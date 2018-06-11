@@ -58,4 +58,4 @@ issue to consider when writing JUnit tests in Geonetwork and that is the separat
     of directly using HttpClient.  This is because there are mock instances of org.fao.geonet.utils.GeonetHttpRequestFactory that can
     be used to mock responses when performing tests.
 		
-# Here we will document the new features and resolved issues
+# Here we will document the features for AIV
