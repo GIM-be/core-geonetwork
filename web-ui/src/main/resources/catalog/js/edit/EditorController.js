@@ -225,6 +225,12 @@
                   //with "default" view.
                   'iso19139': function (md) {
                     return 'identificationTab';
+                  },
+
+                  //Default tab id for dcat-ap-for-services metadata is "defaultDataset" in order to differentiate it's label
+                  //with "default" view.
+                  'dcat-ap-for-services': function (md) {
+                    return 'defaultDataset';
                   }
                 };
                 if (schemaCustomConfig) {
@@ -249,6 +255,7 @@
                   displayAttributes: $location.search()['displayAttributes'] === 'true',
                   displayTooltips: true,
                   displayTooltipsMode: $location.search()['displayTooltipsMode'] || '',
+                  displaySections: ($location.search()['displaySections'] || 'true') === 'true',
                   compileScope: $scope,
                   formScope: $scope.$new(),
                   sessionStartTime: moment(),
@@ -281,6 +288,8 @@
                   editorFormUrl += '&displayTooltipsMode='
                     + gnCurrentEdit.displayTooltipsMode ;
                 }
+
+                editorFormUrl += '&displaySections=' + (gnCurrentEdit.displaySections === true ? 'true' : 'false');
 
                 gnEditor.load(editorFormUrl).then(function() {
                   // $scope.onFormLoad();
@@ -388,6 +397,14 @@
         // Scroll top
         if (tabIdentifier !== $('#currTab')[0].value) {
           gnUtilityService.scrollTo();
+        }
+
+        // If switching between default and advanced view (or the opposite)
+        // Stay on the current tab (Dataset/Distribution)
+        if ($('#currTab')[0].value === 'defaultDistribution' && tabIdentifier === 'advancedDataset') {
+          tabIdentifier = 'advancedDistribution';
+        } else if ($('#currTab')[0].value === 'advancedDistribution' && tabIdentifier === 'defaultDataset') {
+          tabIdentifier = 'defaultDistribution';
         }
 
         $('#currTab')[0].value = tabIdentifier;
