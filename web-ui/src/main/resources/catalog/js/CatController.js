@@ -65,16 +65,17 @@
             'eng': 'en',
             'dut': 'nl',
             'fre': 'fr',
-            'ger': 'ge',
+            'ger': 'de',
             'kor': 'ko',
             'spa': 'es',
-            'cze': 'cz',
+            'cze': 'cs',
             'cat': 'ca',
             'fin': 'fi',
             'ice': 'is',
             'ita' : 'it',
             'rus': 'ru',
-            'chi': 'zh'
+            'chi': 'zh',
+            'slo': 'sk'
           }
         },
         'home': {
@@ -262,7 +263,7 @@
         gnViewerSettings.bingKey = this.gnCfg.mods.map.bingKey;
         gnViewerSettings.defaultContext =
           gnViewerSettings.mapConfig['map-viewer'].context;
-        gnViewerSettings.geocoder = this.gnCfg.mods.geocoder.appUrl;
+        gnViewerSettings.geocoder = this.gnCfg.mods.geocoder.appUrl || defaultConfig.mods.geocoder.appUrl;
       },
       getDefaultConfig: function() {
         return angular.copy(defaultConfig);
@@ -428,7 +429,7 @@
         'fre': 'Français', 'ger': 'Deutsch', 'kor': '한국의',
         'spa': 'Español', 'cat': 'Català', 'cze': 'Czech',
         'ita': 'Italiano', 'fin': 'Suomeksi', 'ice': 'Íslenska',
-        'rus': 'русский', 'chi': '中文'};
+        'rus': 'русский', 'chi': '中文', 'slo': 'Slovenčina'};
       $scope.url = '';
       $scope.gnUrl = gnGlobalSettings.gnUrl;
       $scope.gnCfg = gnGlobalSettings.gnCfg;

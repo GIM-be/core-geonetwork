@@ -1,9 +1,13 @@
 <div data-ng-controller="GnMdViewController" class="container">
   <div class="alert alert-warning"
-       data-ng-hide="mdView.current.record"
+       data-ng-hide="!mdView.loadDetailsFinished || mdView.current.record"
        data-translate=""
        data-translate-values="{uuid: '{{recordIdentifierRequested | htmlToPlaintext}}', url: '{{url | encodeURIComponent}}'}">
     recordNotFound
+  </div>
+  <div class="row"
+       data-ng-show="!mdView.loadDetailsFinished">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
   </div>
 
   <div class="row gn-md-view"
@@ -56,13 +60,6 @@
           <a href="" data-ng-click="format(f)">
             <i class="fa fa-fw"></i>
             {{f.label | translate}}
-          </a>
-        </li>
-        <li>
-          <a data-ng-href="{{gnUrl}}api/records/{{md.getUuid()}}/formatters/xml"
-                 target="_blank">
-            <i class="fa fa-file-code-o"></i>&nbsp;
-            <span data-translate="">xmlView</span>
           </a>
         </li>
       </ul>
@@ -172,9 +169,17 @@
               <ul>
                 <li data-ng-repeat="k in keywords track by $index"
                     data-ng-if="k"
-                    class="tt-cursor"
-                    title="{{'clickToFilterOn' | translate}} {{k}}">
-                    <a href="" data-ng-click="search({'keyword': k})">{{k}}</a>
+                    class="tt-cursor">
+                    <span data-ng-show="k.link == ''">{{k.value}}</span>
+                    <a href=""
+                       data-ng-href="{{k.link}}"
+                       data-ng-hide="k.link == ''">
+                      {{k.value}}</a>&nbsp;
+                    <a href=""
+                       title="{{'clickToFilterOn' | translate}} {{k.value}}"
+                       data-ng-click="search({'keyword': k.value})">
+                      <i class="fa fa-search"/>
+                    </a>
                 </li>
               </ul>
             </td>
@@ -438,7 +443,7 @@
           <!-- TODO: use map config -->
           <p data-ng-repeat="bbox in mdView.current.record.geoBox">
             <img class="gn-img-thumbnail img-thumbnail gn-img-extent"
-                 data-ng-src="{{gnUrl}}/{{lang}}/region.getmap.png?mapsrs=EPSG:3857&width=250&background=osm&geomsrs=EPSG:4326&geom={{mdView.current.record.getBoxAsPolygon($index)}}"/>
+                 data-ng-src="{{gnUrl}}/{{lang}}/region.getmap.png?mapsrs=EPSG:3857&width=250&background=settings&geomsrs=EPSG:4326&geom={{mdView.current.record.getBoxAsPolygon($index)}}"/>
           </p>
 
         </section>
