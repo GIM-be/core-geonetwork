@@ -29,7 +29,7 @@
   <groupId>org.geonetwork-opensource</groupId>
   <artifactId>geonetwork</artifactId>
   <packaging>pom</packaging>
-  <version>3.4.2-0</version>
+  <version>3.4.4-0</version>
   <name>GeoNetwork opensource</name>
   <description>GeoNetwork opensource is a standards based, Free and
     Open Source catalog application to manage spatially referenced
@@ -1338,5 +1338,6 @@
     <slf4j.version>1.7.7</slf4j.version>
     <xbean.version>3.18</xbean.version>
     <httpcomponents.version>4.4.1</httpcomponents.version>
+    <gn.schemas.version>3.4</gn.schemas.version>
   </properties>
 </project>

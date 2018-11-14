@@ -61,10 +61,12 @@
   <xsl:template mode="mode-iso19139" match="*[gmd:CI_Date]" priority="2000">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="overrideLabel" select="''" required="no"/>
 
     <xsl:apply-templates mode="mode-iso19139" select="*/gmd:*">
       <xsl:with-param name="schema" select="$schema"/>
       <xsl:with-param name="labels" select="$labels"/>
+      <xsl:with-param name="overrideLabel" select="$overrideLabel" />
     </xsl:apply-templates>
   </xsl:template>
 
@@ -80,6 +82,7 @@
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="listOfValues" select="$iso19139codelists" required="no"/>
+    <xsl:param name="overrideLabel" select="''" required="no"/>
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
@@ -92,7 +95,14 @@
          id="gn-el-{$dateTypeElementRef}"
          data-gn-field-highlight="">
       <label class="col-sm-2 control-label">
-        <xsl:value-of select="$labelConfig/label"/>
+        <xsl:choose>
+          <xsl:when test="$overrideLabel != ''">
+            <xsl:value-of select="$overrideLabel"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$labelConfig/label"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </label>
       <div class="col-sm-3 gn-value">
         <xsl:variable name="codelist"
@@ -124,7 +134,8 @@
         <div data-gn-date-picker="{gco:Date|gco:DateTime}"
              data-label=""
              data-element-name="{name(gco:Date|gco:DateTime)}"
-             data-element-ref="{concat('_X', gn:element/@ref)}">
+             data-element-ref="{concat('_X', gn:element/@ref)}"
+             data-hide-time="{if ($viewConfig/@hideTimeInCalendar = 'true') then 'true' else 'false'}">
         </div>
 
 
@@ -158,6 +169,7 @@
                 match="*[(gco:Date|gco:DateTime) and not(../gmd:dateType)]">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="overrideLabel" select="''" required="no"/>
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
@@ -172,13 +184,21 @@
          id="gn-el-{$dateTypeElementRef}"
          data-gn-field-highlight="">
       <label class="col-sm-2 control-label">
-        <xsl:value-of select="$labelConfig/label"/>
+        <xsl:choose>
+          <xsl:when test="$overrideLabel != ''">
+            <xsl:value-of select="$overrideLabel"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$labelConfig/label"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </label>
       <div class="col-sm-9 gn-value nopadding-in-table">
         <div data-gn-date-picker="{gco:Date|gco:DateTime}"
              data-label=""
              data-element-name="{name(gco:Date|gco:DateTime)}"
-             data-element-ref="{concat('_X', gn:element/@ref)}">
+             data-element-ref="{concat('_X', gn:element/@ref)}"
+             data-hide-time="{if ($viewConfig/@hideTimeInCalendar = 'true') then 'true' else 'false'}">
         </div>
 
 
