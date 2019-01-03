@@ -290,7 +290,7 @@ USA.
 
             <sch:let name="thesaurus_name" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:title/*/text()"/>
             <sch:let name="thesaurus_date" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:date/*/text()"/>
-            <sch:let name="thesaurus_dateType" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:dateType/*/@codeListValue/text()"/>
+            <sch:let name="thesaurus_dateType" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:dateType/*/@codeListValue/normalize-space(.)"/>
             <sch:let name="keyword"
                 value="gmd:descriptiveKeywords/*/gmd:keyword/gco:CharacterString|
 				gmd:descriptiveKeywords/*/gmd:keyword/gmx:Anchor"/>
@@ -435,7 +435,7 @@ USA.
                 <sch:value-of select="$loc/strings/alert.M42.creation/div"/>
             </sch:assert>
 
-            <sch:assert test="$publicationDate or $creationDate or $revisionDate or $temporalExtentBegin or $temporalExtentEnd">
+            <sch:assert test="$publicationDate!='' or $creationDate!='' or $revisionDate!='' or $temporalExtentBegin or $temporalExtentEnd">
                 <sch:value-of select="$loc/strings/alert.M42/div"/></sch:assert>
             <sch:report test="$temporalExtentBegin">
                 <sch:value-of select="$loc/strings/report.M42.begin/div"/>
@@ -445,15 +445,15 @@ USA.
                 <sch:value-of select="$loc/strings/report.M42.end/div"/>
                 <sch:value-of select="$temporalExtentEnd"/>
             </sch:report>
-            <sch:report test="$publicationDate">
+            <sch:report test="$publicationDate!=''">
                 <sch:value-of select="$loc/strings/report.M42.publication/div"/>
                 <sch:value-of select="$publicationDate"/>
             </sch:report>
-            <sch:report test="$revisionDate">
+            <sch:report test="$revisionDate!=''">
                 <sch:value-of select="$loc/strings/report.M42.revision/div"/>
                 <sch:value-of select="$revisionDate"/>
             </sch:report>
-            <sch:report test="$creationDate">
+            <sch:report test="$creationDate!=''">
                 <sch:value-of select="$loc/strings/report.M42.creation/div"/>
                 <sch:value-of select="$creationDate"/>
             </sch:report>
@@ -553,8 +553,10 @@ USA.
 				gmd:resourceConstraints/*/gmd:otherConstraints/gco:CharacterString!='' and
 				count(gmd:resourceConstraints/*/gmd:accessConstraints/gmd:MD_RestrictionCode[@codeListValue='otherRestrictions'])=0
 				"/>
-            <sch:let name="otherConstraintInfo"
+            <sch:let name="otherConstraintCharacterStringInfo"
                 value="gmd:resourceConstraints/*/gmd:otherConstraints/gco:CharacterString"/>
+            <sch:let name="otherConstraintAnchorInfo"
+                value="gmd:resourceConstraints/*/gmd:otherConstraints/gmx:Anchor"/>
 
             <sch:assert test="$accessConstraints_found">
                 <sch:value-of select="$loc/strings/alert.M45.ca/div"/>
@@ -568,9 +570,10 @@ USA.
             <sch:assert test="not($otherConstraints)">
                 <sch:value-of select="$loc/strings/alert.M45.or/div"/>
             </sch:assert>
-            <sch:report test="$otherConstraintInfo!='' and not($accessConstraints) and not($otherConstraints)">
+            <sch:report test="($otherConstraintCharacterStringInfo!='' or $otherConstraintAnchorInfo!='') and not($accessConstraints) and not($otherConstraints)">
                 <sch:value-of select="$loc/strings/report.M45.or/div"/>
-                <sch:value-of select="$otherConstraintInfo"/>
+                <sch:value-of select="$otherConstraintCharacterStringInfo"/>
+                <sch:value-of select="$otherConstraintAnchorInfo"/>
             </sch:report>
 
         </sch:rule>
@@ -582,16 +585,15 @@ USA.
 			//srv:SV_ServiceIdentification/gmd:resourceConstraints/*|
 			//*[@gco:isoType='srv:SV_ServiceIdentification']/gmd:resourceConstraints/*">
             <sch:let name="accessConstraints" value="string-join(gmd:accessConstraints/*/@codeListValue, ', ')"/>
-            <sch:let name="classification" value="string-join(gmd:classification/*/@codeListValue, ', ')"/>
-            <sch:let name="otherConstraints" value="gmd:otherConstraints/gco:CharacterString/text()"/>
+            <!--<sch:let name="classification" value="string-join(gmd:classification/*/@codeListValue, ', ')"/>-->
             <sch:report test="$accessConstraints!=''">
                 <sch:value-of select="$loc/strings/report.M45.ac/div"/>
                 <sch:value-of select="$accessConstraints"/>
             </sch:report>
-            <sch:report test="$classification!=''">
-                <sch:value-of select="$loc/strings/report.M45.class/div"/>
-                <sch:value-of select="$classification"/>
-            </sch:report>
+            <!--<sch:report test="$classification!=''">-->
+                <!--<sch:value-of select="$loc/strings/report.M45.class/div"/>-->
+                <!--<sch:value-of select="$classification"/>-->
+            <!--</sch:report>-->
         </sch:rule>
     </sch:pattern>
 
@@ -616,8 +618,8 @@ USA.
     <sch:pattern>
         <sch:title>$loc/strings/org</sch:title>
 
-        <sch:rule context="//gmd:identificationInfo">
-            <sch:let name="missing" value="not(*/gmd:pointOfContact)"/>
+        <sch:rule context="//gmd:identificationInfo/*/gmd:pointOfContact">
+            <sch:let name="missing" value="not(.)"/>
             <sch:assert
                 test="not($missing)"
                 ><sch:value-of select="$loc/strings/alert.M47/div"/></sch:assert>
@@ -627,17 +629,17 @@ USA.
             </sch:report>
         </sch:rule>
 
-        <sch:rule context="//gmd:identificationInfo/*/gmd:pointOfContact
-			|//*[@gco:isoType='gmd:MD_DataIdentification']/gmd:pointOfContact
-			|//*[@gco:isoType='srv:SV_ServiceIdentification']/gmd:pointOfContact">
-            <sch:let name="missing" value="not(*/gmd:organisationName)
-				or (*/gmd:organisationName/@gco:nilReason)
-				or not(*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress)
-				or (*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/@gco:nilReason)"/>
-            <sch:let name="organisationName" value="*/gmd:organisationName/*/text()"/>
-            <sch:let name="role" value="normalize-space(*/gmd:role/*/@codeListValue)"/>
+        <sch:rule context="//gmd:identificationInfo/*/gmd:pointOfContact/*/gmd:organisationName
+			|//*[@gco:isoType='gmd:MD_DataIdentification']/gmd:pointOfContact/*/gmd:organisationName
+			|//*[@gco:isoType='srv:SV_ServiceIdentification']/gmd:pointOfContact/*/gmd:organisationName">
+            <sch:let name="missing" value="not(.)
+				or (./@gco:nilReason)
+				or not(../gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress)
+				or (../gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/@gco:nilReason)"/>
+            <sch:let name="organisationName" value="./*/text()"/>
+            <sch:let name="role" value="normalize-space(../gmd:role/*/@codeListValue)"/>
             <sch:let name="emptyRole" value="$role=''"/>
-            <sch:let name="emailAddress" value="*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()"/>
+            <sch:let name="emailAddress" value="../gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()"/>
 
             <sch:assert
                 test="not($missing)"
@@ -711,9 +713,9 @@ USA.
                 19115. The default value is pointOfContact."
                 JRC schematron 1.0 validate only if role=pointOfContact
             -->
-            <sch:let name="role" value="normalize-space(gmd:CI_ResponsibleParty/gmd:role/*/@codeListValue)"/>
+            <sch:let name="role" value="normalize-space(../gmd:role/*/@codeListValue)"/>
             <sch:let name="emptyRole" value="$role=''"/>
-            <sch:let name="emailAddress" value="gmd:CI_ResponsibleParty/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()"/>
+            <sch:let name="emailAddress" value="../gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()"/>
 
             <sch:assert
                 test="not($emptyRole)"
