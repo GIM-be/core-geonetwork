@@ -58,6 +58,7 @@ import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.UpdateDatestamp;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
+import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.harvest.BaseAligner;
 import org.fao.geonet.kernel.harvest.harvester.CategoryMapper;
 import org.fao.geonet.kernel.harvest.harvester.GroupMapper;
@@ -78,6 +79,7 @@ import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.OperationAllowedRepository;
+import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.utils.BinaryFile;
 import org.fao.geonet.utils.IO;
 import org.fao.geonet.utils.Log;
@@ -121,6 +123,7 @@ public class Aligner extends BaseAligner<GeonetParams> {
     private Map<String, Object> processParams = new HashMap<String, Object>();
     private MetadataRepository metadataRepository;
     private HashMap<String, HashMap<String, String>> hmRemoteGroups = new HashMap<String, HashMap<String, String>>();
+    private IMetadataValidator metadataValidator;
 
     public Aligner(AtomicBoolean cancelMonitor, Logger log, ServiceContext context, XmlRequest req,
                    GeonetParams params, Element remoteInfo) {
@@ -134,6 +137,7 @@ public class Aligner extends BaseAligner<GeonetParams> {
         dataMan = gc.getBean(DataManager.class);
         metadataRepository = gc.getBean(MetadataRepository.class);
         result = new HarvestResult();
+        metadataValidator = gc.getBean(IMetadataValidator.class);
 
         //--- save remote categories and groups into hashmaps for a fast access
 
@@ -591,6 +595,8 @@ public class Aligner extends BaseAligner<GeonetParams> {
             addPrivilegesFromGroupPolicy(id, info.getChild("privileges"));
         }
         context.getBean(IMetadataManager.class).save(metadata);
+        metadataValidator.doValidate(metadata, context.getLanguage());
+        new AGIVValidation(context).addConformKeywords(metadata, true);
 
         dataMan.indexMetadata(id, Math.random() < 0.01, null);
         result.addedMetadata++;

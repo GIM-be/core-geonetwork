@@ -56,6 +56,7 @@ import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.UpdateDatestamp;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
+import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.harvest.BaseAligner;
 import org.fao.geonet.kernel.harvest.harvester.CategoryMapper;
 import org.fao.geonet.kernel.harvest.harvester.GroupMapper;
@@ -66,6 +67,7 @@ import org.fao.geonet.kernel.harvest.harvester.RecordInfo;
 import org.fao.geonet.kernel.harvest.harvester.UUIDMapper;
 import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.repository.OperationAllowedRepository;
+import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.xpath.XPath;
@@ -82,6 +84,7 @@ public class Aligner extends BaseAligner<CswParams> {
 
     private IMetadataUtils metadataUtils;
     private IMetadataManager metadataManager;
+    private IMetadataValidator metadataValidator;
     //--------------------------------------------------------------------------
     //---
     //--- Variables
@@ -103,6 +106,7 @@ public class Aligner extends BaseAligner<CswParams> {
         dataMan = gc.getBean(DataManager.class);
         metadataUtils = gc.getBean(IMetadataUtils.class);
         metadataManager = gc.getBean(IMetadataManager.class);
+        metadataValidator = gc.getBean(IMetadataValidator.class);
         result = new HarvestResult();
         result.unretrievable = 0;
         result.uuidSkipped = 0;
@@ -313,6 +317,8 @@ public class Aligner extends BaseAligner<CswParams> {
         addCategories(metadata, params.getCategories(), localCateg, context, log, null, false);
 
         metadata = dataMan.insertMetadata(context, metadata, md, true, false, false, UpdateDatestamp.NO, false, false);
+        metadataValidator.doValidate(metadata, context.getLanguage());
+        new AGIVValidation(context).addConformKeywords(metadata, true);
 
         String id = String.valueOf(metadata.getId());
 
