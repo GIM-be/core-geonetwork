@@ -16,24 +16,31 @@
   <!-- Concept list -->
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/GDI-Vlaanderen-Trefwoorden/TOEGEVOEGDGDIVL">
     <skos:prefLabel xml:lang="nl">Toegevoegd GDI-Vl</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Toegevoegd GDI-Vl</skos:prefLabel>
   </skos:Concept>
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/GDI-Vlaanderen-Trefwoorden/HERBRUIKBAAR">
     <skos:prefLabel xml:lang="nl">Herbruikbaar</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Herbruikbaar</skos:prefLabel>
   </skos:Concept>
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/GDI-Vlaanderen-Trefwoorden/VLOPENDATA">
     <skos:prefLabel xml:lang="nl">Vlaamse Open data</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Vlaamse Open data</skos:prefLabel>
   </skos:Concept>
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/GDI-Vlaanderen-Trefwoorden/KOSTELOOS">
     <skos:prefLabel xml:lang="nl">Kosteloos</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Kosteloos</skos:prefLabel>
   </skos:Concept>
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/GDI-Vlaanderen-Trefwoorden/LIJSTMRINSPIRE">
     <skos:prefLabel xml:lang="nl">Lijst M&amp;R INSPIRE</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Lijst M&amp;R INSPIRE</skos:prefLabel>
   </skos:Concept>
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/GDI-Vlaanderen-Trefwoorden/MDINSPIRECONFORM">
     <skos:prefLabel xml:lang="nl">Metadata INSPIRE-conform</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Metadata INSPIRE-conform</skos:prefLabel>
   </skos:Concept>
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/GDI-Vlaanderen-Trefwoorden/MDGDICONFORM">
     <skos:prefLabel xml:lang="nl">Metadata GDI-Vl-conform</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Metadata GDI-Vl-conform</skos:prefLabel>
   </skos:Concept>
-  </rdf:RDF>
+</rdf:RDF>
 
