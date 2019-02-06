@@ -84,6 +84,7 @@ import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.repository.specification.MetadataValidationSpecs;
 import org.fao.geonet.repository.specification.OperationAllowedSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
+import org.fao.geonet.services.validation.AGIVValidation;
 import org.jdom.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -322,6 +323,7 @@ public class MetadataSharingApi {
             boolean sharingChanges = false;
 
             boolean allowPublishInvalidMd = sm.getValueAsBool("metadata/workflow/allowPublishInvalidMd");
+            boolean agivValidation = true;
 
             SharingResponse sharingBefore = getRecordSharingSettings(metadata.getUuid(), request.getSession(), request);
 
@@ -337,7 +339,10 @@ public class MetadataSharingApi {
                     if (o.getValue()) {
                         // For privileges to ALL group, check if it's allowed or not to publish invalid metadata
                         if ((p.getGroup() == ReservedGroup.all.getId()) && (!allowPublishInvalidMd)) {
-                            if (!canPublishToAllGroup(context, dm, metadata)) {
+                            //Unsure that a validation report is present in the database
+                            boolean canPublish = canPublishToAllGroup(context, dm, metadata, agivValidation);
+                            agivValidation = false;
+                            if (!allowPublishInvalidMd && !canPublish) {
                                 continue;
                             }
                         }
@@ -367,15 +372,16 @@ public class MetadataSharingApi {
      * @return
      * @throws Exception
      */
-    private boolean canPublishToAllGroup(ServiceContext context, DataManager dm, AbstractMetadata metadata) throws Exception {
+    private boolean canPublishToAllGroup(ServiceContext context, DataManager dm, AbstractMetadata metadata, boolean agivValidation) throws Exception {
         MetadataValidationRepository metadataValidationRepository = context.getBean(MetadataValidationRepository.class);
         IMetadataValidator validator = context.getBean(IMetadataValidator.class);
 
         boolean hasValidation =
             (metadataValidationRepository.count(MetadataValidationSpecs.hasMetadataId(metadata.getId())) > 0);
 
-        if (!hasValidation) {
+        if (agivValidation || !hasValidation) {
             validator.doValidate(metadata, context.getLanguage());
+            new AGIVValidation(context).addConformKeywords(metadata, true);
             dm.indexMetadata(metadata.getId() + "", true, null);
         }
 

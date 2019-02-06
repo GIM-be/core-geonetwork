@@ -49,6 +49,7 @@ import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.repository.MetadataValidationRepository;
 import org.fao.geonet.repository.OperationAllowedRepository;
 import org.fao.geonet.repository.specification.MetadataValidationSpecs;
+import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -326,6 +327,7 @@ public class MetadataEditingApi {
             // Save validation if the forceValidationOnMdSave is enabled
             if (forceValidationOnMdSave) {
                 validator.doValidate(metadata, context.getLanguage());
+                new AGIVValidation(context).addConformKeywords(metadata, true);
                 reindex = true;
             }
 
