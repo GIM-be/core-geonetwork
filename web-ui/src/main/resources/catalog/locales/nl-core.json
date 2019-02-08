@@ -434,5 +434,6 @@
     "indexingTaskRunning": "Indexeren {{total}} records...",
     "indexingTaskFinished": "Indexeren afgerond, {{total}} records verwerkt",
     "indexingTaskFinishedWithErrors": "Indexeren afgerond, {{total}} records verwerkt met {{errors}} fouten",
-    "indexingTaskCanceled": "Indexeren geannuleerd"
+    "indexingTaskCanceled": "Indexeren geannuleerd",
+    "fileId": "Bestand identifier"
 }

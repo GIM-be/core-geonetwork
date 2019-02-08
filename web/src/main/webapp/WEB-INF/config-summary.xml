@@ -127,6 +127,7 @@
     <facet name="maintenanceAndUpdateFrequency" indexKey="cl_maintenanceAndUpdateFrequency"
            label="maintenanceAndUpdateFrequencies"/>
     <facet name="mdActions" indexKey="_mdActions" label="mdActions"/>
+    <facet name="fileId" indexKey="fileId" label="fileId"/>
   </facets>
 
   <summaryTypes>
@@ -245,6 +246,7 @@
       <item facet="serviceType"/>
       <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="createDateYear" sortOrder="asc"/>
+      <item facet="fileId"/>
     </summaryType>
   </summaryTypes>
 
