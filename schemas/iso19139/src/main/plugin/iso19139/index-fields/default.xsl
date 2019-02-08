@@ -367,6 +367,12 @@
               </xsl:if>
             </xsl:if>
           </xsl:if>
+
+          <!-- If the keyword come from "GDI-Vlaanderen Trefwoorden" thesaurus, index it under flanderskeyword -->
+          <xsl:if test="$thesaurusName = 'GDI-Vlaanderen Trefwoorden'">
+            <Field name="flanderskeyword" string="{$keyword}" store="true" index="true"/>
+          </xsl:if>
+
         </xsl:for-each>
 
         <!-- Index thesaurus name to easily search for records
