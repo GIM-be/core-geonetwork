@@ -22,6 +22,34 @@
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
 
-<codelists/>
+<codelists>
+  <codelist name="gmd:CI_RoleCode">
+    <entry>
+      <code>originator</code>
+      <label>Producent</label>
+      <description>Producent van de dataset.</description>
+    </entry>
+  </codelist>
+  <codelist name="gfc:isAbstract">
+    <entry>
+      <code>true</code>
+      <label>Ja</label>
+    </entry>
+    <entry>
+      <code>false</code>
+      <label>Nee</label>
+    </entry>
+  </codelist>
+  <codelist name="gco:Boolean">
+    <entry>
+      <code>true</code>
+      <label>Ja</label>
+    </entry>
+    <entry>
+      <code>false</code>
+      <label>Nee</label>
+    </entry>
+  </codelist>
+</codelists>
 
 
