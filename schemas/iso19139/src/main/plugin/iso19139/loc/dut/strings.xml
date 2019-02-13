@@ -23,14 +23,14 @@
   -->
 
 <strings>
-  <understandResource>Informatie over de dataset</understandResource>
-  <relatedResources>Gerelateerde services en gekoppelde data</relatedResources>
+  <understandResource>Informatie betreffende de dataset</understandResource>
+  <relatedResources>Gerelateerde diensten en linked data</relatedResources>
   <techInfo>Technische informatie</techInfo>
   <contactInfo>Contact informatie</contactInfo>
-  <mdContactInfo>Metadata contact</mdContactInfo>
+  <mdContactInfo>Metadata contact informatie</mdContactInfo>
   <refDate>Referentie datum</refDate>
   <temporalRef>Temporele informatie</temporalRef>
-  <constraintInfo>Toegang restrictie informatie</constraintInfo>
+  <constraintInfo>Informatie betreffende toegangsbeperkingen</constraintInfo>
 
   <!-- New strings added for the AngularJS editor -->
   <!-- View and tabs -->

@@ -51,10 +51,10 @@
     in test mode. Checking this box switches test mode off and changes will be made to the database.
   </dontMakeChanges>
 
-  <defaultStatusChangeMessage>No information</defaultStatusChangeMessage>
+  <defaultStatusChangeMessage>Beschrijf hier extra informatie</defaultStatusChangeMessage>
   <createThesaurus>Create/Update Thesaurus</createThesaurus>
   <thesaurusType>Thesaurus Type</thesaurusType>
-  <changeLogMessage>Change Log Message</changeLogMessage>
+  <changeLogMessage>Informatie betreffende de wijziging</changeLogMessage>
   <status>Status</status>
   <updateStatus>Wijzigingsstatus</updateStatus>
   <batchUpdateStatusTitle>Batch Wijzigingsstatus Operation</batchUpdateStatusTitle>
@@ -145,7 +145,7 @@
   <stat.simpleVsAdvanced>Eenvoudig vs. geavanceerd zoeken</stat.simpleVsAdvanced>
   <stat.mdPopularity>Metadata populariteit</stat.mdPopularity>
   <stat.graphicalStats>Grafische statistieken</stat.graphicalStats>
-  <stat.tip2>Kies een datum eenhedi (jaar, maand, dag) en een datum spanne en klik OK om de grafiek
+  <stat.tip2>Kies een datum eenheid (jaar, maand, dag) en een datum spanne en klik OK om de grafiek
     te tonen
   </stat.tip2>
   <stat.numberOfRequests>Aantal requests</stat.numberOfRequests>
@@ -219,8 +219,8 @@
 
   <logo>Logo configuration</logo>
   <logoSelectionWindow js="true">Choose a logo</logoSelectionWindow>
-  <chooseLogo>Choose logo</chooseLogo>
-  <orgLogo>Organisation logo</orgLogo>
+  <chooseLogo>Kies logo</chooseLogo>
+  <orgLogo>Organisatie logo</orgLogo>
   <logoDes>Manage catalogue logo (node and harvesting logo)</logoDes>
   <logoRegistered js="true">Registered logos</logoRegistered>
   <logoAdd js="true">Add new logo</logoAdd>
@@ -341,8 +341,7 @@
   </linkedChildrenMetadataHelp>
   <linkedDatasetMetadata>Related datasets:</linkedDatasetMetadata>
   <serviceCreate>Create new service metadata</serviceCreate>
-  <parentSearch js="true">Search for a metadata record to set as parent of current record.
-  </parentSearch>
+  <parentSearch js="true">Search for a metadata record to set as parent of current record.</parentSearch>
   <linkedMetadataSelectionWindowTitle js="true">Related metadata selection
   </linkedMetadataSelectionWindowTitle>
   <searchText js="true">Text search</searchText>
@@ -350,7 +349,7 @@
   <createRelation js="true">Create relation</createRelation>
   <export>Export</export>
   <exportText>Export (TXT)</exportText>
-  <addXMLFragment>Add from dictionary ...</addXMLFragment>
+  <addXMLFragment>Kies een sleutelwoord uit één van de thesauri</addXMLFragment>
   <translateWithGoogle>Use Google translation service to suggest a translation for selected
     language.
   </translateWithGoogle>
@@ -422,7 +421,7 @@
   <all>alle</all>
   <any>- Alles -</any>
   <anytime>Willekeurig tijdstip</anytime>
-  <appSchInfoTab>App. schema</appSchInfoTab>
+  <appSchInfoTab>Applicatieschema</appSchInfoTab>
   <arcgislayer>ArcGIS laag</arcgislayer>
   <assigned>Toegewezen</assigned>
   <attrlabl>Attribuut Label</attrlabl>
@@ -452,8 +451,8 @@
   <browsed>Afbeelding bladeren op omschrijving</browsed>
   <browsen>Afbeelding bladeren op naam</browsen>
   <browset>Afbeelding bladeren op bestandstype</browset>
-  <byGroup>Per Groep</byGroup>
-  <byPackage>Per Package</byPackage>
+  <byGroup>ISO weergave</byGroup>
+  <byPackage>Tab-weergave</byPackage>
   <cancel>Terug</cancel>
   <categories>Categorieen</categories>
   <category>Categorie</category>
@@ -479,15 +478,15 @@
   <confirmCancelCreate>Weet u zeker dat u wilt annuleren creëren van deze metadata?
   </confirmCancelCreate>
   <confirmDelete>Weet u zeker dat u de metadata wilt verwijderen uit de database?</confirmDelete>
-  <confirmBatchDelete>Weet u zeker dat u alle $1 geselecteerde metadata wild verwijderen uit de
+  <confirmBatchDelete>Weet u zeker dat u alle $1 geselecteerde metadata wilt verwijderen uit de
     database?
   </confirmBatchDelete>
   <confirmNewPassword>Bevestig nieuw wachtwoord</confirmNewPassword>
   <confirmPassword>Bevestig wachtwoord</confirmPassword>
-  <constraintsTab>Beperkingen</constraintsTab>
+  <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
   <contactUs>Contact</contactUs>
   <contains>Bevat</contains>
-  <contentInfoTab>Informatie over de inhoud</contentInfoTab>
+  <contentInfoTab>Inhoud</contentInfoTab>
   <convert>Converteer</convert>
   <copyright1>Copyright</copyright1>
   <copyright2>
@@ -507,7 +506,7 @@
   <crs code="EPSG:2154">RGF93 / Lambert-93</crs>
   <cswTest>CSW ISO Profile test</cswTest>
   <cswTestDesc>Test omgeving voor de CSW ISO Profile catalog interface</cswTestDesc>
-  <dataQualityTab>Datakwaliteit</dataQualityTab>
+  <dataQualityTab>Kwaliteit</dataQualityTab>
   <datasetIssued>Temporal Extent</datasetIssued>
   <datasetTab>Dataset</datasetTab>
   <dateModified>Veranderde datum</dateModified>
@@ -607,7 +606,7 @@
   <help>Help</help>
   <helpLinkTooltip js="true">Help</helpLinkTooltip>
   <helpComplete>Complete help</helpComplete>
-  <helperList>Suggestions:</helperList>
+  <helperList>Suggesties:</helperList>
   <hideAdvancedOptions>Verberg geavanceerde opties</hideAdvancedOptions>
   <highlights>Highlights</highlights>
   <hitsPerPage>Bezoeken per pagina</hitsPerPage>
@@ -633,8 +632,8 @@
   <infoTitle>Info</infoTitle>
   <insert>Invoegen</insert>
   <insertFileMode js="true">Bestand Toevoegen</insertFileMode>
-  <insertMode>Insert mode:</insertMode>
-  <insertPasteMode>Kopieër/Plak</insertPasteMode>
+  <insertMode>Modus:</insertMode>
+  <insertPasteMode>Kopieer/Plak</insertPasteMode>
   <interactiveMap>Toon kaart</interactiveMap>
   <interMapInfo>
     <h1>Informatie interactieve kaarten</h1>
@@ -769,7 +768,7 @@
   <metadata-template-order-desc>Sorteer uw templates</metadata-template-order-desc>
   <metadata-template-add-default>Add templates</metadata-template-add-default>
   <metadata>Metadata</metadata>
-  <metadataAdded>Metadata met ID: is opgenomen in de database</metadataAdded>
+  <metadataAdded>Metadata met databank ID: %1 is opgeslagen in de databank</metadataAdded>
   <metadataDeleted>Metadata met ID: is niet meer aanwezig</metadataDeleted>
   <metadataInsertResults>Results of Metadata Import</metadataInsertResults>
   <metadataJSForm>Metadata van JS Form</metadataJSForm>
@@ -813,7 +812,7 @@
   <output>Output</output>
   <outputType id="full">Volledig</outputType>
   <outputType id="text">Alleen Tekst</outputType>
-  <overwrite>Overschrijf metadata met eenzelfde UUID</overwrite>
+  <overwrite>Overschrijf metadata met hetzelfde UUID</overwrite>
   <overwriteFile>Overschrijven?</overwriteFile>
   <owner>Gebruiker</owner>
   <ownerRights>Verwijder/Toegangsrechten/Categorieën vrij: u heeft beheersrechten</ownerRights>
@@ -839,7 +838,7 @@
   <indexConfiguration>Index instellingen</indexConfiguration>
   <io>Import, export &amp; harvesting</io>
   <placeKeyword>Geef sleutelwoorden</placeKeyword>
-  <porCatInfoTab>Catalogus</porCatInfoTab>
+  <porCatInfoTab>Objectencatalogus</porCatInfoTab>
   <poweredBy>Gemaakt met</poweredBy>
   <previous>Vorige</previous>
   <privileges>Toegangsrechten</privileges>
@@ -847,7 +846,7 @@
   <profileChoice value="Administrator">Beheerder</profileChoice>
   <profileChoice value="Editor">Editor</profileChoice>
   <profileChoice value="RegisteredUser">Geregistreerde gebruiker</profileChoice>
-  <profileChoice value="Reviewer">Content reviewer</profileChoice>
+  <profileChoice value="Reviewer">Hoofdeditor</profileChoice>
   <profileChoice value="UserAdmin">Gebruikers beheerder</profileChoice>
   <profileChoice value="Monitor">System Monitor</profileChoice>
   <progress>Voortgang</progress>
@@ -867,7 +866,7 @@
   <rawMetadata>Invoer ruwe metadata</rawMetadata>
   <rebuild>Vernieuw</rebuild>
   <recentAdditions>Recente wijzigingen</recentAdditions>
-  <refSysTab>Ref. systeem</refSysTab>
+  <refSysTab>Referentiesysteem</refSysTab>
   <region>Regio</region>
   <register>Registreren</register>
   <registerChoose>Ik wil</registerChoose>
@@ -891,7 +890,7 @@
   <resultsCoordinate>Resultaten die met de coördinaten overeenkomen</resultsCoordinate>
   <resultsFreeText>Resultaten die met de zoek criteria overeenkomen</resultsFreeText>
   <resultsMatching>Zoekresultaten :</resultsMatching>
-  <Reviewer>Controleur gegevens</Reviewer>
+  <Reviewer>Hoofdeditor</Reviewer>
   <rss>Open RSS feed</rss>
   <rtitle>Titel</rtitle>
   <altTitle>Alternatieve titel</altTitle>
@@ -944,10 +943,10 @@
   <southbc>Zuidelijke coördinaat</southbc>
   <spacesNot js="true">Spaties zijn niet toegestaan in dit veld</spacesNot>
   <spatial2Tab>Ruimt. Repr.</spatial2Tab>
-  <spatialTab>Ruimt. Info</spatialTab>
+  <spatialTab>Begrenzing</spatialTab>
   <startsWith>Begint met</startsWith>
   <state>Provincie/Staat</state>
-  <styleSheet>StyleSheet</styleSheet>
+  <styleSheet>Transformatie (XSLT)</styleSheet>
   <submit>Bewaren en sluiten</submit>
   <subtemplate>Subtemplate</subtemplate>
   <subtemplateTitle>subtemplate titel</subtemplateTitle>
@@ -958,7 +957,7 @@
   <systemInfo>System information</systemInfo>
   <systemInfoDes>Shows advanced information about catalogue, index, Java, operating system
   </systemInfoDes>
-  <template>Template</template>
+  <template>Sjabloon</template>
   <Term>Zoekterm</Term>
   <thanks>Bedankt voor uw inspanningen.</thanks>
   <theme>ISO onderwerp categorie</theme>
@@ -999,7 +998,7 @@
   <userPw>Wijzig wachtwoord</userPw>
   <userPwDes>Sta de huidige gebruiker toe het wachtwoord te wijzigen</userPwDes>
   <uuidAction>Import acties:</uuidAction>
-  <validate>Valideren</validate>
+  <validate>Valideren schema</validate>
   <assign>Aan huidige cataloog toewijzen</assign>
   <validityBegins>Validatie begint</validityBegins>
   <validityEnds>en eindigt op</validityEnds>
@@ -1019,7 +1018,7 @@
   <xmlInsert>Importeer XML metadata</xmlInsert>
   <xmlInsertTitle>XML Metadata Invoegen</xmlInsertTitle>
   <xmlTab>XML weergave</xmlTab>
-  <inspireTab>INSPIRE view</inspireTab>
+  <inspireTab>INSPIRE weergave</inspireTab>
   <inspireSection>
     <identification>
       <title>Identification</title>
