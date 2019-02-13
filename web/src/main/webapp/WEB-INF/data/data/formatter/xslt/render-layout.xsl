@@ -236,13 +236,32 @@
   <xsl:template mode="render-toc" match="view">
     <xsl:if test="$tabs = 'true' and count(tab) > 1">
       <ul class="view-outline nav nav-tabs nav-tabs-advanced">
-        <xsl:for-each select="tab">
+        <xsl:for-each select="tab[position() &lt; 6]">
           <li>
             <a href="#gn-tab-{@id}">
               <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
             </a>
           </li>
         </xsl:for-each>
+        <xsl:if test="count(tab) > 5">
+          <li class="dropdown" role="menuitem">
+            <a class="dropdown-toggle" data-toggle="dropdown" href=""
+               title="{$i18n/moreTabs}">
+              <i class="fa fa-ellipsis-h"></i>
+              <b class="caret"/>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <xsl:for-each select="tab[position() &gt;= 6]">
+                <li role="menuitem">
+                  <a href="#gn-tab-{@id}">
+                    <xsl:value-of select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
+                  </a>
+                </li>
+              </xsl:for-each>
+            </ul>
+          </li>
+
+        </xsl:if>
       </ul>
     </xsl:if>
   </xsl:template>
