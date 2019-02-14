@@ -30,6 +30,7 @@ docs/schema-loc-*.rst
 web/src/main/webapp/WEB-INF/server.prop
 *.iml
 .*/
+!.gitlab/
 */.*
 eclipse/
 web/src/main/webapp/WEB-INF/data/data/metadata_data
