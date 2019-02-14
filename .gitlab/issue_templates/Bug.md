@@ -1,9 +1,6 @@
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**Root cause**
-Add here the root cause producing the error
-
 **To Reproduce**
 Steps to reproduce the behavior:
 1. Go to '...'
@@ -13,9 +10,6 @@ Steps to reproduce the behavior:
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
-
-**Proposed solution**
-Add here the technical solution for the expected behavior
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
@@ -30,5 +24,11 @@ If applicable, add the server log file to help trace your problem.
 
 **Additional context**
 Add any other context about the problem here.
+
+**Root cause**
+Add here the root cause of the bug (optional)
+
+**Proposed solution**
+You can propose here a way to resolve the bug (optional)
 
  
