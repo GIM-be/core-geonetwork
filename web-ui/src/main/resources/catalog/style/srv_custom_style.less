@@ -1,2 +1,86 @@
 /* Define custom node style here */
-.body {}
+form.gn-editor {
+  fieldset{
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.07);
+    margin: 5px;
+  }
+  .control-label {
+    color: black;
+  }
+  *[data-gn-keyword-selector] {
+    margin-bottom: 0;
+  }
+  .gn-add-field {
+    padding-top: 0;
+    padding-bottom: 10px;
+  }
+  .bootstrap-tagsinput {
+    margin-bottom: 0;
+    padding: 0 6px;
+    .tag {
+      margin-bottom: 8px;
+      margin-top: 8px;
+    }
+  }
+  > fieldset {
+    margin-bottom: 40px;
+    > fieldset {
+      margin-left: auto;
+      margin-right:auto;
+      width: 87%;
+      legend {
+        font-size: 16px;
+        line-height: 1.7;
+      }
+    }
+  }
+  label.gn-sub-required:after, .gn-sub-required > label:after,
+  label.gn-sub-mandatory:after, .gn-sub-mandatory > label:after {
+    content: "*";
+    font-size: 1.5em;
+    margin: 7px 0 0 7px;
+    position: absolute;
+    color: #000;
+    font-weight: normal;
+    line-height: 22px;
+  }
+}
+.gn-md-view {
+  table {
+    border: solid 1px lightgray;
+    box-sizing: border-box;
+    tr {
+      th {
+        width: 20%;
+      }
+      td {
+        &:nth-child(2) {
+          width: 80%;
+        }
+        > .extent {
+          margin: 20px 75px;
+        }
+      }
+    }
+    &.nested-table {
+      background-color: rgba(0, 0, 0, 0.035);
+      margin-bottom: 0;
+    }
+    &.iso19139-md-view {
+      ul {
+        padding-left: 15px;
+      }
+    }
+  }
+  h3 {
+    margin-top: 30px;
+  }
+  .gn-metadata-display {
+    .table-striped {
+      td {
+        padding-left: 0;
+      }
+    }
+  }
+}

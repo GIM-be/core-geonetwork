@@ -122,12 +122,12 @@
         $('.nav-tabs-advanced a:first').tab('show');
       };
 
-      $scope.format = function(f) {
+      $scope.format = function(f, uuid) {
         $scope.usingFormatter = f !== undefined;
         $scope.currentFormatter = f;
         if (f) {
           $('#gn-metadata-display').find('*').remove();
-          gnMdFormatter.getFormatterUrl(f.url, $scope).then(function(url) {
+          gnMdFormatter.getFormatterUrl(f.url, $scope, uuid).then(function(url) {
             $http.get(url, {
               headers: {
                 Accept: 'text/html'
@@ -164,8 +164,16 @@
       // Reset current formatter to open the next record
       // in default mode.
       $scope.$watch('mdView.current.record', function() {
-        $scope.usingFormatter = false;
-        $scope.currentFormatter = null;
+        if($scope.mdView.current.record &&
+          ($scope.mdView.current.record['geonet:info'].schema === 'dcat-ap' ||
+            $scope.mdView.current.record['geonet:info'].schema === 'iso19139')) {
+
+          $scope.recordIdentifierRequested = gnSearchLocation.getUuid();
+          $scope.format($scope.formatter.list[0], $scope.mdView.current.record.getUuid());
+        } else {
+          $scope.usingFormatter = false;
+          $scope.currentFormatter = null;
+        }
       });
 
       // Know from what path we come from
