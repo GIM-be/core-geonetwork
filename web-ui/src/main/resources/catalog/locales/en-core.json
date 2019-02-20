@@ -435,5 +435,8 @@
     "indexingTaskRunning": "Indexing {{total}} records...",
     "indexingTaskFinished": "Indexing finished, {{total}} records processed",
     "indexingTaskFinishedWithErrors": "Indexing finished, {{total}} records processed with {{errors}} errors",
-    "indexingTaskCanceled": "Indexing canceled"
+    "indexingTaskCanceled": "Indexing canceled",
+    "fileId": "File identifier",
+    "flanderskeyword": "GDI-Vlaanderen keyword",
+    "flanderskeywords": "GDI-Vlaanderen keywords"
 }
