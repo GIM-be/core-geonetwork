@@ -81,6 +81,7 @@ import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
+import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.mef.Importer;
 import org.fao.geonet.kernel.mef.MEFLib;
 import org.fao.geonet.kernel.search.SearchManager;
@@ -91,6 +92,7 @@ import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.Updater;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
+import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.utils.FilePathChecker;
 import org.fao.geonet.utils.IO;
 import org.fao.geonet.utils.Log;
@@ -825,6 +827,9 @@ public class MetadataInsertDeleteApi {
         dataMan.setTemplate(iId, metadataType, null);
 
         if (publishToAll) {
+            IMetadataValidator validator = context.getBean(IMetadataValidator.class);
+            validator.doValidate(context.getUserSession(), schema, Integer.toString(iId), xmlElement, context.getLanguage(), false);
+            new AGIVValidation(context).addConformKeywords(Integer.toString(iId), true);
             dataMan.setOperation(context, iId, ReservedGroup.all.getId(), ReservedOperation.view.getId());
             dataMan.setOperation(context, iId, ReservedGroup.all.getId(), ReservedOperation.download.getId());
             dataMan.setOperation(context, iId, ReservedGroup.all.getId(), ReservedOperation.dynamic.getId());

@@ -83,6 +83,7 @@ import org.fao.geonet.repository.UserSavedSelectionRepository;
 import org.fao.geonet.repository.specification.MetadataFileUploadSpecs;
 import org.fao.geonet.repository.specification.MetadataSpecs;
 import org.fao.geonet.repository.specification.OperationAllowedSpecs;
+import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -703,6 +704,7 @@ public class BaseMetadataManager implements IMetadataManager {
                 // contains both XSD and schematron errors.
                 // The report is used when building the editor form
                 // to display errors related to elements.
+                metadataXml = new AGIVValidation(srvContext).addConformKeywordsToElement(metadataXml, schema, Integer.parseInt(id)).two();
                 metadataXml.addContent(versionAndReport.one());
             } else {
 				editLib.expandElements(schema, metadataXml);
@@ -815,6 +817,7 @@ public class BaseMetadataManager implements IMetadataManager {
 			// --- do the validation last - it throws exceptions
 			if (session != null && validate) {
 				metadataValidator.doValidate(session, schema, metadataId, metadataXml, lang, false);
+                new AGIVValidation(context).addConformKeywords(metadataId, true);
 			}
 		} finally {
 			if (index) {

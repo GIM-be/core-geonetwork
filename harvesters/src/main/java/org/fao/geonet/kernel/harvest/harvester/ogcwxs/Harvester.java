@@ -63,6 +63,7 @@ import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.UpdateDatestamp;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
+import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.harvest.BaseAligner;
 import org.fao.geonet.kernel.harvest.harvester.CategoryMapper;
 import org.fao.geonet.kernel.harvest.harvester.GroupMapper;
@@ -77,6 +78,7 @@ import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataCategoryRepository;
 import org.fao.geonet.services.thumbnail.Set;
 import org.fao.geonet.repository.MetadataRepository;
+import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.util.Sha1Encoder;
 import org.fao.geonet.utils.BinaryFile;
 import org.fao.geonet.utils.GeonetHttpRequestFactory;
@@ -188,6 +190,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
     private CategoryMapper localCateg;
     private GroupMapper localGroups;
     private HarvestResult result;
+    private IMetadataValidator metadataValidator;
 
     /**
      * Store the GetCapabilities operation URL. This URL is scrambled and used to uniquelly
@@ -218,6 +221,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
         dataMan = gc.getBean(DataManager.class);
         schemaMan = gc.getBean(SchemaManager.class);
+        metadataValidator = gc.getBean(IMetadataValidator.class);
     }
 
     /**
@@ -454,6 +458,9 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
             dataMan.updateMetadata(context, id, md, false, false, false,
                 context.getLanguage(), dataMan.extractDateModified(schema, md), false);
         }
+        metadataValidator.doValidate(metadata, context.getLanguage());
+        new AGIVValidation(context).addConformKeywords(metadata, true);
+        dataMan.indexMetadata(Integer.toString(metadata.getId()), true, null);
 
         String id = String.valueOf(metadata.getId());
         uuids.add(uuid);
