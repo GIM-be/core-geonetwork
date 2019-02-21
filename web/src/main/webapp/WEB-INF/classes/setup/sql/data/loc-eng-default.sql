@@ -522,6 +522,7 @@ INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (2,'eng','Approved');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (3,'eng','Retired');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (4,'eng','Submitted');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (5,'eng','Rejected');
+INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (6,'eng','Just created');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (50,'eng','Record created.');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (51,'eng','Record updated.');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (52,'eng','Attachment {{h.currentStatus}} added.');
