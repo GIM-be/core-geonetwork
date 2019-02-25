@@ -111,11 +111,6 @@
           //show elements that require js
           $(".hidden-nojs").removeClass('hidden-nojs');
 
-          // attach click to tab
-          $('.nav-tabs-advanced a').click(function (e) {
-            e.preventDefault();
-            $(this).tab('show');
-          });
           // hide empty tab
           $('.nav-tabs-advanced a').each(function() {
 
@@ -127,6 +122,27 @@
               }
             }
           });
+
+          var visibleTab = 0;
+          $('.nav-tabs-advanced li:not(#tab-overflow)').each(function(){
+            if($(this).is(':visible')) {
+              visibleTab++;
+              if(visibleTab > 5){
+                $('#tab-overflow .dropdown-menu').append($(this).clone());
+                $(this).hide();
+                if($('#tab-overflow').is(':hidden')) {
+                  $('#tab-overflow').show();
+                }
+              }
+            }
+          });
+
+          // attach click to tab
+          $('.nav-tabs-advanced a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+          });
+
           // show the first tab
           $('.nav-tabs-advanced a:first').tab('show');
         </script>
