@@ -522,6 +522,7 @@ INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (2,'fre','Validé');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (3,'fre','Retiré');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (4,'fre','A valider');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (5,'fre','Rejeté');
+INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (6,'fre','Juste créé');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (50,'fre','Fiche créée.');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (51,'fre','Fiche mise à jour.');
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (52,'fre','Document {{h.item1}} ajouté.');

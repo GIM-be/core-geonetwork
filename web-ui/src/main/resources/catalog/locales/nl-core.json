@@ -435,7 +435,7 @@
     "indexingTaskFinished": "Indexeren afgerond, {{total}} records verwerkt",
     "indexingTaskFinishedWithErrors": "Indexeren afgerond, {{total}} records verwerkt met {{errors}} fouten",
     "indexingTaskCanceled": "Indexeren geannuleerd",
-    "fileId": "Bestand identifier",
+    "fileId": "Metadata-identificator (fileIdentifier):",
     "flanderskeyword": "GDI-Vlaanderen trefwoord",
     "flanderskeywords": "GDI-Vlaanderen trefwoorden"
 }

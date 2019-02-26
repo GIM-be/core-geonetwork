@@ -102,11 +102,6 @@
       // activate the tabs in the advanded metadata view
       $scope.activateTabs = function() {
 
-        // attach click to tab
-        $('.nav-tabs-advanced a').click(function(e) {
-          e.preventDefault();
-          $(this).tab('show');
-        });
         // hide empty tab
         $('.nav-tabs-advanced a').each(function() {
 
@@ -118,6 +113,28 @@
             }
           }
         });
+
+        //Stack tabs in a dropdown if more than 5
+        var visibleTab = 0;
+        $('.nav-tabs-advanced li:not(#tab-overflow)').each(function(){
+          if($(this).is(':visible')) {
+            visibleTab++;
+            if(visibleTab > 5){
+              $('#tab-overflow .dropdown-menu').append($(this).clone());
+              $(this).remove();
+              if($('#tab-overflow').is(':hidden')) {
+                $('#tab-overflow').show();
+              }
+            }
+          }
+        });
+
+        // attach click to tab
+        $('.nav-tabs-advanced a').click(function(e) {
+          e.preventDefault();
+          $(this).tab('show');
+        });
+
         // show the first tab
         $('.nav-tabs-advanced a:first').tab('show');
       };
