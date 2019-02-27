@@ -434,8 +434,5 @@
     "indexingTaskRunning": "Indexations de {{total}} fiches...",
     "indexingTaskFinished": "Indexation terminée, {{total}} fiches traitées",
     "indexingTaskFinishedWithErrors": "Indexation terminée, {{total}} fiches traitées avec {{errors}} erreurs",
-    "indexingTaskCanceled": "Indexation annulée",
-    "fileId": "Identificateur",
-    "flanderskeyword": "Mot clé GDI-Vlaanderen",
-    "flanderskeywords": "Mots clés GDI-Vlaanderen"
+    "indexingTaskCanceled": "Indexation annulée"
 }
