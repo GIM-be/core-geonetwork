@@ -11,6 +11,7 @@
     "addNewLogo": "Voeg nieuw logo toe",
     "addOrUpdateStandards": "Standaarden toevoegen of bijwerken",
     "addStandard": "Toevoegen",
+    "configureYourAvatar": "To associate an image to your account, define a globally recognized avatar for your email on <a href='https://en.gravatar.com/'>gravatar</a>.",
     "addThesaurus": "Voeg woordenlijst toe",
     "advancedCssProps": "Geavanceerde eigenschappen",
     "allowedCategories": "Toegestane categorien",
@@ -1174,7 +1175,7 @@
     "ui-mod-map": "Kaart applicatie",
     "ui-map": "Default kaart context",
     "ui-projection": "Map projectie",
-    "ui-projectionList": "Lijst van kaart projecties om de coordinaten in te tonen ",
+    "ui-projectionList": "Lijst van kaart projecties om de coordinaten in te tonen",
     "ui-useOSM": "Gebruik OpenStreetMap",
     "ui-useOSM-help": "TODO",
     "ui-facetConfig": "Lijst van facets",
@@ -1344,5 +1345,9 @@
     "ui-editorIndentType-colored": "Colored indents",
     "filterSettings": "Filter settings",
     "filterPlaceHolder": "e.g. INSPIRE",
-    "filterReset": "Reset the filter"
+    "filterReset": "Reset the filter",
+    "distributedSearch": "Distributed search",
+    "distributedSearchHelp": "Enables the distributed search in remote server (if the remote server supports it). When this option is enabled, the remote catalog cascades the search to the Federated CSW servers that has configured.",
+    "hopCount": "Hop count",
+    "hopCountHelp": "Control the maximum number of message hops (default to 2) before the search is terminated in a distributed search."
 }

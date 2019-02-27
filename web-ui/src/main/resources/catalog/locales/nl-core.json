@@ -256,7 +256,7 @@
     "replaceByThoseOperations": "Vervangen door geselecteerde",
     "spatialExtent": "Ruimtelijke dekking",
     "sessionIsAboutToBeCancelled": "Uw sessie is bijna verlopen",
-    "sessionAlertMsg": "Uw laatste activiteit was om {{startedAt}} en uw sessie zal verlopen in {{willBeCancelledIn}}s (max tijd inactief is {{length}}s). Sla uw werk op, anders dreigen uw wijzigingen verloren te gaan! ",
+    "sessionAlertMsg": "Uw laatste activiteit was om {{startedAt}} en uw sessie zal verlopen in {{willBeCancelledIn}}s (max tijd inactief is {{length}}s). Sla uw werk op, anders dreigen uw wijzigingen verloren te gaan!",
     "sessionWillExpireIn": "Uw sessie zal aflopen in {{remainingTime}}s. Sla uw werk op.",
     "sessionIsProbablyCancelled": "Uw sessie is verlopen.",
     "sessionAlertDisconnectedMsg": "Uw laatste activiteit was om {{startedAt}} en uw sessie is waarschijnlijk verlopen  (max tijd inactief is {{length}}s). U dient de pagina te herladen.",
@@ -356,7 +356,7 @@
     "downloadRecord": "Record downloaden",
     "manageRecord": "Record beheren",
     "valueDefinition": "Definitie",
-    "toggleNavigation": "Toggle navigatie ",
+    "toggleNavigation": "Toggle navigatie",
     "valueCode": "Code",
     "addRecord": "Record toevoegen",
     "ImportRecord": "Records importeren",
@@ -380,7 +380,7 @@
     "dateToDate": "tot",
     "batchEditing": "In bulk wijzigen",
     "harvesters": "Harvesting",
-    "metadatasAndTemplates": "Metadata en tamplates",
+    "metadatasAndTemplates": "Metadata en templates",
     "statisticsAndStatus": "Statistieken en status",
     "reports": "Rapporten",
     "reportLink": "Weergave rapport",
@@ -434,5 +434,10 @@
     "indexingTaskRunning": "Indexeren {{total}} records...",
     "indexingTaskFinished": "Indexeren afgerond, {{total}} records verwerkt",
     "indexingTaskFinishedWithErrors": "Indexeren afgerond, {{total}} records verwerkt met {{errors}} fouten",
-    "indexingTaskCanceled": "Indexeren geannuleerd"
+    "indexingTaskCanceled": "Indexeren geannuleerd",
+    "metadataPublished": "Metadata published.",
+    "metadataPublishedError": "Error occurred while publishing metadata.",
+    "metadataUnpublished": "Metadata un-published.",
+    "metadataUnpublishedError": "Error occurred while un-publishing metadata.",
+    "categoriesUpdated": "Categories updated."
 }
