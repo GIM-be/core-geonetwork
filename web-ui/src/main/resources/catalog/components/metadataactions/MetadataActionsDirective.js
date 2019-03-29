@@ -41,8 +41,8 @@
    * a action.
    */
   module.directive('gnMetadataStatusUpdater', ['$translate', '$http',
-    'gnMetadataManager',
-    function($translate, $http, gnMetadataManager) {
+    'gnMetadataManager', 'gnAgivMetadataActions',
+    function($translate, $http, gnMetadataManager, gnAgivMetadataActions) {
 
       return {
         restrict: 'A',
@@ -113,14 +113,17 @@
                 });
           };
 
-          var statusApproved = 2;
-          var statusSubmitted = 3;
-          var statusRejected = 5;
+          // var statusApproved = 2;
+          // var statusSubmitted = 3;
+          // var statusRejected = 5;
+          // scope.cantChangeStatus = function(status) {
+          //   return ((status == statusRejected ||
+          //            status == statusApproved ||
+          //            status == statusSubmitted) &&
+          //       !user.isReviewerOrMore());
+          // };
           scope.cantChangeStatus = function(status) {
-            return ((status == statusRejected ||
-                     status == statusApproved ||
-                     status == statusSubmitted) &&
-                !user.isReviewerOrMore());
+            return status === scope.lastStatus ? true : !gnAgivMetadataActions.getStatusAllowed(status, scope.lastStatus, user);
           };
 
           init();

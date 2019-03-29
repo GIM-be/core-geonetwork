@@ -422,4 +422,181 @@
         else return crs;
       };
     }]);
+
+
+  module.service('gnAgivMetadataActions', [function () {
+
+    var nodeType = "agiv";
+    var statusValues = Object.freeze({
+      UNKNOWN:          0,  DRAFT:                1,  APPROVED:             2,
+      RETIRED:          3,  SUBMITTED:            4,  REJECTED:             5,
+      JUSTCREATED:      6,  SUBMITTED_FOR_AGIV:   7,  APPROVED_BY_AGIV:     8,
+      REJECTED_BY_AGIV: 9,  RETIRED_FOR_AGIV:     10, REMOVED_FOR_AGIV:     11,
+      REMOVED:          12, REJECTED_FOR_RETIRE:  13, REJECTED_FOR_REMOVE:  14
+    });
+
+    function getStatusAllowed(status, currentStatus, user) {
+      var isAllowed = false;
+      //No need to check if the user can edit the record as it is already done
+      if (user.isAdministratorOrMore()) {
+        isAllowed = testAdminAllowed(status, currentStatus);
+      } else if (user.isReviewerOrMore()) {
+        isAllowed = testReviewerAllowed(status, currentStatus);
+      } else if (user.isEditorOrMore()) {
+        isAllowed = testEditorAllowed(status, currentStatus);
+      }
+      return isAllowed;
+    }
+
+    function testAdminAllowed(status, currentStatus) {
+      var changeAllowed = true;
+
+      switch (status) {
+        case statusValues.UNKNOWN:  case statusValues.JUSTCREATED:
+          break;
+
+        case statusValues.DRAFT:  case statusValues.SUBMITTED:  case statusValues.REJECTED:
+          changeAllowed = false;
+          break;
+
+        case statusValues.APPROVED:
+          if ([statusValues.SUBMITTED, statusValues.REJECTED, statusValues.REJECTED_BY_AGIV, statusValues.RETIRED_FOR_AGIV,
+            statusValues.REMOVED_FOR_AGIV, statusValues.REJECTED_FOR_RETIRE, statusValues.REJECTED_FOR_REMOVE].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        case statusValues.RETIRED:
+          if (nodeType === "agiv" && ![statusValues.RETIRED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        case statusValues.SUBMITTED_FOR_AGIV:
+          if (![statusValues.DRAFT].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        case statusValues.APPROVED_BY_AGIV:
+          if (![statusValues.DRAFT, statusValues.SUBMITTED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        case statusValues.REJECTED_BY_AGIV:
+          if ([statusValues.DRAFT, statusValues.APPROVED, statusValues.RETIRED, statusValues.SUBMITTED, statusValues.REJECTED,
+            statusValues.APPROVED_BY_AGIV, statusValues.REMOVED_FOR_AGIV, statusValues.RETIRED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        case statusValues.RETIRED_FOR_AGIV:
+          if (![statusValues.APPROVED].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        case statusValues.REMOVED_FOR_AGIV:
+          if ([statusValues.SUBMITTED_FOR_AGIV, statusValues.APPROVED_BY_AGIV, statusValues.RETIRED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        case statusValues.REMOVED:
+          if (nodeType === "agiv" && ![statusValues.REMOVED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        case statusValues.REJECTED_FOR_RETIRE:
+          if (![statusValues.RETIRED_FOR_AGIV].includes(currentStatus)) {
+          changeAllowed = false;
+        }
+          break;
+
+        case statusValues.REJECTED_FOR_REMOVE:
+          if (![statusValues.REMOVED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        default:
+          break;
+      }
+
+      return changeAllowed;
+    }
+
+    function testReviewerAllowed(status, currentStatus) {
+      var changeAllowed = true;
+
+      switch (status) {
+        case statusValues.UNKNOWN:              case statusValues.DRAFT:                case statusValues.JUSTCREATED:
+        case statusValues.APPROVED_BY_AGIV:     case statusValues.RETIRED_FOR_AGIV:     case statusValues.REMOVED:
+        case statusValues.REJECTED_FOR_RETIRE:  case statusValues.REJECTED_FOR_REMOVE:  case statusValues.SUBMITTED_FOR_AGIV:
+        case statusValues.REMOVED_FOR_AGIV:
+          changeAllowed = false;
+          break;
+
+        case statusValues.APPROVED:
+          if (nodeType === "agiv") {
+            changeAllowed = false;
+          }
+          break;
+
+        case statusValues.RETIRED:
+          if (nodeType === "agiv" || ![statusValues.APPROVED].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        case statusValues.SUBMITTED:
+          if ([statusValues.APPROVED, statusValues.RETIRED].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        case statusValues.REJECTED:
+          if ([statusValues.APPROVED, statusValues.RETIRED, statusValues.REJECTED_BY_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        default:
+          break;
+      }
+
+      return changeAllowed;
+    }
+
+    function testEditorAllowed(status, currentStatus) {
+      var changeAllowed = true;
+      console.log("here");
+      switch (status) {
+        case statusValues.UNKNOWN :             case statusValues.DRAFT :               case statusValues.APPROVED :
+        case statusValues.RETIRED :             case statusValues.REJECTED :            case statusValues.JUSTCREATED :
+        case statusValues.SUBMITTED_FOR_AGIV :  case statusValues.APPROVED_BY_AGIV :    case statusValues.REJECTED_BY_AGIV :
+        case statusValues.RETIRED_FOR_AGIV :    case statusValues.REMOVED_FOR_AGIV :    case statusValues.REMOVED :
+        case statusValues.REJECTED_FOR_RETIRE : case statusValues.REJECTED_FOR_REMOVE :
+          changeAllowed = false;
+          break;
+        case statusValues.SUBMITTED:
+          if (![statusValues.DRAFT, statusValues.REJECTED, statusValues.REJECTED_BY_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+
+        default:
+          break;
+      }
+      return changeAllowed;
+    }
+
+
+    return {
+      getStatusAllowed: getStatusAllowed
+    }
+
+  }])
 })();

@@ -35,7 +35,7 @@ public class StatusActionsFactory {
     Class<StatusActions> statusRules;
 
     private String className;
-    private static final String DEFAULT_STATUS_ACTION_CLASS = "org.fao.geonet.kernel.metadata.DefaultStatusActions";
+    private static final String DEFAULT_STATUS_ACTION_CLASS = "org.fao.geonet.kernel.metadata.AgivStatusAction";
 
     /**
      * Constructor.

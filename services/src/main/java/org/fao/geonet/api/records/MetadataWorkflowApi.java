@@ -324,11 +324,22 @@ public class MetadataWorkflowApi {
         MetadataStatus metadataStatus = convertParameter(metadata.getId(), status, author);
         List<MetadataStatus> listOfStatusChange = new ArrayList<>(1);
         listOfStatusChange.add(metadataStatus);
-        sa.onStatusChange(listOfStatusChange);
+        Set<Integer> unchanged = sa.onStatusChange(listOfStatusChange);
 
         //--- reindex metadata
         DataManager dataManager = appContext.getBean(DataManager.class);
         dataManager.indexMetadata(String.valueOf(metadata.getId()), true, null);
+
+        if(unchanged.size() > 0 ) {
+            //TODO Clearer message (It empty in the view)
+            StringBuilder messageBuilder = new StringBuilder("Could not change status for records with ID(s) : \n");
+            for(Integer uc : unchanged) {
+                messageBuilder.append(" - ");
+                messageBuilder.append(uc);
+                messageBuilder.append("\n");
+            }
+            throw new SecurityException(messageBuilder.toString());
+        }
     }
 
 

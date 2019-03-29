@@ -128,6 +128,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @Override
     @Nonnull
+    @SuppressWarnings("Duplicates")
     public List<Pair<Integer, User>> findAllByGroupOwnerNameAndProfile(@Nonnull final Collection<Integer> metadataIds,
                                                                        @Nullable final Profile profile, @Nullable final Sort sort) {
         CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
@@ -147,6 +148,48 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         Predicate basePredicate = cb.and(metadataPredicate, ownerPredicate, userToGroupPredicate);
         if (profile != null) {
             Expression<Boolean> profilePredicate = cb.equal(userGroupRoot.get(UserGroup_.id).get(UserGroupId_.profile), profile);
+            query.where(cb.and(basePredicate, profilePredicate));
+        } else {
+            query.where(basePredicate);
+        }
+        if (sort != null) {
+            List<Order> orders = SortUtils.sortToJpaOrders(cb, sort, userGroupRoot, metadataRoot, userRoot);
+            query.orderBy(orders);
+        }
+        query.distinct(true);
+
+        List<Pair<Integer, User>> results = new ArrayList<Pair<Integer, User>>();
+
+        for (Tuple result : _entityManager.createQuery(query).getResultList()) {
+            Integer mdId = (Integer) result.get(0);
+            User user = (User) result.get(1);
+            results.add(Pair.read(mdId, user));
+        }
+        return results;
+    }
+
+    @Override
+    @Nonnull
+    @SuppressWarnings("Duplicates")
+    public List<Pair<Integer, User>> findAllByGroupOwnerNameAndProfiles(@Nonnull final Collection<Integer> metadataIds,
+                                                                        @Nullable Collection<Profile> profiles, @Nullable final Sort sort) {
+        CriteriaBuilder cb = _entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> query = cb.createQuery(Tuple.class);
+
+        Root<User> userRoot = query.from(User.class);
+        Root<Metadata> metadataRoot = query.from(Metadata.class);
+        Root<UserGroup> userGroupRoot = query.from(UserGroup.class);
+
+        query.multiselect(metadataRoot.get(Metadata_.id), userRoot);
+
+        Predicate metadataPredicate = metadataRoot.get(Metadata_.id).in(metadataIds);
+        Predicate ownerPredicate = cb.equal(metadataRoot.get(Metadata_.sourceInfo).get(MetadataSourceInfo_.groupOwner),
+            userGroupRoot.get(UserGroup_.id).get(UserGroupId_.groupId));
+        Predicate userToGroupPredicate = cb.equal(userGroupRoot.get(UserGroup_.id).get(UserGroupId_.userId), userRoot.get(User_.id));
+
+        Predicate basePredicate = cb.and(metadataPredicate, ownerPredicate, userToGroupPredicate);
+        if (profiles != null && !profiles.isEmpty()) {
+            Predicate profilePredicate = userGroupRoot.get(UserGroup_.id).get(UserGroupId_.profile).in(profiles);
             query.where(cb.and(basePredicate, profilePredicate));
         } else {
             query.where(basePredicate);
