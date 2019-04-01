@@ -109,7 +109,8 @@
                     title: $translate.instant('metadataStatusUpdatedErrors'),
                     error: data,
                     timeout: 0,
-                    type: 'danger'});
+                    type: 'danger',
+                    msg: data.data ? data.data.description : ""});
                 });
           };
 

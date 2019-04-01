@@ -345,7 +345,6 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
                 }
             }
         }
-        System.out.println(changeAllowed);
         return changeAllowed;
     }
 

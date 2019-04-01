@@ -572,7 +572,6 @@
 
     function testEditorAllowed(status, currentStatus) {
       var changeAllowed = true;
-      console.log("here");
       switch (status) {
         case statusValues.UNKNOWN :             case statusValues.DRAFT :               case statusValues.APPROVED :
         case statusValues.RETIRED :             case statusValues.REJECTED :            case statusValues.JUSTCREATED :
