@@ -1,6 +1,5 @@
 package org.fao.geonet.kernel.metadata;
 
-import com.itextpdf.text.Meta;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import org.fao.geonet.ApplicationContextHolder;
@@ -41,7 +40,7 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
     private IMetadataStatus metadataStatusManager;
     private Logger logger;
 
-    private static final String nodeType = "agiv";
+    private static final String nodeType = "general";
 
     @Override
     public void init(ServiceContext context) throws Exception {

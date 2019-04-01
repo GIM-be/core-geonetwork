@@ -426,7 +426,7 @@
 
   module.service('gnAgivMetadataActions', [function () {
 
-    var nodeType = "agiv";
+    var nodeType = "general";
     var statusValues = Object.freeze({
       UNKNOWN:          0,  DRAFT:                1,  APPROVED:             2,
       RETIRED:          3,  SUBMITTED:            4,  REJECTED:             5,
