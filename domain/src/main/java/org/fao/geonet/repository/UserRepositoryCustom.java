@@ -65,6 +65,20 @@ public interface UserRepositoryCustom {
     List<Pair<Integer, User>> findAllByGroupOwnerNameAndProfile(@Nonnull Collection<Integer> metadataIds,
                                                                 @Nullable Profile profile, @Nullable Sort sort);
 
+
+    /**
+     * Find all the users that are part of the ownerGroup of a particular set of metadata.
+     *
+     * @param metadataIds the metadataIds of the metadata to inspect.
+     * @param profiles     if non-null then filter the users by the given profiles.
+     * @param sort        if non-null then Sort the results by the <em>User</em> property.  The sort
+     *                    object must contain user properties only.
+     * @return all the users that are part of the ownerGroup of a particular set of metadata.
+     */
+    @Nonnull
+    List<Pair<Integer, User>> findAllByGroupOwnerNameAndProfiles(@Nonnull Collection<Integer> metadataIds,
+                                                                @Nullable Collection<Profile> profiles, @Nullable Sort sort);
+
     /**
      * Find all the users that own at least one metadata element.
      *

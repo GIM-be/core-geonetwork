@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static org.fao.geonet.kernel.metadata.DefaultStatusActions.compileMessageWithIndexFields;
+import static org.fao.geonet.kernel.metadata.AgivStatusActions.compileMessageWithIndexFields;
 import static org.fao.geonet.kernel.setting.Settings.SYSTEM_USER_LASTNOTIFICATIONDATE;
 
 /**
