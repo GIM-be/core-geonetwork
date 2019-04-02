@@ -426,7 +426,7 @@
 
   module.service('gnAgivMetadataActions', [function () {
 
-    var nodeType = "general";
+    var nodeType = "agiv";
     var statusValues = Object.freeze({
       UNKNOWN:          0,  DRAFT:                1,  APPROVED:             2,
       RETIRED:          3,  SUBMITTED:            4,  REJECTED:             5,
@@ -530,42 +530,58 @@
 
     function testReviewerAllowed(status, currentStatus) {
       var changeAllowed = true;
-
-      switch (status) {
-        case statusValues.UNKNOWN:              case statusValues.DRAFT:                case statusValues.JUSTCREATED:
-        case statusValues.APPROVED_BY_AGIV:     case statusValues.RETIRED_FOR_AGIV:     case statusValues.REMOVED:
-        case statusValues.REJECTED_FOR_RETIRE:  case statusValues.REJECTED_FOR_REMOVE:  case statusValues.SUBMITTED_FOR_AGIV:
-        case statusValues.REMOVED_FOR_AGIV:
-          changeAllowed = false;
-          break;
-
-        case statusValues.APPROVED:
-          if (nodeType === "agiv") {
+      if ([statusValues.SUBMITTED_FOR_AGIV, statusValues.APPROVED_BY_AGIV, statusValues.RETIRED_FOR_AGIV, statusValues.REMOVED_FOR_AGIV].includes(currentStatus)) {
+        changeAllowed = false;
+      } else {
+        switch (status) {
+          case statusValues.UNKNOWN:              case statusValues.DRAFT:                case statusValues.JUSTCREATED:
+          case statusValues.APPROVED_BY_AGIV:     case statusValues.REJECTED_BY_AGIV:     case statusValues.REMOVED:
+          case statusValues.REJECTED_FOR_RETIRE:  case statusValues.REJECTED_FOR_REMOVE:
             changeAllowed = false;
-          }
-          break;
+            break;
 
-        case statusValues.RETIRED:
-          if (nodeType === "agiv" || ![statusValues.APPROVED].includes(currentStatus)) {
-            changeAllowed = false;
-          }
-          break;
+          case statusValues.APPROVED:
+            if (nodeType === "agiv") {
+              changeAllowed = false;
+            }
+            break;
 
-        case statusValues.SUBMITTED:
-          if ([statusValues.APPROVED, statusValues.RETIRED].includes(currentStatus)) {
-            changeAllowed = false;
-          }
-          break;
+          case statusValues.RETIRED:
+            if (nodeType === "agiv" || ![statusValues.APPROVED].includes(currentStatus)) {
+              changeAllowed = false;
+            }
+            break;
 
-        case statusValues.REJECTED:
-          if ([statusValues.APPROVED, statusValues.RETIRED, statusValues.REJECTED_BY_AGIV].includes(currentStatus)) {
-            changeAllowed = false;
-          }
-          break;
+          case statusValues.SUBMITTED:
+          case statusValues.SUBMITTED_FOR_AGIV:
+            if ([statusValues.APPROVED, statusValues.RETIRED].includes(currentStatus)) {
+              changeAllowed = false;
+            }
+            break;
 
-        default:
-          break;
+          case statusValues.REJECTED:
+            if ([statusValues.APPROVED, statusValues.RETIRED, statusValues.REJECTED_BY_AGIV].includes(currentStatus)) {
+              changeAllowed = false;
+            }
+            break;
+            
+          case statusValues.RETIRED_FOR_AGIV:
+            if ([statusValues.RETIRED, statusValues.REMOVED_FOR_AGIV].includes(currentStatus)) {
+              changeAllowed = false;
+            }
+            break;
+            
+          case statusValues.REMOVED_FOR_AGIV:
+            if ([statusValues.RETIRED_FOR_AGIV].includes(currentStatus)) {
+              changeAllowed = false;
+            }
+            break;
+            
+          default:
+            break;
+        }
       }
+
 
       return changeAllowed;
     }

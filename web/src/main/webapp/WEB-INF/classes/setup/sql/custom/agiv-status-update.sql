@@ -9,6 +9,25 @@ INSERT INTO StatusValues (id, name, reserved, displayorder, type, notificationLe
 INSERT INTO StatusValues (id, name, reserved, displayorder, type, notificationLevel) VALUES  (13,'rejectedforretire','y', 12, 'workflow', null);
 INSERT INTO StatusValues (id, name, reserved, displayorder, type, notificationLevel) VALUES  (14,'rejectedforremove','y', 13, 'workflow', null);
 
+
+-- Change the displayed order
+
+UPDATE statusvalues SET displayorder = 1  WHERE id = 6;   -- justcreated
+UPDATE statusvalues SET displayorder = 2  WHERE id = 1;   -- draft
+UPDATE statusvalues SET displayorder = 3  WHERE id = 4;   -- submitted
+UPDATE statusvalues SET displayorder = 4  WHERE id = 7;   -- submittedforagiv
+UPDATE statusvalues SET displayorder = 5  WHERE id = 5;   -- rejected
+UPDATE statusvalues SET displayorder = 6  WHERE id = 8;   -- approvedbyagiv
+UPDATE statusvalues SET displayorder = 7  WHERE id = 9;   -- rejectedbyagiv
+UPDATE statusvalues SET displayorder = 8  WHERE id = 2;   -- approved
+UPDATE statusvalues SET displayorder = 9  WHERE id = 3;   -- retired
+UPDATE statusvalues SET displayorder = 10 WHERE id = 10;  -- retiredforagiv
+UPDATE statusvalues SET displayorder = 11 WHERE id = 13;  -- rejectedforretire
+UPDATE statusvalues SET displayorder = 12 WHERE id = 11;  -- removedforagiv
+UPDATE statusvalues SET displayorder = 13 WHERE id = 12;  -- removed
+UPDATE statusvalues SET displayorder = 14 WHERE id = 14;  -- rejectedforremove
+
+
 -- Add translation for the new status
 
 INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (7, 'dut','Intern goedgekeurd en ingediend bij Informatie Vlaanderen');
