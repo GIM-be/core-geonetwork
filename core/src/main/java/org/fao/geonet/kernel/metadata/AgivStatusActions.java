@@ -2,6 +2,7 @@ package org.fao.geonet.kernel.metadata;
 
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.Logger;
 import org.fao.geonet.constants.Geonet;
@@ -14,6 +15,7 @@ import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.*;
+import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.util.MailUtil;
 import org.springframework.context.ApplicationContext;
 
@@ -605,17 +607,33 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
         String subject = MessageFormat.format(subjectTemplate,
             statusDescription,
             replyTo,
-            replyToDescr,
-            status.getDueDate());
+            replyToDescr);
+
+
+        UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
+        List<Integer> groupIds = userGroupRepository.findGroupIds(UserGroupSpecs.hasUserId(context.getUserSession().getUserIdAsInt()));
+        List<Group> groups = context.getBean(GroupRepository.class).findAll(groupIds);
+        StringBuilder groupsDescriptionBuilder = new StringBuilder();
+        groupsDescriptionBuilder.append("<dl><dt><strong>Groups: </strong></dt>");
+        if (groups.size() > 0) {
+            groupsDescriptionBuilder.append("<dd>");
+            for (Group group: groups) {
+                groupsDescriptionBuilder.append(group.getName());
+                groupsDescriptionBuilder.append(": ");
+                groupsDescriptionBuilder.append(StringUtils.isNotBlank(group.getDescription()) ? group.getDescription() : "<em>No description</em>");
+            }
+            groupsDescriptionBuilder.append("</dd>");
+        }
+        groupsDescriptionBuilder.append("</dl>");
+
 
         String message = MessageFormat.format(messageTemplate,
             replyToDescr, // Author of the change
-            status.getChangeMessage(),
+            replyTo,
+            groupsDescriptionBuilder.toString(),
+            nodeType,
             statusDescription,
-            status.getId().getChangeDate(),
-            status.getDueDate(),
-            status.getCloseDate(),
-            owner == null ? "" : owner.getName() + " " + owner.getSurname(),
+            status.getChangeMessage(),
             siteUrl);
 
         MetadataRepository metadataRepository = ApplicationContextHolder.get().getBean(MetadataRepository.class);
@@ -645,7 +663,7 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
             SettingManager sm = applicationContext.getBean(SettingManager.class);
             List<String> to = new ArrayList<>();
             to.add(sendTo);
-            MailUtil.sendMail(to, subject, message, null, sm, replyTo, replyToDescr);
+            MailUtil.sendMail(to, subject, null, message, sm, replyTo, replyToDescr);
         }
     }
 }
