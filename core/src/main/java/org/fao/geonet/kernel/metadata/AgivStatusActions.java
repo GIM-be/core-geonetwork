@@ -42,7 +42,7 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
     private IMetadataStatus metadataStatusManager;
     private Logger logger;
 
-    private static final String nodeType = "general";
+    private static final String nodeType = "agiv";
 
     @Override
     public void init(ServiceContext context) throws Exception {
