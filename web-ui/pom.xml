@@ -208,5 +208,30 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>update-translation</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.6.0</version>
+            <groupId>org.codehaus.mojo</groupId>
+            <executions>
+              <execution>
+                <id>Update Translations</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>C:\Program Files\Git\bin\sh.exe</executable>
+                  <commandlineArgs>${basedir}\update-nl_BE-translations.sh</commandlineArgs>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 </project>
