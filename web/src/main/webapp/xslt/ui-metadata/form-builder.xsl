@@ -42,7 +42,7 @@
 
   <xsl:import href="menu-fn.xsl"/>
 
-  <xsl:import href="menu-builder.xsl"/>
+  <xsl:import href="menu-builder-aiv.xsl"/>
 
   <!--
     Render an element with a label and a value
