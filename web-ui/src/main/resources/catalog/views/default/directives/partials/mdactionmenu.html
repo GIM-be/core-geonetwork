@@ -60,13 +60,13 @@
             (!md.hasValidation() || (md.hasValidation() && md.isValid())))) ? '' : 'disabled'">
         <a data-ng-href=""
            data-ng-if="user.canEditRecord(md) &&
-                                md.isWorkflowEnabled()"
+                                md.isWorkflowEnabled() && md.getSchema()!='dcat-ap'"
            data-ng-click="mdService.openUpdateStatusPanel(getScope(), 'workflow')">
           <i class="fa fa-fw fa-code-fork"></i>&nbsp;
           <span data-translate="">updateStatus</span>
         </a>
       </li>
-      <li data-ng-if="user.canEditRecord(md) && !md.isWorkflowEnabled()">
+      <li data-ng-if="user.canEditRecord(md) && !md.isWorkflowEnabled() && md.getSchema()!='dcat-ap'">
         <a role="menuitem"
            data-ng-href=""
            data-ng-click="mdService.startWorkflow(md, getCatScope())">
