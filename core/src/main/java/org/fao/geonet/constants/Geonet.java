@@ -68,6 +68,7 @@ public final class Geonet {
     public static final String MEF = GEONETWORK + ".mef";
     public static final String CSW = GEONETWORK + ".csw";
     public static final String LDAP = GEONETWORK + ".ldap";
+    public static final String FEDIZ = GEONETWORK + ".fediz";
     public static final String RESOURCES = GEONETWORK + ".resources";
     public static final String EDITOR = GEONETWORK + ".editor";
     public static final String EDITORADDELEMENT = GEONETWORK + ".editoraddelement";

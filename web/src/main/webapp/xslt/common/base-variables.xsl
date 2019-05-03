@@ -68,6 +68,9 @@
   <xsl:variable name="shibbolethOn"
                 select="util:existsBean('shibbolethConfiguration')"/>
 
+  <xsl:variable name="fedizOn"
+                select="util:existsBean('fedizClaimsUserMapper')"/>
+
   <!-- Define which JS module to load using Closure -->
   <xsl:variable name="angularApp" select="
     if ($service = 'admin.console') then 'gn_admin'
