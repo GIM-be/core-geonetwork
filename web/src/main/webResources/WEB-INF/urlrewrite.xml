@@ -216,7 +216,7 @@
     <to type="permanent-redirect" last="true">%{context-path}/home</to>
   </rule>
   <rule>
-    <from>^/(?!signin$)(?!signout$)(?!home$)(?!monitor$)(?!\w*healthcheck$)(?!swagger-resources.*$)([a-zA-Z0-9_\-]+)$
+    <from>^/(?!fedizsignin$)(?!signin$)(?!signout$)(?!home$)(?!monitor$)(?!\w*healthcheck$)(?!swagger-resources.*$)([a-zA-Z0-9_\-]+)$
     </from>
     <to type="permanent-redirect" last="true">%{context-path}/home?node=$1</to>
   </rule>

@@ -1082,6 +1082,17 @@
         <artifactId>commons-csv</artifactId>
         <version>1.2</version>
       </dependency>
+      <dependency>
+        <groupId>org.apache.cxf.fediz</groupId>
+        <artifactId>fediz-core</artifactId>
+        <version>1.4.5</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf.fediz</groupId>
+        <artifactId>fediz-spring</artifactId>
+        <version>1.4.5</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

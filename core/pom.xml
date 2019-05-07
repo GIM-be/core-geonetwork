@@ -507,6 +507,14 @@
       <artifactId>spring-test</artifactId>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+	    <groupId>org.apache.cxf.fediz</groupId>
+	    <artifactId>fediz-core</artifactId>
+    </dependency>
+    <dependency>
+	    <groupId>org.apache.cxf.fediz</groupId>
+	    <artifactId>fediz-spring</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

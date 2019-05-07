@@ -206,6 +206,7 @@
         module.config(['gnGlobalSettings',
         function(gnGlobalSettings) {
         gnGlobalSettings.shibbolethEnabled = <xsl:value-of select="$shibbolethOn"/>;
+        gnGlobalSettings.fedizEnabled = <xsl:value-of select="$fedizOn"/>;
         }]);
       </script>
     </xsl:if>
@@ -216,6 +217,7 @@
         module.config(['gnGlobalSettings',
         function(gnGlobalSettings) {
         gnGlobalSettings.shibbolethEnabled = <xsl:value-of select="$shibbolethOn"/>;
+        gnGlobalSettings.fedizEnabled = <xsl:value-of select="$fedizOn"/>;
         }]);
       </script>
     </xsl:if>

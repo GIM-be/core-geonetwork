@@ -23,6 +23,11 @@
 
 package jeeves.server;
 
+import java.util.Hashtable;
+
+import javax.servlet.http.HttpSession;
+
+import org.fao.geonet.domain.FedizUser;
 import org.fao.geonet.domain.LDAPUser;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.User;
@@ -32,10 +37,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
-
-import javax.servlet.http.HttpSession;
-
-import java.util.Hashtable;
 
 //=============================================================================
 
@@ -217,7 +218,9 @@ public class UserSession {
                 return (User) auth.getPrincipal();
             } else if (auth.getPrincipal() instanceof LDAPUser) {
                 return ((LDAPUser) auth.getPrincipal()).getUser();
-            }
+	        } else if (auth.getPrincipal() instanceof FedizUser) {
+	            return ((FedizUser) auth.getPrincipal()).getUser();
+	        }
         }
         return null;
     }
