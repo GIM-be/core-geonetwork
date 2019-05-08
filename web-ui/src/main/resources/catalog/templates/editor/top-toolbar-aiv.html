@@ -37,29 +37,9 @@
             {{(isTemplate() ? 'saveAsMetadata' : 'saveAsTemplate') | translate}}
           </a>
         </li>
-        <li class="dropdown-header"
-            role="menuitem">
-          <label title="{{'minorEditHelp' | translate}}">
-            <input type="checkbox" data-ng-model="gnCurrentEdit.isMinor"/>
-            {{'minorEdit' | translate}}
-          </label>
-        </li>
       </ul>
     </div>
-    <div class="btn-group gn-view-menu-button">
-      <!-- An empty drown down updated when form is loaded -->
-      <button type="button"
-              class="btn btn-default navbar-btn dropdown-toggle"
-              data-toggle="dropdown"
-              aria-label="{{'selectView' | translate}}"
-              title="{{'selectView'|translate}}"
-              aria-expanded="false">
-        <i class="fa fa-eye"></i>
-		<span class="visible-lg" data-translate="">selectView</span>
-        <span class="caret"></span>
-      </button>
-    </div>
-	    <data-gn-md-validation-tools></data-gn-md-validation-tools>
+    <data-gn-md-validation-tools></data-gn-md-validation-tools>
     <!-- TODO: automatic save status -->
     <div class="btn-group">
       <button type="button"
@@ -79,6 +59,19 @@
               data-ng-mouseover="getCancelStatus()" title="{{cancelStatus}}">
         <i class="fa fa-fw fa-undo"/>
         <span class="visible-lg" data-translate="">cancel</span>
+      </button>
+    </div>
+    <div class="btn-group gn-view-menu-button">
+      <!-- An empty drown down updated when form is loaded -->
+      <button type="button"
+              class="btn btn-default navbar-btn dropdown-toggle"
+              data-toggle="dropdown"
+              aria-label="{{'selectView' | translate}}"
+              title="{{'selectView'|translate}}"
+              aria-expanded="false">
+        <i class="fa fa-eye"></i>
+		<span class="visible-lg" data-translate="">selectView</span>
+        <span class="caret"></span>
       </button>
     </div>
     <div class="btn-group">

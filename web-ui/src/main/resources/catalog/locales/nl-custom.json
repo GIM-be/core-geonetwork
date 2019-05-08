@@ -2,8 +2,10 @@
   "fileId": "Metadata-identificator (fileIdentifier):",
   "flanderskeyword": "GDI-Vlaanderen trefwoord",
   "flanderskeywords": "GDI-Vlaanderen trefwoorden",
-  "validate": "Bewaar en valideer",
+  "validate": "Valideer",
   "closeEditor": "Bewaar en sluit",
+  "saveTemplate": "Bewaar",
+  "saveMetadata": "Bewaar",
   "cancel": "Annuleer",
-  "selectView": "Voorstellingswijze"  
+  "selectView": "Voorstelling"  
 }
