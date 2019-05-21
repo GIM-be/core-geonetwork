@@ -526,16 +526,47 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
+  
   <session-config>
     <session-timeout>${sessionTimeout}</session-timeout>
     <cookie-config>
       <http-only>true</http-only>
       <secure>${cookieSecureFlag}</secure>
     </cookie-config>
- </session-config>
+  </session-config>
+
+  <welcome-file-list>
+      <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
 
   <context-param>
     <param-name>spring.profiles.active</param-name>
     <param-value>${es.spring.profile}</param-value>
   </context-param>
+  <security-role>
+    <role-name>AGIV Metadata Editor</role-name>
+    <role-name>AGIV Metadata Admin</role-name>
+    <role-name>AGIV Metadata Hoofdeditor</role-name>
+    <role-name>AIV Metadata Editor</role-name>
+    <role-name>AIV Metadata Admin</role-name>
+    <role-name>AIV Metadata Hoofdeditor</role-name>
+    <role-name>Geopunt Metadata Editor</role-name>
+    <role-name>Geopunt Metadata Admin</role-name>
+    <role-name>Geopunt Metadata Hoofdeditor</role-name>
+    <role-name>Authenticated</role-name>
+  </security-role>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Protected Area</web-resource-name>
+      <url-pattern>/fedizsignin</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>*</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>WSFED</auth-method>
+    <realm-name>WSFED</realm-name>
+  </login-config>
 </web-app>

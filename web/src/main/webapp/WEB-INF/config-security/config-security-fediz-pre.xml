@@ -42,6 +42,7 @@
 			<map />
 		</property>
 		<property name="createNonExistingFedizGroup" value="${fediz.createNonExistingFedizGroup}" />
+		<property name="profileKey" value="${fediz.profileKey}"/>
 	</bean>
 
 	<sec:authentication-manager alias="authenticationManager">
