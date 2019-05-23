@@ -37,12 +37,15 @@ import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.FedizUser;
 import org.fao.geonet.domain.Group;
+import org.fao.geonet.domain.Language;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.User;
 import org.fao.geonet.domain.UserGroup;
 import org.fao.geonet.repository.GroupRepository;
+import org.fao.geonet.repository.LanguageRepository;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
+import org.fao.geonet.repository.specification.GroupSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.utils.Log;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,14 +68,7 @@ public class FedizUtils {
         }
         User toSave = getUser(user, userName);
 
-        // Add user groups if the user has no group assigned.
-        // This means that if some privileges has been assigned
-        // to the user after the creation, those are preserved.
-
-        UserGroupRepository userGroupRepository = ApplicationContextHolder.get().getBean(UserGroupRepository.class);
-        List<UserGroup> existingGroups = userGroupRepository.findAll(UserGroupSpecs.hasUserId(user.getUser().getId()));
-
-        if (existingGroups.size() == 0 && user.getOrganisations().size() > 0) {
+        if (user.getOrganisations().size() > 0) {
             entityManager.flush();
             entityManager.clear();
             List<UserGroup> ug = getOrgansiationsAndCreateGroups(user,
@@ -121,18 +117,37 @@ public class FedizUtils {
             // Add group privileges for each groups
 
             // Retrieve group id
+        	Group group = null;
             Map<String,String> organisation = user.getOrganisations().get(organisationKey);
-            String groupName = organisation.get("organisationId");
-            Group group = groupRepo.findByName(groupName);
-
-            if (group == null && createNonExistingFedizGroup) {
-                group = new Group().setName(groupName);
-                group = group.setDescription(organisation.get("organisationDisplayname"));
-                group = groupRepo.save(group);
-
+        	String groupName = organisation.get("organisationDisplayname");
+            try {
+            	Integer groupId = Integer.parseInt(organisation.get("organisationId"));
+	            group = groupRepo.findOne(GroupSpecs.referrerEquals(groupId));
+	
+	            if (group == null && createNonExistingFedizGroup) {
+	                group = new Group().setName(groupName);
+	                group = group.setDescription(groupName);
+	                group.setReferrer(groupId);
+                    LanguageRepository langRepository = ApplicationContextHolder.get().getBean(LanguageRepository.class);
+                    java.util.List<Language> allLanguages = langRepository.findAll();
+                    for (Language l : allLanguages) {
+                        group.getLabelTranslations().put(l.getId(), groupName);
+                    }
+	                group = groupRepo.save(group);
+	
+	                if (Log.isDebugEnabled(Geonet.FEDIZ)) {
+	                    Log.debug(Geonet.FEDIZ, "  - Create FEDIZ group " + groupName
+	                        + " for user.");
+	                }
+	            }
+            } catch (NumberFormatException e) {
                 if (Log.isDebugEnabled(Geonet.FEDIZ)) {
-                    Log.debug(Geonet.FEDIZ, "  - Create FEDIZ group " + groupName
-                        + " for user.");
+                    Log.debug(
+                        Geonet.FEDIZ,
+                        "  - Can't create FEDIZ group "
+                            + groupName
+                            + " for user. "
+                            + "The id from the organisation is not an integer value.");
                 }
             }
             if (group != null) {

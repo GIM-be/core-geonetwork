@@ -63,7 +63,7 @@ public class PreAuthenticatedGrantedAuthoritiesUserDetailsFederationService
         Collection<? extends GrantedAuthority> authorities =
             ((GrantedAuthoritiesContainer) token.getDetails()).getGrantedAuthorities();
 
-        return createuserDetails(token, authorities, ((FedizPrincipal)token.getPrincipal()).getClaims());
+        return createUserDetails(token, authorities, ((FedizPrincipal)token.getPrincipal()).getClaims());
     }
 
     /**
@@ -73,9 +73,9 @@ public class PreAuthenticatedGrantedAuthoritiesUserDetailsFederationService
      * @param authorities the pre-authenticated authorities.
      * @param authorities the pre-authenticated claims.
      */
-    protected UserDetails createuserDetails(Authentication token,
+    protected UserDetails createUserDetails(Authentication token,
         Collection<? extends GrantedAuthority> authorities, ClaimCollection claims) {
         FedizClaimsUserDetailsMapper fedizClaimsUserDetailsMapper = ApplicationContextHolder.get().getBean(FedizClaimsUserDetailsMapper.class);
-        return fedizClaimsUserDetailsMapper.mapUserFromClaimsAndRoles(claims);
+        return fedizClaimsUserDetailsMapper.mapUserFromClaimsAndRoles(claims, true);
     }
 }

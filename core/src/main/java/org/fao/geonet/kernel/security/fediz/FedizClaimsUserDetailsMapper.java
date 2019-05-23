@@ -79,7 +79,7 @@ public class FedizClaimsUserDetailsMapper {
         return userInfo;
     }
     
-    public UserDetails mapUserFromClaimsAndRoles(List<Claim> claims) {
+    public UserDetails mapUserFromClaimsAndRoles(List<Claim> claims, boolean bSaveUser) {
         Map<String, String> userInfo = getUserInfo(claims);
         String organisationId = userInfo.get("organisationid");
         String organisationDisplayname = userInfo.get("organisationdisplayname");
@@ -105,14 +105,15 @@ public class FedizClaimsUserDetailsMapper {
         userDetails.setOrganisations(organisations);
         setProfile(userDetails, userInfo.get(profileKey));
         FedizUtils fedizUtils = ApplicationContextHolder.get().getBean(FedizUtils.class);
-        try {
-            fedizUtils.saveUser(userDetails,createNonExistingFedizGroup);
-        } catch (Exception e) {
-            throw new AuthenticationServiceException(
-                "Unexpected error while saving/updating FEDIZ user in database",
-                e);
-        }
-        
+    	if (bSaveUser) {
+	        try {
+	            fedizUtils.saveUser(userDetails,createNonExistingFedizGroup);
+	        } catch (Exception e) {
+	            throw new AuthenticationServiceException(
+	                "Unexpected error while saving/updating FEDIZ user in database",
+	                e);
+	        }
+    	}
         return userDetails;
     }
 

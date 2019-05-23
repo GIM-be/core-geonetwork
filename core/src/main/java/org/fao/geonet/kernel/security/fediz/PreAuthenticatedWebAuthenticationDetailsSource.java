@@ -43,7 +43,7 @@ public class PreAuthenticatedWebAuthenticationDetailsSource
         try {
             FedizPrincipal principal = (FedizPrincipal) context.getUserPrincipal();
             FedizClaimsUserDetailsMapper fedizClaimsUserDetailsMapper = ApplicationContextHolder.get().getBean(FedizClaimsUserDetailsMapper.class);
-            UserDetails user = fedizClaimsUserDetailsMapper.mapUserFromClaimsAndRoles(principal.getClaims());
+            UserDetails user = fedizClaimsUserDetailsMapper.mapUserFromClaimsAndRoles(principal.getClaims(), false);
             PreAuthenticatedGrantedAuthoritiesWebAuthenticationDetails result =
                     new PreAuthenticatedGrantedAuthoritiesWebAuthenticationDetails(context, user.getAuthorities());
 
