@@ -23,8 +23,10 @@
 package org.fao.geonet.kernel.security.fediz;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -40,6 +42,8 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
+import jeeves.component.ProfileManager;
+
 /**
  * Map Fediz user information to GeoNetworkUser information.
  *
@@ -52,9 +56,11 @@ public class FedizClaimsUserDetailsMapper {
 
     Map<String, String> mapping;
     Map<String, String> profileMapping;
+    String profileKey = "profile";
     private boolean createNonExistingFedizGroup = true;
     
-    public Map<String, String> getUserInfo(List<Claim> claims) {
+    @SuppressWarnings("unchecked")
+	public Map<String, String> getUserInfo(List<Claim> claims) {
         Map<String, String> userInfo = new HashMap<String, String>();
         for (Claim claim : claims) {
             Object claimValue = claim.getValue();
@@ -65,12 +71,15 @@ public class FedizClaimsUserDetailsMapper {
                 if (claimValue instanceof String && userAttribute!=null) {
                     userInfo.put(userAttribute, (String) claimValue);
                 }
+                if (claimValue instanceof List && userAttribute!=null && userAttribute.equals(profileKey)) {
+                    userInfo.put(userAttribute, StringUtils.collectionToDelimitedString((List<String>) claimValue,","));
+                }
             }
         }
         return userInfo;
     }
     
-    public UserDetails mapUserFromClaimsAndRoles(List<Claim> claims) {
+    public UserDetails mapUserFromClaimsAndRoles(List<Claim> claims, boolean bSaveUser) {
         Map<String, String> userInfo = getUserInfo(claims);
         String organisationId = userInfo.get("organisationid");
         String organisationDisplayname = userInfo.get("organisationdisplayname");
@@ -94,39 +103,53 @@ public class FedizClaimsUserDetailsMapper {
         Map<String,Map<String,String>> organisations =  new HashMap<String, Map<String,String>>();
         organisations.put(organisationId, organisationInfo);
         userDetails.setOrganisations(organisations);
-        setProfile(userDetails, userInfo.get("profile"));
+        setProfile(userDetails, userInfo.get(profileKey));
         FedizUtils fedizUtils = ApplicationContextHolder.get().getBean(FedizUtils.class);
-        try {
-            fedizUtils.saveUser(userDetails,createNonExistingFedizGroup);
-        } catch (Exception e) {
-            throw new AuthenticationServiceException(
-                "Unexpected error while saving/updating FEDIZ user in database",
-                e);
-        }
-        
+    	if (bSaveUser) {
+	        try {
+	            fedizUtils.saveUser(userDetails,createNonExistingFedizGroup);
+	        } catch (Exception e) {
+	            throw new AuthenticationServiceException(
+	                "Unexpected error while saving/updating FEDIZ user in database",
+	                e);
+	        }
+    	}
         return userDetails;
     }
 
     protected void setProfile(@Nonnull FedizUser userDetails,
-                              @Nonnull String profileName) {
-        String mappedProfileName = getProfileMappingValue(profileName);
-        if (mappedProfileName != null) {
-            if (Log.isDebugEnabled(Geonet.FEDIZ)) {
-                Log.debug(Geonet.FEDIZ, "  Assigning profile " + mappedProfileName);
-            }
-            try {
-                Profile profile = Profile.valueOf(mappedProfileName);
-                if (profile != null) {
-                    userDetails.getUser().setProfile(profile);
-                } else {
-                    Log.error(Geonet.FEDIZ, "  Profile " + mappedProfileName
-                        + " does not exist.");
-                }
-            } catch (Exception e) {
-                Log.warning(Geonet.FEDIZ, "  Profile " + profileName
-                    + " could not be mapped to a valid profile (default profile will be used). " + e.getMessage());
-            }
-        }
+                              @Nonnull String profileNames) {
+        Set<Profile> profileList = new HashSet<Profile>();
+    	for (String profileName : profileNames.split(",")) {
+	        String mappedProfileName = getProfileMappingValue(profileName);
+	        if (mappedProfileName != null) {
+	            if (Log.isDebugEnabled(Geonet.FEDIZ)) {
+	                Log.debug(Geonet.FEDIZ, "  Assigning profile " + mappedProfileName);
+	            }
+	            try {
+	                Profile profile = Profile.valueOf(mappedProfileName);
+	                if (profile != null) {
+	                	profileList.add(profile);
+	                } else {
+	                    Log.error(Geonet.FEDIZ, "  Profile " + mappedProfileName
+	                        + " does not exist.");
+	                }
+	            } catch (Exception e) {
+	                Log.warning(Geonet.FEDIZ, "  Profile " + profileName
+	                    + " could not be mapped to a valid profile (default profile will be used). " + e.getMessage());
+	            }
+	        }
+    	}
+    	if (profileList.size()>0) {
+	        Profile highestUserProfile = ProfileManager.getHighestProfile(profileList.toArray(new Profile[profileList.size()]));
+	        if (highestUserProfile != null) {
+	            if (Log.isDebugEnabled(Geonet.FEDIZ)) {
+	                Log.debug(Geonet.FEDIZ, "  Highest user profile is "
+	                    + highestUserProfile);
+	            }
+	            userDetails.getUser().setProfile(highestUserProfile);
+	        }
+    	}        
     }
 
     public String getMappingValue(String key) {
@@ -157,6 +180,14 @@ public class FedizClaimsUserDetailsMapper {
 
     public void setProfileMapping(Map<String, String> profileMapping) {
         this.profileMapping = profileMapping;
+    }
+
+    public void setProfileKey(String profileKey) {
+        this.profileKey = profileKey;
+    }
+
+    public String getProfileKey() {
+        return profileKey;
     }
 
     public boolean isCreateNonExistingFedizGroup() {

@@ -29,6 +29,8 @@ docs/*/users/build
 docs/schema-loc-*.rst
 web/src/main/webapp/WEB-INF/server.prop
 *.iml
+.project
+web/src/main/webapp/META-INF/context.xml
 .*/
 */.*
 eclipse/

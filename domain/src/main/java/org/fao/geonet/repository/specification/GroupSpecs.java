@@ -69,6 +69,16 @@ public final class GroupSpecs {
         };
     }
 
+    public static Specification<Group> referrerEquals(final Integer referrer) {
+        return new Specification<Group>() {
+            @Override
+            public Predicate toPredicate(Root<Group> root,
+                                         CriteriaQuery<?> query, CriteriaBuilder cb) {
+                return cb.equal(root.get(Group_.referrer), referrer);
+            }
+        };
+    }
+
     private static Predicate getIsReserved(Root<Group> root,
                                            CriteriaBuilder cb) {
         int maxId = Integer.MIN_VALUE;
