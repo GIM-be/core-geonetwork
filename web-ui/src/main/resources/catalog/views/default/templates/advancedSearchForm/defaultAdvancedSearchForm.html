@@ -4,13 +4,13 @@
       <h3 data-translate="">what</h3>
       <div class="form-group">
         <div class="col-sm-12">
-          <label for="categoriesF"
-                class="control-label"
-                data-translate="">categories</label>
-          <input type="text" id="categoriesF" value=""
+          <label for="fileIdF"
+                 class="control-label"
+                 data-translate="">flanderskeywords</label>
+          <input type="text" id="flanderskeywordF" value=""
                  class="form-control"
-                 gn-typeahead="categoriesOptions"
-                 gn-values="searchObj.params._cat"/>
+                 gn-values="searchObj.params.flanderskeyword"
+                 gn-typeahead="flanderskeywordOptions"/>
         </div>
       </div>
       <div class="form-group">
@@ -48,13 +48,13 @@
       </div>
       <div class="form-group">
         <div class="col-sm-12">
-          <label for="fileIdF"
+          <label for="categoriesF"
                  class="control-label"
-                 data-translate="">flanderskeywords</label>
-          <input type="text" id="flanderskeywordF" value=""
+                 data-translate="">categories</label>
+          <input type="text" id="categoriesF" value=""
                  class="form-control"
-                 gn-values="searchObj.params.flanderskeyword"
-                 gn-typeahead="flanderskeywordOptions"/>
+                 gn-typeahead="categoriesOptions"
+                 gn-values="searchObj.params._cat"/>
         </div>
       </div>
     </div>
