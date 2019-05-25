@@ -52,7 +52,7 @@ public class StatusActionsFactory {
             Log.error(Geonet.DATA_MANAGER, String.format(
                 "Class name '%s' is not found. You MUST use a valid class name loaded in the classpath. " +
                     "The default status action class is used (ie. %s)",
-                this.className
+                this.className,DEFAULT_STATUS_ACTION_CLASS	
             ));
             try {
                 this.statusRules = (Class<StatusActions>) Class.forName(DEFAULT_STATUS_ACTION_CLASS);
