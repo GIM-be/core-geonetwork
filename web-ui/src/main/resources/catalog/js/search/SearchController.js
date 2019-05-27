@@ -88,6 +88,7 @@
 
       $scope.keywordsOptions = {
         mode: 'remote',
+        doRefresh: false,
         remote: {
           url: suggestService.getUrl('QUERY', 'keyword', 'STARTSWITHFIRST'),
           filter: suggestService.bhFilter,
@@ -97,6 +98,7 @@
 
       $scope.orgNameOptions = {
         mode: 'remote',
+        doRefresh: false,
         remote: {
           url: suggestService.getUrl('QUERY', 'orgName', 'STARTSWITHFIRST'),
           filter: suggestService.bhFilter,
@@ -106,6 +108,7 @@
 
       $scope.categoriesOptions = {
         mode: 'prefetch',
+        doRefresh: false,
         promise: (function() {
           var defer = $q.defer();
           $http.get('../api/tags', {cache: true}).
@@ -125,6 +128,7 @@
 
       $scope.sourcesOptions = {
         mode: 'prefetch',
+        doRefresh: false,
         promise: (function() {
           var defer = $q.defer();
           $http.get('../api/sources', {cache: true}).
@@ -144,6 +148,7 @@
 
       $scope.fileIdOptions = {
         mode: 'remote',
+        doRefresh: false,
         remote: {
           url: suggestService.getUrl('QUERY', 'fileId', 'STARTSWITHFIRST'),
           filter: suggestService.bhFilter,
@@ -152,12 +157,23 @@
       };
 
       $scope.flanderskeywordOptions = {
-        mode: 'remote',
-        remote: {
-          url: suggestService.getUrl('QUERY', 'flanderskeyword', 'STARTSWITHFIRST'),
-          filter: suggestService.bhFilter,
-          wildcard: 'QUERY'
-        }
+        mode: 'prefetch',
+        doRefresh: false,
+        promise: (function () {
+          var defer = $q.defer();
+          $http.get('../api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.theme.GDI-Vlaanderen-trefwoorden&pLang=dut', {cache: true})
+            .success(function (data) {
+              var res = [];
+              for (var i = 0; i < data.length; i++) {
+                res.push({
+                  id: data[i].value,
+                  name: data[i].value
+                });
+              }
+              defer.resolve(res);
+            });
+          return defer.promise;
+        })()
       };
 
       /**
