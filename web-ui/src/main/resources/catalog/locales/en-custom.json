@@ -1,5 +1,7 @@
 {
   "fileId": "File identifier",
   "flanderskeyword": "GDI-Vlaanderen keyword",
-  "flanderskeywords": "GDI-Vlaanderen keywords"
+  "flanderskeywords": "GDI-Vlaanderen keywords",
+  "groupReferrer": "Id of the linked organisation",
+  "groupReferrerHelp": "Id as defined by the organisationid federation claim"
 }
