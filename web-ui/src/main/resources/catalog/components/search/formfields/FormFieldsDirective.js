@@ -190,7 +190,11 @@
                 }
 
                 // Refresh remaining tags
-                $(element).tagsinput('refresh');
+                // This will also have for effect to html encode the content of all tags
+                // To avoid using the refresh function, add "doRefresh: false" property in the field definition.
+                if (!angular.isDefined(scope.options.doRefresh) || scope.options.doRefresh) {
+                  $(element).tagsinput('refresh');
+                }
 
                 // Add new items in model as tags
                 for (i = 0; i < added.length; i++) {
