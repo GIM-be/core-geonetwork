@@ -152,12 +152,22 @@
       };
 
       $scope.flanderskeywordOptions = {
-        mode: 'remote',
-        remote: {
-          url: suggestService.getUrl('QUERY', 'flanderskeyword', 'STARTSWITHFIRST'),
-          filter: suggestService.bhFilter,
-          wildcard: 'QUERY'
-        }
+        mode: 'prefetch',
+        promise: (function () {
+          var defer = $q.defer();
+          $http.get('../api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.theme.GDI-Vlaanderen-trefwoorden&pLang=dut', {cache: true})
+            .success(function (data) {
+              var res = [];
+              for (var i = 0; i < data.length; i++) {
+                res.push({
+                  id: data[i].value,
+                  name: data[i].value
+                });
+              }
+              defer.resolve(res);
+            });
+          return defer.promise;
+        })()
       };
 
       /**
