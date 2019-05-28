@@ -120,12 +120,27 @@ public class FedizUtils {
         	Group group = null;
             Map<String,String> organisation = user.getOrganisations().get(organisationKey);
         	String groupName = organisation.get("organisationDisplayname");
-            try {
+
+        	try {
             	Integer groupId = Integer.parseInt(organisation.get("organisationId"));
 	            group = groupRepo.findOne(GroupSpecs.referrerEquals(groupId));
 	
-	            if (group == null && createNonExistingFedizGroup) {
-	                group = new Group().setName(groupName);
+	            if (group != null) {
+	                if (Log.isDebugEnabled(Geonet.FEDIZ)) {
+	                    Log.debug(Geonet.FEDIZ,
+	                        "  - Update FEDIZ group with referrer " + groupId + ".");
+	                }
+	                group.setName(groupName);
+	            } else {
+		            if (createNonExistingFedizGroup) {
+		                if (Log.isDebugEnabled(Geonet.FEDIZ)) {
+		                    Log.debug(Geonet.FEDIZ,
+		                        "  - Saving new FEDIZ group " + groupName + " for user.");
+		                }
+		                group = new Group().setName(groupName);
+		            }
+	            }
+	            if (group!=null) {
 	                group = group.setDescription(groupName);
 	                group.setReferrer(groupId);
                     LanguageRepository langRepository = ApplicationContextHolder.get().getBean(LanguageRepository.class);
@@ -134,12 +149,7 @@ public class FedizUtils {
                         group.getLabelTranslations().put(l.getId(), groupName);
                     }
 	                group = groupRepo.save(group);
-	
-	                if (Log.isDebugEnabled(Geonet.FEDIZ)) {
-	                    Log.debug(Geonet.FEDIZ, "  - Create FEDIZ group " + groupName
-	                        + " for user.");
-	                }
-	            }
+	            }	            	
             } catch (NumberFormatException e) {
                 if (Log.isDebugEnabled(Geonet.FEDIZ)) {
                     Log.debug(
