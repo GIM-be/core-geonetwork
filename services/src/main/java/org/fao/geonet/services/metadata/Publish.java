@@ -40,10 +40,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.fao.geonet.ApplicationContextHolder;
-import org.fao.geonet.domain.AbstractMetadata;
-import org.fao.geonet.domain.OperationAllowed;
-import org.fao.geonet.domain.ReservedGroup;
-import org.fao.geonet.domain.ReservedOperation;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.exceptions.ServiceNotAllowedEx;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.SelectionManager;
@@ -167,14 +164,12 @@ public class Publish {
 
             List<OperationAllowed> operationAllowed = operationAllowedRepository.findAll(allOpsSpec);
             if (publish) {
-
-                if (!allowPublishInvalidMd) {
+                AbstractMetadata metadata = metadataRepository.findOne(mdId);
+                if (!allowPublishInvalidMd && metadata.getDataInfo().getType() != MetadataType.TEMPLATE) {
                     boolean hasValidation =
                             (metadataValidationRepository.count(MetadataValidationSpecs.hasMetadataId(mdId)) > 0);
 
                     if (!hasValidation) {
-                        AbstractMetadata metadata = metadataRepository.findOne(mdId);
-
                         validator.doValidate(metadata, serviceContext.getLanguage());
                         dataManager.indexMetadata(nextId, true, null);
                     }

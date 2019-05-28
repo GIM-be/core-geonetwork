@@ -32,10 +32,7 @@ import org.fao.geonet.GeonetContext;
 import org.fao.geonet.Util;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
-import org.fao.geonet.domain.AbstractMetadata;
-import org.fao.geonet.domain.Profile;
-import org.fao.geonet.domain.ReservedGroup;
-import org.fao.geonet.domain.ReservedOperation;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.exceptions.MetadataNotFoundEx;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
@@ -93,6 +90,7 @@ public class UpdateAdminOper extends NotInReadOnlyModeService {
         String id = Utils.getIdentifierFromParameters(params, context);
         boolean update = Util.getParam(params, Params.UPDATEONLY, "false").equals("true");
 		SettingManager sm = context.getBean(SettingManager.class);
+        IMetadataUtils metadataRepository = context.getBean(IMetadataUtils.class);
 
 		boolean allowPublishInvalidMd = sm.getValueAsBool("metadata/workflow/allowPublishInvalidMd");
 
@@ -144,9 +142,10 @@ public class UpdateAdminOper extends NotInReadOnlyModeService {
                     continue;
                 }
 
+                AbstractMetadata metadata = metadataRepository.findOne(Integer.parseInt(id));
 				if (!update) {
 					// For privileges to ALL group, check if it's allowed or not to publish invalid metadata
-					if (groupId.equals(ReservedGroup.all.getId() + "") && (!allowPublishInvalidMd)) {
+					if (groupId.equals(ReservedGroup.all.getId() + "") && (!allowPublishInvalidMd && metadata.getDataInfo().getType() != MetadataType.TEMPLATE)) {
 						if (!canPublishToAllGroup(context, dm, Integer.parseInt(id))) {
 							continue;
 						}
@@ -158,7 +157,7 @@ public class UpdateAdminOper extends NotInReadOnlyModeService {
 					if (publish) {
 
 						// For privileges to ALL group, check if it's allowed or not to publish invalid metadata
-						if (groupId.equals(ReservedGroup.all.getId() + "") && (!allowPublishInvalidMd)) {
+						if (groupId.equals(ReservedGroup.all.getId() + "") && (!allowPublishInvalidMd && metadata.getDataInfo().getType() != MetadataType.TEMPLATE)) {
 							if (!canPublishToAllGroup(context, dm, Integer.parseInt(id))) {
 								continue;
 							}

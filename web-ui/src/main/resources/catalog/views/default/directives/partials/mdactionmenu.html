@@ -29,13 +29,21 @@
         </a></li>
       <li role="menuitem"
           data-ng-if="user.canEditRecord(md) && user.isReviewerOrMore()"
-          data-ng-class="
-            (md.isPublished() || (allowPublishInvalidMd() === true) ||
-            (!md.isPublished() && (allowPublishInvalidMd() === false) &&
-            (!md.hasValidation() || (md.hasValidation() && md.isValid())))) ? '' : 'disabled'"
+          data-ng-class="(
+            md.isPublished() ||
+            allowPublishInvalidMd() === true ||
+            md.isTemplate === 'y' ||
+            (
+              !md.isPublished() &&
+              (allowPublishInvalidMd() === false) &&
+              (!md.hasValidation() || (md.hasValidation() && md.isValid()))
+            )
+            ) ? '' : 'disabled'"
+
+
           title="{{(!md.isPublished() ? (md.isValid() ? 'mdvalid' :
             (!md.hasValidation() ? 'mdnovalidation':
-            (allowPublishInvalidMd() === false ? 'mdinvalidcantpublish' : 'mdinvalid'))) : '') | translate }}">
+            (allowPublishInvalidMd() === false && md.isTemplate !== 'y'? 'mdinvalidcantpublish' : 'mdinvalid'))) : '') | translate }}">
         <a data-ng-click="mdService.publish(md, undefined, undefined, getCatScope())">
           <i class="fa fa-fw"
              data-ng-class="md.isPublished() ? 'fa-lock' : 'fa-unlock'"></i>&nbsp;
