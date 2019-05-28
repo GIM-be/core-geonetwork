@@ -7,7 +7,7 @@
   "saveTemplate": "Bewaar",
   "saveMetadata": "Bewaar",
   "cancel": "Annuleer",
-  "selectView": "Voorstelling",
+  "selectView": "Weergave",
   "groupReferrer": "Id van gelinkte organisatie",
   "groupReferrerHelp": "Id zoals opgenomen in federation claim organisationid"
 }
