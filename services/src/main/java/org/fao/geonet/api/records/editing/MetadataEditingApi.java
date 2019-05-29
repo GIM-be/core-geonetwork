@@ -336,7 +336,7 @@ public class MetadataEditingApi {
 
             // Unpublish the metadata automatically if the setting automaticUnpublishInvalidMd is enabled and
             // the metadata becomes invalid
-            if (automaticUnpublishInvalidMd) {
+            if (automaticUnpublishInvalidMd && !isTemplate.equals("y")) {
                 final OperationAllowedRepository operationAllowedRepo = context.getBean(OperationAllowedRepository.class);
 
                 boolean isPublic = (operationAllowedRepo.count(where(hasMetadataId(id)).and(hasOperation(ReservedOperation

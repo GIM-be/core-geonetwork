@@ -53,16 +53,7 @@ import org.fao.geonet.api.records.model.GroupPrivilege;
 import org.fao.geonet.api.records.model.SharingParameter;
 import org.fao.geonet.api.records.model.SharingResponse;
 import org.fao.geonet.api.tools.i18n.LanguageUtils;
-import org.fao.geonet.domain.Group;
-import org.fao.geonet.domain.AbstractMetadata;
-import org.fao.geonet.domain.Operation;
-import org.fao.geonet.domain.OperationAllowed;
-import org.fao.geonet.domain.OperationAllowedId;
-import org.fao.geonet.domain.Profile;
-import org.fao.geonet.domain.ReservedGroup;
-import org.fao.geonet.domain.ReservedOperation;
-import org.fao.geonet.domain.User;
-import org.fao.geonet.domain.UserGroup;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.domain.utils.ObjectJSONUtils;
 import org.fao.geonet.events.history.RecordGroupOwnerChangeEvent;
 import org.fao.geonet.events.history.RecordOwnerChangeEvent;
@@ -338,11 +329,11 @@ public class MetadataSharingApi {
 
                     if (o.getValue()) {
                         // For privileges to ALL group, check if it's allowed or not to publish invalid metadata
-                        if ((p.getGroup() == ReservedGroup.all.getId()) && (!allowPublishInvalidMd)) {
+                        if ((p.getGroup() == ReservedGroup.all.getId()) && (!allowPublishInvalidMd && metadata.getDataInfo().getType() != MetadataType.TEMPLATE)) {
                             //Unsure that a validation report is present in the database
                             boolean canPublish = canPublishToAllGroup(context, dm, metadata, agivValidation);
                             agivValidation = false;
-                            if (!allowPublishInvalidMd && !canPublish) {
+                            if (!canPublish) {
                                 continue;
                             }
                         }

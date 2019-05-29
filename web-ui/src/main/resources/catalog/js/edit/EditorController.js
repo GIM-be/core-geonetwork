@@ -585,7 +585,8 @@
       $scope.close = function() {
         // if auto unpublish is not set in the settings, or if MD is not
         // published: close w/o confirmation
-        if (!$scope.gnCurrentEdit.metadata.isPublished() ||
+        if ($scope.isTemplate() ||
+            !$scope.gnCurrentEdit.metadata.isPublished() ||
             !gnConfig['metadata.workflow.automaticUnpublishInvalidMd']) {
           $scope.confirmClose();
           return;
