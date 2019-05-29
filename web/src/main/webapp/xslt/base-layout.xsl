@@ -85,6 +85,9 @@
             </xsl:if>
             <!-- AngularJS application -->
             <xsl:if test="$angularApp != 'gn_search' and $angularApp != 'gn_viewer' and $angularApp != 'gn_formatter_viewer'">
+              <div class="aiv"
+                   data-ng-include="'../../catalog/views/default/templates/aiv-header.html'">
+              </div>
               <div class="navbar navbar-default gn-top-bar"
                    role="navigation"
                    data-ng-hide="layout.hideTopToolBar"
