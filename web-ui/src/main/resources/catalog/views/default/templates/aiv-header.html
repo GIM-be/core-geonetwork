@@ -1,0 +1,51 @@
+<script>
+  function toggleDropdown() {
+    document.getElementById("aiv-contact-dropdown").classList.toggle("show");
+  }
+
+  window.onclick = function (event) {
+    if (!event.target.matches('.aiv-dropdown-content') &&
+      !event.target.matches('.contact-redirect') &&
+      !event.target.matches('.contact-label')) {
+      var dropdown = document.getElementsByClassName("aiv-dropdown-content")[0];
+      if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+      }
+    }
+  };
+</script>
+<div class="aiv-header">
+  <div class="header-wrapper">
+    <div class="brand-wrapper">
+      <a class="brand-redirect" href="https://overheid.vlaanderen.be/informatie-vlaanderen">
+        <div class="logo-wrapper">
+          <img class="aiv-logo" ng-src="../../images/logos/aiv-logo.png" alt="AIV-logo" width="17" height="27"/>
+        </div>
+        <span>Vlaanderen</span>
+      </a>
+      <a class="node-redirect" href="https://metadata.vlaanderen.be/">https://metadata.vlaanderen.be/</a>
+    </div>
+    <div class="contact-wrapper">
+      <a class="contact-redirect" onclick="toggleDropdown()">
+        <span class="contact-label">Contacteer ons<i class="fa fa-question-circle"></i></span>
+      </a>
+      <div id="aiv-contact-dropdown" class="aiv-dropdown-content">
+        <div class="contact-menu-header aiv-dropdown-content">
+          <span class="menu-item-title aiv-dropdown-content">Contacteer ons</span>
+        </div>
+        <ul class="menu-items aiv-dropdown-content" style="max-height: 1147px;">
+          <li class="menu-item aiv-dropdown-content">
+            <div class="menu-item-wrapper item-icon-call aiv-dropdown-content" tabindex="0">
+              <span class="menu-item-title aiv-dropdown-content">Telefoneer ons</span>
+              <div class="menu-item-description aiv-dropdown-content">09 276 15 00</div></div>
+          </li>
+          <li class="menu-item aiv-dropdown-content">
+            <a class="menu-item-wrapper item-icon-mail menu-item-mail aiv-dropdown-content" href="mailto:informatie.vlaanderen@vlaanderen.be" target="_self">
+              <span class="menu-item-title aiv-dropdown-content">Mail ons</span>
+              <div class="menu-item-description aiv-dropdown-content">informatie.vlaanderen@vlaanderen.be</div></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

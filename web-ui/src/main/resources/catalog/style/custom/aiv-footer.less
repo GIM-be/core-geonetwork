@@ -1,0 +1,60 @@
+@import "./fonts.less";
+@import "./mixin.less";
+
+.aiv-footer {
+  height: 100px;
+  background-color: #fff;
+  bottom: 0;
+  border-top: 1px solid #cbd2da;
+  width: 100%;
+  position: relative;
+  .footer-wrapper {
+    position: relative;
+    .brand-wrapper {
+      float: left;
+      padding: 20px;
+      .logo-wrapper {
+        display: inline-block;
+        float: left;
+        position: relative;
+        &::after {
+          .aiv-slash(40px, -5px, 75px);
+        }
+      }
+      .logo-text {
+        display: inline-block;
+        padding-left: 30px;
+        padding-top: 5px;
+        div {
+          display: block;
+        }
+        .logo-text-grp {
+          font-weight: 500;
+          font-size: 20px;
+          color: #333332;
+        }
+        .logo-text-quote {
+          font-size: 14px;
+          color: #3b3b3c;
+        }
+      }
+      @media screen and (max-width: 900px) {
+        float: none;
+        margin: auto;
+        width: 218px;
+      }
+    }
+    .managed-wrapper {
+      font-size: 16px;
+      padding: 42px 0 42px 0;
+      width: 50%;
+      margin: auto;
+      text-align: center;
+      @media screen and (max-width: 1310px) {
+        padding: 30px 0 30px 0;
+      }
+      .managed-text {
+      }
+    }
+  }
+}
