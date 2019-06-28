@@ -552,8 +552,7 @@
                 closeEditor();
               }, function(reason) {
                 $rootScope.$broadcast('StatusUpdated', {
-                  title: $translate.instant(reason.data.error.message),
-                  timeout: 0,
+                  msg: reason.data.description,
                   type: 'danger'
                 });
               });
