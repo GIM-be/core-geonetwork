@@ -36,6 +36,7 @@
     <property name="securityMetadataSource">
       <sec:filter-security-metadata-source use-expressions="true" request-matcher="regex">
         <sec:intercept-url pattern="/metadata/.*" access="permitAll"/>
+        <sec:intercept-url pattern="/.well-known/pki-validation/.*" access="permitAll"/>
 
         <!-- Secure proxy URL if needed eg. restrict to some host only. -->
         <sec:intercept-url pattern="/proxy\?url=.*" access="permitAll"/>
