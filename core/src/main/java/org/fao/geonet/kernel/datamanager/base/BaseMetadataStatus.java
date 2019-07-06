@@ -26,6 +26,7 @@ package org.fao.geonet.kernel.datamanager.base;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -88,6 +89,38 @@ public class BaseMetadataStatus implements IMetadataStatus {
         } else {
             return status.get(0);
         }
+    }
+
+    /**
+     * Return previous workflow status for the metadata id
+     */
+    @Override
+    public MetadataStatus getPreviousStatus(int metadataId) throws Exception {
+        String sortField = SortUtils.createPath(MetadataStatus_.id, MetadataStatusId_.changeDate);
+        List<MetadataStatus> metadataStatusList = metadataStatusRepository.findAllByIdAndByType(
+            metadataId, StatusValueType.workflow, new Sort(Sort.Direction.DESC, sortField));
+        if (metadataStatusList.isEmpty() || metadataStatusList.size()==1) {
+            return null;
+        } else {
+            return metadataStatusList.get(1);
+        }
+    }
+
+    /**
+     * Return previous published workflow status for the metadata id
+     */
+    @Override
+    public MetadataStatus getPreviousPublishedStatus(int metadataId) throws Exception {
+        String sortField = SortUtils.createPath(MetadataStatus_.id, MetadataStatusId_.changeDate);
+        List<MetadataStatus> metadataStatusList = metadataStatusRepository.findAllByIdAndByType(
+            metadataId, StatusValueType.workflow, new Sort(Sort.Direction.DESC, sortField));
+        for(Iterator i = metadataStatusList.iterator(); i.hasNext();) {
+        	MetadataStatus metadataStatus = (MetadataStatus)i.next();
+            if (metadataStatus.getId().equals(StatusValue.Status.APPROVED) || metadataStatus.getId().equals(StatusValue.Status.RETIRED)) {
+            	return metadataStatus;
+            }
+        }
+        return null;
     }
 
     /**

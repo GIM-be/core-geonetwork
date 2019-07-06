@@ -113,6 +113,7 @@ public final class Geonet {
         public static final String UPDATE_FIXED_INFO_SUBTEMPLATE = "update-fixed-info-subtemplate.xsl";
         public static final String UPDATE_CHILD_FROM_PARENT_INFO = "update-child-from-parent-info.xsl";
         public static final String EXTRACT_UUID = "extract-uuid.xsl";
+        public static final String EXTRACT_TITLE = "extract-title.xsl";
         public static final String EXTRACT_DEFAULT_LANGUAGE = "extract-default-language.xsl";
         public static final String EXTRACT_SKOS_FROM_ISO19135 = "xml_iso19135ToSKOS.xsl";
         public static final String EXTRACT_DATE_MODIFIED = "extract-date-modified.xsl";
@@ -131,6 +132,7 @@ public final class Geonet {
         public static final String SORT_HARVESTERS = "sort-harvesters.xsl";
         public static final String JZKITAPPLICATIONCONTEXT = "JZkitApplicationContext.xml";
         public static final String INFLATE_METADATA = "inflate-metadata.xsl";
+        public static final String STATUS_CHANGE_EMAIL= "status-change-email.xsl";
 
         /**
          * Stylesheet to convert a CQL parameter to a filter.

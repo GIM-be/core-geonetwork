@@ -116,6 +116,11 @@ public interface IMetadataUtils {
      */
     String extractUUID(String schema, Element md) throws Exception;
 
+    /**
+     * Extract title from the metadata record using the schema XSL for title extraction)
+     */
+    String extractTitle(String schema, Element md) throws Exception;
+
 
     String extractDefaultLanguage(String schema, Element md) throws Exception;
 

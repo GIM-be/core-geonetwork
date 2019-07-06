@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -211,6 +212,19 @@ public class MetadataWorkflowApi {
         MetadataStatus recordStatus = metadataStatus.getStatus(metadata.getId());
 
         List<StatusValue> elStatus = statusValueRepository.findAllByType(StatusValueType.workflow);
+        //--- use StatusActionsFactory and StatusActions class to
+        //--- change status and carry out behaviours for status changes
+        StatusActions sa = statusActionFactory.createStatusActions(context);
+        IMetadataStatus metadataStatusManager = context.getBean(IMetadataStatus.class);
+        String currentStatusId = metadataStatusManager.getCurrentStatus(metadata.getId());
+        Iterator<StatusValue> statusValueIterator = elStatus.iterator();
+        while (statusValueIterator.hasNext()) {
+        	StatusValue statusValue = statusValueIterator.next();
+            String statusId = String.valueOf(statusValue.getId());
+        	if (!currentStatusId.equals(statusId) && !sa.statusChangeAllowedByUser(currentStatusId, statusId, metadata)) {
+        		statusValueIterator.remove();
+        	}
+        }
 
         // --- get the list of content reviewers for this metadata record
         Set<Integer> ids = new HashSet<Integer>();

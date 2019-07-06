@@ -281,6 +281,24 @@ public class BaseMetadataUtils implements IMetadataUtils {
     }
 
     /**
+     * Extract title from the metadata record using the schema XSL for title
+     * extraction)
+     */
+    @Override
+	public String extractTitle(String schema, Element md) throws Exception {
+        Path styleSheet = metadataSchemaUtils.getSchemaDir(schema).resolve(Geonet.File.EXTRACT_TITLE);
+        String title = Xml.transform(md, styleSheet).getText().trim();
+
+        if (Log.isDebugEnabled(Geonet.DATA_MANAGER))
+            Log.debug(Geonet.DATA_MANAGER, "Extracted title '" + title + "' for schema '" + schema + "'");
+
+        // --- needed to detach md from the document
+        md.detach();
+
+        return title;
+	}
+
+	/**
      * Extract metadata default language from the metadata record using the schema XSL for default language extraction)
      */
     @Override

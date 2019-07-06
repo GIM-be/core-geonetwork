@@ -35,6 +35,7 @@ import javax.annotation.Nullable;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Custom (Non spring-data) Query methods for {@link User} entities.
@@ -65,6 +66,24 @@ public interface UserRepositoryCustom {
     List<Pair<Integer, User>> findAllByGroupOwnerNameAndProfile(@Nonnull Collection<Integer> metadataIds,
                                                                 @Nullable Profile profile, @Nullable Sort sort);
 
+    /**
+     * Find all the metadata and users that are part of the ownerGroup of a particular set of metadata.
+     *
+     * @param metadataUUIDs the metadata uuids of the metadata to inspect.
+     * @param profile the profile of the user to be informed.
+     * @return all the metadata and administrators
+     */
+    @Nonnull
+    public List<Object[]> getContentUsers(Set<String> metadataUUIDs, int profileOrdinal) throws Exception;
+
+    /**
+     * Find all the metadata and administrators of a particular set of metadata.
+     *
+     * @param metadataUUIDs the metadata uuids of the metadata to inspect.
+     * @return all the metadata and administrators
+     */
+    @Nonnull
+    public List<Object[]> getContentAdmins(Set<String> metadataUUIDs) throws Exception;
 
     /**
      * Find all the users that are part of the ownerGroup of a particular set of metadata.
@@ -137,4 +156,5 @@ public interface UserRepositoryCustom {
      */
     @Nonnull
     public List<String> findDuplicatedUsernamesCaseInsensitive();
+
 }

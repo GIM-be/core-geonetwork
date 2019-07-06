@@ -215,6 +215,20 @@ public class DefaultStatusActions implements StatusActions {
     }
 
     /**
+	 *
+	 * @param currentStatus
+	 * @param statusId
+	 * @param metadata
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public boolean statusChangeAllowedByUser(String currentStatusId, String statusId, AbstractMetadata metadata)
+			throws Exception {
+		return true;
+	}
+
+	/**
      * This apply specific rules depending on status change.
      * The default rules are:
      * <ul>
@@ -239,7 +253,6 @@ public class DefaultStatusActions implements StatusActions {
             unsetAllOperations(status.getId().getMetadataId());
         }
     }
-
 
     /**
      * Send email to a list of users. The list of users is defined based on the
