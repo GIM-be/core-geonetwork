@@ -4,13 +4,22 @@
       <div class="logo-wrapper">
         <img class="aiv-logo" ng-src="../../images/aiv-logo.png" alt="AIV-logo" width="38" height="60"/>
       </div>
-      <div class="logo-text">
-        <div class="logo-text-grp">Vlaanderen</div>
-        <div class="logo-text-quote">verbeelding werkt</div>
+      <!-- If host is metdatacenter, do not show "Vlaamse overheid" and adapt layout -->
+      <div class="logo-text" ng-show="info['system/server/host'].includes('metadatacenter')">
+        <div class="logo-text-grp" style="padding-top: 10px">{{info['system/site/name']}}</div>
+      </div>
+      <!--      -->
+      <div class="logo-text" ng-hide="info['system/server/host'].includes('metadatacenter')">
+        <div class="logo-text-grp">Vlaamse overheid</div>
+        <div class="logo-text-quote">{{info['system/site/name']}}</div>
       </div>
     </div>
     <div class="managed-wrapper">
-      <span class="managed-text">https://metadata.vlaanderen.be/ wordt beheerd door het agentschap Informatie Vlaanderen</span>
+      <span class="managed-text">
+        <a ng-href="{{info['system/server/protocol']}}://{{info['system/server/host']}}{{info['system/server/port'] != 80 ? ':' + info['system/server/port'] : ''}}/">
+        {{info['system/server/protocol']}}://{{info['system/server/host']}}{{info['system/server/port'] != 80 ? ':' + info['system/server/port'] : ''}}/  wordt beheerd door het agentschap Informatie Vlaanderen
+      </a>
+      </span>
     </div>
   </div>
 </div>
