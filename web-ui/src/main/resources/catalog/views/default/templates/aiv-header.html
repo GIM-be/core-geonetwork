@@ -23,7 +23,10 @@
         </div>
         <span>Vlaanderen</span>
       </a>
-      <a class="node-redirect" href="https://metadata.vlaanderen.be/">https://metadata.vlaanderen.be/</a>
+      <a class="node-redirect"
+         ng-href="{{info['system/server/protocol']}}://{{info['system/server/host']}}{{info['system/server/port'] != 80 ? ':' + info['system/server/port'] : ''}}/">
+        {{info['system/server/protocol']}}://{{info['system/server/host']}}{{info['system/server/port'] != 80 ? ':' + info['system/server/port'] : ''}}/
+      </a>
     </div>
     <div class="contact-wrapper">
       <a class="contact-redirect" onclick="toggleDropdown()">
