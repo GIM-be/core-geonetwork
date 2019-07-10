@@ -77,6 +77,15 @@
                        data !== 'null' ? data.status : null;
                     scope.newStatus.status = scope.statusToSelect;
                     scope.lastStatus = data.currentStatus.id.statusId;
+                  }).
+                  error(function(data) {
+                    scope.$emit('metadataStatusUpdated', false);
+                    scope.$emit('StatusUpdated', {
+                      title: $translate.instant('metadataStatusUpdatedErrors'),
+                      error: data,
+                      timeout: 0,
+                      type: 'danger'
+                    });
                   });
             } else {
               return $http.get('../api/status/' + scope.statusType).
@@ -105,13 +114,13 @@
                     timeout: 2,
                     type: 'success'});
                 }, function(response) {
-                  scope.$emit('metadataStatusUpdated', false);
+                  // scope.$emit('metadataStatusUpdated', false);
                   scope.$emit('StatusUpdated', {
                     title: $translate.instant('metadataStatusUpdatedErrors'),
                     error: response.data,
                     timeout: 0,
-                    type: 'danger',
-                    msg: data.data ? data.data.description : ""});
+                    type: 'danger'
+                  });
                 });
           };
 

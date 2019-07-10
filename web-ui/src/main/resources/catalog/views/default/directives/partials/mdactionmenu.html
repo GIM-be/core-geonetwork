@@ -15,7 +15,7 @@
     <ul class="dropdown-menu" role="menu">
       <li role="menuitem">
         <a data-ng-href=""
-             data-ng-if="user.canEditRecord(md) && user.isEditorOrMore() && md.draft != 'y'"
+             data-ng-if="user.canEditRecord(md) && (user.isAdministrator() || (md.getSchema()=='dcat-ap' && user.isEditorOrMore())) && md.draft != 'y'"
              data-ng-click="mdService.openPrivilegesPanel(md, getCatScope())">
           <i class="fa fa-fw fa-key"></i>&nbsp;
           <span data-translate="">privileges</span>
@@ -28,7 +28,7 @@
           <i class="fa fa-fw fa-user"></i>&nbsp;
           <span data-translate="">transferOwnership</span>
         </a></li>
-      <li role="menuitem"
+      <!-- <li role="menuitem"
           data-ng-if="user.canEditRecord(md) && (user.isAdmin() || user.isReviewerForGroup(md.groupOwner))"
           data-ng-class="(
             md.isPublished() ||
@@ -40,7 +40,6 @@
               (!md.hasValidation() || (md.hasValidation() && md.isValid()))
             )
             ) ? '' : 'disabled'"
-
 
           title="{{(!md.isPublished() ? (md.isValid() ? 'mdvalid' :
             (!md.hasValidation() ? 'mdnovalidation':
@@ -60,7 +59,7 @@
              data-ng-if="!md.isPublished() && !md.hasValidation()"></i>
         </a>
 
-      </li>
+      </li> -->
       <!-- TODO: Some installation only allows status update
       based on current status. -->
 

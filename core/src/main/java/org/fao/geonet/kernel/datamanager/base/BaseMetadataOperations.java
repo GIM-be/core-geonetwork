@@ -339,12 +339,12 @@ public class BaseMetadataOperations implements IMetadataOperations, ApplicationE
 
         setOperation(context, id, groupId, ReservedOperation.view);
         setOperation(context, id, groupId, ReservedOperation.notify);
+        setOperation(context, id, groupId, ReservedOperation.editing);
         //
         // Restrictive: new and inserted records should not be editable,
         // their resources can't be downloaded and any interactive maps can't be
         // displayed by users in the same group
         if (fullRightsForGroup) {
-            setOperation(context, id, groupId, ReservedOperation.editing);
             setOperation(context, id, groupId, ReservedOperation.download);
             setOperation(context, id, groupId, ReservedOperation.dynamic);
         }

@@ -26,6 +26,7 @@ package org.fao.geonet.api.records;
 import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
 import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
 import static org.fao.geonet.api.ApiParams.API_PARAM_RECORD_UUID;
+import static org.fao.geonet.api.ApiParams.API_RESPONSE_NOT_ALLOWED_ONLY_ADMIN;
 import static org.fao.geonet.repository.specification.OperationAllowedSpecs.hasGroupId;
 import static org.fao.geonet.repository.specification.OperationAllowedSpecs.hasMetadataId;
 import static org.springframework.data.jpa.domain.Specifications.where;
@@ -45,6 +46,7 @@ import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.API;
 import org.fao.geonet.api.ApiParams;
 import org.fao.geonet.api.ApiUtils;
+import org.fao.geonet.api.exception.NotAllowedException;
 import org.fao.geonet.api.exception.ResourceNotFoundException;
 import org.fao.geonet.api.processing.report.MetadataProcessingReport;
 import org.fao.geonet.api.processing.report.SimpleMetadataProcessingReport;
@@ -268,6 +270,12 @@ public class MetadataSharingApi {
         //--- in case of owner, privileges for groups 0,1 and GUEST are disabled
         //--- and are not sent to the server. So we cannot remove them
         UserSession us = ApiUtils.getUserSession(session);
+
+        // For record other than dcat-ap, only administrators can change privileges
+        if (!metadata.getDataInfo().getSchemaId().equals("dcat-ap") && us.getProfile() != Profile.Administrator) {
+            throw new NotAllowedException(API_RESPONSE_NOT_ALLOWED_ONLY_ADMIN);
+        }
+
         boolean isAdmin = Profile.Administrator == us.getProfile();
         boolean isReviewer = Profile.Reviewer == us.getProfile();
         if (us.getUserIdAsInt() == metadata.getSourceInfo().getOwner() &&
@@ -518,6 +526,9 @@ public class MetadataSharingApi {
         List<GroupPrivilege> groupPrivileges = new ArrayList<>(elGroup.size());
         if (elGroup != null) {
             for (Group g : elGroup) {
+                // Privileges for group "ALL" cannot be edited
+                if (g.getId() == 1) continue;
+
                 GroupPrivilege groupPrivilege = new GroupPrivilege();
                 groupPrivilege.setGroup(g.getId());
                 groupPrivilege.setReserved(g.isReserved());
