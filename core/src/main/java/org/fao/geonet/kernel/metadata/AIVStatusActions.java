@@ -74,6 +74,7 @@ public class AIVStatusActions implements StatusActions {
     protected DataManager dm;
     @Autowired
     protected IMetadataUtils metadataUtils;
+    protected String baseUrl;
     protected String siteUrl;
     protected String siteName;
     protected UserSession session;
@@ -145,6 +146,7 @@ public class AIVStatusActions implements StatusActions {
         metadataValidator = context.getBean(IMetadataValidator.class);
         metadataValidationRepository = context.getBean(MetadataValidationRepository.class);
         metadataStatusManager = context.getBean(IMetadataStatus.class);
+        baseUrl = sm.getBaseURL();
         siteUrl = sm.getSiteURL(context);
         stylePath = context.getAppPath() + FS + Geonet.Path.STYLESHEETS + FS;
         metadataManager = context.getBean(IMetadataManager.class);
@@ -628,7 +630,7 @@ public class AIVStatusActions implements StatusActions {
      */
     @SuppressWarnings("unchecked")
     protected void processList(ServiceContext context, String replyTo, String replyToDescr, List<Object[]> contentUsers, String subject, String status,
-                               String changeDate, String changeMessage, Map<String, Map<String, String>> metadataMap, List<String> emailMetadataIdList, String nodeType, String siteUrl, String siteName)
+                               String changeDate, String changeMessage, Map<String, Map<String, String>> metadataMap, List<String> emailMetadataIdList, String nodeType)
         throws Exception {
         Set<String> metadataIds = new HashSet<String>();
         String currentUserId = null;
@@ -649,7 +651,7 @@ public class AIVStatusActions implements StatusActions {
                 if (currentEmail != null) {
                     currentEmail = currentEmail.toLowerCase();
                 }
-                root = getNewRootElement(context, status, changeMessage, nodeType, siteUrl, siteName);
+                root = getNewRootElement(context, status, changeMessage, nodeType);
             } else if (!currentUserId.equals(userId)) {
                 if (StringUtils.isNotBlank(currentEmail) && metadataIds.size() > 0) {
                     sendEmail(context, currentEmail, root);
@@ -660,7 +662,7 @@ public class AIVStatusActions implements StatusActions {
                 if (currentEmail != null) {
                     currentEmail = currentEmail.toLowerCase();
                 }
-                root = getNewRootElement(context, status, changeMessage, nodeType, siteUrl, siteName);
+                root = getNewRootElement(context, status, changeMessage, nodeType);
             }
             if (StringUtils.isNotBlank(currentEmail) && !emailMetadataIdList.contains(currentEmail + "_" + metadataId)) {
                 emailMetadataIdList.add(currentEmail + "_" + metadataId);
@@ -681,7 +683,7 @@ public class AIVStatusActions implements StatusActions {
         }
     }
 
-    public Element getNewRootElement(ServiceContext context, String status, String changeMessage, String nodeType, String siteUrl, String fromDescription) {
+    public Element getNewRootElement(ServiceContext context, String status, String changeMessage, String nodeType) {
         Element user = new Element("user");
         user.addContent(new Element("surname").setText(context.getUserSession().getSurname()));
         user.addContent(new Element("name").setText(context.getUserSession().getName()));
@@ -691,8 +693,9 @@ public class AIVStatusActions implements StatusActions {
         root.addContent(user);
         root.addContent(group);
         root.addContent(new Element("node").setText(nodeType));
+        root.addContent(new Element("baseUrl").setText(baseUrl));
         root.addContent(new Element("siteUrl").setText(siteUrl));
-        root.addContent(new Element("metadatacenter").setText(fromDescription));
+        root.addContent(new Element("metadatacenter").setText(siteName));
         root.addContent(new Element("status").setText(status));
         root.addContent(new Element("changeMessage").setText(changeMessage));
         return root;

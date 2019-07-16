@@ -403,6 +403,6 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
     protected void processList(ServiceContext context, String replyTo, String replyToDescr, List<Object[]> contentUsers, String subject, String statusId,
                                String changeDate, String changeMessage, Map<String, Map<String, String>> metadataMap, List<String> emailMetadataIdList)
         throws Exception {
-        processList(context, replyTo, replyToDescr, contentUsers, subject, statusId, changeDate, changeMessage, metadataMap, emailMetadataIdList, "agiv", siteUrl, siteName);
+        processList(context, replyTo, replyToDescr, contentUsers, subject, statusId, changeDate, changeMessage, metadataMap, emailMetadataIdList, "agiv");
     }
 }
