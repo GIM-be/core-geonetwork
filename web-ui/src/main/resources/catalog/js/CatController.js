@@ -154,7 +154,7 @@
           'isFilterTagsDisplayedInSearch': false
         },
         'map': {
-          'enabled': true,
+          'enabled': false,
           'appUrl': '../../srv/{{lang}}/catalog.search#/map',
           'externalViewer': {
             'enabled': false,
