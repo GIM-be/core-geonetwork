@@ -410,7 +410,10 @@ public class SettingManager {
         String protocol = getValue(Settings.SYSTEM_SERVER_PROTOCOL);
         String host = getValue(Settings.SYSTEM_SERVER_HOST);
         String port = getValue(Settings.SYSTEM_SERVER_PORT);
-
+        String securePort = getValue(Settings.SYSTEM_SERVER_SECURE_PORT);
+        if ("https".equals(protocol)) {
+        	port = securePort;
+        }
         return protocol + "://" + host + (isPortRequired(protocol, port) ? ":" + port : "");
     }
 
