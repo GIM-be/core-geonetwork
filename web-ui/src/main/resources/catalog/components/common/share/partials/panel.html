@@ -31,7 +31,7 @@
              ng-class="sorter.reverse ? 'fa-long-arrow-up' : 'fa-long-arrow-down'"></i>
           </a>
         </th>
-        <th data-ng-repeat="key in operations">
+        <th data-ng-repeat="key in operations" ng-hide="key == 'dynamic'">
           <a href="" ng-click="setSorter(key)">
             <i class="fa {{icons[key] || fa-fw}}"/>
             <span class="hidden-xs">&nbsp;{{('op-' + key) | translate}}&nbsp;</span>
@@ -57,7 +57,7 @@
       <tr class="info"
           data-ng-repeat="g in privileges | filter:{reserved: true} | orderBy:'id':true">
         <td><strong>{{('group-' + g.group) | translate}}</strong></td>
-        <td data-ng-repeat="key in operations" class="text-center">
+        <td data-ng-repeat="key in operations" class="text-center" ng-hide="key == 'dynamic'">
           <input type="checkbox"
                  name="{{g.group + '-' + key}}"
                  data-ng-disabled="!isAdminOrReviewer"
@@ -80,7 +80,7 @@
         data-ng-show="(onlyUserGroup == true && g.userGroup == true) ||
                        onlyUserGroup == false">
         <td><strong>{{('group-' + g.group) | translate}}</strong></td>
-        <td data-ng-repeat="key in operations" class="text-center">
+        <td data-ng-repeat="key in operations" class="text-center" ng-hide="key == 'dynamic'">
           <input type="checkbox"
                  name="{{g.group + '-' + key}}"
                  data-ng-disabled="g.privileges[key].disabled"

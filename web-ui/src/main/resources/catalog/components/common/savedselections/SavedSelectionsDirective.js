@@ -107,11 +107,11 @@
           // null (ie. not preserved on page refresh).
           storage: 'localStorage',
           isAnonymousOnly: true
-        }, {
-          id: -20,
-          name: 'MapLayerlist',
-          records: [],
-          storage: null
+          // }, {
+          //   id: -20,
+          //   name: 'MapLayerlist',
+          //   records: [],
+          //   storage: null
           // }, {
           //   id: -30,
           //   name: 'DataDownloaderlist',

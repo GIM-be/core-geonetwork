@@ -187,10 +187,21 @@
               };
               scope.hasAction = function(mainType) {
                 var fn = gnRelatedResources.map[mainType].action;
+
+                // Changed by GVB to mainType, because previously function name checker will not work when minifying js
+                if (gnGlobalSettings.isMapViewerEnabled === false) {
+          
                 // If function name ends with ToMap do not display the action
-                if (fn && fn.name && fn.name.match(/.*ToMap$/) &&
-                   gnGlobalSettings.isMapViewerEnabled === false) {
-                  return false;
+                  if (fn && fn.name && fn.name.match(/.*ToMap$/)) {
+                    return false;
+                  } else {
+                    var mapTypes = ["WMS","WMTS","WFS","KML","MAP"];
+                    for (var i=0; i < mapTypes.length; i++) {
+                      if (mainType === mapTypes[i]) {
+                        return false;
+                      }
+                    }
+                  }
                 }
                 return angular.isFunction(fn);
               };
