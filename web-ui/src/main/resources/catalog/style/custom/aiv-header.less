@@ -2,6 +2,7 @@
 @import "./mixin.less";
 
 .aiv-header {
+  font-family: flanders-sans, sans-serif;
   background-color: white;
   height: 45px;
   border-bottom: 1px solid #cbd2da;
@@ -50,6 +51,7 @@
           span {
             &:first-child {
               display: block;
+              font-weight: 500;
             }
             &:not(:first-child) {
               font-size: 12px;
@@ -112,7 +114,7 @@
         display: none;
       }
       .show-dropdown {
-        display: block !important;
+        visibility: visible !important;
         top: 47px !important;
         opacity: 1 !important;
       }
@@ -128,7 +130,7 @@
         box-shadow: 0 0 21px rgba(0,0,0,0.3);
         z-index: 9999;
         outline: none;
-        display: none;
+        visibility: hidden;
         transition: all 0.3s ease;
         &::before {
           content: ' ';
@@ -155,7 +157,6 @@
           overflow-y: auto;
           -webkit-overflow-scrolling: touch;
           position: relative;
-          z-index: 9998;
           list-style-type: none;
           padding: 0;
           margin: 0;
