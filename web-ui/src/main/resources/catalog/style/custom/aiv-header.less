@@ -2,6 +2,7 @@
 @import "./mixin.less";
 
 .aiv-header {
+  font-family: flanders-sans, sans-serif;
   background-color: white;
   height: 45px;
   border-bottom: 1px solid #cbd2da;
@@ -15,38 +16,58 @@
       color: #06c;
     }
   }
+  .header-slash {
+    margin-left: 10px;
+    .aiv-slash(0, 45px);
+  }
   .header-wrapper {
     position: relative;
     .brand-wrapper {
       float: left;
       padding: 8px;
-      &::after {
-        .aiv-slash(150px, 5px, 35px);
-      }
+      height: 45px;
       .brand-redirect {
         .logo-wrapper {
           display: inline-block;
           float: left;
           position: relative;
-          &::after {
-            .aiv-slash(20px, -12px, 54px);
-          }
           .aiv-logo {
             position: relative;
             text-align: center;
           }
         }
-        span {
-          font-size: 19px;
+        .metadatacenter-header {
+          position: relative;
+          top: 3px;
           margin-left: 25px;
+          font-size: 16px;
           font-weight: 500;
+        }
+        .vl-header {
+          display: inline-block;
+          margin-left: 25px;
+          position: relative;
+          top: -5px;
+          span {
+            &:first-child {
+              display: block;
+              font-weight: 500;
+            }
+            &:not(:first-child) {
+              font-size: 12px;
+            }
+          }
         }
       }
       .node-redirect {
+        position: relative;
         padding-left: 30px;
-        @media screen and (max-width: 584px) {
+        @media screen and (max-width: 720px) {
           display: none;
         }
+      }
+      .vl-node-redirect {
+        top: -15px;
       }
     }
     .contact-wrapper {
@@ -92,9 +113,15 @@
       @media screen and (max-width: 380px) {
         display: none;
       }
+      .show-dropdown {
+        visibility: visible !important;
+        top: 47px !important;
+        opacity: 1 !important;
+      }
       #aiv-contact-dropdown {
         position: absolute;
-        top: 47px;
+        top: 0;
+        opacity: 0;
         right: 0;
         width: 300px;
         background-color: #fff;
@@ -103,10 +130,8 @@
         box-shadow: 0 0 21px rgba(0,0,0,0.3);
         z-index: 9999;
         outline: none;
-        display: none;
-        .show {
-          display: block;
-        }
+        visibility: hidden;
+        transition: all 0.3s ease;
         &::before {
           content: ' ';
           display: block;
@@ -132,7 +157,6 @@
           overflow-y: auto;
           -webkit-overflow-scrolling: touch;
           position: relative;
-          z-index: 9998;
           list-style-type: none;
           padding: 0;
           margin: 0;

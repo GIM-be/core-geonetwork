@@ -1,6 +1,6 @@
 <script>
   function toggleDropdown() {
-    document.getElementById("aiv-contact-dropdown").classList.toggle("show");
+    document.getElementById("aiv-contact-dropdown").classList.toggle("show-dropdown");
   }
 
   window.onclick = function (event) {
@@ -8,8 +8,8 @@
       !event.target.matches('.contact-redirect') &&
       !event.target.matches('.contact-label')) {
       var dropdown = document.getElementsByClassName("aiv-dropdown-content")[0];
-      if (dropdown.classList.contains('show')) {
-        dropdown.classList.remove('show');
+      if (dropdown.classList.contains('show-dropdown')) {
+        dropdown.classList.remove('show-dropdown');
       }
     }
   };
@@ -21,9 +21,18 @@
         <div class="logo-wrapper">
           <img class="aiv-logo" ng-src="../../images/aiv-logo.png" alt="AIV-logo" width="17" height="27"/>
         </div>
-        <span>Vlaanderen</span>
+        <div class="header-slash"></div>
+        <span class="metadatacenter-header" ng-show="info['system/server/host'].includes('metadatacenter')">
+          {{info['system/site/name']}}
+        </span>
+        <span class="vl-header" ng-hide="info['system/server/host'].includes('metadatacenter')">
+          <span>Vlaamse overheid</span>
+          <span>{{info['system/site/name']}}</span>
+        </span>
       </a>
+      <div class="header-slash"></div>
       <a class="node-redirect"
+         ng-class="info['system/server/host'].includes('metadatacenter') ? '': 'vl-node-redirect'"
          ng-href="{{info['system/server/protocol']}}://{{info['system/server/host']}}{{info['system/server/port'] != 80 ? ':' + info['system/server/port'] : ''}}/">
         {{info['system/server/protocol']}}://{{info['system/server/host']}}{{info['system/server/port'] != 80 ? ':' + info['system/server/port'] : ''}}/
       </a>
