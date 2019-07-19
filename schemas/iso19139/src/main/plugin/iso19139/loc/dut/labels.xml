@@ -1522,10 +1522,6 @@
   <element name="gmd:MD_CharacterSetCode">
     <label>Character Set</label>
   </element>
-  <element name="gmd:MD_Constraints" id="67.0">
-    <label>Constraints</label>
-    <description>Restrictions on the access and use of a resource or metadata</description>
-  </element>
   <element name="gmd:MD_CoverageDescription" id="239.0">
     <label>Coverage description</label>
     <description>Information about the content of a grid data cell</description>
