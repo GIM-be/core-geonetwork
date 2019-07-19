@@ -1522,10 +1522,6 @@
   <element name="gmd:MD_CharacterSetCode">
     <label>Character Set</label>
   </element>
-  <element name="gmd:MD_CoverageDescription" id="239.0">
-    <label>Coverage description</label>
-    <description>Information about the content of a grid data cell</description>
-  </element>
   <element name="gmd:MD_StandardOrderProcess">
     <label>Standard leveringsproces</label>
     <description>Standaard manieren waarop de bron kan verkregen, ontvangen worden en gerelateerde instructies en
