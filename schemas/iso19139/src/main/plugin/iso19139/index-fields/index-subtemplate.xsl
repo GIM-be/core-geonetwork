@@ -216,45 +216,50 @@
     </xsl:template>
 
 
-    <!-- Aiv subtemplate -->
-    <xsl:template mode="index" match="gmd:aggregationInfo">
-      <Field name="_title"
-             string="Aggregation Information"
-             store="true" index="true"/>
+  <!-- Aiv subtemplate -->
+  <xsl:template mode="index" match="gmd:aggregationInfo">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Aggregation Information'}"
+           store="true" index="true"/>
 
-      <xsl:call-template name="subtemplate-common-fields"/>
-    </xsl:template>
+    <xsl:call-template name="subtemplate-common-fields"/>
+  </xsl:template>
 
-    <xsl:template mode="index" match="gmd:DQ_AbsoluteExternalPositionalAccuracy|gmd:DQ_CompletenessOmission|gmd:DQ_DomainConsistency|gmd:DQ_ThematicClassificationCorrectness">
-      <Field name="_title"
-             string="{
+  <xsl:template mode="index"
+                match="gmd:DQ_AbsoluteExternalPositionalAccuracy|gmd:DQ_CompletenessOmission|gmd:DQ_DomainConsistency|gmd:DQ_ThematicClassificationCorrectness">
+    <Field name="_title"
+           string="{
+              if ($title != '') then $title else
               if (name() = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Absolute External Positional Accuracy' else
               if (name() = 'gmd:DQ_CompletenessOmission') then 'Completeness Omission' else
               if (name() = 'gmd:DQ_DomainConsistency') then 'Domain Consistency' else
               if (name() = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematic Classification Correctness' else
               ''
              }"
-             store="true" index="true"/>
+           store="true" index="true"/>
 
-      <xsl:call-template name="subtemplate-common-fields"/>
-    </xsl:template>
+    <xsl:call-template name="subtemplate-common-fields"/>
+  </xsl:template>
 
-    <xsl:template mode="index" match="gmd:MD_Constraints|gmd:MD_LegalConstraints|gmd:MD_SecurityConstraints">
-      <Field name="_title"
-             string="{
+  <xsl:template mode="index" match="gmd:MD_Constraints|gmd:MD_LegalConstraints|gmd:MD_SecurityConstraints">
+    <Field name="_title"
+           string="{
+                if ($title != '') then $title else
                 if (name() = 'gmd:MD_Constraints') then 'Constraints' else
                 if (name() = 'gmd:MD_LegalConstraints') then 'Legal Constraints' else
                 if (name() = 'gmd:MD_SecurityConstraints') then 'Security Constraints' else
                 ''
                }"
-             store="true" index="true"/>
+           store="true" index="true"/>
 
-      <xsl:call-template name="subtemplate-common-fields"/>
-    </xsl:template>
+    <Field name="any" string="{if (normalize-space(string(.))) then normalize-space(string(.)) else 'void'}"
+           store="false" index="true"/>
+    <Field name="_root" string="{name(.)}" store="true" index="true"/>
+  </xsl:template>
 
-    <xsl:template name="subtemplate-common-fields">
-        <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
-        <Field name="_root" string="{name(.)}" store="true" index="true"/>
-    </xsl:template>
+  <xsl:template name="subtemplate-common-fields">
+    <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
+    <Field name="_root" string="{name(.)}" store="true" index="true"/>
+  </xsl:template>
 
 </xsl:stylesheet>
