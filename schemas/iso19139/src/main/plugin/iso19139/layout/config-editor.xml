@@ -263,6 +263,15 @@
         data-insert-modes="text"
         data-template-type="report"/>
     </for>
+    <for name="gmd:spatialResolution" addDirective="data-gn-directory-entry-selector">
+      <directiveAttributes
+        data-template-add-action="false"
+        data-search-action="true"
+        data-popup-action="false"
+        data-filter='{"_root": "gmd:MD_Resolution"}'
+        data-insert-modes="text"
+        data-template-type="report"/>
+    </for>
   </fields>
 
 
