@@ -238,7 +238,20 @@
 
       <xsl:call-template name="subtemplate-common-fields"/>
     </xsl:template>
-  
+
+    <xsl:template mode="index" match="gmd:MD_Constraints|gmd:MD_LegalConstraints|gmd:MD_SecurityConstraints">
+      <Field name="_title"
+             string="{
+                if (name() = 'gmd:MD_Constraints') then 'Constraints' else
+                if (name() = 'gmd:MD_LegalConstraints') then 'Legal Constraints' else
+                if (name() = 'gmd:MD_SecurityConstraints') then 'Security Constraints' else
+                ''
+               }"
+             store="true" index="true"/>
+
+      <xsl:call-template name="subtemplate-common-fields"/>
+    </xsl:template>
+
     <xsl:template name="subtemplate-common-fields">
         <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
         <Field name="_root" string="{name(.)}" store="true" index="true"/>
