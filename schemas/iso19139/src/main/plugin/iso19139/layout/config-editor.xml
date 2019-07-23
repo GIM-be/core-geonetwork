@@ -183,15 +183,15 @@
         data-insert-modes=""
         data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
     </for>
-    <for name="gmd:report" addDirective="data-gn-directory-entry-selector">
-      <directiveAttributes
-        data-template-add-action="true"
-        data-search-action="true"
-        data-popup-action="true"
-        data-filter='{"_root": "gmd:DQ_DomainConsistency"}'
-        data-insert-modes=""
-        data-template-type="report"/>
-    </for>
+<!--    <for name="gmd:report" addDirective="data-gn-directory-entry-selector">-->
+<!--      <directiveAttributes-->
+<!--        data-template-add-action="true"-->
+<!--        data-search-action="true"-->
+<!--        data-popup-action="true"-->
+<!--        data-filter='{"_root": "gmd:DQ_DomainConsistency"}'-->
+<!--        data-insert-modes=""-->
+<!--        data-template-type="report"/>-->
+<!--    </for>-->
 
 
 
@@ -233,6 +233,18 @@
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:aggregationInfo"}'
+        data-insert-modes="text"
+        data-template-type="report"/>
+    </for>
+    <for name="gmd:report" addDirective="data-gn-directory-entry-selector">
+      <directiveAttributes
+        data-template-add-action="false"
+        data-search-action="true"
+        data-popup-action="false"
+        data-filter='{"_root": "gmd:DQ_AbsoluteExternalPositionalAccuracy or
+          gmd:DQ_CompletenessOmission or
+          gmd:DQ_DomainConsistency or
+          gmd:DQ_ThematicClassificationCorrectness"}'
         data-insert-modes="text"
         data-template-type="report"/>
     </for>
