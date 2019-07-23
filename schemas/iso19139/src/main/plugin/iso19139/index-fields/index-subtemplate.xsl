@@ -252,13 +252,25 @@
                }"
            store="true" index="true"/>
 
-    <Field name="any" string="{if (normalize-space(string(.))) then normalize-space(string(.)) else 'void'}"
-           store="false" index="true"/>
-    <Field name="_root" string="{name(.)}" store="true" index="true"/>
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:MD_Distributor">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Distributor'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
   </xsl:template>
 
   <xsl:template name="subtemplate-common-fields">
     <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
+    <Field name="_root" string="{name(.)}" store="true" index="true"/>
+  </xsl:template>
+
+  <xsl:template name="subtemplate-common-fields-or-void">
+    <Field name="any" string="{if (normalize-space(string(.))) then normalize-space(string(.)) else 'void'}"
+           store="false" index="true"/>
     <Field name="_root" string="{name(.)}" store="true" index="true"/>
   </xsl:template>
 
