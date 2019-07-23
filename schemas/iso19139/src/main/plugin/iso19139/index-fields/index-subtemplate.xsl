@@ -215,7 +215,13 @@
         <xsl:call-template name="subtemplate-common-fields"/>
     </xsl:template>
 
+    <xsl:template mode="index" match="gmd:aggregationInfo">
+      <Field name="_title"
+             string="Aggregation Information"
+             store="true" index="true"/>
 
+      <xsl:call-template name="subtemplate-common-fields"/>
+    </xsl:template>
 
     <xsl:template name="subtemplate-common-fields">
         <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>

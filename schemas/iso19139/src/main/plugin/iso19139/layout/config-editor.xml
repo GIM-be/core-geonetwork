@@ -225,6 +225,17 @@
                                             gmd:code/gmx:Anchor/
                                               concat('-', substring-after(text()[. != ''], 'geonetwork.thesaurus.')), ',')"/>
     </for>
+
+    <!-- AIV custom fields -->
+    <for name="gmd:aggregationInfo" addDirective="data-gn-directory-entry-selector">
+      <directiveAttributes
+        data-template-add-action="false"
+        data-search-action="true"
+        data-popup-action="false"
+        data-filter='{"_root": "gmd:aggregationInfo"}'
+        data-insert-modes="text"
+        data-template-type="report"/>
+    </for>
   </fields>
 
 
