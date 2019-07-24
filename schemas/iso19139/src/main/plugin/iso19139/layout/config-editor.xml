@@ -276,6 +276,14 @@
         data-filter='{"_root": "gmd:LI_ProcessStep"}'
         data-insert-modes="text"/>
     </for>
+    <for name="gmd:resourceSpecificUsage" addDirective="data-gn-directory-entry-selector">
+      <directiveAttributes
+        data-template-add-action="false"
+        data-search-action="true"
+        data-popup-action="false"
+        data-filter='{"_root": "gmd:MD_Usage"}'
+        data-insert-modes="text"/>
+    </for>
   </fields>
 
 
