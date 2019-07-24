@@ -292,6 +292,14 @@
         data-filter='{"_root": "gmd:LI_Source"}'
         data-insert-modes="text"/>
     </for>
+    <for name="gmd:transferOptions" addDirective="data-gn-directory-entry-selector">
+      <directiveAttributes
+        data-template-add-action="false"
+        data-search-action="true"
+        data-popup-action="false"
+        data-filter='{"_root": "gmd:MD_DigitalTransferOptions"}'
+        data-insert-modes="text"/>
+    </for>
   </fields>
 
 
