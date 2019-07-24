@@ -292,6 +292,14 @@
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
   </xsl:template>
 
+  <xsl:template mode="index" match="gmd:LI_Source">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Source'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
   <xsl:template name="subtemplate-common-fields">
     <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
     <Field name="_root" string="{name(.)}" store="true" index="true"/>
