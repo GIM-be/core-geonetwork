@@ -268,6 +268,13 @@
         data-filter='{"_root": "gmd:MD_Resolution"}'
         data-insert-modes="text"/>
     </for>
+    <for name="gmd:processStep" addDirective="data-gn-directory-entry-selector">
+      <directiveAttributes
+        data-template-add-action="false"
+        data-search-action="true"
+        data-popup-action="false"
+        data-filter='{"_root": "gmd:LI_ProcessStep"}'
+        data-insert-modes="text"/>
     </for>
   </fields>
 
