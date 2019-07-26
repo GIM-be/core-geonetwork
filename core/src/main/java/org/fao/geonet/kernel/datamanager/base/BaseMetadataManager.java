@@ -454,7 +454,8 @@ public class BaseMetadataManager implements IMetadataManager {
 		boolean isMetadata = templateMetadata.getDataInfo().getType() == MetadataType.METADATA;
 		setMetadataTitle(schema, xml, context.getLanguage(), !isMetadata);
 		if (isMetadata) {
-			xml = updateFixedInfo(schema, Optional.<Integer>absent(), uuid, xml, parentUuid, UpdateDatestamp.NO,
+            cleanElementOnDuplicate(schema, xml);
+            xml = updateFixedInfo(schema, Optional.<Integer>absent(), uuid, xml, parentUuid, UpdateDatestamp.NO,
 					context);
 		}
 		final Metadata newMetadata = new Metadata();
@@ -522,6 +523,40 @@ public class BaseMetadataManager implements IMetadataManager {
             });
         }
     }
+
+    /**
+     * Empty elements on metadata duplication
+     */
+    private void cleanElementOnDuplicate(String schema, Element xml) {
+        SchemaPlugin schemaPlugin = SchemaManager.getSchemaPlugin(schema);
+        List<String> xpathToClean = new ArrayList<>();
+        if (schema.equals("iso19139")) {
+            xpathToClean.add("gmd:identificationInfo/*/gmd:citation/*/gmd:title/gco:CharacterString");
+            xpathToClean.add("gmd:identificationInfo/*/gmd:citation/*/gmd:title/*/gmd:textGroup/gmd:LocalisedCharacterString");
+            xpathToClean.add("gmd:parentIdentifier");
+        }
+        xpathToClean.forEach(xpath -> {
+            List<?> nodes = null;
+            try {
+                nodes = Xml.selectNodes(xml, xpath, new ArrayList<>(schemaPlugin.getNamespaces()));
+                for (Object o : nodes) {
+                    if (o instanceof Element) {
+                        Element el = (Element) o;
+                        // If the element contain text, empty the text otherwise remove the element
+                        if (el.getChildren().isEmpty()) {
+                            el.setText("");
+                        } else {
+                            el.getParent().removeContent(el);
+                        }
+                    }
+                }
+            } catch (JDOMException e) {
+                LOGGER_DATA_MANAGER.debug("Check xpath '{}' for schema plugin '{}'. Error is '{}'.", new Object[] {
+                    xpath, schema, e.getMessage()});
+            }
+        });
+    }
+
 
     /**
 	 * Inserts a metadata into the database, optionally indexing it, and optionally
