@@ -97,7 +97,7 @@
       <gmd:citation>
         <gmd:CI_Citation>
           <gmd:title>
-            <gco:CharacterString>Metadata-sjabloon voor &lt;b&gt; services &lt;/b&gt; v1.0.2, conform GDI-Vlaanderen
+            <gco:CharacterString>Metadata-sjabloon voor services v1.0.2, conform GDI-Vlaanderen
               Best Practices v1.0
             </gco:CharacterString>
           </gmd:title>
@@ -181,6 +181,11 @@
           <gmd:keyword>
             <gco:CharacterString/>
           </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode
+              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="theme"/>
+          </gmd:type>
           <gmd:thesaurusName>
             <gmd:CI_Citation>
               <gmd:title>
@@ -192,13 +197,22 @@
                     <gco:Date>2008-12-03</gco:Date>
                   </gmd:date>
                   <gmd:dateType>
-                    <gmd:CI_DateTypeCode codeListValue="publication"
-                                         codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode">
-                      publication
-                    </gmd:CI_DateTypeCode>
+                    <gmd:CI_DateTypeCode
+                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
               </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                                xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=external.theme.inspire-service-taxonomy">
+                      geonetwork.thesaurus.external.theme.inspire-service-taxonomy
+                    </gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
             </gmd:CI_Citation>
           </gmd:thesaurusName>
         </gmd:MD_Keywords>
@@ -210,8 +224,8 @@
           </gmd:keyword>
           <gmd:type>
             <gmd:MD_KeywordTypeCode
-              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_KeywordTypeCode"
-              codeListValue=""/>
+              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="theme"/>
           </gmd:type>
           <gmd:thesaurusName>
             <gmd:CI_Citation>
@@ -225,12 +239,21 @@
                   </gmd:date>
                   <gmd:dateType>
                     <gmd:CI_DateTypeCode
-                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmx Codelists.xml#CI_DateTypeCode"
-                      codeListValue="publication">publication
-                    </gmd:CI_DateTypeCode>
+                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
               </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                                xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=external.theme.gemet">
+                      geonetwork.thesaurus.external.theme.gemet
+                    </gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
             </gmd:CI_Citation>
           </gmd:thesaurusName>
         </gmd:MD_Keywords>
@@ -240,6 +263,11 @@
           <gmd:keyword>
             <gco:CharacterString>Vlaams Gewest</gco:CharacterString>
           </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode
+              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="place"/>
+          </gmd:type>
           <gmd:thesaurusName>
             <gmd:CI_Citation>
               <gmd:title>
@@ -252,12 +280,21 @@
                   </gmd:date>
                   <gmd:dateType>
                     <gmd:CI_DateTypeCode
-                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/cCodelist/ML_gmxCodelists.xml#CI_DateTypeCode"
-                      codeListValue="publication">publication
-                    </gmd:CI_DateTypeCode>
+                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
               </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                                xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=external.place.GDI-Vlaanderenregios">
+                      geonetwork.thesaurus.external.place.GDI-Vlaanderenregios
+                    </gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
             </gmd:CI_Citation>
           </gmd:thesaurusName>
         </gmd:MD_Keywords>
@@ -267,6 +304,11 @@
           <gmd:keyword>
             <gco:CharacterString/>
           </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode
+              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="theme"/>
+          </gmd:type>
           <gmd:thesaurusName>
             <gmd:CI_Citation>
               <gmd:title>
@@ -279,12 +321,21 @@
                   </gmd:date>
                   <gmd:dateType>
                     <gmd:CI_DateTypeCode
-                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/cCodelist/ML_gmxCodelists.xml#CI_DateTypeCode"
-                      codeListValue="publication">publication
-                    </gmd:CI_DateTypeCode>
+                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
               </gmd:date>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                                xlink:href="http://localhost:8080/geonetwork/srv/eng/thesaurus.download?ref=external.theme.GDI-Vlaanderen-service-types">
+                      geonetwork.thesaurus.external.theme.GDI-Vlaanderen-service-types
+                    </gmx:Anchor>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
             </gmd:CI_Citation>
           </gmd:thesaurusName>
         </gmd:MD_Keywords>
@@ -512,7 +563,8 @@
               <gmd:specification>
                 <gmd:CI_Citation>
                   <gmd:title>
-                    <gco:CharacterString>VERORDENING (EU) Nr. 1089/2010 VAN DE COMMISSIE van 23 november 2010 ter
+                    <gco:CharacterString>
+                      VERORDENING (EU) Nr. 1089/2010 VAN DE COMMISSIE van 23 november 2010 ter
                       uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende de
                       interoperabiliteit van verzamelingen ruimtelijke gegevens en van diensten met betrekking tot
                       ruimtelijke gegevens
