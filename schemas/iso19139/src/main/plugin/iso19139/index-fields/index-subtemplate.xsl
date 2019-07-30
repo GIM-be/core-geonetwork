@@ -34,6 +34,7 @@
 
 
     <xsl:variable name="isMultilingual" select="count(distinct-values(*//gmd:LocalisedCharacterString/@locale)) > 0"/>
+    <xsl:variable name="codeList" select="document('../loc/dut/codelist.xml')"/>
 
     <!-- Subtemplate indexing -->
     <xsl:template match="/">
@@ -98,7 +99,8 @@
                        string="{if ($title != '') then $title
                                 else if ($name != '') then concat($org, ' (', $name, ')')
                                 else if ($mail != '') then concat($org, ' (', $mail, ')')
-                                else $org}"
+                                else if ($org != '') then $org
+                                else util:getCodelistTranslation('gmd:CI_RoleCode', string(gmd:role/*/@codeListValue), string('dut'))}"
                        store="true" index="true"/>
                 <Field name="orgName" string="{$org}" store="true" index="true"/>
                 <Field name="orgNameTree" string="{$org}" store="true" index="true"/>
@@ -120,7 +122,8 @@
                        string="{if ($title != '') then $title
                                 else if ($name != '') then concat($org, ' (', $name, ')')
                                 else if ($mail != '') then concat($org, ' (', $mail, ')')
-                                else $org}"
+                                else if ($org != '') then $org
+                                else util:getCodelistTranslation('gmd:CI_RoleCode', string(gmd:role/*/@codeListValue), string('dut'))}"
                        store="true" index="true"/>
                 <Field name="orgName" string="{$org}" store="true" index="true"/>
                 <Field name="orgNameTree" string="{$org}" store="true" index="true"/>
@@ -217,12 +220,11 @@
 
 
   <!-- Aiv subtemplate -->
-  <xsl:template mode="index" match="gmd:aggregationInfo">
+  <xsl:template mode="index" match="gmd:MD_AggregateInformation">
     <Field name="_title"
            string="{if ($title != '') then $title else 'Aggregation Information'}"
            store="true" index="true"/>
-
-    <xsl:call-template name="subtemplate-common-fields"/>
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
   </xsl:template>
 
   <xsl:template mode="index"
@@ -303,6 +305,14 @@
   <xsl:template mode="index" match="gmd:MD_DigitalTransferOptions">
     <Field name="_title"
            string="{if ($title != '') then $title else 'Digital transfer options'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:EX_Extent">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Vertical Element'}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
