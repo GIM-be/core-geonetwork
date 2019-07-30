@@ -1,16 +1,12 @@
-<gmd:EX_Extent xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd">
-  <gmd:verticalElement>
-    <gmd:EX_VerticalExtent>
-      <gmd:minimumValue/>
-      <gmd:maximumValue/>
-      <gmd:verticalCRS>
-        <gml:VerticalCRS gml:id="">
-          <gml:identifier codeSpace=""/>
-          <gml:scope/>
-          <gml:verticalCS nilReason="missing"/>
-          <gml:verticalDatum nilReason="missing"/>
-        </gml:VerticalCRS>
-      </gmd:verticalCRS>
-    </gmd:EX_VerticalExtent>
-  </gmd:verticalElement>
-</gmd:EX_Extent>
+<gmd:EX_VerticalExtent xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd">
+  <gmd:minimumValue/>
+  <gmd:maximumValue/>
+  <gmd:verticalCRS>
+    <gml:VerticalCRS gml:id="">
+      <gml:identifier codeSpace=""/>
+      <gml:scope/>
+      <gml:verticalCS nilReason="missing"/>
+      <gml:verticalDatum nilReason="missing"/>
+    </gml:VerticalCRS>
+  </gmd:verticalCRS>
+</gmd:EX_VerticalExtent>

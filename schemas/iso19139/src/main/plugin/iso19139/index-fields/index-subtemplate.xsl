@@ -154,10 +154,12 @@
     <!--Online resources-->
     <xsl:template mode="index" match="gmd:CI_OnlineResource[count(ancestor::node()) =  1]">
         <Field name="_title"
-               string="{if ($title != '') then $title else gmd:linkage/gmd:URL}"
+               string="{if ($title != '') then $title
+                        else if (gmd:linkage/gmd:URL and normalize-space(gmd:linkage/gmd:URL) != '') then gmd:linkage/gmd:URL
+                        else 'Online bronnen'}"
                store="true" index="true"/>
 
-        <xsl:call-template name="subtemplate-common-fields"/>
+        <xsl:call-template name="subtemplate-common-fields-or-void"/>
     </xsl:template>
 
 
@@ -212,10 +214,12 @@
 
     <xsl:template mode="index" match="gmd:MD_Format[count(ancestor::node()) =  1]">
         <Field name="_title"
-               string="{if ($title != '') then $title else gmd:name/gco:CharacterString}"
+               string="{if ($title != '') then $title
+                        else if (gmd:name/gco:CharacterString and normalize-space(gmd:name/gco:CharacterString) != '') then gmd:name/gco:CharacterString
+                        else 'Distributieformaat'}"
                store="true" index="true"/>
 
-        <xsl:call-template name="subtemplate-common-fields"/>
+        <xsl:call-template name="subtemplate-common-fields-or-void"/>
     </xsl:template>
 
 
@@ -232,10 +236,10 @@
     <Field name="_title"
            string="{
               if ($title != '') then $title else
-              if (name() = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Absolute External Positional Accuracy' else
-              if (name() = 'gmd:DQ_CompletenessOmission') then 'Completeness Omission' else
-              if (name() = 'gmd:DQ_DomainConsistency') then 'Domain Consistency' else
-              if (name() = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematic Classification Correctness' else
+              if (name() = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Geometrische nauwkeurigheid' else
+              if (name() = 'gmd:DQ_CompletenessOmission') then 'Volledigheid' else
+              if (name() = 'gmd:DQ_DomainConsistency') then 'INSPIRE Domeinconsistentie' else
+              if (name() = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematische classificatie' else
               ''
              }"
            store="true" index="true"/>
@@ -247,9 +251,9 @@
     <Field name="_title"
            string="{
                 if ($title != '') then $title else
-                if (name() = 'gmd:MD_Constraints') then 'Constraints' else
-                if (name() = 'gmd:MD_LegalConstraints') then 'Legal Constraints' else
-                if (name() = 'gmd:MD_SecurityConstraints') then 'Security Constraints' else
+                if (name() = 'gmd:MD_Constraints') then 'Inhoudelijke gebruiksbeperkingen' else
+                if (name() = 'gmd:MD_LegalConstraints') then 'Legale beperkingen' else
+                if (name() = 'gmd:MD_SecurityConstraints') then 'Veiligheidsbeperkingen' else
                 ''
                }"
            store="true" index="true"/>
@@ -259,7 +263,7 @@
 
   <xsl:template mode="index" match="gmd:MD_Distributor">
     <Field name="_title"
-           string="{if ($title != '') then $title else 'Distributor'}"
+           string="{if ($title != '') then $title else 'Verdeler'}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
@@ -269,8 +273,8 @@
     <Field name="_title"
            string="{
                 if ($title != '') then $title else
-                if (gmd:distance) then 'Distance' else
-                if (gmd:equivalentScale) then 'Equivalent scale' else
+                if (gmd:distance) then 'Grondresolutie' else
+                if (gmd:equivalentScale) then 'Toepassingsschaal' else
                 ''
                }"
            store="true" index="true"/>
@@ -280,7 +284,7 @@
 
   <xsl:template mode="index" match="gmd:LI_ProcessStep">
     <Field name="_title"
-           string="{if ($title != '') then $title else 'Process Step'}"
+           string="{if ($title != '') then $title else 'Processtappen'}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
@@ -288,7 +292,7 @@
 
   <xsl:template mode="index" match="gmd:MD_Usage">
     <Field name="_title"
-           string="{if ($title != '') then $title else 'Resource usage'}"
+           string="{if ($title != '') then $title else 'Gebruik'}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
@@ -296,7 +300,7 @@
 
   <xsl:template mode="index" match="gmd:LI_Source">
     <Field name="_title"
-           string="{if ($title != '') then $title else 'Source'}"
+           string="{if ($title != '') then $title else 'Bron'}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
@@ -304,15 +308,31 @@
 
   <xsl:template mode="index" match="gmd:MD_DigitalTransferOptions">
     <Field name="_title"
-           string="{if ($title != '') then $title else 'Digital transfer options'}"
+           string="{if ($title != '') then $title else 'Overdracht'}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
   </xsl:template>
 
-  <xsl:template mode="index" match="gmd:EX_Extent">
+  <xsl:template mode="index" match="gmd:MD_StandardOrderProcess">
     <Field name="_title"
-           string="{if ($title != '') then $title else 'Vertical Element'}"
+           string="{if ($title != '') then $title else 'Bestelinformatie'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:EX_VerticalExtent">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Verticale begrenzing'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:EX_TemporalExtent">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Temporele begrenzing'}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
