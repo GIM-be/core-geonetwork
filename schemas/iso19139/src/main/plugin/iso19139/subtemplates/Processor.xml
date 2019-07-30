@@ -3,7 +3,7 @@
     <gco:CharacterString/>
   </gmd:individualName>
   <gmd:organisationName>
-    <gco:CharacterString>Empty Contact</gco:CharacterString>
+    <gco:CharacterString/>
   </gmd:organisationName>
   <gmd:contactInfo>
     <gmd:CI_Contact>
@@ -46,6 +46,9 @@
     </gmd:CI_Contact>
   </gmd:contactInfo>
   <gmd:role>
-    <gmd:CI_RoleCode codeList="" codeListValue=""/>
+    <gmd:CI_RoleCode
+      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode"
+      codeListValue="processor">processor
+    </gmd:CI_RoleCode>
   </gmd:role>
 </gmd:CI_ResponsibleParty>
