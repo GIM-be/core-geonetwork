@@ -452,9 +452,9 @@ public class BaseMetadataManager implements IMetadataManager {
 		String data = templateMetadata.getData();
 		Element xml = Xml.loadString(data, false);
 		boolean isMetadata = templateMetadata.getDataInfo().getType() == MetadataType.METADATA;
-		setMetadataTitle(schema, xml, context.getLanguage(), !isMetadata);
+		// setMetadataTitle(schema, xml, context.getLanguage(), !isMetadata);
+        xml = cleanElementOnDuplicate(schema, uuid, xml, parentUuid, context);
 		if (isMetadata) {
-            cleanElementOnDuplicate(schema, xml);
             xml = updateFixedInfo(schema, Optional.<Integer>absent(), uuid, xml, parentUuid, UpdateDatestamp.NO,
 					context);
 		}
@@ -525,36 +525,64 @@ public class BaseMetadataManager implements IMetadataManager {
     }
 
     /**
-     * Empty elements on metadata duplication
+     * Empty and remove some elements from the source metadata/template
+     * when creating a new metadata out of it
      */
-    private void cleanElementOnDuplicate(String schema, Element xml) {
-        SchemaPlugin schemaPlugin = SchemaManager.getSchemaPlugin(schema);
-        List<String> xpathToClean = new ArrayList<>();
-        if (schema.equals("iso19139")) {
-            xpathToClean.add("gmd:identificationInfo/*/gmd:citation/*/gmd:title/gco:CharacterString");
-            xpathToClean.add("gmd:identificationInfo/*/gmd:citation/*/gmd:title/*/gmd:textGroup/gmd:LocalisedCharacterString");
-            xpathToClean.add("gmd:parentIdentifier");
-        }
-        xpathToClean.forEach(xpath -> {
-            List<?> nodes = null;
-            try {
-                nodes = Xml.selectNodes(xml, xpath, new ArrayList<>(schemaPlugin.getNamespaces()));
-                for (Object o : nodes) {
-                    if (o instanceof Element) {
-                        Element el = (Element) o;
-                        // If the element contain text, empty the text otherwise remove the element
-                        if (el.getChildren().isEmpty()) {
-                            el.setText("");
-                        } else {
-                            el.getParent().removeContent(el);
-                        }
-                    }
-                }
-            } catch (JDOMException e) {
-                LOGGER_DATA_MANAGER.debug("Check xpath '{}' for schema plugin '{}'. Error is '{}'.", new Object[] {
-                    xpath, schema, e.getMessage()});
+    private Element cleanElementOnDuplicate(String schema, String uuid, Element md,
+                                            String parentUuid, ServiceContext context) throws Exception {
+        Path styleSheet = metadataSchemaUtils.getSchemaDir(schema).resolve("clean-elements-on-duplicate.xsl");
+        if (styleSheet.toFile().exists()) {
+            // --- setup environment
+            Element env = new Element("env");
+            env.addContent(new Element("uuid").setText(uuid));
+            env.addContent(thesaurusManager.buildResultfromThTable(context));
+
+            Element schemaLoc = new Element("schemaLocation");
+            schemaLoc.setAttribute(schemaManager.getSchemaLocation(schema, context));
+            env.addContent(schemaLoc);
+
+            if (parentUuid != null) {
+                env.addContent(new Element("parentUuid").setText(parentUuid));
             }
-        });
+
+            // add user information to env if user is authenticated (should be)
+            Element elUser = new Element("user");
+            UserSession usrSess = context.getUserSession();
+            if (usrSess.isAuthenticated()) {
+                String myUserId = usrSess.getUserId();
+                User user = getApplicationContext().getBean(UserRepository.class).findOne(myUserId);
+                if (user != null) {
+                    Element elUserDetails = new Element("details");
+                    elUserDetails.addContent(new Element("surname").setText(user.getSurname()));
+                    elUserDetails.addContent(new Element("firstname").setText(user.getName()));
+                    elUserDetails.addContent(new Element("organisation").setText(user.getOrganisation()));
+                    elUserDetails.addContent(new Element("username").setText(user.getUsername()));
+                    elUser.addContent(elUserDetails);
+                    env.addContent(elUser);
+                }
+            }
+
+            // add original metadata to result
+            Element result = new Element("root");
+            result.addContent(md);
+            // add 'environment' to result
+            env.addContent(new Element("siteURL").setText(settingManager.getSiteURL(context)));
+            env.addContent(new Element("nodeURL").setText(settingManager.getNodeURL()));
+            env.addContent(new Element("node").setText(context.getNodeId()));
+
+            // Settings were defined as an XML starting with root named config
+            // Only second level elements are defined (under system).
+            List<?> config = settingManager.getAllAsXML(true).cloneContent();
+            for (Object c : config) {
+                Element settings = (Element) c;
+                env.addContent(settings);
+            }
+            result.addContent(env);
+            result = Xml.transform(result, styleSheet);
+            return result;
+        } else {
+            return md;
+        }
     }
 
 
