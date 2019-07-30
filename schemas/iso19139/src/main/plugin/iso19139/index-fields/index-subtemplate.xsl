@@ -226,7 +226,7 @@
   <!-- Aiv subtemplate -->
   <xsl:template mode="index" match="gmd:MD_AggregateInformation">
     <Field name="_title"
-           string="{if ($title != '') then $title else 'Aggregation Information'}"
+           string="{if ($title != '') then $title else 'Verwante dataset(serie)s'}"
            store="true" index="true"/>
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
   </xsl:template>

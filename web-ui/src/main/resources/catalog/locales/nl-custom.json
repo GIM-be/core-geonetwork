@@ -9,5 +9,15 @@
   "cancel": "Annuleer",
   "selectView": "Weergave",
   "groupReferrer": "Id van gelinkte organisatie",
-  "groupReferrerHelp": "Id zoals opgenomen in federation claim organisationid"
+  "groupReferrerHelp": "Id zoals opgenomen in federation claim organisationid",
+  "searchAaggregationInfo": "Zoek een Verwante dataset(serie)s ...",
+  "searchAdistributor": "Zoek een Verdeler ...",
+  "searchAspatialResolution": "Zoek een Ruimtelijke resolutie dataset(serie) ...",
+  "searchAprocessStep": "Zoek een Processtappen ...",
+  "searchAresourceSpecificUsage": "Zoek een Gebruik ...",
+  "searchAsource": "Zoek een Bron ...",
+  "searchAtransferOptions": "Zoek een Overdracht ...",
+  "searchAdistributionOrderProcess": "Zoek een Bestelinformatie ...",
+  "searchAonLineResource": "Zoek een Online bronnen ...",
+  "searchAtemporalElement": "Zoek een Temporele begrenzing ..."
 }
