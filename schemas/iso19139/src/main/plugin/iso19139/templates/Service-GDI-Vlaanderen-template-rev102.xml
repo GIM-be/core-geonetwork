@@ -429,8 +429,12 @@
           </gmd:temporalElement>
           <gmd:verticalElement>
             <gmd:EX_VerticalExtent>
-              <gmd:minimumValue/>
-              <gmd:maximumValue/>
+              <gmd:minimumValue>
+                <gco:Real/>
+              </gmd:minimumValue>
+              <gmd:maximumValue>
+                <gco:Real/>
+              </gmd:maximumValue>
               <gmd:verticalCRS>
                 <gml:VerticalCRS gml:id="VCRS_01">
                   <gml:identifier codeSpace=""/>

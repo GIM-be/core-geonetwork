@@ -114,7 +114,7 @@
         <gmd:CI_Citation>
           <gmd:title>
             <gco:CharacterString>
-              Metadata-sjabloon voor &lt;b&gt; datasetseries &lt;/b&gt; v1.0.3, conform
+              Metadata-sjabloon voor datasetseries v1.0.3, conform
               GDI-Vlaanderen Best Practices v1.0
             </gco:CharacterString>
           </gmd:title>
@@ -600,8 +600,12 @@
           </gmd:temporalElement>
           <gmd:verticalElement>
             <gmd:EX_VerticalExtent>
-              <gmd:minimumValue/>
-              <gmd:maximumValue/>
+              <gmd:minimumValue>
+                <gco:Real/>
+              </gmd:minimumValue>
+              <gmd:maximumValue>
+                <gco:Real/>
+              </gmd:maximumValue>
               <gmd:verticalCRS>
                 <gml:VerticalCRS gml:id="VCRS_01">
                   <gml:identifier codeSpace=""/>
@@ -624,7 +628,25 @@
       <gmd:includedWithDataset>
         <gco:Boolean>true</gco:Boolean>
       </gmd:includedWithDataset>
-      <gmd:featureCatalogueCitation uuidref=""/>
+      <gmd:featureCatalogueCitation>
+        <gmd:CI_Citation>
+          <gmd:title gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:title>
+          <gmd:date>
+            <gmd:CI_Date>
+              <gmd:date>
+                <gco:Date/>
+              </gmd:date>
+              <gmd:dateType>
+                <gmd:CI_DateTypeCode
+                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                  codeListValue=""/>
+              </gmd:dateType>
+            </gmd:CI_Date>
+          </gmd:date>
+        </gmd:CI_Citation>
+      </gmd:featureCatalogueCitation>
     </gmd:MD_FeatureCatalogueDescription>
   </gmd:contentInfo>
   <gmd:distributionInfo>
