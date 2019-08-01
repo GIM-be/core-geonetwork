@@ -51,18 +51,12 @@
     </gmd:alternateTitle>
   </xsl:template>
 
-  <xsl:template match="gmd:identificationInfo/*/gmd:citation/*/gmd:title/*/gmd:textGroup/gmd:LocalisedCharacterString">
-    <gmd:textGroup gco:nilReason="missing">
-      <gmd:LocalisedCharacterString/>
-    </gmd:textGroup>
-  </xsl:template>
-
   <!-- Remove Parent identifier -->
   <xsl:template match="gmd:parentIdentifier"/>
 
   <!-- Set a new RS_Identifier -->
-  <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier|
-                       gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier">
+  <xsl:template match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier|
+                       gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <gmd:code>
