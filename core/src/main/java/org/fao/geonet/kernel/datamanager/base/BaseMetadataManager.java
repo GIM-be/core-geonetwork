@@ -451,10 +451,12 @@ public class BaseMetadataManager implements IMetadataManager {
 		String schema = templateMetadata.getDataInfo().getSchemaId();
 		String data = templateMetadata.getData();
 		Element xml = Xml.loadString(data, false);
-		boolean isMetadata = templateMetadata.getDataInfo().getType() == MetadataType.METADATA;
+		MetadataType type = templateMetadata.getDataInfo().getType();
 		// setMetadataTitle(schema, xml, context.getLanguage(), !isMetadata);
-        xml = cleanElementOnDuplicate(schema, uuid, xml, parentUuid, context);
-		if (isMetadata) {
+        if (type == MetadataType.METADATA || type == MetadataType.TEMPLATE) {
+            xml = updateInfoOnDuplicate(schema, uuid, xml, parentUuid, context);
+        }
+        if (type == MetadataType.METADATA) {
             xml = updateFixedInfo(schema, Optional.<Integer>absent(), uuid, xml, parentUuid, UpdateDatestamp.NO,
 					context);
 		}
@@ -525,12 +527,12 @@ public class BaseMetadataManager implements IMetadataManager {
     }
 
     /**
-     * Empty and remove some elements from the source metadata/template
+     * Empty, remove and set some elements from the source metadata/template
      * when creating a new metadata out of it
      */
-    private Element cleanElementOnDuplicate(String schema, String uuid, Element md,
-                                            String parentUuid, ServiceContext context) throws Exception {
-        Path styleSheet = metadataSchemaUtils.getSchemaDir(schema).resolve("clean-elements-on-duplicate.xsl");
+    private Element updateInfoOnDuplicate(String schema, String uuid, Element md,
+                                          String parentUuid, ServiceContext context) throws Exception {
+        Path styleSheet = metadataSchemaUtils.getSchemaDir(schema).resolve("update-info-on-duplicate.xsl");
         if (styleSheet.toFile().exists()) {
             // --- setup environment
             Element env = new Element("env");
@@ -577,6 +579,8 @@ public class BaseMetadataManager implements IMetadataManager {
                 Element settings = (Element) c;
                 env.addContent(settings);
             }
+            env.addContent(new Element("mduuid").setText(UUID.randomUUID().toString()));
+
             result.addContent(env);
             result = Xml.transform(result, styleSheet);
             return result;

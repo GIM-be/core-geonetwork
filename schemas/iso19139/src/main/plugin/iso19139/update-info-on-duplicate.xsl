@@ -25,46 +25,55 @@
                 select="count(//gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[starts-with(@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/Category')]) = 1"/>
 
   <!-- The default language is also added as gmd:locale for multilingual metadata records. -->
-  <xsl:variable name="mainLanguage"
-                select="/root/*/gmd:language/gco:CharacterString/text()|
-                        /root/*/gmd:language/gmd:LanguageCode/@codeListValue"/>
-
-  <xsl:variable name="isMultilingual"
-                select="count(/root/*/gmd:locale[*/gmd:languageCode/*/@codeListValue != $mainLanguage]) > 0"/>
-
-  <xsl:variable name="mainLanguageId"
-                select="upper-case(java:twoCharLangCode($mainLanguage))"/>
-
-  <xsl:variable name="locales"
-                select="/root/*/gmd:locale/gmd:PT_Locale"/>
-
-  <xsl:variable name="defaultEncoding"
-                select="'utf8'"/>
-
-  <xsl:variable name="editorConfig"
-                select="document('layout/config-editor.xml')"/>
-
-  <xsl:variable name="nonMultilingualFields"
-                select="$editorConfig/editor/multilingualFields/exclude"/>
+  <xsl:variable name="mainLanguage" select="/root/*/gmd:language/gco:CharacterString/text()| /root/*/gmd:language/gmd:LanguageCode/@codeListValue"/>
+  <xsl:variable name="isMultilingual" select="count(/root/*/gmd:locale[*/gmd:languageCode/*/@codeListValue != $mainLanguage]) > 0"/>
+  <xsl:variable name="mainLanguageId" select="upper-case(java:twoCharLangCode($mainLanguage))"/>
+  <xsl:variable name="locales" select="/root/*/gmd:locale/gmd:PT_Locale"/>
+  <xsl:variable name="defaultEncoding" select="'utf8'"/>
+  <xsl:variable name="editorConfig" select="document('layout/config-editor.xml')"/>
+  <xsl:variable name="nonMultilingualFields" select="$editorConfig/editor/multilingualFields/exclude"/>
 
 
   <xsl:template match="/root">
     <xsl:apply-templates select="*:MD_Metadata"/>
   </xsl:template>
 
-  <xsl:template match="gmd:identificationInfo/*/gmd:citation/*/gmd:title/gco:CharacterString">
-    <xsl:copy/>
+  <!-- Empty titles string -->
+  <xsl:template match="gmd:identificationInfo/*/gmd:citation/*/gmd:title">
+    <gmd:title gco:nilReason="missing">
+      <gco:CharacterString/>
+    </gmd:title>
   </xsl:template>
 
-  <xsl:template match="gmd:identificationInfo/*/gmd:citation/*/gmd:alternateTitle/gco:CharacterString">
-    <xsl:copy/>
+  <xsl:template match="gmd:identificationInfo/*/gmd:citation/*/gmd:alternateTitle">
+    <gmd:alternateTitle gco:nilReason="missing">
+      <gco:CharacterString/>
+    </gmd:alternateTitle>
   </xsl:template>
 
-  <xsl:template match="gmd:identificationInfo/*/gmd:citation/*/gmd:title/*/gmd:textGroup/gmd:LocalisedCharacterString">
-    <xsl:copy/>
+  <xsl:template match="gmd:parentIdentifier">
+    <gmd:parentIdentifier gco:nilReason="missing">
+      <gco:CharacterString/>
+    </gmd:parentIdentifier>
   </xsl:template>
 
-  <xsl:template match="gmd:parentIdentifier"/>
+  <!-- Set a new RS_Identifier or gmd:MD_Identifier -->
+  <xsl:template match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier|
+                       gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <gmd:code>
+        <gco:CharacterString>
+          <xsl:value-of select="/root/env/mduuid"/>
+        </gco:CharacterString>
+      </gmd:code>
+      <xsl:if test="name() = 'gmd:RS_Identifier'">
+        <gmd:codeSpace gco:nilReason="missing">
+          <gco:CharacterString/>
+        </gmd:codeSpace>
+      </xsl:if>
+    </xsl:copy>
+  </xsl:template>
 
   <!-- copy everything else as is -->
   <xsl:template match="@*|node()">
