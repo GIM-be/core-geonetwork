@@ -51,10 +51,13 @@
     </gmd:alternateTitle>
   </xsl:template>
 
-  <!-- Remove Parent identifier -->
-  <xsl:template match="gmd:parentIdentifier"/>
+  <xsl:template match="gmd:parentIdentifier">
+    <gmd:parentIdentifier gco:nilReason="missing">
+      <gco:CharacterString/>
+    </gmd:parentIdentifier>
+  </xsl:template>
 
-  <!-- Set a new RS_Identifier -->
+  <!-- Set a new RS_Identifier or gmd:MD_Identifier -->
   <xsl:template match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier|
                        gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier">
     <xsl:copy>
@@ -64,6 +67,11 @@
           <xsl:value-of select="/root/env/mduuid"/>
         </gco:CharacterString>
       </gmd:code>
+      <xsl:if test="name() = 'gmd:RS_Identifier'">
+        <gmd:codeSpace gco:nilReason="missing">
+          <gco:CharacterString/>
+        </gmd:codeSpace>
+      </xsl:if>
     </xsl:copy>
   </xsl:template>
 
