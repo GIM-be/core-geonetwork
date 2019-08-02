@@ -25,6 +25,7 @@
 <xsl:stylesheet xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
                 version="2.0"
 >
@@ -34,6 +35,7 @@
 
 
     <xsl:variable name="isMultilingual" select="count(distinct-values(*//gmd:LocalisedCharacterString/@locale)) > 0"/>
+    <xsl:variable name="codeList" select="document('../loc/dut/codelist.xml')"/>
 
     <!-- Subtemplate indexing -->
     <xsl:template match="/">
@@ -98,7 +100,8 @@
                        string="{if ($title != '') then $title
                                 else if ($name != '') then concat($org, ' (', $name, ')')
                                 else if ($mail != '') then concat($org, ' (', $mail, ')')
-                                else $org}"
+                                else if ($org != '') then $org
+                                else util:getCodelistTranslation('gmd:CI_RoleCode', string(gmd:role/*/@codeListValue), string('dut'))}"
                        store="true" index="true"/>
                 <Field name="orgName" string="{$org}" store="true" index="true"/>
                 <Field name="orgNameTree" string="{$org}" store="true" index="true"/>
@@ -120,7 +123,8 @@
                        string="{if ($title != '') then $title
                                 else if ($name != '') then concat($org, ' (', $name, ')')
                                 else if ($mail != '') then concat($org, ' (', $mail, ')')
-                                else $org}"
+                                else if ($org != '') then $org
+                                else util:getCodelistTranslation('gmd:CI_RoleCode', string(gmd:role/*/@codeListValue), string('dut'))}"
                        store="true" index="true"/>
                 <Field name="orgName" string="{$org}" store="true" index="true"/>
                 <Field name="orgNameTree" string="{$org}" store="true" index="true"/>
@@ -151,10 +155,12 @@
     <!--Online resources-->
     <xsl:template mode="index" match="gmd:CI_OnlineResource[count(ancestor::node()) =  1]">
         <Field name="_title"
-               string="{if ($title != '') then $title else gmd:linkage/gmd:URL}"
+               string="{if ($title != '') then $title
+                        else if (gmd:linkage/gmd:URL and normalize-space(gmd:linkage/gmd:URL) != '') then gmd:linkage/gmd:URL
+                        else 'Online bronnen'}"
                store="true" index="true"/>
 
-        <xsl:call-template name="subtemplate-common-fields"/>
+        <xsl:call-template name="subtemplate-common-fields-or-void"/>
     </xsl:template>
 
 
@@ -196,30 +202,167 @@
 
 
 
-    <xsl:template mode="index" match="gmd:DQ_DomainConsistency[count(ancestor::node()) =  1]">
-        <Field name="_title"
-               string="{if ($title != '') then $title
-                        else gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString}"
-               store="true" index="true"/>
+<!--    <xsl:template mode="index" match="gmd:DQ_DomainConsistency[count(ancestor::node()) =  1]">-->
+<!--        <Field name="_title"-->
+<!--               string="{if ($title != '') then $title-->
+<!--                        else gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString}"-->
+<!--               store="true" index="true"/>-->
 
-        <xsl:call-template name="subtemplate-common-fields"/>
-    </xsl:template>
+<!--        <xsl:call-template name="subtemplate-common-fields"/>-->
+<!--    </xsl:template>-->
 
 
 
     <xsl:template mode="index" match="gmd:MD_Format[count(ancestor::node()) =  1]">
         <Field name="_title"
-               string="{if ($title != '') then $title else gmd:name/gco:CharacterString}"
+               string="{if ($title != '') then $title
+                        else if (gmd:name/gco:CharacterString and normalize-space(gmd:name/gco:CharacterString) != '') then gmd:name/gco:CharacterString
+                        else 'Distributieformaat'}"
                store="true" index="true"/>
 
-        <xsl:call-template name="subtemplate-common-fields"/>
+        <xsl:call-template name="subtemplate-common-fields-or-void"/>
     </xsl:template>
 
 
+  <!-- Aiv subtemplate -->
+  <xsl:template mode="index" match="gmd:MD_AggregateInformation">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Verwante dataset(serie)s'}"
+           store="true" index="true"/>
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
 
-    <xsl:template name="subtemplate-common-fields">
-        <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
-        <Field name="_root" string="{name(.)}" store="true" index="true"/>
-    </xsl:template>
+  <xsl:template mode="index"
+                match="gmd:DQ_AbsoluteExternalPositionalAccuracy|gmd:DQ_CompletenessOmission|gmd:DQ_DomainConsistency|gmd:DQ_ThematicClassificationCorrectness">
+    <Field name="_title"
+           string="{
+              if ($title != '') then $title
+              else if (name() = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Geometrische nauwkeurigheid'
+              else if (name() = 'gmd:DQ_CompletenessOmission') then 'Volledigheid'
+              else if (name() = 'gmd:DQ_DomainConsistency') then 'INSPIRE Domeinconsistentie'
+              else if (name() = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematische classificatie'
+              else ''
+             }"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:MD_Constraints|gmd:MD_LegalConstraints|gmd:MD_SecurityConstraints">
+    <Field name="_title"
+           string="{
+                if ($title != '') then $title
+                else if (name() = 'gmd:MD_Constraints') then 'Inhoudelijke gebruiksbeperkingen'
+                else if (name() = 'gmd:MD_LegalConstraints') then 'Legale beperkingen'
+                else if (name() = 'gmd:MD_SecurityConstraints') then 'Veiligheidsbeperkingen'
+                else ''
+               }"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:MD_Distributor">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Verdeler'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:MD_Resolution">
+    <Field name="_title"
+           string="{
+                if ($title != '') then $title
+                else if (gmd:distance) then 'Grondresolutie'
+                else if (gmd:equivalentScale) then 'Toepassingsschaal'
+                else ''
+               }"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:LI_ProcessStep">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Processtappen'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:MD_Usage">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Gebruik'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:LI_Source">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Bron'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:MD_DigitalTransferOptions">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Overdracht'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:MD_StandardOrderProcess">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Bestelinformatie'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:EX_VerticalExtent">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Verticale begrenzing'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:EX_TemporalExtent">
+    <Field name="_title"
+           string="{if ($title != '') then $title else 'Temporele begrenzing'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:otherConstraints">
+    <Field name="_title"
+           string="{
+                if ($title != '') then $title
+                else if (normalize-space(./gmx:Anchor/text()) != '') then normalize-space(./gmx:Anchor/text())
+                else if (normalize-space(./gco:CharacterString/text()) != '') then normalize-space(./gco:CharacterString/text())
+                else if (name(./*[1]) = 'gmx:Anchor') then 'Anchor'
+                else if (name(./*[1]) = 'gco:CharacterString') then 'CharacterString'
+                else ''
+               }"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template name="subtemplate-common-fields">
+    <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
+    <Field name="_root" string="{name(.)}" store="true" index="true"/>
+  </xsl:template>
+
+  <xsl:template name="subtemplate-common-fields-or-void">
+    <Field name="any" string="{if (normalize-space(string(.))) then normalize-space(string(.)) else 'void'}"
+           store="false" index="true"/>
+    <Field name="_root" string="{name(.)}" store="true" index="true"/>
+  </xsl:template>
 
 </xsl:stylesheet>
