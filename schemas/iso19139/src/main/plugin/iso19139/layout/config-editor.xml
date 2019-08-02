@@ -317,15 +317,15 @@
         data-insert-modes="text"
         data-template-type="transferOptions"/>
     </for>
-<!--    <for name="gmd:verticalElement" addDirective="data-gn-directory-entry-selector" xpath="gmd:identificationInfo/gmd:MD_DataIdentification">-->
-<!--      <directiveAttributes-->
-<!--        data-template-add-action="false"-->
-<!--        data-search-action="true"-->
-<!--        data-popup-action="false"-->
-<!--        data-filter='{"_root": "gmd:EX_VerticalExtent"}'-->
-<!--        data-insert-modes="text"-->
-<!--        data-template-type="extent"/>-->
-<!--    </for>-->
+    <for name="gmd:verticalElement" addDirective="data-gn-directory-entry-selector" xpath="gmd:identificationInfo/gmd:MD_DataIdentification">
+      <directiveAttributes
+        data-template-add-action="false"
+        data-search-action="true"
+        data-popup-action="false"
+        data-filter='{"_root": "gmd:EX_VerticalExtent"}'
+        data-insert-modes="text"
+        data-template-type="extent"/>
+    </for>
     <for name="gmd:distributionFormat" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
         data-template-add-action="false"
@@ -361,6 +361,16 @@
         data-filter='{"_root": "gmd:EX_TemporalExtent"}'
         data-insert-modes="text"
         data-template-type="temporalElement"/>
+    </for>
+    <for name="gmd:otherConstraints" addDirective="data-gn-directory-entry-selector">
+      <directiveAttributes
+        data-template-add-action="false"
+        data-search-action="true"
+        data-popup-action="false"
+        data-filter='{"_root": "gmd:otherConstraints"}'
+        data-insert-modes="text"
+        data-template-type="otherConstraints"
+        data-transformation="removeRoot"/>
     </for>
   </fields>
 

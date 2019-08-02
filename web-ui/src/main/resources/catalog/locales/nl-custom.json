@@ -19,5 +19,6 @@
   "searchAtransferOptions": "Zoek een Overdracht ...",
   "searchAdistributionOrderProcess": "Zoek een Bestelinformatie ...",
   "searchAonLineResource": "Zoek een Online bronnen ...",
-  "searchAtemporalElement": "Zoek een Temporele begrenzing ..."
+  "searchAtemporalElement": "Zoek een Temporele begrenzing ...",
+  "searchAotherConstraints": "Zoek een Overige beperkingen ..."
 }

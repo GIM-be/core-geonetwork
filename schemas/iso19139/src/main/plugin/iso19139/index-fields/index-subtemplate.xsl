@@ -25,6 +25,7 @@
 <xsl:stylesheet xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
                 version="2.0"
 >
@@ -235,12 +236,12 @@
                 match="gmd:DQ_AbsoluteExternalPositionalAccuracy|gmd:DQ_CompletenessOmission|gmd:DQ_DomainConsistency|gmd:DQ_ThematicClassificationCorrectness">
     <Field name="_title"
            string="{
-              if ($title != '') then $title else
-              if (name() = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Geometrische nauwkeurigheid' else
-              if (name() = 'gmd:DQ_CompletenessOmission') then 'Volledigheid' else
-              if (name() = 'gmd:DQ_DomainConsistency') then 'INSPIRE Domeinconsistentie' else
-              if (name() = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematische classificatie' else
-              ''
+              if ($title != '') then $title
+              else if (name() = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Geometrische nauwkeurigheid'
+              else if (name() = 'gmd:DQ_CompletenessOmission') then 'Volledigheid'
+              else if (name() = 'gmd:DQ_DomainConsistency') then 'INSPIRE Domeinconsistentie'
+              else if (name() = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematische classificatie'
+              else ''
              }"
            store="true" index="true"/>
 
@@ -250,11 +251,11 @@
   <xsl:template mode="index" match="gmd:MD_Constraints|gmd:MD_LegalConstraints|gmd:MD_SecurityConstraints">
     <Field name="_title"
            string="{
-                if ($title != '') then $title else
-                if (name() = 'gmd:MD_Constraints') then 'Inhoudelijke gebruiksbeperkingen' else
-                if (name() = 'gmd:MD_LegalConstraints') then 'Legale beperkingen' else
-                if (name() = 'gmd:MD_SecurityConstraints') then 'Veiligheidsbeperkingen' else
-                ''
+                if ($title != '') then $title
+                else if (name() = 'gmd:MD_Constraints') then 'Inhoudelijke gebruiksbeperkingen'
+                else if (name() = 'gmd:MD_LegalConstraints') then 'Legale beperkingen'
+                else if (name() = 'gmd:MD_SecurityConstraints') then 'Veiligheidsbeperkingen'
+                else ''
                }"
            store="true" index="true"/>
 
@@ -272,10 +273,10 @@
   <xsl:template mode="index" match="gmd:MD_Resolution">
     <Field name="_title"
            string="{
-                if ($title != '') then $title else
-                if (gmd:distance) then 'Grondresolutie' else
-                if (gmd:equivalentScale) then 'Toepassingsschaal' else
-                ''
+                if ($title != '') then $title
+                else if (gmd:distance) then 'Grondresolutie'
+                else if (gmd:equivalentScale) then 'Toepassingsschaal'
+                else ''
                }"
            store="true" index="true"/>
 
@@ -333,6 +334,21 @@
   <xsl:template mode="index" match="gmd:EX_TemporalExtent">
     <Field name="_title"
            string="{if ($title != '') then $title else 'Temporele begrenzing'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <xsl:template mode="index" match="gmd:otherConstraints">
+    <Field name="_title"
+           string="{
+                if ($title != '') then $title
+                else if (normalize-space(./gmx:Anchor/text()) != '') then normalize-space(./gmx:Anchor/text())
+                else if (normalize-space(./gco:CharacterString/text()) != '') then normalize-space(./gco:CharacterString/text())
+                else if (name(./*[1]) = 'gmx:Anchor') then 'Anchor'
+                else if (name(./*[1]) = 'gco:CharacterString') then 'CharacterString'
+                else ''
+               }"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
