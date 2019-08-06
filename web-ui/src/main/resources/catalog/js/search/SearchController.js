@@ -176,6 +176,113 @@
         })()
       };
 
+      $scope.sourceCatalogOptions = {
+        mode: 'prefetch',
+        doRefresh: false,
+        promise: (function () {
+          var defer = $q.defer();
+          $http.get('../api/sources', {cache: true})
+            .success(function (data) {
+              var res = [];
+              for (var i = 0; i < data.length; i++) {
+                res.push({
+                  id: data[i].uuid,
+                  name: data[i].label.dut ? data[i].label.dut: data[i].name
+                });
+              }
+              defer.resolve(res);
+            });
+          return defer.promise;
+        })()
+      };
+
+      $scope.typeOptions = {
+        mode: 'local',
+        doRefresh: false,
+        data: [{
+          id: 'dataset',
+          name: 'Dataset'
+        }, {
+          id: 'series',
+          name: 'Datasetserie'
+        }, {
+          id: 'featureCatalog',
+          name: 'Objectencatalogus'
+        }, {
+          id: 'service',
+          name: 'Service'
+        }]
+      };
+
+      $scope.metadataTypeOptions = {
+        mode: 'local',
+        doRefresh: false,
+        data: [{
+          id: 'n',
+          name: 'Metadata'
+        }, {
+          id: 'y',
+          name: 'Sjabloon'
+        }]
+      };
+
+      $scope.groupOwnerOptions = {
+        mode: 'prefetch',
+        doRefresh: false,
+        promise: (function () {
+          var defer = $q.defer();
+          $http.get('../api/groups', {cache: true})
+            .success(function (data) {
+              var res = [];
+              for (var i = 0; i < data.length; i++) {
+                res.push({
+                  id: data[i].id,
+                  name: data[i].label.dut ? data[i].label.dut: data[i].name
+                });
+              }
+              defer.resolve(res);
+            });
+          return defer.promise;
+        })()
+      };
+
+      $scope.mdStatusOptions = {
+        mode: 'prefetch',
+        doRefresh: false,
+        promise: (function () {
+          var defer = $q.defer();
+          $http.get('../api/status', {cache: true})
+            .success(function (data) {
+              var res = [];
+              for (var i = 0; i < data.length; i++) {
+                if(data[i].id < 50) {
+                  res.push({
+                    id: data[i].id,
+                    name: data[i].label.dut ? data[i].label.dut: data[i].name
+                  });
+                }
+              }
+              defer.resolve(res);
+            });
+          return defer.promise;
+        })()
+      };
+
+      // checkbox variable model cannot be primitive type. Instead, set it as an object property
+      $scope.checkbox = {
+        isMyMd: false
+      };
+      $scope.filterMyMd = function() {
+        if ($scope.searchObj.params._owner && $scope.searchObj.params._owner === $scope.user.id) {
+          delete $scope.searchObj.params['_owner']
+        } else {
+          $scope.searchObj.params._owner = $scope.user.id
+        }
+      };
+      $scope.$watchGroup(["searchObj.params._owner", "user.id"], function() {
+        $scope.checkbox.isMyMd = $scope.searchObj.params._owner === $scope.user.id;
+      });
+
       /**
        * Keep a reference on main cat scope
        * @return {*}
