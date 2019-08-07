@@ -52,7 +52,7 @@ public class SearchDefaults {
         {Geonet.SearchResult.HITS_PER_PAGE, "10"},
         {Geonet.SearchResult.SIMILARITY, "1"},
         {Geonet.SearchResult.OUTPUT, Geonet.SearchResult.Output.FULL},
-        {Geonet.SearchResult.SORT_BY, Geonet.SearchResult.SortBy.RELEVANCE},
+        {Geonet.SearchResult.SORT_BY, Geonet.SearchResult.SortBy.SORTDATE},
         {Geonet.SearchResult.SORT_ORDER, ""},
         {Geonet.SearchResult.INTERMAP, Geonet.Text.ON}};
 

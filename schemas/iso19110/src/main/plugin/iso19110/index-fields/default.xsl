@@ -91,6 +91,7 @@
       <xsl:for-each select="/gfc:FC_FeatureCatalogue/gmx:versionDate/gco:Date|
         /gfc:FC_FeatureCatalogue/gfc:versionDate/gco:Date">
         <Field name="revisionDate" string="{string(.)}" store="true" index="true"/>
+        <Field name="_sortDate" string="{string(.)}" store="true" index="true"/>
       </xsl:for-each>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

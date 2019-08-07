@@ -430,8 +430,9 @@ public final class Geonet {
         public static final String OUTPUT = "output";
 
         /**
-         * Parameter name: {@value #SORT_BY} - Order results by {@value SortBy#RELEVANCE} (default),
-         * {@value SortBy#RATING}, {@value SortBy#POPULARITY} or by {@value SortBy#DATE}
+         * Parameter name: {@value #SORT_BY} - Order results by {@value SortBy#SORTDATE} (default),
+         * {@value SortBy#RELEVANCE}, {@value SortBy#RATING}, {@value SortBy#POPULARITY}
+         * or by {@value SortBy#DATE}
          */
         public static final String SORT_BY = "sortBy";
 
@@ -532,6 +533,7 @@ public final class Geonet {
         public static final class SortBy {
             public static final String RELEVANCE = "relevance";
             public static final String RATING = "rating";
+            public static final String SORTDATE = "sortDate";
             public static final String POPULARITY = "popularity";
             public static final String DATE = "changeDate";
 
@@ -655,6 +657,7 @@ public final class Geonet {
         public static final String DUMMY = "_dummy";
         public static final String POPULARITY = "_popularity";
         public static final String RATING = "_rating";
+        public static final String SORTDATE = "sortDate";
         public static final String DISPLAY_ORDER = "_displayOrder";
         public static final String EXTRA = "_extra";
         public static final String USERINFO = "_userinfo";
