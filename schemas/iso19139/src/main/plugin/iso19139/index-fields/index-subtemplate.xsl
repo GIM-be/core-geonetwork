@@ -344,6 +344,7 @@
     <Field name="_title"
            string="{
                 if ($title != '') then $title
+                else if (normalize-space(./subtemplate-title/text()) != '') then normalize-space(./subtemplate-title/text())
                 else if (normalize-space(./gmx:Anchor/text()) != '') then normalize-space(./gmx:Anchor/text())
                 else if (normalize-space(./gco:CharacterString/text()) != '') then normalize-space(./gco:CharacterString/text())
                 else if (name(./*[1]) = 'gmx:Anchor') then 'Anchor'
