@@ -241,27 +241,20 @@
         data-template-add-action="false"
         data-search-action="true"
         data-popup-action="false"
-        data-filter='{"_root": "gmd:DQ_AbsoluteExternalPositionalAccuracy or gmd:DQ_CompletenessOmission or gmd:DQ_DomainConsistency or gmd:DQ_ThematicClassificationCorrectness"}'
+        data-filter='{"_root": "gmd:report"}'
         data-insert-modes="text"
-        data-template-type="report"/>
+        data-template-type="report"
+        data-transformation="removeRoot"/>
     </for>
     <for name="gmd:resourceConstraints" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
         data-template-add-action="false"
         data-search-action="true"
         data-popup-action="false"
-        data-filter='{"_root": "gmd:MD_Constraints or gmd:MD_LegalConstraints or gmd:MD_SecurityConstraints"}'
+        data-filter='{"_root": "gmd:resourceConstraints"}'
         data-insert-modes="text"
-        data-template-type="resourceConstraints"/>
-    </for>
-    <for name="gmd:metadataConstraints" addDirective="data-gn-directory-entry-selector">
-      <directiveAttributes
-        data-template-add-action="false"
-        data-search-action="true"
-        data-popup-action="false"
-        data-filter='{"_root": "gmd:MD_Constraints or gmd:MD_LegalConstraints or gmd:MD_SecurityConstraints"}'
-        data-insert-modes="text"
-        data-template-type="resourceConstraints"/>
+        data-template-type="resourceConstraints"
+        data-transformation="rsrcConstrTransform"/>
     </for>
     <for name="gmd:distributor" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
@@ -370,7 +363,7 @@
         data-filter='{"_root": "gmd:otherConstraints"}'
         data-insert-modes="text"
         data-template-type="otherConstraints"
-        data-transformation="removeRoot"/>
+        data-transformation="otherConstrTransform"/>
     </for>
   </fields>
 
