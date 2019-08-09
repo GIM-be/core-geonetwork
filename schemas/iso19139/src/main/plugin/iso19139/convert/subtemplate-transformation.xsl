@@ -13,7 +13,11 @@
     <xsl:copy-of select="./*"/>
   </xsl:template>
 
-  <xsl:template name="removeRootAndTitle">
+  <xsl:template name="rsrcConstrTransform">
+    <xsl:copy-of select="./*[not(name() = 'subtemplate-title')]"/>
+  </xsl:template>
+
+  <xsl:template name="otherConstrTransform">
     <xsl:apply-templates select="./*[not(name() = 'subtemplate-title')]" mode="normalise-spaces"/>
   </xsl:template>
 

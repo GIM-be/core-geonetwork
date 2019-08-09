@@ -253,6 +253,7 @@
     <Field name="_title"
            string="{
                 if ($title != '') then $title
+                else if (normalize-space(./subtemplate-title/text()) != '') then normalize-space(./subtemplate-title/text())
                 else if (name(*[1]) = 'gmd:MD_Constraints') then 'Inhoudelijke gebruiksbeperkingen'
                 else if (name(*[1]) = 'gmd:MD_LegalConstraints') then 'Legale beperkingen'
                 else if (name(*[1]) = 'gmd:MD_SecurityConstraints') then 'Veiligheidsbeperkingen'

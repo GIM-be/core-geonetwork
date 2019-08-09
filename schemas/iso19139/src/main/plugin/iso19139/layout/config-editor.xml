@@ -254,7 +254,7 @@
         data-filter='{"_root": "gmd:resourceConstraints"}'
         data-insert-modes="text"
         data-template-type="resourceConstraints"
-        data-transformation="removeRoot"/>
+        data-transformation="rsrcConstrTransform"/>
     </for>
     <for name="gmd:distributor" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
@@ -363,7 +363,7 @@
         data-filter='{"_root": "gmd:otherConstraints"}'
         data-insert-modes="text"
         data-template-type="otherConstraints"
-        data-transformation="removeRootAndTitle"/>
+        data-transformation="otherConstrTransform"/>
     </for>
   </fields>
 
