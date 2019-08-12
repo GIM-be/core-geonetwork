@@ -91,6 +91,20 @@ public class SendNotification {
             if (groupEmail != null && !groupEmail.trim().isEmpty()) {
                 toAddress.add(groupEmail);
                 bToAddressSet = true;
+            } else {
+                List<User> groupUsers = getGroupUsers(Integer.valueOf(ah.getParams().getOwnerIdGroup()));
+                if (groupUsers!=null) {
+                    for (User user : groupUsers) {
+                    	if (user.getEmail()!=null && !user.getEmail().trim().isEmpty() && user.getProfile()==Profile.Reviewer) {
+                        	if (bToAddressSet) {
+                        		bccAddress.add(user.getEmail());
+                        	} else {
+                        		toAddress.add(user.getEmail());
+                                bToAddressSet = true;
+                        	}
+                    	}
+                    }
+                }
             }
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -105,20 +119,6 @@ public class SendNotification {
         	}
         }
 
-        List<User> groupUsers = getGroupUsers(Integer.valueOf(ah.getParams().getOwnerIdGroup()));
-        if (groupUsers!=null) {
-            for (User user : groupUsers) {
-            	if (user.getEmail()!=null && !user.getEmail().trim().isEmpty() && user.getProfile()==Profile.Administrator) {
-                	if (bToAddressSet) {
-                		bccAddress.add(user.getEmail());
-                	} else {
-                		toAddress.add(user.getEmail());
-                        bToAddressSet = true;
-                	}
-            	}
-            }
-        }
-        
         String subject = settings.getValue(Settings.SYSTEM_HARVESTING_MAIL_SUBJECT);
 
         String htmlMessage = settings
