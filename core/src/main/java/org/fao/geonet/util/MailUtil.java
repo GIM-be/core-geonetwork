@@ -59,10 +59,27 @@ public class MailUtil {
      */
     public static Boolean sendHtmlMail(List<String> toAddress, String subject,
                                        String htmlMessage, SettingManager settings) {
+    	return sendHtmlMail(toAddress, null, subject, htmlMessage, settings);
+    }
+    
+    /**
+     * Send an html mail. Will look on the settings directly to know the
+     * remitent
+     *
+     * @param toAddress
+     * @param bccAddress
+     * @param subject
+     * @param htmlMessage
+     * @param settings
+     * @throws EmailException
+     */
+    public static Boolean sendHtmlMail(List<String> toAddress, List<String> bccAddress, String subject,
+                                       String htmlMessage, SettingManager settings) {
         // Create data information to compose the mail
         HtmlEmail email = new HtmlEmail();
         configureBasics(settings, email);
 
+        boolean bMinimumOne = false;
         email.setSubject(subject);
         try {
             email.setHtmlMsg(htmlMessage);
@@ -74,14 +91,28 @@ public class MailUtil {
         // send to all mails extracted from settings
         for (String add : toAddress) {
             try {
-                email.addBcc(add);
+                email.addTo(add);
+                bMinimumOne = true;
             } catch (EmailException e) {
-                Log.error(LOG_MODULE_NAME, "Error setting email BCC address " + add, e);
-                return false;
+                Log.error(LOG_MODULE_NAME, "Error setting email TO address " + add, e);
             }
         }
 
-        return send(email);
+        if (bccAddress!=null) {
+	        for (String add : bccAddress) {
+	            try {
+	                email.addBcc(add);
+	                bMinimumOne = true;
+	            } catch (EmailException e) {
+	                Log.error(LOG_MODULE_NAME, "Error setting email BCC address " + add, e);
+	            }
+	        }
+        }
+
+        if (bMinimumOne) {
+        	return send(email);
+        }
+        return false;
     }
 
     /**

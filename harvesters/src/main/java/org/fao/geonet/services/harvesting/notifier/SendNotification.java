@@ -18,15 +18,33 @@
 package org.fao.geonet.services.harvesting.notifier;
 
 import org.apache.commons.mail.EmailException;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.GeonetContext;
+import org.fao.geonet.api.exception.NotAllowedException;
+import org.fao.geonet.api.exception.ResourceNotFoundException;
 import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.domain.Group;
+import org.fao.geonet.domain.Profile;
+import org.fao.geonet.domain.User;
+import org.fao.geonet.domain.UserGroupId_;
 import org.fao.geonet.kernel.harvest.harvester.AbstractHarvester;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
+import org.fao.geonet.repository.GroupRepository;
+import org.fao.geonet.repository.UserRepository;
+import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.util.MailUtil;
 import org.jdom.Element;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.google.common.collect.Lists;
+
+import static org.springframework.data.jpa.domain.Specifications.where;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import jeeves.server.context.ServiceContext;
@@ -65,18 +83,42 @@ public class SendNotification {
 
         String receiver = settings.getValue(Settings.SYSTEM_HARVESTING_MAIL_RECIPIENT);
         List<String> toAddress = new ArrayList<String>();
+        List<String> bccAddress = new ArrayList<String>();
+        boolean bToAddressSet = false;
 
-        // If no email to send, take the email of the owner of the harvester
-        if (receiver == null || receiver.trim().isEmpty()) {
-            try {
-                receiver = ah.getOwnerEmail();
-            } catch (Exception e1) {
-                e1.printStackTrace();
+        try {
+            String groupEmail = ah.getOwnerEmail();
+            if (groupEmail != null && !groupEmail.trim().isEmpty()) {
+                toAddress.add(groupEmail);
+                bToAddressSet = true;
             }
+        } catch (Exception e1) {
+            e1.printStackTrace();
         }
 
-        toAddress.add(receiver);
+        if (receiver != null && !receiver.trim().isEmpty()) {
+        	if (bToAddressSet) {
+                bccAddress.add(receiver);
+        	} else {
+                toAddress.add(receiver);
+                bToAddressSet = true;
+        	}
+        }
 
+        List<User> groupUsers = getGroupUsers(Integer.valueOf(ah.getParams().getOwnerIdGroup()));
+        if (groupUsers!=null) {
+            for (User user : groupUsers) {
+            	if (user.getEmail()!=null && !user.getEmail().trim().isEmpty() && user.getProfile()==Profile.Administrator) {
+                	if (bToAddressSet) {
+                		bccAddress.add(user.getEmail());
+                	} else {
+                		toAddress.add(user.getEmail());
+                        bToAddressSet = true;
+                	}
+            	}
+            }
+        }
+        
         String subject = settings.getValue(Settings.SYSTEM_HARVESTING_MAIL_SUBJECT);
 
         String htmlMessage = settings
@@ -165,10 +207,24 @@ public class SendNotification {
         htmlMessage = htmlMessage.replace("$$harvesterType$$", ah.getType());
         subject = subject.replace("$$harvesterType$$", ah.getType());
 
-        MailUtil.sendHtmlMail(toAddress, subject, htmlMessage, settings);
+        MailUtil.sendHtmlMail(toAddress, bccAddress, subject, htmlMessage, settings);
     }
 
-    /**
+    @SuppressWarnings("unused")
+	private static List<User> getGroupUsers(Integer groupId) {
+        ApplicationContext applicationContext = ApplicationContextHolder.get();
+        GroupRepository groupRepository = applicationContext.getBean(GroupRepository.class);
+        final Group group = groupRepository.findOne(groupId);
+
+        if (group != null) {
+            UserRepository userRepository = applicationContext.getBean(UserRepository.class);
+            return userRepository.findAllUsersInUserGroups(
+                UserGroupSpecs.hasGroupId(groupId));
+        }
+        return null;
+    }
+
+	/**
      * @param result
      * @return
      */
