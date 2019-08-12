@@ -422,7 +422,8 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
         } else if (sortBy.equals(Geonet.SearchResult.SortBy.SCALE_DENOMINATOR)) {
             sortType = SortField.Type.INT;
         } else if (sortBy.equals(Geonet.SearchResult.SortBy.DATE)
-            || sortBy.equals(Geonet.SearchResult.SortBy.TITLE)) {
+            || sortBy.equals(Geonet.SearchResult.SortBy.TITLE)
+            || sortBy.equals(Geonet.SearchResult.SortBy.SORTDATE)) {
             sortBy = "_" + sortBy;
         }
         LOGGER.debug( "Sort by: {} order: {} type: {}", new Object[] {sortBy, sortOrder, sortType});
@@ -1560,7 +1561,7 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
 
         _filter = new CachingWrapperFilter(filter);
 
-        String sortBy = Util.getParam(request, Geonet.SearchResult.SORT_BY, Geonet.SearchResult.SortBy.RELEVANCE);
+        String sortBy = Util.getParam(request, Geonet.SearchResult.SORT_BY, Geonet.SearchResult.SortBy.SORTDATE);
         boolean sortOrder = (Util.getParam(request, Geonet.SearchResult.SORT_ORDER, "").equals(""));
         LOGGER.debug("Sorting by : {}", sortBy);
 

@@ -2,9 +2,14 @@
   <div class="row">
     <div class="col-md-5 col-md-offset-1">
       <h3 data-translate="">what</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5 col-md-offset-1">
+      <!-- <h3 data-translate="">what</h3> -->
       <div class="form-group">
         <div class="col-sm-12">
-          <label for="fileIdF"
+          <label for="flanderskeywordF"
                  class="control-label"
                  data-translate="">flanderskeywords</label>
           <input type="text" id="flanderskeywordF" value=""
@@ -16,23 +21,12 @@
       <div class="form-group">
         <div class="col-sm-12">
           <label for="keywordsF"
-                class="control-label"
-                data-translate="">keywords</label>
+                 class="control-label"
+                 data-translate="">keywords</label>
           <input type="text" id="keywordsF" value=""
                  class="form-control"
                  gn-values="searchObj.params.keyword"
                  gn-typeahead="keywordsOptions"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-12">
-          <label for="orgNameF"
-                class="control-label"
-                data-translate="">orgName</label>
-          <input type="text" id="orgNameF" value=""
-                 class="form-control"
-                 gn-values="searchObj.params.orgName"
-                 gn-typeahead="orgNameOptions"/>
         </div>
       </div>
       <div class="form-group">
@@ -46,31 +40,140 @@
                  gn-typeahead="fileIdOptions"/>
         </div>
       </div>
-      <div class="form-group">
-        <div class="col-sm-12">
-          <label for="categoriesF"
-                 class="control-label"
-                 data-translate="">categories</label>
-          <input type="text" id="categoriesF" value=""
-                 class="form-control"
-                 gn-typeahead="categoriesOptions"
-                 gn-values="searchObj.params._cat"/>
+
+      <div ng-show="authenticated && user.isEditorOrMore()">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="orgNameF"
+                   class="control-label"
+                   data-translate="">orgName</label>
+            <input type="text" id="orgNameF" value=""
+                   class="form-control"
+                   gn-values="searchObj.params.orgName"
+                   gn-typeahead="orgNameOptions"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="typeF"
+                   class="control-label"
+                   data-translate="">metadataTypes</label>
+            <input type="text" id="typeF" value=""
+                   class="form-control"
+                   gn-values="searchObj.params.type"
+                   gn-typeahead="typeOptions"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="categoriesF"
+                   class="control-label"
+                   data-translate="">categories</label>
+            <input type="text" id="categoriesF" value=""
+                   class="form-control"
+                   gn-typeahead="categoriesOptions"
+                   gn-values="searchObj.params._cat"/>
+          </div>
         </div>
       </div>
+
     </div>
+
+
     <div class="col-md-5 gn-search-filter-datepickers">
-      <h3 data-translate="">when</h3>
-      <div data-gn-period-chooser="resourcesCreatedTheLast"
-           data-date-from="searchObj.params.creationDateFrom"
-           data-date-to="searchObj.params.creationDateTo"
-           class="gn-search-filter-datepicker">
+      <!-- <h3 data-translate="">when</h3> -->
+      <div ng-hide="authenticated && user.isEditorOrMore()">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="orgNameF2"
+                   class="control-label"
+                   data-translate="">orgName</label>
+            <input type="text" id="orgNameF2" value=""
+                   class="form-control"
+                   gn-values="searchObj.params.orgName"
+                   gn-typeahead="orgNameOptions"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="typeF2"
+                   class="control-label"
+                   data-translate="">metadataTypes</label>
+            <input type="text" id="typeF2" value=""
+                   class="form-control"
+                   gn-values="searchObj.params.type"
+                   gn-typeahead="typeOptions"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="categoriesF2"
+                   class="control-label"
+                   data-translate="">categories</label>
+            <input type="text" id="categoriesF2" value=""
+                   class="form-control"
+                   gn-typeahead="categoriesOptions"
+                   gn-values="searchObj.params._cat"/>
+          </div>
+        </div>
+      </div>
+      <div data-ng-show="authenticated && user.isEditorOrMore()">
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="sourceCatalogF"
+                   class="control-label"
+                   data-translate="">sourceCatalog</label>
+            <input type="text" id="sourceCatalogF" value=""
+                   class="form-control"
+                   gn-values="searchObj.params._source"
+                   gn-typeahead="sourceCatalogOptions"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="metadataTypeF"
+                   class="control-label"
+                   data-translate="">type</label>
+            <input type="text" id="metadataTypeF" value=""
+                   class="form-control"
+                   gn-values="searchObj.params._isTemplate"
+                   gn-typeahead="metadataTypeOptions"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="groupsOwnerF"
+                   class="control-label"
+                   data-translate="">_groupOwner</label>
+            <input type="text" id="groupsOwnerF" value=""
+                   class="form-control"
+                   gn-values="searchObj.params._groupOwner"
+                   gn-typeahead="groupOwnerOptions"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12">
+            <label for="mdStatusF"
+                   class="control-label"
+                   data-translate="">mdStatus</label>
+            <input type="text" id="mdStatusF" value=""
+                   class="form-control"
+                   gn-values="searchObj.params._status"
+                   gn-typeahead="mdStatusOptions"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-12" id="myMetadataContainer">
+            <label for="myMetadataF"
+                   class="control-label"
+                   data-translate="">myMetadata</label>
+            <input type="checkbox" id="myMetadataF"
+                   ng-model="checkbox.isMyMd"
+                   ng-change="filterMyMd()"/>
+          </div>
+        </div>
       </div>
 
-      <div data-gn-period-chooser="recordsCreatedTheLast"
-           data-date-from="searchObj.params.dateFrom"
-           data-date-to="searchObj.params.dateTo"
-           class="gn-search-filter-datepicker">
-      </div>
     </div>
   </div>
 </div>

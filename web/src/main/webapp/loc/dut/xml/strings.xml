@@ -939,6 +939,7 @@
   <sortByType id="rating">Beoordeling</sortByType>
   <sortByType id="relevance">Relevantie</sortByType>
   <sortByType id="title">Titel</sortByType>
+  <sortByType id="sortDate">Referentiedatum</sortByType>
 
   <southbc>Zuidelijke coördinaat</southbc>
   <spacesNot js="true">Spaties zijn niet toegestaan in dit veld</spacesNot>

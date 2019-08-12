@@ -132,6 +132,7 @@
   </facets>
 
   <summaryTypes>
+    <!-- Search page faceted search -->
     <summaryType name="details" format="DIMENSION">
       <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="mdActions"/>
@@ -160,8 +161,11 @@
       <item facet="gemetKeyword"
             translator="term:http://geonetwork-opensource.org/gemet"/>
       -->
+
+      <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
     </summaryType>
 
+    <!-- Contribution tab faceted search -->
     <summaryType name="manager" format="DIMENSION">
       <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="category" max="99" sortBy="value"

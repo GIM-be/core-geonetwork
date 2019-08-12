@@ -950,6 +950,7 @@
   <sortByType id="rating">Note</sortByType>
   <sortByType id="relevance">Pertinence</sortByType>
   <sortByType id="title">Titre</sortByType>
+  <sortByType id="sortDate">Date de référence</sortByType>
 
   <southbc>Coordonnée sud de l'emprise</southbc>
   <spacesNot js="true">Les espaces ne sont pas autorisés dans ce champ</spacesNot>

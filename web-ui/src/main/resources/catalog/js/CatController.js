@@ -105,6 +105,9 @@
           ],
           'filters': {},
           'sortbyValues': [{
+            'sortBy': 'sortDate',
+            'sortOrder': ''
+          }, {
             'sortBy': 'relevance',
             'sortOrder': ''
           }, {
@@ -126,7 +129,7 @@
             'sortBy': 'denominatorAsc',
             'sortOrder': 'reverse'
           }],
-          'sortBy': 'relevance',
+          'sortBy': 'sortDate',
           'resultViewTpls': [{
             'tplUrl': '../../catalog/components/' +
                 'search/resultsview/partials/viewtemplates/grid.html',

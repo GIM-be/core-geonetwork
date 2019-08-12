@@ -917,6 +917,7 @@
   <sortByType id="rating">Rating</sortByType>
   <sortByType id="relevance">Relevance</sortByType>
   <sortByType id="title">Title</sortByType>
+  <sortByType id="sortDate">Reference date</sortByType>
 
   <southbc>South Bounding Coordinate</southbc>
   <spacesNot js="true">Spaces in this field are not allowed</spacesNot>
