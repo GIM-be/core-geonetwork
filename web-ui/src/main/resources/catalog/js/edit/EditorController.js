@@ -233,7 +233,7 @@
                   containerId: '#gn-editor-container-' + $routeParams.id,
                   tab: $location.search()['tab'] || defaultTab,
                   displayAttributes: $location.search()['displayAttributes'] === 'true',
-                  displayTooltips: $location.search()['displayTooltips'] === 'true',
+                  displayTooltips: true,
                   displayTooltipsMode: $location.search()['displayTooltipsMode'] || '',
                   compileScope: $scope,
                   formScope: $scope.$new(),
