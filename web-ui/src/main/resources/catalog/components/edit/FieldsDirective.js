@@ -302,6 +302,10 @@
                      var html = '';
 
                      // TODO: externalize in a template.
+
+                     // Add description to the body html
+                     html += '<p><div>' + info.description + '</div>';
+
                      if (angular.isArray(info.help)) {
                        angular.forEach(info.help, function(helpText) {
                          if (helpText['@for']) {
@@ -319,8 +323,7 @@
                        closeTooltips();
                      }
 
-                     // Add description to the body html
-                     html += '<p>' + info.description + '</p>';
+                     html += '</p><p>Element name: ' + info.name + '</p>';
 
                      // Right same width as field
                      // For legend, popover is right

@@ -1606,7 +1606,7 @@
   <element name="gmd:name" context="/gmd:MD_Format" id="285.0">
     <label>Formaatnaam</label>
     <description>Naam van het formaat</description>
-    <help>name of the data transfer format(s)</help>
+    <help>Name of the data transfer format(s)</help>
     <helper rel="gmd:version">
       <option value="Text">Text</option>
       <option value="ESRI Shapefile" title="1.0">ESRI Shapefile</option>
