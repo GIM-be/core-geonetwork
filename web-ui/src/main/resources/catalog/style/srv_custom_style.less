@@ -51,6 +51,14 @@ form.gn-editor {
     background-color: #f7f7f7;
     box-shadow: 0 5px 10px grey;
   }
+  label.gn-mandatory-inspire:after, .gn-mandatory-inspire > label:after {
+    content: "(*)" !important;
+    font-size: 1.5em !important;
+  }
+  label.gn-mandatory-gdi:after, .gn-mandatory-gdi > label:after {
+    content: "((*))" !important;
+    font-size: 1em !important;
+  }
 }
 .gn-md-view {
   table {

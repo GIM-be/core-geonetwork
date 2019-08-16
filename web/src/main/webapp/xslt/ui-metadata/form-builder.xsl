@@ -175,12 +175,17 @@
       <xsl:otherwise>
 
         <div
-          class="form-group gn-field gn-{substring-after(name(), ':')} {if ($isRequired) then 'gn-required' else ''} {if ($label/condition) then concat('gn-', $label/condition) else ''} {if ($isFirst) then '' else 'gn-extra-field'}"
+          class="form-group gn-field gn-{substring-after(name(), ':')} {if ($isRequired) then 'gn-required' else ''} {if ($label/condition != 'mandatory') then concat('gn-', $label/condition) else ''} {if ($label/condition = 'mandatory') then (if ($label/mandatoryType) then concat('gn-mandatory-', $label/mandatoryType) else concat('gn-', $label/condition)) else ''} {if ($isFirst) then '' else 'gn-extra-field'}"
           id="gn-el-{$editInfo/@ref}"
           data-gn-field-highlight="">
           <label
             for="gn-field-{$editInfo/@ref}"
             class="col-sm-2 control-label">
+            <xsl:if test="$label/mandatoryTooltip">
+              <xsl:attribute name="title">
+                <xsl:value-of select="$label/mandatoryTooltip"/>
+              </xsl:attribute>
+            </xsl:if>
             <xsl:value-of select="$label/label"/>
           </label>
 
