@@ -712,7 +712,7 @@
                  if="count(gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification) > 0">
             <template>
               <values>
-                <key label="code" required="true"
+                <key label="code"
                      xpath="gmd:MD_Identifier/gmd:code/gco:CharacterString"
                      tooltip="gmd:code|gmd:MD_Identifier"/>
               </values>
@@ -834,7 +834,6 @@
             <template>
               <values>
                 <key label="code"
-                     required="true"
                      xpath="gmd:RS_Identifier/gmd:code/gco:CharacterString"
                      tooltip="gmd:MD_ReferenceSystem"/>
                 <!-- TODO: Get the helper -->
@@ -1197,7 +1196,6 @@
               <template>
                 <values>
                   <key label="operatesOn"
-                       required="true"
                        xpath="@xlink:href"
                        tooltip="srv:operatesOn">
                   </key>
@@ -1241,7 +1239,6 @@
               <template>
                 <values>
                   <key label="operatesOn"
-                       required="true"
                        xpath="@xlink:href"
                        tooltip="srv:operatesOn">
                   </key>

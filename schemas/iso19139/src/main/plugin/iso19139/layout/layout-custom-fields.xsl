@@ -108,8 +108,27 @@
       </xsl:choose>
     </xsl:variable>
 
+    <xsl:variable name="requiredType">
+      <xsl:if test="$schema = 'iso19139' and $labelConfig/condition = 'mandatory'">
+        <xsl:choose>
+          <xsl:when test="$labelConfig/condition = 'mandatory' and $labelConfig/mandatoryType">
+            <xsl:value-of select="$labelConfig/mandatoryType"/>
+          </xsl:when>
+          <xsl:when test="$labelConfig/condition = 'mandatory' and not($labelConfig/mandatoryType)">
+            <xsl:value-of select="'iso'"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="'none'"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
+    </xsl:variable>
 
-    <div class="form-group gn-field gn-title {if ($isRequired) then 'gn-required' else ''} {if ($labelConfig/condition) then concat('gn-', $labelConfig/condition) else ''}"
+
+    <div class="form-group gn-field gn-title
+                {if ($isRequired and not($requiredType)) then 'gn-required' else ''}
+                {if ($labelConfig/condition and not($requiredType)) then concat('gn-', $labelConfig/condition) else ''}
+                {if ($requiredType and not($requiredType = 'none')) then concat('required-', $requiredType) else ''}"
          id="gn-el-{*/gn:element/@ref}"
          data-gn-field-highlight="">
       <label class="col-sm-2 control-label">
@@ -134,6 +153,12 @@
               saxon:serialize($helper, 'default-serialize-mode'))"/>
         </textarea>
       </div>
+      <xsl:if test="$requiredType">
+        <img src="{concat('../../images/required/', $requiredType, '.png')}"
+             class="{$requiredType}"
+             alt="{if ($labelConfig/mandatoryTooltip) then $labelConfig/mandatoryTooltip else ''}"
+             title="{if ($labelConfig/mandatoryTooltip) then $labelConfig/mandatoryTooltip else ''}"/>
+      </xsl:if>
       <div class="col-sm-1 col-xs-1 gn-control">
         <xsl:call-template name="render-form-field-control-remove">
           <xsl:with-param name="editInfo" select="*/gn:element"/>

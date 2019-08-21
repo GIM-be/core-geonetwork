@@ -92,7 +92,7 @@
     <xsl:variable name="dateTypeElementRef"
                   select="../gn:element/@ref"/>
 
-    <div class="form-group gn-field gn-date gn-required"
+    <div class="form-group gn-field gn-date {if ($schema != 'iso19139') then 'gn-required' else ''}"
          id="gn-el-{$dateTypeElementRef}"
          data-gn-field-highlight="">
       <label class="col-sm-2 control-label">

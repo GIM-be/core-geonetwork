@@ -208,6 +208,10 @@
     <description>Locatie (adres) voor de on-line toegang, gebruik makend van een Uniform Resource Locator address
       (URL) of gelijkaardige adresschema's zoals http://www.statkart.na/isotc211.
     </description>
+    <condition>mandatory</condition>
+    <mandatoryType>inspire</mandatoryType>
+    <mandatoryTooltip>INSPIRE B 1.4: conditioneel - verplicht indien een URL beschikbaar is moet deze aanwezig zijn.
+    </mandatoryTooltip>
   </element>
   <element name="gmd:URL" context="/gmd:linkage">
     <label>Connectiepunt URL</label>
@@ -1603,7 +1607,6 @@
     <label>Formaatnaam</label>
     <description>Naam van het formaat</description>
     <help>name of the data transfer format(s)</help>
-    <condition>mandatory</condition>
     <helper rel="gmd:version">
       <option value="Text">Text</option>
       <option value="ESRI Shapefile" title="1.0">ESRI Shapefile</option>
