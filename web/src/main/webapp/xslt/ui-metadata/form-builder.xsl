@@ -173,9 +173,28 @@
         </div>
       </xsl:when>
       <xsl:otherwise>
+        <xsl:variable name="requiredType">
+          <xsl:if test="$schema = 'iso19139' and $label/condition = 'mandatory'">
+            <xsl:choose>
+              <xsl:when test="$label/condition = 'mandatory' and $label/mandatoryType">
+                <xsl:value-of select="$label/mandatoryType"/>
+              </xsl:when>
+              <xsl:when test="$label/condition = 'mandatory' and not($label/mandatoryType)">
+                <xsl:value-of select="'iso'"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="'none'"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:if>
+        </xsl:variable>
 
         <div
-          class="form-group gn-field gn-{substring-after(name(), ':')} {if ($isRequired) then 'gn-required' else ''} {if ($label/condition) then concat('gn-', $label/condition) else ''} {if ($isFirst) then '' else 'gn-extra-field'}"
+          class="form-group gn-field gn-{substring-after(name(), ':')}
+                 {if ($isRequired and not($requiredType)) then 'gn-required' else ''}
+                 {if ($label/condition and not($requiredType)) then concat('gn-', $label/condition) else ''}
+                 {if ($requiredType and not($requiredType = 'none')) then concat('required-', $requiredType) else ''}
+                 {if ($isFirst) then '' else 'gn-extra-field'}"
           id="gn-el-{$editInfo/@ref}"
           data-gn-field-highlight="">
           <label
@@ -286,6 +305,12 @@
             <xsl:call-template name="get-errors"/>
 
           </div>
+          <xsl:if test="$requiredType">
+            <img src="{concat('../../images/required/', $requiredType, '.png')}"
+                 class="{$requiredType}"
+                 alt="{if ($label/mandatoryTooltip) then $label/mandatoryTooltip else ''}"
+                 title="{if ($label/mandatoryTooltip) then $label/mandatoryTooltip else ''}"/>
+          </xsl:if>
           <div class="col-sm-1 col-xs-1 gn-control">
             <xsl:if test="not($isDisabled)">
               <xsl:call-template name="render-form-field-control-remove">

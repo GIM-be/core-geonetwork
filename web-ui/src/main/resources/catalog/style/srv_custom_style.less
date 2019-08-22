@@ -51,7 +51,26 @@ form.gn-editor {
     background-color: #f7f7f7;
     box-shadow: 0 5px 10px grey;
   }
+
+  .required-iso {
+    input[type=text], input[type=number], select, textarea.form-control, .form-control, .bootstrap-tagsinput {
+      border-color: #ff0000;
+      &:focus {
+        border-color: #ff8f00;
+      }
+    }
+  }
+
+  .required-gdi, .required-inspire {
+    input[type=text], input[type=number], select, textarea.form-control, .form-control, .bootstrap-tagsinput {
+      border-color: #0000ff;
+      &:focus {
+        border-color: #0077ff;
+      }
+    }
+  }
 }
+
 .gn-md-view {
   table {
     border: solid 1px lightgray;
