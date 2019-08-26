@@ -171,8 +171,8 @@
    </example>
    */
   module.directive('gnFieldTooltip',
-      ['gnSchemaManagerService', 'gnCurrentEdit', '$compile',
-       function(gnSchemaManagerService, gnCurrentEdit, $compile) {
+      ['gnSchemaManagerService', 'gnCurrentEdit', '$compile', '$q',
+       function(gnSchemaManagerService, gnCurrentEdit, $compile, $q) {
 
          var iconTemplate =
          "<a class='btn field-tooltip' " +
@@ -290,108 +290,137 @@
                $('.popover').hide();
              };
 
+             var getParentTooltip = function () {
+               var defer = $q.defer();
+               var parentFieldset = element.closest('fieldset') || '';
+               var parentLegend = parentFieldset !== '' ? parentFieldset.children('legend').first() || '' : '';
+               var parentTooltip = parentLegend !== '' ? parentLegend.attr('data-gn-field-tooltip') || '' : '';
+               if (parentTooltip === '' || parentTooltip === attrs.gnFieldTooltip) {
+                 defer.resolve(null);
+               } else {
+                 gnSchemaManagerService.getElementInfo(parentTooltip).then(function (data) {
+                   defer.resolve(data);
+                 });
+               }
+               return defer.promise;
+             };
+
              var initTooltip = function(event) {
                if (!isInitialized && gnCurrentEdit.displayTooltips) {
                  // Retrieve field information (there is a cache)
-                 gnSchemaManagerService
-                  .getElementInfo(attrs.gnFieldTooltip)
-                 .then(function(data) {
+                 gnSchemaManagerService.getElementInfo(attrs.gnFieldTooltip).then(function(data) {
                    var info = data;
-                   if (info.description && info.description.length > 0) {
-                     // Initialize tooltip when description returned
-                     var html = '';
+                   getParentTooltip().then(function (data) {
+                     var parentInfo = data;
+                     if (info.description && info.description.length > 0) {
+                       // Initialize tooltip when description returned
+                       var html = '';
 
-                     // TODO: externalize in a template.
+                       // TODO: externalize in a template.
 
-                     // Add description to the body html
-                     html += '<p><div>' + info.description + '</div>';
+                       // Add description to the body html
+                       html += '<p><div>' + info.description + '</div>';
 
-                     if (angular.isArray(info.help)) {
-                       angular.forEach(info.help, function(helpText) {
-                         if (helpText['@for']) {
-                           html += helpText['#text'];
-                         } else {
-                           html += helpText;
+                       if (angular.isArray(info.help)) {
+                         angular.forEach(info.help, function(helpText) {
+                           if (helpText['@for']) {
+                             html += helpText['#text'];
+                           } else {
+                             html += helpText;
+                           }
+                         });
+                       } else if (info.help) {
+                         html += info.help;
+                       }
+
+                       // Only one tooltip visible at a time
+                       if (iconMode) {
+                         closeTooltips();
+                       }
+
+                       if (info.mandatoryTooltip != null) {
+                         html += '</p><p>' + info.mandatoryTooltip + '</p>';
+                       }
+                       html += '</p><p>Element name: ' + info.name + '</p>';
+
+                       if (parentInfo!== null && parentInfo.description && parentInfo.description.length > 0) {
+                         html += '</p><h3 class="tooltip-parent-info">Parent: ' + parentInfo.label + '</h3>';
+                         html += '</p><p>' + parentInfo.description + '</p>';
+                         if (parentInfo.mandatoryTooltip != null) {
+                           html += '</p><p>' + parentInfo.mandatoryTooltip + '</p>';
+                         }
+                         html += '</p><p>Element name: ' + parentInfo.name + '</p>';
+                       }
+
+
+                       // Right same width as field
+                       // For legend, popover is right
+                       // Bottom is not recommended when typeahead
+                       var placement = attrs.placement || 'right';
+
+                       // TODO : improve. Here we fix the width
+                       // to the remaining space between the element
+                       // and the right window border.
+                       var width = ($(window).width() -
+                         tooltipTarget.offset().left -
+                         tooltipTarget.outerWidth()) * .95;
+
+                       var closeBtn = '<button onclick="$(this).' +
+                         'closest(\'div.popover\').remove();" type="button" ' +
+                         'class="fa fa-times btn btn-link pull-right"></button>';
+
+                       tooltipTarget.popover({
+                         title: info.label,
+                         container: 'body',
+                         content: html,
+                         html: true,
+                         placement: placement,
+                         template: '<div class="popover gn-popover" ' +
+                           'style="max-width:' + width + 'px;' +
+                           'width:' + width + 'px"' +
+                           '>' +
+                           '<div class="arrow">' +
+                           '</div><div class="popover-inner">' + closeBtn +
+                           '<h3 class="popover-title"></h3>' +
+                           '<div class="popover-content"><p></p></div></div></div>',
+                         //                       trigger: 'click',
+                         trigger: isField ? 'focus' : 'click'
+                       });
+
+
+                       if (event === 'click' && !isField) {
+                         tooltipTarget.click('show');
+                       } else {
+                         tooltipTarget.focus();
+                       }
+
+                       if (iconMode) {
+                         tooltipTarget.mouseleave(function() {
+                           tooltipTarget.popover('hide');
+                           isInitialized = false;
+                         });
+                       }
+
+
+                       tooltipTarget.on('shown.bs.popover', function(event) {
+                         // move popover under navbar in case they are
+                         // above visible area.
+                         if ($('div.popover').css('top') &&
+                           $('div.popover').css('top').charAt(0) === '-') {
+                           var oldTopPopover = $('div.popover').position().top;
+                           var newTopPopover =
+                             $(".navbar:not('.ng-hide')").outerHeight() + 5;
+                           var oldTopArrow = $('.popover>.arrow').position().top;
+                           $('div.popover').css('top', newTopPopover);
+                           $('.popover>.arrow').css('top',
+                             oldTopArrow - newTopPopover + oldTopPopover);
                          }
                        });
-                     } else if (info.help) {
-                       html += info.help;
+
+                       tooltipTarget.popover('show');
+                       isInitialized = true;
                      }
-
-                     // Only one tooltip visible at a time
-                     if (iconMode) {
-                       closeTooltips();
-                     }
-
-                     html += '</p><p>Element name: ' + info.name + '</p>';
-
-                     // Right same width as field
-                     // For legend, popover is right
-                     // Bottom is not recommended when typeahead
-                     var placement = attrs.placement || 'right';
-
-                     // TODO : improve. Here we fix the width
-                     // to the remaining space between the element
-                     // and the right window border.
-                     var width = ($(window).width() -
-                     tooltipTarget.offset().left -
-                     tooltipTarget.outerWidth()) * .95;
-
-                     var closeBtn = '<button onclick="$(this).' +
-                     'closest(\'div.popover\').remove();" type="button" ' +
-                     'class="fa fa-times btn btn-link pull-right"></button>';
-
-                     tooltipTarget.popover({
-                       title: info.label,
-                       container: 'body',
-                       content: html,
-                       html: true,
-                       placement: placement,
-                       template: '<div class="popover gn-popover" ' +
-                       'style="max-width:' + width + 'px;' +
-                       'width:' + width + 'px"' +
-                       '>' +
-                       '<div class="arrow">' +
-                       '</div><div class="popover-inner">' + closeBtn +
-                       '<h3 class="popover-title"></h3>' +
-                       '<div class="popover-content"><p></p></div></div></div>',
-                       //                       trigger: 'click',
-                       trigger: isField ? 'focus' : 'click'
-                     });
-
-
-                     if (event === 'click' && !isField) {
-                       tooltipTarget.click('show');
-                     } else {
-                       tooltipTarget.focus();
-                     }
-
-                     if (iconMode) {
-                       tooltipTarget.mouseleave(function() {
-                         tooltipTarget.popover('hide');
-                         isInitialized = false;
-                       });
-                     }
-
-
-                     tooltipTarget.on('shown.bs.popover', function(event) {
-                       // move popover under navbar in case they are
-                       // above visible area.
-                       if ($('div.popover').css('top') &&
-                           $('div.popover').css('top').charAt(0) === '-') {
-                         var oldTopPopover = $('div.popover').position().top;
-                         var newTopPopover =
-                         $(".navbar:not('.ng-hide')").outerHeight() + 5;
-                         var oldTopArrow = $('.popover>.arrow').position().top;
-                         $('div.popover').css('top', newTopPopover);
-                         $('.popover>.arrow').css('top',
-                         oldTopArrow - newTopPopover + oldTopPopover);
-                       }
-                     });
-
-                     tooltipTarget.popover('show');
-                     isInitialized = true;
-                   }
+                   });
                  });
                }
              };
