@@ -54,6 +54,8 @@ public class Element {
     protected String condition;
     protected String example;
     protected Helper helper;
+    protected String mandatoryType;
+    protected String mandatoryTooltip;
     @XmlAttribute(name = "context")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "NMTOKEN")
@@ -220,6 +222,57 @@ public class Element {
      */
     public void setHelper(Helper value) {
         this.helper = value;
+    }
+
+    /**
+     * In case the condition element is set to mandatory,
+     *  this element will determine the mandatory type.
+     *
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getMandatoryType() {
+        return mandatoryType;
+    }
+
+    /**
+     * Sets the value of the mandatoryType property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setMandatoryType(String value) {
+        this.mandatoryType = value;
+    }
+
+    /**
+     * Tooltip displayed when hovering the mandatory indicator
+     *
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getMandatoryTooltip() {
+        return mandatoryTooltip;
+    }
+
+    /**
+     * Sets the value of the mandatoryTooltip property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setMandatoryTooltip(String value) {
+        this.mandatoryTooltip = value;
     }
 
     /**

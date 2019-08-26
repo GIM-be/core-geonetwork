@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <labels xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../../labels.xsd"
+        xsi:noNamespaceSchemaLocation="../../../../../../../schema-labels.xsd"
         xmlns:gmd="http://www.isotc211.org/2005/gmd"
         xmlns:gts="http://www.isotc211.org/2005/gts"
         xmlns:gco="http://www.isotc211.org/2005/gco"
@@ -1606,7 +1606,7 @@
   <element name="gmd:name" context="/gmd:MD_Format" id="285.0">
     <label>Formaatnaam</label>
     <description>Naam van het formaat</description>
-    <help>name of the data transfer format(s)</help>
+    <help>Name of the data transfer format(s)</help>
     <helper rel="gmd:version">
       <option value="Text">Text</option>
       <option value="ESRI Shapefile" title="1.0">ESRI Shapefile</option>
