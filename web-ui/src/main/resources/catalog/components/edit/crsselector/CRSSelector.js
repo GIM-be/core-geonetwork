@@ -71,12 +71,22 @@
 
 
              scope.search = function() {
-               if (scope.filter) {
+               if (scope.filter !== undefined) {
                  $http.get('../api/registries/crs?type=&rows=50&q=' +
                  scope.filter).success(
                  function(data) {
                    scope.crsResults = data;
                  });
+               }
+             };
+
+             scope.triggerSearch = function() {
+               if (scope.filter === undefined) {
+                 scope.filter = '';
+               } else {
+                 if (scope.crsResults.length === 0) {
+                   scope.search();
+                 }
                }
              };
 
