@@ -1139,37 +1139,37 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>3480Cartridge</code>
-      <label>3480Cartridge</label>
+      <label>3480 Cartridge</label>
       <description>3480 cartridge tape drive</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>3490Cartridge</code>
-      <label>3490Cartridge</label>
+      <label>3490 Cartridge</label>
       <description>3490 cartridge tape drive</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>3580Cartridge</code>
-      <label>3580Cartridge</label>
+      <label>3580 Cartridge</label>
       <description>3580 cartridge tape drive</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>4mmCartridgeTape</code>
-      <label>4mmCartridgeTape</label>
+      <label>4mm Cartridge Tape</label>
       <description>4 millimeter magnetische tape</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8mmCartridgeTape</code>
-      <label>8mmCartridgeTape</label>
+      <label>8mm Cartridge Tape</label>
       <description>8 millimeter magnetische tape</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>1quarterInchCartridgeTape</code>
-      <label>1quarterInchCartridgeTape</label>
+      <label>1 quarterInch Cartridge Tape</label>
       <description>0,25 inch magnetische tape</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -2099,6 +2099,26 @@ het gebruik van een commerci&#235;le druk of
     <entry>
       <code>in/out</code>
       <label>Input/output</label>
+    </entry>
+  </codelist>
+  <codelist name="gmd:pass">
+    <entry>
+      <code>true</code>
+      <label>Conform</label>
+    </entry>
+    <entry>
+      <code>false</code>
+      <label>Niet-conform</label>
+    </entry>
+  </codelist>
+  <codelist name="gmd:includedWithDataset">
+    <entry>
+      <code>true</code>
+      <label>Ja</label>
+    </entry>
+    <entry>
+      <code>false</code>
+      <label>Nee</label>
     </entry>
   </codelist>
 </codelists>

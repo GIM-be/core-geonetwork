@@ -10,7 +10,8 @@
     <input type="text" class="form-control"
            placeholder="{{'searchACRS' | translate}}"
            data-ng-model="filter"
-           data-ng-model-options="{debounce: 500}"/>
+           data-ng-model-options="{debounce: 500}"
+           data-ng-click="triggerSearch()"/>
 
     <div class="list-group gn-autocomplete-list">
       <li href="" class="list-group-item"

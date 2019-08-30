@@ -114,7 +114,8 @@
         link: function(scope, element, attrs) {
           scope.gnRegionService = gnRegionService;
 
-          var addGeonames = !attrs['disableGeonames'];
+          // var addGeonames = !attrs['disableGeonames'];
+          var addGeonames = false;
           scope.regionTypes = [];
          
           function setDefault() {

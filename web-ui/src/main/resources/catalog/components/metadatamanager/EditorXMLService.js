@@ -37,15 +37,14 @@
           '<gmd:referenceSystemIdentifier>' +
           '<gmd:RS_Identifier>' +
           '<gmd:code>' +
-          '<gco:CharacterString>{{description}}' +
-          '</gco:CharacterString>' +
+          '<gco:CharacterString>{{code}}</gco:CharacterString>' +
           '</gmd:code>' +
           '<gmd:codeSpace>' +
           '<gco:CharacterString>{{codeSpace}}</gco:CharacterString>' +
           '</gmd:codeSpace>' +
-          '<gmd:version>' +
-          '<gco:CharacterString>{{version}}</gco:CharacterString>' +
-          '</gmd:version>' +
+          // '<gmd:version>' +
+          // '<gco:CharacterString>{{version}}</gco:CharacterString>' +
+          // '</gmd:version>' +
           '</gmd:RS_Identifier>' +
           '</gmd:referenceSystemIdentifier>' +
           '</gmd:MD_ReferenceSystem>' +

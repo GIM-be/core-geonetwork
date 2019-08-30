@@ -12,15 +12,20 @@
     <dc:rights>Vrij gebruik</dc:rights>
     <dcterms:issued>2013-04-18</dcterms:issued>
     <dcterms:modified>2013-09-25</dcterms:modified>
+    <skos:hasTopConcept rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
   </skos:ConceptScheme>
   <!-- Main Concept-->
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen">
     <skos:prefLabel xml:lang="nl">Vlaanderen</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Vlaanderen</skos:prefLabel>
+    <skos:prefLabel xml:lang="du">Vlaanderen</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Vlaanderen</skos:prefLabel>
     <skos:narrower rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Antwerpen" />
     <skos:narrower rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/VlaamsBrabant" />
     <skos:narrower rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/WestVlaanderen" />
     <skos:narrower rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/OostVlaanderen" />
     <skos:narrower rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Limburg" />
+    <skos:narrower rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaams Gewest" />
     <gml:BoundedBy>
       <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
         <gml:lowerCorner>2.5456398 50.687428500000003</gml:lowerCorner>
@@ -31,6 +36,9 @@
   <!-- Concept list -->
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Antwerpen">
     <skos:prefLabel xml:lang="nl">Provincie Antwerpen</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Provincie Antwerpen</skos:prefLabel>
+    <skos:prefLabel xml:lang="du">Provincie Antwerpen</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Provincie Antwerpen</skos:prefLabel>
     <gml:BoundedBy>
       <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
         <gml:lowerCorner>4.1722929999999998 50.9901275</gml:lowerCorner>
@@ -41,6 +49,9 @@
   </skos:Concept>
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/VlaamsBrabant">
     <skos:prefLabel xml:lang="nl">Provincie Vlaams-Brabant</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Provincie Vlaams-Brabant</skos:prefLabel>
+    <skos:prefLabel xml:lang="du">Provincie Vlaams-Brabant</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Provincie Vlaams-Brabant</skos:prefLabel>
     <gml:BoundedBy>
       <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
         <gml:lowerCorner>3.8894057000000002 50.687428500000003</gml:lowerCorner>
@@ -51,6 +62,9 @@
   </skos:Concept>
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/WestVlaanderen">
     <skos:prefLabel xml:lang="nl">Provincie West-Vlaanderen</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Provincie West-Vlaanderen</skos:prefLabel>
+    <skos:prefLabel xml:lang="du">Provincie West-Vlaanderen</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Provincie West-Vlaanderen</skos:prefLabel>
     <gml:BoundedBy>
       <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
         <gml:lowerCorner>2.5456398 50.708131999999999</gml:lowerCorner>
@@ -61,6 +75,9 @@
   </skos:Concept>
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/OostVlaanderen">
     <skos:prefLabel xml:lang="nl">Provincie Oost-Vlaanderen</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Provincie Oost-Vlaanderen</skos:prefLabel>
+    <skos:prefLabel xml:lang="du">Provincie Oost-Vlaanderen</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Provincie Oost-Vlaanderen</skos:prefLabel>
     <gml:BoundedBy>
       <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
         <gml:lowerCorner>3.3312984999999999 50.720881900000002</gml:lowerCorner>
@@ -71,6 +88,9 @@
   </skos:Concept>
   <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Limburg">
     <skos:prefLabel xml:lang="nl">Provincie Limburg</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Provincie Limburg</skos:prefLabel>
+    <skos:prefLabel xml:lang="du">Provincie Limburg</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Provincie Limburg</skos:prefLabel>
     <gml:BoundedBy>
       <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
         <gml:lowerCorner>4.9801884000000003 50.695422499999999</gml:lowerCorner>
@@ -79,7 +99,19 @@
     </gml:BoundedBy>
     <skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen" />
   </skos:Concept>
-<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaams Gewest"><skos:prefLabel xml:lang="nl">Vlaams Gewest</skos:prefLabel></skos:Concept>
+  <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaams Gewest">
+    <skos:prefLabel xml:lang="nl">Vlaams Gewest</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Vlaams Gewest</skos:prefLabel>
+    <skos:prefLabel xml:lang="du">Vlaams Gewest</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Vlaams Gewest</skos:prefLabel>
+    <gml:BoundedBy>
+      <gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+        <gml:lowerCorner>2.5456398 50.687428500000003</gml:lowerCorner>
+        <gml:upperCorner>5.9111042999999999 51.505080700000001</gml:upperCorner>
+      </gml:Envelope>
+    </gml:BoundedBy>
+    <skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen" />
+  </skos:Concept>
 <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Brussels Hoofdstedelijk Gewest"><skos:prefLabel xml:lang="nl">Brussels Hoofdstedelijk Gewest</skos:prefLabel></skos:Concept>
 <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Boutersem"><skos:prefLabel xml:lang="nl">Gemeente Boutersem</skos:prefLabel></skos:Concept>
 <skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Bonheiden"><skos:prefLabel xml:lang="nl">Gemeente Bonheiden</skos:prefLabel></skos:Concept>

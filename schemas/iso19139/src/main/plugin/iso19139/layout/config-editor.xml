@@ -220,10 +220,13 @@
 
       Exclude all thesaurus already used in the metadata:
       -->
+      <!--
       <directiveAttributes data-include="xpath::string-join(gmd:MD_Metadata/gmd:identificationInfo
                                           //gmd:thesaurusName/*/gmd:identifier/*/
                                             gmd:code/gmx:Anchor/
                                               concat('-', substring-after(text()[. != ''], 'geonetwork.thesaurus.')), ',')"/>
+      -->
+      <directiveAttributes data-include="external.place.GDI-Vlaanderenregios,external.theme.inspire-theme,external.theme.gemet,external.theme.GDI-Vlaanderen-trefwoorden,external.theme.GDI-Vlaanderen-service-types,external.theme.inspire-service-taxonomy"/>
     </for>
 
     <!-- AIV custom fields -->
@@ -590,7 +593,7 @@
   <!-- View configuration -->
   <views>
     <!--Turn on INSPIRE according to system settings -->
-    <view name="inspire" upAndDownControlHidden="true" displayIfServiceInfo="/settings/system/inspire/enable='true'">
+    <view name="inspire" upAndDownControlHidden="true" displayIfServiceInfo="/settings/system/inspire/enable='true'" hideTimeInCalendar="true">
       <sidePanel>
         <directive data-gn-onlinesrc-list=""/>
         <directive gn-geo-publisher=""
@@ -3246,7 +3249,7 @@
     <!--
     Customize the editor layout by adding a class attribute
     <view name="default" class="gn-indent-bluescale gn-label-above-input">-->
-    <view name="default">
+    <view name="default" hideTimeInCalendar="true">
       <sidePanel>
         <!-- General online source manager
         <directive data-gn-onlinesrc-list=""/>
@@ -3335,7 +3338,7 @@
       </thesaurusList>
 
     </view>
-    <view name="advanced">
+    <view name="advanced" hideTimeInCalendar="true">
       <sidePanel>
         <directive data-gn-onlinesrc-list=""/>
         <directive gn-geo-publisher=""
