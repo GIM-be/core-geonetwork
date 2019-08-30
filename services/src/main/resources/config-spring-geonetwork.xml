@@ -49,7 +49,7 @@
   <bean id="RegionsDAO" class="org.fao.geonet.services.region.ThesaurusBasedRegionsDAO">
     <constructor-arg ref="languages"/>
     <property name="cacheAllRegionsInMemory" value="true"/>
-    <property name="thesaurusName" value="external.place.regions"/>
+    <property name="thesaurusName" value="external.place.GDI-Vlaanderenregios"/>
   </bean>
   <bean id="MetadataRegionsDAO" class="org.fao.geonet.services.region.MetadataRegionDAO">
     <property name="cacheAllRegionsInMemory" value="false"/>
