@@ -220,10 +220,13 @@
 
       Exclude all thesaurus already used in the metadata:
       -->
+      <!--
       <directiveAttributes data-include="xpath::string-join(gmd:MD_Metadata/gmd:identificationInfo
                                           //gmd:thesaurusName/*/gmd:identifier/*/
                                             gmd:code/gmx:Anchor/
                                               concat('-', substring-after(text()[. != ''], 'geonetwork.thesaurus.')), ',')"/>
+      -->
+      <directiveAttributes data-include="external.place.GDI-Vlaanderenregios,external.theme.inspire-theme,external.theme.gemet,external.theme.GDI-Vlaanderen-trefwoorden,external.theme.GDI-Vlaanderen-service-types,external.theme.inspire-service-taxonomy"/>
     </for>
 
     <!-- AIV custom fields -->
