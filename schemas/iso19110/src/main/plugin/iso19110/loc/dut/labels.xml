@@ -304,4 +304,8 @@
   <element name="gco:aName" context="gco:TypeName">
     <label>Type</label>
   </element>
+  <element name="gco:range">
+    <label>Cardinaliteiten</label>
+    <description/>
+  </element>
 </labels>
