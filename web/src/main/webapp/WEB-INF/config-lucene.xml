@@ -184,6 +184,7 @@
       <field name="_groupWebsite" tagName="groupWebsite"/>
       <field name="featureTypes" tagName="featureTypes"/>
       <field name="_sortDate" tagName="sortDate"/>
+      <field name="versionIdentifier" tagName="versionIdentifier"/>
     </dumpFields>
   </search>
 
