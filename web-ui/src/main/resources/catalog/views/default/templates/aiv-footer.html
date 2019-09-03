@@ -5,20 +5,15 @@
         <img class="aiv-logo" ng-src="../../images/aiv-logo.png" alt="AIV-logo" width="38" height="60"/>
       </div>
       <div class="header-slash"></div>
-      <!-- If host is metdatacenter, do not show "Vlaamse overheid" and adapt layout -->
-      <div class="logo-text" ng-show="info['system/server/host'].includes('metadatacenter')">
-        <div class="logo-text-grp" style="padding-top: 10px">{{info['system/site/name']}}</div>
-      </div>
-      <!-- Else, display "Vlaamse overheid" -->
-      <div class="logo-text" ng-hide="info['system/server/host'].includes('metadatacenter')">
+      <div class="logo-text">
         <div class="logo-text-grp">Vlaamse overheid</div>
         <div class="logo-text-quote">{{info['system/site/name']}}</div>
       </div>
     </div>
     <div class="managed-wrapper">
       <span class="managed-text">
-        <a ng-href="{{info['system/server/protocol']}}://{{info['system/server/host']}}{{info['system/server/protocol'] == 'http' && info['system/server/port'] != 80 ? ':' + info['system/server/port'] : (info['system/server/protocol'] == 'https' && info['system/server/securePort'] != 443 ? ':' + info['system/server/securePort'] : '')}}/">
-        {{info['system/server/protocol']}}://{{info['system/server/host']}}{{info['system/server/protocol'] == 'http' && info['system/server/port'] != 80 ? ':' + info['system/server/port'] : (info['system/server/protocol'] == 'https' && info['system/server/securePort'] != 443 ? ':' + info['system/server/securePort'] : '')}}/  wordt beheerd door het agentschap Informatie Vlaanderen
+        <a ng-href="{{info['system/server/protocol']}}://{{info['system/server/host']}}{{((info['system/server/protocol'] == 'http' && info['system/server/port'] != 80) ? (':' + info['system/server/port']) : ((info['system/server/protocol'] == 'https' && info['system/server/securePort'] != 443) ? (':' + info['system/server/securePort']) : ''))}}/{{info['system/site/name'].toLowerCase().indexOf('metadatacenter')>-1 ? 'metadatacenter/' : ''}}">
+        {{info['system/server/protocol']}}://{{info['system/server/host']}}{{((info['system/server/protocol'] == 'http' && info['system/server/port'] != 80) ? (':' + info['system/server/port']) : ((info['system/server/protocol'] == 'https' && info['system/server/securePort'] != 443) ? (':' + info['system/server/securePort']) : ''))}}/{{info['system/site/name'].toLowerCase().indexOf('metadatacenter')>-1 ? 'metadatacenter/' : ''}} wordt beheerd door het agentschap Informatie Vlaanderen
       </a>
       </span>
     </div>
