@@ -22,10 +22,7 @@
           <img class="aiv-logo" ng-src="../../images/aiv-logo.png" alt="AIV-logo" width="17" height="27"/>
         </div>
         <div class="header-slash"></div>
-        <span class="metadatacenter-header" ng-show="info['system/server/host'].includes('metadatacenter')">
-          {{info['system/site/name']}}
-        </span>
-        <span class="vl-header" ng-hide="info['system/server/host'].includes('metadatacenter')">
+        <span class="vl-header">
           <span>Vlaamse overheid</span>
           <span>{{info['system/site/name']}}</span>
         </span>
@@ -33,8 +30,8 @@
       <div class="header-slash"></div>
       <a class="node-redirect"
          ng-class="info['system/server/host'].includes('metadatacenter') ? '': 'vl-node-redirect'"
-         ng-href="{{info['system/server/protocol']}}://{{info['system/server/host']}}{{info['system/server/protocol'] == 'http' && info['system/server/port'] != 80 ? ':' + info['system/server/port'] : (info['system/server/protocol'] == 'https' && info['system/server/securePort'] != 443 ? ':' + info['system/server/securePort'] : '')}}/">
-        {{info['system/server/protocol']}}://{{info['system/server/host']}}{{info['system/server/protocol'] == 'http' && info['system/server/port'] != 80 ? ':' + info['system/server/port'] : (info['system/server/protocol'] == 'https' && info['system/server/securePort'] != 443 ? ':' + info['system/server/securePort'] : '')}}/
+         ng-href="{{info['system/server/protocol']}}://{{info['system/server/host']}}{{((info['system/server/protocol'] == 'http' && info['system/server/port'] != 80) ? (':' + info['system/server/port']) : ((info['system/server/protocol'] == 'https' && info['system/server/securePort'] != 443) ? (':' + info['system/server/securePort']) : ''))}}/{{info['system/site/name'].toLowerCase().indexOf('metadatacenter')>-1 ? 'metadatacenter/' : ''}}">
+        {{info['system/server/protocol']}}://{{info['system/server/host']}}{{((info['system/server/protocol'] == 'http' && info['system/server/port'] != 80) ? (':' + info['system/server/port']) : ((info['system/server/protocol'] == 'https' && info['system/server/securePort'] != 443) ? (':' + info['system/server/securePort']) : ''))}}/{{info['system/site/name'].toLowerCase().indexOf('metadatacenter')>-1 ? 'metadatacenter/' : ''}}
       </a>
     </div>
     <div class="contact-wrapper">

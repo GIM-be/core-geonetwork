@@ -185,7 +185,8 @@ public class SiteApi {
             Settings.SYSTEM_PLATFORM_SUBVERSION,
             Settings.SYSTEM_SERVER_PROTOCOL,
             Settings.SYSTEM_SERVER_HOST,
-            Settings.SYSTEM_SERVER_PORT
+            Settings.SYSTEM_SERVER_PORT,
+            Settings.SYSTEM_SERVER_SECURE_PORT
         }));
         return response;
     }
