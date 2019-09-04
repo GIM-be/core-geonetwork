@@ -109,9 +109,12 @@ public class FedizClaimsUserDetailsMapper {
 	        try {
 	            fedizUtils.saveUser(userDetails,createNonExistingFedizGroup);
 	        } catch (Exception e) {
+                Log.error(Geonet.FEDIZ, "Unexpected error while saving/updating FEDIZ user (" + user.getSurname() + " " + user.getName() + ") in database: " + e.toString());
+	            /* 
 	            throw new AuthenticationServiceException(
 	                "Unexpected error while saving/updating FEDIZ user in database",
 	                e);
+	            */
 	        }
     	}
         return userDetails;
@@ -128,7 +131,7 @@ public class FedizClaimsUserDetailsMapper {
 	            }
 	            try {
 	                Profile profile = Profile.valueOf(mappedProfileName);
-	                if (profile != null) {
+	                if (profile != null && !StringUtils.isEmpty(profile.toString())) {
 	                	profileList.add(profile);
 	                } else {
 	                    Log.error(Geonet.FEDIZ, "  Profile " + mappedProfileName
@@ -136,13 +139,13 @@ public class FedizClaimsUserDetailsMapper {
 	                }
 	            } catch (Exception e) {
 	                Log.warning(Geonet.FEDIZ, "  Profile " + profileName
-	                    + " could not be mapped to a valid profile (default profile will be used). " + e.getMessage());
+	                    + " could not be mapped to a valid profile. " + e.getMessage());
 	            }
 	        }
     	}
     	if (profileList.size()>0) {
 	        Profile highestUserProfile = ProfileManager.getHighestProfile(profileList.toArray(new Profile[profileList.size()]));
-	        if (highestUserProfile != null) {
+	        if (highestUserProfile != null && !StringUtils.isEmpty(highestUserProfile.toString())) {
 	            if (Log.isDebugEnabled(Geonet.FEDIZ)) {
 	                Log.debug(Geonet.FEDIZ, "  Highest user profile is "
 	                    + highestUserProfile);
@@ -168,7 +171,7 @@ public class FedizClaimsUserDetailsMapper {
     }
 
     public String getProfileMappingValue(String key) {
-        if (profileMapping!=null) {
+        if (profileMapping!=null && !StringUtils.isEmpty(key)) {
             return profileMapping.get(key);
         }
         return null;
