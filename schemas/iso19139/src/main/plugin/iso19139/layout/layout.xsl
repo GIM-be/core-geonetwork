@@ -64,8 +64,9 @@
 
 
     <xsl:variable name="name" select="concat(@prefix, ':', @name)"/>
+    <xsl:variable name="parentXpath" select="gn-fn-metadata:getXPath(..)"/>
     <xsl:variable name="flatModeException"
-                  select="gn-fn-metadata:isFieldFlatModeException($viewConfig, $name)"/>
+                  select="gn-fn-metadata:isFieldFlatModeException($viewConfig, $name, $parentXpath)"/>
 
 
     <xsl:if test="$name = 'gmd:descriptiveKeywords' and count(../gmd:descriptiveKeywords) = 0">

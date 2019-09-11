@@ -320,7 +320,7 @@
         data-popup-action="false"
         data-filter='{"_root": "gmd:EX_VerticalExtent"}'
         data-insert-modes="text"
-        data-template-type="extent"/>
+        data-template-type="verticalElement"/>
     </for>
     <for name="gmd:distributionFormat" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
@@ -503,37 +503,37 @@
   </multilingualFields>
 
   <tableFields>
-    <table for="gmd:CI_ResponsibleParty">
-      <header>
-        <!-- TODO: Add label from strings.xml / label with context-->
-        <col label="gmd:organisationName"/>
-        <col label="gmd:individualName"/>
-        <col label="gmd:electronicMailAddress"/>
-        <col label="gmd:role"/>
-        <col/>
-      </header>
-      <row>
-        <col xpath="gmd:organisationName"/>
-        <col xpath="gmd:individualName"/>
-        <col xpath="gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"/>
-        <col xpath="gmd:role"/>
-        <col del=".."/>
-      </row>
-    </table>
-    <table for="gmd:CI_OnlineResource">
-      <header>
-        <col label="gmd:protocol"/>
-        <col label="gmd:linkage"/>
-        <col label="gmd:name"/>
-        <col/>
-      </header>
-      <row>
-        <col xpath="gmd:protocol"/>
-        <col xpath="gmd:linkage"/>
-        <col xpath="gmd:name"/>
-        <col del=".."/>
-      </row>
-    </table>
+<!--    <table for="gmd:CI_ResponsibleParty">-->
+<!--      <header>-->
+<!--        &lt;!&ndash; TODO: Add label from strings.xml / label with context&ndash;&gt;-->
+<!--        <col label="gmd:organisationName"/>-->
+<!--        <col label="gmd:individualName"/>-->
+<!--        <col label="gmd:electronicMailAddress"/>-->
+<!--        <col label="gmd:role"/>-->
+<!--        <col/>-->
+<!--      </header>-->
+<!--      <row>-->
+<!--        <col xpath="gmd:organisationName"/>-->
+<!--        <col xpath="gmd:individualName"/>-->
+<!--        <col xpath="gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"/>-->
+<!--        <col xpath="gmd:role"/>-->
+<!--        <col del=".."/>-->
+<!--      </row>-->
+<!--    </table>-->
+<!--    <table for="gmd:CI_OnlineResource">-->
+<!--      <header>-->
+<!--        <col label="gmd:protocol"/>-->
+<!--        <col label="gmd:linkage"/>-->
+<!--        <col label="gmd:name"/>-->
+<!--        <col/>-->
+<!--      </header>-->
+<!--      <row>-->
+<!--        <col xpath="gmd:protocol"/>-->
+<!--        <col xpath="gmd:linkage"/>-->
+<!--        <col xpath="gmd:name"/>-->
+<!--        <col del=".."/>-->
+<!--      </row>-->
+<!--    </table>-->
     <table for="srv:SV_OperationMetadata">
       <header>
         <col label="srv:operationName"/>
@@ -3275,9 +3275,132 @@
 
       <tab id="default" default="true" mode="flat">
         <section xpath="/gmd:MD_Metadata/gmd:identificationInfo"/>
-        <section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo"/>
+        <section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo" or="referenceSystemInfo" in="/gmd:MD_Metadata"/>
         <section xpath="/gmd:MD_Metadata/gmd:spatialRepresentationInfo"/>
-        <section xpath="/gmd:MD_Metadata/gmd:distributionInfo"/>
+        <section name="gmd:distributionInfo">
+          <section xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat"/>
+          <section xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor"/>
+          <action type="add" name="distributor" or="distributor" in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution" required="true()">
+            <template>
+              <snippet>
+                <gmd:distributor>
+                  <gmd:MD_Distributor>
+                    <gmd:distributorContact>
+                      <gmd:CI_ResponsibleParty>
+                        <gmd:individualName>
+                          <gco:CharacterString/>
+                        </gmd:individualName>
+                        <gmd:organisationName>
+                          <gco:CharacterString/>
+                        </gmd:organisationName>
+                        <gmd:contactInfo>
+                          <gmd:CI_Contact>
+                            <gmd:phone>
+                              <gmd:CI_Telephone>
+                                <gmd:voice>
+                                  <gco:CharacterString/>
+                                </gmd:voice>
+                                <gmd:facsimile>
+                                  <gco:CharacterString/>
+                                </gmd:facsimile>
+                              </gmd:CI_Telephone>
+                            </gmd:phone>
+                            <gmd:address>
+                              <gmd:CI_Address>
+                                <gmd:deliveryPoint>
+                                  <gco:CharacterString/>
+                                </gmd:deliveryPoint>
+                                <gmd:city>
+                                  <gco:CharacterString/>
+                                </gmd:city>
+                                <gmd:postalCode>
+                                  <gco:CharacterString/>
+                                </gmd:postalCode>
+                                <gmd:country>
+                                  <gco:CharacterString/>
+                                </gmd:country>
+                                <gmd:electronicMailAddress>
+                                  <gco:CharacterString/>
+                                </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                            </gmd:address>
+                            <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                <gmd:linkage>
+                                  <gmd:URL/>
+                                </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                            </gmd:onlineResource>
+                          </gmd:CI_Contact>
+                        </gmd:contactInfo>
+                        <gmd:role>
+                          <gmd:CI_RoleCode
+                            codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode"
+                            codeListValue=""/>
+                        </gmd:role>
+                      </gmd:CI_ResponsibleParty>
+                    </gmd:distributorContact>
+                    <gmd:distributionOrderProcess>
+                      <gmd:MD_StandardOrderProcess>
+                        <gmd:fees>
+                          <gco:CharacterString/>
+                        </gmd:fees>
+                        <gmd:orderingInstructions>
+                          <gco:CharacterString/>
+                        </gmd:orderingInstructions>
+                        <gmd:turnaround>
+                          <gco:CharacterString/>
+                        </gmd:turnaround>
+                      </gmd:MD_StandardOrderProcess>
+                    </gmd:distributionOrderProcess>
+                  </gmd:MD_Distributor>
+                </gmd:distributor>
+              </snippet>
+            </template>
+          </action>
+          <section xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"/>
+          <action type="add" name="transferOptions" or="transferOptions" in="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution" required="true()">
+            <template>
+              <snippet>
+                <gmd:transferOptions>
+                  <gmd:MD_DigitalTransferOptions>
+                    <gmd:unitsOfDistribution>
+                      <gco:CharacterString/>
+                    </gmd:unitsOfDistribution>
+                    <gmd:transferSize>
+                      <gco:Real>0</gco:Real>
+                    </gmd:transferSize>
+                    <gmd:onLine>
+                      <gmd:CI_OnlineResource>
+                        <gmd:linkage>
+                          <gmd:URL/>
+                        </gmd:linkage>
+                        <gmd:protocol>
+                          <gco:CharacterString/>
+                        </gmd:protocol>
+                        <gmd:name>
+                          <gco:CharacterString/>
+                        </gmd:name>
+                        <gmd:description>
+                          <gco:CharacterString/>
+                        </gmd:description>
+                      </gmd:CI_OnlineResource>
+                    </gmd:onLine>
+                    <gmd:offLine>
+                      <gmd:MD_Medium>
+                        <gmd:name>
+                          <gmd:MD_MediumNameCode
+                            codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_MediumNameCode"
+                            codeListValue=""/>
+                        </gmd:name>
+                      </gmd:MD_Medium>
+                    </gmd:offLine>
+                  </gmd:MD_DigitalTransferOptions>
+                </gmd:transferOptions>
+              </snippet>
+            </template>
+          </action>
+        </section>
         <section xpath="/gmd:MD_Metadata/gmd:dataQualityInfo"/>
         <section name="gmd:MD_Metadata">
           <field xpath="/gmd:MD_Metadata/gmd:fileIdentifier"/>
@@ -3315,6 +3438,20 @@
         <for name="gmd:processor"/>
         <for name="gmd:topicCategory"/>
         <for name="srv:parameters"/>
+
+        <for name="gmd:alternateTitle"/>
+        <for name="gmd:date" xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation"/>
+        <for name="gmd:date" xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation"/>
+        <for name="gmd:graphicOverview" xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"/>
+        <for name="gmd:code" xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier"/>
+        <for name="md:codeSpace" xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier"/>
+        <for name="gmd:voice"/>
+        <for name="gmd:facsimile"/>
+        <for name="gmd:deliveryPoint"/>
+        <for name="gmd:electronicMailAddress"/>
+        <for name="gmd:transferOptions"/>
+        <for name="gmd:temporalElement"/>
+        <for name="gmd:verticalElement"/>
       </flatModeExceptions>
 
       <!--
