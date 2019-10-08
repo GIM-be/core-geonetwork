@@ -585,7 +585,7 @@
   <element name="gmd:date">
     <label>Versiedatum</label>
     <description>Datum van creatie, publicatie of wijziging. Het type gebeurtenis waar de datum op slaat is
-      weergegeven in het datum type. Het formaat van de datum is JJJJ-MM-DD.
+      weergegeven in het datum type. Het formaat van de datum is DD-MM-JJJJ.
     </description>
     <condition>mandatory</condition>
   </element>
