@@ -80,7 +80,7 @@
   <explanation>Explanation</explanation>
   <pass>Conformity</pass>
   <indeterminatePosition>Indeterminate position</indeterminatePosition>
-  <pointOfContact>Contact for the resource</pointOfContact>
+  <pointOfContact>Contactgegevens voor de data</pointOfContact>
   <metadataPointOfContact>Contact for the metadata</metadataPointOfContact>
   <organisationName>Organisation name</organisationName>
   <electronicMailAddress>Email</electronicMailAddress>
