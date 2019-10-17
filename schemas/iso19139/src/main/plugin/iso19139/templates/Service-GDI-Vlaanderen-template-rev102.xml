@@ -386,7 +386,7 @@
                 <gco:Real/>
               </gmd:maximumValue>
               <gmd:verticalCRS>
-                <gml:VerticalCRS gml:id="VCRS_01">
+                <gml:VerticalCRS gml:id="">
                   <gml:identifier codeSpace=""/>
                   <gml:scope/>
                   <gml:verticalCS nilReason="missing"/>
