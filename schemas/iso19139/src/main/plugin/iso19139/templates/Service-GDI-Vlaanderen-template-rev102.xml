@@ -98,8 +98,8 @@
       <gmd:citation>
         <gmd:CI_Citation>
           <gmd:title>
-            <gco:CharacterString>Metadata-sjabloon voor services v1.n, conform GDI-Vlaanderen
-              Best Practices v1.0
+            <gco:CharacterString>
+              Sjabloon voor Metadata van Geografische services, conform GDI-Vlaanderen Best Practices v2.0
             </gco:CharacterString>
           </gmd:title>
           <gmd:alternateTitle>
