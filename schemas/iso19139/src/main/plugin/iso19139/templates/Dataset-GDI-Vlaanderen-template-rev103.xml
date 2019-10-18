@@ -698,7 +698,7 @@
               <gmd:role>
                 <gmd:CI_RoleCode
                   codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode"
-                  codeListValue=""/>
+                  codeListValue="distributor"/>
               </gmd:role>
             </gmd:CI_ResponsibleParty>
           </gmd:distributorContact>
@@ -953,7 +953,7 @@
                       <gmd:role>
                         <gmd:CI_RoleCode
                           codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode"
-                          codeListValue=""/>
+                          codeListValue="processor"/>
                       </gmd:role>
                     </gmd:CI_ResponsibleParty>
                   </gmd:processor>
