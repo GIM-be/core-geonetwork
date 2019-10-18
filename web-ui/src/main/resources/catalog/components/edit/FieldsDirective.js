@@ -305,13 +305,14 @@
                return defer.promise;
              };
 
+             var mouseLeft = false;
              var initTooltip = function(event) {
                if (!isInitialized && gnCurrentEdit.displayTooltips) {
                  // Retrieve field information (there is a cache)
-                 gnSchemaManagerService.getElementInfo(attrs.gnFieldTooltip).then(function(data) {
-                   var info = data;
-                   getParentTooltip().then(function (data) {
-                     var parentInfo = data;
+                 $q.all([gnSchemaManagerService.getElementInfo(attrs.gnFieldTooltip), getParentTooltip()])
+                   .then(function (result) {
+                     var info = result[0];
+                     var parentInfo = result[1];
                      if (info.description && info.description.length > 0) {
                        // Initialize tooltip when description returned
                        var html = '';
@@ -384,10 +385,10 @@
                            '<h3 class="popover-title"></h3>' +
                            '<div class="popover-content"><p></p></div></div></div>',
                          //                       trigger: 'click',
-                         trigger: isField ? 'focus' : 'click'
+                         trigger: 'hover'
                        });
 
-
+                       /*
                        if (event === 'click' && !isField) {
                          tooltipTarget.click('show');
                        } else {
@@ -400,7 +401,7 @@
                            isInitialized = false;
                          });
                        }
-
+                       */
 
                        tooltipTarget.on('shown.bs.popover', function(event) {
                          // move popover under navbar in case they are
@@ -417,15 +418,19 @@
                          }
                        });
 
-                       tooltipTarget.popover('show');
+                       //todo: show tooltip if still mouse on hover (boolean ?)
+                       if(!mouseLeft) {
+                         tooltipTarget.popover('show');
+                       }
                        isInitialized = true;
                      }
-                   });
-                 });
+                   }
+                 );
                }
              };
 
              // On hover trigger the tooltip init
+             /*
              if (iconMode) {
                tooltipTarget.hover(function(event) {
                  event.stopPropagation;
@@ -444,6 +449,15 @@
                  });
                }
              }
+             */
+             tooltipTarget.hover(function() {
+               initTooltip('hover');
+             });
+             tooltipTarget.mouseleave(function() {
+               mouseLeft = true;
+               tooltipTarget.popover('hide');
+               isInitialized = false;
+             });
            }
          };
        }]);
