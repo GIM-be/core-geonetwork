@@ -204,4 +204,7 @@
 
   <sds-section-custodian>Responsible custodian</sds-section-custodian>
   <sds-addOperation>Add Operation</sds-addOperation>
+
+  <distributor>Verdeler</distributor>
+  <transferOptions>Overdracht</transferOptions>
 </strings>

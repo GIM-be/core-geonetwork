@@ -1463,8 +1463,23 @@
   <element name="gml:rangeMeaning">
     <label>Range meaning</label>
   </element>
+  <element name="gml:verticalCS">
+    <label>Vertical CS</label>
+  </element>
+  <element name="gml:VerticalCS">
+    <label>Vertical CS</label>
+  </element>
+  <element name="gml:verticalDatum">
+    <label>Vertical datum</label>
+  </element>
   <element name="gml:VerticalDatum">
     <label>Vertical datum</label>
+  </element>
+  <element name="gml:axis">
+    <label>Axis</label>
+  </element>
+  <element name="gml:domainOfValidity">
+    <label>Domein van geldigheid</label>
   </element>
   <element name="gml:realizationEpoch">
     <label>Realization epoch</label>

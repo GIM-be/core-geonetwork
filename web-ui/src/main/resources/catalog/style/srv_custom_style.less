@@ -1,75 +1,83 @@
 /* Define custom node style here */
-form.gn-editor {
-  fieldset{
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    background-color: rgba(0, 0, 0, 0.07);
-    margin: 5px;
-  }
-  .control-label {
-    color: black;
-  }
-  *[data-gn-keyword-selector] {
-    margin-bottom: 0;
-  }
-  .gn-add-field {
-    padding-top: 0;
-    padding-bottom: 10px;
-  }
-  .bootstrap-tagsinput {
-    margin-bottom: 0;
-    padding: 0 6px;
-    .tag {
-      margin-bottom: 8px;
-      margin-top: 8px;
+[ng-app="gn_editor"] {
+  form.gn-editor {
+    fieldset{
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.04);
+      margin: 5px;
     }
-  }
-  > fieldset {
-    margin-bottom: 40px;
+    .control-label {
+      color: black;
+    }
+    *[data-gn-keyword-selector] {
+      margin-bottom: 0;
+    }
+    .gn-add-field {
+      padding-top: 0;
+      padding-bottom: 10px;
+    }
+    .bootstrap-tagsinput {
+      margin-bottom: 0;
+      padding: 0 6px;
+      .tag {
+        margin-bottom: 8px;
+        margin-top: 8px;
+      }
+    }
     > fieldset {
-      margin-left: auto;
-      margin-right:auto;
-      width: 87%;
-      legend {
-        font-size: 16px;
-        line-height: 1.7;
+      margin-bottom: 40px;
+      > fieldset {
+        margin-left: auto;
+        margin-right:auto;
+        width: 87%;
+        legend {
+          font-size: 16px;
+          line-height: 1.7;
+        }
+      }
+    }
+    label.gn-sub-required:after, .gn-sub-required > label:after,
+    label.gn-sub-mandatory:after, .gn-sub-mandatory > label:after {
+      content: "*";
+      font-size: 1.5em;
+      margin: 7px 0 0 7px;
+      position: absolute;
+      color: #000;
+      font-weight: normal;
+      line-height: 22px;
+    }
+    .gn-autocomplete-list {
+      background-color: #f7f7f7;
+      box-shadow: 0 5px 10px grey;
+    }
+    .required-iso {
+      input[type=text], input[type=number], select, textarea.form-control, .form-control, .bootstrap-tagsinput {
+        border-color: #ff0000;
+        &:focus {
+          border-color: #ff8f00;
+        }
+      }
+    }
+    .required-gdi, .required-inspire {
+      input[type=text], input[type=number], select, textarea.form-control, .form-control, .bootstrap-tagsinput {
+        border-color: #0000ff;
+        &:focus {
+          border-color: #0077ff;
+        }
       }
     }
   }
-  label.gn-sub-required:after, .gn-sub-required > label:after,
-  label.gn-sub-mandatory:after, .gn-sub-mandatory > label:after {
-    content: "*";
-    font-size: 1.5em;
-    margin: 7px 0 0 7px;
-    position: absolute;
-    color: #000;
-    font-weight: normal;
-    line-height: 22px;
-  }
-  .gn-autocomplete-list {
-    background-color: #f7f7f7;
-    box-shadow: 0 5px 10px grey;
-  }
-  .required-iso {
-    input[type=text], input[type=number], select, textarea.form-control, .form-control, .bootstrap-tagsinput {
-      border-color: #ff0000;
-      &:focus {
-        border-color: #ff8f00;
-      }
-    }
-  }
-  .required-gdi, .required-inspire {
-    input[type=text], input[type=number], select, textarea.form-control, .form-control, .bootstrap-tagsinput {
-      border-color: #0000ff;
-      &:focus {
-        border-color: #0077ff;
-      }
-    }
-  }
+
   .gn-date {
     .gn-date-picker > input[type=date].gn-notime {
       width: 100%;
     }
   }
+
+  div.gn-extra-field > label {
+    visibility: visible;
+  }
+
 }
 .tooltip-parent-info {
   margin: 8px -14px 0 -14px;

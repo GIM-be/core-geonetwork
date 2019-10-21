@@ -88,18 +88,18 @@
   </gmd:contact>
   <gmd:dateStamp gco:nilReason="missing"/>
   <gmd:metadataStandardName>
-    <gco:CharacterString>ISO 19119:2005/Amd 1:2008</gco:CharacterString>
+    <gco:CharacterString>ISO 19119:2005/Amd 1:2008/INSPIRE MD TG 2.0.1</gco:CharacterString>
   </gmd:metadataStandardName>
   <gmd:metadataStandardVersion>
-    <gco:CharacterString>GDI-Vlaanderen Best Practices - versie 1.0</gco:CharacterString>
+    <gco:CharacterString>GDI-Vlaanderen Best Practices – versie 2.0</gco:CharacterString>
   </gmd:metadataStandardVersion>
   <gmd:identificationInfo>
     <srv:SV_ServiceIdentification>
       <gmd:citation>
         <gmd:CI_Citation>
           <gmd:title>
-            <gco:CharacterString>Metadata-sjabloon voor services v1.n, conform GDI-Vlaanderen
-              Best Practices v1.0
+            <gco:CharacterString>
+              Sjabloon voor Metadata van Geografische services, conform GDI-Vlaanderen Best Practices v2.0
             </gco:CharacterString>
           </gmd:title>
           <gmd:alternateTitle>
@@ -386,7 +386,7 @@
                 <gco:Real/>
               </gmd:maximumValue>
               <gmd:verticalCRS>
-                <gml:VerticalCRS gml:id="VCRS_01">
+                <gml:VerticalCRS gml:id="">
                   <gml:identifier codeSpace=""/>
                   <gml:scope/>
                   <gml:verticalCS nilReason="missing"/>

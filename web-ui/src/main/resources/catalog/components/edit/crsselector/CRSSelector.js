@@ -52,6 +52,10 @@
            link: function(scope, element, attrs) {
              scope.snippet = null;
              scope.crsResults = [];
+             scope.defaultCrs = {
+               code: "31370",
+               codeSpace: "EPSG"
+             };
              scope.snippetRef = gnEditor.
              buildXMLFieldName(scope.elementRef, scope.elementName);
 

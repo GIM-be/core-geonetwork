@@ -1,6 +1,11 @@
-<gmd:EX_VerticalExtent xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd">
-  <gmd:minimumValue/>
-  <gmd:maximumValue/>
+<gmd:EX_VerticalExtent xmlns:gml="http://www.opengis.net/gml" xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                       xmlns:gco="http://www.isotc211.org/2005/gco">
+  <gmd:minimumValue>
+    <gco:Real/>
+  </gmd:minimumValue>
+  <gmd:maximumValue>
+    <gco:Real/>
+  </gmd:maximumValue>
   <gmd:verticalCRS>
     <gml:VerticalCRS gml:id="">
       <gml:identifier codeSpace=""/>
