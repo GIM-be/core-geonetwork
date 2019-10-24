@@ -522,7 +522,7 @@
   <xsl:template mode="mode-iso19139" priority="100" match="gml:*[count(.//gn:element) = 1]">
     <xsl:variable name="name" select="name(.)"/>
 
-    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, $name, $labels)"/>
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, $name, $labels, name(..), '', '')"/>
     <xsl:variable name="helper" select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
 
     <xsl:variable name="added" select="parent::node()/parent::node()/@gn:addedObj"/>
