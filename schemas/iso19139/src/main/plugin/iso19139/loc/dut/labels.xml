@@ -1441,7 +1441,7 @@
     <description>Naam van het gebruikte medium</description>
   </element>
   <element name="gmd:MD_Metadata">
-    <label>Metadata</label>
+    <label>Meta-metadata</label>
     <description>Basisobject dat metadata over (een) bron(nen) definieert</description>
   </element>
   <element name="gmd:MD_MetadataExtensionInformation">
