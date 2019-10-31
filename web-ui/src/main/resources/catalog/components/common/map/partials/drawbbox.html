@@ -87,7 +87,7 @@
                  placeholder="{{'north' | translate}}"
                  data-ng-change="updateBbox(true)"
                  ng-disabled="readOnly"/>
-          <span class="input-group-addon hidden-xs">N</span>
+          <span class="input-group-addon hidden-xs">Max Y</span>
         </div>
         <div class="input-group coord coord-south">
           <input data-ng-model="extent.form[1]"
@@ -96,7 +96,7 @@
                  placeholder="{{'south' | translate}}"
                  data-ng-change="updateBbox(true)"
                  ng-disabled="readOnly"/>
-          <span class="input-group-addon hidden-xs">S</span>
+          <span class="input-group-addon hidden-xs">Min Y</span>
         </div>
         <div class="input-group coord coord-east">
           <input data-ng-model="extent.form[2]"
@@ -105,7 +105,7 @@
                  placeholder="{{'east' | translate}}"
                  data-ng-change="updateBbox(true)"
                  ng-disabled="readOnly"/>
-          <span class="input-group-addon hidden-xs">E</span>
+          <span class="input-group-addon hidden-xs">Max X</span>
         </div>
         <div class="input-group coord coord-west">
           <input data-ng-model="extent.form[0]"
@@ -114,7 +114,7 @@
                  placeholder="{{'west' | translate}}"
                  data-ng-change="updateBbox(true)"
                  ng-disabled="readOnly"/>
-          <span class="input-group-addon hidden-xs">W</span>
+          <span class="input-group-addon hidden-xs">Min X</span>
         </div>
       </span>
       <table>
