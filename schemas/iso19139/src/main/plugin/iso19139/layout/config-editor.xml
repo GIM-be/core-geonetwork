@@ -3275,6 +3275,9 @@
 
       <tab id="default" default="true" mode="flat">
         <section xpath="/gmd:MD_Metadata/gmd:identificationInfo"/>
+        <section name="gmd:applicationSchemaInfo">
+          <section xpath="/gmd:MD_Metadata/gmd:applicationSchemaInfo"/>
+        </section>
         <section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo" or="referenceSystemInfo" in="/gmd:MD_Metadata"/>
         <section xpath="/gmd:MD_Metadata/gmd:spatialRepresentationInfo"/>
         <section name="gmd:distributionInfo">
