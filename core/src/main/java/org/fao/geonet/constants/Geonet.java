@@ -40,7 +40,7 @@ public final class Geonet {
 
     public static final String CONTEXT_NAME = "contextName";
     // TODO make this configurable
-    public static final String DEFAULT_LANGUAGE = "eng";
+    public static final String DEFAULT_LANGUAGE = "dut";
 
     public static final String CC_API_REST_URL = "http://api.creativecommons.org/rest/1.5/simple/chooser";
     public static final String LUCENE_LOCALE_KEY = "_locale";
