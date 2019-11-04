@@ -79,9 +79,9 @@
   -->
 
   <facets>
-    <facet name="keyword" indexKey="keyword" label="keywords" localized="true"/>
-    <facet name="topicCat" indexKey="topicCat" label="topicCats" localized="true"/>
-    <facet name="category" indexKey="_cat" label="categories" localized="true"/>
+    <facet name="keyword" indexKey="keyword" label="keywords" localized="false"/>
+    <facet name="topicCat" indexKey="topicCat" label="topicCats" localized="false"/>
+    <facet name="category" indexKey="_cat" label="categories" localized="false"/>
     <facet name="inspireTheme" indexKey="inspiretheme" label="inspireThemes"/>
     <facet name="inspireThemeWithAc" indexKey="inspirethemewithac" label="inspireThemesWithAc"/>
     <facet name="inspireThemeURI" indexKey="inspirethemeuri" label="inspireThemesURI"/>
@@ -89,7 +89,7 @@
     <facet name="resolution" indexKey="resolution" label="resolutions"/>
     <facet name="spatialRepresentationType" indexKey="cl_spatialRepresentationType"
            label="spatialRepresentationTypes"/>
-    <facet name="orgName" indexKey="orgName" label="orgNames" localized="true"/>
+    <facet name="orgName" indexKey="orgName" label="orgNames" localized="false"/>
     <facet name="orgNameTree" indexKey="orgNameTree" label="orgNamesTree"
            classifier="slashSplitClassifier"/>
     <facet name="metadataPOC" indexKey="metadataPOC" label="metadataPOCs"/>
