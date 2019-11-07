@@ -448,7 +448,6 @@
   <xsl:function name="gn-fn-metadata:isFieldFlatModeException" as="xs:boolean">
     <xsl:param name="configuration" as="node()"/>
     <xsl:param name="name" as="xs:string"/>
-    <xsl:message select="'No xpath'"/>
     <xsl:value-of select="gn-fn-metadata:isFieldFlatModeException($configuration, $name, '')"/>
   </xsl:function>
   <xsl:function name="gn-fn-metadata:isFieldFlatModeException" as="xs:boolean">
