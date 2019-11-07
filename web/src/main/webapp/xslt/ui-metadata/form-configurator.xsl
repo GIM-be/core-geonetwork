@@ -90,6 +90,47 @@
   </xsl:template>
 
 
+  <!-- Create multiple fieldsets with custom name depending on
+    the number of element targeted by the @per attribute -->
+  <xsl:template mode="form-builder" match="section[@name and @per]" priority="10">
+    <xsl:param name="base" as="node()"/>
+    <xsl:variable name="section" select="."/>
+    <xsl:variable name="count">
+      <saxon:call-template name="{concat('evaluate-', $schema, '-number')}">
+        <xsl:with-param name="base" select="$metadata"/>
+        <xsl:with-param name="in" select="concat('/../', @per)"/>
+      </saxon:call-template>
+    </xsl:variable>
+    <xsl:for-each select="1 to $count">
+      <xsl:variable name="secWithPos">
+        <saxon:call-template name="add-position-to-xpath">
+          <xsl:with-param name="section" select="$section"/>
+          <xsl:with-param name="position" select="position()"/>
+        </saxon:call-template>
+      </xsl:variable>
+      <xsl:apply-templates mode="form-builder" select="$secWithPos">
+        <xsl:with-param name="base" select="$base"/>
+      </xsl:apply-templates>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="add-position-to-xpath">
+    <xsl:param name="section" as="node()"/>
+    <xsl:param name="position"/>
+    <xsl:variable name="per" select="$section/@per"/>
+    <xsl:element name="{name($section)}">
+      <xsl:copy-of select="$section/@*[not(name() = 'per')]"/>
+      <xsl:for-each select="$section/*">
+        <xsl:copy copy-namespaces="no">
+          <xsl:if test="@xpath">
+            <xsl:attribute name="xpath" select="concat($per, '[', $position,']', substring-after(@xpath, $per))"/>
+          </xsl:if>
+          <xsl:copy-of select="@*[not(name() = 'xpath')]|*|text()"/>
+        </xsl:copy>
+      </xsl:for-each>
+    </xsl:element>
+  </xsl:template>
+
   <!-- Insert a HTML fragment in the editor from the
   localization files. -->
   <xsl:template mode="form-builder" match="text">

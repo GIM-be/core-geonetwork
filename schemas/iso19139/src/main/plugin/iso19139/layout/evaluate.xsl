@@ -83,5 +83,11 @@
     <xsl:value-of select="saxon:evaluate(concat('$p1', $in), $base)"/>
   </xsl:template>
 
+  <!-- Evaluate XPath returning the count of matched element -->
+  <xsl:template name="evaluate-iso19139-number">
+    <xsl:param name="base" as="node()"/>
+    <xsl:param name="in"/>
+    <xsl:value-of select="count(saxon:evaluate(concat('$p1', $in), $base))"/>
+  </xsl:template>
 
 </xsl:stylesheet>
