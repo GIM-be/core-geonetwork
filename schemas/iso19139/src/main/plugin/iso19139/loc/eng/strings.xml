@@ -68,6 +68,7 @@
   <citationProposal>Citation proposal</citationProposal>
   <citationProposal-help>This proposal was automatically generated, check if the metadata authors did not specified custom citation requirements.</citationProposal-help>
   <associatedResources>Associated resources</associatedResources>
+  <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
 
   <!-- XSD error translation -->
   <invalidElement>Invalid content found at element </invalidElement>

@@ -174,19 +174,19 @@
                   then gn-fn-metadata:getLabel($schema, $sectionName, $labels)/label
                   else $strings/*[name() = $sectionName]"
               />
-              <xsl:if test="$refToDelete">
+              <xsl:if test="$refToDelete and not(@required)">
                 <xsl:call-template name="render-boxed-element-control">
                   <xsl:with-param name="editInfo" select="$refToDelete/geonet:element"/>
                 </xsl:call-template>
               </xsl:if>
             </legend>
-            <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' and name() != 'xpath']|*">
+            <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' and name() != 'xpath' and name() != 'required']|*">
               <xsl:with-param name="base" select="$base"/>
             </xsl:apply-templates>
           </fieldset>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' or name() = 'xpath']|*">
+          <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' or name() = 'xpath' and name() != 'required']|*">
             <xsl:with-param name="base" select="$base"/>
           </xsl:apply-templates>
         </xsl:otherwise>

@@ -61,6 +61,7 @@
   <applicationSchemaInfo>Schema info</applicationSchemaInfo>
   <noThesaurusName>Trefwoorden</noThesaurusName>
   <bboxesSection>Geografische dekking</bboxesSection>
+  <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
 
   <!-- INSPIRE view labels and help -->
   <url>Online resource</url>

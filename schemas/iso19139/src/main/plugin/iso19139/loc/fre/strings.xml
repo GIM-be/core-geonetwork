@@ -62,6 +62,7 @@
   <citationProposal>Proposition de citation</citationProposal>
   <citationProposal-help>Cette proposition de citation a été générée automatiquement selon le format suggéré par DataCite. Nous vous invitons à vérifier dans les métadonnées si les auteurs n'ont pas imposé un format de citation spécifique.</citationProposal-help>
   <associatedResources>Ressources associées</associatedResources>
+  <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
 
   <keywordFrom>Mots clés - </keywordFrom>
   <!-- XSD error translation -->
