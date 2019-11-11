@@ -478,6 +478,7 @@
       <xsl:with-param name="parentEditInfo" select="gn:element"/>
       <xsl:with-param name="listOfValues"
                       select="gn-fn-metadata:getCodeListValues($schema, name(*[@codeListValue]), $codelists, .)"/>
+      <xsl:with-param name="isDisabled" select="if (name(../..)='gmd:contact') then true() else false()"/>
       <xsl:with-param name="isFirst"
                       select="count(preceding-sibling::*[name() = $elementName]) = 0"/>
     </xsl:call-template>
