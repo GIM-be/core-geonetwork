@@ -140,12 +140,12 @@
 
     <for name="gmd:contact" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
-        data-template-add-action="true"
+        data-template-add-action="false"
         data-search-action="true"
-        data-popup-action="true"
+        data-popup-action="false"
         data-template-type="contact"
-        data-insert-modes=""
-        data-variables="gmd:role/gmd:CI_RoleCode/@codeListValue~{role}"/>
+        data-filter='{"_roleCode": "pointOfContact"}'
+        data-insert-modes="text"/>
     </for>
     <for name="gmd:pointOfContact" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes

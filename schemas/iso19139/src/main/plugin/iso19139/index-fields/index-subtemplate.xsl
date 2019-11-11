@@ -140,7 +140,8 @@
 
       </xsl:otherwise>
     </xsl:choose>
-
+		<Field name="_roleCode" string="{string(gmd:role/*/@codeListValue)}"
+               store="true" index="true"/>
     <xsl:call-template name="subtemplate-common-fields"/>
 
   </xsl:template>
