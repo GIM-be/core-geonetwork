@@ -530,6 +530,15 @@
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
 
+    <xsl:variable name="attributes">
+      <xsl:apply-templates mode="render-for-field-for-attribute"
+                           select="@codeSpace">
+        <xsl:with-param name="ref" select="./gn:element/@ref"/>
+        <xsl:with-param name="insertRef" select="./gn:element/@ref"/>
+      </xsl:apply-templates>
+    </xsl:variable>
+    <xsl:variable name="forceDisplayAttributes" select="boolean(@codeSpace)"/>
+
     <xsl:call-template name="render-element">
       <xsl:with-param name="label" select="$labelConfig"/>
       <xsl:with-param name="value" select="."/>
@@ -540,6 +549,8 @@
       <xsl:with-param name="editInfo"
                       select="gn:element"/>
       <xsl:with-param name="listOfValues" select="$helper"/>
+      <xsl:with-param name="attributesSnippet" select="$attributes"/>
+      <xsl:with-param name="forceDisplayAttributes" select="$forceDisplayAttributes"/>
     </xsl:call-template>
   </xsl:template>
 

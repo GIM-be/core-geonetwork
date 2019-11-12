@@ -2847,7 +2847,7 @@
     <label>Unieke code</label>
     <description>Unieke identificatie voor dit gml element. Moet uniek zijn binnen dit XML document.</description>
   </element>
-  <element name="gml:identifier" context="gml:VerticalCS">
+  <element name="gml:identifier" context="gml:VerticalCRS">
     <label>Unieke code</label>
     <description>Unieke identificatie voor dit gml element. Moet uniek zijn binnen dit XML document.</description>
     <helper relAtt="codeSpace">

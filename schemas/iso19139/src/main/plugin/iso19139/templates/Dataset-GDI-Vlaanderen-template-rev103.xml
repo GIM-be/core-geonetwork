@@ -600,17 +600,8 @@
                 <gml:VerticalCRS gml:id="">
                   <gml:identifier codeSpace=""/>
                   <gml:scope/>
-                  <gml:verticalCS>
-                    <gml:VerticalCS>
-                      <gml:identifier codeSpace=""/>
-                    </gml:VerticalCS>
-                  </gml:verticalCS>
-                  <gml:verticalDatum>
-                    <gml:VerticalDatum>
-                      <gml:identifier codeSpace=""/>
-                      <gml:scope/>
-                    </gml:VerticalDatum>
-                  </gml:verticalDatum>
+                  <gml:verticalCS nilReason="missing"/>
+                  <gml:verticalDatum nilReason="missing"/>
                 </gml:VerticalCRS>
               </gmd:verticalCRS>
             </gmd:EX_VerticalExtent>

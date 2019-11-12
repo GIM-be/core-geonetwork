@@ -27,6 +27,7 @@
                 xmlns:gn="http://www.fao.org/geonetwork"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:saxon="http://saxon.sf.net/"
+                xmlns:geonet="http://www.fao.org/geonetwork"
                 extension-element-prefixes="saxon"
                 exclude-result-prefixes="#all" version="2.0">
   <!--
@@ -89,6 +90,109 @@
     </xsl:if>
   </xsl:template>
 
+
+  <!-- Create multiple fieldsets with custom name depending on
+    the number of element targeted by the @per attribute -->
+  <xsl:template mode="form-builder" match="section[@name and @per]" priority="10">
+    <xsl:param name="base" as="node()"/>
+    <xsl:variable name="section" select="."/>
+    <xsl:variable name="count">
+      <saxon:call-template name="{concat('evaluate-', $schema, '-number')}">
+        <xsl:with-param name="base" select="$metadata"/>
+        <xsl:with-param name="in" select="concat('/../', @per)"/>
+      </saxon:call-template>
+    </xsl:variable>
+    <xsl:for-each select="1 to $count">
+      <xsl:variable name="secWithPos">
+        <saxon:call-template name="add-position-to-xpath">
+          <xsl:with-param name="section" select="$section"/>
+          <xsl:with-param name="position" select="position()"/>
+        </saxon:call-template>
+      </xsl:variable>
+      <xsl:apply-templates mode="form-builder-named-section" select="$secWithPos">
+        <xsl:with-param name="base" select="$base"/>
+      </xsl:apply-templates>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="add-position-to-xpath">
+    <xsl:param name="section" as="node()"/>
+    <xsl:param name="position"/>
+    <xsl:variable name="per" select="$section/@per"/>
+    <xsl:element name="{name($section)}">
+      <xsl:copy-of select="$section/@*[not(name() = 'per')]"/>
+      <xsl:attribute name="xpath" select="concat($per, '[' , $position, ']')"/>
+      <xsl:for-each select="$section/*">
+        <xsl:copy copy-namespaces="no">
+          <xsl:if test="@xpath">
+            <xsl:attribute name="xpath" select="concat($per, '[', $position,']', substring-after(@xpath, $per))"/>
+          </xsl:if>
+          <xsl:copy-of select="@*[not(name() = 'xpath')]|*|text()"/>
+        </xsl:copy>
+      </xsl:for-each>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template mode="form-builder-named-section" match="section">
+    <xsl:param name="base" as="node()"/>
+
+    <xsl:variable name="match">
+      <xsl:choose>
+        <xsl:when test="@displayIfRecord">
+          <saxon:call-template name="{concat('evaluate-', $schema, '-boolean')}">
+            <xsl:with-param name="base" select="$metadata"/>
+            <xsl:with-param name="in" select="concat('/../', @displayIfRecord)"/>
+          </saxon:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="true()"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:if test="$match = true()">
+      <xsl:variable name="sectionName" select="@name"/>
+      <xsl:variable name="nodes">
+        <saxon:call-template name="{concat('evaluate-', $schema)}">
+          <xsl:with-param name="base" select="$base"/>
+          <xsl:with-param name="in" select="concat('/../', @xpath)"/>
+        </saxon:call-template>
+      </xsl:variable>
+      <xsl:variable name="refToDelete">
+        <xsl:call-template name="get-ref-element-to-delete">
+          <xsl:with-param name="node" select="gn-fn-metadata:getOriginalNode($metadata, $nodes/node())"/>
+          <xsl:with-param name="delXpath" select="@del"/>
+        </xsl:call-template>
+      </xsl:variable>
+
+      <xsl:choose>
+        <xsl:when test="$sectionName">
+          <fieldset data-gn-field-highlight="" class="gn-{@name}">
+            <legend data-gn-slide-toggle="">
+              <xsl:value-of
+                select="if (contains($sectionName, ':'))
+                  then gn-fn-metadata:getLabel($schema, $sectionName, $labels)/label
+                  else $strings/*[name() = $sectionName]"
+              />
+              <xsl:if test="$refToDelete and not(@required)">
+                <xsl:call-template name="render-boxed-element-control">
+                  <xsl:with-param name="editInfo" select="$refToDelete/geonet:element"/>
+                </xsl:call-template>
+              </xsl:if>
+            </legend>
+            <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' and name() != 'xpath' and name() != 'required']|*">
+              <xsl:with-param name="base" select="$base"/>
+            </xsl:apply-templates>
+          </fieldset>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' or name() = 'xpath' and name() != 'required']|*">
+            <xsl:with-param name="base" select="$base"/>
+          </xsl:apply-templates>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
 
   <!-- Insert a HTML fragment in the editor from the
   localization files. -->
