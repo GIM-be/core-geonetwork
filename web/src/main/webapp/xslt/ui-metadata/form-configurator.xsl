@@ -102,35 +102,47 @@
         <xsl:with-param name="in" select="concat('/../', @per)"/>
       </saxon:call-template>
     </xsl:variable>
+
     <xsl:for-each select="1 to $count">
-      <xsl:variable name="secWithPos">
-        <saxon:call-template name="add-position-to-xpath">
-          <xsl:with-param name="section" select="$section"/>
-          <xsl:with-param name="position" select="position()"/>
-        </saxon:call-template>
+      <xsl:variable name="per" select="$section/@per"/>
+      <xsl:variable name="xpathWithPos" select="concat($per, '[', position(),']')"/>
+      <xsl:variable name="generatedSection">
+        <xsl:element name="section">
+          <xsl:attribute name="xpath" select="$xpathWithPos"/>
+          <xsl:copy-of select="$section/@*[not(name() = 'per')]"/>
+          <xsl:for-each select="$section/*">
+            <xsl:copy copy-namespaces="no">
+              <xsl:choose>
+                <xsl:when test="name() = 'action'">
+                  <xsl:if test="@in">
+                    <xsl:attribute name="in" select="concat($xpathWithPos, '/', @in)"/>
+                  </xsl:if>
+                  <xsl:if test="not(@in)">
+                    <xsl:attribute name="in" select="$xpathWithPos"/>
+                  </xsl:if>
+                  <xsl:copy-of select="@*[not(name() = 'in')]|*"/>
+                </xsl:when>
+                <xsl:when test="@xpath">
+                  <xsl:attribute name="xpath" select="concat($xpathWithPos, '/', @xpath)"/>
+                  <xsl:copy-of select="@*[not(name() = 'xpath')]|*"/>
+                </xsl:when>
+                <xsl:when test="@per">
+                  <xsl:attribute name="per" select="concat($xpathWithPos, '/', @per)"/>
+                  <xsl:copy-of select="@*[not(name() = 'per')]|*"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:copy-of select="@*|*"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:copy>
+          </xsl:for-each>
+        </xsl:element>
       </xsl:variable>
-      <xsl:apply-templates mode="form-builder-named-section" select="$secWithPos">
+
+      <xsl:apply-templates mode="form-builder-named-section" select="$generatedSection">
         <xsl:with-param name="base" select="$base"/>
       </xsl:apply-templates>
     </xsl:for-each>
-  </xsl:template>
-
-  <xsl:template name="add-position-to-xpath">
-    <xsl:param name="section" as="node()"/>
-    <xsl:param name="position"/>
-    <xsl:variable name="per" select="$section/@per"/>
-    <xsl:element name="{name($section)}">
-      <xsl:copy-of select="$section/@*[not(name() = 'per')]"/>
-      <xsl:attribute name="xpath" select="concat($per, '[' , $position, ']')"/>
-      <xsl:for-each select="$section/*">
-        <xsl:copy copy-namespaces="no">
-          <xsl:if test="@xpath">
-            <xsl:attribute name="xpath" select="concat($per, '[', $position,']', substring-after(@xpath, $per))"/>
-          </xsl:if>
-          <xsl:copy-of select="@*[not(name() = 'xpath')]|*|text()"/>
-        </xsl:copy>
-      </xsl:for-each>
-    </xsl:element>
   </xsl:template>
 
   <xsl:template mode="form-builder-named-section" match="section">
