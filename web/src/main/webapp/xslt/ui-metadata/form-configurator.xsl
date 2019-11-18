@@ -112,11 +112,11 @@
           <xsl:copy-of select="$section/@*[not(name() = 'per')]"/>
           <xsl:for-each select="$section/*">
             <xsl:copy copy-namespaces="no">
+              <xsl:if test="@in">
+                <xsl:attribute name="in" select="concat($xpathWithPos, '/', @in)"/>
+              </xsl:if>
               <xsl:choose>
                 <xsl:when test="name() = 'action'">
-                  <xsl:if test="@in">
-                    <xsl:attribute name="in" select="concat($xpathWithPos, '/', @in)"/>
-                  </xsl:if>
                   <xsl:if test="not(@in)">
                     <xsl:attribute name="in" select="$xpathWithPos"/>
                   </xsl:if>
@@ -124,11 +124,11 @@
                 </xsl:when>
                 <xsl:when test="@xpath">
                   <xsl:attribute name="xpath" select="concat($xpathWithPos, '/', @xpath)"/>
-                  <xsl:copy-of select="@*[not(name() = 'xpath')]|*"/>
+                  <xsl:copy-of select="@*[not(name() = 'xpath') and not(name() = 'in')]|*"/>
                 </xsl:when>
                 <xsl:when test="@per">
                   <xsl:attribute name="per" select="concat($xpathWithPos, '/', @per)"/>
-                  <xsl:copy-of select="@*[not(name() = 'per')]|*"/>
+                  <xsl:copy-of select="@*[not(name() = 'per') and not(name() = 'in')]|*"/>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:copy-of select="@*|*"/>

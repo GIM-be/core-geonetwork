@@ -3280,7 +3280,7 @@
           <section xpath="gmd:MD_DataIdentification/gmd:resourceMaintenance"/>
           <section xpath="gmd:MD_DataIdentification/gmd:graphicOverview"/>
           <section xpath="gmd:MD_DataIdentification/gmd:descriptiveKeywords"
-                   or="descriptiveKeywords" in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"/>
+                   or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
           <section xpath="gmd:MD_DataIdentification/gmd:resourceSpecificUsage"/>
           <section xpath="gmd:MD_DataIdentification/gmd:aggregationInfo"/>
           <section xpath="gmd:MD_DataIdentification/gmd:spatialRepresentationType"/>
@@ -3312,11 +3312,11 @@
           <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints">
             <section xpath="gmd:MD_Constraints"/>
             <section name="gmd:MD_LegalConstraints" per="gmd:MD_LegalConstraints">
-              <section xpath="gmd:useLimitation" or="useLimitation" in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints"/>
-              <section xpath="gmd:accessConstraints" or="gmd:accessConstraints" in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints"/>
-              <section xpath="gmd:useConstraints" or="gmd:useConstraints" in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints"/>
+              <section xpath="gmd:useLimitation" or="useLimitation" in="."/>
+              <section xpath="gmd:accessConstraints" or="gmd:accessConstraints" in="."/>
+              <section xpath="gmd:useConstraints" or="gmd:useConstraints" in="."/>
               <!-- in will be concat to the current context. In this case, the context is enough-->
-              <action type="add" name="otherConstraints" or="otherConstraints"
+              <action type="add" name="addOtherConstraints" or="otherConstraints"
                       addDirective="data-gn-directory-entry-selector">
                 <directiveAttributes
                   data-template-add-action="false"
@@ -3328,7 +3328,7 @@
                   data-transformation="otherConstrTransform"/>
               </action>
               <section name="gmd:otherConstraints" per="gmd:otherConstraints">
-                <section xpath="."/>
+                <section xpath="." name="description"/>
               </section>
             </section>
             <section xpath="gmd:MD_SecurityConstraints"/>
