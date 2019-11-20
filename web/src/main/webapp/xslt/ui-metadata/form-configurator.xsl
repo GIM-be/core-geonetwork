@@ -113,7 +113,12 @@
           <xsl:for-each select="$section/*">
             <xsl:copy copy-namespaces="no">
               <xsl:if test="@in">
-                <xsl:attribute name="in" select="concat($xpathWithPos, '/', @in)"/>
+                <xsl:if test="normalize-space(@in) = ''">
+                  <xsl:attribute name="in" select="$xpathWithPos"/>
+                </xsl:if>
+                <xsl:if test="normalize-space(@in) != ''">
+                  <xsl:attribute name="in" select="concat($xpathWithPos, '/', @in)"/>
+                </xsl:if>
               </xsl:if>
               <xsl:choose>
                 <xsl:when test="name() = 'action'">

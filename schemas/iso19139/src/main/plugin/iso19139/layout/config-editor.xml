@@ -3312,9 +3312,9 @@
           <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints">
             <section xpath="gmd:MD_Constraints"/>
             <section name="gmd:MD_LegalConstraints" per="gmd:MD_LegalConstraints">
-              <section xpath="gmd:useLimitation" or="useLimitation" in="."/>
-              <section xpath="gmd:accessConstraints" or="gmd:accessConstraints" in="."/>
-              <section xpath="gmd:useConstraints" or="gmd:useConstraints" in="."/>
+              <section xpath="gmd:useLimitation" or="useLimitation" in=""/>
+              <section xpath="gmd:accessConstraints" or="accessConstraints" in=""/>
+              <section xpath="gmd:useConstraints" or="useConstraints" in=""/>
               <!-- in will be concat to the current context. In this case, the context is enough-->
               <action type="add" name="addOtherConstraints" or="otherConstraints"
                       addDirective="data-gn-directory-entry-selector">
