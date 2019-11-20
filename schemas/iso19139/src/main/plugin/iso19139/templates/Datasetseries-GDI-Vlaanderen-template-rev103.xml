@@ -858,7 +858,9 @@
               <gmd:description>
                 <gco:CharacterString/>
               </gmd:description>
-              <gmd:dateTime gco:nilReason="missing"/>
+              <gmd:dateTime gco:nilReason="missing">
+                <gco:DateTime/>
+              </gmd:dateTime>
               <gmd:processor>
                 <gmd:CI_ResponsibleParty>
                   <gmd:individualName>
@@ -927,7 +929,9 @@
                   <gmd:description>
                     <gco:CharacterString/>
                   </gmd:description>
-                  <gmd:dateTime gco:nilReason="missing"/>
+                  <gmd:dateTime gco:nilReason="missing">
+                    <gco:DateTime/>
+                  </gmd:dateTime>
                   <gmd:processor>
                     <gmd:CI_ResponsibleParty>
                       <gmd:individualName>

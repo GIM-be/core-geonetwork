@@ -93,7 +93,7 @@
 
   <!-- Create multiple fieldsets with custom name depending on
     the number of element targeted by the @per attribute -->
-  <xsl:template mode="form-builder" match="section[@name and @per]" priority="10">
+  <xsl:template mode="form-builder" match="section[@per]" priority="10">
     <xsl:param name="base" as="node()"/>
     <xsl:variable name="section" select="."/>
     <xsl:variable name="count">
@@ -197,13 +197,13 @@
                 </xsl:call-template>
               </xsl:if>
             </legend>
-            <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' and name() != 'xpath' and name() != 'required']|*">
+            <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' and name() != 'xpath' and name() != 'required' and name() != 'del']|*">
               <xsl:with-param name="base" select="$base"/>
             </xsl:apply-templates>
           </fieldset>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' or name() = 'xpath' and name() != 'required']|*">
+          <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' and name() != 'xpath' and name() != 'required']|*">
             <xsl:with-param name="base" select="$base"/>
           </xsl:apply-templates>
         </xsl:otherwise>
