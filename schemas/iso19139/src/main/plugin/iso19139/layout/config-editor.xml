@@ -402,6 +402,7 @@
     <name>gmd:source</name>
     <name>gmd:transferOptions</name>
     <name>gmd:distributionOrderProcess</name>
+    <name>gmd:featureCatalogueCitation</name>
   </fieldsWithFieldset>
 
   <multilingualFields>
@@ -3729,6 +3730,10 @@
           <field xpath="/gmd:MD_Metadata/gmd:propertyType"/>
           <field xpath="/gmd:MD_Metadata/gmd:featureType"/>
           <field xpath="/gmd:MD_Metadata/gmd:featureAttribute"/>
+        </section>
+        <section name="gmd:contentInfo" per="/gmd:MD_Metadata/gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
+          <section xpath="gmd:includedWithDataset"/>
+          <section xpath="gmd:featureCatalogueCitation" or="featureCatalogueCitation" in=""/>
         </section>
       </tab>
 

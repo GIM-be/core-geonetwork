@@ -618,25 +618,7 @@
       <gmd:includedWithDataset>
         <gco:Boolean>true</gco:Boolean>
       </gmd:includedWithDataset>
-      <gmd:featureCatalogueCitation>
-        <gmd:CI_Citation>
-          <gmd:title gco:nilReason="missing">
-            <gco:CharacterString/>
-          </gmd:title>
-          <gmd:date>
-            <gmd:CI_Date>
-              <gmd:date>
-                <gco:Date/>
-              </gmd:date>
-              <gmd:dateType>
-                <gmd:CI_DateTypeCode
-                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
-                  codeListValue=""/>
-              </gmd:dateType>
-            </gmd:CI_Date>
-          </gmd:date>
-        </gmd:CI_Citation>
-      </gmd:featureCatalogueCitation>
+      <gmd:featureCatalogueCitation uuidref=""/>
     </gmd:MD_FeatureCatalogueDescription>
   </gmd:contentInfo>
   <gmd:distributionInfo>
