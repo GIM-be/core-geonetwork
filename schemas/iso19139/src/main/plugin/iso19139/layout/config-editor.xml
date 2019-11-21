@@ -3705,8 +3705,7 @@
           <field xpath="/gmd:MD_Metadata/gmd:characterSet"/>
           <field xpath="/gmd:MD_Metadata/gmd:parentIdentifier" or="parentIdentifier"
                  in="/gmd:MD_Metadata"/>
-          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevel" or="hierarchyLevel"
-                 in="/gmd:MD_Metadata"/>
+          <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevel"/>
           <field xpath="/gmd:MD_Metadata/gmd:hierarchyLevelName" or="hierarchyLevelName"
                  in="/gmd:MD_Metadata"/>
           <field xpath="/gmd:MD_Metadata/gmd:dateStamp"/>
