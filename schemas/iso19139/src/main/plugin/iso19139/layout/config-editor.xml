@@ -3279,7 +3279,8 @@
           <section xpath="gmd:MD_DataIdentification/gmd:status"/>
           <section xpath="gmd:MD_DataIdentification/gmd:pointOfContact"/>
           <section xpath="gmd:MD_DataIdentification/gmd:resourceMaintenance"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:graphicOverview"/>
+          <section xpath="gmd:MD_DataIdentification/gmd:graphicOverview"
+                   or="graphicOverview" in="gmd:MD_DataIdentification"/>
           <section xpath="gmd:MD_DataIdentification/gmd:descriptiveKeywords"
                    or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
           <section xpath="gmd:MD_DataIdentification/gmd:resourceSpecificUsage"/>
@@ -3752,6 +3753,7 @@
         <for name="gmd:useConstraints"/>
         <for name="gmd:accessConstraints"/>
         <for name="gmd:otherConstraints"/>
+        <for name="gmd:fileDescription"/>
 
         <for name="gmd:date"      xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation"/>
         <for name="gmd:date"      xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation"/>
