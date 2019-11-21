@@ -71,6 +71,7 @@
   <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
   <description>Description</description>
   <addOtherConstraints>Add another constraints</addOtherConstraints>
+  <sourceDescription>Collection method</sourceDescription>
 
   <!-- XSD error translation -->
   <invalidElement>Invalid content found at element </invalidElement>

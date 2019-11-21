@@ -3346,7 +3346,7 @@
               </action>
               <section name="gmd:source" per="gmd:LI_Lineage/gmd:source">
                 <section xpath="gmd:LI_Source/gmd:description"/>
-                <section name="gmd:description" per="gmd:LI_Source/gmd:sourceStep" required="true()">
+                <section name="sourceDescription" per="gmd:LI_Source/gmd:sourceStep" required="true()">
                   <section xpath="gmd:LI_ProcessStep/gmd:description"/>
                   <section xpath="gmd:LI_ProcessStep/gmd:dateTime"/>
                 </section>
@@ -3753,6 +3753,15 @@
         <for name="gmd:useConstraints"/>
         <for name="gmd:accessConstraints"/>
         <for name="gmd:otherConstraints"/>
+
+        <for name="gmd:date"      xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation"/>
+        <for name="gmd:date"      xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation"/>
+        <for name="gmd:date"      xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation"/>
+        <for name="gmd:date"      xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation"/>
+        <for name="gmd:dateTime"  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency"/>
+        <for name="gmd:dateTime"  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness"/>
+        <for name="gmd:dateTime"  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission"/>
+        <for name="gmd:dateTime"  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy"/>
       </flatModeExceptions>
 
       <!--

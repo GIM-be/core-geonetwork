@@ -64,6 +64,7 @@
   <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
   <description>Beschrijving</description>
   <addOtherConstraints>Beschikbare invulblokken Overige beperkingen</addOtherConstraints>
+  <sourceDescription>Inwinningsmethode</sourceDescription>
 
   <!-- INSPIRE view labels and help -->
   <url>Online resource</url>

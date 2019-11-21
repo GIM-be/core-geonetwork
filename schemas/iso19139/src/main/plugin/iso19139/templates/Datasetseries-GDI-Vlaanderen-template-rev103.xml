@@ -807,7 +807,9 @@
           <gmd:measureDescription>
             <gco:CharacterString/>
           </gmd:measureDescription>
-          <gmd:dateTime gco:nilReason="missing"/>
+          <gmd:dateTime gco:nilReason="missing">
+            <gco:DateTime/>
+          </gmd:dateTime>
           <gmd:result>
             <gmd:DQ_ConformanceResult>
               <gmd:specification>
