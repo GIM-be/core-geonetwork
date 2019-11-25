@@ -23,6 +23,7 @@
   "searchAonLineResource": "Zoek een Online bronnen ...",
   "searchAtemporalElement": "Zoek een Temporele begrenzing ...",
   "searchAverticalElement": "Zoek een Verticale begrenzing ...",
-  "searchAotherConstraints": "Zoek een Overige beperkingen ...",
+  "searchAotherConstraints": "Beschikbare invulblokken Overige beperkingen",
+  "searchAresourceConstraints": "Beschikbare invulblokken",
   "zarooResult": "Geen resultaten gevonden"
 }

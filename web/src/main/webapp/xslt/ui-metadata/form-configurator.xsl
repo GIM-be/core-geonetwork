@@ -93,7 +93,7 @@
 
   <!-- Create multiple fieldsets with custom name depending on
     the number of element targeted by the @per attribute -->
-  <xsl:template mode="form-builder" match="section[@name and @per]" priority="10">
+  <xsl:template mode="form-builder" match="section[@per]" priority="10">
     <xsl:param name="base" as="node()"/>
     <xsl:variable name="section" select="."/>
     <xsl:variable name="count">
@@ -102,35 +102,52 @@
         <xsl:with-param name="in" select="concat('/../', @per)"/>
       </saxon:call-template>
     </xsl:variable>
+
     <xsl:for-each select="1 to $count">
-      <xsl:variable name="secWithPos">
-        <saxon:call-template name="add-position-to-xpath">
-          <xsl:with-param name="section" select="$section"/>
-          <xsl:with-param name="position" select="position()"/>
-        </saxon:call-template>
+      <xsl:variable name="per" select="$section/@per"/>
+      <xsl:variable name="xpathWithPos" select="concat($per, '[', position(),']')"/>
+      <xsl:variable name="generatedSection">
+        <xsl:element name="section">
+          <xsl:attribute name="xpath" select="$xpathWithPos"/>
+          <xsl:copy-of select="$section/@*[not(name() = 'per')]"/>
+          <xsl:for-each select="$section/*">
+            <xsl:copy copy-namespaces="no">
+              <xsl:if test="@in">
+                <xsl:if test="normalize-space(@in) = ''">
+                  <xsl:attribute name="in" select="$xpathWithPos"/>
+                </xsl:if>
+                <xsl:if test="normalize-space(@in) != ''">
+                  <xsl:attribute name="in" select="concat($xpathWithPos, '/', @in)"/>
+                </xsl:if>
+              </xsl:if>
+              <xsl:choose>
+                <xsl:when test="name() = 'action'">
+                  <xsl:if test="not(@in)">
+                    <xsl:attribute name="in" select="$xpathWithPos"/>
+                  </xsl:if>
+                  <xsl:copy-of select="@*[not(name() = 'in')]|*"/>
+                </xsl:when>
+                <xsl:when test="@xpath">
+                  <xsl:attribute name="xpath" select="concat($xpathWithPos, '/', @xpath)"/>
+                  <xsl:copy-of select="@*[not(name() = 'xpath') and not(name() = 'in')]|*"/>
+                </xsl:when>
+                <xsl:when test="@per">
+                  <xsl:attribute name="per" select="concat($xpathWithPos, '/', @per)"/>
+                  <xsl:copy-of select="@*[not(name() = 'per') and not(name() = 'in')]|*"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:copy-of select="@*|*"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:copy>
+          </xsl:for-each>
+        </xsl:element>
       </xsl:variable>
-      <xsl:apply-templates mode="form-builder-named-section" select="$secWithPos">
+
+      <xsl:apply-templates mode="form-builder-named-section" select="$generatedSection">
         <xsl:with-param name="base" select="$base"/>
       </xsl:apply-templates>
     </xsl:for-each>
-  </xsl:template>
-
-  <xsl:template name="add-position-to-xpath">
-    <xsl:param name="section" as="node()"/>
-    <xsl:param name="position"/>
-    <xsl:variable name="per" select="$section/@per"/>
-    <xsl:element name="{name($section)}">
-      <xsl:copy-of select="$section/@*[not(name() = 'per')]"/>
-      <xsl:attribute name="xpath" select="concat($per, '[' , $position, ']')"/>
-      <xsl:for-each select="$section/*">
-        <xsl:copy copy-namespaces="no">
-          <xsl:if test="@xpath">
-            <xsl:attribute name="xpath" select="concat($per, '[', $position,']', substring-after(@xpath, $per))"/>
-          </xsl:if>
-          <xsl:copy-of select="@*[not(name() = 'xpath')]|*|text()"/>
-        </xsl:copy>
-      </xsl:for-each>
-    </xsl:element>
   </xsl:template>
 
   <xsl:template mode="form-builder-named-section" match="section">
@@ -180,13 +197,13 @@
                 </xsl:call-template>
               </xsl:if>
             </legend>
-            <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' and name() != 'xpath' and name() != 'required']|*">
+            <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' and name() != 'xpath' and name() != 'required' and name() != 'del']|*">
               <xsl:with-param name="base" select="$base"/>
             </xsl:apply-templates>
           </fieldset>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' or name() = 'xpath' and name() != 'required']|*">
+          <xsl:apply-templates mode="form-builder" select="@*[name() != 'displayIfRecord' and name() != 'xpath' and name() != 'required']|*">
             <xsl:with-param name="base" select="$base"/>
           </xsl:apply-templates>
         </xsl:otherwise>
