@@ -60,7 +60,7 @@
         <xsl:call-template name="fill"/>
       </xsl:if>
 
-      <xsl:apply-templates select="gmd:graphicOverview"/>
+      <xsl:apply-templates select="gmd:graphicOverview[$updateKey != '' or not(gmd:MD_BrowseGraphic/gmd:fileName/@gco:nilReason = 'missing')]"/>
 
       <xsl:apply-templates select="gmd:resourceFormat"/>
       <xsl:apply-templates select="gmd:descriptiveKeywords"/>
