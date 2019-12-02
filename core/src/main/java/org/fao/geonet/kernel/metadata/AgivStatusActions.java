@@ -9,6 +9,7 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataStatus;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
@@ -40,6 +41,7 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
     private IMetadataValidator metadataValidator;
     private MetadataValidationRepository metadataValidationRepository;
     private IMetadataStatus metadataStatusManager;
+    private IMetadataManager metadataManager;
     private Logger logger;
 
     private static final String nodeType = "agiv";
@@ -85,6 +87,7 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
         metadataValidator = context.getBean(IMetadataValidator.class);
         metadataValidationRepository = context.getBean(MetadataValidationRepository.class);
         metadataStatusManager = context.getBean(IMetadataStatus.class);
+        metadataManager = context.getBean(IMetadataManager.class);
         logger = context.getLogger();
     }
 
@@ -177,7 +180,7 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
         } finally {
             try {
                 for (int id : recordsToDelete) {
-                    dm.deleteMetadata(context, String.valueOf(id));
+                    metadataManager.deleteMetadata(context, String.valueOf(id));
                 }
             } catch (Exception e) {
                 logger.error("ERROR in statusChange during delete metadata " + e.getMessage());
@@ -202,61 +205,60 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
         if (changeAllowed) {
             if (session.getProfile().equals(Profile.Administrator)) {
                 switch (status) {
-                    case StatusValue.Status.UNKNOWN: 
-                    case StatusValue.Status.JUSTCREATED: 
+                    case StatusValue.Status.JUSTCREATED:
                         break;
-                    case StatusValue.Status.DRAFT: 
-                    case StatusValue.Status.SUBMITTED: 
-                    case StatusValue.Status.REJECTED: 
+                    case StatusValue.Status.DRAFT:
+                    case StatusValue.Status.SUBMITTED:
+                    case StatusValue.Status.REJECTED:
                         changeAllowed = false;
                         break;
-                    case StatusValue.Status.APPROVED: 
+                    case StatusValue.Status.APPROVED:
                         if (currentStatus.equals(StatusValue.Status.SUBMITTED) || currentStatus.equals(StatusValue.Status.REJECTED) || currentStatus.equals(StatusValue.Status.REJECTED_BY_AGIV) || currentStatus.equals(StatusValue.Status.RETIRED_FOR_AGIV) || currentStatus.equals(StatusValue.Status.REMOVED_FOR_AGIV) || currentStatus.equals(StatusValue.Status.REJECTED_FOR_RETIRE) || currentStatus.equals(StatusValue.Status.REJECTED_FOR_REMOVE)) {
                             changeAllowed = false;
                         }
                         break;
-                    case StatusValue.Status.RETIRED: 
+                    case StatusValue.Status.RETIRED:
                         if (nodeType.equalsIgnoreCase("agiv") && !currentStatus.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
                             changeAllowed = false;
                         }
                         break;
-                    case StatusValue.Status.SUBMITTED_FOR_AGIV: 
+                    case StatusValue.Status.SUBMITTED_FOR_AGIV:
                         if (!currentStatus.equals(StatusValue.Status.DRAFT)) {
                             changeAllowed = false;
                         }
                         break;
-                    case StatusValue.Status.APPROVED_BY_AGIV: 
+                    case StatusValue.Status.APPROVED_BY_AGIV:
                         if (!currentStatus.equals(StatusValue.Status.DRAFT) && !currentStatus.equals(StatusValue.Status.SUBMITTED_FOR_AGIV)) {
                             changeAllowed = false;
                         }
                         break;
-                    case StatusValue.Status.REJECTED_BY_AGIV: 
+                    case StatusValue.Status.REJECTED_BY_AGIV:
                         if (currentStatus.equals(StatusValue.Status.DRAFT) || currentStatus.equals(StatusValue.Status.APPROVED) || currentStatus.equals(StatusValue.Status.RETIRED) || currentStatus.equals(StatusValue.Status.SUBMITTED) || currentStatus.equals(StatusValue.Status.REJECTED) ||
                             currentStatus.equals(StatusValue.Status.APPROVED_BY_AGIV) || currentStatus.equals(StatusValue.Status.RETIRED_FOR_AGIV) || currentStatus.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
                             changeAllowed = false;
                         }
                         break;
-                    case StatusValue.Status.RETIRED_FOR_AGIV: 
+                    case StatusValue.Status.RETIRED_FOR_AGIV:
                         if (!currentStatus.equals(StatusValue.Status.APPROVED)) {
                             changeAllowed = false;
                         }
                         break;
-                    case StatusValue.Status.REMOVED_FOR_AGIV: 
+                    case StatusValue.Status.REMOVED_FOR_AGIV:
                         if (currentStatus.equals(StatusValue.Status.SUBMITTED_FOR_AGIV) || currentStatus.equals(StatusValue.Status.APPROVED_BY_AGIV) || currentStatus.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
                             changeAllowed = false;
                         }
                         break;
-                    case StatusValue.Status.REMOVED: 
+                    case StatusValue.Status.REMOVED:
                         if (nodeType.equalsIgnoreCase("agiv") && !currentStatus.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
                             changeAllowed = false;
                         }
                         break;
-                    case StatusValue.Status.REJECTED_FOR_RETIRE: 
+                    case StatusValue.Status.REJECTED_FOR_RETIRE:
                         if (!currentStatus.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
                             changeAllowed = false;
                         }
                         break;
-                    case StatusValue.Status.REJECTED_FOR_REMOVE: 
+                    case StatusValue.Status.REJECTED_FOR_REMOVE:
                         if (!currentStatus.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
                             changeAllowed = false;
                         }
@@ -270,43 +272,42 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
                     changeAllowed = false;
                 } else {
                     switch (status) {
-                        case StatusValue.Status.UNKNOWN: 
-                        case StatusValue.Status.DRAFT: 
-                        case StatusValue.Status.JUSTCREATED: 
-                        case StatusValue.Status.APPROVED_BY_AGIV: 
-                        case StatusValue.Status.REJECTED_BY_AGIV: 
-                        case StatusValue.Status.REMOVED: 
-                        case StatusValue.Status.REJECTED_FOR_RETIRE: 
-                        case StatusValue.Status.REJECTED_FOR_REMOVE: 
+                        case StatusValue.Status.DRAFT:
+                        case StatusValue.Status.JUSTCREATED:
+                        case StatusValue.Status.APPROVED_BY_AGIV:
+                        case StatusValue.Status.REJECTED_BY_AGIV:
+                        case StatusValue.Status.REMOVED:
+                        case StatusValue.Status.REJECTED_FOR_RETIRE:
+                        case StatusValue.Status.REJECTED_FOR_REMOVE:
                             changeAllowed = false;
                             break;
-                        case StatusValue.Status.APPROVED: 
+                        case StatusValue.Status.APPROVED:
                             if (nodeType.equalsIgnoreCase("agiv")) {
                                 changeAllowed = false;
                             }
                             break;
-                        case StatusValue.Status.RETIRED: 
+                        case StatusValue.Status.RETIRED:
                             if (nodeType.equalsIgnoreCase("agiv") || !currentStatus.equals(StatusValue.Status.APPROVED)) {
                                 changeAllowed = false;
                             }
                             break;
-                        case StatusValue.Status.SUBMITTED: 
-                        case StatusValue.Status.SUBMITTED_FOR_AGIV: 
+                        case StatusValue.Status.SUBMITTED:
+                        case StatusValue.Status.SUBMITTED_FOR_AGIV:
                             if (currentStatus.equals(StatusValue.Status.APPROVED) || currentStatus.equals(StatusValue.Status.RETIRED)) {
                                 changeAllowed = false;
                             }
                             break;
-                        case StatusValue.Status.REJECTED: 
+                        case StatusValue.Status.REJECTED:
                             if (currentStatus.equals(StatusValue.Status.APPROVED) || currentStatus.equals(StatusValue.Status.RETIRED) || currentStatus.equals(StatusValue.Status.REJECTED_BY_AGIV)) {
                                 changeAllowed = false;
                             }
                             break;
-                        case StatusValue.Status.RETIRED_FOR_AGIV: 
+                        case StatusValue.Status.RETIRED_FOR_AGIV:
                             if (currentStatus.equals(StatusValue.Status.RETIRED) || currentStatus.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
                                 changeAllowed = false;
                             }
                             break;
-                        case StatusValue.Status.REMOVED_FOR_AGIV: 
+                        case StatusValue.Status.REMOVED_FOR_AGIV:
                             if (currentStatus.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
                                 changeAllowed = false;
                             }
@@ -320,7 +321,6 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
                     changeAllowed = false;
                 } else {
                     switch (status) {
-                        case StatusValue.Status.UNKNOWN:
                         case StatusValue.Status.DRAFT:
                         case StatusValue.Status.APPROVED:
                         case StatusValue.Status.RETIRED:
@@ -534,9 +534,6 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
     private Set<Profile> getProfileToNotify(MetadataStatus status, String currentStatusId) {
         Set<Profile> profilesToBeNotified = new HashSet<>();
         switch (String.valueOf(status.getId().getStatusId())) {
-            case StatusValue.Status.UNKNOWN: //UNKNOWN
-                break;
-
             case StatusValue.Status.DRAFT:
                 profilesToBeNotified.add(Profile.Editor);
                 break;

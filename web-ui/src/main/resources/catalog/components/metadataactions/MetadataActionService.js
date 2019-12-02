@@ -128,10 +128,10 @@
        */
       this.metadataRDF = function(uuid, approved) {
         var url = gnHttp.getService('mdGetRDF') + '?uuid=' + uuid;
-        
+
         url += angular.isDefined(approved) ?
             '&approved=' + approved : '';
-        
+
         location.replace(url);
       };
 
@@ -141,7 +141,7 @@
        * @param {string} uuid
        */
       this.metadataMEF = function(uuid, bucket, approved) {
-        
+
         var url = gnHttp.getService('mdGetMEF') + '?version=2';
         url += angular.isDefined(uuid) ?
             '&uuid=' + uuid : '&format=full';
@@ -306,14 +306,14 @@
 
         scope.isMdWorkflowEnable = gnConfig['metadata.workflow.enable'];
 
-        //Warn about possible workflow changes on batch changes 
-        // or when record is not approved 
+        //Warn about possible workflow changes on batch changes
+        // or when record is not approved
         if((!md || md.mdStatus != 2) && flag === 'on' && scope.isMdWorkflowEnable) {
           if(!confirm($translate.instant('warnPublishDraft'))){
             return;
           }
         }
-        
+
         scope.$broadcast('operationOnSelectionStart');
         var onOrOff = flag === 'on';
 
@@ -453,7 +453,7 @@
 
     var nodeType = "agiv";
     var statusValues = Object.freeze({
-      UNKNOWN:          0,  DRAFT:                1,  APPROVED:             2,
+      DRAFT:            1,  APPROVED:             2,
       RETIRED:          3,  SUBMITTED:            4,  REJECTED:             5,
       JUSTCREATED:      6,  SUBMITTED_FOR_AGIV:   7,  APPROVED_BY_AGIV:     8,
       REJECTED_BY_AGIV: 9,  RETIRED_FOR_AGIV:     10, REMOVED_FOR_AGIV:     11,
@@ -477,7 +477,7 @@
       var changeAllowed = true;
 
       switch (status) {
-        case statusValues.UNKNOWN:  case statusValues.JUSTCREATED:
+        case statusValues.JUSTCREATED:
           break;
 
         case statusValues.DRAFT:  case statusValues.SUBMITTED:  case statusValues.REJECTED:
@@ -559,7 +559,7 @@
         changeAllowed = false;
       } else {
         switch (status) {
-          case statusValues.UNKNOWN:              case statusValues.DRAFT:                case statusValues.JUSTCREATED:
+          case statusValues.DRAFT:                case statusValues.JUSTCREATED:
           case statusValues.APPROVED_BY_AGIV:     case statusValues.REJECTED_BY_AGIV:     case statusValues.REMOVED:
           case statusValues.REJECTED_FOR_RETIRE:  case statusValues.REJECTED_FOR_REMOVE:
             changeAllowed = false;
@@ -589,19 +589,19 @@
               changeAllowed = false;
             }
             break;
-            
+
           case statusValues.RETIRED_FOR_AGIV:
             if ([statusValues.RETIRED, statusValues.REMOVED_FOR_AGIV].includes(currentStatus)) {
               changeAllowed = false;
             }
             break;
-            
+
           case statusValues.REMOVED_FOR_AGIV:
             if ([statusValues.RETIRED_FOR_AGIV].includes(currentStatus)) {
               changeAllowed = false;
             }
             break;
-            
+
           default:
             break;
         }
@@ -614,7 +614,7 @@
     function testEditorAllowed(status, currentStatus) {
       var changeAllowed = true;
       switch (status) {
-        case statusValues.UNKNOWN :             case statusValues.DRAFT :               case statusValues.APPROVED :
+        case statusValues.DRAFT :               case statusValues.APPROVED :
         case statusValues.RETIRED :             case statusValues.REJECTED :            case statusValues.JUSTCREATED :
         case statusValues.SUBMITTED_FOR_AGIV :  case statusValues.APPROVED_BY_AGIV :    case statusValues.REJECTED_BY_AGIV :
         case statusValues.RETIRED_FOR_AGIV :    case statusValues.REMOVED_FOR_AGIV :    case statusValues.REMOVED :

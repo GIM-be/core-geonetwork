@@ -542,14 +542,15 @@
                       select="if ($refToDelete) then $refToDelete else gn:element"/>
       <xsl:with-param name="listOfValues"
                       select="gn-fn-metadata:getCodeListValues($schema, name(*[@codeListValue]), $codelists, .)"/>
-      <xsl:with-param name="isDisabled" select="if (name(../..)='gmd:contact') then true() else false()"/>
       <xsl:with-param name="isFirst"
                       select="count(preceding-sibling::*[name() = $elementName]) = 0"/>
       <!-- Children of an element having an XLink using the directory
       is in readonly mode. Search by reference because this template may be
       called without context eg. render-table. -->
       <xsl:with-param name="isDisabled"
-                      select="count($metadata//*[gn:element/@ref = $ref]/ancestor-or-self::node()[contains(@xlink:href, 'api/registries/entries')]) > 0"/>
+                      select="if (name(../..)='gmd:contact' or
+                                  count($metadata//*[gn:element/@ref = $ref]/ancestor-or-self::node()[contains(@xlink:href, 'api/registries/entries')]) > 0)
+                                  then true() else false()"/>
     </xsl:call-template>
 
   </xsl:template>
