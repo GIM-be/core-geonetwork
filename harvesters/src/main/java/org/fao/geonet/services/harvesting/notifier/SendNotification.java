@@ -34,6 +34,7 @@ import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.util.MailUtil;
+import org.fao.geonet.utils.Log;
 import org.jdom.Element;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -107,7 +108,7 @@ public class SendNotification {
                 }
             }
         } catch (Exception e1) {
-            e1.printStackTrace();
+            Log.error(Geonet.HARVESTER, e1.getMessage(), e1);
         }
 
         if (receiver != null && !receiver.trim().isEmpty()) {
@@ -224,7 +225,7 @@ public class SendNotification {
         return null;
     }
 
-	/**
+    /**
      * @param result
      * @return
      */

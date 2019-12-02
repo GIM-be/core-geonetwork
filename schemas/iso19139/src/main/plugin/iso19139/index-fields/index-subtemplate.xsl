@@ -27,8 +27,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
-                version="2.0"
->
+                version="2.0">
   <xsl:param name="id"/>
   <xsl:param name="uuid"/>
   <xsl:param name="title"/>
@@ -206,14 +205,14 @@
   </xsl:template>
 
 
-  <!--    <xsl:template mode="index" match="gmd:DQ_DomainConsistency[count(ancestor::node()) =  1]">-->
-  <!--        <Field name="_title"-->
-  <!--               string="{if ($title != '') then $title-->
-  <!--                        else gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString}"-->
-  <!--               store="true" index="true"/>-->
+  <!--<xsl:template mode="index" match="gmd:DQ_DomainConsistency[count(ancestor::node()) =  1]">-->
+  <!--  <Field name="_title"-->
+  <!--         string="{if ($title != '') then $title-->
+  <!--                      else gmd:result/*/gmd:specification/*/gmd:title/*/text()}"-->
+  <!--         store="true" index="true"/>-->
 
-  <!--        <xsl:call-template name="subtemplate-common-fields"/>-->
-  <!--    </xsl:template>-->
+  <!--  <xsl:call-template name="subtemplate-common-fields"/>-->
+  <!--</xsl:template>-->
 
 
   <xsl:template mode="index" match="gmd:MD_Format[count(ancestor::node()) =  1]">

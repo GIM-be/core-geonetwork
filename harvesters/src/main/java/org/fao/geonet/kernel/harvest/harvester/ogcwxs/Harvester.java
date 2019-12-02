@@ -32,7 +32,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +61,7 @@ import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.UpdateDatestamp;
+import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.harvest.BaseAligner;
@@ -76,7 +76,6 @@ import org.fao.geonet.kernel.schema.SchemaPlugin;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataCategoryRepository;
-import org.fao.geonet.services.thumbnail.Set;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.util.Sha1Encoder;
@@ -92,27 +91,6 @@ import org.jdom.Namespace;
 import org.jdom.xpath.XPath;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-
-import jeeves.server.context.ServiceContext;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 //=============================================================================
@@ -186,6 +164,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
     private Logger log;
     private ServiceContext context;
     private DataManager dataMan;
+    private IMetadataManager metadataManager;
     private SchemaManager schemaMan;
     private CategoryMapper localCateg;
     private GroupMapper localGroups;
@@ -221,6 +200,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
         dataMan = gc.getBean(DataManager.class);
         schemaMan = gc.getBean(SchemaManager.class);
+        metadataManager = gc.getBean(IMetadataManager.class);
         metadataValidator = gc.getBean(IMetadataValidator.class);
     }
 
@@ -264,7 +244,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
 
         // Convert from GetCapabilities to ISO19119
         List<String> uuids = addMetadata(xml);
-        dataMan.flush();
+        metadataManager.flush();
 
         List<String> ids = Lists.transform(uuids, new Function<String, String>() {
             @Nullable
@@ -300,7 +280,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
                 IO.deleteFileOrDirectory(Lib.resource.getMetadataDir(context.getBean(GeonetworkDataDirectory.class), id));
 
                 // Remove metadata
-                dataMan.deleteMetadata(context, id);
+                metadataManager.deleteMetadata(context, id);
 
                 result.locallyRemoved++;
             }
@@ -308,7 +288,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
 
 
         if (result.locallyRemoved > 0) {
-            dataMan.flush();
+            metadataManager.flush();
         }
 
         return result;
@@ -446,16 +426,16 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
         } catch (NumberFormatException e) {
         }
 
-        addCategories(metadata, params.getCategories(), localCateg, context, log, null, false);
+        addCategories(metadata, params.getCategories(), localCateg, context, null, false);
 
         if (!dataMan.existsMetadataUuid(uuid)) {
             result.addedMetadata++;
-            metadata = dataMan.insertMetadata(context, metadata, md, true, false, false, UpdateDatestamp.NO, false, false);
+            metadata = metadataManager.insertMetadata(context, metadata, md, true, false, false, UpdateDatestamp.NO, false, false);
         } else {
             result.updatedMetadata++;
             String id = dataMan.getMetadataId(uuid);
             metadata.setId(Integer.valueOf(id));
-            dataMan.updateMetadata(context, id, md, false, false, false,
+            metadataManager.updateMetadata(context, id, md, false, false, false,
                 context.getLanguage(), dataMan.extractDateModified(schema, md), false);
         }
         metadataValidator.doValidate(metadata, context.getLanguage());
@@ -465,7 +445,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
         String id = String.valueOf(metadata.getId());
         uuids.add(uuid);
 
-        addPrivileges(id, params.getPrivileges(), localGroups, dataMan, context, log);
+        addPrivileges(id, params.getPrivileges(), localGroups, context);
 
         return uuids;
     }
@@ -522,7 +502,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
             }
 
             // Use the template as a basis
-            existingRecordXml = dataMan.getMetadata(templateId);
+            existingRecordXml = metadataManager.getMetadata(templateId);
             schema = dataMan.getMetadataSchema(templateId);
         }
 
@@ -852,16 +832,16 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
                 if (metadataCategory == null) {
                     throw new IllegalArgumentException("No category found with name: " + params.datasetCategory);
                 }
-                metadata.getMetadataCategories().add(metadataCategory);
+                metadata.getCategories().add(metadataCategory);
             }
             if (!dataMan.existsMetadataUuid(reg.uuid)) {
                 result.addedMetadata++;
-                metadata = dataMan.insertMetadata(context, metadata, xml, true, false, false, UpdateDatestamp.NO, false, false);
+                metadata = metadataManager.insertMetadata(context, metadata, xml, true, false, false, UpdateDatestamp.NO, false, false);
             } else {
                 result.updatedMetadata++;
                 String id = dataMan.getMetadataId(reg.uuid);
                 metadata.setId(Integer.valueOf(id));
-                dataMan.updateMetadata(context, id, xml, false, false, false,
+                metadataManager.updateMetadata(context, id, xml, false, false, false,
                     context.getLanguage(), dataMan.extractDateModified(schema, xml), false);
             }
 
@@ -870,7 +850,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
             if (log.isDebugEnabled()) log.debug("    - Layer loaded in DB.");
 
             if (log.isDebugEnabled()) log.debug("    - Set Privileges and category.");
-            addPrivileges(reg.id, params.getPrivileges(), localGroups, dataMan, context, log);
+            addPrivileges(reg.id, params.getPrivileges(), localGroups, context);
 
             if (log.isDebugEnabled()) log.debug("    - Set Harvested.");
 
@@ -892,7 +872,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
 
                     xml = loadThumbnail(reg, xml, schema);
                     if (xml != null) {
-                        dataMan.updateMetadata(context, reg.id, xml,
+                        metadataManager.updateMetadata(context, reg.id, xml,
                             false, false, false,
                             context.getLanguage(),
                             dataMan.extractDateModified(schema, xml), false);
@@ -954,7 +934,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
             return null;
         } catch (Exception e) {
             log.warning("  - Failed to set thumbnail for metadata: " + e.getMessage());
-            e.printStackTrace();
+            log.error(e);
             result.thumbnailsFailed++;
         }
         return null;
