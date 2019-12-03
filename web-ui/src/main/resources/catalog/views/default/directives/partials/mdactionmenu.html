@@ -84,8 +84,19 @@
           data-ng-show="isMdWorkflowEnable && (md.mdStatus == 1 || md.mdStatus == 4)">
         <span data-translate="">workflow</span>
       </li>
-      <!-- user = editor, status = 1, statusToSelect = 4 -->
+
       <li role="menuitem"
+          data-ng-if="user.canEditRecord(md) && isMdWorkflowEnable && md.isWorkflowEnabled() && md.getSchema() != 'dcat-ap'"
+          data-ng-repeat="allowedStatus in mdService.getAllowedStatusList(md.mdStatus, user)">
+        <a data-ng-href=""
+           data-ng-click="mdService.openUpdateStatusPanel(getScope(), 'workflow', null, allowedStatus, allowedStatus + 50)">
+          <!--<i class="fa fa-fw fa-file-o"></i>&nbsp;-->
+          <span data-translate="">{{'mdStatusTitle-' + (allowedStatus + 50) | translate}}</span>
+        </a>
+      </li>
+
+      <!-- user = editor, status = 1, statusToSelect = 4 -->
+      <!--<li role="menuitem"
           data-ng-if="user.canEditRecord(md) && (user.isAdmin() ||
           user.isEditorForGroup(md.groupOwner)) && md.mdStatus == 1 && isMdWorkflowEnable && md.isWorkflowEnabled() && md.getSchema() != 'dcat-ap'">
         <a data-ng-href=""
@@ -93,8 +104,8 @@
           <i class="fa fa-fw fa-file-o"></i>&nbsp;
           <span data-translate="">mdStatusTitle-14</span>
         </a>
-      </li>
-      <li role="menuitem"
+      </li>-->
+      <!--<li role="menuitem"
           data-ng-if="user.canEditRecord(md) && (user.isAdmin() ||
           user.isEditorForGroup(md.groupOwner)) && md.mdStatus == 3 && isMdWorkflowEnable && md.isWorkflowEnabled() && md.getSchema() != 'dcat-ap'">
         <a data-ng-href=""
@@ -102,9 +113,9 @@
           <i class="fa fa-fw fa-file-o"></i>&nbsp;
           <span data-translate="">mdStatusTitle-31</span>
         </a>
-      </li>
+      </li>-->
       <!-- user = editor, status = 4, statusToSelect = 1 -->
-      <li role="menuitem"
+      <!--<li role="menuitem"
           data-ng-if="user.canEditRecord(md) && !user.isReviewerForGroup(md.groupOwner) &&
           user.isEditorForGroup(md.groupOwner) && md.mdStatus == 4  && isMdWorkflowEnable && md.isWorkflowEnabled() && md.getSchema() != 'dcat-ap'">
         <a data-ng-href=""
@@ -112,9 +123,9 @@
           <i class="fa fa-fw fa-undo"></i>&nbsp;
           <span data-translate="">mdStatusTitle-41</span>
         </a>
-      </li>
+      </li>-->
       <!-- user = reviewer, status = 4, statusToSelect = 2 -->
-      <li role="menuitem"
+      <!--<li role="menuitem"
           data-ng-if="user.canEditRecord(md) && (user.isAdmin() || user.isReviewerForGroup(md.groupOwner)) &&
           md.mdStatus == 4  && isMdWorkflowEnable && md.isWorkflowEnabled() && md.getSchema() != 'dcat-ap'">
         <a data-ng-href=""
@@ -122,8 +133,8 @@
           <i class="fa fa-fw fa-thumbs-o-up"></i>&nbsp;
           <span data-translate="">mdStatusTitle-42</span>
         </a>
-      </li>
-      <li role="menuitem"
+      </li>-->
+      <!--<li role="menuitem"
           data-ng-if="user.canEditRecord(md) && (user.isAdmin() || user.isReviewerForGroup(md.groupOwner)) &&
           md.mdStatus == 1  && isMdWorkflowEnable && md.isWorkflowEnabled() && md.getSchema() != 'dcat-ap'">
         <a data-ng-href=""
@@ -131,9 +142,9 @@
           <i class="fa fa-fw fa-thumbs-o-up"></i>&nbsp;
           <span data-translate="">mdStatusTitle-12</span>
         </a>
-      </li>
+      </li>-->
       <!-- user = reviewer, status = 4, statusToSelect = 5 -->
-      <li role="menuitem"
+      <!--<li role="menuitem"
           data-ng-if="user.canEditRecord(md) && (user.isAdmin() || user.isReviewerForGroup(md.groupOwner)) &&
           md.mdStatus == 4  && isMdWorkflowEnable && md.isWorkflowEnabled() && md.getSchema() != 'dcat-ap'">
         <a data-ng-href=""
@@ -141,9 +152,9 @@
           <i class="fa fa-fw fa-thumbs-o-down"></i>&nbsp;
           <span data-translate="">mdStatusTitle-411</span>
         </a>
-      </li>
+      </li>-->
       <!-- user = reviewer, status = 4, statusToSelect = 3 -->
-      <li role="menuitem"
+      <!--<li role="menuitem"
           data-ng-if="user.canEditRecord(md) && (user.isAdmin() || user.isReviewerForGroup(md.groupOwner)) &&
           md.mdStatus == 4  && isMdWorkflowEnable && md.isWorkflowEnabled()">
         <a data-ng-href=""
@@ -151,7 +162,8 @@
           <i class="fa fa-fw fa-archive"></i>&nbsp;
           <span data-translate="">mdStatusTitle-33</span>
         </a>
-      </li>
+      </li>-->
+
       <li data-ng-if="isMdWorkflowEnable && user.canEditRecord(md) && !md.isWorkflowEnabled() && md.getSchema() != 'dcat-ap'">
         <a role="menuitem"
            data-ng-href=""
@@ -161,10 +173,9 @@
         </a>
       </li>
 
+
       <li role="menuitem" class="divider"
           data-ng-if="user.isConnected() && user.canEditRecord(md) && md.draft != 'y'"></li>
-
-
       <li data-ng-repeat="t in tasks"
           data-ng-show="taskConfiguration[t.name] && taskConfiguration[t.name].isVisible && taskConfiguration[t.name].isVisible(md)"
           data-ng-class="::{'disabled': !taskConfiguration[t.name].isApplicable(md)}">

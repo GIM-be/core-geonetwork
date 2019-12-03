@@ -52,10 +52,11 @@
     '$q',
     '$http',
     'gnConfig',
+    'gnAgivMetadataActions',
     function($rootScope, $timeout, $location, gnHttp,
              gnMetadataManager, gnAlertService, gnSearchSettings,
              gnUtilityService, gnShareService, gnPopup, gnMdFormatter,
-             $translate, $q, $http, gnConfig) {
+             $translate, $q, $http, gnConfig, gnAgivMetadataActions) {
 
       var windowName = 'geonetwork';
       var windowOption = '';
@@ -446,6 +447,11 @@
         if (crsDetails.name) return crsDetails.name + ' (' + crs + ')';
         else return crs;
       };
+
+      this.getAllowedStatusList = function(currentStatus, user) {
+        return gnAgivMetadataActions.getAllowedStatusList(currentStatus, user)
+      }
+
     }]);
 
 
@@ -453,12 +459,31 @@
 
     var nodeType = "agiv";
     var statusValues = Object.freeze({
-      DRAFT:            1,  APPROVED:             2,
-      RETIRED:          3,  SUBMITTED:            4,  REJECTED:             5,
-      JUSTCREATED:      6,  SUBMITTED_FOR_AGIV:   7,  APPROVED_BY_AGIV:     8,
-      REJECTED_BY_AGIV: 9,  RETIRED_FOR_AGIV:     10, REMOVED_FOR_AGIV:     11,
-      REMOVED:          12, REJECTED_FOR_RETIRE:  13, REJECTED_FOR_REMOVE:  14
+      DRAFT: 1,
+      APPROVED: 2,
+      RETIRED: 3,
+      SUBMITTED: 4,
+      REJECTED: 5,
+      JUSTCREATED: 6,
+      SUBMITTED_FOR_AGIV: 7,
+      APPROVED_BY_AGIV: 8,
+      REJECTED_BY_AGIV: 9,
+      RETIRED_FOR_AGIV: 10,
+      REMOVED_FOR_AGIV: 11,
+      REMOVED: 12,
+      REJECTED_FOR_RETIRE: 13,
+      REJECTED_FOR_REMOVE: 14
     });
+
+    function getAllowedStatusList(currentStatus, user) {
+      var allowedStatusList = [];
+      Object.keys(statusValues).forEach(function(key) {
+        if (getStatusAllowed(statusValues[key], currentStatus, user)) {
+          allowedStatusList.push(statusValues[key]);
+        }
+      });
+      return allowedStatusList;
+    }
 
     function getStatusAllowed(status, currentStatus, user) {
       var isAllowed = false;
@@ -635,6 +660,7 @@
 
 
     return {
+      getAllowedStatusList: getAllowedStatusList,
       getStatusAllowed: getStatusAllowed
     }
 

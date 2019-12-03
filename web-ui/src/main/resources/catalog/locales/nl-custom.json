@@ -25,5 +25,19 @@
   "searchAverticalElement": "Zoek een Verticale begrenzing ...",
   "searchAotherConstraints": "Beschikbare invulblokken Overige beperkingen",
   "searchAresourceConstraints": "Beschikbare invulblokken",
-  "zarooResult": "Geen resultaten gevonden"
+  "zarooResult": "Geen resultaten gevonden",
+  "mdStatusTitle-51": "Ontwerp",
+  "mdStatusTitle-52": "Intern goedgekeurd en gepubliceerd",
+  "mdStatusTitle-53": "Gedepubliceerd",
+  "mdStatusTitle-55": "Intern ingediend",
+  "mdStatusTitle-56": "Afgekeurd door Hoofdeditor",
+  "mdStatusTitle-57": "Pas gecreëerd",
+  "mdStatusTitle-58": "Intern goedgekeurd en ingediend bij Informatie Vlaanderen",
+  "mdStatusTitle-59": "Klaar voor publicatie door Informatie Vlaanderen",
+  "mdStatusTitle-60": "Afgekeurd door validator Informatie Vlaanderen",
+  "mdStatusTitle-61": "Ingediend voor depubliceren",
+  "mdStatusTitle-62": "Ingediend voor verwijderen",
+  "mdStatusTitle-63": "Verwijderd",
+  "mdStatusTitle-64": "Afgekeurd door validator Informatie Vlaanderen en niet gedepubliceerd",
+  "mdStatusTitle-65": "Afgekeurd door validator Informatie Vlaanderen en niet verwijderd"
 }

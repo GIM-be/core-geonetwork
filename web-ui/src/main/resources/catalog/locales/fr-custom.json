@@ -1,5 +1,19 @@
 {
   "fileId": "Identificateur",
   "flanderskeyword": "Mot clé GDI-Vlaanderen",
-  "flanderskeywords": "Mots clés GDI-Vlaanderen"
+  "flanderskeywords": "Mots clés GDI-Vlaanderen",
+  "mdStatusTitle-51": "Brouillon",
+  "mdStatusTitle-52": "Validé",
+  "mdStatusTitle-53": "Retiré",
+  "mdStatusTitle-55": "A valider",
+  "mdStatusTitle-56": "Rejeté",
+  "mdStatusTitle-57": "Juste créé",
+  "mdStatusTitle-58": "Approuvé en interne et soumis à Informatie Vlaanderen",
+  "mdStatusTitle-59": "Prêt pour publication par Informatie Vlaanderen",
+  "mdStatusTitle-60": "Rejeté par le validateur d'Informatie Vlaanderen",
+  "mdStatusTitle-61": "Soumis pour dépublication",
+  "mdStatusTitle-62": "Soumis à l'enlèvement",
+  "mdStatusTitle-63": "Enlevé",
+  "mdStatusTitle-64": "Rejeté par le validateur d'Informatie Vlaanderen et non publié",
+  "mdStatusTitle-65": "Rejeté par le validateur d'Informatie Vlaanderen et non supprimé"
 }

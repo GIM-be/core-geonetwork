@@ -3,5 +3,19 @@
   "flanderskeyword": "GDI-Vlaanderen keyword",
   "flanderskeywords": "GDI-Vlaanderen keywords",
   "groupReferrer": "Id of the linked organisation",
-  "groupReferrerHelp": "Id as defined by the organisationid federation claim"
+  "groupReferrerHelp": "Id as defined by the organisationid federation claim",
+  "mdStatusTitle-51": "Draft",
+  "mdStatusTitle-52": "Approved",
+  "mdStatusTitle-53": "Retired",
+  "mdStatusTitle-55": "Submitted",
+  "mdStatusTitle-56": "Rejected",
+  "mdStatusTitle-57": "Just created",
+  "mdStatusTitle-58": "Internally approved and submitted to Informatie Vlaanderen",
+  "mdStatusTitle-59": "Ready for publication by Informatie Vlaanderen",
+  "mdStatusTitle-60": "Rejected by Informatie Vlaanderen validator",
+  "mdStatusTitle-61": "Submitted for un-publishing",
+  "mdStatusTitle-62": "Submitted for removal",
+  "mdStatusTitle-63": "Deleted",
+  "mdStatusTitle-64": "Rejected by Informatie Vlaanderen validator and not unpublished",
+  "mdStatusTitle-65": "Rejected by Informatie Vlaanderen validator and not deleted"
 }
