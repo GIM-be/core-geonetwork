@@ -57,41 +57,15 @@ attached it to the metadata for data.
                 gmd:referenceSystemInfo|
                 gmd:metadataExtensionInfo|
                 gmd:identificationInfo"/>
-
-
-      <xsl:choose>
-        <!-- Check if featureCatalogueCitation for uuidref -->
-        <xsl:when
-          test="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation[@uuidref = $uuidref]">
-          <gmd:contentInfo>
-            <gmd:MD_FeatureCatalogueDescription>
-              <xsl:copy-of select="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation[@uuidref = $uuidref]/../gmd:complianceCode|
-                                   gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation[@uuidref = $uuidref]/../gmd:language|
-                                   gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation[@uuidref = $uuidref]/../gmd:includedWithDataset|
-                                   gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation[@uuidref = $uuidref]/../gmd:featureTypes"/>
-
-              <!-- Add xlink:href featureCatalogueCitation -->
-              <gmd:featureCatalogueCitation uuidref="{$uuidref}"
-                                            xlink:href="{$siteUrl}csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidref}">
-                <xsl:copy-of
-                  select="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation[@uuidref = $uuidref]/gmd:CI_Citation"/>
-              </gmd:featureCatalogueCitation>
-
-            </gmd:MD_FeatureCatalogueDescription>
-          </gmd:contentInfo>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:copy-of select="gmd:contentInfo"/>
-          <gmd:contentInfo>
-            <gmd:MD_FeatureCatalogueDescription>
-              <gmd:includedWithDataset/>
-              <gmd:featureCatalogueCitation uuidref="{$uuidref}"
-                                            xlink:href="{$siteUrl}csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidref}"/>
-            </gmd:MD_FeatureCatalogueDescription>
-          </gmd:contentInfo>
-        </xsl:otherwise>
-      </xsl:choose>
-
+			<gmd:contentInfo>
+				<gmd:MD_FeatureCatalogueDescription>
+					<gmd:includedWithDataset>
+						<gco:Boolean>true</gco:Boolean>
+					</gmd:includedWithDataset>
+					<gmd:featureCatalogueCitation uuidref="{$uuidref}" 
+                                            xlink:href="{$siteUrl}csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidref}"/>/>
+				</gmd:MD_FeatureCatalogueDescription>
+			</gmd:contentInfo>
       <xsl:copy-of select="gmd:distributionInfo|
                             gmd:dataQualityInfo|
                             gmd:portrayalCatalogueInfo|
