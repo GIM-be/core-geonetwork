@@ -3732,8 +3732,23 @@
           <field xpath="/gmd:MD_Metadata/gmd:featureAttribute"/>
         </section>
         <section name="gmd:contentInfo" per="/gmd:MD_Metadata/gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
-          <section xpath="gmd:includedWithDataset"/>
-          <section xpath="gmd:featureCatalogueCitation" or="featureCatalogueCitation" in=""/>
+					<field xpath="gmd:includedWithDataset"/>
+					<section name="gmd:featureCatalogueCitation" per="gmd:featureCatalogueCitation">
+						<field name="uuidref" templateModeOnly="true" notDisplayedIfMissing="true"
+                   xpath=".">
+              <template>
+                <values readonlyIf="true()">
+                  <key label="uuidref"
+                       xpath="@uuidref"
+                       tooltip=".">
+                  </key>
+                </values>
+                <snippet>
+                  <gmd:featureCatalogueCitation uuidref="{{uuidref}}" />
+                </snippet>
+              </template>
+            </field>
+          </section>
         </section>
       </tab>
 
