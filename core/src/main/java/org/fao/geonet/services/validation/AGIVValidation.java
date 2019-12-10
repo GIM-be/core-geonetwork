@@ -5,6 +5,8 @@ import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.datamanager.IMetadataManager;
+import org.fao.geonet.repository.MetadataDraftRepository;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.repository.MetadataValidationRepository;
 import org.fao.geonet.repository.Updater;
@@ -70,19 +72,28 @@ public class AGIVValidation {
                 metadata.getId()
             );
 
-            if((Boolean)result.one()) {
-                if(save) {
-                    metadata = gc.getBean(MetadataRepository.class).update(metadata.getId(), new Updater<Metadata>() {
-                        @Override
-                        public void apply(@Nonnull Metadata entity) {
-                            entity.setDataAndFixCR((Element)result.two());
-                        }
-                    });
+            if ((Boolean) result.one()) {
+                if (save) {
+                    if (metadata instanceof MetadataDraft) {
+                        metadata = gc.getBean(MetadataDraftRepository.class).update(metadata.getId(), new Updater<MetadataDraft>() {
+                            @Override
+                            public void apply(@Nonnull MetadataDraft entity) {
+                                entity.setDataAndFixCR((Element) result.two());
+                            }
+                        });
+                    } else {
+                        metadata = gc.getBean(MetadataRepository.class).update(metadata.getId(), new Updater<Metadata>() {
+                            @Override
+                            public void apply(@Nonnull Metadata entity) {
+                                entity.setDataAndFixCR((Element) result.two());
+                            }
+                        });
+                    }
                 } else {
-                    metadata.setDataAndFixCR((Element)result.two());
+                    metadata.setDataAndFixCR((Element) result.two());
                 }
             }
-            return Pair.read((Boolean)result.one(), metadata);
+            return Pair.read((Boolean) result.one(), metadata);
         } catch (Exception x) {
             System.out.println("AGIVValidation NOK");
             throw new ValidationHookException(x.getMessage(), x);
