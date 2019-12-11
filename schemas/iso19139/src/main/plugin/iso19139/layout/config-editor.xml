@@ -3734,17 +3734,17 @@
         <section name="gmd:contentInfo" per="/gmd:MD_Metadata/gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
 					<field xpath="gmd:includedWithDataset"/>
 					<section name="gmd:featureCatalogueCitation" per="gmd:featureCatalogueCitation">
-						<field name="uuidref" templateModeOnly="true" notDisplayedIfMissing="true"
+						<field name="featureCatalogueCitationUuidref" templateModeOnly="true" notDisplayedIfMissing="true"
                    xpath=".">
               <template>
                 <values readonlyIf="true()">
-                  <key label="uuidref"
+                  <key label="featureCatalogueCitationUuidref"
                        xpath="@uuidref"
                        tooltip=".">
                   </key>
                 </values>
                 <snippet>
-                  <gmd:featureCatalogueCitation uuidref="{{uuidref}}" />
+                  <gmd:featureCatalogueCitation uuidref="{{featureCatalogueCitationUuidref}}" />
                 </snippet>
               </template>
             </field>
