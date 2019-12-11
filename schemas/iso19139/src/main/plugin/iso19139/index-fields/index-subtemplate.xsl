@@ -250,6 +250,18 @@
     <xsl:call-template name="subtemplate-common-fields"/>
   </xsl:template>
 
+  <!--INSPIRE Domeinconsistentie-->
+  <xsl:template mode="index" match="gmd:DQ_DomainConsistency">
+  	<xsl:variable name="specificationTitle" select="//gmd:title/gmx:Anchor"/>
+    <Field name="_title"
+           string="{if ($title != '') then $title
+                        else if ($specificationTitle and normalize-space($specificationTitle) != '') then normalize-space($specificationTitle)
+                        else 'INSPIRE Domeinconsistentie'}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
   <xsl:template mode="index" match="gmd:resourceConstraints">
     <Field name="_title"
            string="{
