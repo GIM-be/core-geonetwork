@@ -3300,10 +3300,9 @@
                 data-template-add-action="false"
                 data-search-action="true"
                 data-popup-action="false"
-                data-filter='{"_root": "gmd:report"}'
+                data-filter='{"_root": "gmd:DQ_DomainConsistency"}'
                 data-insert-modes="text"
-                data-template-type="report"
-                data-transformation="removeRoot"/>
+                data-template-type="report"/>
             </action>
             <section xpath="gmd:report/gmd:DQ_ThematicClassificationCorrectness" del=".."/>
             <section xpath="gmd:report/gmd:DQ_CompletenessOmission" del=".."/>
