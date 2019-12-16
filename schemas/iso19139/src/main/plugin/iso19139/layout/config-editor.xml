@@ -3315,10 +3315,9 @@
                 data-template-add-action="false"
                 data-search-action="true"
                 data-popup-action="false"
-                data-filter='{"_root": "gmd:report"}'
+                data-filter='{"_root": "gmd:DQ_DomainConsistency"}'
                 data-insert-modes="text"
-                data-template-type="report"
-                data-transformation="removeRoot"/>
+                data-template-type="report"/>
             </action>
             <section xpath="gmd:report/gmd:DQ_ThematicClassificationCorrectness" del=".."/>
             <section xpath="gmd:report/gmd:DQ_CompletenessOmission" del=".."/>
@@ -3747,8 +3746,23 @@
           <field xpath="/gmd:MD_Metadata/gmd:featureAttribute"/>
         </section>
         <section name="gmd:contentInfo" per="/gmd:MD_Metadata/gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
-          <section xpath="gmd:includedWithDataset"/>
-          <section xpath="gmd:featureCatalogueCitation" or="featureCatalogueCitation" in=""/>
+					<field xpath="gmd:includedWithDataset"/>
+					<section name="gmd:featureCatalogueCitation" per="gmd:featureCatalogueCitation">
+						<field name="featureCatalogueCitationUuidref" templateModeOnly="true" notDisplayedIfMissing="true"
+                   xpath=".">
+              <template>
+                <values readonlyIf="true()">
+                  <key label="featureCatalogueCitationUuidref"
+                       xpath="@uuidref"
+                       tooltip=".">
+                  </key>
+                </values>
+                <snippet>
+                  <gmd:featureCatalogueCitation uuidref="{{featureCatalogueCitationUuidref}}" />
+                </snippet>
+              </template>
+            </field>
+          </section>
         </section>
       </tab>
 
