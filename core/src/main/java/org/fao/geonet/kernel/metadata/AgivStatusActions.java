@@ -7,6 +7,7 @@ import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.Logger;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.*;
+import org.fao.geonet.events.md.MetadataStatusChanged;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
@@ -18,6 +19,7 @@ import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.*;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.util.MailUtil;
+import org.fao.geonet.utils.Log;
 import org.springframework.context.ApplicationContext;
 
 import java.io.File;
@@ -113,8 +115,12 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
         try {
             for (MetadataStatus status : statusList) {
                 int mdId = status.getId().getMetadataId();
-                String currentStatusId = dm.getCurrentStatus(mdId);
+                MetadataStatus currentStatus = dm.getStatus(status.getId().getMetadataId());
+                String currentStatusId = (currentStatus != null) ? String.valueOf(mdId) : "";
                 String statusId = String.valueOf(status.getId().getStatusId());
+
+                Set<Integer> listOfId = new HashSet<>(1);
+                listOfId.add(status.getId().getMetadataId());
 
                 // If the status value does not change then do nothing
                 if (status.getStatusValue().getType().equals(StatusValueType.workflow) && (statusId).equals(currentStatusId)) {
@@ -133,29 +139,30 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
                 // In order to set the status to SUBMITTED_FOR_AGIV, APPROVED_BY_AGIV or APPROVED,
                 // the record must be valid
                 // This rule does not apply for template
-                if (statusChangeAllowedByUser(currentStatusId, statusId, String.valueOf(mdId)) && (
+                boolean isStatusChangeAllowed =
                     isTemplate ||
-                        !(statusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV) ||
-                            statusId.equals(StatusValue.Status.APPROVED_BY_AGIV) ||
-                            statusId.equals(StatusValue.Status.APPROVED)) ||
-                        statusChangeAllowed(metadata))) {
+                    !(statusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV) || statusId.equals(StatusValue.Status.APPROVED_BY_AGIV) || statusId.equals(StatusValue.Status.APPROVED)) ||
+                    statusChangeAllowed(metadata);
+
+                boolean isStatusChangeAllowedByUser =
+                    (currentStatusId.equals("") && statusId.equals(StatusValue.Status.DRAFT)) ||
+                    statusChangeAllowedByUser(currentStatusId, statusId, String.valueOf(mdId));
+
+                if (isStatusChangeAllowedByUser && isStatusChangeAllowed) {
 
                     logger.info("Change status of metadata with uuid " + metadata.getUuid()
                         + " from " + currentStatusId + " to " + statusId);
 
-                    if (statusId.equals(StatusValue.Status.APPROVED)) {
-                        metadataStatusManager.setStatusExt(status);
-                        setAllOperations(String.valueOf(metadata.getId()));
-
-                    } else if (statusId.equals(StatusValue.Status.RETIRED)) {
-                        metadataStatusManager.setStatusExt(status);
-                        unsetAllOperations(metadata.getId());
-
-                    } else if (statusId.equals(StatusValue.Status.REJECTED_FOR_RETIRE) || statusId.equals(StatusValue.Status.REJECTED_FOR_REMOVE)) {
-                        // set status, indexing is assumed to take place later
+                    if (statusId.equals(StatusValue.Status.REJECTED_FOR_RETIRE) || statusId.equals(StatusValue.Status.REJECTED_FOR_REMOVE)) {
                         metadataStatusManager.setStatusExt(getPreviousStatus(metadata.getId()));
                     } else {
                         metadataStatusManager.setStatusExt(status);
+                        if (!(metadata instanceof MetadataDraft)) {
+                            if (statusId.equals(StatusValue.Status.APPROVED))
+                                setAllOperations(String.valueOf(metadata.getId()));
+                            else if (statusId.equals(StatusValue.Status.RETIRED))
+                                unsetAllOperations(metadata.getId());
+                        }
                     }
 
                     // When a status is updated, get all the users profile who need to be notified
@@ -163,8 +170,27 @@ public class AgivStatusActions extends DefaultStatusActions implements StatusAct
                     if (statusId.equals(StatusValue.Status.REMOVED)) {
                         recordsToDelete.add(metadata.getId());
                     }
-                    List<User> usersToNotify = getUserToNotify(status, profilesToBeNotified);
-                    notify(usersToNotify, status);
+                    try {
+                        List<User> usersToNotify = getUserToNotify(status, profilesToBeNotified);
+                        notify(usersToNotify, status);
+                    } catch (Exception e) {
+                        context.warning(String.format(
+                            "Failed to send notification on status change for metadata %s with status %s. Error is: %s",
+                            status.getId().getMetadataId(), status.getId().getStatusId(), e.getMessage()));
+                    }
+
+
+                    //Throw events
+                    Log.trace(Geonet.DATA_MANAGER, "Throw workflow events.");
+                    for (Integer mid : listOfId) {
+                        if (!unchanged.contains(mid)) {
+                            Log.debug(Geonet.DATA_MANAGER, "  > Status changed for record (" + mid + ") to status " + status);
+                            context.getApplicationContext().publishEvent(new MetadataStatusChanged(
+                                metadataUtils.findOne(Integer.valueOf(mid)),
+                                status.getStatusValue(), status.getChangeMessage(),
+                                status.getId().getUserId()));
+                        }
+                    }
 
 
                 } else {
