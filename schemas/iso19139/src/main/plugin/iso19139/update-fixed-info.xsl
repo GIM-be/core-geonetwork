@@ -683,6 +683,18 @@
   <xsl:template match="gmd:extent[gmd:EX_Extent/not(*)]|srv:extent[gmd:EX_Extent/not(*)]"/>
 
 
+  <xsl:template match="gmd:dateTime">
+    <xsl:variable name="child" select="gco:Date|gco:DateTime"/>
+    <xsl:copy copy-namespaces="no">
+      <xsl:if test="normalize-space($child) = ''">
+        <xsl:attribute name="gco:nilReason" select="'missing'"/>
+      </xsl:if>
+      <gco:DateTime>
+        <xsl:value-of select="$child"/>
+      </gco:DateTime>
+    </xsl:copy>
+  </xsl:template>
+
   <!-- ================================================================= -->
   <!-- copy everything else as is -->
 

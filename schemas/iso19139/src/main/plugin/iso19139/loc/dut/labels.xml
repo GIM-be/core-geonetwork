@@ -596,7 +596,7 @@
   </element>
   <element name="gmd:dateTime">
     <label>Versiedatum</label>
-    <description>Datum waarop de bewerkingen of metingen zijn gestart.(JJJJ-MM-DD).</description>
+    <description>Datum waarop de bewerkingen of metingen zijn gestart.(JJJJ-MM-DDTHH:mm:ss).</description>
   </element>
   <element name="gmd:dateType">
     <label>Type versiedatum</label>
