@@ -9,7 +9,7 @@
                  xmlns:srv="http://www.isotc211.org/2005/srv"
                  xmlns:geonet="http://www.fao.org/geonetwork"
                  xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                 xsi:schemaLocation="http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd">
+                 xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
   <gmd:fileIdentifier>
     <gco:CharacterString>70e7fac8-f9c0-46a2-acf5-8572bdc73fa6</gco:CharacterString>
   </gmd:fileIdentifier>

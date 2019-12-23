@@ -57,18 +57,20 @@
   * ISO19139:2005 (not recommended)
   <xsl:variable name="isUsing2005Schema" select="true()"/>
   -->
-  <xsl:variable name="isUsing2005Schema"
-                select="(/root/gmd:MD_Metadata/@xsi:schemaLocation
-                          and /root/gmd:MD_Metadata/@xsi:schemaLocation != $schemaLocationFor2007)
-                        or
-                        count(//gml320:*) > 0"/>
+  <!--<xsl:variable name="isUsing2005Schema"-->
+  <!--              select="(/root/gmd:MD_Metadata/@xsi:schemaLocation-->
+  <!--                        and /root/gmd:MD_Metadata/@xsi:schemaLocation != $schemaLocationFor2007)-->
+  <!--                      or-->
+  <!--                      count(//gml320:*) > 0"/>-->
 
   <!-- This variable is used to migrate from 2005 to 2007 version.
   By setting the schema location in a record, on next save, the record
   will use GML3.2.1.-->
-  <xsl:variable name="isUsing2007Schema"
-                select="/root/gmd:MD_Metadata/@xsi:schemaLocation
-                          and /root/gmd:MD_Metadata/@xsi:schemaLocation = $schemaLocationFor2007"/>
+  <!--<xsl:variable name="isUsing2007Schema"-->
+  <!--              select="/root/gmd:MD_Metadata/@xsi:schemaLocation-->
+  <!--                        and /root/gmd:MD_Metadata/@xsi:schemaLocation = $schemaLocationFor2007"/>-->
+  <xsl:variable name="isUsing2005Schema" select="false()"/>
+  <xsl:variable name="isUsing2007Schema" select="true()"/>
 
   <!-- We use the category check to find out if this is an SDS metadata. Please replace with anything better -->
   <xsl:variable name="isSDS"
@@ -131,7 +133,16 @@
     <xsl:copy copy-namespaces="no">
       <xsl:call-template name="add-namespaces"/>
 
-      <xsl:apply-templates select="@*"/>
+      <xsl:choose>
+        <xsl:when test="$isUsing2007Schema and not($isUsing2005Schema)">
+          <xsl:apply-templates select="@*[name() != 'xsi:schemaLocation']"/>
+          <xsl:attribute name="xsi:schemaLocation" select="'http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd'"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="@*"/>
+        </xsl:otherwise>
+      </xsl:choose>
+
 
       <gmd:fileIdentifier>
         <gco:CharacterString>

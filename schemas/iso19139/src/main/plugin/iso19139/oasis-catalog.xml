@@ -82,4 +82,7 @@
   <system systemId="http://www.w3.org/1999/xlink/xlinks.xsd"
           uri="schema/xlink/xlinks.xsd"/>-->
 
+  <system systemId="http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd"
+          uri="schema2007/apiso/apiso.xsd"/>
+
 </catalog>
