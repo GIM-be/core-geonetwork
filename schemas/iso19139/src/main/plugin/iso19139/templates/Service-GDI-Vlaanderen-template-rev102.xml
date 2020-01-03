@@ -19,7 +19,7 @@
   <gmd:characterSet>
     <gmd:MD_CharacterSetCode
       codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
-      codeListValue="utf8">UTF-8
+      codeListValue="utf8">utf8
     </gmd:MD_CharacterSetCode>
   </gmd:characterSet>
   <gmd:hierarchyLevel>
@@ -80,7 +80,7 @@
       </gmd:contactInfo>
       <gmd:role>
         <gmd:CI_RoleCode
-          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode"
           codeListValue="pointOfContact">pointOfContact
         </gmd:CI_RoleCode>
       </gmd:role>
@@ -180,7 +180,7 @@
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
-            <gco:CharacterString/>
+            <gmx:Anchor/>
           </gmd:keyword>
           <gmd:thesaurusName>
             <gmd:CI_Citation>
@@ -207,7 +207,7 @@
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
-            <gco:CharacterString/>
+            <gmx:Anchor/>
           </gmd:keyword>
           <gmd:type>
             <gmd:MD_KeywordTypeCode
@@ -239,7 +239,7 @@
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
-            <gco:CharacterString>Vlaams Gewest</gco:CharacterString>
+            <gmx:Anchor xlink:href="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaams Gewest">Vlaams Gewest</gmx:Anchor>
           </gmd:keyword>
           <gmd:thesaurusName>
             <gmd:CI_Citation>
@@ -266,7 +266,7 @@
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
-            <gco:CharacterString/>
+            <gmx:Anchor/>
           </gmd:keyword>
           <gmd:thesaurusName>
             <gmd:CI_Citation>
