@@ -3267,16 +3267,16 @@
         <!-- Every sections inside a section with @per attr will have for context the content of @per with the position -->
         <!-- The first child will have for xpath: /gmd:MD_Metadata/gmd:identificationInfo[position]/gmd:MD_DataIdentification/gmd:citation -->
         <section name="gmd:identificationInfo" per="/gmd:MD_Metadata/gmd:identificationInfo" required="true()">
+
+          <!-- For dataset and dataset series -->
           <section xpath="gmd:MD_DataIdentification/gmd:citation"/>
           <section xpath="gmd:MD_DataIdentification/gmd:abstract"/>
           <section xpath="gmd:MD_DataIdentification/gmd:purpose"/>
           <section xpath="gmd:MD_DataIdentification/gmd:status"/>
           <section xpath="gmd:MD_DataIdentification/gmd:pointOfContact"/>
           <section xpath="gmd:MD_DataIdentification/gmd:resourceMaintenance"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:graphicOverview"
-                   or="graphicOverview" in="gmd:MD_DataIdentification"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:descriptiveKeywords"
-                   or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
+          <section xpath="gmd:MD_DataIdentification/gmd:graphicOverview" or="graphicOverview" in="gmd:MD_DataIdentification"/>
+          <section xpath="gmd:MD_DataIdentification/gmd:descriptiveKeywords"  or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
           <section xpath="gmd:MD_DataIdentification/gmd:resourceSpecificUsage"/>
           <section xpath="gmd:MD_DataIdentification/gmd:aggregationInfo"/>
           <section xpath="gmd:MD_DataIdentification/gmd:spatialRepresentationType"/>
@@ -3286,6 +3286,25 @@
           <section xpath="gmd:MD_DataIdentification/gmd:topicCategory"/>
           <section xpath="gmd:MD_DataIdentification/gmd:extent"/>
           <section xpath="gmd:MD_DataIdentification/gmd:supplementalInformation"/>
+
+          <!-- For services -->
+          <section xpath="srv:SV_ServiceIdentification/gmd:citation"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:abstract"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:purpose"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:status"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:pointOfContact"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:resourceMaintenance"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:graphicOverview" or="graphicOverview" in="gmd:MD_DataIdentification"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:descriptiveKeywords"  or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:resourceSpecificUsage"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:aggregationInfo"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:spatialRepresentationType"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:spatialResolution"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:language"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:characterSet"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:topicCategory"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:extent"/>
+          <section xpath="srv:SV_ServiceIdentification/gmd:supplementalInformation"/>
         </section>
         <section xpath="/gmd:MD_Metadata/gmd:applicationSchemaInfo" or="applicationSchemaInfo" in="/gmd:MD_Metadata"/>
         <section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo" or="referenceSystemInfo" in="/gmd:MD_Metadata"/>
@@ -3532,6 +3551,7 @@
           </action>
         </section>
         <section name="constraintsTab">
+          <!-- For dataset and dataset series -->
           <action type="add" name="resourceConstraints" or="resourceConstraints"
                   in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
                   addDirective="data-gn-directory-entry-selector">
@@ -3545,6 +3565,44 @@
               data-transformation="rsrcConstrTransform"/>
           </action>
           <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints">
+            <section xpath="gmd:MD_Constraints"/>
+            <section name="gmd:MD_LegalConstraints" per="gmd:MD_LegalConstraints">
+              <section xpath="gmd:useLimitation" or="useLimitation" in=""/>
+              <section xpath="gmd:accessConstraints" or="accessConstraints" in=""/>
+              <section xpath="gmd:useConstraints" or="useConstraints" in=""/>
+              <!-- in will be concat to the current context. In this case, the context is enough-->
+              <action type="add" name="addOtherConstraints" or="otherConstraints"
+                      addDirective="data-gn-directory-entry-selector">
+                <directiveAttributes
+                  data-template-add-action="false"
+                  data-search-action="true"
+                  data-popup-action="false"
+                  data-filter='{"_root": "gmd:otherConstraints"}'
+                  data-insert-modes="text"
+                  data-template-type="otherConstraints"
+                  data-transformation="otherConstrTransform"/>
+              </action>
+              <section name="gmd:otherConstraints" per="gmd:otherConstraints">
+                <section xpath="." name="description"/>
+              </section>
+            </section>
+            <section xpath="gmd:MD_SecurityConstraints"/>
+          </section>
+
+          <!-- For services -->
+          <action type="add" name="resourceConstraints" or="resourceConstraints"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                  addDirective="data-gn-directory-entry-selector">
+            <directiveAttributes
+              data-template-add-action="false"
+              data-search-action="true"
+              data-popup-action="false"
+              data-filter='{"_root": "gmd:resourceConstraints"}'
+              data-insert-modes="text"
+              data-template-type="resourceConstraints"
+              data-transformation="rsrcConstrTransform"/>
+          </action>
+          <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:resourceConstraints">
             <section xpath="gmd:MD_Constraints"/>
             <section name="gmd:MD_LegalConstraints" per="gmd:MD_LegalConstraints">
               <section xpath="gmd:useLimitation" or="useLimitation" in=""/>
