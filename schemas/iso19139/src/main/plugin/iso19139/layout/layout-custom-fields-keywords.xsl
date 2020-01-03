@@ -205,7 +205,7 @@
                       as="xs:string"
                       select="if ($thesaurusConfig/@transformations != '')
                               then $thesaurusConfig/@transformations
-                              else 'to-iso19139-keyword,to-iso19139-keyword-with-anchor,to-iso19139-keyword-as-xlink'"/>
+                              else 'to-iso19139-keyword-with-anchor'"/>
 
         <!-- Get current transformation mode based on XML fragment analysis -->
         <xsl:variable name="transformation"

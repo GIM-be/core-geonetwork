@@ -245,7 +245,7 @@
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
-            <gco:CharacterString/>
+            <gmx:Anchor/>
           </gmd:keyword>
           <gmd:type>
             <gmd:MD_KeywordTypeCode
@@ -281,7 +281,7 @@
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
-            <gco:CharacterString/>
+            <gmx:Anchor/>
           </gmd:keyword>
           <gmd:type>
             <gmd:MD_KeywordTypeCode
@@ -313,7 +313,7 @@
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
-            <gco:CharacterString>Vlaams Gewest</gco:CharacterString>
+            <gmx:Anchor xlink:href="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaams Gewest">Vlaams Gewest</gmx:Anchor>
           </gmd:keyword>
           <gmd:thesaurusName>
             <gmd:CI_Citation>
@@ -340,7 +340,7 @@
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
-            <gco:CharacterString/>
+            <gmx:Anchor/>
           </gmd:keyword>
           <gmd:thesaurusName>
             <gmd:CI_Citation>
