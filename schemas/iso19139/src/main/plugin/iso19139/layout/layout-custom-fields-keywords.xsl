@@ -212,7 +212,8 @@
                       select="if (parent::node()/@xlink:href) then 'to-iso19139-keyword-as-xlink'
           else if (count(gmd:keyword/gmx:Anchor) > 0)
           then 'to-iso19139-keyword-with-anchor'
-          else 'to-iso19139-keyword'"/>
+          else 'to-iso19139-keyword-with-anchor'"/>
+
 
         <xsl:variable name="parentName" select="name(..)"/>
 

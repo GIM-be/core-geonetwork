@@ -1115,4 +1115,25 @@
     </a>
   </xsl:template>
 
+  <xsl:template mode="render-value"
+                match="*[gmx:Anchor and ../gmd:keyword]"
+                priority="100">
+    <a>
+      <xsl:attribute name="href" select="gmx:Anchor/@xlink:href"/>
+      <xsl:attribute name="target" select="'_blank'"/>
+      <xsl:value-of select="normalize-space(.)"/>
+    </a>
+    <xsl:message select="normalize-space(.)"/>
+    <a>
+      <!--<xsl:attribute name="href" select="''"/>-->
+      <xsl:attribute name="title" select="concat('Click to filter on ', normalize-space(.))"/>
+      <xsl:attribute name="data-ng-click"
+                     select="concat('search({''keyword'':''',
+                                    replace(replace(normalize-space(.),'$apos;','%27'),'&quot;','%22'),
+                                    '''})')"/>
+      <i class="fa fa-search"></i>
+    </a>
+  </xsl:template>
+
+
 </xsl:stylesheet>
