@@ -109,207 +109,161 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                                              AbstractMetadata metadata) throws Exception {
         AccessManager accessManager = context.getBean(AccessManager.class);
         boolean changeAllowed = accessManager.canEdit(context, String.valueOf(metadata.getId()));
-        boolean isWorkspace = metadata instanceof MetadataDraft;
         if (changeAllowed) {
             if (session.getProfile() == (Profile.Administrator)) {
-                switch (Integer.parseInt(statusId)) {
-                    case 0: //UNKNOWN
-                        break;
-                    case 1: //DRAFT
-                        changeAllowed = false;
-/*
-						if (currentStatusId.equals(StatusValue.Status.SUBMITTED) || currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REJECTED) || currentStatusId.equals(StatusValue.Status.APPROVED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.REJECTED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
-							changeAllowed = false;
-						}
-*/
-                        break;
-                    case 2: //APPROVED
-                        if (currentStatusId.equals(StatusValue.Status.SUBMITTED) || currentStatusId.equals(StatusValue.Status.REJECTED) || currentStatusId.equals(StatusValue.Status.REJECTED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REJECTED_FOR_RETIRE) || currentStatusId.equals(StatusValue.Status.REJECTED_FOR_REMOVE)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    case 3: //RETIRED
-                        if (!currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    case 4: //SUBMITTED
-                        changeAllowed = false;
-                        break;
-                    case 5: //REJECTED
-                        changeAllowed = false;
-                        break;
-                    case 6: //JUSTCREATED
-                        break;
-                    case 7: //SUBMITTED_FOR_AGIV
-                        if (!currentStatusId.equals(StatusValue.Status.DRAFT)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    case 8: //APPROVED_BY_AGIV
-                        if (!currentStatusId.equals(StatusValue.Status.DRAFT) && !currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    case 9: //REJECTED_BY_AGIV
-                        if (currentStatusId.equals(StatusValue.Status.DRAFT) || currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED) || currentStatusId.equals(StatusValue.Status.SUBMITTED) || currentStatusId.equals(StatusValue.Status.REJECTED) ||
-                            currentStatusId.equals(StatusValue.Status.APPROVED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    case 10: //RETIRED_FOR_AGIV
-//						if (isWorkspace || currentStatusId.equals(StatusValue.Status.RETIRED) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
-//						if (currentStatusId.equals(StatusValue.Status.DRAFT) || currentStatusId.equals(StatusValue.Status.RETIRED) || currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.APPROVED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
-                        if (!currentStatusId.equals(StatusValue.Status.APPROVED)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    case 11: //REMOVED_FOR_AGIV
-//						if (isWorkspace || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
-                        if (currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.APPROVED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    case 12: //REMOVED
-                        if (!currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    case 13: //REJECTED_FOR_RETIRE
-                        if (!currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    case 14: //REJECTED_FOR_REMOVE
-                        if (!currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                changeAllowed = changeAllowedByAdmin(currentStatusId, statusId);
             } else if (session.getProfile() == Profile.Reviewer) {
-                if (currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.APPROVED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
-                    changeAllowed = false;
-                } else {
-                    switch (Integer.parseInt(statusId)) {
-                        case 0: //UNKNOWN
-                            changeAllowed = false;
-                            break;
-                        case 1: //DRAFT
-                            changeAllowed = false;
-                            break;
-                        case 2: //APPROVED
-                            changeAllowed = false;
-                            break;
-                        case 3: //RETIRED
-                            changeAllowed = false;
-                            break;
-                        case 4: //SUBMITTED
-                            if (currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED)) {
-                                changeAllowed = false;
-                            }/* else if (am.isLockedBy(context, mid)) {
-								changeAllowed = false;
-							}*/
-                            break;
-                        case 5: //REJECTED
-                            if (currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED) || currentStatusId.equals(StatusValue.Status.REJECTED_BY_AGIV)) {
-                                changeAllowed = false;
-                            }
-                            break;
-                        case 6: //JUSTCREATED
-                            changeAllowed = false;
-                            break;
-                        case 7: //SUBMITTED_FOR_AGIV
-                            if (currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED)) {
-                                changeAllowed = false;
-                            }
-                            break;
-                        case 8: //APPROVED_BY_AGIV
-                            changeAllowed = false;
-                            break;
-                        case 9: //REJECTED_BY_AGIV
-                            changeAllowed = false;
-                            break;
-                        case 10: //RETIRED_FOR_AGIV
-                            if (isWorkspace || currentStatusId.equals(StatusValue.Status.RETIRED) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
-                                changeAllowed = false;
-                            }
-                            break;
-                        case 11: //REMOVED_FOR_AGIV
-                            if (isWorkspace || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
-                                changeAllowed = false;
-                            }
-                            break;
-                        case 12: //REMOVED
-                            changeAllowed = false;
-                            break;
-                        case 13: //REJECTED_FOR_RETIRE
-                            changeAllowed = false;
-                            break;
-                        case 14: //REJECTED_FOR_REMOVE
-                            changeAllowed = false;
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                changeAllowed = changeAllowedByReviewer(currentStatusId, statusId);
             } else if (session.getProfile() == Profile.Editor) {
-                if (!accessManager.isOwner(context, String.valueOf(metadata.getId())) || currentStatusId.equals(StatusValue.Status.SUBMITTED) || currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV)) {
+                changeAllowed = changeAllowedByEditor(currentStatusId, statusId, metadata, accessManager);
+            }
+        }
+        return changeAllowed;
+    }
+
+    private boolean changeAllowedByAdmin(String currentStatusId, String statusId) {
+        boolean changeAllowed = true;
+        switch (Integer.parseInt(statusId)) {
+            case 0: //UNKNOWN
+                break;
+            case 1: //DRAFT
+                changeAllowed = false;
+                break;
+            case 2: //APPROVED
+                if (currentStatusId.equals(StatusValue.Status.SUBMITTED) || currentStatusId.equals(StatusValue.Status.REJECTED) || currentStatusId.equals(StatusValue.Status.REJECTED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REJECTED_FOR_RETIRE) || currentStatusId.equals(StatusValue.Status.REJECTED_FOR_REMOVE)) {
                     changeAllowed = false;
-                } else {
-                    switch (Integer.parseInt(statusId)) {
-                        case 0: //UNKNOWN
-                            changeAllowed = false;
-                            break;
-                        case 1: //DRAFT
-                            changeAllowed = false;
-                            break;
-                        case 2: //APPROVED
-                            changeAllowed = false;
-                            break;
-                        case 3: //RETIRED
-                            changeAllowed = false;
-                            break;
-                        case 4: //SUBMITTED
-                            if (!(currentStatusId.equals(StatusValue.Status.DRAFT) || currentStatusId.equals(StatusValue.Status.REJECTED) || currentStatusId.equals(StatusValue.Status.REJECTED_BY_AGIV))) {
-                                changeAllowed = false;
-                            }
-                            break;
-                        case 5: //REJECTED
-                            changeAllowed = false;
-                            break;
-                        case 6: //JUSTCREATED
-                            changeAllowed = false;
-                            break;
-                        case 7: //SUBMITTED_FOR_AGIV
-                            changeAllowed = false;
-                            break;
-                        case 8: //APPROVED_BY_AGIV
-                            changeAllowed = false;
-                            break;
-                        case 9: //REJECTED_BY_AGIV
-                            changeAllowed = false;
-                            break;
-                        case 10: //RETIRED_FOR_AGIV
-                            changeAllowed = false;
-                            break;
-                        case 11: //REMOVED_FOR_AGIV
-                            changeAllowed = false;
-                            break;
-                        case 12: //REMOVED
-                            changeAllowed = false;
-                            break;
-                        case 13: //REJECTED_FOR_RETIRE
-                            changeAllowed = false;
-                            break;
-                        case 14: //REJECTED_FOR_REMOVE
-                            changeAllowed = false;
-                            break;
-                        default:
-                            break;
-                    }
                 }
+                break;
+            case 3: //RETIRED
+                if (!currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
+                    changeAllowed = false;
+                }
+                break;
+            case 4: //SUBMITTED
+                changeAllowed = false;
+                break;
+            case 5: //REJECTED
+                changeAllowed = false;
+                break;
+            case 6: //JUSTCREATED
+                break;
+            case 7: //SUBMITTED_FOR_AGIV
+                if (!currentStatusId.equals(StatusValue.Status.DRAFT)) {
+                    changeAllowed = false;
+                }
+                break;
+            case 8: //APPROVED_BY_AGIV
+                if (!currentStatusId.equals(StatusValue.Status.DRAFT) && !currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV)) {
+                    changeAllowed = false;
+                }
+                break;
+            case 9: //REJECTED_BY_AGIV
+                if (currentStatusId.equals(StatusValue.Status.DRAFT) || currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED) || currentStatusId.equals(StatusValue.Status.SUBMITTED) || currentStatusId.equals(StatusValue.Status.REJECTED) ||
+                    currentStatusId.equals(StatusValue.Status.APPROVED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
+                    changeAllowed = false;
+                }
+                break;
+            case 10: //RETIRED_FOR_AGIV
+                if (!currentStatusId.equals(StatusValue.Status.APPROVED)) {
+                    changeAllowed = false;
+                }
+                break;
+            case 11: //REMOVED_FOR_AGIV
+                if (currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV) ||
+                    currentStatusId.equals(StatusValue.Status.APPROVED_BY_AGIV) ||
+                    currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
+                    changeAllowed = false;
+                }
+                break;
+            case 12: //REMOVED
+                if (!currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
+                    changeAllowed = false;
+                }
+                break;
+            case 13: //REJECTED_FOR_RETIRE
+                if (!currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
+                    changeAllowed = false;
+                }
+                break;
+            case 14: //REJECTED_FOR_REMOVE
+                if (!currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
+                    changeAllowed = false;
+                }
+                break;
+            default:
+                break;
+        }
+        return changeAllowed;
+    }
+
+    private boolean changeAllowedByReviewer(String currentStatusId, String statusId) {
+        boolean changeAllowed = true;
+        if (currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.APPROVED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
+            changeAllowed = false;
+        } else {
+            switch (Integer.parseInt(statusId)) {
+                case 0: //UNKNOWN
+                case 1: //DRAFT
+                case 2: //APPROVED
+                case 3: //RETIRED
+                case 6: //JUSTCREATED
+                case 7: //SUBMITTED_FOR_AGIV
+                case 8: //APPROVED_BY_AGIV
+                case 9: //REJECTED_BY_AGIV
+                case 10: //RETIRED_FOR_AGIV
+                case 11: //REMOVED_FOR_AGIV
+                case 12: //REMOVED
+                case 13: //REJECTED_FOR_RETIRE
+                case 14: //REJECTED_FOR_REMOVE
+                    changeAllowed = false;
+                    break;
+                case 4: //SUBMITTED
+                    if (currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED)) {
+                        changeAllowed = false;
+                    }
+                    break;
+                case 5: //REJECTED
+                    if (currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED) || currentStatusId.equals(StatusValue.Status.REJECTED_BY_AGIV)) {
+                        changeAllowed = false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return changeAllowed;
+    }
+
+    private boolean changeAllowedByEditor(String currentStatusId, String statusId, AbstractMetadata metadata, AccessManager accessManager) throws Exception {
+        boolean changeAllowed = true;
+        if (!accessManager.isOwner(context, String.valueOf(metadata.getId())) || currentStatusId.equals(StatusValue.Status.SUBMITTED) || currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV)) {
+            changeAllowed = false;
+        } else {
+            switch (Integer.parseInt(statusId)) {
+                case 0: //UNKNOWN
+                case 1: //DRAFT
+                case 2: //APPROVED
+                case 3: //RETIRED
+                case 5: //REJECTED
+                case 6: //JUSTCREATED
+                case 7: //SUBMITTED_FOR_AGIV
+                case 8: //APPROVED_BY_AGIV
+                case 9: //REJECTED_BY_AGIV
+                case 10: //RETIRED_FOR_AGIV
+                case 11: //REMOVED_FOR_AGIV
+                case 12: //REMOVED
+                case 13: //REJECTED_FOR_RETIRE
+                case 14: //REJECTED_FOR_REMOVE
+                    changeAllowed = false;
+                    break;
+                case 4: //SUBMITTED
+                    if (!(currentStatusId.equals(StatusValue.Status.DRAFT) || currentStatusId.equals(StatusValue.Status.REJECTED) || currentStatusId.equals(StatusValue.Status.REJECTED_BY_AGIV))) {
+                        changeAllowed = false;
+                    }
+                    break;
+                default:
+                    break;
             }
         }
         return changeAllowed;
@@ -323,12 +277,6 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                 case 0: //UNKNOWN
                     break;
                 case 1: //DRAFT
-/*
-						if (StringUtils.isNotBlank(lockedBy)) {
-							properties.put("lockedBy", mdInfo.lockedBy);
-			            	changedMetadataIdsToInformOwner.put(metadata.getUuid(),properties);
-			            }
-*/
                     changedMetadataIdsToInformEditors.put(metadata.getUuid(), notificationProperties);
                     break;
                 case 2: //APPROVED

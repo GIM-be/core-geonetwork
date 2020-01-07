@@ -27,6 +27,7 @@ import java.text.MessageFormat;
 import java.util.*;
 
 @SuppressWarnings("Duplicates")
+@Deprecated
 public class AgivStatusActions extends DefaultStatusActions implements StatusActions {
 
     private String fromDescr, replyTo, replyToDescr;
