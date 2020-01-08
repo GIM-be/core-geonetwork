@@ -105,71 +105,84 @@ public class GeopuntStatusActions extends AIVStatusActions {
         boolean changeAllowed = accessManager.canEdit(context, String.valueOf(metadata.getId()));
         if (changeAllowed) {
             if (session.getProfile() == (Profile.Administrator)) {
-                switch (Integer.parseInt(statusId)) {
-                    case 1: //DRAFT
-                    case 4: //SUBMITTED
-                    case 5: //REJECTED
-                        changeAllowed = false;
-/*
-						if (currentStatusId.equals(StatusValue.Status.SUBMITTED)) || currentStatusId.equals(StatusValue.Status.REJECTED)) {
-							changeAllowed = false;
-						}
-*/
-                        break;
-                    case 2: //APPROVED
-                        if (currentStatusId.equals(StatusValue.Status.SUBMITTED) || currentStatusId.equals(StatusValue.Status.REJECTED)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    case 3: //RETIRED
-                    case 6: //JUSTCREATED
-                        break;
-                    default:
-                        break;
-                }
+                changeAllowed = changeAllowedByAdmin(currentStatusId, statusId);
             } else if (session.getProfile() == Profile.Reviewer) {
-                switch (Integer.parseInt(statusId)) {
-                    case 1: //DRAFT
-                    case 6: //JUSTCREATED
-                        changeAllowed = false;
-                        break;
-                    case 2: //APPROVED
-                        break;
-                    case 3: //RETIRED
-                        if (!currentStatusId.equals(StatusValue.Status.APPROVED)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    case 4: //SUBMITTED
-                    case 5: //REJECTED
-                        if (currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED)) {
-                            changeAllowed = false;
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                changeAllowed = changeAllowedByReviewer(currentStatusId, statusId);
             } else if (session.getProfile() == Profile.Editor) {
-                if (!accessManager.isOwner(context, String.valueOf(metadata.getId())) || currentStatusId.equals(StatusValue.Status.SUBMITTED)) {
+                changeAllowed = changeAllowedByEditor(currentStatusId, statusId, accessManager, metadata);
+            }
+        }
+        return changeAllowed;
+    }
+
+    private boolean changeAllowedByAdmin(String currentStatusId, String statusId) {
+        boolean changeAllowed = true;
+        switch (Integer.parseInt(statusId)) {
+            case 1: //DRAFT
+            case 4: //SUBMITTED
+            case 5: //REJECTED
+                changeAllowed = false;
+                break;
+            case 2: //APPROVED
+                if (currentStatusId.equals(StatusValue.Status.SUBMITTED) || currentStatusId.equals(StatusValue.Status.REJECTED)) {
                     changeAllowed = false;
-                } else {
-                    switch (Integer.parseInt(statusId)) {
-                        case 1: //DRAFT
-                        case 2: //APPROVED
-                        case 3: //RETIRED
-                        case 5: //REJECTED
-                        case 6: //JUSTCREATED
-                            changeAllowed = false;
-                            break;
-                        case 4: //SUBMITTED
-                            if (!(currentStatusId.equals(StatusValue.Status.DRAFT) || currentStatusId.equals(StatusValue.Status.REJECTED))) {
-                                changeAllowed = false;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
                 }
+                break;
+            case 3: //RETIRED
+            case 6: //JUSTCREATED
+                break;
+            default:
+                break;
+        }
+        return changeAllowed;
+    }
+
+    private boolean changeAllowedByReviewer(String currentStatusId, String statusId) {
+        boolean changeAllowed = true;
+        switch (Integer.parseInt(statusId)) {
+            case 1: //DRAFT
+            case 6: //JUSTCREATED
+                changeAllowed = false;
+                break;
+            case 2: //APPROVED
+                break;
+            case 3: //RETIRED
+                if (!currentStatusId.equals(StatusValue.Status.APPROVED)) {
+                    changeAllowed = false;
+                }
+                break;
+            case 4: //SUBMITTED
+            case 5: //REJECTED
+                if (currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED)) {
+                    changeAllowed = false;
+                }
+                break;
+            default:
+                break;
+        }
+        return changeAllowed;
+    }
+
+    private boolean changeAllowedByEditor(String currentStatusId, String statusId, AccessManager accessManager, AbstractMetadata metadata) throws Exception {
+        boolean changeAllowed = true;
+        if (!accessManager.isOwner(context, String.valueOf(metadata.getId())) || currentStatusId.equals(StatusValue.Status.SUBMITTED)) {
+            changeAllowed = false;
+        } else {
+            switch (Integer.parseInt(statusId)) {
+                case 1: //DRAFT
+                case 2: //APPROVED
+                case 3: //RETIRED
+                case 5: //REJECTED
+                case 6: //JUSTCREATED
+                    changeAllowed = false;
+                    break;
+                case 4: //SUBMITTED
+                    if (!(currentStatusId.equals(StatusValue.Status.DRAFT) || currentStatusId.equals(StatusValue.Status.REJECTED))) {
+                        changeAllowed = false;
+                    }
+                    break;
+                default:
+                    break;
             }
         }
         return changeAllowed;
@@ -181,12 +194,6 @@ public class GeopuntStatusActions extends AIVStatusActions {
             notificationProperties.put("currentStatus", currentStatusId);
             switch (Integer.parseInt(statusId)) {
                 case 1: //DRAFT
-/*
-						if (StringUtils.isNotBlank(lockedBy)) {
-							properties.put("lockedBy", mdInfo.lockedBy);
-			            	changedMetadataIdsToInformOwner.put(metadata.getUuid(),properties);
-			            }
-*/
                     changedMetadataIdsToInformEditors.put(metadata.getUuid(), notificationProperties);
                     break;
                 case 2: //APPROVED

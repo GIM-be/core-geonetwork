@@ -77,10 +77,10 @@
           2. Reject metadata (id = 5)
           3. Retire metadata (id = 3)
       -->
-      <li role="menuitem" class="divider" data-ng-show="isMdWorkflowEnable" data-ng-if="user.canEditRecord(md) && user.isUserAdminOrMore()"></li>
+      <li role="menuitem" class="divider" data-ng-show="isMdWorkflowEnable" data-ng-if="user.canEditRecord(md) && user.isUserAdminOrMore() && mdService.getAllowedStatusList(md, user).length !== 0"></li>
       <li role="menuitem"
           class="dropdown-header"
-          data-ng-show="isMdWorkflowEnable && (md.mdStatus == 1 || md.mdStatus == 4)">
+          data-ng-show="isMdWorkflowEnable && mdService.getAllowedStatusList(md, user).length !== 0">
         <span data-translate="">workflow</span>
       </li>
 

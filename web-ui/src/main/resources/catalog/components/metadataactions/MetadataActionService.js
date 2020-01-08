@@ -517,7 +517,7 @@
 
     function testAdminAllowed(status, md) {
       var changeAllowed = true;
-      var currentStatus = md.mdStatus;
+      var currentStatus = parseInt(md.mdStatus);
       switch (status) {
         case sv.DRAFT:
           changeAllowed = false;
@@ -592,7 +592,7 @@
 
     function testReviewerAllowed(status, md) {
       var changeAllowed = true;
-      var currentStatus = md.mdStatus;
+      var currentStatus = parseInt(md.mdStatus);
       if ([sv.SUBMITTED_FOR_AGIV, sv.APPROVED_BY_AGIV, sv.RETIRED_FOR_AGIV].includes(currentStatus)) {
         changeAllowed = false;
       } else {
@@ -630,7 +630,7 @@
 
     function testEditorAllowed(status, md, user) {
       var changeAllowed = true;
-      var currentStatus = md.mdStatus;
+      var currentStatus = parseInt(md.mdStatus);
       if (md.getOwnerId() !== user.id || [sv.SUBMITTED, sv.SUBMITTED_FOR_AGIV].includes(currentStatus)) {
         changeAllowed = false;
       } else {
@@ -669,7 +669,7 @@
   }]);
 
   module.service('aivGeopuntStatusAction', [function() {
-    var statusValues = Object.freeze({
+    var sv = Object.freeze({
       DRAFT: 1,
       APPROVED: 2,
       RETIRED: 3,
@@ -680,23 +680,100 @@
 
     function getAllowedStatusList(md, user) {
       var allowedStatusList = [];
-      Object.keys(statusValues).forEach(function(key) {
-        if (getStatusAllowed(statusValues[key], md.statusId, user)) {
-          allowedStatusList.push(statusValues[key]);
+      Object.keys(sv).forEach(function(key) {
+        if (getStatusAllowed(sv[key], md, user)) {
+          allowedStatusList.push(sv[key]);
         }
       });
       return allowedStatusList;
     }
 
-    function getStatusAllowed(status, currentStatus, user) {
-      var isAllowed = false;
-      //No need to check if the user can edit the record as it is already done
+    function getStatusAllowed(status, md, user) {
+      var isAllowed = true;
       if (user.isAdministratorOrMore()) {
-        // isAllowed = testAdminAllowed(status, currentStatus);
+        isAllowed = testAdminAllowed(status, md);
       } else if (user.isReviewerOrMore()) {
-        // isAllowed = testReviewerAllowed(status, currentStatus);
+        isAllowed = testReviewerAllowed(status, md);
       } else if (user.isEditorOrMore()) {
-        // isAllowed = testEditorAllowed(status, currentStatus);
+        isAllowed = testEditorAllowed(status, md, user);
+      }
+      return isAllowed;
+    }
+
+    function testAdminAllowed(status, md) {
+      var isAllowed = true;
+      var currentStatus = parseInt(md.mdStatus);
+      switch (status) {
+        case sv.DRAFT:
+        case sv.SUBMITTED:
+        case sv.REJECTED:
+          isAllowed = false;
+          break;
+        case sv.APPROVED:
+          if ([sv.SUBMITTED, sv.REJECTED].includes(currentStatus)) {
+            isAllowed = false;
+          }
+          break;
+        case sv.RETIRED:
+        case sv.JUSTCREATED:
+          break;
+        default:
+          break;
+      }
+      return isAllowed;
+    }
+
+    function testReviewerAllowed(status, md) {
+      var isAllowed = true;
+      var currentStatus = parseInt(md.mdStatus);
+      switch (status) {
+        case sv.DRAFT:
+        case sv.JUSTCREATED:
+          isAllowed = false;
+          break;
+        case sv.APPROVED:
+          break;
+        case sv.RETIRED:
+          if (![sv.APPROVED].includes(currentStatus)) {
+            isAllowed = false;
+          }
+          break;
+        case sv.SUBMITTED:
+        case sv.REJECTED:
+          if ([sv.APPROVED, sv.RETIRED].includes(currentStatus)) {
+            isAllowed = false;
+            console.log(currentStatus);
+          }
+          console.log(isAllowed);
+          break;
+        default:
+          break;
+      }
+      return isAllowed;
+    }
+
+    function testEditorAllowed(status, md, user) {
+      var isAllowed = true;
+      var currentStatus = parseInt(md.mdStatus);
+      if (md.getOwnerId() !== user.id || [sv.SUBMITTED].includes(currentStatus)) {
+        isAllowed = false;
+      } else {
+        switch (status) {
+          case sv.DRAFT:
+          case sv.APPROVED:
+          case sv.RETIRED:
+          case sv.REJECTED:
+          case sv.JUSTCREATED:
+            isAllowed = false;
+            break;
+          case sv.SUBMITTED:
+            if (![sv.DRAFT, sv.REJECTED].includes(currentStatus)) {
+              isAllowed = false;
+            }
+            break;
+          default:
+            break;
+        }
       }
       return isAllowed;
     }
