@@ -82,6 +82,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -394,6 +395,18 @@ public class MetadataWorkflowApi {
         }
 
         return buildMetadataStatusResponses(metadataStatuses, details, context.getLanguage());
+    }
+
+
+    @ApiOperation(value = "Current node used to authorize status changes", notes = "", nickname = "getStatusNode")
+    @RequestMapping(path = "/status/node", produces = "text/plain;charset=UTF-8", method = RequestMethod.GET)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Node found"),
+        @ApiResponse(code = 403, message = ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_VIEW)
+    })
+    public ResponseEntity<String> getStatusNode() {
+        String statusActionClass = statusActionFactory.getClassName();
+        return new ResponseEntity<>(statusActionClass.substring(statusActionClass.lastIndexOf(".") + 1), HttpStatus.OK);
     }
 
     /**

@@ -65,7 +65,7 @@ import java.util.regex.Pattern;
 import static org.fao.geonet.kernel.setting.Settings.*;
 import static org.fao.geonet.repository.specification.UserGroupSpecs.hasUserId;
 
-public class AIVStatusActions implements StatusActions {
+public abstract class AIVStatusActions implements StatusActions {
 
     public static final Pattern metadataLuceneField = Pattern.compile("\\{\\{index:([^\\}]+)\\}\\}");
     private static String FS = File.separator;

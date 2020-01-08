@@ -77,16 +77,16 @@
           2. Reject metadata (id = 5)
           3. Retire metadata (id = 3)
       -->
-      <li role="menuitem" class="divider" data-ng-show="isMdWorkflowEnable"></li>
+      <li role="menuitem" class="divider" data-ng-show="isMdWorkflowEnable" data-ng-if="user.canEditRecord(md) && user.isUserAdminOrMore() && mdService.getAllowedStatusList(md, user).length !== 0"></li>
       <li role="menuitem"
           class="dropdown-header"
-          data-ng-show="isMdWorkflowEnable && (md.mdStatus == 1 || md.mdStatus == 4)">
+          data-ng-show="isMdWorkflowEnable && mdService.getAllowedStatusList(md, user).length !== 0">
         <span data-translate="">workflow</span>
       </li>
 
       <li role="menuitem"
-          data-ng-repeat="allowedStatus in mdService.getAllowedStatusList(md.mdStatus, user)"
-          data-ng-if="user.canEditRecord(md) && isMdWorkflowEnable && md.isWorkflowEnabled() && allowedStatus != md.mdStatus && md.getSchema() != 'dcat-ap'">
+          data-ng-repeat="allowedStatus in mdService.getAllowedStatusList(md, user)"
+          data-ng-if="user.canEditRecord(md) && isMdWorkflowEnable && md.isWorkflowEnabled() && allowedStatus != md.mdStatus && mdService.currentNode && md.getSchema() != 'dcat-ap'">
         <a data-ng-href=""
            data-ng-click="mdService.openUpdateStatusPanel(getScope(), 'workflow', null, allowedStatus, allowedStatus + 50)">
           <!--<i class="fa fa-fw fa-file-o"></i>&nbsp;-->
