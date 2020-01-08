@@ -1053,9 +1053,7 @@
       <xsl:attribute name="target" select="'_blank'"/>
       <xsl:value-of select="normalize-space(.)"/>
     </a>
-    <xsl:message select="normalize-space(.)"/>
     <a>
-      <!--<xsl:attribute name="href" select="''"/>-->
       <xsl:attribute name="title" select="concat('Click to filter on ', normalize-space(.))"/>
       <xsl:attribute name="data-ng-click"
                      select="concat('search({''keyword'':''',
