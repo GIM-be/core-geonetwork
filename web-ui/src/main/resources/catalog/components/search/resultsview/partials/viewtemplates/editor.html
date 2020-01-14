@@ -39,7 +39,7 @@
               </div> 
             </div>
           </div>
-          <gn-draft-validation-widget data-ng-if="md.draft == 'e'" metadata="md"></gn-draft-validation-widget>
+          <gn-draft-validation-widget data-ng-if="md.draft == 'e' && user.canEditRecord(md)" metadata="md"></gn-draft-validation-widget>
         </div>
         <div class="col-lg-4 col-md-4 gn-nopadding-right">
           <div class="btn-group">
