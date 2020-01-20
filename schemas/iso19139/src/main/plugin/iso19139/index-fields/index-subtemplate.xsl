@@ -27,6 +27,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
                 version="2.0">
   <xsl:param name="id"/>
   <xsl:param name="uuid"/>
@@ -234,14 +235,13 @@
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
   </xsl:template>
 
-  <xsl:template mode="index" match="gmd:report">
+  <xsl:template mode="index" match="gmd:report[count(gmd:DQ_AbsoluteExternalPositionalAccuracy)>0 or count(gmd:DQ_CompletenessOmission)>0 or count(gmd:DQ_ThematicClassificationCorrectness)>0]">
     <Field name="_title"
            string="{
               if ($title != '') then $title
-              else if (name(*[1]) = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Geometrische nauwkeurigheid'
-              else if (name(*[1]) = 'gmd:DQ_CompletenessOmission') then 'Volledigheid'
-              else if (name(*[1]) = 'gmd:DQ_DomainConsistency') then 'INSPIRE Domeinconsistentie'
-              else if (name(*[1]) = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematische classificatie'
+              else if (name(*[1]) = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then '* Geometrische nauwkeurigheid'
+              else if (name(*[1]) = 'gmd:DQ_CompletenessOmission') then '* Volledigheid'
+              else if (name(*[1]) = 'gmd:DQ_ThematicClassificationCorrectness') then '* Thematische classificatie'
               else ''
              }"
            store="true" index="true"/>
@@ -250,12 +250,12 @@
   </xsl:template>
 
   <!--INSPIRE Domeinconsistentie-->
-  <xsl:template mode="index" match="gmd:DQ_DomainConsistency">
+  <xsl:template mode="index" match="gmd:report[gmd:DQ_DomainConsistency]">
   	<xsl:variable name="specificationTitle" select="//gmd:title/gmx:Anchor"/>
     <Field name="_title"
            string="{if ($title != '') then $title
                         else if ($specificationTitle and normalize-space($specificationTitle) != '') then normalize-space($specificationTitle)
-                        else 'INSPIRE Domeinconsistentie'}"
+                        else '* INSPIRE Domeinconsistentie'}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
