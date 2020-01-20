@@ -1204,6 +1204,7 @@
   <element name="gmd:level">
     <label>Niveau kwaliteitsinformatie</label>
     <description>Niveau (dataset of datasetserie) waar de kwaliteitsbeschrijving betrekking op heeft.</description>
+    <help>Suggestie om te kiezen voor 'Dataset', 'Datasetserie', of 'Objecttype'.</help>
     <condition>mandatory</condition>
   </element>
   <element name="gmd:levelDescription">
