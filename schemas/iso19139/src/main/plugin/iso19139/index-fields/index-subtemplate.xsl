@@ -254,8 +254,9 @@
   	<xsl:variable name="specificationTitle" select="//gmd:title/gmx:Anchor"/>
     <Field name="_title"
            string="{if ($title != '') then $title
+                        else if ($specificationTitle and contains(normalize-space($specificationTitle),'1089/2010')) then '* INSPIRE Domeinconsistentie'
                         else if ($specificationTitle and normalize-space($specificationTitle) != '') then normalize-space($specificationTitle)
-                        else '* INSPIRE Domeinconsistentie'}"
+                        else ''}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
