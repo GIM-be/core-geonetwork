@@ -23,6 +23,7 @@
 
   <sch:ns prefix="gml" uri="http://www.opengis.net/gml"/>
   <sch:ns prefix="gmd" uri="http://www.isotc211.org/2005/gmd"/>
+  <sch:ns prefix="srv" uri="http://www.isotc211.org/2005/srv"/>
   <sch:ns prefix="gmx" uri="http://www.isotc211.org/2005/gmx"/>
   <sch:ns prefix="gco" uri="http://www.isotc211.org/2005/gco"/>
   <sch:ns prefix="geonet" uri="http://www.fao.org/geonetwork"/>
@@ -65,7 +66,7 @@
       </sch:assert>
 
       <sch:report
-        test="count(gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='dataset' or gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='series']])=1">
+        test="count(gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='dataset' or gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='series'])=1">
         <sch:value-of select="$loc/strings/tg4.ok"/>
       </sch:report>
 
