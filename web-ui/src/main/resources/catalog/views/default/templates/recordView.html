@@ -367,9 +367,7 @@
             <th data-translate="">crs</th>
             <td>
               <ul>
-                <li data-ng-repeat="r in mdView.current.record.crsDetails">
-                  {{ mdService.formatCrs(r) }}
-                </li>
+                <li data-ng-repeat="r in mdView.current.record.crsDetails" ng-bind-html="mdService.formatCrs(r)"></li>
               </ul>
             </td>
           </tr>
