@@ -53,9 +53,25 @@
              scope.snippet = null;
              scope.crsResults = [];
              scope.defaultCrs = {
-               code: "31370",
-               codeSpace: "EPSG"
+               url: 'http://www.opengis.net/def/crs/EPSG/0/31370',
+               code: 'http://www.opengis.net/def/crs/EPSG/0/31370'
              };
+             scope.defaultCrsXmlSnippet =
+               '<gmd:referenceSystemInfo' +
+               '    xmlns:gmd="http://www.isotc211.org/2005/gmd"' +
+               '    xmlns:gmx="http://www.isotc211.org/2005/gmx"' +
+               '    xmlns:xlink="http://www.w3.org/1999/xlink">' +
+               '  <gmd:MD_ReferenceSystem>' +
+               '    <gmd:referenceSystemIdentifier>' +
+               '      <gmd:RS_Identifier>' +
+               '        <gmd:code>' +
+               '          <gmx:Anchor xlink:href="{{url}}">{{code}}</gmx:Anchor>' +
+               '        </gmd:code>' +
+               '      </gmd:RS_Identifier>' +
+               '    </gmd:referenceSystemIdentifier>' +
+               '  </gmd:MD_ReferenceSystem>' +
+               '</gmd:referenceSystemInfo>';
+
              scope.snippetRef = gnEditor.
              buildXMLFieldName(scope.elementRef, scope.elementName);
 
@@ -97,11 +113,11 @@
              // Then register search filter change
              scope.$watch('filter', scope.search);
 
-             scope.addCRS = function(crs) {
+             scope.addCRS = function(crs, crsXmlSnippet) {
 
                var textarea = $.find('textarea[id=' + scope.snippetRef +
                ']')[0];
-               var xmlSnippet = textarea ? $(textarea).text() : undefined;
+               var xmlSnippet = crsXmlSnippet ? crsXmlSnippet: (textarea ? $(textarea).text() : undefined);
                scope.snippet = gnEditorXMLService.buildCRSXML(crs,
                gnCurrentEdit.schema, xmlSnippet);
                scope.crsResults = [];
