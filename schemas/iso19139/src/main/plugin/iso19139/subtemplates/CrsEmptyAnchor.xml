@@ -1,0 +1,15 @@
+<gmd:referenceSystemInfo
+  xmlns:gmd="http://www.isotc211.org/2005/gmd"
+  xmlns:gmx="http://www.isotc211.org/2005/gmx"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <subtemplate-title>Vul uw eigen Anchor CRS in...</subtemplate-title>
+  <gmd:MD_ReferenceSystem>
+    <gmd:referenceSystemIdentifier>
+      <gmd:RS_Identifier>
+        <gmd:code>
+          <gmx:Anchor xlink:href=""/>
+        </gmd:code>
+      </gmd:RS_Identifier>
+    </gmd:referenceSystemIdentifier>
+  </gmd:MD_ReferenceSystem>
+</gmd:referenceSystemInfo>

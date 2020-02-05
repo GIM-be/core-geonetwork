@@ -104,7 +104,7 @@
 
     <for name="gmd:referenceSystemInfo" addDirective="data-gn-directory-entry-selector">
       <directiveAttributes
-        data-template-add-action="true"
+        data-template-add-action="false"
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:referenceSystemInfo"}'
