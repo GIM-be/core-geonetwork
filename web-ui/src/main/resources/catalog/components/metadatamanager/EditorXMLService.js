@@ -91,7 +91,7 @@
            */
            buildCRSXML: function(crs, schema, xmlSnippet) {
              var replacement = ['description', 'codeSpace',
-               'authority', 'code', 'version'];
+               'authority', 'code', 'version', 'url'];
              var xml = xmlSnippet || gnXmlTemplates.CRS[schema] ||
              gnXmlTemplates.CRS['iso19139'];
              angular.forEach(replacement, function(key) {
