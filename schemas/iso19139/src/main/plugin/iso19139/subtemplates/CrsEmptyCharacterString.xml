@@ -1,0 +1,17 @@
+<gmd:referenceSystemInfo
+  xmlns:gmd="http://www.isotc211.org/2005/gmd"
+  xmlns:gco="http://www.isotc211.org/2005/gco">
+  <subtemplate-title>Vul uw eigen CharacterString CRS in...</subtemplate-title>
+  <gmd:MD_ReferenceSystem>
+    <gmd:referenceSystemIdentifier>
+      <gmd:RS_Identifier>
+        <gmd:code>
+          <gco:CharacterString/>
+        </gmd:code>
+        <gmd:codeSpace>
+          <gco:CharacterString/>
+        </gmd:codeSpace>
+      </gmd:RS_Identifier>
+    </gmd:referenceSystemIdentifier>
+  </gmd:MD_ReferenceSystem>
+</gmd:referenceSystemInfo>

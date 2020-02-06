@@ -370,6 +370,22 @@
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
   </xsl:template>
 
+  <xsl:template mode="index" match="gmd:referenceSystemInfo">
+    <Field name="_title"
+           string="{
+                if ($title != '') then $title
+                else if (normalize-space(./subtemplate-title/text()) != '') then normalize-space(./subtemplate-title/text())
+                else if (normalize-space(./gmx:Anchor/text()) != '') then normalize-space(./gmx:Anchor/text())
+                else if (normalize-space(./gco:CharacterString/text()) != '') then normalize-space(./gco:CharacterString/text())
+                else if (name(./*[1]) = 'gmx:Anchor') then 'Anchor'
+                else if (name(./*[1]) = 'gco:CharacterString') then 'CharacterString'
+                else ''
+               }"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
   <xsl:template name="subtemplate-common-fields">
     <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
     <Field name="_root" string="{name(.)}" store="true" index="true"/>

@@ -444,8 +444,11 @@
        * @param {Object} crsDetails expected keys: code, codeSpace, name
        */
       this.formatCrs = function(crsDetails) {
+        var formattedCode = crsDetails.url ?
+          '<a target="_blank" href="'+ crsDetails.url + '">' + crsDetails.code +'</a>':
+          crsDetails.code;
         var crs = (crsDetails.codeSpace && crsDetails.codeSpace + ':') +
-            crsDetails.code;
+          formattedCode;
         if (crsDetails.name) return crsDetails.name + ' (' + crs + ')';
         else return crs;
       };

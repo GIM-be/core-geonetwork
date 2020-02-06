@@ -21,6 +21,10 @@
     <xsl:apply-templates select="./*[not(name() = 'subtemplate-title')]" mode="normalise-spaces"/>
   </xsl:template>
 
+  <xsl:template name="referenceSystemInfoTransform">
+    <xsl:copy-of select="./*[not(name() = 'subtemplate-title')]"/>
+  </xsl:template>
+
   <xsl:template match="@*|node()" mode="normalise-spaces">
     <xsl:copy>
       <xsl:choose>

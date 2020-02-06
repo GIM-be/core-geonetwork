@@ -650,7 +650,7 @@
   <!-- Identifier -->
   <xsl:template mode="render-field"
                 match="*[(gmd:RS_Identifier or gmd:MD_Identifier) and
-                  */gmd:code/gco:CharacterString != '']"
+                  (*/gmd:code/gco:CharacterString != '' or */gmd:code/gmx:Anchor != '')]"
                 priority="100">
     <tr class="gn-code">
       <th>
@@ -913,7 +913,7 @@
       </xsl:apply-templates>
     </xsl:variable>
 
-    <a href="{gmx:Anchor/@xlink:href}">
+    <a href="{gmx:Anchor/@xlink:href}" target="_blank">
       <xsl:value-of select="$txt"/>
     </a>
   </xsl:template>
