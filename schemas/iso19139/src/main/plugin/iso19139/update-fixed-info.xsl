@@ -672,6 +672,15 @@
     </xsl:call-template>
   </xsl:template>
 
+  <!-- Only gmd:referenceSystemIdentifier can have a gmd:RS_Identifier child element, all other RS_Identifier elements
+        must be transformed to a MD:Identifier and existing child elements gmd:codeSpace and gmd:version must be removed -->
+  <xsl:template match="gmd:RS_Identifier[not(name(..)='gmd:referenceSystemIdentifier')]" priority="100">
+    <gmd:MD_Identifier>
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates select="*[not(name(.)='gmd:codeSpace' or name(.)='gmd:version')]"/>
+    </gmd:MD_Identifier>
+  </xsl:template>
+
   <!-- ================================================================= -->
   <!-- SDS fixes -->
 

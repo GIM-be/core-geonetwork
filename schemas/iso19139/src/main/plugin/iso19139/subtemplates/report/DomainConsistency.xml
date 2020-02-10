@@ -6,14 +6,11 @@
             xmlns:xlink="http://www.w3.org/1999/xlink">
   <gmd:DQ_DomainConsistency>
     <gmd:measureIdentification>
-      <gmd:RS_Identifier>
+      <gmd:MD_Identifier>
         <gmd:code>
           <gco:CharacterString/>
         </gmd:code>
-        <gmd:codeSpace>
-          <gco:CharacterString/>
-        </gmd:codeSpace>
-      </gmd:RS_Identifier>
+      </gmd:MD_Identifier>
     </gmd:measureIdentification>
     <gmd:measureDescription>
       <gco:CharacterString/>
