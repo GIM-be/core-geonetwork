@@ -455,23 +455,29 @@
 
   <!-- Return if a flat mode exception has been defined in the current view for a field. -->
   <xsl:function name="gn-fn-metadata:isFieldFlatModeException" as="xs:boolean">
-    <xsl:param name="configuration" as="node()"/>
+    <xsl:param name="configuration" as="node()?"/>
     <xsl:param name="name" as="xs:string"/>
     <xsl:value-of select="gn-fn-metadata:isFieldFlatModeException($configuration, $name, '')"/>
   </xsl:function>
+
   <xsl:function name="gn-fn-metadata:isFieldFlatModeException" as="xs:boolean">
-    <xsl:param name="configuration" as="node()"/>
+    <xsl:param name="configuration" as="node()?"/>
     <xsl:param name="name" as="xs:string"/>
     <xsl:param name="xpath" as="xs:string"/>
 
-    <xsl:variable name="exception"
-                  select="count($configuration/flatModeExceptions/for[@name = $name and (not(@xpath) or @xpath = '' or @xpath = $xpath)])"/>
+    <xsl:choose>
+      <xsl:when test="not($configuration)">
+        <xsl:value-of select="false()"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="exception"
+                      select="count($configuration/flatModeExceptions/for[@name = $name and (not(@xpath) or @xpath = '' or @xpath = $xpath)])"/>
 
-    <xsl:value-of
-      select="if ($exception > 0)
-      then true()
-      else false()"
-    />
+        <xsl:value-of select="if ($exception > 0)
+                      then true()
+                      else false()"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 
   <xsl:function name="gn-fn-metadata:getXPath" as="xs:string">

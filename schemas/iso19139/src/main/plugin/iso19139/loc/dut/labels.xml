@@ -2613,7 +2613,7 @@
     <label>Ruimtelijk Referentie Systeem Naam</label>
     <description>Naam van het Ruimtelijk Referentie Systeem. Als default gezet op geografisch WGS 84- epsg:4326
     </description>
-    <example>urn:x-ogc:def:crs:EPSG:6.6:4326</example>
+    <example>urn:ogc:def:crs:EPSG:6.6:4326</example>
   </element>
 
   <!-- === SRV namespace for 19119 service metadata -->

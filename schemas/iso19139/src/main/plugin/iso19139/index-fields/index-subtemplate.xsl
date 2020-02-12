@@ -216,14 +216,31 @@
   <!--</xsl:template>-->
 
 
+
   <xsl:template mode="index" match="gmd:MD_Format[count(ancestor::node()) =  1]">
     <Field name="_title"
            string="{if ($title != '') then $title
-                        else if (gmd:name/gco:CharacterString and normalize-space(gmd:name/gco:CharacterString) != '') then gmd:name/gco:CharacterString
-                        else 'Distributieformaat'}"
+                    else if (gmd:name/*/text() and normalize-space(gmd:name/*/text()) != '') then gmd:name/*/text()
+                    else 'Distributieformaat'}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <!--xsl:template mode="index" match="gmd:resourceConstraints[count(ancestor::node()) =  1]">
+    <Field name="_title"
+           string="{if ($title != '') then $title
+                     else concat(
+                        string-join(gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue[@codeListValue!='otherConstraints'], ', '),
+                        ' ', string-join(gmd:MD_LegalConstraints/gmd:otherConstraints/*/text(), ', '))}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields"/>
+  </xsl:template-->
+
+  <xsl:template name="subtemplate-common-fields">
+    <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
+    <Field name="_root" string="{name(.)}" store="true" index="true"/>
   </xsl:template>
 
 
@@ -251,7 +268,7 @@
 
   <!--INSPIRE Domeinconsistentie-->
   <xsl:template mode="index" match="gmd:report[gmd:DQ_DomainConsistency]">
-  	<xsl:variable name="specificationTitle" select="//gmd:title/gmx:Anchor"/>
+    <xsl:variable name="specificationTitle" select="//gmd:title/gmx:Anchor"/>
     <Field name="_title"
            string="{if ($title != '') then $title
                         else if ($specificationTitle and contains(normalize-space($specificationTitle),'1089/2010')) then '* INSPIRE domeinconsistentie (verordening)'
@@ -384,11 +401,6 @@
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
-  </xsl:template>
-
-  <xsl:template name="subtemplate-common-fields">
-    <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
-    <Field name="_root" string="{name(.)}" store="true" index="true"/>
   </xsl:template>
 
   <xsl:template name="subtemplate-common-fields-or-void">

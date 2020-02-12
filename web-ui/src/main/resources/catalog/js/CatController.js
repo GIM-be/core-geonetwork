@@ -88,7 +88,9 @@
             'slo': 'sk'
           },
           'isLogoInHeader': false,
-          'logoInHeaderPosition': 'left'
+          'logoInHeaderPosition': 'left',
+          'fluidHeaderLayout': true,
+          'showGNName': true
         },
         'home': {
           'enabled': true,
@@ -202,7 +204,7 @@
           },
           'projection': 'EPSG:3857',
           'projectionList': [{
-            'code': 'EPSG:4326',
+            'code': 'urn:ogc:def:crs:EPSG:6.6:4326',
             'label': 'WGS84 (EPSG:4326)'
           }],
           'switcherProjectionList': [{
@@ -454,6 +456,8 @@
       $scope.socialMediaLink = $location.absUrl();
       $scope.getPermalink = gnUtilityService.getPermalink;
       $scope.fluidEditorLayout = gnGlobalSettings.gnCfg.mods.editor.fluidEditorLayout;
+      $scope.fluidHeaderLayout = gnGlobalSettings.gnCfg.mods.header.fluidHeaderLayout;
+      $scope.showGNName = gnGlobalSettings.gnCfg.mods.header.showGNName;
 
       // If gnLangs current already set by config, do not use URL
       $scope.langs = gnGlobalSettings.gnCfg.mods.header.languages;
