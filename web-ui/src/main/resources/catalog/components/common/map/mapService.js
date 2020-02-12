@@ -62,10 +62,11 @@
       'gnGlobalSettings',
       'gnViewerSettings',
       'gnViewerService',
+      'gnAlertService',
       function(ngeoDecorateLayer, gnOwsCapabilities, gnConfig, $log,
           gnSearchLocation, $rootScope, gnUrlUtils, $q, $translate,
           gnWmsQueue, gnSearchManagerService, Metadata, gnWfsService,
-          gnGlobalSettings, gnViewerSettings, gnViewerService) {
+          gnGlobalSettings, gnViewerSettings, gnViewerService, gnAlertService) {
 
         /**
          * @description
@@ -76,15 +77,15 @@
          * @param {string} url of the service
          * @return {boolean} true if layer is in the map
          */
-        var isLayerInMap = function(map, name, url) {
-          return getLayerInMap(map, name, url) !== null;
+        var isLayerInMap = function(map, name, url, style) {
+          return getLayerInMap(map, name, url, style) !== null;
         };
-        var getLayerInMap = function(map, name, url) {
-          if (gnWmsQueue.isPending(url, name)) {
+        var getLayerInMap = function(map, name, url, style) {
+          if (gnWmsQueue.isPending(url, name, style)) {
             return true;
           }
 
-          if(getTheLayerFromMap(map, name, url) != null) {
+          if(getTheLayerFromMap(map, name, url, style) != null) {
             return true;
           }
           return null;
@@ -98,7 +99,7 @@
          * @param {string} name of the layer
          * @param {string} url of the service
          */
-        var getTheLayerFromMap = function(map, name, url) {
+        var getTheLayerFromMap = function(map, name, url, style) {
           for (var i = 0; i < map.getLayers().getLength(); i++) {
             var l = map.getLayers().item(i);
             var source = l.getSource();
@@ -111,6 +112,7 @@
             else if (source instanceof ol.source.TileWMS ||
                 source instanceof ol.source.ImageWMS) {
               if (source.getParams().LAYERS == name &&
+                  source.getParams().STYLES == style &&
                   l.get('url').split('?')[0] == url.split('?')[0]) {
                 return l;
               }
@@ -162,19 +164,19 @@
               defer.reject();
               return $q.defer().promise;
             }
-            
+
             //Check if the layer has some projection restriction
             //If no restriction, just (try to) add it
-            if(layerInfo.projectionList && layerInfo.projectionList.length 
+            if(layerInfo.projectionList && layerInfo.projectionList.length
                 && layerInfo.projectionList.length > 0) {
               var addIt = false;
-              
+
               $.each(layerInfo.projectionList, function(i, p){
                 if(map.getView().getProjection().getCode() == p) {
                   addIt = true;
                 }
               });
-              
+
               if(!addIt) {
                 defer.reject();
                 return $q.defer().promise;
@@ -189,22 +191,22 @@
                 }));
                 break;
 
-              case 'tms':            
-                var prop = { 
+              case 'tms':
+                var prop = {
                   // Settings are usually encoded
                     url: decodeURI(layerInfo.url)
                 };
-                
+
                 if(layerInfo.projection) {
                   prop.projection = layerInfo.projection;
                 }
-                
+
                 if(layerInfo.attribution) {
                   prop.attributions = [
                     new ol.Attribution({"html": layerInfo.attribution})
                   ]
                 }
-                
+
                 defer.resolve(new ol.layer.Tile({
                   source: new ol.source.XYZ(prop),
                   title: layerInfo.title || 'TMS Layer'
@@ -250,11 +252,11 @@
                         layer.set('title', layerInfo.title);
                         layer.set('label', layerInfo.title);
                       }
-                      
+
                       if(layerInfo.attribution) {
                         layer.getSource().setAttributions(layerInfo.attribution);
                       }
-                      
+
                       defer.resolve(layer);
                     });
                 break;
@@ -273,11 +275,11 @@
                         layer.set('title', layerInfo.title);
                         layer.set('label', layerInfo.title);
                       }
-                      
+
                       if(layerInfo.attribution) {
                         layer.getSource().setAttributions(layerInfo.attribution);
                       }
-                      
+
                       defer.resolve(layer);
                     });
                 break;
@@ -439,13 +441,19 @@
                 geometry = new ol.geom.MultiPolygon(null);
                 for (var j = 0; j < extent.length; j++) {
                   // TODO: Point will not be supported in multi geometry
-                  var projectedExtent = ol.extent.getIntersection(
-                      ol.proj.transformExtent(extent[j], 'EPSG:4326', proj),
-                      projExtent
-                      );
-                  var coords = this.getPolygonFromExtent(projectedExtent);
+                  var projectedExtent = ol.proj.transformExtent(extent[j], 'EPSG:4326', proj);
+                  if (!ol.extent.intersects(projectedExtent, projExtent)) {
+                    continue;
+                  }
+                  var coords = this.getPolygonFromExtent(
+                    ol.extent.getIntersection(projectedExtent, projExtent)
+                  );
                   geometry.appendPolygon(new ol.geom.Polygon(coords));
                 }
+              }
+              // no valid bbox was found: clear geometry
+              if (!geometry.getPolygons().length) {
+                geometry = null;
               }
               feat.setGeometry(geometry);
             }
@@ -624,6 +632,39 @@
           /**
            * @ngdoc method
            * @methodOf gn_map.service:gnMap
+           * @name gnMap#addGeoJSONToMap
+           *
+           * @description
+           * Add a GeoJSON layer to the map from a given source.
+           *
+           * @param {string} name of the layer
+           * @param {number} url of the GeoJSON source
+           * @param {ol.Map} map object
+           */
+          addGeoJSONToMap: function(name, url, map) {
+            if (!url || url == '') {
+              return;
+            }
+
+            var GeoJSONSource = new ol.source.Vector({
+              projection: map.getView().getProjection(),
+              format: new ol.format.GeoJSON(),
+              url: url
+            });
+
+            var vector = new ol.layer.Vector({
+              source: GeoJSONSource,
+              label: name
+            });
+
+            ngeoDecorateLayer(vector);
+            vector.displayInLayerManager = true;
+            map.getLayers().push(vector);
+          },
+
+          /**
+           * @ngdoc method
+           * @methodOf gn_map.service:gnMap
            * @name gnMap#addKmlToMap
            *
            * @description
@@ -638,9 +679,10 @@
               return;
             }
 
-            var kmlSource = new ol.source.KML({
+            var kmlSource = new ol.source.Vector({
+              url: url,
               projection: map.getView().getProjection(),
-              url: url
+              format: new ol.format.KML()
             });
 
             var vector = new ol.layer.Vector({
@@ -785,7 +827,6 @@
                     url: url,
                     layer: layer
                   });
-                  console.warn(msg);
                   $rootScope.$broadcast('StatusUpdated', {
                     msg: msg,
                     timeout: 0,
@@ -865,10 +906,8 @@
               }
 
               if (!requestedStyle && this.containsStyles(getCapLayer)) {
-                legendUrl = (getCapLayer.Style[getCapLayer.
-                    Style.length - 1].LegendURL) ?
-                    getCapLayer.Style[getCapLayer.
-                        Style.length - 1].LegendURL[0] : undefined;
+                legendUrl = (getCapLayer.Style[0].LegendURL) ?
+                    getCapLayer.Style[0].LegendURL[0] : undefined;
               }
 
               if (legendUrl) {
@@ -1073,13 +1112,17 @@
                   }
                 }
               } else {
-                errors.push($translate.instant('layerCRSNotFound'));
-                console.warn($translate.instant('layerCRSNotFound'));
+                gnAlertService.addAlert({
+                  msg: $translate.instant('layerCRSNotFound'),
+                  delay: 5000,
+                  type: 'warning'});
               }
 
               if (!isLayerAvailableInMapProjection) {
-              //  errors.push($translate.instant('layerNotAvailableInMapProj'));
-                console.warn($translate.instant('layerNotAvailableInMapProj'));
+				gnAlertService.addAlert({
+                  msg: $translate.instant('layerNotAvailableInMapProj',{proj:mapProjection}),
+                  delay: 5000,
+                  type: 'warning'});
               }
 
               // TODO: parse better legend & attribution
@@ -1310,8 +1353,8 @@
             var defer = $q.defer();
             var $this = this;
 
-            if (!isLayerInMap(map, name, url)) {
-              gnWmsQueue.add(url, name);
+            if (!isLayerInMap(map, name, url, style)) {
+              gnWmsQueue.add(url, name, style ? style.Name : '');
               gnOwsCapabilities.getWMSCapabilities(url).then(function(capObj) {
                 var capL = gnOwsCapabilities.getLayerInfoFromCap(
                     name, capObj, md && md.getUuid && md.getUuid()),
@@ -1326,7 +1369,8 @@
                   var errormsg = $translate.instant(
                       'layerNotfoundInCapability', {
                         layer: name,
-                        url: url
+                        type: 'wms',
+                        url: encodeURIComponent(url)
                       });
                   var o = {
                     url: url,
@@ -1374,7 +1418,7 @@
                           if (!createOnly) {
                             map.addLayer(olL);
                           }
-                          gnWmsQueue.removeFromQueue(url, name);
+                          gnWmsQueue.removeFromQueue(url, name, style ? style.Name : '');
                           defer.resolve(olL);
                         });
                   };
@@ -1473,12 +1517,21 @@
                 var capL = gnOwsCapabilities.getLayerInfoFromCap(
                     name, capObj, md && md.getUuid());
                 if (!capL) {
+                  gnWmsQueue.removeFromQueue(url, name, map);
+                  // If layer not found in the GetCapabilities
+                  gnAlertService.addAlert({
+                    msg: $translate.instant('layerNotfoundInCapability', {
+                    layer: name,
+                    type: 'wmts',
+                    url: encodeURIComponent(url)
+                    }),
+                    delay: 20000,
+                    type: 'warning'});
                   var o = {
                     url: url,
                     name: name,
-                    msg: $translate.instant('layerNotInCap')
-                  };
-                  gnWmsQueue.error(o);
+                    msg: ""
+                  }, errors = [];
                   defer.reject(o);
                 }
                 else {
@@ -1551,36 +1604,24 @@
                   getLayerInfoFromWfsCap(name, capObj, md.getUuid()),
                   olL;
               if (!capL) {
+                gnWmsQueue.removeFromQueue(url, name, map);
                 // If layer not found in the GetCapabilities
-                // Try to add the layer from the metadata
-                // information only. A tile error loading
-                // may be reported after the layer is added
-                // to the map and will give more details.
-                var errormsg = $translate.instant('layerNotfoundInCapability', {
+                gnAlertService.addAlert({
+                  msg: $translate.instant('layerNotfoundInCapability', {
                   layer: name,
-                  url: url
-                });
+                  type: 'wfs',
+                  url: encodeURIComponent(url)
+                  }),
+                  delay: 20000,
+                  type: 'warning'});
                 var o = {
                   url: url,
                   name: name,
-                  msg: errormsg
+                  msg: ""
                 }, errors = [];
-                olL = $this.addWmsToMap(map, o);
-
-                if (!angular.isArray(olL.get('errors'))) {
-                  olL.set('errors', []);
-                }
-
-                errors.push(errormsg);
-                console.warn(errormsg);
-
-                olL.get('errors').push(errors);
-
-                gnWmsQueue.error(o);
                 defer.reject(o);
               } else {
                 olL = $this.addWfsToMapFromCap(map, capL, url);
-
 
                 // attach the md object to the layer
                 if (md) {
@@ -1630,6 +1671,11 @@
                   Contents: capabilities,
                   OperationsMetadata: capabilities.operationsMetadata
               };
+
+              //OpenLayers expects an array of style objects having isDefault property
+              angular.forEach(cap.Contents.Layer,function(l){
+                if (!angular.isArray(l.Style)){ l.Style=[{Identifier:l.Style,isDefault:true}] };
+              });
 
               var options = ol.source.WMTS.optionsFromCapabilities(cap, {
                 layer: getCapLayer.Identifier,
@@ -1903,6 +1949,7 @@
               return gnSearchManagerService.gnSearch({
                 uuid: layer.get('metadataUuid'),
                 fast: 'index',
+                _draft: 'n or e',
                 _content_type: 'json'
               }).then(function(data) {
                 if (data.metadata.length == 1) {

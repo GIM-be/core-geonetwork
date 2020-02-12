@@ -41,8 +41,8 @@
    * a action.
    */
   module.directive('gnMetadataStatusUpdater', ['$translate', '$http',
-    'gnMetadataManager', 'gnAgivMetadataActions',
-    function($translate, $http, gnMetadataManager, gnAgivMetadataActions) {
+    'gnMetadataManager',
+    function($translate, $http, gnMetadataManager) {
 
       return {
         restrict: 'A',
@@ -52,7 +52,8 @@
         scope: {
           md: '=gnMetadataStatusUpdater',
           statusType: '@',
-          task: '='
+          task: '=',
+          statusToSelect: '@'
         },
         link: function(scope) {
           var user = scope.$parent.user;
@@ -68,21 +69,30 @@
           // Retrieve last status to set it in the form
           function init() {
             if (scope.statusType === defaultType) {
-              return $http.get('../api/records/'
-                + metadataId + '/status/'
-                + scope.statusType + '/last').
+              return $http.get('../api/records/' +
+                  metadataId + '/status/' +
+                  scope.statusType + '/last').
                   success(function(data) {
                     scope.status =
                        data !== 'null' ? data.status : null;
-                    scope.newStatus.status = data.currentStatus.id.statusId;
+                    scope.newStatus.status = scope.statusToSelect;
                     scope.lastStatus = data.currentStatus.id.statusId;
+                  }).
+                  error(function(data) {
+                    scope.$emit('metadataStatusUpdated', false);
+                    scope.$emit('StatusUpdated', {
+                      title: $translate.instant('metadataStatusUpdatedErrors'),
+                      error: data,
+                      timeout: 0,
+                      type: 'danger'
+                    });
                   });
             } else {
               return $http.get('../api/status/' + scope.statusType).
-              success(function(data) {
-                scope.status = data;
-                scope.newStatus = {status: scope.task ? scope.task.id : 0, owner: null, dueDate: null, changeMessage: ''};
-              });
+                  success(function(data) {
+                    scope.status = data;
+                    scope.newStatus = {status: scope.task ? scope.task.id : 0, owner: null, dueDate: null, changeMessage: ''};
+                  });
             }
           };
 
@@ -95,7 +105,7 @@
             return $http.put('../api/records/' + metadataId +
                 '/status', scope.newStatus
             ).then(
-                function(data) {
+                function(response) {
                   gnMetadataManager.updateMdObj(scope.md);
                   scope.$emit('metadataStatusUpdated', true);
                   scope.$emit('StatusUpdated', {
@@ -103,29 +113,27 @@
                        'metadataStatusUpdatedWithNoErrors'),
                     timeout: 2,
                     type: 'success'});
-                }, function(data) {
-                  scope.$emit('metadataStatusUpdated', false);
+                }, function(response) {
+                  // scope.$emit('metadataStatusUpdated', false);
                   scope.$emit('StatusUpdated', {
                     title: $translate.instant('metadataStatusUpdatedErrors'),
-                    error: data,
+                    error: response.data,
                     timeout: 0,
-                    type: 'danger',
-                    msg: data.data ? data.data.description : ""});
+                    type: 'danger'
+                  });
                 });
           };
 
-          // var statusApproved = 2;
-          // var statusSubmitted = 3;
-          // var statusRejected = 5;
-          // scope.cantChangeStatus = function(status) {
-          //   return ((status == statusRejected ||
-          //            status == statusApproved ||
-          //            status == statusSubmitted) &&
-          //       !user.isReviewerOrMore());
-          // };
+          var statusApproved = 2;
+          var statusSubmitted = 3;
+          var statusRejected = 5;
           scope.cantChangeStatus = function(status) {
-            return status === scope.lastStatus ? true : !gnAgivMetadataActions.getStatusAllowed(status, scope.lastStatus, user);
+            return ((status == statusRejected ||
+                     status == statusApproved ||
+                     status == statusSubmitted) &&
+                !user.isReviewerOrMore());
           };
+
 
           init();
         }
@@ -192,7 +200,7 @@
           });
 
           scope.$watch('currentCategories', function(newvalue, oldvalue) {
-              init();
+            init();
           });
 
           var init = function() {
@@ -317,7 +325,7 @@
                   $rootScope.$broadcast('StatusUpdated', {
                     title: $translate.instant('assignCategoryError',
                         {category: c.name}),
-                    error: response.error,
+                    error: response.data,
                     timeout: 0,
                     type: 'danger'});
                 });
@@ -423,7 +431,9 @@
    */
   module.directive('gnTransferOwnership', [
     '$translate', '$http', 'gnHttp', '$rootScope',
-    function($translate, $http, gnHttp, $rootScope) {
+    'gnUtilityService',
+    function($translate, $http, gnHttp, $rootScope,
+             gnUtilityService) {
       return {
         restrict: 'A',
         replace: false,
@@ -435,6 +445,9 @@
           var bucket = attrs['selectionBucket'];
           var mdUuid = attrs['gnTransferOwnership'];
           scope.selectedUserGroup = null;
+          scope.groupsLoaded = false;
+          scope.userGroupDefined = false;
+          scope.userGroups = null;
 
           scope.selectUser = function(user) {
             scope.selectedUser = user;
@@ -467,14 +480,19 @@
                   }
                 });
                 scope.userGroups = uniqueUserGroups;
-                if(scope.userGroups && Object.keys(scope.userGroups).length>0) {
+                if (scope.userGroups && Object.keys(scope.userGroups).length > 0) {
                   scope.userGroupDefined = true;
                 } else {
                   scope.userGroupDefined = false;
                 }
-              });
+              }).finally(function() {
+                scope.groupsLoaded = true;
+          });
 
           scope.save = function() {
+            if (!scope.selectedUserGroup) {
+              return;
+            }
             var url = '../api/records/';
             if (bucket != 'null') {
               url += 'ownership?bucket=' + bucket + '&';
@@ -485,13 +503,26 @@
                 'userIdentifier=' + scope.selectedUserGroup.userId +
                 '&groupIdentifier=' + scope.selectedUserGroup.groupId)
                 .then(function(r) {
-                  $rootScope.$broadcast('search');
-                  $rootScope.$broadcast('StatusUpdated', {
-                    msg: $translate.instant('transfertPrivilegesFinished', {
-                      metadata: r.data.numberOfRecordsProcessed
-                    }),
-                    timeout: 2,
-                    type: 'success'});
+                  var msg = $translate.instant('transfertPrivilegesFinished', {
+                    metadata: r.data.numberOfRecordsProcessed
+                  });
+
+                  scope.processReport = r.data;
+
+                  // A report is returned
+                  gnUtilityService.openModal({
+                    title: msg,
+                    content: '<div gn-batch-report="processReport"></div>',
+                    className: 'gn-privileges-popup',
+                    onCloseCallback: function() {
+                      if (bucket != 'null') {
+                        scope.$emit('search', true);
+                        scope.$broadcast('operationOnSelectionStop');
+                      }
+                      scope.$emit('TransferOwnershipDone', true);
+                      scope.processReport = null;
+                    }
+                  }, scope, 'TransferOwnershipDone');
                 });
           };
         }

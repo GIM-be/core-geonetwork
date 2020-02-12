@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<strings>
+  <schematron.title>INSPIRE SDD(S) Rules</schematron.title>
+
+  <precondition>Preconditions</precondition>
+  <precondition.nodataset>The current metadata is not about a dataset.</precondition.nodataset>
+  <precondition.dataset>The current metadata documents a dataset.</precondition.dataset>
+
+  <tg4>TG4: Service QualityInfo</tg4>
+  <tg4.missing>QualityInfo missing. For each spatial data dataset(serie), there shall be one and only one
+    set of quality information (dataQualityInfo element) scoped to "dataset" or "series".
+  </tg4.missing>
+  <tg4.toomany>Too many QualityInfo elements. For each spatial data dataset(serie), there shall be one and
+    only one set of quality information (dataQualityInfo element) scoped to "dataset" or "series".
+  </tg4.toomany>
+  <tg4.ok>One QualityInfo element found.</tg4.ok>
+</strings>

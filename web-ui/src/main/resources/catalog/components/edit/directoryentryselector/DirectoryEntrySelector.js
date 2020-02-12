@@ -100,7 +100,7 @@
                       _isTemplate: 's',
                       any: '',
                       from: 1,
-                      to: 20,
+                      to: 50,
                       _root: 'gmd:CI_ResponsibleParty',
                       sortBy: 'title',
                       sortOrder: 'reverse',

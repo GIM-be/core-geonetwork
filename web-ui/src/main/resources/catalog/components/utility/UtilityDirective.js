@@ -117,7 +117,7 @@
           // var addGeonames = !attrs['disableGeonames'];
           var addGeonames = false;
           scope.regionTypes = [];
-         
+
           function setDefault() {
             var defaultThesaurus = attrs['default'];
             for (t in scope.regionTypes) {
@@ -221,6 +221,77 @@
                   n.metadataErrorReport.metadataErrorReport.length != 0;
             }
           });
+        }
+      };
+    }]);
+
+  module.directive('gnDuplicateCheck', ['$translate', '$http', '$q',
+    function($translate, $http, $q) {
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        scope: {
+          value: '=gnDuplicateCheck',
+          list: '=gnDuplicateCheckList',
+          apply: '=gnDuplicateCheckApply',
+          remote: '@gnDuplicateCheckRemote',
+          property: '@gnDuplicateCheckProperty'
+        },
+        link: function(scope, element, attrs, ngModel) {
+          var cssClass = 'gn-duplicate';
+          if (!angular.isArray(scope.list) && scope.remote === undefined) {
+            console.warn('gnDuplicateCheck need an array of values for the list or a remote URL.')
+            return;
+          }
+
+          if (angular.isArray(scope.list)) {
+            var existingValues = scope.property ? [] : scope.list;
+            if (scope.property) {
+              var path = scope.property.split('.');
+              for (var i = 0; i < scope.list.length; i++) {
+                var v = scope.list[i];
+                if (angular.isObject(v)) {
+                  for (var j = 0; j < path.length; j++) {
+                    v = v[path[j]];
+                    existingValues.push(v);
+                  }
+                }
+              }
+            }
+          }
+
+          ngModel.$asyncValidators.gnDuplicateCheck = function(value, viewValue) {
+            value = value || viewValue;
+            if (scope.apply === false) {
+              return $q.when(true);
+            }
+            if (angular.isArray(existingValues)) {
+              if (existingValues.indexOf(value) !== -1) {
+                ngModel.$setValidity(cssClass, false);
+                return $q.reject(false);
+              } else {
+                return $q.when(true);
+              }
+            } else if (scope.remote) {
+              var deferred = $q.defer();
+
+              // Promise server side check
+              $http.get(scope.remote.replace('{value}', value)).then(function (r){
+                if (r.status !== 404) {
+                  ngModel.$setValidity(cssClass, false);
+                  deferred.reject(false);
+                } else {
+                  ngModel.$setValidity(cssClass, true);
+                  deferred.resolve(true);
+                }
+              }, function (e){
+                ngModel.$setValidity(cssClass, true);
+                deferred.resolve(true);
+              });
+
+              return deferred.promise;
+            }
+          };
         }
       };
     }]);
@@ -418,8 +489,8 @@
       };
     }]);
 
-  module.directive('gnHumanizeTime', [
-    function() {
+  module.directive('gnHumanizeTime', ['gnGlobalSettings',
+    function(gnGlobalSettings) {
       return {
         restrict: 'A',
         template: '<span title="{{title}}">{{value}}</span>',
@@ -429,6 +500,7 @@
           fromNow: '@'
         },
         link: function linkFn(scope, element, attr) {
+          var useFromNowSetting = gnGlobalSettings.gnCfg.mods.global.humanizeDates;
           scope.$watch('date', function(originalDate) {
             if (originalDate) {
               // Moment will properly parse YYYY, YYYY-MM,
@@ -446,9 +518,9 @@
                 var formattedDate = scope.format ?
                     date.format(scope.format) :
                     date.toString();
-                scope.value = scope.fromNow !== undefined ?
+                scope.value = scope.fromNow !== undefined && useFromNowSetting ?
                     fromNow : formattedDate;
-                scope.title = scope.fromNow !== undefined ?
+                scope.title = scope.fromNow !== undefined && useFromNowSetting ?
                     formattedDate : fromNow;
               }
             }
@@ -1231,8 +1303,8 @@
    * to the parent element (required to highlight
    * element in navbar)
    */
-  module.directive('gnActiveTbItem', ['$location', 'gnLangs',
-    function($location, gnLangs) {
+  module.directive('gnActiveTbItem', ['$location', 'gnLangs', 'gnConfig',
+    function($location, gnLangs, gnConfig) {
       return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -1241,6 +1313,7 @@
 
           // Replace lang in link
           link = link.replace('{{lang}}', gnLangs.getCurrent());
+          link = link.replace('{{node}}', gnConfig.env.node);
 
           // Insert debug mode between service and route
           if (link.indexOf('#') !== -1) {
@@ -1296,10 +1369,11 @@
         }
       };
     }]);
-  module.filter('signInLink', ['$location', 'gnLangs',
-    function($location, gnLangs) {
+  module.filter('signInLink', ['$location', 'gnLangs', 'gnConfig',
+    function($location, gnLangs, gnConfig) {
       return function(href) {
-        href = href.replace('{{lang}}', gnLangs.getCurrent()) +
+        href = href.replace('{{lang}}', gnLangs.getCurrent())
+                   .replace('{{node}}', gnConfig.env.node) +
             '?redirect=' + encodeURIComponent(window.location.href);
         return href;
       }}
@@ -1371,7 +1445,20 @@
         var modalElt;
 
         element.bind('click', function() {
-          var img = scope.$eval(attr['gnImgModal']);
+          var imgOrMd = scope.$eval(attr['gnImgModal']);
+          var img = undefined;
+          if(imgOrMd.getThumbnails) {
+            var imgs = imgOrMd.getThumbnails();
+            var url = $(element).attr('src');
+            for (var i = 0; i < imgs.list.length; i++) {
+              if (imgs.list[i].url === url) {
+                img = imgs.list[i];
+                break;
+              }
+            }
+          } else {
+            img = imgOrMd;
+          }
 
           // Toggle the modal if already displayed
           if (modalElt) {
@@ -1520,4 +1607,28 @@
       };
     }
   ]);
+
+  /**
+   * @ngdoc directive
+   * @name gn_utility.directive:gnStringToNumber
+   *
+   * @description
+   * Converts a string with a number value to a number.
+   * To be used for example in input type=number fields
+   * when the model value is stored in a string field.
+   *
+   */
+  module.directive('gnStringToNumber', function() {
+    return {
+      require: 'ngModel',
+      link: function (scope, element, attrs, ngModel) {
+        ngModel.$parsers.push(function (value) {
+          return '' + value;
+        });
+        ngModel.$formatters.push(function (value) {
+          return parseFloat(value);
+        });
+      }
+    };
+  });
 })();

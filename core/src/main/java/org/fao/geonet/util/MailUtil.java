@@ -61,7 +61,7 @@ public class MailUtil {
                                        String htmlMessage, SettingManager settings) {
     	return sendHtmlMail(toAddress, null, subject, htmlMessage, settings);
     }
-    
+
     /**
      * Send an html mail. Will look on the settings directly to know the
      * remitent
@@ -387,7 +387,7 @@ public class MailUtil {
             throw new IllegalArgumentException(
                 "Missing settings in System Configuration (see Administration menu) - cannot send mail");
         }
-        if (username != null && !username.isEmpty()) {
+        if (StringUtils.isNotEmpty(username)) {
             email.setAuthenticator(new DefaultAuthenticator(username, password));
         }
 

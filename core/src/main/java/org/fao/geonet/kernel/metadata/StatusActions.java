@@ -28,6 +28,7 @@ import jeeves.server.context.ServiceContext;
 import java.util.List;
 import java.util.Set;
 
+import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.domain.ISODate;
 import org.fao.geonet.domain.MetadataStatus;
 
@@ -39,4 +40,5 @@ public interface StatusActions {
 
     public Set<Integer> onStatusChange(List<MetadataStatus> status) throws Exception;
 
+    public boolean statusChangeAllowedByUser(String currentStatusId, String statusId, AbstractMetadata metadata) throws Exception;
 }

@@ -118,7 +118,7 @@
       <field name="_featured" tagName="featured"/>
       <field name="_owner" tagName="owner"/>
       <field name="_userinfo" tagName="userinfo"/>
-      <field name="_ownername" tagName="ownername"/>
+      <field name="recordOwner" tagName="recordOwner"/>
       <field name="_cat" tagName="category"/>
       <field name="topicCat" tagName="topicCat"/>
       <field name="inspirethemewithac" tagName="inspirethemewithac"/>
@@ -183,8 +183,9 @@
       <field name="standardName" tagName="standardName"/>
       <field name="_groupWebsite" tagName="groupWebsite"/>
       <field name="featureTypes" tagName="featureTypes"/>
-      <field name="_sortDate" tagName="sortDate"/>
       <field name="versionIdentifier" tagName="versionIdentifier"/>
+      <field name="_draft" tagName="draft"/>
+      <field name="_sortDate" tagName="sortDate"/>
     </dumpFields>
   </search>
 

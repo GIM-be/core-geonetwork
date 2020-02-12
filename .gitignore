@@ -32,6 +32,7 @@ web/src/main/webapp/WEB-INF/server.prop
 .project
 web/src/main/webapp/META-INF/context.xml
 .*/
+!.gitlab/
 */.*
 eclipse/
 web/src/main/webapp/WEB-INF/data/data/metadata_data
@@ -80,3 +81,6 @@ schemas/*/doc/*/*.rst
 *.old
 web-ui-docs/package-lock.json
 release/jetty/*
+chromedriver
+node_modules
+package-lock.json

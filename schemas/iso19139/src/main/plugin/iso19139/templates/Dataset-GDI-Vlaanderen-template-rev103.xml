@@ -6,7 +6,7 @@
                  xmlns:geonet="http://www.fao.org/geonetwork"
                  xmlns:xlink="http://www.w3.org/1999/xlink"
                  xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                 xsi:schemaLocation="http://www.isotc211.org/2005/gmx http://www.isotc211.org/2005/gmx/gmx.xsd http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd">
+                 xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
   <gmd:fileIdentifier>
     <gco:CharacterString>0375d805-5b57-4808-8651-894c334ab70d</gco:CharacterString>
   </gmd:fileIdentifier>
@@ -143,14 +143,11 @@
             <gco:CharacterString/>
           </gmd:edition>
           <gmd:identifier>
-            <gmd:RS_Identifier>
+            <gmd:MD_Identifier>
               <gmd:code>
                 <gco:CharacterString/>
               </gmd:code>
-              <gmd:codeSpace>
-                <gco:CharacterString/>
-              </gmd:codeSpace>
-            </gmd:RS_Identifier>
+            </gmd:MD_Identifier>
           </gmd:identifier>
           <gmd:series>
             <gmd:CI_Series>
@@ -814,14 +811,11 @@
       <gmd:report>
         <gmd:DQ_DomainConsistency>
           <gmd:measureIdentification>
-            <gmd:RS_Identifier>
+            <gmd:MD_Identifier>
               <gmd:code>
                 <gco:CharacterString/>
               </gmd:code>
-              <gmd:codeSpace>
-                <gco:CharacterString/>
-              </gmd:codeSpace>
-            </gmd:RS_Identifier>
+            </gmd:MD_Identifier>
           </gmd:measureIdentification>
           <gmd:measureDescription>
             <gco:CharacterString/>
@@ -834,12 +828,12 @@
               <gmd:specification>
                 <gmd:CI_Citation>
                   <gmd:title>
-                    <gco:CharacterString>
+                    <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">
                       VERORDENING (EU) Nr. 1089/2010 VAN DE COMMISSIE van 23 november 2010 ter
                       uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende de
                       interoperabiliteit van verzamelingen ruimtelijke gegevens en van diensten met betrekking tot
                       ruimtelijke gegevens
-                    </gco:CharacterString>
+                    </gmx:Anchor>
                   </gmd:title>
                   <gmd:alternateTitle>
                     <gco:CharacterString/>

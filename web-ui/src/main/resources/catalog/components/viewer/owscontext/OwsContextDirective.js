@@ -140,7 +140,6 @@
             }
             if (el.is('a')) {
               el.attr('href', data);
-
             }
           };
 
@@ -151,7 +150,7 @@
             var str = new XMLSerializer().serializeToString(xml);
             var base64 = base64EncArr(strToUTF8Arr(str));
 
-            openContent($event, 'data:text/xml;base64,' + base64);
+            openContent($event, 'data:text/xml;charset=utf-8;base64,' + base64);
           };
 
           scope.saveMapAsImage = function($event) {
@@ -172,13 +171,20 @@
 
           var defaultMapProps = {
             title: '',
-            recordAbstract: ''
+            recordAbstract: '',
+            group: null,
+            publishToAll: false
           };
 
           scope.mapProps = angular.extend({}, defaultMapProps);
 
-          scope.saveInCatalog = function($event) {
+          scope.saveInCatalog = function($event, publishToAll) {
             var defer = $q.defer();
+            if (publishToAll) {
+              scope.mapProps.publishToAll = true;
+            } else {
+              scope.mapProps.publishToAll = false;
+            }
 
             getMapAsImage($event, .66).then(function(data) {
               scope.mapUuid = null;

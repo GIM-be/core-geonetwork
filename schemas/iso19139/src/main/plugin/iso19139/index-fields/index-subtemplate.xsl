@@ -27,8 +27,8 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
-                version="2.0"
->
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                version="2.0">
   <xsl:param name="id"/>
   <xsl:param name="uuid"/>
   <xsl:param name="title"/>
@@ -206,24 +206,41 @@
   </xsl:template>
 
 
-  <!--    <xsl:template mode="index" match="gmd:DQ_DomainConsistency[count(ancestor::node()) =  1]">-->
-  <!--        <Field name="_title"-->
-  <!--               string="{if ($title != '') then $title-->
-  <!--                        else gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString}"-->
-  <!--               store="true" index="true"/>-->
+  <!--<xsl:template mode="index" match="gmd:DQ_DomainConsistency[count(ancestor::node()) =  1]">-->
+  <!--  <Field name="_title"-->
+  <!--         string="{if ($title != '') then $title-->
+  <!--                      else gmd:result/*/gmd:specification/*/gmd:title/*/text()}"-->
+  <!--         store="true" index="true"/>-->
 
-  <!--        <xsl:call-template name="subtemplate-common-fields"/>-->
-  <!--    </xsl:template>-->
+  <!--  <xsl:call-template name="subtemplate-common-fields"/>-->
+  <!--</xsl:template>-->
+
 
 
   <xsl:template mode="index" match="gmd:MD_Format[count(ancestor::node()) =  1]">
     <Field name="_title"
            string="{if ($title != '') then $title
-                        else if (gmd:name/gco:CharacterString and normalize-space(gmd:name/gco:CharacterString) != '') then gmd:name/gco:CharacterString
-                        else 'Distributieformaat'}"
+                    else if (gmd:name/*/text() and normalize-space(gmd:name/*/text()) != '') then gmd:name/*/text()
+                    else 'Distributieformaat'}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
+  </xsl:template>
+
+  <!--xsl:template mode="index" match="gmd:resourceConstraints[count(ancestor::node()) =  1]">
+    <Field name="_title"
+           string="{if ($title != '') then $title
+                     else concat(
+                        string-join(gmd:MD_LegalConstraints/*/gmd:MD_RestrictionCode/@codeListValue[@codeListValue!='otherConstraints'], ', '),
+                        ' ', string-join(gmd:MD_LegalConstraints/gmd:otherConstraints/*/text(), ', '))}"
+           store="true" index="true"/>
+
+    <xsl:call-template name="subtemplate-common-fields"/>
+  </xsl:template-->
+
+  <xsl:template name="subtemplate-common-fields">
+    <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
+    <Field name="_root" string="{name(.)}" store="true" index="true"/>
   </xsl:template>
 
 
@@ -235,14 +252,13 @@
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
   </xsl:template>
 
-  <xsl:template mode="index" match="gmd:report">
+  <xsl:template mode="index" match="gmd:report[count(gmd:DQ_AbsoluteExternalPositionalAccuracy)>0 or count(gmd:DQ_CompletenessOmission)>0 or count(gmd:DQ_ThematicClassificationCorrectness)>0]">
     <Field name="_title"
            string="{
               if ($title != '') then $title
-              else if (name(*[1]) = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Geometrische nauwkeurigheid'
-              else if (name(*[1]) = 'gmd:DQ_CompletenessOmission') then 'Volledigheid'
-              else if (name(*[1]) = 'gmd:DQ_DomainConsistency') then 'INSPIRE Domeinconsistentie'
-              else if (name(*[1]) = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematische classificatie'
+              else if (name(*[1]) = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then '* Geometrische nauwkeurigheid'
+              else if (name(*[1]) = 'gmd:DQ_CompletenessOmission') then '* Volledigheid'
+              else if (name(*[1]) = 'gmd:DQ_ThematicClassificationCorrectness') then '* Thematische classificatie'
               else ''
              }"
            store="true" index="true"/>
@@ -251,12 +267,13 @@
   </xsl:template>
 
   <!--INSPIRE Domeinconsistentie-->
-  <xsl:template mode="index" match="gmd:DQ_DomainConsistency">
-  	<xsl:variable name="specificationTitle" select="//gmd:title/gmx:Anchor"/>
+  <xsl:template mode="index" match="gmd:report[gmd:DQ_DomainConsistency]">
+    <xsl:variable name="specificationTitle" select="//gmd:title/gmx:Anchor"/>
     <Field name="_title"
            string="{if ($title != '') then $title
+                        else if ($specificationTitle and contains(normalize-space($specificationTitle),'1089/2010')) then '* INSPIRE domeinconsistentie (verordening)'
                         else if ($specificationTitle and normalize-space($specificationTitle) != '') then normalize-space($specificationTitle)
-                        else 'INSPIRE Domeinconsistentie'}"
+                        else ''}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
@@ -384,11 +401,6 @@
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
-  </xsl:template>
-
-  <xsl:template name="subtemplate-common-fields">
-    <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
-    <Field name="_root" string="{name(.)}" store="true" index="true"/>
   </xsl:template>
 
   <xsl:template name="subtemplate-common-fields-or-void">

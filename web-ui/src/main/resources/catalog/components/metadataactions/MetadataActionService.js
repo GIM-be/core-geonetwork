@@ -51,16 +51,20 @@
     '$translate',
     '$q',
     '$http',
+    'gnConfig',
+    'aivMetadatacenterStatusAction',
+    'aivGeopuntStatusAction',
     function($rootScope, $timeout, $location, gnHttp,
              gnMetadataManager, gnAlertService, gnSearchSettings,
              gnUtilityService, gnShareService, gnPopup, gnMdFormatter,
-             $translate, $q, $http) {
+             $translate, $q, $http, gnConfig, aivMetadatacenterStatusAction,
+             aivGeopuntStatusAction) {
 
       var windowName = 'geonetwork';
       var windowOption = '';
       var translations = null;
-      $translate(['privilegesUpdated',
-        'privilegesUpdatedError']).then(function(t) {
+      $translate(['metadataPublished', 'metadataUnpublished',
+        'metadataPublishedError', 'metadataUnpublishedError']).then(function(t) {
         translations = t;
       });
       var alertResult = function(msg) {
@@ -68,25 +72,6 @@
           msg: msg,
           type: 'success'
         });
-      };
-
-      /**
-       * Open a popup and compile object content.
-       * Bind to an event to close the popup.
-       * @param {Object} o popup config
-       * @param {Object} scope to build content uppon
-       * @param {string} eventName
-       */
-      var openModal = function(o, scope, eventName) {
-        // var popup = gnPopup.create(o, scope);
-        var popup = gnPopup.createModal(o, scope);
-        var myListener = $rootScope.$on(eventName,
-            function(e, o) {
-              $timeout(function() {
-                popup.modal('hide');
-              }, 0);
-              myListener();
-            });
       };
 
       var callBatch = function(service) {
@@ -144,8 +129,12 @@
        * Export one metadata to RDF format.
        * @param {string} uuid
        */
-      this.metadataRDF = function(uuid) {
+      this.metadataRDF = function(uuid, approved) {
         var url = gnHttp.getService('mdGetRDF') + '?uuid=' + uuid;
+
+        url += angular.isDefined(approved) ?
+            '&approved=' + approved : '';
+
         location.replace(url);
       };
 
@@ -154,12 +143,15 @@
        * one metadata, else export the whole selection.
        * @param {string} uuid
        */
-      this.metadataMEF = function(uuid, bucket) {
+      this.metadataMEF = function(uuid, bucket, approved) {
+
         var url = gnHttp.getService('mdGetMEF') + '?version=2';
         url += angular.isDefined(uuid) ?
             '&uuid=' + uuid : '&format=full';
         url += angular.isDefined(bucket) ?
             '&bucket=' + bucket : '';
+        url += angular.isDefined(approved) ?
+            '&approved=' + approved : '';
 
         location.replace(url);
       };
@@ -212,7 +204,7 @@
 
 
       this.openPrivilegesPanel = function(md, scope) {
-        openModal({
+        gnUtilityService.openModal({
           title: $translate.instant('privileges') + ' - ' +
               (md.title || md.defaultTitle),
           content: '<div gn-share="' + md.getId() + '"></div>',
@@ -220,37 +212,41 @@
         }, scope, 'PrivilegesUpdated');
       };
 
-      this.openUpdateStatusPanel = function(scope, statusType, t) {
+      this.openUpdateStatusPanel = function(scope, statusType, t, statusToBe, label) {
         scope.task = t;
-        openModal({
-          title: 'updateStatus',
+        scope.statusToSelect = statusToBe;
+        gnUtilityService.openModal({
+          title: 'mdStatusTitle-' + label,
           content: '<div data-gn-metadata-status-updater="md" ' +
-                        'data-status-type="' + statusType + '" task="t"></div>'
+                        'data-status-to-select="' + statusToBe +
+                        '" data-status-type="' + statusType + '" task="t"></div>'
         }, scope, 'metadataStatusUpdated');
       };
 
       this.startWorkflow = function(md, scope) {
         return $http.put('../api/records/' + md.getId() +
             '/status', {status: 1, changeMessage: 'Enable workflow'}).then(
-            function(data) {
+            function(response) {
               gnMetadataManager.updateMdObj(md);
               scope.$emit('metadataStatusUpdated', true);
               scope.$emit('StatusUpdated', {
                 msg: $translate.instant('metadataStatusUpdatedWithNoErrors'),
                 timeout: 2,
                 type: 'success'});
-            }, function(data) {
+            }, function(response) {
               scope.$emit('metadataStatusUpdated', false);
+
+
               scope.$emit('StatusUpdated', {
                 title: $translate.instant('metadataStatusUpdatedErrors'),
-                error: data,
+                error: response.data,
                 timeout: 0,
                 type: 'danger'});
             });
       };
 
       this.openPrivilegesBatchPanel = function(scope, bucket) {
-        openModal({
+        gnUtilityService.openModal({
           title: 'privileges',
           content: '<div gn-share="" ' +
               'gn-share-batch="true" ' +
@@ -262,7 +258,7 @@
         $location.path('/batchediting');
       };
       this.openCategoriesBatchPanel = function(bucket, scope) {
-        openModal({
+        gnUtilityService.openModal({
           title: 'categories',
           content: '<div gn-batch-categories="" ' +
               'selection-bucket="' + bucket + '"></div>'
@@ -273,13 +269,13 @@
         var uuid = md ? md.getUuid() : '';
         var ownerId = md ? md.getOwnerId() : '';
         var groupOwner = md ? md.getGroupOwner() : '';
-        openModal({
+        gnUtilityService.openModal({
           title: 'transferOwnership',
           content: '<div gn-transfer-ownership="' + uuid +
               '" gn-transfer-md-owner="' + ownerId + '" ' +
               '" gn-transfer-md-group-owner="' + groupOwner + '" ' +
               'selection-bucket="' + bucket + '"></div>'
-        }, scope, 'TransferOwnership');
+        }, scope, 'TransferOwnershipDone');
       };
       /**
        * Duplicate the given metadata. Open the editor in new page.
@@ -307,10 +303,21 @@
        * @return {*}
        */
       this.publish = function(md, bucket, flag, scope) {
-        scope.$broadcast('operationOnSelectionStart');
         if (md) {
           flag = md.isPublished() ? 'off' : 'on';
         }
+
+        scope.isMdWorkflowEnable = gnConfig['metadata.workflow.enable'];
+
+        //Warn about possible workflow changes on batch changes
+        // or when record is not approved
+        if((!md || md.mdStatus != 2) && flag === 'on' && scope.isMdWorkflowEnable) {
+          if(!confirm($translate.instant('warnPublishDraft'))){
+            return;
+          }
+        }
+
+        scope.$broadcast('operationOnSelectionStart');
         var onOrOff = flag === 'on';
 
         return gnShareService.publish(
@@ -318,22 +325,43 @@
             angular.isDefined(md) ? undefined : bucket,
             onOrOff, $rootScope.user)
             .then(
-            function(data) {
-              scope.$emit('PrivilegesUpdated', true);
-              scope.$broadcast('operationOnSelectionStop');
-              scope.$emit('StatusUpdated', {
-                msg: translations.privilegesUpdated,
-                timeout: 0,
-                type: 'success'});
+            function(response) {
+              if (response.data !== '') {
+                scope.processReport = response.data;
+
+                // A report is returned
+                gnUtilityService.openModal({
+                  title: onOrOff ? translations.metadataPublished :
+                    translations.metadataUnpublished,
+                  content: '<div gn-batch-report="processReport"></div>',
+                  className: 'gn-privileges-popup',
+                  onCloseCallback: function() {
+                    scope.$emit('PrivilegesUpdated', true);
+                    scope.$broadcast('operationOnSelectionStop');
+                    scope.processReport = null;
+                  }
+                }, scope, 'PrivilegesUpdated');
+
+              } else {
+                scope.$emit('PrivilegesUpdated', true);
+                scope.$broadcast('operationOnSelectionStop');
+                scope.$emit('StatusUpdated', {
+                  msg: onOrOff ? translations.metadataPublished :
+                    translations.metadataUnpublished,
+                  timeout: 0,
+                  type: 'success'});
+              }
+
               if (md) {
                 md.publish();
               }
-            }, function(data) {
+            }, function(response) {
               scope.$emit('PrivilegesUpdated', false);
               scope.$broadcast('operationOnSelectionStop');
               scope.$emit('StatusUpdated', {
-                title: translations.privilegesUpdatedError,
-                error: data,
+                title: onOrOff ? translations.metadataPublishedError :
+                  translations.metadataUnpublishedError,
+                error: response.data,
                 timeout: 0,
                 type: 'danger'});
             });
@@ -424,19 +452,371 @@
         if (crsDetails.name) return crsDetails.name + ' (' + crs + ')';
         else return crs;
       };
+
+      this.currentNode = undefined;
+      var self = this;
+      $http.get('../api/records/status/node').then(function(response) {
+        self.currentNode = response.data;
+      });
+
+      this.getAllowedStatusList = function (md, user) {
+        var allowedStatusList;
+        switch (this.currentNode) {
+          case 'MetadatacenterStatusActions':
+            allowedStatusList = aivMetadatacenterStatusAction.getAllowedStatusList(md, user);
+            break;
+          case 'GeopuntStatusActions':
+            allowedStatusList = aivGeopuntStatusAction.getAllowedStatusList(md, user);
+            break;
+          default:
+            allowedStatusList = [];
+            break;
+        }
+        return allowedStatusList;
+      }
     }]);
 
 
-  module.service('gnAgivMetadataActions', [function () {
+  module.service('aivMetadatacenterStatusAction', [function () {
+    var sv = Object.freeze({
+      DRAFT: 1,
+      APPROVED: 2,
+      RETIRED: 3,
+      SUBMITTED: 4,
+      REJECTED: 5,
+      JUSTCREATED: 6,
+      SUBMITTED_FOR_AGIV: 7,
+      APPROVED_BY_AGIV: 8,
+      REJECTED_BY_AGIV: 9,
+      RETIRED_FOR_AGIV: 10,
+      REMOVED_FOR_AGIV: 11,
+      REMOVED: 12,
+      REJECTED_FOR_RETIRE: 13,
+      REJECTED_FOR_REMOVE: 14
+    });
+
+    function getAllowedStatusList(md, user) {
+      var allowedStatusList = [];
+      Object.keys(sv).forEach(function (key) {
+        if (getStatusAllowed(sv[key], md, user)) {
+          allowedStatusList.push(sv[key]);
+        }
+      });
+      return allowedStatusList;
+    }
+
+    function getStatusAllowed(status, md, user) {
+      var isAllowed = true;
+      // No need to check if the user can edit again
+      if (user.isAdministratorOrMore()) {
+        isAllowed = testAdminAllowed(status, md);
+      } else if (user.isReviewerOrMore()) {
+        isAllowed = testReviewerAllowed(status, md);
+      } else if (user.isEditorOrMore()) {
+        isAllowed = testEditorAllowed(status, md, user);
+      }
+      return isAllowed;
+    }
+
+    function testAdminAllowed(status, md) {
+      var changeAllowed = true;
+      var currentStatus = parseInt(md.mdStatus);
+      switch (status) {
+        case sv.DRAFT:
+          changeAllowed = false;
+          break;
+        case sv.APPROVED:
+          if ([sv.SUBMITTED, sv.REJECTED, sv.REJECTED_BY_AGIV,
+            sv.RETIRED_FOR_AGIV, sv.REMOVED_FOR_AGIV, sv.REJECTED_FOR_RETIRE,
+            sv.REJECTED_FOR_REMOVE].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+        case sv.RETIRED:
+          if (![sv.RETIRED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+        case sv.SUBMITTED:
+          changeAllowed = false;
+          break;
+        case sv.REJECTED:
+          changeAllowed = false;
+          break;
+        case sv.JUSTCREATED:
+          break;
+        case sv.SUBMITTED_FOR_AGIV:
+          if (![sv.DRAFT].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+        case sv.APPROVED_BY_AGIV:
+          if (![sv.DRAFT, sv.SUBMITTED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+        case sv.REJECTED_BY_AGIV:
+          if ([sv.DRAFT, sv.APPROVED, sv.RETIRED,
+            sv.SUBMITTED, sv.REJECTED, sv.APPROVED_BY_AGIV,
+            sv.RETIRED_FOR_AGIV, sv.REMOVED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+        case sv.RETIRED_FOR_AGIV:
+          if (![sv.APPROVED].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+        case sv.REMOVED_FOR_AGIV:
+          if ([sv.SUBMITTED_FOR_AGIV, sv.APPROVED_BY_AGIV, sv.RETIRED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+        case sv.REMOVED:
+          if (![sv.REMOVED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+        case sv.REJECTED_FOR_RETIRE:
+          if (![sv.RETIRED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+        case sv.REJECTED_FOR_REMOVE:
+          if (![sv.REMOVED_FOR_AGIV].includes(currentStatus)) {
+            changeAllowed = false;
+          }
+          break;
+        default:
+          break;
+      }
+      return changeAllowed;
+    }
+
+    function testReviewerAllowed(status, md) {
+      var changeAllowed = true;
+      var currentStatus = parseInt(md.mdStatus);
+      if ([sv.SUBMITTED_FOR_AGIV, sv.APPROVED_BY_AGIV, sv.RETIRED_FOR_AGIV].includes(currentStatus)) {
+        changeAllowed = false;
+      } else {
+        switch (status) {
+          case sv.DRAFT:
+          case sv.APPROVED:
+          case sv.RETIRED:
+          case sv.JUSTCREATED:
+          case sv.SUBMITTED_FOR_AGIV:
+          case sv.APPROVED_BY_AGIV:
+          case sv.REJECTED_BY_AGIV:
+          case sv.RETIRED_FOR_AGIV:
+          case sv.REMOVED_FOR_AGIV:
+          case sv.REMOVED:
+          case sv.REJECTED_FOR_RETIRE:
+          case sv.REJECTED_FOR_REMOVE:
+            changeAllowed = false;
+            break;
+          case sv.SUBMITTED:
+            if ([sv.APPROVED, sv.RETIRED].includes(currentStatus)) {
+              changeAllowed = false;
+            }
+            break;
+          case sv.REJECTED:
+            if ([sv.APPROVED, sv.RETIRED, sv.REJECTED_BY_AGIV].includes(currentStatus)) {
+              changeAllowed = false;
+            }
+            break;
+          default:
+            break;
+        }
+      }
+      return changeAllowed;
+    }
+
+    function testEditorAllowed(status, md, user) {
+      var changeAllowed = true;
+      var currentStatus = parseInt(md.mdStatus);
+      if (md.getOwnerId() !== user.id || [sv.SUBMITTED, sv.SUBMITTED_FOR_AGIV].includes(currentStatus)) {
+        changeAllowed = false;
+      } else {
+        switch (status) {
+          case sv.DRAFT :
+          case sv.APPROVED :
+          case sv.RETIRED :
+          case sv.REJECTED :
+          case sv.JUSTCREATED :
+          case sv.SUBMITTED_FOR_AGIV :
+          case sv.APPROVED_BY_AGIV :
+          case sv.REJECTED_BY_AGIV :
+          case sv.RETIRED_FOR_AGIV :
+          case sv.REMOVED_FOR_AGIV :
+          case sv.REMOVED :
+          case sv.REJECTED_FOR_RETIRE :
+          case sv.REJECTED_FOR_REMOVE :
+            changeAllowed = false;
+            break;
+          case sv.SUBMITTED:
+            if (![sv.DRAFT, sv.REJECTED, sv.REJECTED_BY_AGIV].includes(currentStatus)) {
+              changeAllowed = false;
+            }
+            break;
+
+          default:
+            break;
+        }
+      }
+      return changeAllowed;
+    }
+
+    return {
+      getAllowedStatusList: getAllowedStatusList
+    }
+  }]);
+
+  module.service('aivGeopuntStatusAction', [function() {
+    var sv = Object.freeze({
+      DRAFT: 1,
+      APPROVED: 2,
+      RETIRED: 3,
+      SUBMITTED: 4,
+      REJECTED: 5,
+      JUSTCREATED: 6
+    });
+
+    function getAllowedStatusList(md, user) {
+      var allowedStatusList = [];
+      Object.keys(sv).forEach(function(key) {
+        if (getStatusAllowed(sv[key], md, user)) {
+          allowedStatusList.push(sv[key]);
+        }
+      });
+      return allowedStatusList;
+    }
+
+    function getStatusAllowed(status, md, user) {
+      var isAllowed = true;
+      if (user.isAdministratorOrMore()) {
+        isAllowed = testAdminAllowed(status, md);
+      } else if (user.isReviewerOrMore()) {
+        isAllowed = testReviewerAllowed(status, md);
+      } else if (user.isEditorOrMore()) {
+        isAllowed = testEditorAllowed(status, md, user);
+      }
+      return isAllowed;
+    }
+
+    function testAdminAllowed(status, md) {
+      var isAllowed = true;
+      var currentStatus = parseInt(md.mdStatus);
+      switch (status) {
+        case sv.DRAFT:
+        case sv.SUBMITTED:
+        case sv.REJECTED:
+          isAllowed = false;
+          break;
+        case sv.APPROVED:
+          if ([sv.SUBMITTED, sv.REJECTED].includes(currentStatus)) {
+            isAllowed = false;
+          }
+          break;
+        case sv.RETIRED:
+        case sv.JUSTCREATED:
+          break;
+        default:
+          break;
+      }
+      return isAllowed;
+    }
+
+    function testReviewerAllowed(status, md) {
+      var isAllowed = true;
+      var currentStatus = parseInt(md.mdStatus);
+      switch (status) {
+        case sv.DRAFT:
+        case sv.JUSTCREATED:
+          isAllowed = false;
+          break;
+        case sv.APPROVED:
+          break;
+        case sv.RETIRED:
+          if (![sv.APPROVED].includes(currentStatus)) {
+            isAllowed = false;
+          }
+          break;
+        case sv.SUBMITTED:
+        case sv.REJECTED:
+          if ([sv.APPROVED, sv.RETIRED].includes(currentStatus)) {
+            isAllowed = false;
+            console.log(currentStatus);
+          }
+          console.log(isAllowed);
+          break;
+        default:
+          break;
+      }
+      return isAllowed;
+    }
+
+    function testEditorAllowed(status, md, user) {
+      var isAllowed = true;
+      var currentStatus = parseInt(md.mdStatus);
+      if (md.getOwnerId() !== user.id || [sv.SUBMITTED].includes(currentStatus)) {
+        isAllowed = false;
+      } else {
+        switch (status) {
+          case sv.DRAFT:
+          case sv.APPROVED:
+          case sv.RETIRED:
+          case sv.REJECTED:
+          case sv.JUSTCREATED:
+            isAllowed = false;
+            break;
+          case sv.SUBMITTED:
+            if (![sv.DRAFT, sv.REJECTED].includes(currentStatus)) {
+              isAllowed = false;
+            }
+            break;
+          default:
+            break;
+        }
+      }
+      return isAllowed;
+    }
+
+    return {
+      getAllowedStatusList: getAllowedStatusList
+    }
+  }])
+
+  // Deprecated
+  /*
+  module.service('aivAgivStatusAction', [function () {
 
     var nodeType = "agiv";
     var statusValues = Object.freeze({
-      UNKNOWN:          0,  DRAFT:                1,  APPROVED:             2,
-      RETIRED:          3,  SUBMITTED:            4,  REJECTED:             5,
-      JUSTCREATED:      6,  SUBMITTED_FOR_AGIV:   7,  APPROVED_BY_AGIV:     8,
-      REJECTED_BY_AGIV: 9,  RETIRED_FOR_AGIV:     10, REMOVED_FOR_AGIV:     11,
-      REMOVED:          12, REJECTED_FOR_RETIRE:  13, REJECTED_FOR_REMOVE:  14
+      DRAFT: 1,
+      APPROVED: 2,
+      RETIRED: 3,
+      SUBMITTED: 4,
+      REJECTED: 5,
+      JUSTCREATED: 6,
+      SUBMITTED_FOR_AGIV: 7,
+      APPROVED_BY_AGIV: 8,
+      REJECTED_BY_AGIV: 9,
+      RETIRED_FOR_AGIV: 10,
+      REMOVED_FOR_AGIV: 11,
+      REMOVED: 12,
+      REJECTED_FOR_RETIRE: 13,
+      REJECTED_FOR_REMOVE: 14
     });
+
+    function getAllowedStatusList(currentStatus, user) {
+      var allowedStatusList = [];
+      Object.keys(statusValues).forEach(function(key) {
+        if (getStatusAllowed(statusValues[key], currentStatus, user)) {
+          allowedStatusList.push(statusValues[key]);
+        }
+      });
+      return allowedStatusList;
+    }
 
     function getStatusAllowed(status, currentStatus, user) {
       var isAllowed = false;
@@ -455,7 +835,7 @@
       var changeAllowed = true;
 
       switch (status) {
-        case statusValues.UNKNOWN:  case statusValues.JUSTCREATED:
+        case statusValues.JUSTCREATED:
           break;
 
         case statusValues.DRAFT:  case statusValues.SUBMITTED:  case statusValues.REJECTED:
@@ -514,8 +894,8 @@
 
         case statusValues.REJECTED_FOR_RETIRE:
           if (![statusValues.RETIRED_FOR_AGIV].includes(currentStatus)) {
-          changeAllowed = false;
-        }
+            changeAllowed = false;
+          }
           break;
 
         case statusValues.REJECTED_FOR_REMOVE:
@@ -537,7 +917,7 @@
         changeAllowed = false;
       } else {
         switch (status) {
-          case statusValues.UNKNOWN:              case statusValues.DRAFT:                case statusValues.JUSTCREATED:
+          case statusValues.DRAFT:                case statusValues.JUSTCREATED:
           case statusValues.APPROVED_BY_AGIV:     case statusValues.REJECTED_BY_AGIV:     case statusValues.REMOVED:
           case statusValues.REJECTED_FOR_RETIRE:  case statusValues.REJECTED_FOR_REMOVE:
             changeAllowed = false;
@@ -567,19 +947,19 @@
               changeAllowed = false;
             }
             break;
-            
+
           case statusValues.RETIRED_FOR_AGIV:
             if ([statusValues.RETIRED, statusValues.REMOVED_FOR_AGIV].includes(currentStatus)) {
               changeAllowed = false;
             }
             break;
-            
+
           case statusValues.REMOVED_FOR_AGIV:
             if ([statusValues.RETIRED_FOR_AGIV].includes(currentStatus)) {
               changeAllowed = false;
             }
             break;
-            
+
           default:
             break;
         }
@@ -592,7 +972,7 @@
     function testEditorAllowed(status, currentStatus) {
       var changeAllowed = true;
       switch (status) {
-        case statusValues.UNKNOWN :             case statusValues.DRAFT :               case statusValues.APPROVED :
+        case statusValues.DRAFT :               case statusValues.APPROVED :
         case statusValues.RETIRED :             case statusValues.REJECTED :            case statusValues.JUSTCREATED :
         case statusValues.SUBMITTED_FOR_AGIV :  case statusValues.APPROVED_BY_AGIV :    case statusValues.REJECTED_BY_AGIV :
         case statusValues.RETIRED_FOR_AGIV :    case statusValues.REMOVED_FOR_AGIV :    case statusValues.REMOVED :
@@ -613,8 +993,9 @@
 
 
     return {
-      getStatusAllowed: getStatusAllowed
+      getAllowedStatusList: getAllowedStatusList
     }
 
-  }])
+  }]);
+  */
 })();

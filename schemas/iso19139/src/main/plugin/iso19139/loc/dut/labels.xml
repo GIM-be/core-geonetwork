@@ -123,12 +123,6 @@
     <label>heeft</label>
     <description>heeft</description>
   </element>
-  <element name="gco:ScopedName">
-    <label>Naam van de laag in de service</label>
-    <description/>
-    <help/>
-    <condition/>
-  </element>
   <element name="gmd:initiativeType">
     <label>Initiatief type</label>
     <description>Type van het initiatief</description>
@@ -602,7 +596,7 @@
   </element>
   <element name="gmd:dateTime">
     <label>Versiedatum</label>
-    <description>Datum waarop de bewerkingen of metingen zijn gestart.(JJJJ-MM-DD).</description>
+    <description>Datum waarop de bewerkingen of metingen zijn gestart.(JJJJ-MM-DDTHH:mm:ss).</description>
   </element>
   <element name="gmd:dateType">
     <label>Type versiedatum</label>
@@ -1210,6 +1204,7 @@
   <element name="gmd:level">
     <label>Niveau kwaliteitsinformatie</label>
     <description>Niveau (dataset of datasetserie) waar de kwaliteitsbeschrijving betrekking op heeft.</description>
+    <help>Suggestie om te kiezen voor 'Dataset', 'Datasetserie', of 'Objecttype'.</help>
     <condition>mandatory</condition>
   </element>
   <element name="gmd:levelDescription">
@@ -2457,6 +2452,24 @@
     <description>Kwaliteitsmeting</description>
   </element>
 
+  <element name="gco:ScopedName">
+    <label>Naam van de laag in de service</label>
+    <description/>
+    <help/>
+    <condition/>
+  </element>
+
+  <element name="gco:Record">
+    <label>Waarde</label>
+    <description>Een Record is een string of XML fragment dat data bevat volgens een structuur beschreven door het
+      RecordType.
+    </description>
+  </element>
+  <element name="gco:MemberName">
+    <label>Member name</label>
+    <description/>
+  </element>
+
   <!-- === GTS namespace -->
 
   <element name="gts:TM_PeriodDuration">
@@ -2600,7 +2613,7 @@
     <label>Ruimtelijk Referentie Systeem Naam</label>
     <description>Naam van het Ruimtelijk Referentie Systeem. Als default gezet op geografisch WGS 84- epsg:4326
     </description>
-    <example>urn:x-ogc:def:crs:EPSG:6.6:4326</example>
+    <example>urn:ogc:def:crs:EPSG:6.6:4326</example>
   </element>
 
   <!-- === SRV namespace for 19119 service metadata -->
@@ -2905,12 +2918,6 @@
       or is another suitable unit. The encoding is defined for GML in gml:TimeUnitType. The second
       component of this union type provides a method for indicating time units other than the six
       standard units given in the enumeration.
-    </description>
-  </element>
-  <element name="gco:Record">
-    <label>Waarde</label>
-    <description>Een Record is een string of XML fragment dat data bevat volgens een structuur beschreven door het
-      RecordType.
     </description>
   </element>
   <element name="gml:BaseUnit">

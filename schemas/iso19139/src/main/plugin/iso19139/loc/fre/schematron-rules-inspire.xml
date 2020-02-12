@@ -100,7 +100,7 @@
   <alert.M46><div>Une limitation d'accès public (i.e. contraintes légales ou de sécurité) est manquante</div></alert.M46>
   <alert.M47><div>Contact pour la ressource est manquant.</div></alert.M47>
   <report.M47><div>Contact pour la ressource trouvé.</div></report.M47>
-  <alert.M47.info><div>Le nom de l'organisation et l'email du contact sur la ressource sont manquants.</div></alert.M47.info>
+  <alert.M47.info><div>Le nom de l'organisation et/ou l'email du contact sur la ressource sont manquants</div></alert.M47.info>
   <report.M47.info><div>Le nom de l'organisation et l'email du contact sur la ressource sont définis pour :</div></report.M47.info>
 
 
@@ -108,7 +108,7 @@
   <alert.M48><div>Contact pour la métadonnées est manquant.</div></alert.M48>
   <report.M48><div>Contact pour la métadonnées trouvé.</div></report.M48>
   <alert.M48.role><div>Le rôle du contact est vide.</div></alert.M48.role>
-  <alert.M48.info><div>Le nom de l'organisation et l'email du contact pour la métadonnées sont manquants.</div></alert.M48.info>
+  <alert.M48.info><div>Le nom de l'organisation et/ou l'email du contact des métadonnées sont manquants</div></alert.M48.info>
   <report.M48.info><div>Le nom de l'organisation et l'email du contact pour la métadonnées sont définis pour :</div></report.M48.info>
 
 
