@@ -480,7 +480,7 @@
   <!--  only accept the pointOfContact role code for a gmd:contact element -->
   <xsl:template match="gmd:role[name(../..)='gmd:contact']" priority="100">
     <gmd:role>
-      <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+      <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
     </gmd:role>
   </xsl:template>
 
