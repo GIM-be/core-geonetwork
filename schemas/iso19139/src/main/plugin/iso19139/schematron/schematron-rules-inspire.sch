@@ -773,9 +773,9 @@ USA.
                 19115. The default value is pointOfContact."
                 JRC schematron 1.0 validate only if role=pointOfContact
             -->
-            <sch:let name="role" value="normalize-space(../gmd:role/*/@codeListValue)"/>
+            <sch:let name="role" value="normalize-space(gmd:CI_ResponsibleParty/gmd:role/*/@codeListValue)"/>
             <sch:let name="emptyRole" value="$role=''"/>
-            <sch:let name="emailAddress" value="../gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()"/>
+            <sch:let name="emailAddress" value="gmd:CI_ResponsibleParty/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*/text()"/>
 
             <sch:assert
                 test="not($emptyRole)"
