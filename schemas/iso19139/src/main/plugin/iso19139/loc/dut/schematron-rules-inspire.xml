@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <strings>
     <!-- INSPIRE metadata rules translation / START -->
-    
+
     <!-- List of pattern title -->
     <identification>Identificatie</identification>
-    <dataIdentification>Data Identificatie</dataIdentification>    
+    <dataIdentification>Data Identificatie</dataIdentification>
     <serviceIdentification>Service Identificatie</serviceIdentification>
     <theme>Sleutelwoorden en INSPIRE data thema's</theme>
     <serviceTaxonomy>INSPIRE Service taxonomy</serviceTaxonomy>
@@ -15,8 +15,8 @@
     <constraints>Beperkingen inzake toegang en gebruik</constraints>
     <org>Verantwoordelijke organisatie</org>
     <metadata>Meta-metadata</metadata>
-    
-    
+
+
     <alert.M35><div><h2>Titel ontbreekt.</h2></div></alert.M35>
     <report.M35><div><h2>Titel:</h2></div></report.M35>
     <alert.M36><div><h2>Samenvatting ontbreekt.</h2>
@@ -32,14 +32,14 @@
             <li>dataset voor datasets;</li>
             <li>series voor datasetseries;</li>
             <li>services voor diensten.</li>
-        </ul> 
+        </ul>
         Het hiërarchisch niveau is niet verplicht door ISO
         19115, maar is verplicht door de INSPIRE
-        Metadata regels.        
+        Metadata regels.
     </div></alert.M37>
     <report.M37><div><h2>Hiërarchisch niveau is: </h2></div></report.M37>
     <alert.M38><div><h2>Dataset(serie) identificator ontbreekt</h2>
-        <br/>        
+        <br/>
         verplicht voor datasets and dataset(series).<br/>
         <b>Bijvoorbeeld:</b> 527c4cac-070c-4bca-9aaf-92bece7be902
     </div></alert.M38>
@@ -55,27 +55,27 @@
     <alert.M41><div><h2>INSPIRE - Omschrijvende rechthoek is verplicht.</h2><br/>
         <ul>
             <li>
-                Verplicht voor datasets en datasetseries.                
+                Verplicht voor datasets en datasetseries.
             </li>
             <li>
-                Conditioneel voor diensten - enkel verplicht voor diensten met een expliciete ruimtelijke begrenzing.                
+                Conditioneel voor diensten - enkel verplicht voor diensten met een expliciete ruimtelijke begrenzing.
             </li>
         </ul>
-        
+
         <b>Instructies</b>
         <ul>
              <li>
-                De omschrijvende rechthoek moet zo klein als mogelijk genomen worden.      
+                De omschrijvende rechthoek moet zo klein als mogelijk genomen worden.
             </li>
             <li>
-                Als de omschrijvende rechthoek de datumlijn overschrijdt moet de waarde van de meest westelijke lengtegraad (minimum X) groter zijn dan deze van de meest oostelijke lengtegraad (maximum X).      
+                Als de omschrijvende rechthoek de datumlijn overschrijdt moet de waarde van de meest westelijke lengtegraad (minimum X) groter zijn dan deze van de meest oostelijke lengtegraad (maximum X).
             </li>
             <li>
                De coordinaten van de omschrijvende rechthoek moeten uitgedrukt zijn in een geografisch coordinatensysteem dat de Greenwich
-                Meridiaan als nulmeridiaan heeft.   
+                Meridiaan als nulmeridiaan heeft.
             </li>
-        </ul>      
-        
+        </ul>
+
     </div></alert.M41>
     <alert.M41.N><div>Maximum breedtegraad (Y) ontbreekt om heeft een verkeerde waarde. </div></alert.M41.N>
     <alert.M41.S><div>Minimum breedtegraad (Y)  ontbreekt om heeft een verkeerde waarde.</div></alert.M41.S>
@@ -85,7 +85,7 @@
     <report.M41.S><div>Minimum breedtegraad (Y) aanwezig:</div></report.M41.S>
     <report.M41.E><div>Maximum lengtegraad (X)  aanwezig:</div></report.M41.E>
     <report.M41.W><div>Minimum lengtegraad (X)  aanwezig:</div></report.M41.W>
-    
+
     <alert.M42><div><h2>INSPIRE - Temporele referentie is verplicht</h2>
         Er werd geen temporele referentie gevonden.
         <b>Instructies</b><br/>
@@ -93,15 +93,15 @@
         <br/>
          </div></alert.M42>
     <alert.M42.creation><div>Er mag maar één instantie zijn van
-        MD_Metadata.identificationInfo[1].MD_Identification.citation.CI_Citation.date 
+        MD_Metadata.identificationInfo[1].MD_Identification.citation.CI_Citation.date
         die gedefinieerd is als datum van creatie (CI_Date.dateType met creatie als waarde)</div></alert.M42.creation>
     <report.M42.begin><div>Temporele begrenzing (begindatum) aanwezig: </div></report.M42.begin>
     <report.M42.end><div>Temporele begrenzing (einddatum) aanwezig: </div></report.M42.end>
     <report.M42.publication><div>Datum van publicatie aanwezig:</div></report.M42.publication>
     <report.M42.creation><div>Datum van creatie aanwezig:</div></report.M42.creation>
     <report.M42.revision><div>Datum van laatste wijziging aanwezig:</div></report.M42.revision>
-    
-    
+
+
     <alert.M43><div><h2>INSPIRE - Algemene beschrijving van de herkomst is verplicht</h2><br/>
         <ul>
             <li>Verplicht voor datasets en datasetseries.</li>
@@ -109,29 +109,29 @@
         </ul>
         <br/>
         <b>Bijvoorbeeld:</b>Dataset werd gedigitaliseerd op basis van een kaart op schaal 1:5.000
-        
+
     </div></alert.M43>
     <report.M43><div><h2>Algemene beschrijving van de herkomst is aanwezig.</h2></div></report.M43>
-    
-    
+
+
     <alert.M44><div><h2>INSPIRE - Conformiteit is verplicht (in DQ_DomainConsistency.result.DQ_ConformanceResult)</h2><br/>
         <b>Instructies</b> <br/>
         De dataset kan conform of niet-conform zijn of de conformiteit kan niet geëvalueerd zijn.<br/>
-        
-          
+
+
     </div></alert.M44>
     <report.M44.nonev><div>De graad van conformiteit werd niet geëvalueerd.</div></report.M44.nonev>
     <report.M44.degree><div>De graad van conformiteit wordt gespecifieerd als zijnde:</div></report.M44.degree>
     <report.M44.spec><div>Specificatie:</div></report.M44.spec>
-    
+
     <alert.M45.rc><div><h2>Er moet minstens één voorkomen zijn van:
         MD_Metadata.identificationInfo[1].MD_Identification.resourceConstraints</h2></div></alert.M45.rc>
     <report.M45.ac><div>Toegangsbeperkingen (accessConstraints) aanwezig:</div></report.M45.ac>
     <report.M45.class><div>Toegangsbeperkingen (classification) aanwezig:</div></report.M45.class>
-    <alert.M45.ca><div>Er moet minstens één voorkomen zijn van MD_LegalConstraints/accessConstraints.</div></alert.M45.ca> 
+    <alert.M45.ca><div>Er moet minstens één voorkomen zijn van MD_LegalConstraints/accessConstraints.</div></alert.M45.ca>
     <report.M45.ca><div>Er moet minstens één voorkomen zijn van MD_LegalConstraints/accessConstraints.</div></report.M45.ca>
 
-    <alert.M45.or><div>De waarde van toegansbeperking (accessConstraints) moet anders (otherRestrictions) zijn, 
+    <alert.M45.or><div>De waarde van toegansbeperking (accessConstraints) moet anders (otherRestrictions) zijn,
     	als er voorkomens zijn van 'otherConstraints', en de 'otherConstraints' moeten ingevuld zijn.</div></alert.M45.or>
     <report.M45.or><div>Toegangsbeperkingen (otherConstraints) aanwezig:</div></report.M45.or>
     <alert.M45.us><div>Gebruiksbeperkingen ontbreken.</div></alert.M45.us>
@@ -139,7 +139,7 @@
     <alert.M45><div><h2>INSPIRE - gebruiksperkingen zijn verplicht.</h2><br/>
     </div></alert.M45>
     <alert.M46><div><h2>INSPIRE - Toegangsbeprkingen zijn verplicht.</h2></div></alert.M46>
-    
+
     <alert.M47><div><h2>INSPIRE - Verantwoordelijke organisatie is verplicht.</h2><br/>
        Zowel de naam van de organisatie als het Email adres moeten gegeven worden.
         <br/>
@@ -148,28 +148,28 @@
     <report.M47><div>Verantwoordelijke organisatie voor de dataset, datasetserie of dienst is aanwezig.</div></report.M47>
     <alert.M47.info><div>De naam of het Emailadres van de verantwoordelijke organisatie werd niet gedefinieerd.</div></alert.M47.info>
     <report.M47.info><div>De naam en het Emailadres van de verantwoordelijke organisatie zijn aanwezig:</div></report.M47.info>
-    
+
     <alert.M48><div><h2>INSPIRE - verantwoordelijke organisatie is verplicht.</h2><br/>
      </div></alert.M48>
-    <alert.M48.role><div>Rol van de verantwoordelijke voor de service is niet ingevuld.</div></alert.M48.role>
+    <alert.M48.role><div>Rol van de verantwoordelijke voor de metadata is niet ingevuld.</div></alert.M48.role>
     <report.M48><div>Metadata contactpunt (auteur) aanwezig.</div></report.M48>
     <alert.M48.info><div>Organisatie naam en/of Email niet aanwezig voor de metadata auteur.</div></alert.M48.info>
     <report.M48.info><div>Organisatie naam en/of Email aanwezig:</div></report.M48.info>
-    
+
     <alert.M49><div><h2>INSPIRE - Metadata taal is verplicht</h2><br/>
     </div></alert.M49>
     <report.M49><div>Metadata taal is :</div></report.M49>
-    
+
     <alert.M50><div><h2>Metadata wijzigingsdatum ontbreekt.</h2></div></alert.M50>
     <report.M50><div><h2>Metadata wijzigingsdatum is :</h2></div></report.M50>
-    
-    
+
+
     <alert.M51><div><h2>INSPIRE (diensten) - Gekoppelde bronnen moeten verplicht gegeven worden indien deze dienst opereert op datasets.</h2>
         <br/>
         <b>Instructies:</b><br/>
         Niet van toepassing voor datasets en datasetseries<br/>
         Conditioneel voor diensten.<br/>
-        
+
          </div></alert.M51>
     <report.M51><div>Gekoppelde bronnen aanwezig: </div></report.M51>
     <alert.M52><div><h2>INSPIRE - Connectiepunt URL is verplicht indien er zo'n connectiepunt bestaat. <br></br></h2><br/>
@@ -188,11 +188,11 @@
                     <li>Een link naar een applicatie die gebruikt maakt van de dienst.</li>
                 </ul>
             </ul>
-            
+
     </div></alert.M52>
     <report.M52><div>Resource locator aanwezig:</div></report.M52>
     <alert.M53><div><h2>INSPIRE - Toegangs en gebruiksbeperkingen</h2><br/>
-        Toegangsbeperkingen om de bescherming van privacy en intellectueel eigendom te garanderen en eventuele beperkingen 
+        Toegangsbeperkingen om de bescherming van privacy en intellectueel eigendom te garanderen en eventuele beperkingen
         om de bron te verkrijgen<br/>
         <b>Bijvoorbeeld:</b> Intellectuele eigendomsrechten
         <br/>
@@ -214,14 +214,14 @@
                 Definieer ofwel een schaal ofwel een resolutie (afstand)
             </li>
             <li>
-                Wanneer 2 schalen of afstanden gedefinieerd zijn, is dit te begrijpen als een interval.        
+                Wanneer 2 schalen of afstanden gedefinieerd zijn, is dit te begrijpen als een interval.
             </li>
         </ul>
        </div></alert.M56>
     <report.M56><div>Ruimtelijke resolutie is gedefinieerd:.</div></report.M56>
-    
+
     <alert.M57><div><h2>[ISO19119] - Naam van de operatie is verplicht.</h2></div></alert.M57>
-    
+
     <alert.M58><div>Service taxonomy informatie (sleutelwoord uit de inspire service taxonomy thesaurus) ontbreekt</div></alert.M58>
     <report.M58><div> classificatie van de dienst uit de inspire service taxonomy is aanwezig.</div></report.M58>
     <alert.M59><div><h2>[ISO19119] - Connectie Punt is verplicht</h2></div></alert.M59>
