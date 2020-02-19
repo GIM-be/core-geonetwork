@@ -17,7 +17,9 @@ public enum RelatedItemType {
     hassources,
     related,
     onlines,
-    thumbnails;
+    thumbnails,
+    dcatapsources,
+    dcataprelations;
 
     public static RelatedItemType find(String lookupName) {
         for (RelatedItemType value : values()) {

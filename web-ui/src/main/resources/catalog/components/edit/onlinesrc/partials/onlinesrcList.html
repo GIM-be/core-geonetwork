@@ -79,6 +79,22 @@
               <span data-translate="">linkToSibling</span>
             </a>
           </li>
+          <li data-ng-show="::isCategoryEnable('dcatapsource')">
+            <a href=""
+               data-ng-click="onlinesrcService.onOpenPopup('dcatapsource')">
+              <i class="fa gn-icon-source"></i>
+              <i class="icon-external-link"></i>&nbsp;
+              <span data-translate="">linkToDcatapsource</span>
+            </a>
+          </li>
+          <li data-ng-show="::isCategoryEnable('dcataprelation')">
+            <a href=""
+               data-ng-click="onlinesrcService.onOpenPopup('dcataprelation')">
+              <i class="fa gn-icon-source"></i>
+              <i class="icon-external-link"></i>&nbsp;
+              <span data-translate="">linkToDcataprelation</span>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -497,6 +513,85 @@
         </li>
       </ul>
 
+
+      <!-- ******* List of dcatapsources ******* -->
+      <h2 class="onlinesrc-title"
+          data-ng-show="::isCategoryEnable('dcatapsource') && relations.dcatapsources">
+        <i class="fa fa-sitemap fa-rotate-180"
+           data-ng-class="onlinesrcService.reload ? 'fa-spin' : ''"></i>
+        <i class="icon-external-link"></i>&nbsp;
+        <span data-translate="">dcatapsourceDatasets</span>&nbsp;
+        <a href=""
+           class="btn btn-default btn-xs pull-right"
+           data-ng-click="onlinesrcService.onOpenPopup('dcatapsource')">
+          <i class="fa fa-fw fa-plus"></i>
+          <span data-translate="">add</span>
+        </a>
+      </h2>
+      <ul class="list-group"
+          data-ng-show="::isCategoryEnable('dcatapsource') && relations.dcatapsources">
+        <li class="list-group-item"
+            data-ng-repeat="resource in relations.dcatapsources | orderBy:'title'">
+          <div class="row">
+            <div class="col-md-11"
+                 title="{{resource.description | gnLocalized: lang}}">
+              <a target="_blank"
+                 data-ng-href="{{'../metadata/' + resource.id}}">
+                {{resource.title | gnLocalized: lang}}
+              </a>
+            </div>
+            <div class="col-md-1 text-right">
+              <a href="" class="onlinesrc-remove"
+                 data-ng-if="readonly !== true"
+                 title="{{'remove' | translate}} {{resource.title | gnLocalized: lang}}"
+                 aria-label="{{'remove' | translate}} {{resource.title | gnLocalized: lang}}"
+                 data-ng-click="onlinesrcService.removeMdLink('dcatapsource', resource)">
+                <i class="fa fa-times text-danger"></i>
+              </a>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+
+      <!-- ******* List of dcataprelations ******* -->
+      <h2 class="onlinesrc-title"
+          data-ng-show="::isCategoryEnable('dcataprelation') && relations.dcataprelations">
+        <i class="fa fa-sitemap fa-rotate-180"
+           data-ng-class="onlinesrcService.reload ? 'fa-spin' : ''"></i>
+        <i class="icon-external-link"></i>&nbsp;
+        <span data-translate="">dcataprelationDatasets</span>&nbsp;
+        <a href=""
+           class="btn btn-default btn-xs pull-right"
+           data-ng-click="onlinesrcService.onOpenPopup('dcataprelation')">
+          <i class="fa fa-fw fa-plus"></i>
+          <span data-translate="">add</span>
+        </a>
+      </h2>
+      <ul class="list-group"
+          data-ng-show="::isCategoryEnable('dcataprelation') && relations.dcataprelations">
+        <li class="list-group-item"
+            data-ng-repeat="resource in relations.dcataprelations | orderBy:'title'">
+          <div class="row">
+            <div class="col-md-11"
+                 title="{{resource.description | gnLocalized: lang}}">
+              <a target="_blank"
+                 data-ng-href="{{'../metadata/' + resource.id}}">
+                {{resource.title | gnLocalized: lang}}
+              </a>
+            </div>
+            <div class="col-md-1 text-right">
+              <a href="" class="onlinesrc-remove"
+                 data-ng-if="readonly !== true"
+                 title="{{'remove' | translate}} {{resource.title | gnLocalized: lang}}"
+                 aria-label="{{'remove' | translate}} {{resource.title | gnLocalized: lang}}"
+                 data-ng-click="onlinesrcService.removeMdLink('dcataprelation', resource)">
+                <i class="fa fa-times text-danger"></i>
+              </a>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

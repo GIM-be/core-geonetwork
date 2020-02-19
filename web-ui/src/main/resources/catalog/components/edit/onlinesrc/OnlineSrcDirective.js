@@ -1397,6 +1397,22 @@
                         label: $translate.instant('linkToSource')
                       };
                     }
+                    else if (scope.mode === 'dcatapsource') {
+                      searchParams = {
+                        hitsPerPage: 10
+                      };
+                      scope.btn = {
+                        label: $translate.instant('linkToDcatapsource')
+                      };
+                    }
+                    else if (scope.mode === 'dcataprelation') {
+                      searchParams = {
+                        hitsPerPage: 10
+                      };
+                      scope.btn = {
+                        label: $translate.instant('linkToDcataprelation')
+                      };
+                    }
                     scope.$broadcast('resetSearch', searchParams);
                   });
 

@@ -100,5 +100,10 @@
   "system/csw/contactId-help": "Kies het contact wordt toegevoegd aan de GetCapabilities aanvraag. Maak een aangepaste gebruikersinterface in het gebruikersbeheer pagina indien nodig.",
   "groupIsRequired": "Gelieve een groep te selecteren. Het metadatarecord komt in het beheer van de geselecteerde organisatie.",
   "standardName": "Profiel",
-  "changelog": "Changelog"
+  "changelog": "Changelog",
+  "searchAlicence": "Selecteer een licentie ...",
+  "linkToDcatapsource": "Link naar brondataset",
+  "linkToDcatapsourceTitle": "Link een bron dataset met de huidige metadata",
+  "linkToDcataprelation": "Link naar gerelateerde dataset",
+  "linkToDcataprelationTitle": "Link een gerelateerde dataset met de huidige metadata"
 }

@@ -72,5 +72,10 @@
   "geoDescCode": "Identificator geografische begrenzing",
   "groupIsRequired": "Gelieve een groep te selecteren. Het metadatarecord komt in het beheer van de geselecteerde organisatie.",
   "standardName": "Profil",
-  "changelog": "Changelog"
+  "changelog": "Changelog",
+  "searchAlicence": "Select a license ...",
+  "linkToDcatapsource": "Link to a source dataset",
+  "linkToDcatapsourceTitle": "Link a source dataset to the current metadata",
+  "linkToDcataprelation": "Link to a related dataset",
+  "linkToDcataprelationTitle": "Link a related dataset to the current metadata"
 }
