@@ -128,7 +128,7 @@ public class BatchOpsMetadataReindexer extends MetadataIndexerProcessor implemen
     private String processAsync(boolean runInCurrentThread) throws Exception {
         int threadCount = ThreadUtils.getNumberOfThreads();
 
-            if (runInCurrentThread) {
+            if (runInCurrentThread || threadCount==1) {
                 executor = MoreExecutors.sameThreadExecutor();
             } else {
                 executor = Executors.newFixedThreadPool(threadCount);
