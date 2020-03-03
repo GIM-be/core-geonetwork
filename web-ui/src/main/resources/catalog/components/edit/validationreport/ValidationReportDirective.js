@@ -42,7 +42,7 @@
             scope: {},
             link: function(scope) {
               scope.showErrors = true;
-              scope.showSuccess = false;
+              scope.showSuccess = true;
               scope.alwaysOnTop = false;
               scope.gnCurrentEdit = gnCurrentEdit;
               scope.loading = false;
