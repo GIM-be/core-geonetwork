@@ -240,7 +240,7 @@ public class AccessManager {
      * @param id The metadata internal identifier
      */
     public boolean canEdit(final ServiceContext context, final String id) throws Exception {
-        return isOwner(context, id) || hasEditPermission(context, id);
+        return isOwner(context, id);
     }
 
     /**
@@ -262,7 +262,15 @@ public class AccessManager {
     public boolean canChangeStatus(final ServiceContext context, final String id) throws Exception {
         return hasOnwershipReviewPermission(context, id) || hasReviewPermission(context, id);
     }
-    
+
+    /**
+     * Return true if the user is owner of a metadata of as the right to take over the ownership
+     * of the metadata
+     */
+    public boolean canTakeover(final ServiceContext context, final String id) throws Exception {
+        return isOwner(context, id) || hasEditPermission(context, id);
+    }
+
     /**
      * Return true if the current user is: <ul> <li>administrator</li> <li>the metadata owner (the
      * user who created the record)</li> <li>reviewer in the group the metadata was created</li>

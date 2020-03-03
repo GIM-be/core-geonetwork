@@ -820,7 +820,7 @@ public class MetadataSharingApi {
         throws Exception {
         MetadataProcessingReport report = new SimpleMetadataProcessingReport();
 
-        AbstractMetadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
+        AbstractMetadata metadata = ApiUtils.canTakeoverRecord(metadataUuid, request);
         try {
             report.setTotalRecords(1);
 
@@ -856,7 +856,7 @@ public class MetadataSharingApi {
         AbstractMetadata metadata = metadataUtils.findOneByUuid(uuid);
         if (metadata == null) {
             report.incrementNullRecords();
-        } else if (!accessMan.canEdit(
+        } else if (!accessMan.canTakeover(
             serviceContext, String.valueOf(metadata.getId()))) {
             report.addNotEditableMetadataId(metadata.getId());
         } else {

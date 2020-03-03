@@ -151,7 +151,9 @@ public class TransferApi {
         Profile myProfile = session.getProfile();
 
         List<UserGroupsResponse> list = new ArrayList<>();
-        if (myProfile == Profile.Administrator || myProfile == Profile.UserAdmin) {
+        if (myProfile == Profile.Administrator || myProfile == Profile.UserAdmin ||
+            myProfile == Profile.Reviewer || myProfile == Profile.Editor) {
+
             // add all admins first
             List<User> allAdmin = userRepository.findAllByProfile(Profile.Administrator);
             Group adminGroup = new Group();

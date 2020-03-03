@@ -649,8 +649,13 @@
           isConnected: function() {
             return !this.isAnonymous();
           },
-          canEditRecord: function(md) {
+          canEditRecord: function(md, permissive) {
             if (!md || this.isAnonymous()) {
+              return false;
+            }
+
+            // Permissive arg is used for non direct edit use cases (eg: Changing the Workflow status or the ownership)
+            if (!permissive && (md.getOwnerId() !== this.id && (this.profile === "Editor" || this.profile === "Reviewer"))) {
               return false;
             }
 
