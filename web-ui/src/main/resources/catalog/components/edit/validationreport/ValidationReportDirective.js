@@ -41,8 +41,8 @@
                 'partials/validationreport.html',
             scope: {},
             link: function(scope) {
-              scope.showErrors = false;
-              scope.showSuccess = false;
+              scope.showErrors = true;
+              scope.showSuccess = true;
               scope.alwaysOnTop = false;
               scope.gnCurrentEdit = gnCurrentEdit;
               scope.loading = false;
