@@ -55,13 +55,9 @@ import org.fao.geonet.kernel.datamanager.IMetadataStatus;
 import org.fao.geonet.kernel.datamanager.base.BaseMetadataUtils;
 import org.fao.geonet.kernel.metadata.StatusActions;
 import org.fao.geonet.kernel.metadata.StatusActionsFactory;
+import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.lib.Lib;
-import org.fao.geonet.repository.GroupRepository;
-import org.fao.geonet.repository.MetadataDraftRepository;
-import org.fao.geonet.repository.MetadataFileUploadRepository;
-import org.fao.geonet.repository.SimpleMetadata;
-import org.fao.geonet.repository.StatusValueRepository;
-import org.fao.geonet.repository.Updater;
+import org.fao.geonet.repository.*;
 import org.fao.geonet.repository.specification.MetadataFileUploadSpecs;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -568,6 +564,12 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
                 metadataStatus.setId(mdStatusId);
                 metadataStatus.setStatusValue(statusValue);
                 metadataStatus.setChangeMessage("Editing instance created");
+
+                boolean isMdWorkflowEnable = settingManager.getValueAsBool(Settings.METADATA_WORKFLOW_ENABLE);
+                if (isMdWorkflowEnable) {
+                    MetadataStatusRepository metadataStatusRepository = context.getBean(MetadataStatusRepository.class);
+                    metadataStatusRepository.save(metadataStatus);
+                }
 
                 List<MetadataStatus> listOfStatusChange = new ArrayList<>(1);
                 listOfStatusChange.add(metadataStatus);
