@@ -89,33 +89,7 @@ public class GeopuntStatusActions extends AIVStatusActions {
         }
     }
 
-    /**
-     * This checks if the status can be set depending on the current status and user profile
-     *
-     * @param currentStatusId
-     * @param statusId
-     * @param metadata
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public boolean statusChangeAllowedByUser(String currentStatusId, String statusId,
-                                             AbstractMetadata metadata) throws Exception {
-        AccessManager accessManager = context.getBean(AccessManager.class);
-        boolean changeAllowed = accessManager.canEdit(context, String.valueOf(metadata.getId()));
-        if (changeAllowed) {
-            if (session.getProfile() == (Profile.Administrator)) {
-                changeAllowed = changeAllowedByAdmin(currentStatusId, statusId);
-            } else if (session.getProfile() == Profile.Reviewer) {
-                changeAllowed = changeAllowedByReviewer(currentStatusId, statusId);
-            } else if (session.getProfile() == Profile.Editor) {
-                changeAllowed = changeAllowedByEditor(currentStatusId, statusId, accessManager, metadata);
-            }
-        }
-        return changeAllowed;
-    }
-
-    private boolean changeAllowedByAdmin(String currentStatusId, String statusId) {
+    protected boolean changeAllowedByAdmin(String currentStatusId, String statusId) {
         boolean changeAllowed = true;
         switch (Integer.parseInt(statusId)) {
             case 1: //DRAFT
@@ -137,7 +111,7 @@ public class GeopuntStatusActions extends AIVStatusActions {
         return changeAllowed;
     }
 
-    private boolean changeAllowedByReviewer(String currentStatusId, String statusId) {
+    protected boolean changeAllowedByReviewer(String currentStatusId, String statusId) {
         boolean changeAllowed = true;
         switch (Integer.parseInt(statusId)) {
             case 1: //DRAFT
@@ -163,7 +137,7 @@ public class GeopuntStatusActions extends AIVStatusActions {
         return changeAllowed;
     }
 
-    private boolean changeAllowedByEditor(String currentStatusId, String statusId, AccessManager accessManager, AbstractMetadata metadata) throws Exception {
+    protected boolean changeAllowedByEditor(String currentStatusId, String statusId, AbstractMetadata metadata, AccessManager accessManager) throws Exception {
         boolean changeAllowed = true;
         if (!accessManager.isOwner(context, String.valueOf(metadata.getId())) || currentStatusId.equals(StatusValue.Status.SUBMITTED)) {
             changeAllowed = false;

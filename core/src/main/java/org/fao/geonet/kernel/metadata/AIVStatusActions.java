@@ -30,6 +30,7 @@ import org.fao.geonet.Constants;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.events.md.MetadataStatusChanged;
+import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
@@ -322,8 +323,23 @@ public abstract class AIVStatusActions implements StatusActions {
     @Override
     public boolean statusChangeAllowedByUser(String currentStatusId, String statusId,
                                              AbstractMetadata metadata) throws Exception {
-        return true;
+        AccessManager accessManager = context.getBean(AccessManager.class);
+        boolean changeAllowed = accessManager.canEdit(context, String.valueOf(metadata.getId()));
+        if (changeAllowed) {
+            if (session.getProfile() == (Profile.Administrator)) {
+                changeAllowed = changeAllowedByAdmin(currentStatusId, statusId);
+            } else if (session.getProfile() == Profile.Reviewer) {
+                changeAllowed = changeAllowedByReviewer(currentStatusId, statusId);
+            } else if (session.getProfile() == Profile.Editor) {
+                changeAllowed = changeAllowedByEditor(currentStatusId, statusId, metadata, accessManager);
+            }
+        }
+        return changeAllowed;
     }
+
+    protected abstract boolean changeAllowedByAdmin(String currentStatusId, String statusId);
+    protected abstract boolean changeAllowedByReviewer(String currentStatusId, String statusId);
+    protected abstract boolean changeAllowedByEditor(String currentStatusId, String statusId, AbstractMetadata metadata, AccessManager accessManager) throws Exception;
 
     /**
      * This apply specific rules depending on status change.
