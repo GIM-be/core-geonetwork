@@ -53,6 +53,8 @@ public interface IMetadataStatus {
      */
     void activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner) throws Exception;
 
+    void activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner, String message) throws Exception;
+
     /**
      * Safely change the status if the current is compatible.
      */

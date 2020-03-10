@@ -560,6 +560,7 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
             StatusValue statusValue = statusValueRepository.findOne(status);
 
             for (Integer mdId : metadataIds) {
+                /*
                 MetadataStatus metadataStatus = new MetadataStatus();
 
                 MetadataStatusId mdStatusId = new MetadataStatusId().setStatusId(status).setMetadataId(mdId)
@@ -572,6 +573,13 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
                 List<MetadataStatus> listOfStatusChange = new ArrayList<>(1);
                 listOfStatusChange.add(metadataStatus);
                 sa.onStatusChange(listOfStatusChange);
+                */
+
+                this.metadataStatus.activateWorkflowIfConfigured(
+                    context,
+                    mdId.toString(),
+                    newMetadata.getSourceInfo().getGroupOwner().toString(),
+                    "Editing instance created");
             }
             return String.valueOf(finalId);
         } catch (Throwable t) {

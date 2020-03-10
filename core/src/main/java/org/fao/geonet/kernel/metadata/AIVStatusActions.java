@@ -100,7 +100,6 @@ public abstract class AIVStatusActions implements StatusActions {
      * Initializes the StatusActions class with external info from GeoNetwork.
      *
      * @param context
-     * @param dbms
      */
     public void init(ServiceContext context) throws Exception {
 
@@ -324,7 +323,7 @@ public abstract class AIVStatusActions implements StatusActions {
     public boolean statusChangeAllowedByUser(String currentStatusId, String statusId,
                                              AbstractMetadata metadata) throws Exception {
         AccessManager accessManager = context.getBean(AccessManager.class);
-        boolean changeAllowed = accessManager.canEdit(context, String.valueOf(metadata.getId()));
+        boolean changeAllowed = accessManager.canTakeover(context, String.valueOf(metadata.getId()));
         if (changeAllowed) {
             if (session.getProfile() == (Profile.Administrator)) {
                 changeAllowed = changeAllowedByAdmin(currentStatusId, statusId);
@@ -636,10 +635,8 @@ public abstract class AIVStatusActions implements StatusActions {
      * Process the users and metadata records for emailing notices.
      *
      * @param context      The service context
-     * @param dbms         The dbms
      * @param replyTo      The replyTo email
      * @param replyToDescr The replyTo description configured in the web.xml
-     * @param records      The selected set of records
      * @param subject      Subject to be used for email notices
      * @param status       The status being set
      * @param changeDate   Datestamp of status change
