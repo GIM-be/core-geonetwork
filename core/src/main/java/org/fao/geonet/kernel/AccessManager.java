@@ -326,14 +326,14 @@ public class AccessManager {
             return false;
 
         //--- if there is no group owner then the reviewer cannot review and the useradmin cannot administer
-        final Integer groupOwner = sourceInfo.getGroupOwner();
-        if (groupOwner == null) {
-            return false;
-        }
-        for (Integer userGroup : getReviewerGroups(us)) {
-            if (userGroup == groupOwner.intValue())
-                return true;
-        }
+        // final Integer groupOwner = sourceInfo.getGroupOwner();
+        // if (groupOwner == null) {
+        //     return false;
+        // }
+        // for (Integer userGroup : getReviewerGroups(us)) {
+        //     if (userGroup == groupOwner.intValue())
+        //         return true;
+        // }
         return false;
     }
 

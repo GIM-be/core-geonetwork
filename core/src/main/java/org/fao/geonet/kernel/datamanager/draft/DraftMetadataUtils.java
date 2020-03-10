@@ -260,7 +260,7 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
     public AbstractMetadata findOneByUuid(String uuid) {
         AbstractMetadata md = super.findOneByUuid(uuid);
         try {
-            if (md != null && am.canEdit(context, Integer.toString(md.getId()))) {
+            if (md != null && am.canTakeover(context, Integer.toString(md.getId()))) {
                 AbstractMetadata tmp = metadataDraftRepository.findOneByUuid(uuid);
                 if (tmp != null) {
                     md = tmp;

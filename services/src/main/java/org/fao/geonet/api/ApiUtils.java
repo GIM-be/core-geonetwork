@@ -294,7 +294,7 @@ public class ApiUtils {
         AccessManager accessManager = appContext.getBean(AccessManager.class);
         if (!accessManager.canTakeover(createServiceContext(request), String.valueOf(metadata.getId()))) {
             throw new SecurityException(String.format(
-                "You can't edit record with UUID %s", metadataUuid));
+                "You can't take over the ownership of the record with UUID %s", metadataUuid));
         }
         return metadata;
     }
