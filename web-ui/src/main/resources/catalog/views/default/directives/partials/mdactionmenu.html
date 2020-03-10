@@ -22,7 +22,7 @@
         </a>
       </li>
       <li role="menuitem"
-          data-ng-if="user.isEditorOrMore()">
+          data-ng-if="user.isEditorOrMore() && user.canEditRecord(md, true)">
         <a data-ng-href=""
            data-ng-click="mdService.openTransferOwnership(md, null, getCatScope())">
           <i class="fa fa-fw fa-user"></i>&nbsp;

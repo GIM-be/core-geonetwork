@@ -84,7 +84,7 @@
         </a>
       </li> -->
       <li  data-ng-show="!excludePattern.test('transferOwnership')"
-           data-ng-if="user.isEditorOrMore()">
+           data-ng-if="user.isUserAdminOrMore()">
         <a href=""
            data-ng-click="mdService.openTransferOwnership(undefined, searchResults.selectionBucket, getCatScope())">
           <i class="fa fa-user"></i>&nbsp;<span translate>transferOwnership</span>

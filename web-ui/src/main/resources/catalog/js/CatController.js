@@ -655,7 +655,7 @@
             }
 
             // Permissive arg is used for non direct edit use cases (eg: Changing the Workflow status or the ownership)
-            if (!permissive && (md.getOwnerId() !== this.id && (this.profile === "Editor" || this.profile === "Reviewer"))) {
+            if (!permissive && (md.getOwnerId() !== this.id && !this.isAdministratorOrMore())) {
               return false;
             }
 
