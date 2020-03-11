@@ -298,7 +298,7 @@ USA.
             <!-- Check that INSPIRE theme are available.
                 Use INSPIRE thesaurus available on SVN to check keywords in all EU languages.
             -->
-            <sch:let name="thesaurusURL" value="concat('file:///', $thesaurusDir, '/external/thesauri/theme/httpinspireeceuropaeutheme-theme.rdf')"/>
+            <sch:let name="thesaurusURL" value="concat('file:///', replace($thesaurusDir, '\\', '/'), '/external/thesauri/theme/inspire-theme.rdf')"/>
             <sch:let name="inspire-thesaurus" value="document($thesaurusURL)"/>
             <sch:let name="inspire-theme" value="$inspire-thesaurus//skos:Concept"/>
 
@@ -307,7 +307,6 @@ USA.
                 INSPIRE Theme thesaurus not found (at <sch:value-of select="$thesaurusURL" />. Check installation in codelist/external/thesauri/theme.
                 Download thesaurus from INSPIRE Registry.
             </sch:assert>
-
 
             <sch:let name="thesaurus_name" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:title/*/text()"/>
             <sch:let name="thesaurus_date" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:date/*/text()"/>

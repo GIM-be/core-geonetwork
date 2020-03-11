@@ -74,13 +74,16 @@
 	<!-- GDI-Vlaanderen SC5 -->
 	<sch:pattern>
 		<sch:title>Er moet minstens één Nederlandstalig trefwoord aanwezig zijn uit de thesaurus ‘GEMET - INSPIRE thema’s, versie 1.0’ met als datum 2008-06-01 indien de MD_Metadata.language gelijk is aan NL (ISO-element 55)</sch:title>
-		<sch:rule context="//gmd:MD_DataIdentification[/gmd:MD_Metadata/gmd:language/*/text()='dut']">
-			<sch:let name="inspire-thesaurus" value="document(concat('file:///', $thesaurusDir, '/external/thesauri/theme/inspire-theme.rdf'))"/>
+		<sch:rule context="//gmd:MD_DataIdentification[/gmd:MD_Metadata/gmd:language/*/text()='dut' or /gmd:MD_Metadata/gmd:language/gmd:LanguageCode/@codeListValue='dut']">
+			<sch:let name="inspire-thesaurus" value="document(concat('file:///', replace($thesaurusDir, '\\', '/'), '/external/thesauri/theme/inspire-theme.rdf'))"/>
 			<sch:let name="inspire-theme" value="$inspire-thesaurus//skos:Concept"/>
 			<sch:assert test="count($inspire-theme) > 0">
-				INSPIRE Thema thesaurus niet gevonden. 
+				INSPIRE Thema thesaurus niet gevonden.
 			</sch:assert>
-			<sch:let name="keyword" value="gmd:descriptiveKeywords/*/gmd:keyword/gco:CharacterString
+      <sch:let name="thesaurus_name" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:title/*/text()"/>
+      <sch:let name="thesaurus_date" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:date/*/text()"/>
+      <sch:let name="thesaurus_dateType" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:dateType/*/@codeListValue/normalize-space(.)"/>
+			<sch:let name="keyword" value="gmd:descriptiveKeywords/*/gmd:keyword/*[name()='gco:CharacterString' or name()='gmx:Anchor']
 					[../../gmd:thesaurusName/*/gmd:title/*/text()='GEMET - INSPIRE thema''s, versie 1.0' and
 					../../gmd:thesaurusName/*/gmd:date/*/gmd:date/gco:Date/text()='2008-06-01' and
 					../../gmd:thesaurusName/*/gmd:date/*/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']"/>
