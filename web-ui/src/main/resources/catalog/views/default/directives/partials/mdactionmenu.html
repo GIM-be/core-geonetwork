@@ -22,7 +22,7 @@
         </a>
       </li>
       <li role="menuitem"
-          data-ng-if="md.isOwned() && user.isUserAdminOrMore()">
+          data-ng-if="md.isTemplate == 'n' && user.isEditorOrMore() && user.canEditRecord(md, true)">
         <a data-ng-href=""
            data-ng-click="mdService.openTransferOwnership(md, null, getCatScope())">
           <i class="fa fa-fw fa-user"></i>&nbsp;
@@ -86,7 +86,7 @@
 
       <li role="menuitem"
           data-ng-repeat="allowedStatus in mdService.getAllowedStatusList(md, user)"
-          data-ng-if="user.canEditRecord(md) && isMdWorkflowEnable && md.isWorkflowEnabled() && allowedStatus != md.mdStatus && mdService.currentNode && md.getSchema() != 'dcat-ap'">
+          data-ng-if="user.canEditRecord(md, true) && isMdWorkflowEnable && md.isWorkflowEnabled() && allowedStatus != md.mdStatus && mdService.currentNode && md.getSchema() != 'dcat-ap'">
         <a data-ng-href=""
            data-ng-click="mdService.openUpdateStatusPanel(getScope(), 'workflow', null, allowedStatus, allowedStatus + 50)">
           <!--<i class="fa fa-fw fa-file-o"></i>&nbsp;-->
@@ -174,7 +174,7 @@
 
 
       <li role="menuitem" class="divider"
-          data-ng-if="user.isConnected() && user.canEditRecord(md) && md.draft != 'y'"></li>
+          data-ng-if="user.isConnected() && tasks.length > 0 && hasVisibletasks">&nbsp;</li>
       <li data-ng-repeat="t in tasks"
           data-ng-show="taskConfiguration[t.name] && taskConfiguration[t.name].isVisible && taskConfiguration[t.name].isVisible(md)"
           data-ng-class="::{'disabled': !taskConfiguration[t.name].isApplicable(md)}">
@@ -183,10 +183,9 @@
           <span>{{t.label | gnLocalized}}</span>
         </a>
       </li>
+
       <li role="menuitem" class="divider"
-          data-ng-if="user.isConnected() && tasks.length > 0 && hasVisibletasks">&nbsp;</li>
-
-
+          data-ng-if="user.isEditorOrMore() && md.draft != 'y'">&nbsp;</li>
       <li role="menuitem">
         <a data-ng-href=""
            data-ng-if="user.isEditorOrMore() && md.draft != 'y'"
@@ -197,7 +196,7 @@
       </li>
       <li role="menuitem">
         <a data-ng-href=""
-           data-ng-if="user.isEditorOrMore() && md.draft != 'y'"
+           data-ng-if="user.canEditRecord(md) && user.isEditorOrMore() && md.draft != 'y'"
            data-ng-click="mdService.createChild(md)">
           <i class="fa fa-fw fa-sitemap"></i>&nbsp;
           <span data-translate="">createChild</span>

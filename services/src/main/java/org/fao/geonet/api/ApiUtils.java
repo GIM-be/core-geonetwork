@@ -286,6 +286,20 @@ public class ApiUtils {
     }
 
     /**
+     * Check if the current user can takeover the ownership of a record
+     */
+    public static AbstractMetadata canTakeoverRecord(String metadataUuid, HttpServletRequest request) throws Exception {
+        ApplicationContext appContext = ApplicationContextHolder.get();
+        AbstractMetadata metadata = getRecord(metadataUuid);
+        AccessManager accessManager = appContext.getBean(AccessManager.class);
+        if (!accessManager.canTakeover(createServiceContext(request), String.valueOf(metadata.getId()))) {
+            throw new SecurityException(String.format(
+                "You can't take over the ownership of the record with UUID %s", metadataUuid));
+        }
+        return metadata;
+    }
+
+    /**
      * @param img
      * @param outFile
      * @throws IOException

@@ -264,7 +264,7 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
     public AbstractMetadata findOneByUuid(String uuid) {
         AbstractMetadata md = super.findOneByUuid(uuid);
         try {
-            if (md != null && am.canEdit(context, Integer.toString(md.getId()))) {
+            if (md != null && am.canTakeover(context, Integer.toString(md.getId()))) {
                 AbstractMetadata tmp = metadataDraftRepository.findOneByUuid(uuid);
                 if (tmp != null) {
                     md = tmp;
@@ -560,6 +560,7 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
             StatusValue statusValue = statusValueRepository.findOne(status);
 
             for (Integer mdId : metadataIds) {
+                /*
                 MetadataStatus metadataStatus = new MetadataStatus();
 
                 MetadataStatusId mdStatusId = new MetadataStatusId().setStatusId(status).setMetadataId(mdId)
@@ -572,6 +573,13 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
                 List<MetadataStatus> listOfStatusChange = new ArrayList<>(1);
                 listOfStatusChange.add(metadataStatus);
                 sa.onStatusChange(listOfStatusChange);
+                */
+
+                this.metadataStatus.activateWorkflowIfConfigured(
+                    context,
+                    mdId.toString(),
+                    newMetadata.getSourceInfo().getGroupOwner().toString(),
+                    "Editing instance created");
             }
             return String.valueOf(finalId);
         } catch (Throwable t) {

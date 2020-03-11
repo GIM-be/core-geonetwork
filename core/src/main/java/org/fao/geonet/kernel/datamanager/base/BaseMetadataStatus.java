@@ -206,7 +206,7 @@ public class BaseMetadataStatus implements IMetadataStatus {
      * workflow.
      */
     @Override
-    public void activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner) throws Exception {
+    public void activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner, String message) throws Exception {
         if (StringUtils.isEmpty(groupOwner)) {
             return;
         }
@@ -219,9 +219,17 @@ public class BaseMetadataStatus implements IMetadataStatus {
 
         if (WorkflowUtil.isGroupWithEnabledWorkflow(groupName)) {
             setStatus(context, Integer.valueOf(newId), Integer.valueOf(StatusValue.Status.DRAFT), new ISODate(),
-                    String.format("Workflow automatically enabled for record in group %s. Record status is set to %s.",
-                            groupName, StatusValue.Status.DRAFT));
+                    String.format(message, groupName, StatusValue.Status.DRAFT));
         }
+    }
+
+    public void activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner) throws Exception {
+        this.activateWorkflowIfConfigured(
+            context,
+            newId,
+            groupOwner,
+            "Workflow automatically enabled for record in group %s. Record status is set to %s.")
+        ;
     }
 
     /**

@@ -25,6 +25,7 @@ package org.fao.geonet.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.entitylistener.UserEntityListenerManager;
 import org.fao.geonet.domain.converter.BooleanToYNConverter;
@@ -52,6 +53,7 @@ import java.util.*;
 @Cacheable
 @EntityListeners(value = {UserEntityListenerManager.class})
 @SequenceGenerator(name = User.ID_SEQ_NAME, initialValue = 100, allocationSize = 1)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User extends GeonetEntity implements UserDetails {
     public static final String NODE_APPLICATION_CONTEXT_KEY = "jeevesNodeApplicationContext_";
     static final String ID_SEQ_NAME = "user_id_seq";

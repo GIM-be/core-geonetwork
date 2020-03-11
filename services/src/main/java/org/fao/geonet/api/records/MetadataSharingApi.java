@@ -66,6 +66,8 @@ import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataStatus;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
+import org.fao.geonet.kernel.datamanager.base.BaseMetadataUtils;
+import org.fao.geonet.kernel.datamanager.draft.DraftMetadataUtils;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.GroupRepository;
@@ -78,7 +80,6 @@ import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.repository.specification.MetadataValidationSpecs;
 import org.fao.geonet.repository.specification.OperationAllowedSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
-import org.fao.geonet.services.validation.AGIVValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.domain.Specification;
@@ -820,7 +821,7 @@ public class MetadataSharingApi {
         throws Exception {
         MetadataProcessingReport report = new SimpleMetadataProcessingReport();
 
-        AbstractMetadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
+        AbstractMetadata metadata = ApiUtils.canTakeoverRecord(metadataUuid, request);
         try {
             report.setTotalRecords(1);
 
@@ -854,9 +855,11 @@ public class MetadataSharingApi {
                                  List<String> listOfUpdatedRecords, String uuid,
                                  HttpSession session, Boolean approved) throws Exception {
         AbstractMetadata metadata = metadataUtils.findOneByUuid(uuid);
+        AbstractMetadata approvedMetadata = metadata instanceof MetadataDraft ? ((MetadataDraft) metadata).getApprovedVersion(): null;
+
         if (metadata == null) {
             report.incrementNullRecords();
-        } else if (!accessMan.canEdit(
+        } else if (!accessMan.canTakeover(
             serviceContext, String.valueOf(metadata.getId()))) {
             report.addNotEditableMetadataId(metadata.getId());
         } else {
@@ -865,34 +868,11 @@ public class MetadataSharingApi {
             //-- group does which is why we have an ownerGroup (parameter groupid)
             Integer sourceUsr = metadata.getSourceInfo().getOwner();
             Integer sourceGrp = metadata.getSourceInfo().getGroupOwner();
-            Vector<OperationAllowedId> sourcePriv =
-                retrievePrivileges(serviceContext, String.valueOf(metadata.getId()), sourceUsr, sourceGrp);
 
-            // -- Set new privileges for new owner from privileges of the old
-            // -- owner, if none then set defaults
-            if (sourcePriv.size() == 0) {
-                dataManager.copyDefaultPrivForGroup(
-                    serviceContext,
-                    String.valueOf(metadata.getId()),
-                    String.valueOf(groupIdentifier),
-                    false);
-                report.addMetadataInfos(metadata.getId(), String.format(
-                    "No privileges for user '%s' on metadata '%s', so setting default privileges",
-                    sourceUsr, metadata.getUuid()
-                ));
-            } else {
-                for (OperationAllowedId priv : sourcePriv) {
-                    if (sourceGrp != null) {
-                        dataManager.unsetOperation(serviceContext,
-                            metadata.getId(),
-                            sourceGrp,
-                            priv.getOperationId());
-                    }
-                    dataManager.setOperation(serviceContext,
-                        metadata.getId(),
-                        groupIdentifier,
-                        priv.getOperationId());
-                }
+
+            updatePrivileges(groupIdentifier, report, dataManager, serviceContext, sourceUsr, sourceGrp, metadata, true);
+            if (approvedMetadata != null) {
+                updatePrivileges(groupIdentifier, report, dataManager, serviceContext, sourceUsr, sourceGrp, approvedMetadata, true);
             }
 
             Long metadataId = Long.parseLong(ApiUtils.getInternalId(uuid, approved));
@@ -914,9 +894,58 @@ public class MetadataSharingApi {
             dataManager.updateMetadataOwner(metadata.getId(),
                 String.valueOf(userIdentifier),
                 String.valueOf(groupIdentifier));
+
+            if (approvedMetadata != null) {
+                dataManager.updateMetadataOwner(approvedMetadata.getId(),
+                    String.valueOf(userIdentifier),
+                    String.valueOf(groupIdentifier));
+                dataManager.indexMetadata(approvedMetadata.getId() + "", true, null);
+            }
+
             report.addMetadataId(metadata.getId());
             report.incrementProcessedRecords();
             listOfUpdatedRecords.add(metadata.getId() + "");
+        }
+    }
+
+    /**
+     * Set new privileges for new owner from privileges of the old
+     * owner, if none then set defaults
+     */
+    private void updatePrivileges(Integer groupIdentifier,
+                                  MetadataProcessingReport report,
+                                  DataManager dataManager,
+                                  ServiceContext serviceContext,
+                                  Integer sourceUsr, Integer sourceGrp,
+                                  AbstractMetadata metadata, boolean changeReport) throws Exception {
+        Vector<OperationAllowedId> sourcePriv =
+            retrievePrivileges(serviceContext, String.valueOf(metadata.getId()), sourceUsr, sourceGrp);
+        if (sourcePriv.size() == 0) {
+            dataManager.copyDefaultPrivForGroup(
+                serviceContext,
+                String.valueOf(metadata.getId()),
+                String.valueOf(groupIdentifier),
+                false);
+
+            if (changeReport) {
+                report.addMetadataInfos(metadata.getId(), String.format(
+                    "No privileges for user '%s' on metadata '%s', so setting default privileges",
+                    sourceUsr, metadata.getUuid()
+                ));
+            }
+        } else {
+            for (OperationAllowedId priv : sourcePriv) {
+                if (sourceGrp != null) {
+                    dataManager.unsetOperation(serviceContext,
+                        metadata.getId(),
+                        sourceGrp,
+                        priv.getOperationId());
+                }
+                dataManager.setOperation(serviceContext,
+                    metadata.getId(),
+                    groupIdentifier,
+                    priv.getOperationId());
+            }
         }
     }
 

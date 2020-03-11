@@ -150,7 +150,12 @@ public class TransferApi {
         UserSession session = ApiUtils.getUserSession(httpSession);
         Profile myProfile = session.getProfile();
 
+        if (myProfile == Profile.Guest) {
+            throw new SecurityException("You don't have rights to do get the groups for this user");
+        }
+
         List<UserGroupsResponse> list = new ArrayList<>();
+
         if (myProfile == Profile.Administrator || myProfile == Profile.UserAdmin) {
             // add all admins first
             List<User> allAdmin = userRepository.findAllByProfile(Profile.Administrator);
@@ -161,27 +166,37 @@ public class TransferApi {
                     new UserGroupsResponse(u, adminGroup, Profile.Administrator.name())
                 );
             }
-
-            // add all users
-            List<UserGroup> userGroups;
-
-            if (myProfile == Profile.Administrator) {
-                userGroups = userGroupRepository.findAll();
-            } else {
-                List<Integer> myGroups = userGroupRepository.findAll(UserGroupSpecs.hasUserId(session.getUserIdAsInt()))
-                        .stream().map(ug -> ug.getGroup().getId()).collect(Collectors.toList());
-                userGroups = userGroupRepository.findAll(UserGroupSpecs.hasGroupIds(myGroups));
-            }
-
-            for (UserGroup ug : userGroups) {
-                list.add(
-                    new UserGroupsResponse(ug.getUser(), ug.getGroup(), ug.getProfile().name())
-                );
-            }
-            return list;
-        } else {
-            throw new SecurityException("You don't have rights to do get the groups for this user");
         }
+
+        // add all users
+        List<UserGroup> userGroups;
+
+        if (myProfile == Profile.Administrator) {
+            userGroups = userGroupRepository.findAll();
+        } else {
+            List<UserGroup> myGroups = userGroupRepository.findAll(UserGroupSpecs.hasUserId(session.getUserIdAsInt()));
+            List<Integer> userGroupIdsWithPermission = myGroups.stream()
+                .filter(grp -> grp.getProfile() != Profile.Editor)
+                .map(grp -> grp.getGroup().getId())
+                .collect(Collectors.toList());
+            List<UserGroup> userGroupWithoutPermission = myGroups.stream()
+                .filter(grp -> grp.getProfile() == Profile.Editor)
+                .collect(Collectors.toList());
+
+            if (userGroupIdsWithPermission.size() > 0) {
+                userGroups = userGroupRepository.findAll(UserGroupSpecs.hasGroupIds(userGroupIdsWithPermission));
+                userGroups.addAll(userGroupWithoutPermission);
+            } else {
+                userGroups = userGroupWithoutPermission;
+            }
+        }
+
+        for (UserGroup ug : userGroups) {
+            list.add(
+                new UserGroupsResponse(ug.getUser(), ug.getGroup(), ug.getProfile().name())
+            );
+        }
+        return list;
     }
 
     @ApiOperation(

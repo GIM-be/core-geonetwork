@@ -30,6 +30,7 @@ import org.fao.geonet.Constants;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.events.md.MetadataStatusChanged;
+import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
@@ -99,7 +100,6 @@ public abstract class AIVStatusActions implements StatusActions {
      * Initializes the StatusActions class with external info from GeoNetwork.
      *
      * @param context
-     * @param dbms
      */
     public void init(ServiceContext context) throws Exception {
 
@@ -322,8 +322,23 @@ public abstract class AIVStatusActions implements StatusActions {
     @Override
     public boolean statusChangeAllowedByUser(String currentStatusId, String statusId,
                                              AbstractMetadata metadata) throws Exception {
-        return true;
+        AccessManager accessManager = context.getBean(AccessManager.class);
+        boolean changeAllowed = accessManager.canTakeover(context, String.valueOf(metadata.getId()));
+        if (changeAllowed) {
+            if (session.getProfile() == (Profile.Administrator)) {
+                changeAllowed = changeAllowedByAdmin(currentStatusId, statusId);
+            } else if (session.getProfile() == Profile.Reviewer) {
+                changeAllowed = changeAllowedByReviewer(currentStatusId, statusId);
+            } else if (session.getProfile() == Profile.Editor) {
+                changeAllowed = changeAllowedByEditor(currentStatusId, statusId, metadata, accessManager);
+            }
+        }
+        return changeAllowed;
     }
+
+    protected abstract boolean changeAllowedByAdmin(String currentStatusId, String statusId);
+    protected abstract boolean changeAllowedByReviewer(String currentStatusId, String statusId);
+    protected abstract boolean changeAllowedByEditor(String currentStatusId, String statusId, AbstractMetadata metadata, AccessManager accessManager) throws Exception;
 
     /**
      * This apply specific rules depending on status change.
@@ -620,10 +635,8 @@ public abstract class AIVStatusActions implements StatusActions {
      * Process the users and metadata records for emailing notices.
      *
      * @param context      The service context
-     * @param dbms         The dbms
      * @param replyTo      The replyTo email
      * @param replyToDescr The replyTo description configured in the web.xml
-     * @param records      The selected set of records
      * @param subject      Subject to be used for email notices
      * @param status       The status being set
      * @param changeDate   Datestamp of status change
