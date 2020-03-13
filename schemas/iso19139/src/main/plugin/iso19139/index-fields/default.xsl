@@ -376,6 +376,7 @@
               <xsl:variable name="inspireThemeAcronym">
                 <xsl:call-template name="getInspireThemeAcronym">
                   <xsl:with-param name="keyword" select="$keyword"/>
+                  <xsl:with-param name="inspireThemes" select="$inspire-theme"/>
                 </xsl:call-template>
               </xsl:variable>
 
