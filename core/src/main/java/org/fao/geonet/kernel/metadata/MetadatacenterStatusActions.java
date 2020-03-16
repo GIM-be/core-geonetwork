@@ -99,8 +99,11 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
         boolean changeAllowed = true;
         switch (Integer.parseInt(statusId)) {
             case 0: //UNKNOWN
+            case 6: //JUSTCREATED
                 break;
             case 1: //DRAFT
+            case 4: //SUBMITTED
+            case 5: //REJECTED
                 changeAllowed = false;
                 break;
             case 2: //APPROVED
@@ -109,17 +112,10 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                 }
                 break;
             case 3: //RETIRED
+            case 13: //REJECTED_FOR_RETIRE
                 if (!currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
                     changeAllowed = false;
                 }
-                break;
-            case 4: //SUBMITTED
-                changeAllowed = false;
-                break;
-            case 5: //REJECTED
-                changeAllowed = false;
-                break;
-            case 6: //JUSTCREATED
                 break;
             case 7: //SUBMITTED_FOR_AGIV
                 if (!currentStatusId.equals(StatusValue.Status.DRAFT)) {
@@ -150,15 +146,6 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                 }
                 break;
             case 12: //REMOVED
-                if (!currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
-                    changeAllowed = false;
-                }
-                break;
-            case 13: //REJECTED_FOR_RETIRE
-                if (!currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
-                    changeAllowed = false;
-                }
-                break;
             case 14: //REJECTED_FOR_REMOVE
                 if (!currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
                     changeAllowed = false;
@@ -170,7 +157,7 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
         return changeAllowed;
     }
 
-    protected boolean changeAllowedByReviewer(String currentStatusId, String statusId) {
+    protected boolean changeAllowedByReviewer(String currentStatusId, String statusId, boolean bIsDraft) {
         boolean changeAllowed = true;
         if (currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.APPROVED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
             changeAllowed = false;
@@ -181,23 +168,27 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                 case 2: //APPROVED
                 case 3: //RETIRED
                 case 6: //JUSTCREATED
-                case 7: //SUBMITTED_FOR_AGIV
                 case 8: //APPROVED_BY_AGIV
                 case 9: //REJECTED_BY_AGIV
-                case 10: //RETIRED_FOR_AGIV
-                case 11: //REMOVED_FOR_AGIV
                 case 12: //REMOVED
                 case 13: //REJECTED_FOR_RETIRE
                 case 14: //REJECTED_FOR_REMOVE
                     changeAllowed = false;
                     break;
                 case 4: //SUBMITTED
+                case 7: //SUBMITTED_FOR_AGIV
                     if (currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED)) {
                         changeAllowed = false;
                     }
                     break;
                 case 5: //REJECTED
                     if (currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED) || currentStatusId.equals(StatusValue.Status.REJECTED_BY_AGIV)) {
+                        changeAllowed = false;
+                    }
+                    break;
+                case 10: //RETIRED_FOR_AGIV
+                case 11: //REMOVED_FOR_AGIV
+                    if (!currentStatusId.equals(StatusValue.Status.APPROVED)) {
                         changeAllowed = false;
                     }
                     break;
