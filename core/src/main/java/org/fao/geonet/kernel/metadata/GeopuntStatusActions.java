@@ -92,6 +92,10 @@ public class GeopuntStatusActions extends AIVStatusActions {
     protected boolean changeAllowedByAdmin(String currentStatusId, String statusId) {
         boolean changeAllowed = true;
         switch (Integer.parseInt(statusId)) {
+            case 0: //UNKNOWN
+            case 3: //RETIRED
+            case 6: //JUSTCREATED
+                break;
             case 1: //DRAFT
             case 4: //SUBMITTED
             case 5: //REJECTED
@@ -102,18 +106,16 @@ public class GeopuntStatusActions extends AIVStatusActions {
                     changeAllowed = false;
                 }
                 break;
-            case 3: //RETIRED
-            case 6: //JUSTCREATED
-                break;
             default:
                 break;
         }
         return changeAllowed;
     }
 
-    protected boolean changeAllowedByReviewer(String currentStatusId, String statusId) {
+    protected boolean changeAllowedByReviewer(String currentStatusId, String statusId, boolean bIsDraft) {
         boolean changeAllowed = true;
         switch (Integer.parseInt(statusId)) {
+            case 0: //UNKNOWN
             case 1: //DRAFT
             case 6: //JUSTCREATED
                 changeAllowed = false;
@@ -143,6 +145,7 @@ public class GeopuntStatusActions extends AIVStatusActions {
             changeAllowed = false;
         } else {
             switch (Integer.parseInt(statusId)) {
+                case 0: //UNKNOWN
                 case 1: //DRAFT
                 case 2: //APPROVED
                 case 3: //RETIRED

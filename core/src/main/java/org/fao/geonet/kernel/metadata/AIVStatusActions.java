@@ -45,6 +45,8 @@ import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataValidationRepository;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.UserRepository;
+import org.fao.geonet.repository.specification.MetadataValidationSpecs;
+import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.util.MailSender;
 import org.fao.geonet.utils.BinaryFile;
 import org.fao.geonet.utils.IO;
@@ -52,6 +54,7 @@ import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specifications;
 
 import java.io.File;
 import java.io.InputStream;
@@ -65,6 +68,7 @@ import java.util.regex.Pattern;
 
 import static org.fao.geonet.kernel.setting.Settings.*;
 import static org.fao.geonet.repository.specification.UserGroupSpecs.hasUserId;
+import static org.springframework.data.jpa.domain.Specifications.where;
 
 public abstract class AIVStatusActions implements StatusActions {
 
@@ -267,6 +271,7 @@ public abstract class AIVStatusActions implements StatusActions {
                     applyRulesForStatusChange(status, metadata, currentStatusId, unchanged, notificationProperties);
                     if (!unchanged.contains(mid)) {
 
+                        notificationProperties.put("currentStatus", currentStatusId);
                         // --- inform content reviewers if the status is submitted
                         try {
                             getUserToNotify(statusId, metadata, currentStatusId, notificationProperties, recordsToBeDeleted, changedMetadataIdsToInformEditors, changedMetadataIdsToInformReviewers, changedMetadataIdsToInformAdministrators);
@@ -325,10 +330,11 @@ public abstract class AIVStatusActions implements StatusActions {
         AccessManager accessManager = context.getBean(AccessManager.class);
         boolean changeAllowed = accessManager.canTakeover(context, String.valueOf(metadata.getId()));
         if (changeAllowed) {
+            boolean bIsDraft = metadata instanceof MetadataDraft;
             if (session.getProfile() == (Profile.Administrator)) {
                 changeAllowed = changeAllowedByAdmin(currentStatusId, statusId);
             } else if (session.getProfile() == Profile.Reviewer) {
-                changeAllowed = changeAllowedByReviewer(currentStatusId, statusId);
+                changeAllowed = changeAllowedByReviewer(currentStatusId, statusId, bIsDraft);
             } else if (session.getProfile() == Profile.Editor) {
                 changeAllowed = changeAllowedByEditor(currentStatusId, statusId, metadata, accessManager);
             }
@@ -337,7 +343,7 @@ public abstract class AIVStatusActions implements StatusActions {
     }
 
     protected abstract boolean changeAllowedByAdmin(String currentStatusId, String statusId);
-    protected abstract boolean changeAllowedByReviewer(String currentStatusId, String statusId);
+    protected abstract boolean changeAllowedByReviewer(String currentStatusId, String statusId, boolean bIsDraft);
     protected abstract boolean changeAllowedByEditor(String currentStatusId, String statusId, AbstractMetadata metadata, AccessManager accessManager) throws Exception;
 
     /**
@@ -408,93 +414,8 @@ public abstract class AIVStatusActions implements StatusActions {
      * @throws Exception
      */
     protected boolean statusChangeAllowed(AbstractMetadata metadata) throws Exception {
-
-        // AGIV: trigger validation when status is changed. If one of the
-        // validations fails, the change is not allowed (depending on which
-        // logical node this is).
-        //
-        // heikki: use non-boolean doValidate, to get errorreport in session (we
-        // need to know which validation failed exactly)
-        // OR use the other doValidate and then here retrieve validationresult
-        // from db <-- better because errorreport is too detailed, we want the
-        // summary here
-
-        // the workspace md should be validated if the current status is draft
-        // or rejected and the status to be set is submitted; OR
-        // if the current status is submitted and the status to be set is
-        // approved
-
-
-        // if the md is not valid, analyze why not and allow or disallow status
-        // change depending on what exactly was not valid and which logical node
-        // this is
-
         boolean valid = metadataValidator.doValidate(metadata, context.getLanguage());
-        if (!valid) {
-            // retrieve validationreport from db
-            // this is a list of <MetadataValidation> with <valtype>, <status>,
-            // <tested>, and <failed> attribute
-            List<MetadataValidation> validationInfos = metadataValidationRepository
-                .findAllById_MetadataId(metadata.getId());
-
-            // if this is AGIV Edit or the AGIV View Node:
-            // Only when the metadata validates against the ISO schemas and
-            // schematrons, it can be set to
-            // "Submitted to AGIV",
-            // "Submitted to the Principal Editor", and
-            // "Approved by AGIV" states.
-            // In case these validations do not succeed, the metadata is
-            // returned to the "Draft" state and the
-            // user informed.
-            // Even if a metadata record does not validate against the INSPIRE
-            // and GDI-Vlaanderen Best Practices
-            // schematrons, it can be set to the above mentioned states (these
-            // both checks are not blocking).
-
-            // GDI Vlaanderen Node:
-            // Only be set to "Submitted" or "Approved" when the metadata
-            // validates against the ISO schemas and
-            // schematrons. If a metadata record's status is changed, the
-            // metadata validation (all measures)
-            // will be triggered. Metadata records only get the "Approved" or
-            // "Submitted" status if the ISO XSD
-            // and schematron validation was performed OK.
-            // INSPIRE and GDI-Vlaanderen Best Practices validity are given for
-            // information only, metadata can
-            // be saved and set to the above mentioned states even in case that
-            // the validation for these 2
-            // measures was not successful.
-
-            // INSPIRE Node:
-            // only gets its metadata through Harvesting. INSPIRE compliance is
-            // enforced by the validation in
-            // the CSW INSPIRE harvester.
-
-            // heikki: so in short, the status change is only allowed if ISO XSD
-            // and schematron validation has
-            // passed; the same for all logical nodes !
-
-            for (MetadataValidation validationInfo : validationInfos) {
-                // check that xsd validation succeeded
-                if (validationInfo.getId().getValidationType().equals("xsd")) {
-                    if (validationInfo.getStatus() != MetadataValidationStatus.VALID) {
-                        context.info("Metadata with id " + metadata.getId()
-                            + " failed XSD validation: status change not allowed");
-                        return false;
-                    }
-                } else {
-                    // check if the record is valid on mandatory schematron
-                    if (isMandatorySchematron(validationInfo.getId().getValidationType())) {
-                        if (validationInfo.getStatus() != MetadataValidationStatus.VALID) {
-                            context.info("Metadata with id " + metadata.getId()
-                                + " failed ISO Schematron and/or geonetwork Schematron validation: status change not allowed");
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        return true;
+        return (metadataValidationRepository.count(MetadataValidationSpecs.isInvalidAndRequiredForMetadata(metadata.getId())) == 0);
     }
 
     /**
@@ -701,7 +622,18 @@ public abstract class AIVStatusActions implements StatusActions {
         user.addContent(new Element("surname").setText(context.getUserSession().getSurname()));
         user.addContent(new Element("name").setText(context.getUserSession().getName()));
         Element group = new Element("group");
-        group.addContent(new Element("description").setText(context.getUserSession().getOrganisation()));
+        // Retrieve user groups
+        String groupName = null;
+        UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
+        List<UserGroup> userGroups = userGroupRepository.findAll(UserGroupSpecs.hasUserId(context.getUserSession().getUserIdAsInt()));
+        for (UserGroup ug : userGroups) {
+            Group g = ug.getGroup();
+            groupName = (groupName == null ? g.getName() : groupName + ", " + g.getName());
+        }
+        if (groupName==null) {
+            groupName = context.getUserSession().getOrganisation();
+        }
+        group.setText(groupName);
         Element root = new Element("root");
         root.addContent(user);
         root.addContent(group);

@@ -224,10 +224,12 @@ public class MetadataEditingApi {
 
         // Checks when workflow enabled if the user is allowed
         boolean isEnabledWorkflow = sm.getValueAsBool(Settings.METADATA_WORKFLOW_ENABLE);
+        // Editor can always edit a record with another state as the Draf state when he has the privileges
+        /*
         if (isEnabledWorkflow && isEditor && !statusRepository.canEditorEdit(metadata.getId())) {
             throw new NotAllowedException("Editing is allowed only in Draft state for the current profile.");
         }
-
+        */
         // TODO: Use map only to avoid this conversion
         Log.trace(Geonet.DATA_MANAGER, " > Getting parameters from request");
         Element params = new Element("request");

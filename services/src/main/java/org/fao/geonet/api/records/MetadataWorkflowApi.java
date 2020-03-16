@@ -199,17 +199,18 @@ public class MetadataWorkflowApi {
     public MetadataWorkflowStatusResponse getStatus(
             @ApiParam(value = API_PARAM_RECORD_UUID, required = true) @PathVariable String metadataUuid,
             HttpServletRequest request) throws Exception {
-        AbstractMetadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
+        AbstractMetadata metadata = ApiUtils.canTakeoverRecord(metadataUuid, request);
         ApplicationContext appContext = ApplicationContextHolder.get();
         Locale locale = languageUtils.parseAcceptLanguage(request.getLocales());
         ServiceContext context = ApiUtils.createServiceContext(request, locale.getISO3Language());
 
         // --- only allow the owner of the record to set its status
+        /*
         if (!accessManager.isOwner(context, String.valueOf(metadata.getId()))) {
             throw new SecurityException(String.format(
                     "Only the owner of the metadata can get the status. User is not the owner of the metadata"));
         }
-
+        */
         MetadataStatus recordStatus = metadataStatus.getStatus(metadata.getId());
 
         List<StatusValue> elStatus = statusValueRepository.findAllByType(StatusValueType.workflow);
@@ -251,7 +252,7 @@ public class MetadataWorkflowApi {
     public void setStatus(@ApiParam(value = API_PARAM_RECORD_UUID, required = true) @PathVariable String metadataUuid,
             @ApiParam(value = "Metadata status", required = true) @RequestBody(required = true) MetadataStatusParameter status,
             HttpServletRequest request) throws Exception {
-        AbstractMetadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
+        AbstractMetadata metadata = ApiUtils.canTakeoverRecord(metadataUuid, request);
         ServiceContext context = ApiUtils.createServiceContext(request,
                 languageUtils.getIso3langCode(request.getLocales()));
 
@@ -263,22 +264,25 @@ public class MetadataWorkflowApi {
         }
 
         // --- only allow the owner of the record to set its status
+        /*
         if (!accessManager.isOwner(context, String.valueOf(metadata.getId()))) {
             throw new SecurityException(String.format(
                     "Only the owner of the metadata can set the status of this record. User is not the owner of the metadata."));
         }
-
+        */
         boolean isAllowedSubmitApproveInvalidMd = settingManager
                 .getValueAsBool(Settings.METADATA_WORKFLOW_ALLOW_SUBMIT_APPROVE_INVALID_MD);
         if (((status.getStatus() == Integer.parseInt(StatusValue.Status.SUBMITTED))
                 || (status.getStatus() == Integer.parseInt(StatusValue.Status.APPROVED)))
                 && !isAllowedSubmitApproveInvalidMd) {
-
+            // Validatioin is done in the onStatusChange depending on the status to be set
+            /*
             boolean isInvalid = MetadataUtils.retrieveMetadataValidationStatus(metadata, context);
 
             if (isInvalid) {
                 throw new Exception("Metadata is invalid: can't be submitted or approved");
             }
+            */
         }
 
         // --- use StatusActionsFactory and StatusActions class to
