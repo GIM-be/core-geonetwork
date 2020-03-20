@@ -3310,6 +3310,22 @@
           <section xpath="gmd:MD_DataIdentification/gmd:citation"/>
           <section xpath="gmd:MD_DataIdentification/gmd:abstract"/>
           <section xpath="gmd:MD_DataIdentification/gmd:purpose"/>
+          <!-- For dataset and dataset series -->
+          <action type="add" name="resourceConstraints" or="resourceConstraints"
+                  in="gmd:MD_DataIdentification"
+                  addDirective="data-gn-directory-entry-selector">
+            <directiveAttributes
+              data-template-add-action="false"
+              data-search-action="true"
+              data-popup-action="false"
+              data-filter='{"_root": "gmd:resourceConstraints", "_typeResourceConstraints": "MD_Constraints"}'
+              data-insert-modes="text"
+              data-template-type="resourceConstraints"
+              data-transformation="rsrcConstrTransform"/>
+          </action>
+          <section name="gmd:resourceConstraints" per="gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_Constraints]">
+            <section xpath="gmd:MD_Constraints"/>
+          </section>
           <section xpath="gmd:MD_DataIdentification/gmd:status"/>
           <section xpath="gmd:MD_DataIdentification/gmd:pointOfContact"/>
           <section xpath="gmd:MD_DataIdentification/gmd:resourceMaintenance"/>
@@ -3329,6 +3345,21 @@
           <section xpath="srv:SV_ServiceIdentification/gmd:citation"/>
           <section xpath="srv:SV_ServiceIdentification/gmd:abstract"/>
           <section xpath="srv:SV_ServiceIdentification/gmd:purpose"/>
+          <action type="add" name="resourceConstraints" or="resourceConstraints"
+                  in="srv:SV_ServiceIdentification"
+                  addDirective="data-gn-directory-entry-selector">
+            <directiveAttributes
+              data-template-add-action="false"
+              data-search-action="true"
+              data-popup-action="false"
+              data-filter='{"_root": "gmd:resourceConstraints", "_typeResourceConstraints": "MD_Constraints"}'
+              data-insert-modes="text"
+              data-template-type="resourceConstraints"
+              data-transformation="rsrcConstrTransform"/>
+          </action>
+          <section name="gmd:resourceConstraints" per="srv:SV_ServiceIdentification/gmd:resourceConstraints[gmd:MD_Constraints]">
+            <section xpath="gmd:MD_Constraints"/>
+          </section>
           <section xpath="srv:SV_ServiceIdentification/gmd:status"/>
           <section xpath="srv:SV_ServiceIdentification/gmd:pointOfContact"/>
           <section xpath="srv:SV_ServiceIdentification/gmd:resourceMaintenance"/>
@@ -3608,13 +3639,13 @@
               data-template-add-action="false"
               data-search-action="true"
               data-popup-action="false"
-              data-filter='{"_root": "gmd:resourceConstraints"}'
+              data-filter='{_root": "gmd:resourceConstraints","_typeResourceConstraints": "MD_LegalConstraints or MD_SecurityConstraints"}'
               data-insert-modes="text"
               data-template-type="resourceConstraints"
               data-transformation="rsrcConstrTransform"/>
           </action>
           <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints">
-            <section xpath="gmd:MD_Constraints"/>
+            <!-- section xpath="gmd:MD_Constraints"/-->
             <section name="gmd:MD_LegalConstraints" per="gmd:MD_LegalConstraints">
               <section xpath="gmd:useLimitation" or="useLimitation" in=""/>
               <section xpath="gmd:accessConstraints" or="accessConstraints" in=""/>
