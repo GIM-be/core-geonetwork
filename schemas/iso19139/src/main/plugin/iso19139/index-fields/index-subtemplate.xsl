@@ -291,6 +291,11 @@
                }"
            store="true" index="true"/>
 
+    <Field name="_typeResourceConstraints"
+           string="{local-name(gmd:*[1])}"
+           store="true" index="true"/>
+    <xsl:message select="concat('Indexing constraints of type: ', local-name(gmd:*[1]))"/>
+
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
   </xsl:template>
 
