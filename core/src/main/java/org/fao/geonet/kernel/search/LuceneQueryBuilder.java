@@ -343,9 +343,6 @@ public class LuceneQueryBuilder {
             templateCriteriaAdded = true;
         }
 
-        // Search only for non-draft not set by search criteria before
-        draftCriteria(null, query); 
-
         if (StringUtils.isNotEmpty(_language)) {
             if (Log.isDebugEnabled(Geonet.LUCENE))
                 Log.debug(Geonet.LUCENE, "adding locale query for language " + _language);
@@ -652,7 +649,7 @@ public class LuceneQueryBuilder {
      * Adds draft to query.
      */
     private void draftCriteria(String fieldValue, BooleanQuery query) {
-    	
+
         if (!draftCriteriaAdded) {
             BooleanClause.Occur templateOccur = LuceneUtils.convertRequiredAndProhibitedToOccur(true, false);
 
@@ -995,40 +992,80 @@ public class LuceneQueryBuilder {
      * Add search privilege criteria to a query.
      *
      * @param luceneQueryInput user and system input
-     * @param query            query being built
+     * @param query query being built
      */
     private void addPrivilegeQuery(LuceneQueryInput luceneQueryInput, BooleanQuery query) {
         // Set user groups privileges
+
+        BooleanQuery privilegeQuery = new BooleanQuery();
+        boolean privilegeQueryEmpty;
+
+        //
+        // create query for non-workspace documents
+        //
+        BooleanQuery nonDraftQuery = new BooleanQuery();
+        boolean selectDraftDocs = false;
+        boolean nonDraftQueryEmpty = createDraftQuery(nonDraftQuery, luceneQueryInput, selectDraftDocs);
+
+        BooleanClause.Occur orOccur = LuceneUtils.convertRequiredAndProhibitedToOccur(false, false);
+        if (!nonDraftQueryEmpty) {
+            privilegeQuery.add(nonDraftQuery, orOccur);
+        }
+
+        //
+        // create query for workspace documents
+        //
+        BooleanQuery draftQuery = new BooleanQuery();
+        selectDraftDocs = true;
+        boolean draftQueryEmpty = createDraftQuery(draftQuery, luceneQueryInput, selectDraftDocs);
+
+        if (!draftQueryEmpty) {
+            privilegeQuery.add(draftQuery, orOccur);
+        }
+
+        privilegeQueryEmpty = nonDraftQueryEmpty && draftQueryEmpty;
+
+        // Add the resulting privilege part to the query
+        if(!privilegeQueryEmpty) {
+            BooleanClause.Occur privilegeOccur = LuceneUtils.convertRequiredAndProhibitedToOccur(true, false);
+            query.add(privilegeQuery, privilegeOccur);
+        }
+
+    }
+
+    /**
+     * Add search privilege criteria to a query.
+     *
+     * @param groupsQuery            query being built
+     * @param luceneQueryInput user and system input
+     * @return boolean
+     */
+    private boolean createGroupsQuery(BooleanQuery groupsQuery, LuceneQueryInput luceneQueryInput, boolean selectDraftDocs, boolean selectEditableGroupsOnly) {
+        // Set user groups privileges
         Set<String> groups = luceneQueryInput.getGroups();
         Set<String> editableGroups = luceneQueryInput.getEditableGroups();
-        BooleanQuery groupsQuery = new BooleanQuery();
         boolean groupsQueryEmpty = true;
         BooleanClause.Occur groupOccur = LuceneUtils.convertRequiredAndProhibitedToOccur(false, false);
 
-        if (!CollectionUtils.isEmpty(editableGroups)) {
-        	Log.trace(Geonet.SEARCH_ENGINE, "We have editable groups to add");
-            for (String group : editableGroups) {
-                if (StringUtils.isNotBlank(group)) {
-                	Log.trace(Geonet.SEARCH_ENGINE, " > Group: " + group);
-                    // add to edit
-                    TermQuery editQuery = new TermQuery(new Term(LuceneIndexField._OP2, group.trim()));
-                    BooleanClause editClause = new BooleanClause(editQuery, groupOccur);
-                    groupsQueryEmpty = false;
-                    groupsQuery.add(editClause);
-                }
-            }
-        }
-        
         if (!CollectionUtils.isEmpty(groups)) {
-        	Log.trace(Geonet.SEARCH_ENGINE, "We have viewable groups to add");
+        	Log.trace(Geonet.SEARCH_ENGINE, "We have groups to add");
             for (String group : groups) {
                 if (StringUtils.isNotBlank(group)) {
-                	Log.trace(Geonet.SEARCH_ENGINE, " > Group: " + group);
-                    // add to view
-                    TermQuery viewQuery = new TermQuery(new Term(LuceneIndexField._OP0, group.trim()));
-                    BooleanClause viewClause = new BooleanClause(viewQuery, groupOccur);
-                    groupsQueryEmpty = false;
-                    groupsQuery.add(viewClause);
+                    Log.trace(Geonet.SEARCH_ENGINE, " > Group: " + group);
+                    boolean isGroupEditable = editableGroups.contains(group);
+                    if (!isGroupEditable && !selectDraftDocs && !selectEditableGroupsOnly) {
+                        // add to view
+                        TermQuery viewQuery = new TermQuery(new Term(LuceneIndexField._OP0, group.trim()));
+                        BooleanClause viewClause = new BooleanClause(viewQuery, groupOccur);
+                        groupsQueryEmpty = false;
+                        groupsQuery.add(viewClause);
+                    } else if (isGroupEditable) {
+                        // add to edit
+                        TermQuery editQuery = new TermQuery(new Term(LuceneIndexField._OP2, group.trim()));
+                        BooleanClause editClause = new BooleanClause(editQuery, groupOccur);
+                        groupsQueryEmpty = false;
+                        groupsQuery.add(editClause);
+                    }
                 }
             }
         }
@@ -1060,12 +1097,52 @@ public class LuceneQueryBuilder {
             groupsQuery.add(adminClause);
         }
 
-        // Add the privilege part of the query
-        if (!groupsQueryEmpty) {
-            BooleanClause.Occur groupsOccur = LuceneUtils.convertRequiredAndProhibitedToOccur(true, false);
-            BooleanClause groupsClause = new BooleanClause(groupsQuery, groupsOccur);
-            query.add(groupsClause);
+        return groupsQueryEmpty;
+    }
+
+    private boolean createDraftQuery(BooleanQuery draftOrPublicQuery, LuceneQueryInput luceneQueryInput, boolean selectDraftDocs) {
+        BooleanQuery groupsQuery = new BooleanQuery();
+        boolean groupsQueryEmpty = createGroupsQuery(groupsQuery, luceneQueryInput, selectDraftDocs, false) ;
+        BooleanClause.Occur mustOccur = LuceneUtils.convertRequiredAndProhibitedToOccur(true, false);
+        BooleanClause.Occur mustNotOccur = LuceneUtils.convertRequiredAndProhibitedToOccur(false, true);
+        if(!groupsQueryEmpty) {
+            BooleanClause groupsClause = new BooleanClause(groupsQuery, BooleanClause.Occur.MUST);
+            draftOrPublicQuery.add(groupsClause);
+            if(!selectDraftDocs) {
+                BooleanQuery notDraftQuery = new BooleanQuery();
+                addSeparatedTextField("n or e", OR_SEPARATOR, LuceneIndexField.DRAFT, (BooleanQuery) notDraftQuery);
+                draftOrPublicQuery.add(notDraftQuery, mustOccur);
+
+                if(StringUtils.isNotEmpty(luceneQueryInput.getOwner())) {
+                    //
+                    // this ensures that non-workspace docs are shown if workspace docs exist but you have no edit rights to them
+                    //
+                    BooleanQuery ownerQuery = new BooleanQuery();
+
+                    BooleanQuery editGroupsQuery = new BooleanQuery();
+                    boolean editableGroupsQueryEmpty = createGroupsQuery(editGroupsQuery, luceneQueryInput, selectDraftDocs, true) ;
+                    BooleanClause editGroupsClause = new BooleanClause(editGroupsQuery, mustOccur);
+
+                    TermQuery isLockedQuery = new TermQuery(new Term(LuceneIndexField.DRAFT, "e"));
+                    BooleanClause isLockedClause = new BooleanClause(isLockedQuery, mustOccur);
+
+                    if (!editableGroupsQueryEmpty) {
+                        ownerQuery.add(editGroupsClause);
+                        ownerQuery.add(isLockedClause);
+                        draftOrPublicQuery.add(ownerQuery, mustNotOccur);
+                    }
+                }
+            } else {
+                BooleanQuery draftQuery = new BooleanQuery();
+                Set<String> draftValues = luceneQueryInput.getSearchCriteria().get(LuceneIndexField.DRAFT);
+                addSeparatedTextField(draftValues==null ? "n or y" : StringUtils.join(draftValues," or "), OR_SEPARATOR, LuceneIndexField.DRAFT, (BooleanQuery) draftQuery);
+                draftOrPublicQuery.add(draftQuery, mustOccur);
+
+                //TermQuery isLockedQuery = new TermQuery(new Term(LuceneIndexField.DRAFT, "e"));
+                //draftOrPublicQuery.add(isLockedQuery, mustOccur);
+            }
         }
+        return groupsQueryEmpty;
     }
 
     /**
