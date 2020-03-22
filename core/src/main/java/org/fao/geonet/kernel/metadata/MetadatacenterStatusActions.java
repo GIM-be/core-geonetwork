@@ -187,8 +187,11 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                     }
                     break;
                 case 10: //RETIRED_FOR_AGIV
+                    if (bIsDraft || currentStatusId.equals(StatusValue.Status.RETIRED) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
+                        changeAllowed = false;
+                    }
                 case 11: //REMOVED_FOR_AGIV
-                    if (!currentStatusId.equals(StatusValue.Status.APPROVED)) {
+                    if (bIsDraft || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
                         changeAllowed = false;
                     }
                     break;

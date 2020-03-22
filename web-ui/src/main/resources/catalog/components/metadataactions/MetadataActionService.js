@@ -498,11 +498,13 @@
 
     function getAllowedStatusList(md, user) {
       var allowedStatusList = [];
-      Object.keys(sv).forEach(function (key) {
-        if (getStatusAllowed(sv[key], md, user)) {
-          allowedStatusList.push(sv[key]);
-        }
-      });
+      if (md!=null && md.draft!='e') {
+        Object.keys(sv).forEach(function (key) {
+          if (getStatusAllowed(sv[key], md, user)) {
+            allowedStatusList.push(sv[key]);
+          }
+        });
+      }
       return allowedStatusList;
     }
 
@@ -591,6 +593,7 @@
       if ([sv.SUBMITTED_FOR_AGIV, sv.APPROVED_BY_AGIV, sv.RETIRED_FOR_AGIV, sv.REMOVED_FOR_AGIV].includes(currentStatus)) {
         changeAllowed = false;
       } else {
+        var bDraftExists = (md!=null && md!='n');
         switch (status) {
           //case sv.UNKNOWN:
           case sv.DRAFT:
@@ -616,8 +619,12 @@
             }
             break;
           case sv.RETIRED_FOR_AGIV:
+            if (bDraftExists || [sv.RETIRED, sv.REMOVED_FOR_AGIV].includes(currentStatus)) {
+              changeAllowed = false;
+            }
+            break;
           case sv.REMOVED_FOR_AGIV:
-            if (![sv.APPROVED].includes(currentStatus)) {
+            if (bDraftExists || [sv.RETIRED_FOR_AGIV].includes(currentStatus)) {
               changeAllowed = false;
             }
             break;
@@ -681,11 +688,13 @@
 
     function getAllowedStatusList(md, user) {
       var allowedStatusList = [];
-      Object.keys(sv).forEach(function(key) {
-        if (getStatusAllowed(sv[key], md, user)) {
-          allowedStatusList.push(sv[key]);
-        }
-      });
+      if (md!=null && md.draft!='e') {
+        Object.keys(sv).forEach(function (key) {
+          if (getStatusAllowed(sv[key], md, user)) {
+            allowedStatusList.push(sv[key]);
+          }
+        });
+      }
       return allowedStatusList;
     }
 
