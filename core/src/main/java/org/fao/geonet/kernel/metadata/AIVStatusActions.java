@@ -625,7 +625,8 @@ public abstract class AIVStatusActions implements StatusActions {
         // Retrieve user groups
         String groupName = null;
         UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
-        List<UserGroup> userGroups = userGroupRepository.findAll(UserGroupSpecs.hasUserId(context.getUserSession().getUserIdAsInt()));
+        Specifications spec = where(UserGroupSpecs.hasProfile(context.getUserSession().getProfile())).and(UserGroupSpecs.hasUserId(context.getUserSession().getUserIdAsInt()));
+        List<UserGroup> userGroups = userGroupRepository.findAll(spec);
         for (UserGroup ug : userGroups) {
             Group g = ug.getGroup();
             groupName = (groupName == null ? g.getName() : groupName + ", " + g.getName());
