@@ -436,9 +436,9 @@
    * gn-transfer-md-owner attribute
    */
   module.directive('gnTransferOwnership', [
-    '$translate', '$http', 'gnHttp', '$rootScope',
+    '$translate', '$http', 'gnHttp', '$rootScope', '$window',
     'gnUtilityService',
-    function($translate, $http, gnHttp, $rootScope,
+    function($translate, $http, gnHttp, $rootScope, $window,
              gnUtilityService) {
       return {
         restrict: 'A',
@@ -527,6 +527,7 @@
                       }
                       scope.$emit('TransferOwnershipDone', true);
                       scope.processReport = null;
+                      $window.location.reload();
                     }
                   }, scope, 'TransferOwnershipDone');
                 });
