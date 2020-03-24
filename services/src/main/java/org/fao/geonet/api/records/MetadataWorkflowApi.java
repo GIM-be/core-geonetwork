@@ -299,13 +299,13 @@ public class MetadataWorkflowApi {
         metadataIndexer.indexMetadata(String.valueOf(metadata.getId()), true, null);
 
         if(unchanged.size() > 0 ) {
-            StringBuilder messageBuilder = new StringBuilder("Could not change status for records with ID(s) : </br>");
-            for(Integer uc : unchanged) {
-                messageBuilder.append("- ");
-                messageBuilder.append(uc);
-                messageBuilder.append("</br>");
-            }
-            throw new SecurityException(messageBuilder.toString());
+            // StringBuilder messageBuilder = new StringBuilder("Could not change status for records with ID(s) : </br>");
+            // for(Integer uc : unchanged) {
+            //     messageBuilder.append("- ");
+            //     messageBuilder.append(uc);
+            //     messageBuilder.append("</br>");
+            // }
+            throw new SecurityException("statusChangeImpossible");
         }
     }
 
