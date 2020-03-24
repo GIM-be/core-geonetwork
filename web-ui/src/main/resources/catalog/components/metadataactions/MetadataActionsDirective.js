@@ -97,31 +97,37 @@
           };
 
 
-          scope.updateStatus = function() {
+          scope.updateStatus = function () {
             // Assign task owner id if needed
             if (scope.newStatus.owner) {
               scope.newStatus.owner = scope.newStatus.owner.id;
             }
             return $http.put('../api/records/' + metadataId +
-                '/status', scope.newStatus
+              '/status', scope.newStatus
             ).then(
-                function(response) {
-                  gnMetadataManager.updateMdObj(scope.md);
-                  scope.$emit('metadataStatusUpdated', true);
-                  scope.$emit('StatusUpdated', {
-                    msg: $translate.instant(
-                       'metadataStatusUpdatedWithNoErrors'),
-                    timeout: 2,
-                    type: 'success'});
-                }, function(response) {
-                  // scope.$emit('metadataStatusUpdated', false);
-                  scope.$emit('StatusUpdated', {
-                    title: $translate.instant('metadataStatusUpdatedErrors'),
-                    error: response.data,
-                    timeout: 0,
-                    type: 'danger'
-                  });
+              function (response) {
+                gnMetadataManager.updateMdObj(scope.md);
+                scope.$emit('metadataStatusUpdated', true);
+                scope.$emit('StatusUpdated', {
+                  msg: $translate.instant(
+                    'metadataStatusUpdatedWithNoErrors'),
+                  timeout: 2,
+                  type: 'success'
                 });
+              }, function (response) {
+                // scope.$emit('metadataStatusUpdated', false);
+                var title = $translate.instant('metadataStatusUpdatedErrors');
+                var error = response.data;
+                error.message = title;
+                error.description = $translate.instant(error.description);
+
+                scope.$emit('StatusUpdated', {
+                  title: title,
+                  error: error,
+                  timeout: 0,
+                  type: 'danger'
+                });
+              });
           };
 
           var statusApproved = 2;

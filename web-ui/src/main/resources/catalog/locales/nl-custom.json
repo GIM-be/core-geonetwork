@@ -54,5 +54,6 @@
   "mdStatus-11": "Ingediend voor verwijderen",
   "mdStatus-12": "Verwijderd",
   "mdStatus-13": "Afgekeurd door validator Informatie Vlaanderen en niet gedepubliceerd",
-  "mdStatus-14": "Afgekeurd door validator Informatie Vlaanderen en niet verwijderd"
+  "mdStatus-14": "Afgekeurd door validator Informatie Vlaanderen en niet verwijderd",
+  "statusChangeImpossible": "De statuswijziging is niet gelukt aangezien u niet de rechten hebt of het metadatarecord niet gevalideerd kon worden. Editeer het metadatarecord om de validatiefouten te zien."
 }
