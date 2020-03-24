@@ -3639,7 +3639,7 @@
               data-template-add-action="false"
               data-search-action="true"
               data-popup-action="false"
-              data-filter='{_root": "gmd:resourceConstraints","_typeResourceConstraints": "MD_LegalConstraints or MD_SecurityConstraints"}'
+              data-filter='{"_root": "gmd:resourceConstraints","_typeResourceConstraints": "MD_LegalConstraints or MD_SecurityConstraints"}'
               data-insert-modes="text"
               data-template-type="resourceConstraints"
               data-transformation="rsrcConstrTransform"/>
@@ -3676,7 +3676,7 @@
               data-template-add-action="false"
               data-search-action="true"
               data-popup-action="false"
-              data-filter='{_root": "gmd:resourceConstraints","_typeResourceConstraints": "MD_LegalConstraints or MD_SecurityConstraints"}'
+              data-filter='{"_root": "gmd:resourceConstraints","_typeResourceConstraints": "MD_LegalConstraints or MD_SecurityConstraints"}'
               data-insert-modes="text"
               data-template-type="resourceConstraints"
               data-transformation="rsrcConstrTransform"/>
