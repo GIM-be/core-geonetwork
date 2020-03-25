@@ -61,7 +61,7 @@
             <a class="btn btn-default"
                data-ng-show="user.canEditRecord(md) && md.isTemplate != 's' && (user.isReviewerOrMore() || md.mdStatus != 4 || !isMdWorkflowEnable) && md.draft != 'e'"
                data-gn-click-and-spin="deleteRecord(md)"
-               data-gn-confirm-click="{{'deleteRecordConfirm' | translate:md}}"
+               data-gn-confirm-click="{{(md.draft != 'y') ? 'deleteRecordConfirm' : 'deleteWorkingCopyRecordConfirm' | translate:md}}"
                title="{{'delete' | translate}}">
               <i class="fa fa-times text-danger"></i>
             </a>
