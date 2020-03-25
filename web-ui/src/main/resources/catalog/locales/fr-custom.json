@@ -30,5 +30,6 @@
   "mdStatus-12": "Enlevé",
   "mdStatus-13": "Rejeté par le validateur d'Informatie Vlaanderen et non publié",
   "mdStatus-14": "Rejeté par le validateur d'Informatie Vlaanderen et non supprimé",
-  "statusChangeImpossible": "Le changement de statut a échoué car vous ne disposez pas des droits ou l'enregistrement de métadonnées n'a pas pu être validé. Modifiez l'enregistrement de métadonnées pour voir les erreurs de validation."
+  "statusChangeImpossible": "Le changement de statut a échoué car vous ne disposez pas des droits ou l'enregistrement de métadonnées n'a pas pu être validé. Modifiez l'enregistrement de métadonnées pour voir les erreurs de validation.",
+  "draftCopyRemoved": "Draft copy \"{{title}}\" supprimé."
 }
