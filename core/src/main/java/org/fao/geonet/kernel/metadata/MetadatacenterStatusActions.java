@@ -26,10 +26,16 @@ package org.fao.geonet.kernel.metadata;
 import jeeves.server.context.ServiceContext;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.AccessManager;
+import org.fao.geonet.repository.UserGroupRepository;
+import org.fao.geonet.repository.specification.UserGroupSpecs;
+import org.springframework.data.jpa.domain.Specifications;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static org.springframework.data.jpa.domain.Specifications.where;
 
 public class MetadatacenterStatusActions extends AIVStatusActions {
 
@@ -170,7 +176,6 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                 case 6: //JUSTCREATED
                 case 8: //APPROVED_BY_AGIV
                 case 9: //REJECTED_BY_AGIV
-                case 12: //REMOVED
                 case 13: //REJECTED_FOR_RETIRE
                 case 14: //REJECTED_FOR_REMOVE
                     changeAllowed = false;
@@ -193,6 +198,18 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                 case 11: //REMOVED_FOR_AGIV
                     if (bIsDraft || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
                         changeAllowed = false;
+                    }
+                    break;
+                case 12: //REMOVED
+                    changeAllowed = false;
+                    List<String> canDeleteGroupIds = Arrays.asList(context.getServlet().getCanDeleteGroupIds().split(","));
+                    UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
+                    Specifications spec = where(UserGroupSpecs.hasProfile(session.getProfile())).and(UserGroupSpecs.hasUserId(session.getUserIdAsInt()));
+                    List<UserGroup> userGroups = userGroupRepository.findAll(spec);
+                    for (UserGroup ug : userGroups) {
+                        if (ug.getGroup().getReferrer()!=null && canDeleteGroupIds.contains(ug.getGroup().getReferrer().toString())) {
+                            changeAllowed = true;
+                        }
                     }
                     break;
                 default:

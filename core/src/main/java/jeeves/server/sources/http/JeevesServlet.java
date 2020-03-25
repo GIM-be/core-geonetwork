@@ -60,7 +60,9 @@ import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 
 public class JeevesServlet extends HttpServlet {
     public static final String USER_SESSION_ATTRIBUTE_KEY = Jeeves.Elem.SESSION;
+    public static final String CAN_DELETE_GROUP_IDS = "CAN_DELETE_GROUP_IDS";
     private static final long serialVersionUID = 1L;
+    private String canDeleteGroupIds = "";
     private boolean initialized = false;
 
     //---------------------------------------------------------------------------
@@ -79,6 +81,11 @@ public class JeevesServlet extends HttpServlet {
             jeevesAppContext.setServletConfig(getServletConfig());
             jeevesAppContext.getBean(JeevesEngine.class).init(pathFinder.getAppPath(), pathFinder.getConfigPath(),
                 pathFinder.getBaseUrl(), this);
+
+            String canDeleteGroupIds = getServletConfig().getInitParameter(CAN_DELETE_GROUP_IDS);
+            if(canDeleteGroupIds != null) {
+                this.canDeleteGroupIds = canDeleteGroupIds;
+            }
 
             initialized = true;
         } catch (Throwable e) {
@@ -214,6 +221,7 @@ public class JeevesServlet extends HttpServlet {
         jeeves.dispatch(srvReq, session);
     }
 
+    public String getCanDeleteGroupIds() { return canDeleteGroupIds; }
     public boolean isInitialized() {
         return initialized;
     }
