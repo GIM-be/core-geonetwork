@@ -116,14 +116,11 @@
                 });
               }, function (response) {
                 // scope.$emit('metadataStatusUpdated', false);
-                var title = $translate.instant('metadataStatusUpdatedErrors');
-                var error = response.data;
-                error.message = title;
-                error.description = $translate.instant(error.description);
-
                 scope.$emit('StatusUpdated', {
-                  title: title,
-                  error: error,
+                  error: {
+                    message: $translate.instant('metadataStatusUpdatedErrors'),
+                    description: $translate.instant(response.data.description)
+                  },
                   timeout: 0,
                   type: 'danger'
                 });
