@@ -355,6 +355,14 @@
         <param-name>geonetwork.dir</param-name>
         <param-value>/app/geonetwork_data_dir</param-value>
     </init-param>-->
+    <!-- Specified what overrides to use if the
+        (servlet.getServletContext().getServletContextName()).jeeves.configuration.overrides.file
+        system parameter is not specified.
+    -->
+    <init-param>
+      <param-name>CAN_DELETE_GROUP_IDS</param-name>
+      <param-value>128</param-value>
+    </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
 

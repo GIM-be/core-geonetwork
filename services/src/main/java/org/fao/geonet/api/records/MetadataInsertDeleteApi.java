@@ -43,18 +43,10 @@ import org.fao.geonet.api.ApiParams;
 import org.fao.geonet.api.ApiUtils;
 import org.fao.geonet.api.exception.ResourceNotFoundException;
 import org.fao.geonet.api.processing.report.SimpleMetadataProcessingReport;
+import org.fao.geonet.api.records.model.MetadataStatusParameter;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
-import org.fao.geonet.domain.AbstractMetadata;
-import org.fao.geonet.domain.ISODate;
-import org.fao.geonet.domain.Metadata;
-import org.fao.geonet.domain.MetadataCategory;
-import org.fao.geonet.domain.MetadataType;
-import org.fao.geonet.domain.Pair;
-import org.fao.geonet.domain.Profile;
-import org.fao.geonet.domain.ReservedGroup;
-import org.fao.geonet.domain.ReservedOperation;
-import org.fao.geonet.domain.UserGroup;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.domain.utils.ObjectJSONUtils;
 import org.fao.geonet.events.history.RecordCreateEvent;
 import org.fao.geonet.events.history.RecordImportedEvent;
@@ -70,14 +62,14 @@ import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.mef.Importer;
 import org.fao.geonet.kernel.mef.MEFLib;
+import org.fao.geonet.kernel.metadata.StatusActions;
+import org.fao.geonet.kernel.metadata.StatusActionsFactory;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.lib.Lib;
-import org.fao.geonet.repository.MetadataDraftRepository;
-import org.fao.geonet.repository.MetadataRepository;
-import org.fao.geonet.repository.Updater;
-import org.fao.geonet.repository.UserGroupRepository;
+import org.fao.geonet.repository.*;
+import org.fao.geonet.repository.specification.MetadataSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.utils.FilePathChecker;
@@ -89,6 +81,7 @@ import org.jdom.input.JDOMParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -115,13 +108,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
 import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
@@ -197,17 +184,59 @@ public class MetadataInsertDeleteApi {
         ApplicationContext appContext = ApplicationContextHolder.get();
         IMetadataManager metadataManager = appContext.getBean(IMetadataManager.class);
         SearchManager searchManager = appContext.getBean(SearchManager.class);
-
-        if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE
-                && metadata.getDataInfo().getType() != MetadataType.TEMPLATE_OF_SUB_TEMPLATE && withBackup) {
-            MetadataUtils.backupRecord(metadata, context);
+        StatusActionsFactory saf = context.getBean(StatusActionsFactory.class);
+        boolean bIsMetadatacenterWorkflow = saf.getClassName().endsWith("MetadatacenterStatusActions");
+        boolean isAllowed = true;
+        UserSession us = context.getUserSession();
+        if (metadata!=null && metadata instanceof Metadata) {
+            if (metadataDraftRepository.count((Specification<MetadataDraft>) MetadataSpecs.hasMetadataUuid(metadata.getUuid())) > 0) {
+                throw new SecurityException("The metadata " + metadata.getId() + " has a draft version. Delete it first to remove the published version.");
+            }
+            if (bIsMetadatacenterWorkflow) {
+                if (!us.isAuthenticated() || us.getProfile() == Profile.Editor || us.getProfile() == Profile.Reviewer) {
+                    isAllowed = false;
+                    if (us.getProfile() == Profile.Reviewer) {
+                        List<String> canDeleteGroupIds = Arrays.asList(context.getServlet().getCanDeleteGroupIds().split(","));
+                        UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
+                        Specifications spec = where(UserGroupSpecs.hasProfile(us.getProfile())).and(UserGroupSpecs.hasUserId(us.getUserIdAsInt()));
+                        List<UserGroup> userGroups = userGroupRepository.findAll(spec);
+                        for (UserGroup ug : userGroups) {
+                            if (ug.getGroup().getReferrer()!=null && canDeleteGroupIds.contains(ug.getGroup().getReferrer().toString())) {
+                                isAllowed = true;
+                            }
+                        }
+                    }
+                    if (!isAllowed) {
+                        throw new SecurityException("");
+                    }
+                }
+            }
         }
+        if (metadata!=null && metadata instanceof Metadata && bIsMetadatacenterWorkflow) {
+            StatusActions sa = saf.createStatusActions(context);
+            StatusValueRepository statusValueRepository = appContext.getBean(StatusValueRepository.class);
+            StatusValue statusValue = statusValueRepository.findOne(Integer.parseInt(StatusValue.Status.REMOVED));
 
-        IO.deleteFileOrDirectory(Lib.resource.getMetadataDir(dataDirectory, metadata.getId()));
+            MetadataStatus metadataStatus = new MetadataStatus();
 
-        metadataManager.deleteMetadata(context, metadata.getId() + "");
+            MetadataStatusId mdStatusId = new MetadataStatusId().setStatusId(Integer.parseInt(StatusValue.Status.REMOVED)).setMetadataId(metadata.getId())
+                .setChangeDate(new ISODate()).setUserId(us.getUserIdAsInt());
 
-        searchManager.forceIndexChanges();
+            metadataStatus.setId(mdStatusId);
+            metadataStatus.setStatusValue(statusValue);
+            metadataStatus.setChangeMessage("");
+            List<MetadataStatus> listOfStatusChange = new ArrayList<>(1);
+            listOfStatusChange.add(metadataStatus);
+            sa.onStatusChange(listOfStatusChange);
+        } else {
+            if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE
+                && metadata.getDataInfo().getType() != MetadataType.TEMPLATE_OF_SUB_TEMPLATE && withBackup) {
+                MetadataUtils.backupRecord(metadata, context);
+            }
+            IO.deleteFileOrDirectory(Lib.resource.getMetadataDir(dataDirectory, metadata.getId()));
+            metadataManager.deleteMetadata(context, metadata.getId() + "");
+            searchManager.forceIndexChanges();
+        }
     }
 
     @ApiOperation(value = "Delete one or more records", notes = "User MUST be able to edit the record to delete it. "
