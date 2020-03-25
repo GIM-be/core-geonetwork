@@ -190,7 +190,7 @@ public class MetadataInsertDeleteApi {
         UserSession us = context.getUserSession();
         if (metadata!=null && metadata instanceof Metadata) {
             if (metadataDraftRepository.count((Specification<MetadataDraft>) MetadataSpecs.hasMetadataUuid(metadata.getUuid())) > 0) {
-                throw new Exception("The metadata " + metadata.getId() + " has a draft version. Delete it first to remove the published version.");
+                throw new SecurityException("The metadata " + metadata.getId() + " has a draft version. Delete it first to remove the published version.");
             }
             if (bIsMetadatacenterWorkflow) {
                 if (!us.isAuthenticated() || us.getProfile() == Profile.Editor || us.getProfile() == Profile.Reviewer) {
@@ -207,14 +207,10 @@ public class MetadataInsertDeleteApi {
                         }
                     }
                     if (!isAllowed) {
-                        throw new Exception("Je kan de record niet verwijderen omdat dit record reeds gepubliceerd is. Je kan wel je editsessie annuleren en vervolgens de status veranderen naar 'Ingediend voor verwijderen'.");
+                        throw new SecurityException("");
                     }
                 }
             }
-        }
-        if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE
-            && metadata.getDataInfo().getType() != MetadataType.TEMPLATE_OF_SUB_TEMPLATE && withBackup) {
-            MetadataUtils.backupRecord(metadata, context);
         }
         if (metadata!=null && metadata instanceof Metadata && bIsMetadatacenterWorkflow) {
             StatusActions sa = saf.createStatusActions(context);
@@ -233,6 +229,10 @@ public class MetadataInsertDeleteApi {
             listOfStatusChange.add(metadataStatus);
             sa.onStatusChange(listOfStatusChange);
         } else {
+            if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE
+                && metadata.getDataInfo().getType() != MetadataType.TEMPLATE_OF_SUB_TEMPLATE && withBackup) {
+                MetadataUtils.backupRecord(metadata, context);
+            }
             IO.deleteFileOrDirectory(Lib.resource.getMetadataDir(dataDirectory, metadata.getId()));
             metadataManager.deleteMetadata(context, metadata.getId() + "");
             searchManager.forceIndexChanges();
