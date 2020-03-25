@@ -189,7 +189,7 @@
     "overview": "Overzicht",
     "chooseAView": "Weergave",
     "metadataContact": "Contact voor de metadata",
-    "metadataRemoved": "{{title}} verwijderd.",
+    "metadataRemoved": "Metadata \"{{title}}\" verwijderd.",
     "extent": "Ruimtelijke dekking",
     "aboutThisResource": "Over deze bron",
     "preview": "Voorbeeld",

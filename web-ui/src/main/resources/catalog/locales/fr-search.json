@@ -189,7 +189,7 @@
     "overview": "Aperçu",
     "chooseAView": "Mode affichage",
     "metadataContact": "Contact pour la fiche",
-    "metadataRemoved": "{{title}} supprimé.",
+    "metadataRemoved": "Metadata \"{{title}}\" supprimé.",
     "extent": "Étendue spatiale",
     "aboutThisResource": "À propos de cette ressource",
     "preview": "Aperçu",

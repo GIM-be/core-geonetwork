@@ -107,9 +107,9 @@
         gnMetadataActions.deleteMd(md).
             then(function(data) {
               $rootScope.$broadcast('StatusUpdated', {
-                title: $translate.instant('metadataRemoved',
+                msg: $translate.instant(md.draft === 'y' ? 'draftCopyRemoved' : 'metadataRemoved',
                     {title: md.title || md.defaultTitle}),
-                timeout: 2
+                timeout: 10
               });
               deferred.resolve(data);
             }, function(reason) {
