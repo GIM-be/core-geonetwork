@@ -78,7 +78,7 @@ public class GeopuntStatusActions extends AIVStatusActions {
             } else if (statusId.equals(StatusValue.Status.RETIRED)) {
                 unsetAllOperations(mid);
             }
-            metadataStatusManager.setStatusExt(status);
+            metadataStatusManager.setStatusExt(status, false);
         } else {
             // TODO Make difference between unchanged records for reason of same status and for reason of insufficient rights
             unchanged.add(mid);
@@ -113,7 +113,7 @@ public class GeopuntStatusActions extends AIVStatusActions {
         return changeAllowed;
     }
 
-    protected boolean changeAllowedByReviewer(String currentStatusId, String statusId, boolean bIsDraft) {
+    protected boolean changeAllowedByReviewer(String currentStatusId, String statusId, AbstractMetadata metadata) {
         boolean changeAllowed = true;
         switch (Integer.parseInt(statusId)) {
             case 0: //UNKNOWN

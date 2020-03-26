@@ -331,11 +331,10 @@ public abstract class AIVStatusActions implements StatusActions {
         AccessManager accessManager = context.getBean(AccessManager.class);
         boolean changeAllowed = accessManager.canTakeover(context, String.valueOf(metadata.getId()));
         if (changeAllowed) {
-            boolean bIsDraft = metadata instanceof MetadataDraft;
             if (session.getProfile() == (Profile.Administrator)) {
                 changeAllowed = changeAllowedByAdmin(currentStatusId, statusId);
             } else if (session.getProfile() == Profile.Reviewer) {
-                changeAllowed = changeAllowedByReviewer(currentStatusId, statusId, bIsDraft);
+                changeAllowed = changeAllowedByReviewer(currentStatusId, statusId, metadata);
             } else if (session.getProfile() == Profile.Editor) {
                 changeAllowed = changeAllowedByEditor(currentStatusId, statusId, metadata, accessManager);
             }
@@ -344,7 +343,7 @@ public abstract class AIVStatusActions implements StatusActions {
     }
 
     protected abstract boolean changeAllowedByAdmin(String currentStatusId, String statusId);
-    protected abstract boolean changeAllowedByReviewer(String currentStatusId, String statusId, boolean bIsDraft);
+    protected abstract boolean changeAllowedByReviewer(String currentStatusId, String statusId, AbstractMetadata metadata);
     protected abstract boolean changeAllowedByEditor(String currentStatusId, String statusId, AbstractMetadata metadata, AccessManager accessManager) throws Exception;
 
     /**

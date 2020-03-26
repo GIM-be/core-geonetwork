@@ -593,7 +593,8 @@
       if ([sv.SUBMITTED_FOR_AGIV, sv.APPROVED_BY_AGIV, sv.RETIRED_FOR_AGIV, sv.REMOVED_FOR_AGIV].includes(currentStatus)) {
         changeAllowed = false;
       } else {
-        var bDraftExists = (md!=null && md.draft!='n');
+        var bDraftExists = (md!=null && md.draft=='e');
+        var bIsDraft = ![sv.APPROVED, sv.RETIRED].includes(currentStatus);
         switch (status) {
           //case sv.UNKNOWN:
           case sv.DRAFT:
@@ -619,12 +620,12 @@
             }
             break;
           case sv.RETIRED_FOR_AGIV:
-            if (bDraftExists || [sv.RETIRED, sv.REMOVED_FOR_AGIV].includes(currentStatus)) {
+            if (bDraftExists || bIsDraft || [sv.RETIRED, sv.REMOVED_FOR_AGIV].includes(currentStatus)) {
               changeAllowed = false;
             }
             break;
           case sv.REMOVED_FOR_AGIV:
-            if (bDraftExists || [sv.RETIRED_FOR_AGIV].includes(currentStatus)) {
+            if (bDraftExists || bIsDraft || [sv.RETIRED_FOR_AGIV].includes(currentStatus)) {
               changeAllowed = false;
             }
             break;

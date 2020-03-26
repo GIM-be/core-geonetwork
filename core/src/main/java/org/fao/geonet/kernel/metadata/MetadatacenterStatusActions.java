@@ -26,9 +26,13 @@ package org.fao.geonet.kernel.metadata;
 import jeeves.server.context.ServiceContext;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.AccessManager;
+import org.fao.geonet.repository.MetadataDraftRepository;
+import org.fao.geonet.repository.StatusValueRepository;
 import org.fao.geonet.repository.UserGroupRepository;
+import org.fao.geonet.repository.specification.MetadataSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.util.WorkflowUtil;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 
 import java.util.Arrays;
@@ -83,15 +87,18 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
             if (statusId.equals(StatusValue.Status.REJECTED_FOR_RETIRE) || statusId.equals(StatusValue.Status.REJECTED_FOR_REMOVE)) {
                 MetadataStatus previousStatus = metadataStatusManager.getPreviousStatus(mid);
                 if (previousStatus != null) {
-                    previousStatus.getId().setChangeDate(new ISODate());
-                    previousStatus.setChangeMessage(changeMessage);
-                    notificationProperties.put("previousStatus", String.valueOf(previousStatus.getId().getStatusId()));
-                    //metadataStatusManager.setStatusExt(previousStatus);
-                    metadataStatusManager.setStatusExt(context, mid, previousStatus.getId().getStatusId(), new ISODate(), changeMessage);
+                    StatusValueRepository statusValueRepository = context.getBean(StatusValueRepository.class);
+                    StatusValue statusValue = statusValueRepository.findOne(previousStatus.getId().getStatusId());
+                    MetadataStatus metadataStatus = new MetadataStatus();
+                    MetadataStatusId mdStatusId = new MetadataStatusId().setStatusId(statusValue.getId()).setMetadataId(metadata.getId())
+                        .setChangeDate(new ISODate()).setUserId(session.getUserIdAsInt());
+                    metadataStatus.setId(mdStatusId);
+                    metadataStatus.setStatusValue(statusValue);
+                    metadataStatus.setChangeMessage(changeMessage);
+                    metadataStatusManager.setStatusExt(metadataStatus, false);
                 }
             } else {
-                //metadataStatusManager.setStatusExt(status);
-                metadataStatusManager.setStatusExt(context, mid, status.getId().getStatusId(), status.getId().getChangeDate(), status.getChangeMessage());
+                metadataStatusManager.setStatusExt(status, false);
             }
         } else {
             // TODO Make difference between unchanged records for reason of same status and for reason of insufficient rights
@@ -166,12 +173,19 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
         return changeAllowed;
     }
 
-    protected boolean changeAllowedByReviewer(String currentStatusId, String statusId, boolean bIsDraft) {
+    protected boolean changeAllowedByReviewer(String currentStatusId, String statusId, AbstractMetadata metadata) {
         boolean changeAllowed = true;
         if (currentStatusId.equals(StatusValue.Status.SUBMITTED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.APPROVED_BY_AGIV) || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
             changeAllowed = false;
         } else {
-            switch (Integer.parseInt(statusId)) {
+            int statusIdAsInt = Integer.parseInt(statusId);
+            boolean bIsDraft = !(currentStatusId.equals(StatusValue.Status.APPROVED) || currentStatusId.equals(StatusValue.Status.RETIRED));
+            boolean bDraftExists = false;
+            if (!bIsDraft && (statusIdAsInt==10 || statusIdAsInt==11)) {
+                MetadataDraftRepository metadataDraftRepository = context.getBean(MetadataDraftRepository.class);
+                bDraftExists = (metadataDraftRepository.count((Specification<MetadataDraft>) MetadataSpecs.hasMetadataUuid(metadata.getUuid())) > 0);
+            }
+            switch (statusIdAsInt) {
                 case 0: //UNKNOWN
                 case 1: //DRAFT
                 case 2: //APPROVED
@@ -196,11 +210,11 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                     }
                     break;
                 case 10: //RETIRED_FOR_AGIV
-                    if (bIsDraft || currentStatusId.equals(StatusValue.Status.RETIRED) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
+                    if (bDraftExists || bIsDraft || currentStatusId.equals(StatusValue.Status.RETIRED) || currentStatusId.equals(StatusValue.Status.REMOVED_FOR_AGIV)) {
                         changeAllowed = false;
                     }
                 case 11: //REMOVED_FOR_AGIV
-                    if (bIsDraft || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
+                    if (bDraftExists || bIsDraft || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
                         changeAllowed = false;
                     }
                     break;
