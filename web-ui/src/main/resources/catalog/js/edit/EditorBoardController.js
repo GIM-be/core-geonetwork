@@ -114,7 +114,7 @@
               deferred.resolve(data);
             }, function(reason) {
               $rootScope.$broadcast('StatusUpdated', {
-                msg: reason.data.description,
+                msg: $translate.instant(reason.data.description),
                 type: 'danger'
               });
               deferred.reject(reason);

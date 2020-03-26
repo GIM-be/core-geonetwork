@@ -92,7 +92,7 @@
           // Data needs improvements
           // See https://github.com/geonetwork/core-geonetwork/issues/723
           gnAlertService.addAlert({
-            msg: reason.data.description,
+            msg: $translate.instant(reason.data.description),
             type: 'danger'
           });
         });
