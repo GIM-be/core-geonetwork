@@ -175,13 +175,16 @@ public class MetadataInsertDeleteApi {
             boolean isAlreadyApproved = metadataStatusManager.getPreviousPublishedStatus(metadata.getId())!=null;
             if (isAlreadyApproved) {
                 if (us.getProfile() == Profile.Reviewer) {
-                    List<String> canDeleteGroupIds = Arrays.asList(context.getServlet().getCanDeleteGroupIds().split(","));
-                    UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
-                    Specifications spec = where(UserGroupSpecs.hasProfile(us.getProfile())).and(UserGroupSpecs.hasUserId(us.getUserIdAsInt()));
-                    List<UserGroup> userGroups = userGroupRepository.findAll(spec);
-                    for (UserGroup ug : userGroups) {
-                        if (ug.getGroup().getReferrer() != null && canDeleteGroupIds.contains(ug.getGroup().getReferrer().toString())) {
-                            isAllowed = true;
+                    String canDeleteGroupIds = context.getServlet().getCanDeleteGroupIds();
+                    if (canDeleteGroupIds!=null && !canDeleteGroupIds.isEmpty()) {
+                        List<String> canDeleteGroupIdsList = Arrays.asList(canDeleteGroupIds.split(","));
+                        UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
+                        Specifications spec = where(UserGroupSpecs.hasProfile(us.getProfile())).and(UserGroupSpecs.hasUserId(us.getUserIdAsInt()));
+                        List<UserGroup> userGroups = userGroupRepository.findAll(spec);
+                        for (UserGroup ug : userGroups) {
+                            if (ug.getGroup().getReferrer() != null && canDeleteGroupIdsList.contains(ug.getGroup().getReferrer().toString())) {
+                                isAllowed = true;
+                            }
                         }
                     }
                 } else if (us.getProfile() == Profile.Administrator) {
