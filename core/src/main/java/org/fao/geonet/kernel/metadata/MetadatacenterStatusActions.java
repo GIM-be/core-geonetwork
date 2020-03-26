@@ -28,6 +28,7 @@ import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
+import org.fao.geonet.util.WorkflowUtil;
 import org.springframework.data.jpa.domain.Specifications;
 
 import java.util.Arrays;
@@ -85,10 +86,12 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                     previousStatus.getId().setChangeDate(new ISODate());
                     previousStatus.setChangeMessage(changeMessage);
                     notificationProperties.put("previousStatus", String.valueOf(previousStatus.getId().getStatusId()));
-                    metadataStatusManager.setStatusExt(previousStatus);
+                    //metadataStatusManager.setStatusExt(previousStatus);
+                    metadataStatusManager.setStatusExt(context, mid, previousStatus.getId().getStatusId(), new ISODate(), changeMessage);
                 }
             } else {
-                metadataStatusManager.setStatusExt(status);
+                //metadataStatusManager.setStatusExt(status);
+                metadataStatusManager.setStatusExt(context, mid, status.getId().getStatusId(), status.getId().getChangeDate(), status.getChangeMessage());
             }
         } else {
             // TODO Make difference between unchanged records for reason of same status and for reason of insufficient rights
@@ -176,6 +179,7 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                 case 6: //JUSTCREATED
                 case 8: //APPROVED_BY_AGIV
                 case 9: //REJECTED_BY_AGIV
+                case 12: //REMOVED
                 case 13: //REJECTED_FOR_RETIRE
                 case 14: //REJECTED_FOR_REMOVE
                     changeAllowed = false;
@@ -198,18 +202,6 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
                 case 11: //REMOVED_FOR_AGIV
                     if (bIsDraft || currentStatusId.equals(StatusValue.Status.RETIRED_FOR_AGIV)) {
                         changeAllowed = false;
-                    }
-                    break;
-                case 12: //REMOVED
-                    changeAllowed = false;
-                    List<String> canDeleteGroupIds = Arrays.asList(context.getServlet().getCanDeleteGroupIds().split(","));
-                    UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
-                    Specifications spec = where(UserGroupSpecs.hasProfile(session.getProfile())).and(UserGroupSpecs.hasUserId(session.getUserIdAsInt()));
-                    List<UserGroup> userGroups = userGroupRepository.findAll(spec);
-                    for (UserGroup ug : userGroups) {
-                        if (ug.getGroup().getReferrer()!=null && canDeleteGroupIds.contains(ug.getGroup().getReferrer().toString())) {
-                            changeAllowed = true;
-                        }
                     }
                     break;
                 default:
@@ -336,6 +328,6 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
     protected void processList(ServiceContext context, String replyTo, String replyToDescr, List<Object[]> contentUsers, String subject, String statusId,
                                String changeDate, String changeMessage, Map<String, Map<String, String>> metadataMap, List<String> emailMetadataIdList)
         throws Exception {
-        processList(context, replyTo, replyToDescr, contentUsers, subject, statusId, changeDate, changeMessage, metadataMap, emailMetadataIdList, "agiv");
+        processList(context, replyTo, replyToDescr, contentUsers, subject, statusId, changeDate, changeMessage, metadataMap, emailMetadataIdList, WorkflowUtil.getNodeType(context));
     }
 }

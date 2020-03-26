@@ -26,6 +26,7 @@ package org.fao.geonet.kernel.metadata;
 import jeeves.server.context.ServiceContext;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.AccessManager;
+import org.fao.geonet.util.WorkflowUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -195,6 +196,6 @@ public class GeopuntStatusActions extends AIVStatusActions {
     protected void processList(ServiceContext context, String replyTo, String replyToDescr, List<Object[]> contentUsers, String subject, String statusId,
                                String changeDate, String changeMessage, Map<String, Map<String, String>> metadataMap, List<String> emailMetadataIdList)
         throws Exception {
-        processList(context, replyTo, replyToDescr, contentUsers, subject, statusId, changeDate, changeMessage, metadataMap, emailMetadataIdList, "geopunt");
+        processList(context, replyTo, replyToDescr, contentUsers, subject, statusId, changeDate, changeMessage, metadataMap, emailMetadataIdList, WorkflowUtil.getNodeType(context));
     }
 }

@@ -17,7 +17,7 @@
 						<xsl:text>meerdere metadatarecords ingediend bij de </xsl:text><xsl:call-template name="aanspreking"/><xsl:text> ter validatie.</xsl:text>
 					</xsl:if>
 				</xsl:if>
-			</subject>	
+			</subject>
 			<message>
 				<xsl:text>Beste </xsl:text><xsl:call-template name="aanspreking"/><xsl:text>,&#10;&#13;</xsl:text>
 				<xsl:if test="$metadataCount=1">
@@ -38,11 +38,11 @@
 					<xsl:if test="$metadataCount>1">
 						<xsl:for-each select="/root/metadata">
 							<xsl:text>&#10;&#13;</xsl:text><xsl:value-of select="./title"/>
-						</xsl:for-each>				
+						</xsl:for-each>
 						<xsl:text>&#10;&#13;Je kan deze records bekijken via volgende URLs:</xsl:text>
 						<xsl:for-each select="/root/metadata">
 							<xsl:text>&#10;&#13;</xsl:text><xsl:value-of select="./url"/>
-						</xsl:for-each>				
+						</xsl:for-each>
 					</xsl:if>
 				</xsl:if>
 				<xsl:if test="$status='2' or $status='9'">
@@ -70,7 +70,7 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-				
+
 	<xsl:template name="changeinfo">
 		<xsl:param name="title" />
 		<xsl:param name="currentStatus"/>
@@ -90,7 +90,7 @@
 				<xsl:when test="$status='5' or $status='9'">
 					<xsl:text>Jouw wijzigingen aan </xsl:text><xsl:if test="$metadataCount>1">volgende</xsl:if><xsl:if test="$metadataCount=1">de</xsl:if><xsl:text> metadatarecord</xsl:text><xsl:if test="$metadataCount>1">s</xsl:if><xsl:if test="$metadataCount=1"><xsl:text> met titel '</xsl:text><xsl:value-of select="$title"/><xsl:text>'</xsl:text></xsl:if><xsl:text> konden niet gevalideerd worden door </xsl:text><xsl:if test="$status='5'">jouw hoofdeditor.</xsl:if><xsl:if test="$status='9'">Informatie Vlaanderen.</xsl:if>
 					<xsl:call-template name="changeMessage" />
-					<xsl:text>&#10;&#13;&#10;&#13;Je kan de metadatarecord</xsl:text><xsl:if test="$metadataCount>1">s</xsl:if><xsl:text> wijzigen via </xsl:text><xsl:value-of select="/root/siteUrl"/><xsl:text> en opnieuw indienen.</xsl:text>				
+					<xsl:text>&#10;&#13;&#10;&#13;Je kan de metadatarecord</xsl:text><xsl:if test="$metadataCount>1">s</xsl:if><xsl:text> wijzigen via </xsl:text><xsl:value-of select="/root/siteUrl"/><xsl:text> en opnieuw indienen.</xsl:text>
 				</xsl:when>
 				<xsl:when test="$status='12'">
 					<xsl:if test="$metadataCount>1">Volgende</xsl:if><xsl:if test="$metadataCount=1">De</xsl:if><xsl:text> metadatarecord</xsl:text><xsl:if test="$metadataCount>1">s</xsl:if><xsl:if test="$metadataCount=1"><xsl:text> met titel '</xsl:text><xsl:value-of select="$title"/><xsl:text>'</xsl:text></xsl:if><xsl:text> werd</xsl:text><xsl:if test="$metadataCount>1">en</xsl:if><xsl:text> </xsl:text><xsl:call-template name="typewijziging"/><xsl:text>.</xsl:text>
@@ -108,7 +108,7 @@
 				<xsl:call-template name="changeMessage" />
 <!-- 				<xsl:text>&#10;&#13;&#10;&#13;De metadatarecord</xsl:text><xsl:if test="$metadataCount>1">s</xsl:if><xsl:text> werd</xsl:text><xsl:if test="$metadataCount>1">en</xsl:if><xsl:text> om die reden terug naar zijn oorspronkelijke status "Goedgekeurd door Informatie Vlaanderen en gepubliceerd" gebracht.</xsl:text>-->
 				<xsl:text>&#10;&#13;&#10;&#13;De metadatarecord</xsl:text><xsl:if test="$metadataCount>1">s</xsl:if><xsl:text> werd</xsl:text><xsl:if test="$metadataCount>1">en</xsl:if><xsl:text> om die reden terug naar zijn oorspronkelijke status</xsl:text><xsl:if test="$metadataCount=1"><xsl:call-template name="previousStatus"/></xsl:if><xsl:text> gebracht.</xsl:text>
-			</xsl:if>				
+			</xsl:if>
 		</xsl:if>
 	</xsl:template>
 
@@ -116,7 +116,7 @@
 		<xsl:variable name="status" select="/root/status"/>
 		<xsl:variable name="node" select="/root/node"/>
 		<xsl:choose>
-			<xsl:when test="$node='agiv'">
+			<xsl:when test="$node='Metadatacenter'">
 				<xsl:choose>
 					<xsl:when test="$status='0'">onbekend</xsl:when>
 					<xsl:when test="$status='1'">ontwerp</xsl:when>
@@ -184,7 +184,7 @@
 		</xsl:choose>
 		<xsl:text>"</xsl:text>
 	</xsl:template>
-	
+
 	<xsl:template name="changeMessage">
 		<xsl:variable name="changeMessage" select="normalize-space(/root/changeMessage)"/>
 		<xsl:if test="$changeMessage!='Beschrijf hier extra informatie' and $changeMessage!=''">

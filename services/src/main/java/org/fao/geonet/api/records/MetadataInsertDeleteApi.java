@@ -26,11 +26,7 @@ package org.fao.geonet.api.records;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import jeeves.services.ReadWriteController;
@@ -43,7 +39,6 @@ import org.fao.geonet.api.ApiParams;
 import org.fao.geonet.api.ApiUtils;
 import org.fao.geonet.api.exception.ResourceNotFoundException;
 import org.fao.geonet.api.processing.report.SimpleMetadataProcessingReport;
-import org.fao.geonet.api.records.model.MetadataStatusParameter;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.*;
@@ -55,15 +50,13 @@ import org.fao.geonet.exceptions.XSDValidationErrorEx;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
-import org.fao.geonet.kernel.Schema;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
+import org.fao.geonet.kernel.datamanager.IMetadataStatus;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.mef.Importer;
 import org.fao.geonet.kernel.mef.MEFLib;
-import org.fao.geonet.kernel.metadata.StatusActions;
-import org.fao.geonet.kernel.metadata.StatusActionsFactory;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
@@ -72,6 +65,7 @@ import org.fao.geonet.repository.*;
 import org.fao.geonet.repository.specification.MetadataSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.services.validation.AGIVValidation;
+import org.fao.geonet.util.WorkflowUtil;
 import org.fao.geonet.utils.FilePathChecker;
 import org.fao.geonet.utils.IO;
 import org.fao.geonet.utils.Log;
@@ -87,13 +81,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -102,18 +90,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_OPS;
-import static org.fao.geonet.api.ApiParams.API_CLASS_RECORD_TAG;
-import static org.fao.geonet.api.ApiParams.API_PARAM_RECORD_UUID;
-import static org.fao.geonet.api.ApiParams.API_PARAM_RECORD_UUIDS_OR_SELECTION;
+import static org.fao.geonet.api.ApiParams.*;
 import static org.springframework.data.jpa.domain.Specifications.where;
 
 @RequestMapping(value = { "/{portal}/api/records", "/{portal}/api/" + API.VERSION_0_1 + "/records" })
@@ -141,9 +122,6 @@ public class MetadataInsertDeleteApi {
     private SearchManager searchManager;
 
     @Autowired
-    private AccessManager accessMan;
-
-    @Autowired
     private MetadataRepository metadataRepository;
 
     @Autowired
@@ -165,6 +143,9 @@ public class MetadataInsertDeleteApi {
     private IMetadataManager metadataManager;
 
     @Autowired
+    private IMetadataStatus metadataStatusManager;
+
+    @Autowired
     private AccessManager accessManager;
 
     @ApiOperation(value = "Delete a record", notes = "User MUST be able to edit the record to delete it. "
@@ -181,54 +162,64 @@ public class MetadataInsertDeleteApi {
             HttpServletRequest request) throws Exception {
         AbstractMetadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
         ServiceContext context = ApiUtils.createServiceContext(request);
-        ApplicationContext appContext = ApplicationContextHolder.get();
-        IMetadataManager metadataManager = appContext.getBean(IMetadataManager.class);
-        SearchManager searchManager = appContext.getBean(SearchManager.class);
-        StatusActionsFactory saf = context.getBean(StatusActionsFactory.class);
-        boolean bIsMetadatacenterWorkflow = saf.getClassName().endsWith("MetadatacenterStatusActions");
-        boolean isAllowed = true;
+        boolean bIsMetadatacenterWorkflow = WorkflowUtil.getNodeType(context).equals("Metadatacenter");
+        boolean isAllowed = false;
         UserSession us = context.getUserSession();
-        if (metadata!=null && metadata instanceof Metadata) {
+        boolean bIsMetadataInstance = (metadata!=null && metadata instanceof Metadata);
+        if (bIsMetadataInstance){
             if (metadataDraftRepository.count((Specification<MetadataDraft>) MetadataSpecs.hasMetadataUuid(metadata.getUuid())) > 0) {
-                throw new SecurityException("The metadata " + metadata.getId() + " has a draft version. Delete it first to remove the published version.");
-            }
-            if (bIsMetadatacenterWorkflow) {
-                if (!us.isAuthenticated() || us.getProfile() == Profile.Editor || us.getProfile() == Profile.Reviewer) {
-                    isAllowed = false;
-                    if (us.getProfile() == Profile.Reviewer) {
-                        List<String> canDeleteGroupIds = Arrays.asList(context.getServlet().getCanDeleteGroupIds().split(","));
-                        UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
-                        Specifications spec = where(UserGroupSpecs.hasProfile(us.getProfile())).and(UserGroupSpecs.hasUserId(us.getUserIdAsInt()));
-                        List<UserGroup> userGroups = userGroupRepository.findAll(spec);
-                        for (UserGroup ug : userGroups) {
-                            if (ug.getGroup().getReferrer()!=null && canDeleteGroupIds.contains(ug.getGroup().getReferrer().toString())) {
-                                isAllowed = true;
-                            }
-                        }
-                    }
-                    if (!isAllowed) {
-                        throw new SecurityException("");
-                    }
-                }
+                throw new SecurityException("deleteDraftFirst");
             }
         }
-        if (metadata!=null && metadata instanceof Metadata && bIsMetadatacenterWorkflow) {
-            StatusActions sa = saf.createStatusActions(context);
-            StatusValueRepository statusValueRepository = appContext.getBean(StatusValueRepository.class);
-            StatusValue statusValue = statusValueRepository.findOne(Integer.parseInt(StatusValue.Status.REMOVED));
-
-            MetadataStatus metadataStatus = new MetadataStatus();
-
-            MetadataStatusId mdStatusId = new MetadataStatusId().setStatusId(Integer.parseInt(StatusValue.Status.REMOVED)).setMetadataId(metadata.getId())
-                .setChangeDate(new ISODate()).setUserId(us.getUserIdAsInt());
-
-            metadataStatus.setId(mdStatusId);
-            metadataStatus.setStatusValue(statusValue);
-            metadataStatus.setChangeMessage("");
-            List<MetadataStatus> listOfStatusChange = new ArrayList<>(1);
-            listOfStatusChange.add(metadataStatus);
-            sa.onStatusChange(listOfStatusChange);
+        if (bIsMetadatacenterWorkflow) {
+            boolean isAlreadyApproved = metadataStatusManager.getPreviousPublishedStatus(metadata.getId())!=null;
+            if (isAlreadyApproved) {
+                if (us.getProfile() == Profile.Reviewer) {
+                    List<String> canDeleteGroupIds = Arrays.asList(context.getServlet().getCanDeleteGroupIds().split(","));
+                    UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
+                    Specifications spec = where(UserGroupSpecs.hasProfile(us.getProfile())).and(UserGroupSpecs.hasUserId(us.getUserIdAsInt()));
+                    List<UserGroup> userGroups = userGroupRepository.findAll(spec);
+                    for (UserGroup ug : userGroups) {
+                        if (ug.getGroup().getReferrer() != null && canDeleteGroupIds.contains(ug.getGroup().getReferrer().toString())) {
+                            isAllowed = true;
+                        }
+                    }
+                } else if (us.getProfile() == Profile.Administrator) {
+                    isAllowed = true;
+                }
+            } else {
+                isAllowed = true;
+            }
         } else {
+            isAllowed = true;
+        }
+        if (!isAllowed) {
+            throw new SecurityException("deleteDraftFirst");
+        } else {
+            if (bIsMetadataInstance) {
+                Map<String, String> notificationProperties = new HashMap<String, String>();
+                String currentStatusId = metadataStatusManager.getCurrentStatus(metadata.getId());
+                IMetadataUtils metadataUtils = context.getBean(IMetadataUtils.class);
+                notificationProperties.put("title", metadataUtils.extractTitle(metadata.getDataInfo().getSchemaId(), metadata.getXmlData(false)));
+                notificationProperties.put("currentStatus", currentStatusId);
+                Map<String, Map<String, String>> changedMetadataIdsToInformEditors = new HashMap<String, Map<String, String>>();
+                Map<String, Map<String, String>> changedMetadataIdsToInformReviewers = new HashMap<String, Map<String, String>>();
+                Map<String, Map<String, String>> changedMetadataIdsToInformAdministrators = new HashMap<String, Map<String, String>>();
+                changedMetadataIdsToInformEditors.put(metadata.getUuid(), notificationProperties);
+                changedMetadataIdsToInformReviewers.put(metadata.getUuid(), notificationProperties);
+                if (bIsMetadatacenterWorkflow) {
+                    changedMetadataIdsToInformAdministrators.put(metadata.getUuid(), notificationProperties);
+                }
+                StatusValueRepository statusValueRepository = context.getBean(StatusValueRepository.class);
+                StatusValue statusValue = statusValueRepository.findOne(Integer.parseInt(StatusValue.Status.REMOVED));
+                MetadataStatus metadataStatus = new MetadataStatus();
+                MetadataStatusId mdStatusId = new MetadataStatusId().setStatusId(statusValue.getId()).setMetadataId(metadata.getId())
+                    .setChangeDate(new ISODate()).setUserId(us.getUserIdAsInt());
+                metadataStatus.setId(mdStatusId);
+                metadataStatus.setStatusValue(statusValue);
+                metadataStatus.setChangeMessage("");
+                WorkflowUtil.notify(context, metadataStatus, changedMetadataIdsToInformEditors, changedMetadataIdsToInformReviewers, changedMetadataIdsToInformAdministrators);
+            }
             if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE
                 && metadata.getDataInfo().getType() != MetadataType.TEMPLATE_OF_SUB_TEMPLATE && withBackup) {
                 MetadataUtils.backupRecord(metadata, context);
@@ -259,9 +250,6 @@ public class MetadataInsertDeleteApi {
             @ApiIgnore HttpSession session, HttpServletRequest request) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
         ApplicationContext appContext = ApplicationContextHolder.get();
-        IMetadataManager metadataManager = appContext.getBean(IMetadataManager.class);
-        AccessManager accessMan = appContext.getBean(AccessManager.class);
-        SearchManager searchManager = appContext.getBean(SearchManager.class);
 
         Set<String> records = ApiUtils.getUuidsParameterOrSelection(uuids, bucket, ApiUtils.getUserSession(session));
 

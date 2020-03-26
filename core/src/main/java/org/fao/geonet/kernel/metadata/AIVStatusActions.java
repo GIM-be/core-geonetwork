@@ -48,6 +48,7 @@ import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.repository.specification.MetadataValidationSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.util.MailSender;
+import org.fao.geonet.util.WorkflowUtil;
 import org.fao.geonet.utils.BinaryFile;
 import org.fao.geonet.utils.IO;
 import org.fao.geonet.utils.Log;
@@ -275,7 +276,7 @@ public abstract class AIVStatusActions implements StatusActions {
                         // --- inform content reviewers if the status is submitted
                         try {
                             getUserToNotify(statusId, metadata, currentStatusId, notificationProperties, recordsToBeDeleted, changedMetadataIdsToInformEditors, changedMetadataIdsToInformReviewers, changedMetadataIdsToInformAdministrators);
-                            notify(status, changedMetadataIdsToInformEditors, changedMetadataIdsToInformReviewers, changedMetadataIdsToInformAdministrators);
+                            WorkflowUtil.notify(context, status, changedMetadataIdsToInformEditors, changedMetadataIdsToInformReviewers, changedMetadataIdsToInformAdministrators);
                         } catch (Exception e) {
                             context.warning(String.format(
                                 "Failed to send notification on status change for metadata %s with status %s. Error is: %s",
