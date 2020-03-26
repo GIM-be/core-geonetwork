@@ -69,6 +69,13 @@ public interface IMetadataStatus {
     MetadataStatus setStatusExt(ServiceContext context, int id, int status, ISODate changeDate, String changeMessage) throws Exception;
 
     /**
+     * Set status of metadata id and optional reindex metadata.
+     *
+     * @return the saved status entity object
+     */
+    MetadataStatus setStatusExt(MetadataStatus status, boolean bReindexMetadata) throws Exception;
+
+    /**
      * Set status of metadata id and do not reindex metadata id afterwards.
      *
      * @return the saved status entity object
@@ -90,7 +97,7 @@ public interface IMetadataStatus {
      * @throws Exception
      */
     String getCurrentStatus(int metadataId) throws Exception;
-	
+
     /**
      * Given a metadata id, return the last status of the metadata
      *
