@@ -194,7 +194,7 @@ public class MetadataInsertDeleteApi {
             isAllowed = true;
         }
         if (!isAllowed) {
-            throw new SecurityException("deleteDraftFirst");
+            throw new SecurityException("deleteNotAllowedByUser");
         } else {
             if (bIsMetadataInstance) {
                 Map<String, String> notificationProperties = new HashMap<String, String>();
