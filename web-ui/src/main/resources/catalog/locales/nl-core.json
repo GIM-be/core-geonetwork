@@ -95,7 +95,7 @@
     "deleteRecordConfirm": "Wilt u '{{title}}' echt verwijderen?",
     "deleteSelectedRecordConfirm": "Wilt u echt de {{selectedCount}} geselecteerde record(s) verwijderen?",
     "cofirmEditApproved": "Het bewerken van een geaccordeerd record zet deze terug in de draft status. Doorgaan?",
-    "denominators": "Schaal",
+    "denominators": "Toepassingsschaal1",
     "docNotFound": "<strong> Waarschuwing ! </strong> Pagina <a href='{{page}}'> {{page}} < / a> niet gevonden in de documentatie .",
     "docPageNotFoundAtUrl": "Documentatie pagina niet gevonden:",
     "dut": "Nederlands",
