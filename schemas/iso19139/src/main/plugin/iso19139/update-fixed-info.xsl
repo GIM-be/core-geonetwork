@@ -709,9 +709,11 @@
       <xsl:if test="normalize-space($child) = ''">
         <xsl:attribute name="gco:nilReason" select="'missing'"/>
       </xsl:if>
-      <gco:DateTime>
-        <xsl:value-of select="$child"/>
-      </gco:DateTime>
+      <xsl:if test="not(normalize-space($child) = '')">
+        <gco:DateTime>
+          <xsl:value-of select="$child"/>
+        </gco:DateTime>
+      </xsl:if>
     </xsl:copy>
   </xsl:template>
 
