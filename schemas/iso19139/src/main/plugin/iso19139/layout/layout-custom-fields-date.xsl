@@ -174,7 +174,7 @@
   -->
   <xsl:template mode="mode-iso19139"
                 priority="2000"
-                match="*[(gco:Date|gco:DateTime) and not(../gmd:dateType)]">
+                match="*[(gco:Date|gco:DateTime) and not(../gmd:dateType)]|gmd:dateTime[@gco:nilReason='missing' and not(../gmd:dateType)]">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="overrideLabel" select="''" required="no"/>
@@ -188,7 +188,6 @@
                   select="gn:element/@ref"/>
 
     <xsl:variable name="isRequired" select="gn:element/@min = 1"/>
-
     <div class="form-group gn-field gn-date {if ($isRequired) then 'gn-required' else ''}"
          id="gn-el-{$dateTypeElementRef}"
          data-gn-field-highlight="">
@@ -202,13 +201,19 @@
           </xsl:otherwise>
         </xsl:choose>
       </label>
+      <xsl:variable name="bMissingDateTimeChild" select="name()='gmd:dateTime' and not(gco:Date|gco:DateTime)"/>
+      <xsl:variable name="newElement">
+        <xsl:if test="$bMissingDateTimeChild">
+          <gco:DateTime />
+        </xsl:if>
+      </xsl:variable>
       <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table">
-        <div data-gn-date-picker="{gco:Date|gco:DateTime}"
+        <div data-gn-date-picker="{if (bMissingDateTimeChild) then $newElement else (gco:Date|gco:DateTime)}"
              data-gn-field-tooltip="{$tooltip}"
              data-label=""
-             data-element-name="{name(gco:Date|gco:DateTime)}"
+             data-element-name="{if (bMissingDateTimeChild) then name($newElement) else name(gco:Date|gco:DateTime)}"
              data-element-ref="{concat('_X', gn:element/@ref)}"
-             data-hide-time="{if ($viewConfig/@hideTimeInCalendar = 'true' and not(gco:DateTime)) then 'true' else 'false'}">
+             data-hide-time="{if ($viewConfig/@hideTimeInCalendar = 'true' and not($bMissingDateTimeChild or gco:DateTime)) then 'true' else 'false'}">
         </div>
 
 
