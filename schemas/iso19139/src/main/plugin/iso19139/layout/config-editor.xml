@@ -3662,7 +3662,7 @@
                   data-transformation="otherConstrTransform"/>
               </action>
               <section name="gmd:otherConstraints" per="gmd:otherConstraints">
-                <section xpath="." name="description"/>
+                <section xpath="."/>
               </section>
             </section>
             <section xpath="gmd:MD_SecurityConstraints"/>
@@ -3699,7 +3699,7 @@
                   data-transformation="otherConstrTransform"/>
               </action>
               <section name="gmd:otherConstraints" per="gmd:otherConstraints">
-                <section xpath="." name="description"/>
+                <section xpath="."/>
               </section>
             </section>
             <section xpath="gmd:MD_SecurityConstraints"/>
