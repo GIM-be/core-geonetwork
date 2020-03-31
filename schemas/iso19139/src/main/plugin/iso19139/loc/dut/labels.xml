@@ -1215,7 +1215,7 @@
     <condition>conditional</condition>
   </element>
   <element name="gmd:LI_Lineage">
-    <label>Herkomst</label>
+    <label>Bewerkingen</label>
     <description>Informatie over de gebeurtenissen of brondata die gebruikt werd in het aanmaken van de data
       gespecifieerd door het toepassingsgebied. Of ontbreken van kennis in verband met deze herkomst.
     </description>
