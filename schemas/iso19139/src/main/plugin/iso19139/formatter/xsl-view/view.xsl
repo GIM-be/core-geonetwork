@@ -369,6 +369,28 @@
         </xsl:otherwise>
       </xsl:choose>
     </table>
+
+    <xsl:if test="name() = 'gmd:DQ_DataQuality' and (contains(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString,'2007/2/E'))">
+      <h2 class="view-header"
+          style="border-bottom: 2px solid rgb(229, 229, 229); margin-top: 30px;font-size: 16px;color: rgb(40, 96, 144); position: relative;">
+        <xsl:value-of select="concat('INSPIRE ', tr:node-label(tr:create($schema), name(gmd:report/gmd:DQ_DomainConsistency), null))"/>
+        <xsl:apply-templates mode="render-value"
+                             select="@*"/>
+      </h2>
+      <table style="box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px; background-color: transparent; border-collapse: collapse; border-spacing: 0;"
+             class="table table-striped iso19139-md-view">
+        <xsl:choose>
+          <xsl:when test="count(*) > 0">
+            <xsl:apply-templates mode="render-field" select="gmd:report/gmd:DQ_DomainConsistency/gmd:result"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <tr>
+              <td colspan="2">No information provided.</td>
+            </tr>
+          </xsl:otherwise>
+        </xsl:choose>
+      </table>
+    </xsl:if>
   </xsl:template>
 
 
@@ -404,6 +426,43 @@
     </tr>
 
   </xsl:template>
+
+  <xsl:template mode="render-field" match="gmd:specification/gmd:CI_Citation/gmd:title" priority="10000">
+    <tr>
+      <th>
+        <xsl:value-of select="tr:nodeLabel(tr:create($schema), name(), null)"/>
+      </th>
+      <td>
+        <xsl:value-of select="string(gco:CharacterString)"/>
+      </td>
+    </tr>
+  </xsl:template>
+
+  <xsl:template mode="render-field" match="gmd:DQ_DomainConsistency" priority="10">
+    <xsl:if test="not(contains(gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString, '2007/2/E'))">
+      <tr>
+        <th>
+          <xsl:value-of select="tr:nodeLabel(tr:create($schema), name(), null)"/>
+          <xsl:apply-templates mode="render-value"
+                               select="@*"/>
+        </th>
+        <td><xsl:comment select="name()"/>
+          <xsl:choose>
+            <xsl:when test="count(*) > 0">
+              <table style="background-color: rgba(0, 0, 0, 0.035); margin-bottom: 0; box-sizing: border-box; width: 100%; max-width: 100%; border-collapse: collapse; border-spacing: 0;"
+                     class="table nested-table">
+                <xsl:apply-templates mode="render-field" select="*"/>
+              </table>
+            </xsl:when>
+            <xsl:otherwise>
+              No information provided.
+            </xsl:otherwise>
+          </xsl:choose>
+        </td>
+      </tr>
+    </xsl:if>
+  </xsl:template>
+
 
   <!-- Bbox is displayed with an overview and the geom displayed on it
   and the coordinates displayed around -->
