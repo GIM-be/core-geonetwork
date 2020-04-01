@@ -213,6 +213,7 @@ public class StatusValue extends Localized {
      * one for GeoNetwork and may be modified in the database.
      */
     public static final class Status {
+        public static final String UNKNOWN = "0";
         public static final String DRAFT = "1";
         public static final String APPROVED = "2";
         public static final String RETIRED = "3";

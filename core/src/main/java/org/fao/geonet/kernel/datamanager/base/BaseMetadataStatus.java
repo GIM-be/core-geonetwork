@@ -116,7 +116,8 @@ public class BaseMetadataStatus implements IMetadataStatus {
             metadataId, StatusValueType.workflow, new Sort(Sort.Direction.DESC, sortField));
         for(Iterator i = metadataStatusList.iterator(); i.hasNext();) {
         	MetadataStatus metadataStatus = (MetadataStatus)i.next();
-            if (metadataStatus.getId().equals(StatusValue.Status.APPROVED) || metadataStatus.getId().equals(StatusValue.Status.RETIRED)) {
+            if (metadataStatus.getId().getStatusId()==(Integer.parseInt(StatusValue.Status.APPROVED)) ||
+                metadataStatus.getId().getStatusId()==(Integer.parseInt(StatusValue.Status.RETIRED))) {
             	return metadataStatus;
             }
         }

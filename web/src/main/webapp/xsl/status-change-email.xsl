@@ -31,19 +31,21 @@
 						<xsl:with-param name="currentStatus" select="/root/metadata[1]/currentStatus"/>
 					</xsl:call-template>
 				</xsl:if>
-				<xsl:if test="$status!='1' and $status!='3' and $status!='12'">
-					<xsl:if test="$metadataCount=1">
+				<xsl:if test="$status!='1' and $status!='3'">
+					<xsl:if test="$metadataCount=1 and $status!='12'">
 						<xsl:text>&#10;&#13;Je kan deze record bekijken via </xsl:text><xsl:value-of select="/root/metadata/url"/><xsl:text>.</xsl:text>
 					</xsl:if>
 					<xsl:if test="$metadataCount>1">
 						<xsl:for-each select="/root/metadata">
 							<xsl:text>&#10;&#13;</xsl:text><xsl:value-of select="./title"/>
 						</xsl:for-each>
-						<xsl:text>&#10;&#13;Je kan deze records bekijken via volgende URLs:</xsl:text>
-						<xsl:for-each select="/root/metadata">
-							<xsl:text>&#10;&#13;</xsl:text><xsl:value-of select="./url"/>
-						</xsl:for-each>
-					</xsl:if>
+            <xsl:if test="$status!='12'">
+              <xsl:text>&#10;&#13;Je kan deze records bekijken via volgende URLs:</xsl:text>
+              <xsl:for-each select="/root/metadata">
+                <xsl:text>&#10;&#13;</xsl:text><xsl:value-of select="./url"/>
+              </xsl:for-each>
+            </xsl:if>
+          </xsl:if>
 				</xsl:if>
 				<xsl:if test="$status='2' or $status='9'">
 						<xsl:text>&#10;&#13;Voor meer informatie kan je steeds terecht op onze website </xsl:text><xsl:value-of select="/root/baseUrl"/><xsl:text>, of mail naar informatie.vlaanderen@vlaanderen.be.</xsl:text>
@@ -97,7 +99,7 @@
 					<xsl:call-template name="changeMessage" />
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:if test="$metadataCount>1">Volgende</xsl:if><xsl:if test="$metadataCount=1">De</xsl:if><xsl:text> metadatarecord</xsl:text><xsl:if test="$metadataCount>1">s</xsl:if><xsl:if test="$metadataCount=1"><xsl:text> met titel '</xsl:text><xsl:value-of select="$title"/><xsl:text>'</xsl:text></xsl:if><xsl:text> werd</xsl:text><xsl:if test="$metadataCount>1">en</xsl:if><xsl:text> </xsl:text><xsl:call-template name="typewijziging"/><xsl:value-of select="concat(' door ',/root/user/name, ' ', /root/user/surname, ' van ', /root/group, ' en ')"/><xsl:call-template name="status"/><xsl:text>.</xsl:text>
+					<xsl:if test="$metadataCount>1">Volgende</xsl:if><xsl:if test="$metadataCount=1">De</xsl:if><xsl:text> metadatarecord</xsl:text><xsl:if test="$metadataCount>1">s</xsl:if><xsl:if test="$metadataCount=1"><xsl:text> met titel '</xsl:text><xsl:value-of select="$title"/><xsl:text>'</xsl:text></xsl:if><xsl:text> werd</xsl:text><xsl:if test="$metadataCount>1">en</xsl:if><xsl:text> </xsl:text><xsl:call-template name="typewijziging"/><xsl:value-of select="concat(' door ',/root/user/name, ' ', /root/user/surname, ' van ', /root/group)"/><xsl:if test="/root/status!=''"> en </xsl:if><xsl:call-template name="status"/><xsl:text>.</xsl:text>
 					<xsl:call-template name="changeMessage" />
 				</xsl:otherwise>
 			</xsl:choose>
@@ -154,11 +156,14 @@
 		<xsl:variable name="status" select="/root/status"/>
 		<xsl:choose>
 			<xsl:when test="$status='10'">
-				<xsl:text>ingediend voor depubliceren</xsl:text>
+				<xsl:text>gedepubliceerd</xsl:text>
 			</xsl:when>
-			<xsl:when test="$status='11' or $status='12'">
+			<xsl:when test="$status='11'">
 				<xsl:text>ingediend voor verwijderen</xsl:text>
 			</xsl:when>
+      <xsl:when test="$status='12'">
+        <xsl:text>verwijderd</xsl:text>
+      </xsl:when>
 			<xsl:otherwise><xsl:text>gewijzigd</xsl:text></xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

@@ -375,38 +375,6 @@ public abstract class AIVStatusActions implements StatusActions {
     }
 
     /**
-     * Send email to a list of users. The list of users is defined based on
-     * the notification level of the status. See {@link StatusValueNotificationLevel}.
-     *
-     * @param status
-     * @param changedMetadataIdsToInformEditors
-     * @param changedMetadataIdsToInformReviewers
-     * @param changedMetadataIdsToInformAdministrators
-     * @throws Exception
-     */
-    private void notify(MetadataStatus status, Map<String, Map<String, String>> changedMetadataIdsToInformEditors, Map<String, Map<String, String>> changedMetadataIdsToInformReviewers, Map<String, Map<String, String>> changedMetadataIdsToInformAdministrators) throws Exception {
-        String statusId = status.getId().getStatusId() + "";
-        String statusDescription = status.getStatusValue().getLabelTranslations().containsKey(context.getLanguage()) ?
-            status.getStatusValue().getLabelTranslations().get(context.getLanguage()) :
-            status.getStatusValue().getLabelTranslations().get("eng");
-        String changeMessage = status.getChangeMessage();
-        String changeDate = status.getId().getChangeDate().toString();
-        List<String> emailMetadataIdList = new ArrayList<String>();
-        if (changedMetadataIdsToInformAdministrators.size() > 0) {
-            informContentUsers(changedMetadataIdsToInformAdministrators, changeDate,
-                changeMessage, Profile.Administrator, statusId, statusDescription, emailMetadataIdList);
-        }
-        if (changedMetadataIdsToInformReviewers.size() > 0) {
-            informContentUsers(changedMetadataIdsToInformReviewers, changeDate,
-                changeMessage, Profile.Reviewer, statusId, statusDescription, emailMetadataIdList);
-        }
-        if (changedMetadataIdsToInformEditors.size() > 0) {
-            informContentUsers(changedMetadataIdsToInformEditors, changeDate,
-                changeMessage, Profile.Editor, statusId, statusDescription, emailMetadataIdList);
-        }
-    }
-
-    /**
      * Check the validity of a record against XSD and mandatory schematrons
      *
      * @param metadata Metadata to be validated
@@ -416,19 +384,6 @@ public abstract class AIVStatusActions implements StatusActions {
     protected boolean statusChangeAllowed(AbstractMetadata metadata) throws Exception {
         boolean valid = metadataValidator.doValidate(metadata, context.getLanguage());
         return (metadataValidationRepository.count(MetadataValidationSpecs.isInvalidAndRequiredForMetadata(metadata.getId())) == 0);
-    }
-
-    /**
-     * Check if the validation report comes from a mandatory schematron {@link SchematronRequirement}
-     *
-     * @param valType type of the validation
-     * @return true if schematron is mandatory
-     */
-    private boolean isMandatorySchematron(String valType) {
-        //TODO Check criteria from the Database instead of hard coded
-        return
-            valType.equals("schematron-rules-iso") ||
-                valType.equals("schematron-rules-geonetwork");
     }
 
     // -------------------------------------------------------------------------
@@ -452,28 +407,6 @@ public abstract class AIVStatusActions implements StatusActions {
     }
 
     /**
-     * Set all operations on 'All' Group. Used when status changes from
-     * submitted to approved.
-     *
-     * @param mdId The metadata id to set privileges on
-     */
-    private void setAllOperationsForUserGroup(String mdId) throws Exception {
-        UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
-        List<Integer> groups = userGroupRepository.findGroupIds(hasUserId(Integer.valueOf(session.getUserId())));
-        for (Iterator<Integer> i = groups.iterator(); i.hasNext(); ) {
-            int groupId = i.next().intValue();
-            if (!(groupId == -1 || groupId == 0 || groupId == 1)) {
-                dm.setOperation(context, mdId, String.valueOf(groupId), ReservedOperation.view);
-                dm.setOperation(context, mdId, String.valueOf(groupId), ReservedOperation.download);
-                //dm.setOperation(context, mdId, String.valueOf(groupId), ReservedOperation.editing);
-                dm.setOperation(context, mdId, String.valueOf(groupId), ReservedOperation.notify);
-                dm.setOperation(context, mdId, String.valueOf(groupId), ReservedOperation.dynamic);
-                dm.setOperation(context, mdId, String.valueOf(groupId), ReservedOperation.featured);
-            }
-        }
-    }
-
-    /**
      * Unset all operations on 'All' Group. Used when status changes from approved to something
      * else.
      *
@@ -486,39 +419,6 @@ public abstract class AIVStatusActions implements StatusActions {
         for (ReservedOperation op : ReservedOperation.values()) {
             dm.forceUnsetOperation(context, mdId, allGroup, op.getId());
         }
-    }
-
-    /**
-     * Inform content users of metadata records in list
-     *
-     * @param metadataMap         The selected set of metadata records
-     * @param changeDate          The date that of the change in status
-     * @param changeMessage       Message supplied by the user that set the status
-     * @param profile             Profile of users to be informed
-     * @param statusId            New status
-     * @param emailMetadataIdList List for adding email adresses to sent to the metadata info
-     */
-    private void informContentUsers(Map<String, Map<String, String>> metadataMap,
-                                    String changeDate, String changeMessage, Profile profile, String statusId, String statusDescription, List<String> emailMetadataIdList) throws Exception {
-
-        UserRepository userRepository = context.getBean(UserRepository.class);
-        // --- get content reviewers (sorted on content reviewer userid)
-        List<Object[]> contentUsers;
-        if (profile.equals(Profile.Administrator)) {
-            contentUsers = userRepository.getContentAdmins(metadataMap.keySet());
-        } else {
-            contentUsers = userRepository.getContentUsers(metadataMap.keySet(), profile.ordinal());
-        }
-
-        String subject = "Status metadata record(s) gewijzigd naar '" + statusDescription + "' door " + replyTo + " ("
-            + replyToDescr + ") op " + changeDate;
-
-        processList(context, replyTo, replyToDescr, contentUsers, subject, statusId, changeDate, changeMessage, metadataMap, emailMetadataIdList);
-    }
-
-    protected void processList(ServiceContext context, String replyTo, String replyToDescr, List<Object[]> contentUsers, String subject, String statusId,
-                               String changeDate, String changeMessage, Map<String, Map<String, String>> metadataMap, List<String> emailMetadataIdList)
-        throws Exception {
     }
 
     public static void backupFile(AbstractMetadata metadata, ServiceContext context) {
@@ -549,114 +449,6 @@ public abstract class AIVStatusActions implements StatusActions {
             if (file == null) {
                 IO.deleteFile(file, false, Geonet.MEF);
             }
-        }
-    }
-
-    /**
-     * Process the users and metadata records for emailing notices.
-     *
-     * @param context      The service context
-     * @param replyTo      The replyTo email
-     * @param replyToDescr The replyTo description configured in the web.xml
-     * @param subject      Subject to be used for email notices
-     * @param status       The status being set
-     * @param changeDate   Datestamp of status change
-     */
-    @SuppressWarnings("unchecked")
-    protected void processList(ServiceContext context, String replyTo, String replyToDescr, List<Object[]> contentUsers, String subject, String status,
-                               String changeDate, String changeMessage, Map<String, Map<String, String>> metadataMap, List<String> emailMetadataIdList, String nodeType)
-        throws Exception {
-        Set<String> metadataIds = new HashSet<String>();
-        String currentUserId = null;
-        String userId = null;
-        String currentEmail = null;
-        Iterator<Object[]> recordsIterator = contentUsers.iterator();
-        Element root = null;
-        Element metadata = null;
-        while (recordsIterator.hasNext()) {
-            Object[] record = recordsIterator.next();
-            //select m.id as metadataid, m.uuid as metadatauuid, u.id as userid, u.name as name, u.surname as surname, u.email
-            String metadataId = String.valueOf(record[0]);
-            String metadataUUID = String.valueOf(record[1]);
-            userId = String.valueOf(record[2]);
-            if (currentUserId == null) {
-                currentUserId = userId;
-                currentEmail = String.valueOf(record[5]);
-                if (currentEmail != null) {
-                    currentEmail = currentEmail.toLowerCase();
-                }
-                root = getNewRootElement(context, status, changeMessage, nodeType);
-            } else if (!currentUserId.equals(userId)) {
-                if (StringUtils.isNotBlank(currentEmail) && metadataIds.size() > 0) {
-                    sendEmail(context, currentEmail, root);
-                    metadataIds.clear();
-                }
-                currentUserId = userId;
-                currentEmail = String.valueOf(record[5]);
-                if (currentEmail != null) {
-                    currentEmail = currentEmail.toLowerCase();
-                }
-                root = getNewRootElement(context, status, changeMessage, nodeType);
-            }
-            if (StringUtils.isNotBlank(currentEmail) && !emailMetadataIdList.contains(currentEmail + "_" + metadataId)) {
-                emailMetadataIdList.add(currentEmail + "_" + metadataId);
-                metadataIds.add(metadataId);
-                metadata = new Element("metadata");
-                root.addContent(metadata);
-                metadata.addContent(new Element("url").setText(siteUrl + "catalog.search#/metadata/" + metadataUUID));
-                metadata.addContent(new Element("title").setText(metadataMap.get(metadataUUID).get("title").toString()));
-                metadata.addContent(new Element("currentStatus").setText(metadataMap.get(metadataUUID).get("currentStatus").toString()));
-                if (metadataMap.get(metadataUUID).get("previousStatus") != null) {
-                    metadata.addContent(new Element("previousStatus").setText(metadataMap.get(metadataUUID).get("previousStatus").toString()));
-                }
-            }
-        }
-
-        if (StringUtils.isNotBlank(currentEmail) && metadataIds.size() > 0) {
-            sendEmail(context, currentEmail, root);
-        }
-    }
-
-    public Element getNewRootElement(ServiceContext context, String status, String changeMessage, String nodeType) {
-        Element user = new Element("user");
-        user.addContent(new Element("surname").setText(context.getUserSession().getSurname()));
-        user.addContent(new Element("name").setText(context.getUserSession().getName()));
-        Element group = new Element("group");
-        // Retrieve user groups
-        String groupName = null;
-        UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
-        Specifications spec = where(UserGroupSpecs.hasProfile(context.getUserSession().getProfile())).and(UserGroupSpecs.hasUserId(context.getUserSession().getUserIdAsInt()));
-        List<UserGroup> userGroups = userGroupRepository.findAll(spec);
-        for (UserGroup ug : userGroups) {
-            Group g = ug.getGroup();
-            groupName = (groupName == null ? g.getName() : groupName + ", " + g.getName());
-        }
-        if (groupName==null) {
-            groupName = context.getUserSession().getOrganisation();
-        }
-        group.setText(groupName);
-        Element root = new Element("root");
-        root.addContent(user);
-        root.addContent(group);
-        root.addContent(new Element("node").setText(nodeType));
-        root.addContent(new Element("baseUrl").setText(baseUrl));
-        root.addContent(new Element("siteUrl").setText(siteUrl));
-        root.addContent(new Element("metadatacenter").setText(siteName));
-        root.addContent(new Element("status").setText(status));
-        root.addContent(new Element("changeMessage").setText(changeMessage));
-        return root;
-    }
-
-    public void sendEmail(ServiceContext context, String sendTo, Element params)
-        throws Exception {
-        if (!emailNotes) {
-            context.info("Would send email with message grablock service but no email server configured");
-        } else {
-            String styleSheet = context.getAppPath() + FS + Geonet.Path.STYLESHEETS + FS + Geonet.File.STATUS_CHANGE_EMAIL;
-            Element emailElement = Xml.transform(params, IO.toPath(styleSheet));
-            MailSender sender = new MailSender(context);
-            sender.sendWithReplyTo(host, Integer.parseInt(port), username, password, useSSL, useTLS, true, from, siteName, sendTo, null, replyTo, siteName, emailElement.getChildText("subject"),
-                emailElement.getChildText("message"));
         }
     }
 

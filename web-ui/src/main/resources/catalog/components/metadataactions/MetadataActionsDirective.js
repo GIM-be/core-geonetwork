@@ -432,10 +432,10 @@
    * and the metadata owner id should be the value of the
    * gn-transfer-md-owner attribute
    */
-  module.directive('gnTransferOwnership', [
+  module.directive('gnTransferOwnership', ['gnAlertService',
     '$translate', '$http', 'gnHttp', '$rootScope', '$window',
     'gnUtilityService',
-    function($translate, $http, gnHttp, $rootScope, $window,
+    function(gnAlertService, $translate, $http, gnHttp, $rootScope, $window,
              gnUtilityService) {
       return {
         restrict: 'A',
@@ -527,6 +527,11 @@
                       $window.location.reload();
                     }
                   }, scope, 'TransferOwnershipDone');
+                }, function(reason) {
+                  gnAlertService.addAlert({
+                    msg: $translate.instant(reason.data.description),
+                    type: 'danger'
+                  });
                 });
           };
         }

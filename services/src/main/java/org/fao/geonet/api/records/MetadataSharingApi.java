@@ -80,6 +80,8 @@ import org.fao.geonet.repository.UserRepository;
 import org.fao.geonet.repository.specification.MetadataValidationSpecs;
 import org.fao.geonet.repository.specification.OperationAllowedSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
+import org.fao.geonet.util.WorkflowUtil;
+import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.domain.Specification;
@@ -877,18 +879,19 @@ public class MetadataSharingApi {
 
             Long metadataId = Long.parseLong(ApiUtils.getInternalId(uuid, approved));
             ApplicationContext context = ApplicationContextHolder.get();
+            UserSession us = ApiUtils.getUserSession(session);
             if(!Objects.equals(groupIdentifier, sourceGrp)) {
               Group newGroup = groupRepository.findOne(groupIdentifier);
               Group oldGroup = sourceGrp == null ? null : groupRepository.findOne(sourceGrp);
               new RecordGroupOwnerChangeEvent(metadataId,
-                  ApiUtils.getUserSession(session).getUserIdAsInt(),
+                  us.getUserIdAsInt(),
                   sourceGrp == null ? null : ObjectJSONUtils.convertObjectInJsonObject(oldGroup, RecordGroupOwnerChangeEvent.FIELD),
                   ObjectJSONUtils.convertObjectInJsonObject(newGroup, RecordGroupOwnerChangeEvent.FIELD)).publish(context);
             }
+            User newOwner = userRepository.findOne(userIdentifier);
+            User oldOwner = userRepository.findOne(sourceUsr);
             if(!Objects.equals(userIdentifier, sourceUsr)) {
-              User newOwner = userRepository.findOne(userIdentifier);
-              User oldOwner = userRepository.findOne(sourceUsr);
-              new RecordOwnerChangeEvent(metadataId, ApiUtils.getUserSession(session).getUserIdAsInt(), ObjectJSONUtils.convertObjectInJsonObject(oldOwner, RecordOwnerChangeEvent.FIELD), ObjectJSONUtils.convertObjectInJsonObject(newOwner, RecordOwnerChangeEvent.FIELD)).publish(context);
+              new RecordOwnerChangeEvent(metadataId, us.getUserIdAsInt(), ObjectJSONUtils.convertObjectInJsonObject(oldOwner, RecordOwnerChangeEvent.FIELD), ObjectJSONUtils.convertObjectInJsonObject(newOwner, RecordOwnerChangeEvent.FIELD)).publish(context);
             }
             // -- set the new owner into the metadata record
             dataManager.updateMetadataOwner(metadata.getId(),
@@ -901,6 +904,18 @@ public class MetadataSharingApi {
                     String.valueOf(groupIdentifier));
                 dataManager.indexMetadata(approvedMetadata.getId() + "", true, null);
             }
+            Element root = WorkflowUtil.getNewRootElement(serviceContext, sourceUsr.intValue(), "user", "group", "", "", WorkflowUtil.getNodeType(serviceContext));
+            WorkflowUtil.addUserContent(serviceContext, root, userIdentifier.intValue(), "targetUser", "targetGroup");
+            WorkflowUtil.addMetadataContent(serviceContext, root, metadata.getUuid(), metadataUtils.extractTitle(metadata.getDataInfo().getSchemaId(), metadata.getXmlData(false)), "", null);
+            String replyTo = newOwner.getEmail();
+            String replyToDescr = null;
+            if (replyTo != null) {
+                replyToDescr = newOwner.getName() + " " + newOwner.getSurname();
+            } else {
+                replyTo = sm.getValue(Settings.SYSTEM_FEEDBACK_EMAIL);
+                replyToDescr = sm.getSiteName();
+            }
+            WorkflowUtil.sendEmail(serviceContext, oldOwner.getEmail(), replyTo, replyToDescr, root);
 
             report.addMetadataId(metadata.getId());
             report.incrementProcessedRecords();

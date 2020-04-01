@@ -172,47 +172,9 @@ public class MetadataInsertDeleteApi {
             }
         }
         if (bIsMetadatacenterWorkflow) {
-            boolean isAlreadyApproved = metadataStatusManager.getPreviousPublishedStatus(metadata.getId())!=null;
-            if (isAlreadyApproved) {
-                if (us.getProfile() == Profile.Reviewer) {
-                    String canDeleteGroupIds = context.getServlet().getCanDeleteGroupIds();
-                    if (canDeleteGroupIds!=null && !canDeleteGroupIds.isEmpty()) {
-                        List<String> canDeleteGroupIdsList = Arrays.asList(canDeleteGroupIds.split(","));
-                        UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
-                        Specifications spec = where(UserGroupSpecs.hasProfile(us.getProfile())).and(UserGroupSpecs.hasUserId(us.getUserIdAsInt()));
-                        List<UserGroup> userGroups = userGroupRepository.findAll(spec);
-                        for (UserGroup ug : userGroups) {
-                            if (ug.getGroup().getReferrer() != null && canDeleteGroupIdsList.contains(ug.getGroup().getReferrer().toString())) {
-                                isAllowed = true;
-                            }
-                        }
-                    }
-                } else if (us.getProfile() == Profile.Administrator) {
-                    isAllowed = true;
-                }
-            } else {
-                isAllowed = true;
-            }
-        } else {
-            isAllowed = true;
-        }
-        if (!isAllowed) {
-            throw new SecurityException("deleteNotAllowedByUser");
-        } else {
-            if (bIsMetadataInstance) {
-                Map<String, String> notificationProperties = new HashMap<String, String>();
-                String currentStatusId = metadataStatusManager.getCurrentStatus(metadata.getId());
-                IMetadataUtils metadataUtils = context.getBean(IMetadataUtils.class);
-                notificationProperties.put("title", metadataUtils.extractTitle(metadata.getDataInfo().getSchemaId(), metadata.getXmlData(false)));
-                notificationProperties.put("currentStatus", currentStatusId);
-                Map<String, Map<String, String>> changedMetadataIdsToInformEditors = new HashMap<String, Map<String, String>>();
-                Map<String, Map<String, String>> changedMetadataIdsToInformReviewers = new HashMap<String, Map<String, String>>();
-                Map<String, Map<String, String>> changedMetadataIdsToInformAdministrators = new HashMap<String, Map<String, String>>();
-                changedMetadataIdsToInformEditors.put(metadata.getUuid(), notificationProperties);
-                changedMetadataIdsToInformReviewers.put(metadata.getUuid(), notificationProperties);
-                if (bIsMetadatacenterWorkflow) {
-                    changedMetadataIdsToInformAdministrators.put(metadata.getUuid(), notificationProperties);
-                }
+            Map<String, Map<String, String>> changedMetadataIdsToInformAdministrators = new HashMap<String, Map<String, String>>();
+            isAllowed = isDeleteAllowed(context, metadata, changedMetadataIdsToInformAdministrators, bIsMetadatacenterWorkflow);
+            if (changedMetadataIdsToInformAdministrators.size()>0) {
                 StatusValueRepository statusValueRepository = context.getBean(StatusValueRepository.class);
                 StatusValue statusValue = statusValueRepository.findOne(Integer.parseInt(StatusValue.Status.REMOVED));
                 MetadataStatus metadataStatus = new MetadataStatus();
@@ -221,8 +183,14 @@ public class MetadataInsertDeleteApi {
                 metadataStatus.setId(mdStatusId);
                 metadataStatus.setStatusValue(statusValue);
                 metadataStatus.setChangeMessage("");
-                WorkflowUtil.notify(context, metadataStatus, changedMetadataIdsToInformEditors, changedMetadataIdsToInformReviewers, changedMetadataIdsToInformAdministrators);
+                WorkflowUtil.notify(context, metadataStatus, null, null, changedMetadataIdsToInformAdministrators);
             }
+        } else {
+            isAllowed = true;
+        }
+        if (!isAllowed) {
+            throw new SecurityException("deleteNotAllowedByUser");
+        } else {
             if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE
                 && metadata.getDataInfo().getType() != MetadataType.TEMPLATE_OF_SUB_TEMPLATE && withBackup) {
                 MetadataUtils.backupRecord(metadata, context);
@@ -257,29 +225,53 @@ public class MetadataInsertDeleteApi {
         Set<String> records = ApiUtils.getUuidsParameterOrSelection(uuids, bucket, ApiUtils.getUserSession(session));
 
         SimpleMetadataProcessingReport report = new SimpleMetadataProcessingReport();
+        boolean bIsMetadatacenterWorkflow = WorkflowUtil.getNodeType(context).equals("Metadatacenter");
+        UserRepository userRepository = context.getBean(UserRepository.class);
+        List<Object[]> contentUsers = new ArrayList<Object[]>();
+        Map<String, Map<String, String>> allMetadataIdsToInformAdministrators = new HashMap<String, Map<String, String>>();
         for (String uuid : records) {
             AbstractMetadata metadata = metadataRepository.findOneByUuid(uuid);
             if (metadata == null) {
                 report.incrementNullRecords();
             } else if (!accessManager.canEdit(context, String.valueOf(metadata.getId()))
-                    || metadataDraftRepository.findOneByUuid(uuid) != null) {
+                    || (metadataDraftRepository.count((Specification<MetadataDraft>) MetadataSpecs.hasMetadataUuid(uuid)) > 0)) {
                 report.addNotEditableMetadataId(metadata.getId());
             } else {
-                if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE
-                        && metadata.getDataInfo().getType() != MetadataType.TEMPLATE_OF_SUB_TEMPLATE && withBackup) {
-                    MetadataUtils.backupRecord(metadata, context);
+                boolean isAllowed = false;
+                if (bIsMetadatacenterWorkflow) {
+                    Map<String, Map<String, String>> changedMetadataIdsToInformAdministrators = new HashMap<String, Map<String, String>>();
+                    isAllowed = isDeleteAllowed(context, metadata, changedMetadataIdsToInformAdministrators, bIsMetadatacenterWorkflow);
+                    if (changedMetadataIdsToInformAdministrators.size()>0) {
+                        allMetadataIdsToInformAdministrators.putAll(changedMetadataIdsToInformAdministrators);
+                        contentUsers.addAll(userRepository.getContentAdmins(changedMetadataIdsToInformAdministrators.keySet()));
+                    }
+                } else {
+                    isAllowed = true;
                 }
+                if (isAllowed) {
+                    if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE
+                        && metadata.getDataInfo().getType() != MetadataType.TEMPLATE_OF_SUB_TEMPLATE && withBackup) {
+                        MetadataUtils.backupRecord(metadata, context);
+                    }
 
-                IO.deleteFileOrDirectory(Lib.resource.getMetadataDir(context.getBean(GeonetworkDataDirectory.class),
+                    IO.deleteFileOrDirectory(Lib.resource.getMetadataDir(context.getBean(GeonetworkDataDirectory.class),
                         String.valueOf(metadata.getId())));
 
-                metadataManager.deleteMetadata(context, String.valueOf(metadata.getId()));
+                    metadataManager.deleteMetadata(context, String.valueOf(metadata.getId()));
 
-                report.incrementProcessedRecords();
-                report.addMetadataId(metadata.getId());
+                    report.incrementProcessedRecords();
+                    report.addMetadataId(metadata.getId());
+                }
             }
         }
 
+        if (contentUsers.size()>0) {
+            StatusValueRepository statusValueRepository = context.getBean(StatusValueRepository.class);
+            StatusValue statusValue = statusValueRepository.findOne(Integer.parseInt(StatusValue.Status.REMOVED));
+            List<String> emailMetadataIdList = new ArrayList<String>();
+            WorkflowUtil.informContentUsers(context, allMetadataIdsToInformAdministrators,
+                "", Profile.Administrator, String.valueOf(statusValue.getId()), emailMetadataIdList, contentUsers);
+        }
         searchManager.forceIndexChanges();
 
         report.close();
@@ -914,5 +906,41 @@ public class MetadataInsertDeleteApi {
 
         dataManager.indexMetadata(id.get(0), true, null);
         return Pair.read(Integer.valueOf(id.get(0)), uuid);
+    }
+
+    private boolean isDeleteAllowed(ServiceContext context, AbstractMetadata metadata, Map<String, Map<String, String>> changedMetadataIdsToInformAdministrators, boolean bIsMetadatacenterWorkflow) throws Exception {
+        boolean isAllowed = false;
+        boolean isAlreadyApproved = metadataStatusManager.getPreviousPublishedStatus(metadata.getId())!=null;
+        if (isAlreadyApproved) {
+            UserSession us = context.getUserSession();
+            if (us.getProfile() == Profile.Reviewer) {
+                String canDeleteGroupIds = context.getServlet().getCanDeleteGroupIds();
+                if (canDeleteGroupIds!=null && !canDeleteGroupIds.isEmpty()) {
+                    List<String> canDeleteGroupIdsList = Arrays.asList(canDeleteGroupIds.split(","));
+                    UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
+                    Specifications spec = where(UserGroupSpecs.hasProfile(us.getProfile())).and(UserGroupSpecs.hasUserId(us.getUserIdAsInt()));
+                    List<UserGroup> userGroups = userGroupRepository.findAll(spec);
+                    for (UserGroup ug : userGroups) {
+                        if (ug.getGroup().getReferrer() != null && canDeleteGroupIdsList.contains(ug.getGroup().getReferrer().toString())) {
+                            isAllowed = true;
+                            break;
+                        }
+                    }
+                    if (isAllowed) {
+                        Map<String, String> notificationProperties = new HashMap<String, String>();
+                        String currentStatusId = metadataStatusManager.getCurrentStatus(metadata.getId());
+                        IMetadataUtils metadataUtils = context.getBean(IMetadataUtils.class);
+                        notificationProperties.put("title", metadataUtils.extractTitle(metadata.getDataInfo().getSchemaId(), metadata.getXmlData(false)));
+                        notificationProperties.put("currentStatus", currentStatusId);
+                        changedMetadataIdsToInformAdministrators.put(metadata.getUuid(), notificationProperties);
+                    }
+                }
+            } else if (us.getProfile() == Profile.Administrator) {
+                isAllowed = true;
+            }
+        } else {
+            isAllowed = true;
+        }
+        return isAllowed;
     }
 }
