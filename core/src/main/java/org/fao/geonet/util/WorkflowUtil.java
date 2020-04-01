@@ -107,23 +107,19 @@ public class WorkflowUtil {
      */
     public static void notify(ServiceContext context, MetadataStatus status, Map<String, Map<String, String>> changedMetadataIdsToInformEditors, Map<String, Map<String, String>> changedMetadataIdsToInformReviewers, Map<String, Map<String, String>> changedMetadataIdsToInformAdministrators) throws Exception {
         String statusId = status.getId().getStatusId() + "";
-        String statusDescription = status.getStatusValue().getLabelTranslations().containsKey(context.getLanguage()) ?
-            status.getStatusValue().getLabelTranslations().get(context.getLanguage()) :
-            status.getStatusValue().getLabelTranslations().get("eng");
         String changeMessage = status.getChangeMessage();
-        String changeDate = status.getId().getChangeDate().toString();
         List<String> emailMetadataIdList = new ArrayList<String>();
-        if (changedMetadataIdsToInformAdministrators.size() > 0) {
-            informContentUsers(context, changedMetadataIdsToInformAdministrators, changeDate,
-                changeMessage, Profile.Administrator, statusId, statusDescription, emailMetadataIdList);
+        if (changedMetadataIdsToInformAdministrators!=null && changedMetadataIdsToInformAdministrators.size() > 0) {
+            informContentUsers(context, changedMetadataIdsToInformAdministrators,
+                changeMessage, Profile.Administrator, statusId, emailMetadataIdList, null);
         }
-        if (changedMetadataIdsToInformReviewers.size() > 0) {
-            informContentUsers(context, changedMetadataIdsToInformReviewers, changeDate,
-                changeMessage, Profile.Reviewer, statusId, statusDescription, emailMetadataIdList);
+        if (changedMetadataIdsToInformReviewers!=null && changedMetadataIdsToInformReviewers.size() > 0) {
+            informContentUsers(context, changedMetadataIdsToInformReviewers,
+                changeMessage, Profile.Reviewer, statusId, emailMetadataIdList, null);
         }
-        if (changedMetadataIdsToInformEditors.size() > 0) {
-            informContentUsers(context, changedMetadataIdsToInformEditors, changeDate,
-                changeMessage, Profile.Editor, statusId, statusDescription, emailMetadataIdList);
+        if (changedMetadataIdsToInformEditors!=null && changedMetadataIdsToInformEditors.size() > 0) {
+            informContentUsers(context, changedMetadataIdsToInformEditors,
+                changeMessage, Profile.Editor, statusId, emailMetadataIdList, null);
         }
     }
 
@@ -132,22 +128,22 @@ public class WorkflowUtil {
      *
      * @param context      The service context
      * @param metadataMap         The selected set of metadata records
-     * @param changeDate          The date that of the change in status
      * @param changeMessage       Message supplied by the user that set the status
      * @param profile             Profile of users to be informed
      * @param statusId            New status
      * @param emailMetadataIdList List for adding email adresses to sent to the metadata info
      */
-    private static void informContentUsers(ServiceContext context, Map<String, Map<String, String>> metadataMap,
-                                    String changeDate, String changeMessage, Profile profile, String statusId, String statusDescription, List<String> emailMetadataIdList) throws Exception {
+    public static void informContentUsers(ServiceContext context, Map<String, Map<String, String>> metadataMap,
+                                    String changeMessage, Profile profile, String statusId, List<String> emailMetadataIdList, List<Object[]> contentUsers) throws Exception {
 
         UserRepository userRepository = context.getBean(UserRepository.class);
         // --- get content reviewers (sorted on content reviewer userid)
-        List<Object[]> contentUsers;
-        if (profile.equals(Profile.Administrator)) {
-            contentUsers = userRepository.getContentAdmins(metadataMap.keySet());
-        } else {
-            contentUsers = userRepository.getContentUsers(metadataMap.keySet(), profile.ordinal());
+        if (contentUsers==null || contentUsers.isEmpty()) {
+            if (profile.equals(Profile.Administrator)) {
+                contentUsers = userRepository.getContentAdmins(metadataMap.keySet());
+            } else {
+                contentUsers = userRepository.getContentUsers(metadataMap.keySet(), profile.ordinal());
+            }
         }
 
         SettingManager sm = context.getBean(SettingManager.class);
@@ -164,18 +160,15 @@ public class WorkflowUtil {
             replyToDescr = siteName;
         }
 
-        String subject = "Status metadata record(s) gewijzigd naar '" + statusDescription + "' door " + replyTo + " ("
-            + replyToDescr + ") op " + changeDate;
-
-        processList(context, replyTo, replyToDescr, contentUsers, subject, statusId, changeDate, changeMessage, metadataMap, emailMetadataIdList, getNodeType(context));
+        processList(context, replyTo, replyToDescr, contentUsers, statusId, changeMessage, metadataMap, emailMetadataIdList, getNodeType(context));
     }
 
     /**
      * Process the users and metadata records for emailing notices.
      */
     @SuppressWarnings("unchecked")
-    private static void processList(ServiceContext context, String replyTo, String replyToDescr, List<Object[]> contentUsers, String subject, String status,
-                               String changeDate, String changeMessage, Map<String, Map<String, String>> metadataMap, List<String> emailMetadataIdList, String nodeType)
+    private static void processList(ServiceContext context, String replyTo, String replyToDescr, List<Object[]> contentUsers, String status,
+                               String changeMessage, Map<String, Map<String, String>> metadataMap, List<String> emailMetadataIdList, String nodeType)
         throws Exception {
         Set<String> metadataIds = new HashSet<String>();
         String currentUserId = null;
@@ -183,7 +176,6 @@ public class WorkflowUtil {
         String currentEmail = null;
         Iterator<Object[]> recordsIterator = contentUsers.iterator();
         Element root = null;
-        Element metadata = null;
         while (recordsIterator.hasNext()) {
             Object[] record = recordsIterator.next();
             //select m.id as metadataid, m.uuid as metadatauuid, u.id as userid, u.name as name, u.surname as surname, u.email
@@ -196,10 +188,10 @@ public class WorkflowUtil {
                 if (currentEmail != null) {
                     currentEmail = currentEmail.toLowerCase();
                 }
-                root = getNewRootElement(context, status, changeMessage, nodeType);
+                root = getNewRootElement(context, context.getUserSession().getUserIdAsInt(), "user", "group", status, changeMessage, nodeType);
             } else if (!currentUserId.equals(userId)) {
                 if (StringUtils.isNotBlank(currentEmail) && metadataIds.size() > 0) {
-                    sendEmail(context, replyTo, currentEmail, root);
+                    sendEmail(context, currentEmail, replyTo, replyToDescr, root);
                     metadataIds.clear();
                 }
                 currentUserId = userId;
@@ -207,54 +199,28 @@ public class WorkflowUtil {
                 if (currentEmail != null) {
                     currentEmail = currentEmail.toLowerCase();
                 }
-                root = getNewRootElement(context, status, changeMessage, nodeType);
+                root = getNewRootElement(context, context.getUserSession().getUserIdAsInt(), "user", "group", status, changeMessage, nodeType);
             }
             if (StringUtils.isNotBlank(currentEmail) && !emailMetadataIdList.contains(currentEmail + "_" + metadataId)) {
                 emailMetadataIdList.add(currentEmail + "_" + metadataId);
                 metadataIds.add(metadataId);
-                metadata = new Element("metadata");
-                root.addContent(metadata);
-                SettingManager sm = context.getBean(SettingManager.class);
-                metadata.addContent(new Element("url").setText(sm.getSiteURL(context) + "catalog.search#/metadata/" + metadataUUID));
-                metadata.addContent(new Element("title").setText(metadataMap.get(metadataUUID).get("title").toString()));
-                metadata.addContent(new Element("currentStatus").setText(metadataMap.get(metadataUUID).get("currentStatus").toString()));
-                if (metadataMap.get(metadataUUID).get("previousStatus") != null) {
-                    metadata.addContent(new Element("previousStatus").setText(metadataMap.get(metadataUUID).get("previousStatus").toString()));
-                }
+                addMetadataContent(context, root, metadataUUID, metadataMap.get(metadataUUID).get("title").toString(), metadataMap.get(metadataUUID).get("currentStatus"), metadataMap.get(metadataUUID).get("previousStatus"));
             }
         }
 
         if (StringUtils.isNotBlank(currentEmail) && metadataIds.size() > 0) {
-            sendEmail(context, replyTo, currentEmail, root);
+            sendEmail(context, currentEmail, replyTo, replyToDescr, root);
         }
     }
 
-    private static Element getNewRootElement(ServiceContext context, String status, String changeMessage, String nodeType) {
+    public static Element getNewRootElement(ServiceContext context, int userId, String userElementName, String groupElementName, String status, String changeMessage, String nodeType) {
         SettingManager sm = context.getBean(SettingManager.class);
         String baseUrl = sm.getBaseURL();
         String siteUrl = sm.getSiteURL(context);
         String siteName = sm.getSiteName();
 
-        Element user = new Element("user");
-        user.addContent(new Element("surname").setText(context.getUserSession().getSurname()));
-        user.addContent(new Element("name").setText(context.getUserSession().getName()));
-        Element group = new Element("group");
-        // Retrieve user groups
-        String groupName = null;
-        UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
-        Specifications spec = where(UserGroupSpecs.hasProfile(context.getUserSession().getProfile())).and(UserGroupSpecs.hasUserId(context.getUserSession().getUserIdAsInt()));
-        List<UserGroup> userGroups = userGroupRepository.findAll(spec);
-        for (UserGroup ug : userGroups) {
-            Group g = ug.getGroup();
-            groupName = (groupName == null ? g.getName() : groupName + ", " + g.getName());
-        }
-        if (groupName==null) {
-            groupName = context.getUserSession().getOrganisation();
-        }
-        group.setText(groupName);
         Element root = new Element("root");
-        root.addContent(user);
-        root.addContent(group);
+        addUserContent(context, root, userId, userElementName, groupElementName);
         root.addContent(new Element("node").setText(nodeType));
         root.addContent(new Element("baseUrl").setText(baseUrl));
         root.addContent(new Element("siteUrl").setText(siteUrl));
@@ -264,7 +230,44 @@ public class WorkflowUtil {
         return root;
     }
 
-    private static void sendEmail(ServiceContext context, String replyTo, String sendTo, Element params)
+    public static void addUserContent(ServiceContext context, Element root, int userId, String userElementName, String groupElementName) {
+        User user = context.getBean(UserRepository.class).findOne(userId);
+        if (user != null) {
+            Element userElement = new Element(userElementName);
+            userElement.addContent(new Element("surname").setText(user.getSurname()));
+            userElement.addContent(new Element("name").setText(user.getName()));
+            root.addContent(userElement);
+            Element groupElement = new Element(groupElementName);
+            // Retrieve user groups
+            String groupName = null;
+            UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
+            Specifications spec = where(UserGroupSpecs.hasProfile(user.getProfile())).and(UserGroupSpecs.hasUserId(userId));
+            List<UserGroup> userGroups = userGroupRepository.findAll(spec);
+            for (UserGroup ug : userGroups) {
+                Group g = ug.getGroup();
+                groupName = (groupName == null ? g.getName() : groupName + ", " + g.getName());
+            }
+            if (groupName==null) {
+                groupName = context.getUserSession().getOrganisation();
+            }
+            groupElement.setText(groupName);
+            root.addContent(groupElement);
+        }
+    }
+
+    public static void addMetadataContent(ServiceContext context, Element root, String metadataUUID, String title, String currentStatus, String previousStatus) {
+        Element metadata = new Element("metadata");
+        root.addContent(metadata);
+        SettingManager sm = context.getBean(SettingManager.class);
+        metadata.addContent(new Element("url").setText(sm.getSiteURL(context) + "catalog.search#/metadata/" + metadataUUID));
+        metadata.addContent(new Element("title").setText(title));
+        metadata.addContent(new Element("currentStatus").setText(currentStatus));
+        if (previousStatus != null) {
+            metadata.addContent(new Element("previousStatus").setText(previousStatus));
+        }
+    }
+
+    public static void sendEmail(ServiceContext context, String sendTo, String replyTo, String replyToDescr, Element params)
         throws Exception {
         SettingManager sm = context.getBean(SettingManager.class);
         String siteName = sm.getSiteName();
@@ -295,15 +298,11 @@ public class WorkflowUtil {
         if (!emailNotes) {
             context.info("Would send email with message grablock service but no email server configured");
         } else {
-            if (!emailNotes) {
-                context.info("Would send email with message grablock service but no email server configured");
-            } else {
-                String styleSheet = context.getAppPath() + FS + Geonet.Path.STYLESHEETS + FS + Geonet.File.STATUS_CHANGE_EMAIL;
-                Element emailElement = Xml.transform(params, IO.toPath(styleSheet));
-                MailSender sender = new MailSender(context);
-                sender.sendWithReplyTo(host, Integer.parseInt(port), username, password, useSSL, useTLS, true, from, siteName, sendTo, null, replyTo, siteName, emailElement.getChildText("subject"),
-                    emailElement.getChildText("message"));
-            }
+            String styleSheet = context.getAppPath() + FS + Geonet.Path.STYLESHEETS + FS + Geonet.File.STATUS_CHANGE_EMAIL;
+            Element emailElement = Xml.transform(params, IO.toPath(styleSheet));
+            MailSender sender = new MailSender(context);
+            sender.sendWithReplyTo(host, Integer.parseInt(port), username, password, useSSL, useTLS, true, from, siteName, sendTo, null, replyTo, replyToDescr, emailElement.getChildText("subject"),
+                emailElement.getChildText("message"));
         }
     }
 

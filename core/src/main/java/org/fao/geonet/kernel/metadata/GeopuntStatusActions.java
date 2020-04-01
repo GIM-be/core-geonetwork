@@ -167,7 +167,7 @@ public class GeopuntStatusActions extends AIVStatusActions {
     }
 
     protected void getUserToNotify(String statusId, AbstractMetadata metadata, String currentStatusId, Map<String, String> notificationProperties, Map<String, String> recordsToBeDeleted, Map<String, Map<String, String>> changedMetadataIdsToInformEditors, Map<String, Map<String, String>> changedMetadataIdsToInformReviewers, Map<String, Map<String, String>> changedMetadataIdsToInformAdministrators) throws Exception {
-        if (!statusId.equals(StatusValue.Status.APPROVED)) {
+        if (!(currentStatusId.equals(StatusValue.Status.UNKNOWN) && statusId.equals(StatusValue.Status.APPROVED))) {
             notificationProperties.put("title", metadataUtils.extractTitle(metadata.getDataInfo().getSchemaId(), metadata.getXmlData(false)));
             notificationProperties.put("currentStatus", currentStatusId);
             switch (Integer.parseInt(statusId)) {
@@ -191,11 +191,5 @@ public class GeopuntStatusActions extends AIVStatusActions {
                     break;
             }
         }
-    }
-
-    protected void processList(ServiceContext context, String replyTo, String replyToDescr, List<Object[]> contentUsers, String subject, String statusId,
-                               String changeDate, String changeMessage, Map<String, Map<String, String>> metadataMap, List<String> emailMetadataIdList)
-        throws Exception {
-        processList(context, replyTo, replyToDescr, contentUsers, subject, statusId, changeDate, changeMessage, metadataMap, emailMetadataIdList, WorkflowUtil.getNodeType(context));
     }
 }
