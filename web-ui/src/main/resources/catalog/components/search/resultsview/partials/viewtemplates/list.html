@@ -168,6 +168,11 @@
         </div>
 
       </div>
+      <div data-ng-if="md.mdStatus<50">
+        <i class="fa gn-aiv-workflow-status gn-aiv-workflow-status-{{(md.mdStatus && md.mdStatus < 7) ? md.mdStatus : 'x'}}">
+          <span>{{'mdStatusRecord' | translate}}: {{('mdStatus-' + md.mdStatus) | translate}}</span>
+        </i>
+      </div>
     </div>
   </li>
 </ul>

@@ -33,7 +33,7 @@
 				</xsl:if>
 				<xsl:if test="$status!='1' and $status!='3'">
 					<xsl:if test="$metadataCount=1 and $status!='12'">
-						<xsl:text>&#10;&#13;Je kan deze record bekijken via </xsl:text><xsl:value-of select="/root/metadata/url"/><xsl:text>.</xsl:text>
+						<xsl:text>&#10;&#13;Je kan deze record bekijken via </xsl:text><xsl:value-of select="/root/metadata/url"/><xsl:text> .</xsl:text>
 					</xsl:if>
 					<xsl:if test="$metadataCount>1">
 						<xsl:for-each select="/root/metadata">
