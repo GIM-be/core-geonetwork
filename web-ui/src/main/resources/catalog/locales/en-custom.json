@@ -18,6 +18,7 @@
   "mdStatusTitle-62": "Deleted",
   "mdStatusTitle-63": "Rejected by Informatie Vlaanderen validator and not unpublished",
   "mdStatusTitle-64": "Rejected by Informatie Vlaanderen validator and not deleted",
+  "mdStatusRecord": "Status record",
   "mdStatus-1": "Draft",
   "mdStatus-2": "Approved",
   "mdStatus-3": "Retired",

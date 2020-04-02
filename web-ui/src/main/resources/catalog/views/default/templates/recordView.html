@@ -135,9 +135,9 @@
         <h1>
           <i class="fa gn-icon-{{mdView.current.record.type[0]}}"/>
           {{mdView.current.record.title || mdView.current.record.defaultTitle}}
-          <span class="text-muted badge"
+          <!--span class="text-muted badge"
                 data-ng-class="{'text-success': md.mdStatus == 2, 'text-warning': md.mdStatus == 4}"
-                data-ng-if="user.isEditorOrMore() && md.mdStatus<50 && isMdWorkflowEnable">{{('mdStatus-' + md.mdStatus) | translate}}</span>
+                data-ng-if="user.isEditorOrMore() && md.mdStatus<50 && isMdWorkflowEnable">{{('mdStatus-' + md.mdStatus) | translate}}</span-->
         </h1>
 
 
@@ -145,13 +145,19 @@
             data-ng-bind-html="(mdView.current.record.abstract || mdView.current.record.defaultAbstract) | linky | newlines"/>
 
           <!-- Display the first metadata status (apply to ISO19139 record) -->
-          <div data-ng-if="mdView.current.record.status_text.length > 0"
+          <!--div data-ng-if="mdView.current.record.status_text.length > 0"
               title="{{mdView.current.record.status_text[0]}}"
               class="gn-status gn-status-mdview gn-status-{{mdView.current.record.status[0]}}">
             {{mdView.current.record.status_text[0]}}
-          </div>
+          </div-->
 
-          <div data-gn-related-observer>
+        <div data-ng-if="user.isEditorOrMore() && md.mdStatus<50 && isMdWorkflowEnable">
+          <i class="fa gn-aiv-workflow-status gn-aiv-workflow-status-{{(md.mdStatus && md.mdStatus < 7) ? md.mdStatus : 'x'}}">
+            <span>{{'mdStatusRecord' | translate}}: {{('mdStatus-' + md.mdStatus) | translate}}</span>
+          </i>
+        </div>
+
+        <div data-gn-related-observer>
             <div data-gn-related="mdView.current.record"
                 data-user="user"
                 data-types="onlines"
