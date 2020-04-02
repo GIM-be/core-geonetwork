@@ -1215,7 +1215,7 @@
     <condition>conditional</condition>
   </element>
   <element name="gmd:LI_Lineage">
-    <label>Herkomst</label>
+    <label>Bewerkingen</label>
     <description>Informatie over de gebeurtenissen of brondata die gebruikt werd in het aanmaken van de data
       gespecifieerd door het toepassingsgebied. Of ontbreken van kennis in verband met deze herkomst.
     </description>
@@ -2211,6 +2211,14 @@
     <label>Specificatie</label>
     <description>Naam van de subset, profiel of productspecificatie van het formaat.</description>
     <condition>mandatory</condition>
+  </element>
+  <element name="gmd:CI_Citation" context="gmd:specification">
+    <label>Specificatie</label>
+    <description>Naam van de subset, profiel of productspecificatie van het formaat.</description>
+  </element>
+  <element name="gmd:title" context="gmd:specification">
+    <label>Titel specificatie</label>
+    <description>Titel of naam</description>
   </element>
   <element name="gmd:specificUsage">
     <label>Omschrijving van het gebruik</label>
