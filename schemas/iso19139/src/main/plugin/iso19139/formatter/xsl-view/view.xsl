@@ -427,7 +427,7 @@
 
   </xsl:template>
 
-  <xsl:template mode="render-field" match="gmd:specification/gmd:CI_Citation/gmd:title" priority="10000">
+  <xsl:template mode="render-field" match="gmd:specification/gmd:CI_Citation/gmd:title" priority="2001">
     <tr>
       <th>
         <xsl:value-of select="tr:nodeLabel(tr:create($schema), name(), 'gmd:specification')"/>
@@ -1113,9 +1113,22 @@
                       select="tr:codelist-value-desc(
                             tr:create($schema),
                             parent::node()/local-name(), $id)"/>
-        <span title="{$codelistDesc}">
-          <xsl:value-of select="$codelistTranslation"/>
-        </span>
+
+        <xsl:choose>
+          <xsl:when test="normalize-space($codelistDesc) != ''">
+            <span>
+              <strong>
+                <xsl:value-of select="concat($codelistTranslation, ': ')"/>
+              </strong>
+              <xsl:value-of select="$codelistDesc"/>
+            </span>
+          </xsl:when>
+          <xsl:otherwise>
+            <span>
+              <xsl:value-of select="$codelistTranslation"/>
+            </span>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="$id"/>
