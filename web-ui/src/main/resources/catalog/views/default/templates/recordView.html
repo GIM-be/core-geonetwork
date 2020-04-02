@@ -103,18 +103,20 @@
         <div class="btn-group pull-right" role="group">
           <a class="btn btn-default"
             data-ng-show="user.canEditRecord(mdView.current.record)"
+            ng-if="mdView.current.record.draft !== 'e'"
             data-gn-click-and-spin="deleteRecord(mdView.current.record)"
             data-gn-confirm-click="{{(mdView.current.record.draft != 'y') ? 'deleteRecordConfirm' : 'deleteWorkingCopyRecordConfirm' | translate:mdView.current.record}}"
             title="{{(mdView.current.record.draft != 'y') ? 'delete' : 'cancelWorkingCopy' | translate}}">
             <i class="fa fa-fw fa-times"></i>
             <span data-translate="" class="hidden-sm hidden-xs" data-ng-if="mdView.current.record.draft == 'y'">cancelWorkingCopy</span>
-            <span data-translate="" class="hidden-sm hidden-xs" data-ng-if="mdView.current.record.draft != 'y'">delete</span>
+            <span data-translate="" class="hidden-sm hidden-xs" data-ng-if="mdView.current.record.draft == 'n'">delete</span>
           </a>
         </div>
 
         <div class="btn-group pull-right" role="group">
           <a class="btn btn-default gn-md-edit-btn"
             data-ng-show="user.canEditRecord(mdView.current.record)"
+            ng-if="mdView.current.record.draft !== 'e'"
             data-ng-href="catalog.edit#/metadata/{{mdView.current.record.getId()}}?redirectUrl=catalog.search%23%2Fmetadata%2F{{mdView.current.record.getUuid()}}"
             title="{{'edit' | translate}}">
             <i class="fa fa-fw fa-pencil"></i>

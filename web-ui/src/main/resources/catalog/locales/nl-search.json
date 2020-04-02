@@ -499,5 +499,5 @@
     "userSearchUpdated": "Zoek opdracht opgeslagen",
     "userSearchUpdatedError": "Er is een probleem opgetreden bij het opslaan van de zoek opdracht",
     "seeDraft": "Er is een werkkopie beschikbaar voor dit record. Klik hier om het in te zien.",
-    "seeNoDraft": "Dit record is een werkkopie. Klik hier om de geaccordeerde versie te bekijken."
+    "seeNoDraft": "Dit record is een werkkopie. Klik hier om de gepubliceerde versie te bekijken waarvan vertrokken werd."
 }
