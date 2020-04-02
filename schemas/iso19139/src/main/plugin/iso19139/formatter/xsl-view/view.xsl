@@ -405,7 +405,7 @@
         not(gco:CharacterString) and not(gmd:URL)]">
     <tr>
       <th>
-        <xsl:value-of select="tr:nodeLabel(tr:create($schema), name(), null)"/>
+        <xsl:value-of select="tr:nodeLabel(tr:create($schema), name(), name(..))"/>
         <xsl:apply-templates mode="render-value"
                              select="@*"/>
       </th>
@@ -430,10 +430,10 @@
   <xsl:template mode="render-field" match="gmd:specification/gmd:CI_Citation/gmd:title" priority="10000">
     <tr>
       <th>
-        <xsl:value-of select="tr:nodeLabel(tr:create($schema), name(), null)"/>
+        <xsl:value-of select="tr:nodeLabel(tr:create($schema), name(), 'gmd:specification')"/>
       </th>
       <td>
-        <xsl:value-of select="string(gco:CharacterString)"/>
+        <xsl:value-of select="string(gco:CharacterString|gmx:Anchor)"/>
       </td>
     </tr>
   </xsl:template>
