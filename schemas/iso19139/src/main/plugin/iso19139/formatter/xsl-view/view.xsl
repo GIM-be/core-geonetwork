@@ -440,29 +440,28 @@
     </tr>
   </xsl:template>
 
-  <xsl:template mode="render-field" match="gmd:DQ_DomainConsistency" priority="10">
-    <xsl:if test="not(contains(gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString, '2007/2/E'))">
-      <tr>
-        <th>
-          <xsl:value-of select="tr:nodeLabel(tr:create($schema), name(), null)"/>
-          <xsl:apply-templates mode="render-value"
-                               select="@*"/>
-        </th>
-        <td><xsl:comment select="name()"/>
-          <xsl:choose>
-            <xsl:when test="count(*) > 0">
-              <table style="background-color: rgba(0, 0, 0, 0.035); margin-bottom: 0; box-sizing: border-box; width: 100%; max-width: 100%; border-collapse: collapse; border-spacing: 0;"
-                     class="table nested-table">
-                <xsl:apply-templates mode="render-field" select="*"/>
-              </table>
-            </xsl:when>
-            <xsl:otherwise>
-              No information provided.
-            </xsl:otherwise>
-          </xsl:choose>
-        </td>
-      </tr>
-    </xsl:if>
+  <xsl:template mode="render-field" match="gmd:DQ_DomainConsistency[not(contains(gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString, '2007/2/E'))]" priority="10">
+    <tr>
+      <th>
+        <xsl:value-of select="tr:nodeLabel(tr:create($schema), name(), null)"/>
+        <xsl:apply-templates mode="render-value"
+                             select="@*"/>
+      </th>
+      <td>
+        <xsl:comment select="name()"/>
+        <xsl:choose>
+          <xsl:when test="count(*) > 0">
+            <table style="background-color: rgba(0, 0, 0, 0.035); margin-bottom: 0; box-sizing: border-box; width: 100%; max-width: 100%; border-collapse: collapse; border-spacing: 0;"
+                   class="table nested-table">
+              <xsl:apply-templates mode="render-field" select="*"/>
+            </table>
+          </xsl:when>
+          <xsl:otherwise>
+            No information provided.
+          </xsl:otherwise>
+        </xsl:choose>
+      </td>
+    </tr>
   </xsl:template>
 
 
