@@ -10,7 +10,7 @@ INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (6,'fre','Juste cr√©√
 
 -- Update workflow status label for dutch
 UPDATE StatusValuesDes SET label = 'Ontwerp' WHERE langid = 'dut' and label = 'Draft';
-UPDATE StatusValuesDes SET label = 'Intern goedgekeurd en gepubliceerd' WHERE langid = 'dut' and label = 'Approved';
+UPDATE StatusValuesDes SET label = 'Goedgekeurd door Informatie Vlaanderen en gepubliceerd' WHERE langid = 'dut' and label = 'Approved';
 UPDATE StatusValuesDes SET label = 'Gedepubliceerd' WHERE langid = 'dut' and label = 'Retired';
-UPDATE StatusValuesDes SET label = 'Intern ingediend' WHERE langid = 'dut' and label = 'Submitted'; 
+UPDATE StatusValuesDes SET label = 'Intern ingediend' WHERE langid = 'dut' and label = 'Submitted';
 UPDATE StatusValuesDes SET label = 'Afgekeurd door Hoofdeditor' WHERE langid = 'dut' and label = 'Rejected';
