@@ -65,9 +65,10 @@ public class WorkflowUtil {
     public static boolean isGroupWithEnabledWorkflow(String groupName) {
         SettingManager settingManager = ApplicationContextHolder.get().getBean(SettingManager.class);
 
+        boolean isMdWorkflowEnable = settingManager.getValueAsBool(Settings.METADATA_WORKFLOW_ENABLE);
         String groupMatchingRegex = settingManager.getValue(Settings.METADATA_WORKFLOW_DRAFT_WHEN_IN_GROUP);
 
-        if (!StringUtils.isEmpty(groupMatchingRegex)) {
+        if (isMdWorkflowEnable && !StringUtils.isEmpty(groupMatchingRegex)) {
             final Pattern pattern = Pattern.compile(groupMatchingRegex);
             final Matcher matcher = pattern.matcher(groupName);
             return matcher.find();
