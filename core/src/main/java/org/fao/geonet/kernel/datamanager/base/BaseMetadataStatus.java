@@ -33,16 +33,10 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.fao.geonet.domain.Group;
-import org.fao.geonet.domain.ISODate;
-import org.fao.geonet.domain.MetadataStatus;
-import org.fao.geonet.domain.MetadataStatusId;
-import org.fao.geonet.domain.MetadataStatusId_;
-import org.fao.geonet.domain.MetadataStatus_;
-import org.fao.geonet.domain.StatusValue;
-import org.fao.geonet.domain.StatusValueType;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataStatus;
+import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.GroupRepository;
@@ -65,6 +59,8 @@ public class BaseMetadataStatus implements IMetadataStatus {
     private IMetadataIndexer metadataIndexer;
     @Autowired
     private StatusValueRepository statusValueRepository;
+    @Autowired
+    private IMetadataUtils metadataUtils;
     @Autowired
     private GroupRepository groupRepository;
     @Autowired
@@ -224,10 +220,14 @@ public class BaseMetadataStatus implements IMetadataStatus {
         if (group != null) {
             groupName = group.getName();
         }
-
-        if (WorkflowUtil.isGroupWithEnabledWorkflow(groupName)) {
-            setStatus(context, Integer.valueOf(newId), Integer.valueOf(StatusValue.Status.DRAFT), new ISODate(),
-                    String.format(message, groupName, StatusValue.Status.DRAFT));
+        AbstractMetadata metadata = metadataUtils.findOne(newId);
+        if (metadata!=null) {
+            if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE) {
+                if (WorkflowUtil.isGroupWithEnabledWorkflow(groupName)) {
+                    setStatus(context, Integer.valueOf(newId), Integer.valueOf(StatusValue.Status.DRAFT), new ISODate(),
+                        String.format(message, groupName, StatusValue.Status.DRAFT));
+                }
+            }
         }
     }
 
