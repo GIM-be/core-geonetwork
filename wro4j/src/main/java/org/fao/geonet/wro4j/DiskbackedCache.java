@@ -37,6 +37,7 @@ public class DiskbackedCache implements CacheStrategy<CacheKey, CacheValue>, Clo
     private static final String TYPE = "type";
     private static final String HASH = "hash";
     private static final String RAW_DATA = "rawdata";
+    private static final String SQL_CLEAR_KEY = "DELETE FROM " + TABLE + " WHERE " + GROUPNAME + "=? AND " + TYPE + "=?";
     public static final String SQL_PUT_CACHE_VALUE = "MERGE INTO " + TABLE + " (" + GROUPNAME + ", " + TYPE + ", " + HASH + ", " +
         RAW_DATA + ") VALUES"
         + " (?,?,?,?)";
@@ -93,15 +94,25 @@ public class DiskbackedCache implements CacheStrategy<CacheKey, CacheValue>, Clo
     public void put(CacheKey key, CacheValue value) {
         init();
         defaultCache.put(key, value);
-        try (PreparedStatement statement = dbConnection.prepareStatement(SQL_PUT_CACHE_VALUE)) {
-            statement.setString(1, key.getGroupName());
-            statement.setString(2, key.getType().toString());
-            statement.setString(3, value.getHash());
-            statement.setString(4, value.getRawContent());
+        if (value != null) {
+            try (PreparedStatement statement = dbConnection.prepareStatement(SQL_PUT_CACHE_VALUE)) {
+                statement.setString(1, key.getGroupName());
+                statement.setString(2, key.getType().toString());
+                statement.setString(3, value.getHash());
+                statement.setString(4, value.getRawContent());
 
-            statement.execute();
-        } catch (SQLException e) {
-            throw new WroRuntimeException("Error putting a value into the cache", e);
+                statement.execute();
+            } catch (SQLException e) {
+                throw new WroRuntimeException("Error putting a value into the cache", e);
+            }
+        } else {
+            try (PreparedStatement statement = dbConnection.prepareStatement(SQL_CLEAR_KEY)) {
+                statement.setString(1, key.getGroupName());
+                statement.setString(2, key.getType().toString());
+                statement.execute();
+            } catch (SQLException e) {
+                throw new WroRuntimeException("Error deleting a key from the cache", e);
+            }
         }
     }
 
