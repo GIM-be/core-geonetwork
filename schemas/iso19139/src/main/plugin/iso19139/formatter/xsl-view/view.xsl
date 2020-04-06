@@ -370,26 +370,28 @@
       </xsl:choose>
     </table>
 
-    <xsl:if test="name() = 'gmd:DQ_DataQuality' and (contains(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString,'2007/2/E'))">
-      <h2 class="view-header"
-          style="border-bottom: 2px solid rgb(229, 229, 229); margin-top: 30px;font-size: 16px;color: rgb(40, 96, 144); position: relative;">
-        <xsl:value-of select="concat('INSPIRE ', tr:node-label(tr:create($schema), name(gmd:report/gmd:DQ_DomainConsistency), null))"/>
-        <xsl:apply-templates mode="render-value"
-                             select="@*"/>
-      </h2>
-      <table style="box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px; background-color: transparent; border-collapse: collapse; border-spacing: 0;"
-             class="table table-striped iso19139-md-view">
-        <xsl:choose>
-          <xsl:when test="count(*) > 0">
-            <xsl:apply-templates mode="render-field" select="gmd:report/gmd:DQ_DomainConsistency/gmd:result"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <tr>
-              <td colspan="2">No information provided.</td>
-            </tr>
-          </xsl:otherwise>
-        </xsl:choose>
-      </table>
+    <xsl:if test="name() = 'gmd:DQ_DataQuality'">
+      <xsl:for-each select="gmd:report/gmd:DQ_DomainConsistency[contains(gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString,'2007/2/E')]">
+        <h2 class="view-header"
+            style="border-bottom: 2px solid rgb(229, 229, 229); margin-top: 30px;font-size: 16px;color: rgb(40, 96, 144); position: relative;">
+          <xsl:value-of select="concat('INSPIRE ', tr:node-label(tr:create($schema), name(.), null))"/>
+          <xsl:apply-templates mode="render-value"
+                               select="@*"/>
+        </h2>
+        <table style="box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px; background-color: transparent; border-collapse: collapse; border-spacing: 0;"
+               class="table table-striped iso19139-md-view">
+          <xsl:choose>
+            <xsl:when test="count(*) > 0">
+              <xsl:apply-templates mode="render-field" select="gmd:result"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <tr>
+                <td colspan="2">No information provided.</td>
+              </tr>
+            </xsl:otherwise>
+          </xsl:choose>
+        </table>
+      </xsl:for-each>
     </xsl:if>
   </xsl:template>
 
