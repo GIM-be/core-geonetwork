@@ -165,7 +165,7 @@
     <property name="authenticationFailureHandler">
       <bean
         class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-        <constructor-arg value="${loginErrorForm}"></constructor-arg>
+        <!--constructor-arg value="${loginErrorForm}"></constructor-arg-->
         <property name="redirectStrategy">
           <bean class="jeeves.config.springutil.JeevesNodeAwareRedirectStrategy"/>
         </property>
@@ -256,7 +256,7 @@
 
   <bean id="accessDeniedHandler"
         class="jeeves.config.springutil.JeevesAccessDeniedHandler">
-    <property name="errorPage" value="/accessDenied.jsp"/>
+    <!--property name="errorPage" value="/accessDenied.jsp"/-->
     <property name="onlyStatusResponsePages" value="/*/api/**" />
   </bean>
 
