@@ -221,7 +221,7 @@
 
   <!-- ================================================================= -->
 
-  <xsl:template match="gmd:dateStamp">
+  <xsl:template match="gmd:dateStamp" priority="2000">
     <xsl:choose>
       <xsl:when test="/root/env/changeDate">
         <xsl:copy>
@@ -703,7 +703,7 @@
   <xsl:template match="gmd:extent[gmd:EX_Extent/not(*)]|srv:extent[gmd:EX_Extent/not(*)]"/>
 
 
-  <xsl:template match="gmd:dateTime">
+  <xsl:template match="gmd:dateTime" priority="200">
     <xsl:variable name="child" select="gco:Date|gco:DateTime"/>
     <xsl:copy copy-namespaces="no">
       <xsl:if test="normalize-space($child) = ''">
@@ -713,6 +713,30 @@
         <gco:DateTime>
           <xsl:value-of select="$child"/>
         </gco:DateTime>
+      </xsl:if>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="*[gco:DateTime]" priority="100">
+    <xsl:variable name="child" select="gco:DateTime"/>
+    <xsl:copy copy-namespaces="no">
+      <xsl:if test="normalize-space($child) = ''">
+        <xsl:attribute name="gco:nilReason" select="'missing'"/>
+      </xsl:if>
+      <xsl:if test="not(normalize-space($child) = '')">
+        <xsl:apply-templates select="@*|node()"/>
+      </xsl:if>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="*[gco:Date]" priority="100">
+    <xsl:variable name="child" select="gco:Date"/>
+    <xsl:copy copy-namespaces="no">
+      <xsl:if test="normalize-space($child) = ''">
+        <xsl:attribute name="gco:nilReason" select="'missing'"/>
+      </xsl:if>
+      <xsl:if test="not(normalize-space($child) = '')">
+        <xsl:apply-templates select="@*|node()"/>
       </xsl:if>
     </xsl:copy>
   </xsl:template>

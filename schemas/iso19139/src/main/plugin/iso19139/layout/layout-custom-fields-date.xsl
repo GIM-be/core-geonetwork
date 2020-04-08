@@ -174,7 +174,10 @@
   -->
   <xsl:template mode="mode-iso19139"
                 priority="2000"
-                match="*[(gco:Date|gco:DateTime) and not(../gmd:dateType)]|gmd:dateTime[@gco:nilReason='missing' and not(../gmd:dateType)]">
+                match="*[(gco:Date|gco:DateTime) and not(../gmd:dateType)]|
+                gmd:dateTime[@gco:nilReason='missing']|
+                gmd:dateOfNextUpdate[@gco:nilReason='missing']|
+                gmd:date[@gco:nilReason='missing' and not(../gmd:dateType)]">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="overrideLabel" select="''" required="no"/>
@@ -201,19 +204,22 @@
           </xsl:otherwise>
         </xsl:choose>
       </label>
-      <xsl:variable name="bMissingDateTimeChild" select="name()='gmd:dateTime' and not(gco:Date|gco:DateTime)"/>
+      <xsl:variable name="bMissingChild" select="(name()='gmd:dateTime' or name()='gmd:dateOfNextUpdate' or name()='gmd:date') and not(gco:Date|gco:DateTime)"/>
       <xsl:variable name="newElement">
-        <xsl:if test="$bMissingDateTimeChild">
-          <gco:DateTime />
+        <xsl:if test="$bMissingChild">
+          <xsl:choose>
+            <xsl:when test="name()='gmd:dateTime'"><xsl:element name="gco:DateTime" /></xsl:when>
+            <xsl:otherwise><xsl:element name="gco:Date" /></xsl:otherwise>
+          </xsl:choose>
         </xsl:if>
       </xsl:variable>
       <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table">
-        <div data-gn-date-picker="{if (bMissingDateTimeChild) then $newElement else (gco:Date|gco:DateTime)}"
+        <div data-gn-date-picker="{if (bMissingChild) then $newElement else (gco:Date|gco:DateTime)}"
              data-gn-field-tooltip="{$tooltip}"
              data-label=""
-             data-element-name="{if (bMissingDateTimeChild) then name($newElement) else name(gco:Date|gco:DateTime)}"
+             data-element-name="{if (bMissingChild) then name($newElement) else name(gco:Date|gco:DateTime)}"
              data-element-ref="{concat('_X', gn:element/@ref)}"
-             data-hide-time="{if ($viewConfig/@hideTimeInCalendar = 'true' and not($bMissingDateTimeChild or gco:DateTime)) then 'true' else 'false'}">
+             data-hide-time="{if ($viewConfig/@hideTimeInCalendar = 'true' and not(($bMissingChild and $newElement/name(*[1])='gco:DateTime') or gco:DateTime)) then 'true' else 'false'}">
         </div>
 
 
