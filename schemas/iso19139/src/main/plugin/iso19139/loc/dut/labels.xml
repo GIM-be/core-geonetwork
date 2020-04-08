@@ -2334,7 +2334,7 @@
     </description>
   </element>
   <element name="gmd:useLimitation">
-    <label>Beschrijving gebruiksbeperkingen</label>
+    <label>Beschrijving beperkingen</label>
     <description>Toepassingen waarvoor de data niet geschikt is. Bijvoorbeeld: Niet geschikt voor navigatie.
     </description>
     <condition>mandatory</condition>

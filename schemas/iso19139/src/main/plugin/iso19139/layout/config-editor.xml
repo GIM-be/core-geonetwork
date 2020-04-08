@@ -3311,20 +3311,22 @@
           <section xpath="gmd:MD_DataIdentification/gmd:abstract"/>
           <section xpath="gmd:MD_DataIdentification/gmd:purpose"/>
           <!-- For dataset and dataset series -->
-          <action type="add" name="resourceConstraints" or="resourceConstraints"
-                  in="gmd:MD_DataIdentification"
-                  addDirective="data-gn-directory-entry-selector">
-            <directiveAttributes
-              data-template-add-action="false"
-              data-search-action="true"
-              data-popup-action="false"
-              data-filter='{"_root": "gmd:resourceConstraints", "_typeResourceConstraints": "MD_Constraints"}'
-              data-insert-modes="text"
-              data-template-type="resourceConstraints"
-              data-transformation="rsrcConstrTransform"/>
-          </action>
-          <section name="gmd:resourceConstraints" per="gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_Constraints]">
-            <section xpath="gmd:MD_Constraints"/>
+          <section name="mdConstraintsSection">
+            <action type="add" name="resourceConstraints" or="resourceConstraints"
+                      in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
+                    addDirective="data-gn-directory-entry-selector">
+              <directiveAttributes
+                data-template-add-action="false"
+                data-search-action="true"
+                data-popup-action="false"
+                data-filter='{"_root": "gmd:resourceConstraints", "_typeResourceConstraints": "MD_Constraints"}'
+                data-insert-modes="text"
+                data-template-type="resourceConstraints"
+                data-transformation="rsrcConstrTransform"/>
+            </action>
+            <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_Constraints]">
+              <section xpath="gmd:MD_Constraints"/>
+            </section>
           </section>
           <section xpath="gmd:MD_DataIdentification/gmd:status"/>
           <section xpath="gmd:MD_DataIdentification/gmd:pointOfContact"/>
@@ -3345,20 +3347,22 @@
           <section xpath="srv:SV_ServiceIdentification/gmd:citation"/>
           <section xpath="srv:SV_ServiceIdentification/gmd:abstract"/>
           <section xpath="srv:SV_ServiceIdentification/gmd:purpose"/>
-          <action type="add" name="resourceConstraints" or="resourceConstraints"
-                  in="srv:SV_ServiceIdentification"
-                  addDirective="data-gn-directory-entry-selector">
-            <directiveAttributes
-              data-template-add-action="false"
-              data-search-action="true"
-              data-popup-action="false"
-              data-filter='{"_root": "gmd:resourceConstraints", "_typeResourceConstraints": "MD_Constraints"}'
-              data-insert-modes="text"
-              data-template-type="resourceConstraints"
-              data-transformation="rsrcConstrTransform"/>
-          </action>
-          <section name="gmd:resourceConstraints" per="srv:SV_ServiceIdentification/gmd:resourceConstraints[gmd:MD_Constraints]">
-            <section xpath="gmd:MD_Constraints"/>
+          <section name="mdConstraintsSection">
+            <action type="add" name="resourceConstraints" or="resourceConstraints"
+                      in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                    addDirective="data-gn-directory-entry-selector">
+              <directiveAttributes
+                data-template-add-action="false"
+                data-search-action="true"
+                data-popup-action="false"
+                data-filter='{"_root": "gmd:resourceConstraints", "_typeResourceConstraints": "MD_Constraints"}'
+                data-insert-modes="text"
+                data-template-type="resourceConstraints"
+                data-transformation="rsrcConstrTransform"/>
+            </action>
+            <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:resourceConstraints[gmd:MD_Constraints]">
+              <section xpath="gmd:MD_Constraints"/>
+            </section>
           </section>
           <section xpath="srv:SV_ServiceIdentification/gmd:status"/>
           <section xpath="srv:SV_ServiceIdentification/gmd:pointOfContact"/>
@@ -3630,10 +3634,10 @@
             </template>
           </action>
         </section>
-        <section name="constraintsTab">
+        <section name="mdLegalAndSecurityConstraintsSection">
           <!-- For dataset and dataset series -->
           <action type="add" name="resourceConstraints" or="resourceConstraints"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
+                  in="/gmd:MD_Metadata/gmd:identificationInfo/*[name(.)='gmd:MD_DataIdentification' or name(.)='srv:SV_ServiceIdentification']"
                   addDirective="data-gn-directory-entry-selector">
             <directiveAttributes
               data-template-add-action="false"
@@ -3644,44 +3648,7 @@
               data-template-type="resourceConstraints"
               data-transformation="rsrcConstrTransform"/>
           </action>
-          <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_LegalConstraints or MD_SecurityConstraints]">
-            <section name="gmd:MD_LegalConstraints" per="gmd:MD_LegalConstraints">
-              <section xpath="gmd:useLimitation" or="useLimitation" in=""/>
-              <section xpath="gmd:accessConstraints" or="accessConstraints" in=""/>
-              <section xpath="gmd:useConstraints" or="useConstraints" in=""/>
-              <!-- in will be concat to the current context. In this case, the context is enough-->
-              <action type="add" name="addOtherConstraints" or="otherConstraints"
-                      addDirective="data-gn-directory-entry-selector">
-                <directiveAttributes
-                  data-template-add-action="false"
-                  data-search-action="true"
-                  data-popup-action="false"
-                  data-filter='{"_root": "gmd:otherConstraints"}'
-                  data-insert-modes="text"
-                  data-template-type="otherConstraints"
-                  data-transformation="otherConstrTransform"/>
-              </action>
-              <section name="gmd:otherConstraints" per="gmd:otherConstraints">
-                <section xpath="."/>
-              </section>
-            </section>
-            <section xpath="gmd:MD_SecurityConstraints"/>
-          </section>
-
-          <!-- For services -->
-          <action type="add" name="resourceConstraints" or="resourceConstraints"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
-                  addDirective="data-gn-directory-entry-selector">
-            <directiveAttributes
-              data-template-add-action="false"
-              data-search-action="true"
-              data-popup-action="false"
-              data-filter='{"_root": "gmd:resourceConstraints","_typeResourceConstraints": "MD_LegalConstraints or MD_SecurityConstraints"}'
-              data-insert-modes="text"
-              data-template-type="resourceConstraints"
-              data-transformation="rsrcConstrTransform"/>
-          </action>
-          <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:resourceConstraints[gmd:MD_LegalConstraints or MD_SecurityConstraints]">
+          <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints[gmd:MD_LegalConstraints or gmd:MD_SecurityConstraints]">
             <section name="gmd:MD_LegalConstraints" per="gmd:MD_LegalConstraints">
               <section xpath="gmd:useLimitation" or="useLimitation" in=""/>
               <section xpath="gmd:accessConstraints" or="accessConstraints" in=""/>
