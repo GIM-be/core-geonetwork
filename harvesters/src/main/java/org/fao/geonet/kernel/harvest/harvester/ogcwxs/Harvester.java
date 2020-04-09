@@ -401,41 +401,41 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
         }
 
 
+        AbstractMetadata metadata = null;
         // Save iso19119 metadata in DB
-        log.info("  - Adding metadata for services with " + uuid);
-
-        //
-        // insert metadata
-        //
-        AbstractMetadata metadata = new Metadata();
-        metadata.setUuid(uuid);
-        metadata.getDataInfo().
-            setSchemaId(schema).
-            setRoot(md.getQualifiedName()).
-            setType(MetadataType.METADATA);
-        metadata.getSourceInfo().
-            setSourceId(params.getUuid()).
-            setOwner(getOwner());
-        metadata.getHarvestInfo().
-            setHarvested(true).
-            setUuid(params.getUuid()).
-            setUri(params.url);
-
-        try {
-            metadata.getSourceInfo().setGroupOwner(Integer.valueOf(params.getOwnerIdGroup()));
-        } catch (NumberFormatException e) {
-        }
-
-        addCategories(metadata, params.getCategories(), localCateg, context, null, false);
+        log.info("  - Adding/updating metadata for services with " + uuid);
 
         if (!dataMan.existsMetadataUuid(uuid)) {
+            //
+            // insert metadata
+            //
+            metadata = new Metadata();
+            metadata.setUuid(uuid);
+            metadata.getDataInfo().
+                setSchemaId(schema).
+                setRoot(md.getQualifiedName()).
+                setType(MetadataType.METADATA);
+            metadata.getSourceInfo().
+                setSourceId(params.getUuid()).
+                setOwner(getOwner());
+            metadata.getHarvestInfo().
+                setHarvested(true).
+                setUuid(params.getUuid()).
+                setUri(params.url);
+
+            try {
+                metadata.getSourceInfo().setGroupOwner(Integer.valueOf(params.getOwnerIdGroup()));
+            } catch (NumberFormatException e) {
+            }
+
+            addCategories(metadata, params.getCategories(), localCateg, context, null, false);
+
             result.addedMetadata++;
             metadata = metadataManager.insertMetadata(context, metadata, md, true, false, false, UpdateDatestamp.NO, false, false);
         } else {
             result.updatedMetadata++;
             String id = dataMan.getMetadataId(uuid);
-            metadata.setId(Integer.valueOf(id));
-            metadataManager.updateMetadata(context, id, md, false, false, false,
+            metadata = metadataManager.updateMetadata(context, id, md, false, false, false,
                 context.getLanguage(), dataMan.extractDateModified(schema, md), false);
         }
         metadataValidator.doValidate(metadata, context.getLanguage());
