@@ -197,7 +197,13 @@
         }
       }
       // $scope.$watch('mdView.current.record', loadFormatter);
-      $rootScope.$on('$locationChangeSuccess', loadFormatter)
+      $rootScope.$on('$locationChangeSuccess', loadFormatter);
+      var unwatch = $scope.$watch('mdView.current.record', function () {
+        if($scope.mdView.current.record != null) {
+          loadFormatter();
+          unwatch();
+        }
+      });
       loadFormatter();
 
       // Know from what path we come from
