@@ -112,11 +112,13 @@
     <xsl:namespace name="xsi" select="'http://www.w3.org/2001/XMLSchema-instance'"/>
     <xsl:namespace name="gco" select="'http://www.isotc211.org/2005/gco'"/>
     <xsl:namespace name="gmd" select="'http://www.isotc211.org/2005/gmd'"/>
-    <xsl:namespace name="srv" select="'http://www.isotc211.org/2005/srv'"/>
     <xsl:namespace name="gmx" select="'http://www.isotc211.org/2005/gmx'"/>
     <xsl:namespace name="gts" select="'http://www.isotc211.org/2005/gts'"/>
     <xsl:namespace name="gsr" select="'http://www.isotc211.org/2005/gsr'"/>
     <xsl:namespace name="gmi" select="'http://www.isotc211.org/2005/gmi'"/>
+    <xsl:if test="gmd:identificationInfo/srv:SV_ServiceIdentification">
+      <xsl:namespace name="srv" select="'http://www.isotc211.org/2005/srv'"/>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="$isUsing2005Schema and not($isUsing2007Schema)">
         <xsl:namespace name="gml" select="'http://www.opengis.net/gml'"/>
