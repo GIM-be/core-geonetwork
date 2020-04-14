@@ -337,7 +337,7 @@ public class BaseMetadataValidator implements org.fao.geonet.kernel.datamanager.
                     Map<String, Object> params = new HashMap<String, Object>();
                     params.put("lang", lang);
                     params.put("rule", rule);
-                    params.put("thesaurusDir", thesaurusManager.getThesauriDirectory());
+                    params.put("thesaurusDir", thesaurusManager.getThesauriDirectory().toString());
                     Element xmlReport = Xml.transform(md, schemaTronXmlXslt, params);
                     if (xmlReport != null) {
                         report.addContent(xmlReport);
