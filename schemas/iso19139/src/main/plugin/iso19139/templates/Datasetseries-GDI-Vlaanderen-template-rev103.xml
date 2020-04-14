@@ -2,7 +2,7 @@
 <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:gco="http://www.isotc211.org/2005/gco"
-                 xmlns:gml="http://www.opengis.net/gml"
+                 xmlns:gml="http://www.opengis.net/gml/3.2"
                  xmlns:geonet="http://www.fao.org/geonetwork"
                  xmlns:gmx="http://www.isotc211.org/2005/gmx"
                  xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -349,10 +349,13 @@
           <gmd:keyword>
             <gmx:Anchor/>
           </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme"/>
+          </gmd:type>
           <gmd:thesaurusName>
             <gmd:CI_Citation>
               <gmd:title>
-                <gco:CharacterString>GDI-Vlaanderen Trefwoorden</gco:CharacterString>
+                <gmx:Anchor xlink:href="http://mir.geopunt.be/cl/Geopunt/v11/GDI-Vlaanderen-Trefwoorden#">GDI-Vlaanderen Trefwoorden</gmx:Anchor>
               </gmd:title>
               <gmd:date>
                 <gmd:CI_Date>
@@ -361,9 +364,8 @@
                   </gmd:date>
                   <gmd:dateType>
                     <gmd:CI_DateTypeCode
-                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
-                      codeListValue="publication">publication
-                    </gmd:CI_DateTypeCode>
+                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
               </gmd:date>
@@ -628,7 +630,7 @@
           <gmd:temporalElement>
             <gmd:EX_TemporalExtent>
               <gmd:extent>
-                <gml:TimePeriod gml:id="ID_1">
+                <gml:TimePeriod gml:id="TP1">
                   <gml:beginPosition/>
                   <gml:endPosition/>
                 </gml:TimePeriod>
@@ -638,27 +640,18 @@
           <gmd:verticalElement>
             <gmd:EX_VerticalExtent>
               <gmd:minimumValue>
-                <gco:Real/>
+                <gco:Real>0.0</gco:Real>
               </gmd:minimumValue>
               <gmd:maximumValue>
-                <gco:Real/>
+                <gco:Real>0.0</gco:Real>
               </gmd:maximumValue>
               <gmd:verticalCRS>
-                <gml:VerticalCRS gml:id="">
+                <gml:VerticalCRS gml:id="VCRS1">
                   <gml:identifier codeSpace=""/>
                   <gml:scope/>
-                  <gml:verticalCS>
-                    <gml:VerticalCS>
-                      <gml:identifier codeSpace=""/>
-                    </gml:VerticalCS>
-                  </gml:verticalCS>
-                  <gml:verticalDatum>
-                    <gml:VerticalDatum>
-                      <gml:identifier codeSpace=""/>
-                      <gml:scope/>
-                    </gml:VerticalDatum>
-                  </gml:verticalDatum>
-                </gml:VerticalCRS>
+                  <gml:verticalCS nilReason="missing"/>
+                  <gml:verticalDatum nilReason="missing"/>
+				        </gml:VerticalCRS>
               </gmd:verticalCRS>
             </gmd:EX_VerticalExtent>
           </gmd:verticalElement>
@@ -681,9 +674,7 @@
           </gmd:title>
           <gmd:date>
             <gmd:CI_Date>
-              <gmd:date>
-                <gco:Date/>
-              </gmd:date>
+              <gmd:date gco:nilReason="missing"/>
               <gmd:dateType>
                 <gmd:CI_DateTypeCode
                   codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
@@ -850,9 +841,7 @@
           <gmd:measureDescription>
             <gco:CharacterString/>
           </gmd:measureDescription>
-          <gmd:dateTime gco:nilReason="missing">
-            <gco:DateTime/>
-          </gmd:dateTime>
+          <gmd:dateTime gco:nilReason="missing"/>
           <gmd:result>
             <gmd:DQ_ConformanceResult>
               <gmd:specification>
@@ -903,9 +892,7 @@
               <gmd:description>
                 <gco:CharacterString/>
               </gmd:description>
-              <gmd:dateTime gco:nilReason="missing">
-                <gco:DateTime/>
-              </gmd:dateTime>
+              <gmd:dateTime gco:nilReason="missing"/>
               <gmd:processor>
                 <gmd:CI_ResponsibleParty>
                   <gmd:individualName>
@@ -979,9 +966,7 @@
                   <gmd:description>
                     <gco:CharacterString/>
                   </gmd:description>
-                  <gmd:dateTime gco:nilReason="missing">
-                    <gco:DateTime/>
-                  </gmd:dateTime>
+                  <gmd:dateTime gco:nilReason="missing"/>
                   <gmd:processor>
                     <gmd:CI_ResponsibleParty>
                       <gmd:individualName>
