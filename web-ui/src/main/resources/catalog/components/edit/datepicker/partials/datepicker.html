@@ -22,11 +22,13 @@
       <input type="number" class="form-control"
              data-ng-model="year"
              data-ng-show="mode === 'year'"/>
-      <input type="month" class="form-control"
-             data-ng-model="month"
+      <input type="text" class="form-control month-datepicker"
+             placeholder="Month yyyy"
+             data-ng-model="monthDatePicker"
              data-ng-show="mode === 'month'"/>
-      <input type="date" class="form-control"
-             data-ng-model="date"
+      <input type="text" class="form-control full-datepicker"
+             placeholder="dd/mm/yyyy"
+             data-ng-model="fullDatePicker"
              data-ng-class="hideTime == 'true' ? 'gn-notime' : ''"
              data-ng-show="mode === ''"/>
       <input type="time" class="form-control"

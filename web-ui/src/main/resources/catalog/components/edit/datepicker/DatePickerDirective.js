@@ -75,6 +75,18 @@
                scope.dateInput = dateTime.format(format);
              };
 
+             var fullDatePickerEl = element.find('input[type="text"].full-datepicker');
+             var monthDatePickerEl = element.find('input[type="text"].month-datepicker');
+
+             fullDatePickerEl.datepicker({
+               format: 'dd/mm/yyyy'
+             });
+             monthDatePickerEl.datepicker({
+               format: 'MM yyyy',
+               startView: "months",
+               minViewMode: "months"
+             });
+
              scope.mode = scope.year = scope.month = scope.time =
              scope.date = scope.dateDropDownInput = '';
              scope.withIndeterminatePosition =
@@ -199,8 +211,21 @@
                }
              });
 
-
              buildDate();
+
+             if (scope.mode === 'month') {
+               monthDatePickerEl.datepicker('setDate', scope.month);
+             } else if (scope.mode === '') {
+               fullDatePickerEl.datepicker('setDate', scope.date)
+             }
+
+             scope.$watch('fullDatePicker', function() {
+               scope.date = fullDatePickerEl.datepicker('getDate');
+             });
+
+             scope.$watch('monthDatePicker', function() {
+               scope.month = monthDatePickerEl.datepicker('getDate');
+             });
            }
          };
        }]);
