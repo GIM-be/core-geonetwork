@@ -97,7 +97,7 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
-      <xsl:apply-templates select="gmd:theme"/>
+      <xsl:apply-templates select="gmd:type"/>
       <xsl:apply-templates select="gmd:thesaurusName"/>
     </xsl:copy>
   </xsl:template>
