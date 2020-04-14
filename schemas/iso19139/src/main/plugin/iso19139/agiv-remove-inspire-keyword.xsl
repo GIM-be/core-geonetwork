@@ -6,66 +6,22 @@
  If it does, it is put out retaining all its other keywords (but not the ISNPIRE conformance marker keyword).
  If the INSPIRE conformance marker is the only keyword in this descriptiveKeywords element, it is entirely removed.
  -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-            xmlns:gmd="http://www.isotc211.org/2005/gmd"
-            xmlns:gco="http://www.isotc211.org/2005/gco">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
+                xmlns:gmd="http://www.isotc211.org/2005/gmd">
+  <xsl:output method="xml" indent="yes" encoding="utf-8"/>
+  <xsl:include href="agiv-remove-keyword.xsl"/>
 
-    <xsl:template match="/root">
-        <xsl:apply-templates select="gmd:MD_Metadata"/>
-    </xsl:template>
+  <xsl:variable name="thesaurusTitle">GDI-Vlaanderen Trefwoorden</xsl:variable>
+  <xsl:variable name="keywordToBeRemovedLowerCase">metadata inspire-conform</xsl:variable>
 
-    <!-- match descriptiveKeywords elements -->
-    <xsl:template match="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords">
-        <xsl:choose>
-            <!-- this descriptiveKeywords uses 'GDI-Vlaanderen Trefwoorden'  -->
-            <xsl:when test="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'GDI-Vlaanderen Trefwoorden'">
-                <xsl:choose>
-                    <!-- contains a keyword matching  'Metadata INSPIRE-conform' -->
-                    <xsl:when test="gmd:MD_Keywords//gmd:keyword/gco:CharacterString = 'Metadata INSPIRE-conform'">
-                        <!-- if there are other keywords, put them out -->
-                        <xsl:if test="count(gmd:MD_Keywords/gmd:keyword) > 1">
-                            <gmd:descriptiveKeywords>
-                                <gmd:MD_Keywords>
-                                    <xsl:for-each select="gmd:MD_Keywords/gmd:keyword">
-                                        <xsl:choose>
-                                            <!-- do not put out -->
-                                            <xsl:when test="gco:CharacterString = 'Metadata INSPIRE-conform'"/>
-                                            <xsl:otherwise>
-                                                <gmd:keyword>
-                                                    <xsl:apply-templates select="@*|node()"/>
-                                                </gmd:keyword>
-                                            </xsl:otherwise>
-                                        </xsl:choose>
-                                    </xsl:for-each>
-                                    <!-- do not forget to put out sibling element thesaurusName -->
-                                    <xsl:for-each select="gmd:MD_Keywords/gmd:thesaurusName">
-                                        <xsl:copy-of select="."/>
-                                    </xsl:for-each>
-                                </gmd:MD_Keywords>
-                            </gmd:descriptiveKeywords>
-                        </xsl:if>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <!-- does not contain a keyword matching  'Metadata INSPIRE-conform' : just put out-->
-                        <gmd:descriptiveKeywords>
-                            <xsl:apply-templates select="@*|node()"/>
-                        </gmd:descriptiveKeywords>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:when>
-            <!-- descriptiveKeywords not using 'GDI-Vlaanderen Trefwoorden' : just put out -->
-            <xsl:otherwise>
-                <gmd:descriptiveKeywords>
-                    <xsl:apply-templates select="@*|node()"/>
-                </gmd:descriptiveKeywords>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
+  <xsl:template match="/root">
+    <xsl:apply-templates select="gmd:MD_Metadata"/>
+  </xsl:template>
 
-    <xsl:template match="@*|node()">
+  <xsl:template match="@*|node()">
     <xsl:copy>
-        <xsl:apply-templates select="@*|node()"/>
+      <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
-    </xsl:template>
+  </xsl:template>
 
 </xsl:stylesheet>
