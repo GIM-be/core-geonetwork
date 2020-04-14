@@ -3264,8 +3264,7 @@
     <label>Unieke code</label>
     <description>Unieke identificatie voor dit gml element. Moet uniek zijn binnen dit XML document.</description>
   </element>
-
-  <element name="gmd:dateTime" context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:dateTime">
+  <element name="gmd:dateTime" context="gmd:DQ_DomainConsistency">
     <label>Datum meting</label>
     <description>Datum waarop de bewerkingen of metingen zijn gestart.(JJJJ-MM-DD).</description>
   </element>
