@@ -5,19 +5,6 @@
             xmlns:gmx="http://www.isotc211.org/2005/gmx"
             xmlns:xlink="http://www.w3.org/1999/xlink">
   <gmd:DQ_DomainConsistency>
-    <gmd:measureIdentification>
-      <gmd:MD_Identifier>
-        <gmd:code>
-          <gco:CharacterString/>
-        </gmd:code>
-      </gmd:MD_Identifier>
-    </gmd:measureIdentification>
-    <gmd:measureDescription>
-      <gco:CharacterString/>
-    </gmd:measureDescription>
-    <gmd:dateTime gco:nilReason="missing">
-      <gco:DateTime/>
-    </gmd:dateTime>
     <gmd:result>
       <gmd:DQ_ConformanceResult>
         <gmd:specification>
