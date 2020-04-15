@@ -256,11 +256,15 @@
     <Field name="_title"
            string="{
               if ($title != '') then $title
-              else if (name(*[1]) = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then '* Geometrische nauwkeurigheid'
-              else if (name(*[1]) = 'gmd:DQ_CompletenessOmission') then '* Volledigheid'
-              else if (name(*[1]) = 'gmd:DQ_ThematicClassificationCorrectness') then '* Thematische classificatie'
+              else if (name(*[1]) = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Geometrische nauwkeurigheid'
+              else if (name(*[1]) = 'gmd:DQ_CompletenessOmission') then 'Volledigheid'
+              else if (name(*[1]) = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematische classificatie'
               else ''
              }"
+           store="true" index="true"/>
+
+    <Field name="_typeReport"
+           string="{local-name(gmd:*[1])}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields"/>
@@ -274,6 +278,10 @@
                         else if ($specificationTitle and contains(normalize-space($specificationTitle),'1089/2010')) then '* INSPIRE domeinconsistentie (verordening)'
                         else if ($specificationTitle and normalize-space($specificationTitle) != '') then normalize-space($specificationTitle)
                         else ''}"
+           store="true" index="true"/>
+
+    <Field name="_typeReport"
+           string="{local-name(gmd:*[1])}"
            store="true" index="true"/>
 
     <xsl:call-template name="subtemplate-common-fields-or-void"/>

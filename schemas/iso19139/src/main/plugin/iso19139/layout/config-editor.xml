@@ -639,7 +639,7 @@
 
           <action type="add" btnLabel="hierarchyLevel"
                   name="hierarchyLevel" or="hierarchyLevel"
-                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification) = 0"
+                  if="count(gmd:MD_Metadata/gmd:identificationInfo/srv:MD_DataIdentification) = 0"
                   in="/gmd:MD_Metadata">
             <template>
               <snippet>
@@ -3311,9 +3311,9 @@
           <section xpath="gmd:MD_DataIdentification/gmd:abstract"/>
           <section xpath="gmd:MD_DataIdentification/gmd:purpose"/>
           <!-- For dataset and dataset series -->
-          <section name="mdConstraintsSection">
+          <section name="mdConstraintsSection" per="gmd:MD_DataIdentification">
             <action type="add" name="resourceConstraints" or="resourceConstraints"
-                      in="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"
+                      in=""
                     addDirective="data-gn-directory-entry-selector">
               <directiveAttributes
                 data-template-add-action="false"
@@ -3324,7 +3324,7 @@
                 data-template-type="resourceConstraints"
                 data-transformation="rsrcConstrTransform"/>
             </action>
-            <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints[gmd:MD_Constraints]">
+            <section name="gmd:resourceConstraints" per="gmd:resourceConstraints[gmd:MD_Constraints]">
               <section xpath="gmd:MD_Constraints"/>
             </section>
           </section>
@@ -3347,9 +3347,9 @@
           <section xpath="srv:SV_ServiceIdentification/gmd:citation"/>
           <section xpath="srv:SV_ServiceIdentification/gmd:abstract"/>
           <section xpath="srv:SV_ServiceIdentification/gmd:purpose"/>
-          <section name="mdConstraintsSection">
+          <section name="mdConstraintsSection" per="srv:SV_ServiceIdentification">
             <action type="add" name="resourceConstraints" or="resourceConstraints"
-                      in="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification"
+                      in=""
                     addDirective="data-gn-directory-entry-selector">
               <directiveAttributes
                 data-template-add-action="false"
@@ -3360,7 +3360,7 @@
                 data-template-type="resourceConstraints"
                 data-transformation="rsrcConstrTransform"/>
             </action>
-            <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:resourceConstraints[gmd:MD_Constraints]">
+            <section name="gmd:resourceConstraints" per="gmd:resourceConstraints[gmd:MD_Constraints]">
               <section xpath="gmd:MD_Constraints"/>
             </section>
           </section>
@@ -3383,7 +3383,7 @@
         <section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo" or="referenceSystemInfo" in="/gmd:MD_Metadata"/>
         <section xpath="/gmd:MD_Metadata/gmd:spatialRepresentationInfo"/>
         <section per="/gmd:MD_Metadata/gmd:dataQualityInfo">
-          <section name="gmd:dataQualityInfo" per="gmd:DQ_DataQuality" del="..">
+          <section name="gmd:dataQualityInfo" per="gmd:DQ_DataQuality" required="true()">
             <section xpath="gmd:scope"/>
             <action type="add" name="gmd:report" or="report"
                     in=""
@@ -3392,7 +3392,7 @@
                 data-template-add-action="false"
                 data-search-action="true"
                 data-popup-action="false"
-                data-filter='{"_root": "gmd:report"}'
+                data-filter='{"_root": "gmd:report", "_typeReport": "DQ_ThematicClassificationCorrectness or DQ_CompletenessOmission or DQ_AbsoluteExternalPositionalAccuracy"}'
                 data-insert-modes="text"
                 data-template-type="report"
                 data-transformation="removeRoot"/>
@@ -3463,7 +3463,21 @@
               </action>
             </section>
           </section>
-          <section xpath="gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency" del=".."/>
+          <section name="conformity" per="gmd:DQ_DataQuality" required="true()">
+            <action type="add" name="conformity" or="report"
+                    in=""
+                    addDirective="data-gn-directory-entry-selector">
+              <directiveAttributes
+                data-template-add-action="false"
+                data-search-action="true"
+                data-popup-action="false"
+                data-filter='{"_root": "gmd:report", "_typeReport": "DQ_DomainConsistency"}'
+                data-insert-modes="text"
+                data-template-type="conformity"
+                data-transformation="removeRoot"/>
+            </action>
+            <section xpath="gmd:report/gmd:DQ_DomainConsistency" del=".."/>
+          </section>
         </section>
         <section>
           <action type="add" or="dataQualityInfo" in="/gmd:MD_Metadata">

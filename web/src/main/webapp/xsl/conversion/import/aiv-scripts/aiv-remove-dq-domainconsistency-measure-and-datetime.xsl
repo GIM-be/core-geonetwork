@@ -4,8 +4,6 @@
                 version="2.0">
   <xsl:template
     match="gmd:DQ_DomainConsistency/gmd:measureIdentification|gmd:DQ_DomainConsistency/gmd:measureDescription|gmd:DQ_DomainConsistency/gmd:dateTime"
-    priority="1000">
-    <xsl:message select="concat('Removing element with the name ', name(.))"/>
-  </xsl:template>
+    priority="1000"/>
 
 </xsl:stylesheet>
