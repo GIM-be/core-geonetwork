@@ -1483,17 +1483,22 @@
           </xsl:when>
           <xsl:otherwise>
             <input type="text" class="" name="{$fieldName}" value="{$attributeValue}">
+              <xsl:if test="$isDefaultView and $attributeName = 'xlink:href'">
+                <xsl:attribute name="disabled"/>
+              </xsl:if>
             </input>
           </xsl:otherwise>
         </xsl:choose>
       </div>
-      <div class="col-sm-1">
-        <a class="btn pull-right"
-           data-gn-click-and-spin="removeAttribute('{$fieldName}')" data-toggle="tooltip"
-           data-placement="top" title="{{{{'deleteField' | translate}}}}">
-          <i class="fa fa-times text-danger"/>
-        </a>
-      </div>
+      <xsl:if test="not($isDefaultView and $attributeName = 'xlink:href')">
+        <div class="col-sm-1">
+          <a class="btn pull-right"
+             data-gn-click-and-spin="removeAttribute('{$fieldName}')" data-toggle="tooltip"
+             data-placement="top" title="{{{{'deleteField' | translate}}}}">
+            <i class="fa fa-times text-danger"/>
+          </a>
+        </div>
+      </xsl:if>
     </div>
   </xsl:template>
 
@@ -1520,7 +1525,7 @@
   -->
   <xsl:template mode="render-for-field-for-attribute"
                 match="gn:attribute[not(@name = ('ref', 'parent', 'id', 'uuid', 'type', 'uuidref',
-    'xlink:show', 'xlink:actuate', 'xlink:arcrole', 'xlink:role', 'xlink:title', 'xlink:href'))]"
+    'xlink:show', 'xlink:actuate', 'xlink:arcrole', 'xlink:role', 'xlink:title', 'xlink:href')) and not($isDefaultView and @name = ('xlink:type', 'gco:nilReason'))]"
                 priority="4">
     <xsl:param name="ref"/>
     <xsl:param name="insertRef" select="''"/>

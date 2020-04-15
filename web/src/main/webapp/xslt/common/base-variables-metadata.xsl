@@ -136,5 +136,6 @@
                         then $viewConfig/@displayTooltipsMode
                         else ''"/>
 
+  <xsl:variable name="isDefaultView" select="$viewConfig/@name = 'default'"/>
 
 </xsl:stylesheet>

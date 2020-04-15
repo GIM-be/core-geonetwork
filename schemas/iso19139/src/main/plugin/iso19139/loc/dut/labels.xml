@@ -3053,6 +3053,10 @@
       XLINK]
     </description>
   </element>
+  <element name="xlink:type">
+    <label>Link type</label>
+    <description/>
+  </element>
   <element name="hidden-elements">
     <label>Verborgen Elementen</label>
     <description>Child elements and attributes have been hidden because you do no have access to
