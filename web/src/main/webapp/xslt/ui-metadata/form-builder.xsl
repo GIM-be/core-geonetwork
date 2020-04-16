@@ -844,10 +844,11 @@
     <xsl:param name="btnClass" required="no" as="xs:string?" select="''"/>
 
 
-    <xsl:if test="not($isDisabled) and $parentEditInfo/@ref != ''">
+    <xsl:variable name="qualifiedName"
+                  select="concat($childEditInfo/@prefix, ':', $childEditInfo/@name)"/>
+
+    <xsl:if test="not($isDisabled) and $parentEditInfo/@ref != '' and $qualifiedName != ('gmd:keyword')">
       <xsl:variable name="id" select="generate-id()"/>
-      <xsl:variable name="qualifiedName"
-                    select="concat($childEditInfo/@prefix, ':', $childEditInfo/@name)"/>
       <xsl:variable name="parentName"
                     select="name(ancestor::*[not(contains(name(), 'CHOICE_ELEMENT'))][1])"/>
       <xsl:variable name="isRequired" select="$childEditInfo/@min = 1"/>
