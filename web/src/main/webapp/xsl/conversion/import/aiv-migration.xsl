@@ -3,7 +3,7 @@
                 version="2.0">
   <xsl:include href="./aiv-scripts/aiv-convert-keywords-to-anchor.xsl"/>
   <xsl:include href="./aiv-scripts/aiv-minimal-update-fixed-info.xsl"/>
-  <xsl:include href="./aiv-scripts/aiv-remove-dq-domainconsistency-measure-and-datetime.xsl"/>
+  <xsl:include href="aiv-scripts/aiv-remove-data-quality-info-optional-elements.xsl"/>
 
   <xsl:template match="@*|node()">
     <xsl:copy copy-namespaces="no">
