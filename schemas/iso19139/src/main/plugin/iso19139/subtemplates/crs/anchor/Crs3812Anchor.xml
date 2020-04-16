@@ -2,7 +2,7 @@
   xmlns:gmd="http://www.isotc211.org/2005/gmd"
   xmlns:gmx="http://www.isotc211.org/2005/gmx"
   xmlns:xlink="http://www.w3.org/1999/xlink">
-  <subtemplate-title>ETRS89/ Belgian Lambert 2008 (EPSG:3812): gmx:Anchor</subtemplate-title>
+  <subtemplate-title>ETRS89/ Belgian Lambert 2008 (EPSG:3812)</subtemplate-title>
   <gmd:MD_ReferenceSystem>
     <gmd:referenceSystemIdentifier>
       <gmd:RS_Identifier>

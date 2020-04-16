@@ -837,16 +837,8 @@
               <gmd:specification>
                 <gmd:CI_Citation>
                   <gmd:title>
-                    <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">
-                      VERORDENING (EU) Nr. 1089/2010 VAN DE COMMISSIE van 23 november 2010 ter
-                      uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende de
-                      interoperabiliteit van verzamelingen ruimtelijke gegevens en van diensten met betrekking tot
-                      ruimtelijke gegevens
-                    </gmx:Anchor>
+                    <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">VERORDENING (EU) Nr. 1089/2010 VAN DE COMMISSIE van 23 november 2010 ter uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende de interoperabiliteit van verzamelingen ruimtelijke gegevens en van diensten met betrekking tot ruimtelijke gegevens</gmx:Anchor>
                   </gmd:title>
-                  <gmd:alternateTitle>
-                    <gco:CharacterString/>
-                  </gmd:alternateTitle>
                   <gmd:date>
                     <gmd:CI_Date>
                       <gmd:date>
@@ -863,7 +855,7 @@
                 </gmd:CI_Citation>
               </gmd:specification>
               <gmd:explanation>
-                <gco:CharacterString/>
+                <gco:CharacterString>Geharmoniseerd volgens INSPIRE richtlijn</gco:CharacterString>
               </gmd:explanation>
               <gmd:pass>
                 <gco:Boolean>false</gco:Boolean>

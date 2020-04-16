@@ -2,7 +2,7 @@
   xmlns:gmd="http://www.isotc211.org/2005/gmd"
   xmlns:gmx="http://www.isotc211.org/2005/gmx"
   xmlns:xlink="http://www.w3.org/1999/xlink">
-  <subtemplate-title>Belge 1972 / Belgian Lambert 72 (EPSG:31370): gmx:Anchor</subtemplate-title>
+  <subtemplate-title>Belge 1972 / Belgian Lambert 72 (EPSG:31370)</subtemplate-title>
   <gmd:MD_ReferenceSystem>
     <gmd:referenceSystemIdentifier>
       <gmd:RS_Identifier>
