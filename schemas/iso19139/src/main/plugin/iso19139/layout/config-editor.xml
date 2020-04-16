@@ -3305,11 +3305,9 @@
         <!-- Every sections inside a section with @per attr will have for context the content of @per with the position -->
         <!-- The first child will have for xpath: /gmd:MD_Metadata/gmd:identificationInfo[position]/gmd:MD_DataIdentification/gmd:citation -->
         <section name="gmd:identificationInfo" per="/gmd:MD_Metadata/gmd:identificationInfo" required="true()">
-
-          <!-- For dataset and dataset series -->
-          <section xpath="gmd:MD_DataIdentification/gmd:citation"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:abstract"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:purpose"/>
+          <section xpath="*/gmd:citation"/>
+          <section xpath="*/gmd:abstract"/>
+          <section xpath="*/gmd:purpose"/>
           <!-- For dataset and dataset series -->
           <section name="mdConstraintsSection" per="gmd:MD_DataIdentification">
             <action type="add" name="resourceConstraints" or="resourceConstraints"
@@ -3328,28 +3326,10 @@
               <section xpath="gmd:MD_Constraints"/>
             </section>
           </section>
-          <section xpath="gmd:MD_DataIdentification/gmd:status"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:pointOfContact"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:resourceMaintenance"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:graphicOverview" or="graphicOverview" in="gmd:MD_DataIdentification"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:descriptiveKeywords"  or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:resourceSpecificUsage"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:aggregationInfo"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:spatialRepresentationType"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:spatialResolution"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:language"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:characterSet"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:topicCategory"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:extent"/>
-          <section xpath="gmd:MD_DataIdentification/gmd:supplementalInformation"/>
-
           <!-- For services -->
-          <section xpath="srv:SV_ServiceIdentification/gmd:citation"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:abstract"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:purpose"/>
           <section name="mdConstraintsSection" per="srv:SV_ServiceIdentification">
             <action type="add" name="resourceConstraints" or="resourceConstraints"
-                      in=""
+                    in=""
                     addDirective="data-gn-directory-entry-selector">
               <directiveAttributes
                 data-template-add-action="false"
@@ -3364,20 +3344,21 @@
               <section xpath="gmd:MD_Constraints"/>
             </section>
           </section>
-          <section xpath="srv:SV_ServiceIdentification/gmd:status"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:pointOfContact"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:resourceMaintenance"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:graphicOverview" or="graphicOverview" in="gmd:MD_DataIdentification"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:descriptiveKeywords"  or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:resourceSpecificUsage"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:aggregationInfo"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:spatialRepresentationType"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:spatialResolution"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:language"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:characterSet"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:topicCategory"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:extent"/>
-          <section xpath="srv:SV_ServiceIdentification/gmd:supplementalInformation"/>
+          
+          <section xpath="*/gmd:status"/>
+          <section xpath="*/gmd:pointOfContact"/>
+          <section xpath="*/gmd:resourceMaintenance"/>
+          <section xpath="*/gmd:graphicOverview" or="graphicOverview" in="gmd:MD_DataIdentification"/>
+          <section xpath="*/gmd:descriptiveKeywords"  or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
+          <section xpath="*/gmd:resourceSpecificUsage"/>
+          <section xpath="*/gmd:aggregationInfo"/>
+          <section xpath="*/gmd:spatialRepresentationType"/>
+          <section xpath="*/gmd:spatialResolution"/>
+          <section xpath="*/gmd:language"/>
+          <section xpath="*/gmd:characterSet"/>
+          <section xpath="*/gmd:topicCategory"/>
+          <section xpath="*/gmd:extent"/>
+          <section xpath="*/gmd:supplementalInformation"/>
         </section>
         <section xpath="/gmd:MD_Metadata/gmd:applicationSchemaInfo" or="applicationSchemaInfo" in="/gmd:MD_Metadata"/>
         <section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo" or="referenceSystemInfo" in="/gmd:MD_Metadata"/>
