@@ -3461,7 +3461,7 @@
           </section>
         </section>
         <section>
-          <action type="add" or="dataQualityInfo" in="/gmd:MD_Metadata">
+          <action type="add" or="dataQualityInfo" in="/gmd:MD_Metadata" if="count(gmd:MD_Metadata/gmd:dataQualityInfo) = 0">
             <template>
               <snippet>
                 <gmd:dataQualityInfo xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco">
@@ -3873,7 +3873,10 @@
         <for name="srv:parameters"/>
         <for name="gmd:function"/>
 
-        <for name="gmd:alternateTitle"/>
+        <!--for name="gmd:alternateTitle"/-->
+        <for name="gmd:alternateTitle" xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation"/>
+        <for name="gmd:alternateTitle" xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation"/>
+        <for name="gmd:alternateTitle" xpath="/gmd:MD_Metadata/gmd:applicationSchemaInfo/gmd:MD_ApplicationSchemaInformation/gmd:name/gmd:CI_Citation"/>
         <for name="gmd:date" xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation"/>
         <for name="gmd:date" xpath="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation"/>
         <for name="gmd:graphicOverview" xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification"/>
