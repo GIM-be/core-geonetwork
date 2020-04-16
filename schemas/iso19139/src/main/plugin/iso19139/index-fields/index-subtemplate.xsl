@@ -239,7 +239,9 @@
   </xsl:template-->
 
   <xsl:template name="subtemplate-common-fields">
-    <Field name="any" string="{normalize-space(string(.))}" store="false" index="true"/>
+    <xsl:param name="alternateAny" />
+    <xsl:variable name="any" select="normalize-space(string(.))"/>
+    <Field name="any" string="{if ($any!='') then $any else $alternateAny}" store="false" index="true"/>
     <Field name="_root" string="{name(.)}" store="true" index="true"/>
   </xsl:template>
 
@@ -253,38 +255,34 @@
   </xsl:template>
 
   <xsl:template mode="index" match="gmd:report[count(gmd:DQ_AbsoluteExternalPositionalAccuracy)>0 or count(gmd:DQ_CompletenessOmission)>0 or count(gmd:DQ_ThematicClassificationCorrectness)>0]">
-    <Field name="_title"
-           string="{
-              if ($title != '') then $title
-              else if (name(*[1]) = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Geometrische nauwkeurigheid'
-              else if (name(*[1]) = 'gmd:DQ_CompletenessOmission') then 'Volledigheid'
-              else if (name(*[1]) = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematische classificatie'
-              else ''
-             }"
-           store="true" index="true"/>
+    <xsl:variable name="reportTitle"
+                  select="if ($title != '') then $title
+                    else if (name(*[1]) = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Geometrische nauwkeurigheid'
+                    else if (name(*[1]) = 'gmd:DQ_CompletenessOmission') then 'Volledigheid'
+                    else if (name(*[1]) = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematische classificatie'
+                    else ''" />
+    <Field name="_title" string="{$reportTitle}" store="true" index="true"/>
 
     <Field name="_typeReport"
            string="{local-name(gmd:*[1])}"
            store="true" index="true"/>
-
-    <xsl:call-template name="subtemplate-common-fields"/>
+    <xsl:call-template name="subtemplate-common-fields"><xsl:with-param name="alternateAny" select="$reportTitle" /></xsl:call-template>
   </xsl:template>
 
   <!--INSPIRE Domeinconsistentie-->
   <xsl:template mode="index" match="gmd:report[gmd:DQ_DomainConsistency]">
     <xsl:variable name="specificationTitle" select="//gmd:title/gmx:Anchor"/>
-    <Field name="_title"
-           string="{if ($title != '') then $title
-                        else if ($specificationTitle and contains(normalize-space($specificationTitle),'1089/2010')) then '* INSPIRE domeinconsistentie (verordening)'
-                        else if ($specificationTitle and normalize-space($specificationTitle) != '') then normalize-space($specificationTitle)
-                        else ''}"
-           store="true" index="true"/>
-
+    <xsl:variable name="reportTitle"
+                  select="if ($title != '') then $title
+                    else if ($specificationTitle and contains(normalize-space($specificationTitle),'1089/2010')) then '* INSPIRE domeinconsistentie (verordening)'
+                    else if ($specificationTitle and normalize-space($specificationTitle) != '') then normalize-space($specificationTitle)
+                    else ''" />
+    <Field name="_title" string="{$reportTitle}" store="true" index="true"/>
     <Field name="_typeReport"
            string="{local-name(gmd:*[1])}"
            store="true" index="true"/>
 
-    <xsl:call-template name="subtemplate-common-fields-or-void"/>
+    <xsl:call-template name="subtemplate-common-fields"><xsl:with-param name="alternateAny" select="$reportTitle" /></xsl:call-template>
   </xsl:template>
 
   <xsl:template mode="index" match="gmd:resourceConstraints">
