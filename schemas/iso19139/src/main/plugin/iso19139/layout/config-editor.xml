@@ -3344,12 +3344,12 @@
               <section xpath="gmd:MD_Constraints"/>
             </section>
           </section>
-          
+
           <section xpath="*/gmd:status"/>
           <section xpath="*/gmd:pointOfContact"/>
           <section xpath="*/gmd:resourceMaintenance"/>
           <section xpath="*/gmd:graphicOverview" or="graphicOverview" in="gmd:MD_DataIdentification"/>
-          <section xpath="*/gmd:descriptiveKeywords"  or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
+          <section xpath="*/gmd:descriptiveKeywords" or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
           <section xpath="*/gmd:resourceSpecificUsage"/>
           <section xpath="*/gmd:aggregationInfo"/>
           <section xpath="*/gmd:spatialRepresentationType"/>
@@ -3357,8 +3357,8 @@
           <section xpath="*/gmd:language"/>
           <section xpath="*/gmd:characterSet"/>
           <section xpath="*/gmd:topicCategory"/>
-          <section xpath="*/gmd:extent"/>
           <section xpath="*/gmd:supplementalInformation"/>
+          <section xpath="*/gmd:extent"/>
         </section>
         <section xpath="/gmd:MD_Metadata/gmd:applicationSchemaInfo" or="applicationSchemaInfo" in="/gmd:MD_Metadata"/>
         <section xpath="/gmd:MD_Metadata/gmd:referenceSystemInfo" or="referenceSystemInfo" in="/gmd:MD_Metadata"/>
