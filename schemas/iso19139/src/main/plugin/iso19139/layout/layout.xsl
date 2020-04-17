@@ -179,16 +179,16 @@
   -->
   <xsl:template mode="mode-iso19139" priority="200"
                 match="*[name() = $editorConfig/editor/fieldsWithFieldset/name
-    or @gco:isoType = $editorConfig/editor/fieldsWithFieldset/name]|
-      gmd:report/*|
-      gmd:result/*|
-      gmd:extent[name(..)!='gmd:EX_TemporalExtent']|
-      *[namespace-uri(.) != $gnUri and $isFlatMode = false() and gmd:* and not(gco:CharacterString) and not(gmd:URL)]">
+                       or @gco:isoType = $editorConfig/editor/fieldsWithFieldset/name]|
+                         gmd:report/*|
+                         gmd:result/*|
+                         gmd:extent[name(..)!='gmd:EX_TemporalExtent']|
+                         *[namespace-uri(.) != $gnUri and $isFlatMode = false() and gmd:* and not(gco:CharacterString) and not(gmd:URL)]">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
     <xsl:param name="refToDelete" required="no"/>
 
-
+    <xsl:variable name="name" select="name()"/>
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
 
@@ -204,10 +204,16 @@
       </xsl:apply-templates>
     </xsl:variable>
 
+    <xsl:variable name="hideRefConfig" select="$editorConfig/editor/hideRefToDeleteFieldset"/>
+
+    <xsl:variable name="hideRefToDelete"
+                  select="count($hideRefConfig/name[string() = $name]/@context[contains($xpath, string())]) > 0"/>
+
+
     <xsl:variable name="label" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
     <xsl:call-template name="render-boxed-element">
       <xsl:with-param name="label" select="$label/label"/>
-      <xsl:with-param name="editInfo" select="if ($refToDelete) then $refToDelete else gn:element"/>
+      <xsl:with-param name="editInfo" select="if ($hideRefToDelete = true()) then '' else (if ($refToDelete) then $refToDelete else gn:element)"/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="$xpath"/>
       <xsl:with-param name="attributesSnippet" select="$attributes"/>

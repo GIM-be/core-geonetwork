@@ -421,6 +421,11 @@
     <name>gmd:featureCatalogueCitation</name>
   </fieldsWithFieldset>
 
+  <hideRefToDeleteFieldset>
+    <name context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">gmd:identifier</name>
+    <name context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation">gmd:identifier</name>
+  </hideRefToDeleteFieldset>
+
   <multilingualFields>
     <!-- In multilingual mode, define which mode
     the widget should have. If expanded, then one
