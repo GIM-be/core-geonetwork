@@ -835,7 +835,7 @@
                 </gmd:CI_Citation>
               </gmd:specification>
               <gmd:explanation>
-                <gco:CharacterString>Geharmoniseerd volgens INSPIRE richtlijn</gco:CharacterString>
+                <gco:CharacterString>Geharmoniseerd volgens INSPIRE verordening</gco:CharacterString>
               </gmd:explanation>
               <gmd:pass>
                 <gco:Boolean>false</gco:Boolean>
