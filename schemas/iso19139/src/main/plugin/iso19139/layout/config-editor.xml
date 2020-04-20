@@ -3315,10 +3315,21 @@
           <section xpath="*/gmd:citation"/>
           <section xpath="*/gmd:abstract"/>
           <section xpath="*/gmd:purpose"/>
+          <section xpath="*/gmd:status"/>
+          <action type="add" name="gmd:status" or="status" in="*">
+            <template>
+              <snippet>
+                <gmd:status>
+                  <gmd:MD_ProgressCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"
+                                       codeListValue=""/>
+                </gmd:status>
+              </snippet>
+            </template>
+          </action>
+
           <!-- For dataset and dataset series -->
           <section name="mdConstraintsSection" per="gmd:MD_DataIdentification">
-            <action type="add" name="resourceConstraints" or="resourceConstraints"
-                      in=""
+            <action type="add" name="resourceConstraints" or="resourceConstraints" in=""
                     addDirective="data-gn-directory-entry-selector">
               <directiveAttributes
                 data-template-add-action="false"
@@ -3352,8 +3363,17 @@
             </section>
           </section>
 
-          <section xpath="*/gmd:status"/>
           <section xpath="*/gmd:pointOfContact"/>
+          <action type="add" name="gmd:pointOfContact" or="pointOfContact" in="*"
+                  addDirective="data-gn-directory-entry-selector">
+            <directiveAttributes
+              data-template-add-action="false"
+              data-search-action="true"
+              data-popup-action="false"
+              data-template-type="contact"
+              data-filter='{"_roleCode": "pointOfContact"}'
+              data-insert-modes="text"/>
+          </action>
           <section xpath="*/gmd:resourceMaintenance"/>
           <section xpath="*/gmd:graphicOverview" or="graphicOverview" in="gmd:MD_DataIdentification"/>
           <section xpath="*/gmd:descriptiveKeywords" or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
