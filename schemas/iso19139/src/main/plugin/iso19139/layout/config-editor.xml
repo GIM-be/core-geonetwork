@@ -3316,7 +3316,7 @@
           <section xpath="*/gmd:abstract"/>
           <section xpath="*/gmd:purpose"/>
           <section xpath="*/gmd:status"/>
-          <action type="add" name="gmd:status" or="status" in="gmd:MD_DataIdentification">
+          <action type="add" name="gmd:status" or="status" in="*">
             <template>
               <snippet>
                 <gmd:status>
@@ -3326,6 +3326,7 @@
               </snippet>
             </template>
           </action>
+
           <!-- For dataset and dataset series -->
           <section name="mdConstraintsSection" per="gmd:MD_DataIdentification">
             <action type="add" name="resourceConstraints" or="resourceConstraints" in=""
@@ -3363,6 +3364,16 @@
           </section>
 
           <section xpath="*/gmd:pointOfContact"/>
+          <action type="add" name="gmd:pointOfContact" or="pointOfContact" in="*"
+                  addDirective="data-gn-directory-entry-selector">
+            <directiveAttributes
+              data-template-add-action="false"
+              data-search-action="true"
+              data-popup-action="false"
+              data-template-type="contact"
+              data-filter='{"_roleCode": "pointOfContact"}'
+              data-insert-modes="text"/>
+          </action>
           <section xpath="*/gmd:resourceMaintenance"/>
           <section xpath="*/gmd:graphicOverview" or="graphicOverview" in="gmd:MD_DataIdentification"/>
           <section xpath="*/gmd:descriptiveKeywords" or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
