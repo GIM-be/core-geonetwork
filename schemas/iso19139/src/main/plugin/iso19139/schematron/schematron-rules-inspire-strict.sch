@@ -63,7 +63,7 @@
             </sch:let>
             <sch:let name="langCode" value="normalize-space($langCodeMap//*[name() = $lang])" />
 
-            <sch:let name="specification_title" value="gmd:report/*/gmd:result/*/gmd:specification/*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString' or ../@locale = $langCode)]" />
+            <sch:let name="specification_title" value="gmd:report/*/gmd:result/*/gmd:specification/*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString' or ../name() = 'gmx:Anchor' or ../@locale = $langCode)]" />
             <sch:let name="has_specification_title" value="count($specification_title) > 0" />
 
             <sch:let name="allTitles">
@@ -86,13 +86,13 @@
             <sch:let name="isNlMetadata" value="$lang = 'dut'"/>
 
             <sch:let name="specification_inspire" value="gmd:report/*/gmd:result/*/gmd:specification[
-                ($isDeMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString')]))  = $allTitles//ger/text()) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//ger/text())) or
-                ($isEnMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString')]))  = $allTitles//eng/text()) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//eng/text())) or
-                ($isFrMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString')]))  = $allTitles//fre/text()) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//fre/text())) or
-                ($isItMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString')]))  = $allTitles//ita/text()) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//ita/text())) or
-                ($isEsMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString')]))  = $allTitles//spa/text()) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//spa/text())) or
-                ($isFiMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString')]))  = $allTitles//fin/text()) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//fin/text())) or
-                ($isNlMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString')]))  = $allTitles//dut/text()) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//dut/text()))
+                ($isDeMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString' or ../name() = 'gmx:Anchor')])) = normalize-space($allTitles//ger/text())) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//ger/text())) or
+                ($isEnMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString' or ../name() = 'gmx:Anchor')])) = normalize-space($allTitles//eng/text())) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//eng/text())) or
+                ($isFrMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString' or ../name() = 'gmx:Anchor')])) = normalize-space($allTitles//fre/text())) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//fre/text())) or
+                ($isItMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString' or ../name() = 'gmx:Anchor')])) = normalize-space($allTitles//ita/text())) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//ita/text())) or
+                ($isEsMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString' or ../name() = 'gmx:Anchor')])) = normalize-space($allTitles//spa/text())) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//spa/text())) or
+                ($isFiMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString' or ../name() = 'gmx:Anchor')])) = normalize-space($allTitles//fin/text())) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//fin/text())) or
+                ($isNlMetadata and (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../name() = 'gco:CharacterString' or ../name() = 'gmx:Anchor')])) = normalize-space($allTitles//dut/text())) or (lower-case(normalize-space(*/gmd:title//text()[(string-length(.) > 0) and (../@locale = $langCode)]))  = $allTitles//dut/text()))
                 ]" />
 
             <sch:let name="degree" value="$specification_inspire/../gmd:pass/*/text()"/>
