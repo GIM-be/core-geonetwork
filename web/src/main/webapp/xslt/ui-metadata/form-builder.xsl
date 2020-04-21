@@ -1428,14 +1428,16 @@
     <xsl:variable name="fieldName"
                   select="concat('_', $ref, '_', replace($attributeName, ':', 'COLON'))"/>
 
+    <xsl:variable name="deletable" select="not($isDefaultView and $attributeName = 'xlink:href')"/>
+
     <div class="form-group gn-attr-{replace($attributeName, ':', '_')}" id="gn-attr-{$fieldName}">
-      <label class="col-sm-4">
+      <label class="col-sm-2">
         <xsl:if test="$attributeName = 'xlink:href'">
           <i class="fa fa-link fa-fw"/>
         </xsl:if>
         <xsl:value-of select="gn-fn-metadata:getLabel($schema, $attributeName, $labels)/label"/>
       </label>
-      <div class="col-sm-7">
+      <div class="{if ($deletable) then 'col-sm-9' else 'col-sm-10'}">
         <xsl:if test="$directive">
           <xsl:attribute name="{$directive}"/>
         </xsl:if>
@@ -1471,7 +1473,7 @@
             </select>
           </xsl:when>
           <xsl:otherwise>
-            <input type="text" class="" name="{$fieldName}" value="{$attributeValue}">
+            <input type="text" class="" name="{$fieldName}" value="{$attributeValue}" data-toggle="tooltip" title="{$attributeValue}">
               <xsl:if test="$isDefaultView and $attributeName = 'xlink:href'">
                 <xsl:attribute name="disabled"/>
               </xsl:if>
@@ -1479,7 +1481,7 @@
           </xsl:otherwise>
         </xsl:choose>
       </div>
-      <xsl:if test="not($isDefaultView and $attributeName = 'xlink:href')">
+      <xsl:if test="$deletable">
         <div class="col-sm-1">
           <a class="btn pull-right"
              data-gn-click-and-spin="removeAttribute('{$fieldName}')" data-toggle="tooltip"
