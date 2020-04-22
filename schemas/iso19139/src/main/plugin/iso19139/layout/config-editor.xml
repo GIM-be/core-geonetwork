@@ -426,6 +426,8 @@
     <name context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation">gmd:identifier</name>
     <name context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier">gmd:MD_Identifier</name>
     <name context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier">gmd:MD_Identifier</name>
+    <name context="gmd:result">gmd:DQ_ConformanceResult</name>
+    <name context="gmd:result">gmd:DQ_QuantitativeResult</name>
   </hideRefToDeleteFieldset>
 
   <multilingualFields>
