@@ -164,7 +164,7 @@
     <xsl:apply-templates mode="mode-iso19139" select="*|@*">
       <xsl:with-param name="schema" select="$schema"/>
       <xsl:with-param name="labels" select="$labels"/>
-      <xsl:with-param name="refToDelete" select="$refToDelete"/>
+      <!--xsl:with-param name="refToDelete" select="$refToDelete"/-->
       <xsl:with-param name="overrideLabel" select="$overrideLabel"/>
     </xsl:apply-templates>
   </xsl:template>
