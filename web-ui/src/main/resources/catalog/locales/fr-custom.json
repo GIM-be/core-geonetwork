@@ -32,6 +32,8 @@
   "mdStatus-14": "Rejeté par le validateur d'Informatie Vlaanderen et non supprimé",
   "statusChangeImpossible": "Le changement de statut a échoué car vous ne disposez pas des droits ou l'enregistrement de métadonnées n'a pas pu être validé. Modifiez l'enregistrement de métadonnées pour voir les erreurs de validation.",
   "deleteDraftFirst": "De record heeft een draft versie. Verwijder de draft versie eerst alvorens de gepubliceerde versie te verwijderen.",
-  "deleteNotAllowedByUser": "Je kan de record niet verwijderen omdat dit record reeds gepubliceerd is. Je kan wel je editsessie annuleren en vervolgens de status veranderen naar 'Ingediend voor verwijderen'.",
-  "draftCopyRemoved": "Draft copy \"{{title}}\" supprimé."
+  "deleteNotAllowedByUser": "Je kan de record niet verwijderen omdat dit record reeds gepubliceerd is, maar je kan wel je editeersessie annuleren.  Enkel een hoofdeditor of administrator kan vervolgens de status veranderen naar 'Ingediend voor verwijderen'.",
+  "draftCopyRemoved": "Draft copy \"{{title}}\" supprimé.",
+  "true": "Oui",
+  "false": "Non"
 }
