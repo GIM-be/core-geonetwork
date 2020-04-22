@@ -29,7 +29,7 @@
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
                 xmlns:gn-fn-index="http://geonetwork-opensource.org/xsl/functions/index"
-                version="1.0">
+                version="2.0">
 
   <!-- This file defines what parts of the metadata are indexed by Lucene
         Searches can be conducted on indexes defined here.
@@ -216,7 +216,7 @@
     <xsl:variable name="uuid" select="@uuid"/>
     <xsl:variable name="role" select="gmd:role/*/@codeListValue"/>
     <xsl:variable name="roleTranslation"
-                  select="util:getCodelistTranslation('gmd:CI_RoleCode', string($role), 'en')"/>
+                  select="util:getCodelistTranslation('gmd:CI_RoleCode', string($role), 'dut')"/>
     <xsl:variable name="logo" select=".//gmx:FileName/@src"/>
     <xsl:variable name="email"
                   select="gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString"/>
