@@ -63,5 +63,6 @@
   "deleteNotAllowedByUser": "Je kan de record niet verwijderen omdat dit record reeds gepubliceerd is, maar je kan wel je editeersessie annuleren.  Enkel een hoofdeditor of administrator kan vervolgens de status veranderen naar 'Ingediend voor verwijderen'.",
   "draftCopyRemoved": "Draft copy \"{{title}}\" verwijderd.",
   "true": "Ja",
-  "false": "Nee"
+  "false": "Nee",
+  "deletionReport": "Verwijderingsrapport"
 }

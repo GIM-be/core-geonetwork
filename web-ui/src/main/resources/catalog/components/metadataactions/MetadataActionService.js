@@ -180,7 +180,7 @@
         }
       };
 
-      this.deleteMd = function(md, bucket) {
+      this.deleteMd = function(md, bucket, scope) {
         $rootScope.$broadcast('operationOnSelectionStart');
         if (md) {
           return gnMetadataManager.remove(md.getId()).then(function() {
@@ -193,11 +193,21 @@
           });
         }
         else {
-          return $http.delete('../api/records?' +
-              'bucket=' + bucket).then(function() {
+          return $http.delete('../api/records?' + 'bucket=' + bucket).then(function (response) {
+            scope.processReport = response.data;
             $rootScope.$broadcast('mdSelectNone');
             $rootScope.$broadcast('operationOnSelectionStop');
             $rootScope.$broadcast('search');
+            gnUtilityService.openModal({
+              title: $translate.instant('deletionReport'),
+              content: '<div gn-batch-report="processReport"></div>',
+              className: 'gn-privileges-popup',
+              onCloseCallback: function () {
+                scope.$emit('MetadataDeleted', true);
+                scope.$broadcast('operationOnSelectionStop');
+                scope.processReport = null;
+              }
+            }, scope, 'MetadataDeleted');
           });
         }
       };
