@@ -35,7 +35,7 @@
   "mdStatus-14": "Rejected by Informatie Vlaanderen validator and not deleted",
   "statusChangeImpossible": "The status change was unsuccessful since you do not have the rights or the metadata record could not be validated. Edit the metadata record to see the validation errors.",
   "deleteDraftFirst": "The metadata has a draft version. Delete it first to remove the published version.",
-  "deleteNotAllowedByUser": "You can't delete the record because this record is already published. You can cancel the editsession and then change the status to 'Submitted for removal'.",
+  "deleteNotAllowedByUser": "You can't delete the record because this record is already published. But you can cancel the editsession.  Only a reviewer or administrator can change the status to 'Submitted for removal' next.",
   "draftCopyRemoved": "Draft copy \"{{title}}\" removed",
   "true": "Yes",
   "false": "No"
