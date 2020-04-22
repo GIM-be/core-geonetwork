@@ -460,68 +460,68 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part5</code>
-      <label>8859part5</label>
+      <label>Latijns/Cyrillisch</label>
       <description>ISO/IEC 8859-5,  8-bit single byte karakterset - Deel 5 : Latijns/Cyrillisch alfabet</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part6</code>
-      <label>8859part6</label>
+      <label>Latijns/Arabisch</label>
       <description>ISO/IEC 8859-6, 8-bit single byte karakterset - Deel 6: Latijns/Arabisch alfabet</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part7</code>
-      <label>8859part7</label>
+      <label>Latijns/Grieks</label>
       <description>ISO/IEC 8859-7, 8-bit single byte karakterset - Deel 7 : Latijns/Grieks alfabet</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part8</code>
-      <label>8859part8</label>
+      <label>Latijns/Hebreeuws</label>
       <description>ISO/IEC 8859-8, 8-bit single byte karakterset - Deel 8 : Latijns/Hebreeuws alphabet</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part9</code>
-      <label>8859part9</label>
+      <label>Latin-5</label>
       <description>ISO/IEC 8859-9, 8-bit single byte karakterset - Deel 9 : Latijns alfabet nr. 5</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part10</code>
-      <label>8859part10</label>
+      <label>Latin-6</label>
       <description>ISO/IEC 8859-10, 8-bit single byte karakterset - Deel 10 : Latijns alfabet nr. 6</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part11</code>
-      <label>8859part11</label>
-      <description>ISO/IEC 8859-11, 8-bit single byte karakterset - Deel 11 : Latin/Thais alfabet</description>
+      <label>Latijns/Thais</label>
+      <description>ISO/IEC 8859-11, 8-bit single byte karakterset - Deel 11 : Latijns/Thais alfabet</description>
     </entry>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part13</code>
-      <label>8859part13</label>
+      <label>Latin-7</label>
       <description>ISO/IEC 8859-13, 8-bit single byte karakterset - Deel 13 : Latijns alfabet nr.7</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part14</code>
-      <label>8859part14</label>
+      <label>Latin-8</label>
       <description>ISO/IEC 8859-14, 8-bit single byte karakterset - Deel 14 : Latijns alfabet nr. 8 (Keltisch)</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part15</code>
-      <label>8859part15</label>
+      <label>Latin-9</label>
       <description>ISO/IEC 8859-15, 8-bit single byte karakterset - Deel 15 : Latijns alfabet nr. 9</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part16</code>
-      <label>8859part16</label>
+      <label>Latin-10</label>
       <description>ISO/IEC 8859-16, 8-bit single byte karakterset - Deel 16 : Latijns alfabet nr. 10</description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
