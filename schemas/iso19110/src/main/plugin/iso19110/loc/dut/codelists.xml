@@ -25,9 +25,65 @@
 <codelists>
   <codelist name="gmd:CI_RoleCode">
     <entry>
+      <code>resourceProvider</code>
+      <label>Verstrekker</label>
+      <description>Organisatie die de data verstrekt.</description>
+    </entry>
+    <entry>
+      <code>custodian</code>
+      <label>Beheerder</label>
+      <description>Partij die verantwoordelijkheid heeft geaccepteerd en zorg draagt voor het beheer
+        van de data.
+      </description>
+    </entry>
+    <entry>
+      <code>owner</code>
+      <label>Eigenaar</label>
+      <description>Partij die eigenaar is van de data.</description>
+    </entry>
+    <entry>
+      <code>user</code>
+      <label>Gebruiker</label>
+      <description>Partij die de data gebruikt.</description>
+    </entry>
+    <entry>
+      <code>distributor</code>
+      <label>Verdeler</label>
+      <description>Partij die de data verstrekt.</description>
+    </entry>
+    <entry>
       <code>originator</code>
       <label>Producent</label>
-      <description>Producent van de dataset.</description>
+      <description>Partij die de data heeft aangemaakt.</description>
+    </entry>
+    <entry>
+      <code>pointOfContact</code>
+      <label>Contactpunt</label>
+      <description>Partij waarmee contact kan worden opgenomen voor het vergaren van kennis of
+        verstrekking van de data.
+      </description>
+    </entry>
+    <entry>
+      <code>principalInvestigator</code>
+      <label>Inwinner</label>
+      <description>Sleutelpartij verantwoordelijk voor verzamelen van data en de uitvoering van
+        onderzoek.
+      </description>
+    </entry>
+    <entry>
+      <code>processor</code>
+      <label>Bewerker</label>
+      <description>Partij die de data heeft bewerkt.</description>
+    </entry>
+    <entry>
+      <code>publisher</code>
+      <label>Uitgever</label>
+      <description>Partij die de data publiceert.</description>
+    </entry>
+    <entry>
+      <code>author</code>
+      <label>Auteur</label>
+      <description>Partij die auteur is van de data.</description>
     </entry>
   </codelist>
   <codelist name="gfc:isAbstract">

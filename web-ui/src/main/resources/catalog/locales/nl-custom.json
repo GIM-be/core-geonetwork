@@ -61,5 +61,7 @@
   "statusChangeImpossible": "De statuswijziging is niet gelukt aangezien u niet de rechten hebt of het metadatarecord niet gevalideerd kon worden. Editeer het metadatarecord om de validatiefouten te zien.",
   "deleteDraftFirst": "De record heeft een draft versie. Verwijder de draft versie eerst alvorens de gepubliceerde versie te verwijderen.",
   "deleteNotAllowedByUser": "Je kan de record niet verwijderen omdat dit record reeds gepubliceerd is. Je kan wel je editsessie annuleren en vervolgens de status veranderen naar 'Ingediend voor verwijderen'.",
-  "draftCopyRemoved": "Draft copy \"{{title}}\" verwijderd."
+  "draftCopyRemoved": "Draft copy \"{{title}}\" verwijderd.",
+  "true": "Ja",
+  "false": "Nee"
 }
