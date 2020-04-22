@@ -106,7 +106,7 @@
     "defaultView": "Standaardweergave",
     "full": "Volledige weergave",
     "securityConstraints": "Beveiligingsrestricties",
-    "versionIdentifier": "Version identifier",
+    "versionIdentifier": "Versie",
     "otherConstraints": "Overige beperkingen",
     "resourceConstraints": "Bron restricties",
     "maintenanceAndUpdateFrequencies": "Werk de frequenties bij",
