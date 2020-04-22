@@ -380,6 +380,7 @@
     <name>gmd:spatialRepresentationInfo</name>
     <name>gmd:pointOfContact</name>
     <name>gmd:contact</name>
+    <name>gmd:processor</name>
     <name>gmd:graphicOverview</name>
     <name>gmd:citedResponsibleParty</name>
     <name>gmd:dataQualityInfo</name>
@@ -3399,9 +3400,7 @@
                   <section xpath="gmd:description"/>
                   <section xpath="gmd:dateTime"/>
                 </section>
-                <section name="gmd:processor" per="gmd:LI_ProcessStep/gmd:processor">
-                  <section xpath="."/>
-                </section>
+                <section xpath="gmd:LI_ProcessStep/gmd:processor" />
                 <action type="add" name="gmd:processor" or="processor" in="gmd:LI_ProcessStep"
                         addDirective="data-gn-directory-entry-selector">
                   <directiveAttributes
@@ -3409,7 +3408,7 @@
                     data-search-action="true"
                     data-popup-action="false"
                     data-template-type="contact"
-                    data-filter='{"_roleCode": "pointOfContact"}'
+                    data-filter='{"_roleCode": "processor"}'
                     data-insert-modes="text"/>
                 </action>
               </section>

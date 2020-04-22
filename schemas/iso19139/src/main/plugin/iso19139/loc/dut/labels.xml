@@ -3217,6 +3217,10 @@
     <label>Datum meting</label>
     <description>Datum waarop de bewerkingen of metingen zijn gestart.(JJJJ-MM-DD).</description>
   </element>
+  <element name="gmd:dateTime" context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:dateTime">
+    <label>Datum bewerking</label>
+    <description>Datum waarop de bewerkingen of metingen zijn gestart.(JJJJ-MM-DD).</description>
+  </element>
   <element name="gmd:title" context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title">
     <label>Titel specificatie</label>
     <description>Titel of naam</description>
