@@ -516,7 +516,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part1</code>
-      <label>8859 Part 1</label>
+      <label>Latin-1</label>
       <description>ISO/IEC 8859-1, Information technology - 8-bit single byte coded graphic
         character sets - Part 1 : Latin alphabet No.1
       </description>
@@ -524,7 +524,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part2</code>
-      <label>8859 Part 2</label>
+      <label>Latin-2</label>
       <description>ISO/IEC 8859-2, Information technology - 8-bit single byte coded graphic
         character sets - Part 2 : Latin alphabet No.2
       </description>
@@ -532,7 +532,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part3</code>
-      <label>8859 Part 3</label>
+      <label>Latin-3</label>
       <description>ISO/IEC 8859-3, Information technology - 8-bit single byte coded graphic
         character sets - Part 3 : Latin alphabet No.3
       </description>
@@ -540,7 +540,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part4</code>
-      <label>8859 Part 4</label>
+      <label>Latin-4</label>
       <description>ISO/IEC 8859-4, Information technology - 8-bit single byte coded graphic
         character sets - Part 4 : Latin alphabet No.4
       </description>
@@ -548,7 +548,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part5</code>
-      <label>8859 Part 5</label>
+      <label>Latin/Cyrillic</label>
       <description>ISO/IEC 8859-5, Information technology - 8-bit single byte coded graphic
         character sets - Part 5 : Latin/Cyrillic alphabet
       </description>
@@ -556,7 +556,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part6</code>
-      <label>8859 Part 6</label>
+      <label>Latin/Arabic</label>
       <description>ISO/IEC 8859-6, Information technology - 8-bit single byte coded graphic
         character sets - Part 6 : Latin/Arabic alphabet
       </description>
@@ -564,7 +564,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part7</code>
-      <label>8859 Part 7</label>
+      <label>Latin/Greek</label>
       <description>ISO/IEC 8859-7, Information technology - 8-bit single byte coded graphic
         character sets - Part 7 : Latin/Greek alphabet
       </description>
@@ -572,7 +572,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part8</code>
-      <label>8859 Part 8</label>
+      <label>Latin/Hebrew</label>
       <description>ISO/IEC 8859-8, Information technology - 8-bit single byte coded graphic
         character sets - Part 8 : Latin/Hebrew alphabet
       </description>
@@ -580,7 +580,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part9</code>
-      <label>8859 Part 9</label>
+      <label>Latin-5</label>
       <description>ISO/IEC 8859-9, Information technology - 8-bit single byte coded graphic
         character sets - Part 9 : Latin alphabet No.5
       </description>
@@ -588,7 +588,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part10</code>
-      <label>8859 Part 10</label>
+      <label>Latin-6</label>
       <description>ISO/IEC 8859-10, Information technology - 8-bit single byte coded graphic
         character sets - Part 10 : Latin alphabet No.6
       </description>
@@ -596,7 +596,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part11</code>
-      <label>8859 Part 11</label>
+      <label>Latin/Thai</label>
       <description>ISO/IEC 8859-11, Information technology - 8-bit single byte coded graphic
         character sets - Part 11 : Latin/Thai alphabet
       </description>
@@ -604,7 +604,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part13</code>
-      <label>8859 Part 13</label>
+      <label>Latin-7</label>
       <description>ISO/IEC 8859-13, Information technology - 8-bit single byte coded graphic
         character sets - Part 13 : Latin alphabet No.7
       </description>
@@ -612,7 +612,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part14</code>
-      <label>8859 Part 14</label>
+      <label>Latin-8</label>
       <description>ISO/IEC 8859-14, Information technology - 8-bit single byte coded graphic
         character sets - Part 14 : Latin alphabet No.8 (Celtic)
       </description>
@@ -620,7 +620,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part15</code>
-      <label>8859 Part 15</label>
+      <label>Latin-9</label>
       <description>ISO/IEC 8859-15, Information technology - 8-bit single byte coded graphic
         character sets - Part 15 : Latin alphabet No.9
       </description>
@@ -628,7 +628,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>8859part16</code>
-      <label>8859 Part 16</label>
+      <label>Latin-10</label>
       <description>ISO/IEC 8859-16, Information technology - 8-bit single byte coded graphic
         character sets - Part 16 : Latin alphabet No.10
       </description>
