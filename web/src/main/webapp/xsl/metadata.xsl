@@ -1244,13 +1244,22 @@
     <xsl:variable name="value" select="string(.)"/>
     <xsl:variable name="isXLinked" select="count(ancestor-or-self::node()[@xlink:href]) > 0"/>
 
+    <xsl:variable name="requiredType">
+      <xsl:if test="$schema = 'iso19139'">
+        <xsl:variable name="parentName" select="name(..)"/>
+        <xsl:variable name="mandatoryType" select="/root/gui/schemas/*[name(.)=$schema]/labels/element[@name = $parentName]/mandatoryType"/>
+        <xsl:if test="$mandatoryType!=''">
+          <xsl:value-of select="$mandatoryType"/>
+        </xsl:if>
+      </xsl:if>
+    </xsl:variable>
+    <!--xsl:message><xsl:value-of select="concat('Field with parent name ', name(..), ' and name ', name(.), ' has a required type ', $requiredType)"/></xsl:message-->
     <xsl:choose>
       <!-- list of values -->
       <xsl:when test="geonet:element/geonet:text">
 
-        <xsl:variable name="mandatory" select="geonet:element/@min='1' and
+        <xsl:variable name="mandatory" select="$schema!='iso19139' and geonet:element/@min='1' and
           geonet:element/@max='1'"/>
-
         <!-- This code is mainly run under FGDC
                 but also for enumeration like topic category and
                 service parameter direction in ISO.
@@ -1289,7 +1298,7 @@
           <xsl:if test="$isXLinked">
             <xsl:attribute name="disabled">disabled</xsl:attribute>
           </xsl:if>
-          <xsl:if test="$mandatory and $edit">
+          <xsl:if test="($mandatory or $requiredType) and $edit">
             <xsl:attribute name="onchange">
               validateNonEmpty(this);
             </xsl:attribute>
@@ -1375,9 +1384,9 @@
                 <xsl:attribute name="style">display:none;</xsl:attribute>
               </xsl:if>
 
-              <xsl:variable name="mandatory" select="(name(.)='gmd:LocalisedCharacterString'
+              <xsl:variable name="mandatory" select="$schema!='iso19139' and ((name(.)='gmd:LocalisedCharacterString'
                   and ../../geonet:element/@min='1')
-                  or ../geonet:element/@min='1'"/>
+                  or ../geonet:element/@min='1')"/>
 
               <xsl:choose>
                 <!-- Numeric field -->
@@ -1386,18 +1395,18 @@
                   <xsl:choose>
                     <xsl:when test="name(.)='gco:Integer'">
                       <xsl:attribute name="onkeyup">validateNumber(this, <xsl:value-of
-                        select="not($mandatory)"/>, false);
+                        select="not($mandatory or $requiredType)"/>, false);
                       </xsl:attribute>
                     </xsl:when>
                     <xsl:otherwise>
                       <xsl:attribute name="onkeyup">validateNumber(this, <xsl:value-of
-                        select="not($mandatory)"/>, true);
+                        select="not($mandatory or $requiredType)"/>, true);
                       </xsl:attribute>
                     </xsl:otherwise>
                   </xsl:choose>
                 </xsl:when>
                 <!-- Mandatory field (with extra validator) -->
-                <xsl:when test="$mandatory
+                <xsl:when test="($mandatory or $requiredType)
                   and $edit">
                   <xsl:attribute name="onkeyup">
                     validateNonEmpty(this);

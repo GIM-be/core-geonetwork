@@ -426,6 +426,8 @@
     <name context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation">gmd:identifier</name>
     <name context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier">gmd:MD_Identifier</name>
     <name context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier">gmd:MD_Identifier</name>
+    <name context="gmd:result">gmd:DQ_ConformanceResult</name>
+    <name context="gmd:result">gmd:DQ_QuantitativeResult</name>
   </hideRefToDeleteFieldset>
 
   <multilingualFields>
@@ -3327,8 +3329,8 @@
             </template>
           </action>
 
-          <!-- For dataset and dataset series -->
-          <section name="mdConstraintsSection" per="gmd:MD_DataIdentification">
+          <!-- For dataset(series) and services-->
+          <section name="mdConstraintsSection" per="*[name(.)='gmd:MD_DataIdentification' or name(.)='srv:SV_ServiceIdentification']" required="true()">
             <action type="add" name="resourceConstraints" or="resourceConstraints" in=""
                     addDirective="data-gn-directory-entry-selector">
               <directiveAttributes
@@ -3341,25 +3343,7 @@
                 data-transformation="rsrcConstrTransform"/>
             </action>
             <section name="gmd:resourceConstraints" per="gmd:resourceConstraints[gmd:MD_Constraints]">
-              <section xpath="gmd:MD_Constraints"/>
-            </section>
-          </section>
-          <!-- For services -->
-          <section name="mdConstraintsSection" per="srv:SV_ServiceIdentification">
-            <action type="add" name="resourceConstraints" or="resourceConstraints"
-                    in=""
-                    addDirective="data-gn-directory-entry-selector">
-              <directiveAttributes
-                data-template-add-action="false"
-                data-search-action="true"
-                data-popup-action="false"
-                data-filter='{"_root": "gmd:resourceConstraints", "_typeResourceConstraints": "MD_Constraints"}'
-                data-insert-modes="text"
-                data-template-type="resourceConstraints"
-                data-transformation="rsrcConstrTransform"/>
-            </action>
-            <section name="gmd:resourceConstraints" per="gmd:resourceConstraints[gmd:MD_Constraints]">
-              <section xpath="gmd:MD_Constraints"/>
+              <section xpath="gmd:MD_Constraints" del=".."/>
             </section>
           </section>
 
@@ -3375,12 +3359,12 @@
               data-insert-modes="text"/>
           </action>
           <section xpath="*/gmd:resourceMaintenance"/>
-          <section xpath="*/gmd:graphicOverview" or="graphicOverview" in="gmd:MD_DataIdentification"/>
-          <section xpath="*/gmd:descriptiveKeywords" or="descriptiveKeywords" in="gmd:MD_DataIdentification"/>
+          <section xpath="*/gmd:graphicOverview" or="graphicOverview" in="*[name(.)='gmd:MD_DataIdentification' or name(.)='srv:SV_ServiceIdentification']"/>
+          <section xpath="*/gmd:descriptiveKeywords" or="descriptiveKeywords" in="*[name(.)='gmd:MD_DataIdentification' or name(.)='srv:SV_ServiceIdentification']"/>
           <section xpath="*/gmd:resourceSpecificUsage"/>
           <section xpath="*/gmd:aggregationInfo"/>
           <section xpath="*/gmd:spatialRepresentationType"/>
-          <section xpath="*/gmd:spatialResolution"/>
+          <section xpath="*/gmd:spatialResolution" or="spatialResolution" in="*[name(.)='gmd:MD_DataIdentification' or name(.)='srv:SV_ServiceIdentification']"/>
           <section xpath="*/gmd:language"/>
           <section xpath="*/gmd:characterSet"/>
           <section xpath="*/gmd:topicCategory"/>
@@ -3656,10 +3640,10 @@
             </template>
           </action>
         </section>
-        <section name="mdLegalAndSecurityConstraintsSection">
+        <section name="mdLegalAndSecurityConstraintsSection" per="/gmd:MD_Metadata/gmd:identificationInfo/*[name(.)='gmd:MD_DataIdentification' or name(.)='srv:SV_ServiceIdentification']" required="true()">
           <!-- For dataset and dataset series -->
           <action type="add" name="resourceConstraints" or="resourceConstraints"
-                  in="/gmd:MD_Metadata/gmd:identificationInfo/*[name(.)='gmd:MD_DataIdentification' or name(.)='srv:SV_ServiceIdentification']"
+                  in=""
                   addDirective="data-gn-directory-entry-selector">
             <directiveAttributes
               data-template-add-action="false"
@@ -3670,8 +3654,8 @@
               data-template-type="resourceConstraints"
               data-transformation="rsrcConstrTransform"/>
           </action>
-          <section name="gmd:resourceConstraints" per="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints[gmd:MD_LegalConstraints or gmd:MD_SecurityConstraints]">
-            <section name="gmd:MD_LegalConstraints" per="gmd:MD_LegalConstraints">
+          <section name="gmd:resourceConstraints" per="gmd:resourceConstraints[gmd:MD_LegalConstraints or gmd:MD_SecurityConstraints]">
+            <section name="gmd:MD_LegalConstraints" per="gmd:MD_LegalConstraints" del="..">
               <section xpath="gmd:useLimitation" or="useLimitation" in=""/>
               <section xpath="gmd:accessConstraints" or="accessConstraints" in=""/>
               <section xpath="gmd:useConstraints" or="useConstraints" in=""/>
@@ -3691,7 +3675,7 @@
                 <section xpath="."/>
               </section>
             </section>
-            <section xpath="gmd:MD_SecurityConstraints"/>
+            <section xpath="gmd:MD_SecurityConstraints" del=".."/>
           </section>
         </section>
         <section name="gmd:distributionInfo">
@@ -3914,6 +3898,7 @@
         <for name="gmd:facsimile"/>
         <for name="gmd:deliveryPoint"/>
         <for name="gmd:electronicMailAddress"/>
+        <for name="gmd:address"/>
         <for name="gmd:transferOptions"/>
         <for name="gmd:temporalElement"/>
         <for name="gmd:verticalElement"/>

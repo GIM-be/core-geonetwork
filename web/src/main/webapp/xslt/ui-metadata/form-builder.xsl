@@ -118,7 +118,7 @@
           (not($parentEditInfo) and $editInfo and $editInfo/@min = 1 and $editInfo/@max = 1)">
           <xsl:value-of select="true()"/>
         </xsl:when>
-        <xsl:when test="gn-fn-metadata:getLabel($schema, name(), $labels, name(..),$isoType, $xpath)/condition = 'mandatory'">
+        <xsl:when test="$schema = 'iso19139' and gn-fn-metadata:getLabel($schema, name(), $labels, name(..),$isoType, $xpath)/mandatoryType != ''">
           <xsl:value-of select="true()"/>
         </xsl:when>
         <xsl:otherwise>
@@ -175,27 +175,15 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="requiredType">
-          <xsl:if test="$schema = 'iso19139' and $label/condition = 'mandatory'">
-            <xsl:choose>
-              <xsl:when test="$label/condition = 'mandatory' and $label/mandatoryType">
-                <xsl:value-of select="$label/mandatoryType"/>
-              </xsl:when>
-              <xsl:when test="$label/condition = 'mandatory' and not($label/mandatoryType)">
-                <xsl:value-of select="'iso'"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="'none'"/>
-              </xsl:otherwise>
-            </xsl:choose>
+          <xsl:if test="$schema = 'iso19139' and $label/mandatoryType">
+              <xsl:value-of select="$label/mandatoryType"/>
           </xsl:if>
         </xsl:variable>
-
         <div
           class="form-group gn-field gn-{substring-after(name(), ':')}
-                 {if ($isRequired and not($requiredType)) then 'gn-required' else ''}
-                 {if ($label/condition and not($requiredType)) then concat('gn-', $label/condition) else ''}
-                 {if ($requiredType and not($requiredType = 'none')) then concat('required-', $requiredType) else ''}
-                 {if ($isFirst) then '' else 'gn-extra-field'}"
+                 {if ($isRequired and not($requiredType)) then ' gn-required' else ''}
+                 {if ($requiredType) then concat(' required-', $requiredType) else ''}
+                 {if ($isFirst) then '' else ' gn-extra-field'}"
           id="gn-el-{$editInfo/@ref}"
           data-gn-field-highlight="">
           <label

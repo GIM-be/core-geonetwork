@@ -110,26 +110,15 @@
     </xsl:variable>
 
     <xsl:variable name="requiredType">
-      <xsl:if test="$schema = 'iso19139' and $labelConfig/condition = 'mandatory'">
-        <xsl:choose>
-          <xsl:when test="$labelConfig/condition = 'mandatory' and $labelConfig/mandatoryType">
-            <xsl:value-of select="$labelConfig/mandatoryType"/>
-          </xsl:when>
-          <xsl:when test="$labelConfig/condition = 'mandatory' and not($labelConfig/mandatoryType)">
-            <xsl:value-of select="'iso'"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="'none'"/>
-          </xsl:otherwise>
-        </xsl:choose>
+      <xsl:if test="$schema = 'iso19139' and $labelConfig/mandatoryType!=''">
+          <xsl:value-of select="$labelConfig/mandatoryType"/>
       </xsl:if>
     </xsl:variable>
 
 
     <div class="form-group gn-field gn-title
-                {if ($isRequired and not($requiredType)) then 'gn-required' else ''}
-                {if ($labelConfig/condition and not($requiredType)) then concat('gn-', $labelConfig/condition) else ''}
-                {if ($requiredType and not($requiredType = 'none')) then concat('required-', $requiredType) else ''}"
+                {if ($isRequired and not($requiredType)) then ' gn-required' else ''}
+                {if ($requiredType) then concat(' required-', $requiredType) else ''}"
          id="gn-el-{*/gn:element/@ref}"
          data-gn-field-highlight="">
       <label class="col-sm-2 control-label">
