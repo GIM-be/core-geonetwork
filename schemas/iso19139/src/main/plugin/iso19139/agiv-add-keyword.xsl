@@ -13,7 +13,6 @@
       <gmd:MD_Keywords>
         <!-- Put out every other keywords then conformity one -->
         <xsl:for-each select="gmd:MD_Keywords/gmd:keyword[not(gco:CharacterString = $keywordString or gmx:Anchor = $keywordString)]">
-          <xsl:message select="*/text()"/>
           <xsl:copy-of copy-namespaces="no" select="."/>
         </xsl:for-each>
         <!-- Add the Conformity keyword -->
