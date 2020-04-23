@@ -38,5 +38,6 @@
   "deleteNotAllowedByUser": "You can't delete the record because this record is already published. But you can cancel the editsession.  Only a reviewer or administrator can change the status to 'Submitted for removal' next.",
   "draftCopyRemoved": "Draft copy \"{{title}}\" removed",
   "true": "Yes",
-  "false": "No"
+  "false": "No",
+  "deletionReport": "Deletion report"
 }

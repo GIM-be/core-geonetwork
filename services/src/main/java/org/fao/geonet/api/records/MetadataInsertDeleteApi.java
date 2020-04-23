@@ -225,6 +225,7 @@ public class MetadataInsertDeleteApi {
         Set<String> records = ApiUtils.getUuidsParameterOrSelection(uuids, bucket, ApiUtils.getUserSession(session));
 
         SimpleMetadataProcessingReport report = new SimpleMetadataProcessingReport();
+        report.setTotalRecords(records.size());
         boolean bIsMetadatacenterWorkflow = WorkflowUtil.getNodeType(context).equals("Metadatacenter");
         UserRepository userRepository = context.getBean(UserRepository.class);
         List<Object[]> contentUsers = new ArrayList<Object[]>();
