@@ -9,14 +9,30 @@
 
   <!-- Match "GDI-Vlaanderen Trefwoorden" descriptiveKeywords block -->
   <xsl:template match="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[name() = ('gco:CharacterString', 'gmx:Anchor')] = $thesaurusTitleString]">
-    <xsl:choose>
-      <xsl:when test="count(gmd:MD_Keywords/gmd:keyword[gco:CharacterString = $keywordString and gmx:Anchor = $keywordAnchor]) = 0">
-        <xsl:call-template name="addKeyword"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:copy-of copy-namespaces="no" select="."/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <gmd:descriptiveKeywords>
+      <gmd:MD_Keywords>
+        <!-- Put out every other keywords then conformity one -->
+        <xsl:for-each select="gmd:MD_Keywords/gmd:keyword[not(gco:CharacterString = $keywordString or gmx:Anchor = $keywordString)]">
+          <xsl:message select="*/text()"/>
+          <xsl:copy-of copy-namespaces="no" select="."/>
+        </xsl:for-each>
+        <!-- Add the Conformity keyword -->
+        <gmd:keyword>
+          <gmx:Anchor xlink:href="{$keywordAnchor}">
+            <xsl:value-of select="$keywordString"/>
+          </gmx:Anchor>
+        </gmd:keyword>
+        <!-- Do not forget to put out sibling element type -->
+        <xsl:for-each select="gmd:MD_Keywords/gmd:type">
+          <xsl:copy-of copy-namespaces="no" select="."/>
+        </xsl:for-each>
+        <xsl:apply-templates select="gmd:type"/>
+        <!-- Do not forget to put out sibling element thesaurusName -->
+        <xsl:for-each select="gmd:MD_Keywords/gmd:thesaurusName">
+          <xsl:copy-of copy-namespaces="no" select="."/>
+        </xsl:for-each>
+      </gmd:MD_Keywords>
+    </gmd:descriptiveKeywords>
   </xsl:template>
 
   <!-- In case gmd:MD_DataIdentification does not have a gmd:descriptiveKeywords using  'GDI-Vlaanderen Trefwoorden', insert it at correct position -->
@@ -44,34 +60,7 @@
     </xsl:copy>
   </xsl:template>
 
-  <!-- Add The conformity keyword to an existing descriptiveKeywords element -->
-  <xsl:template name="addKeyword">
-    <gmd:descriptiveKeywords>
-      <gmd:MD_Keywords>
-        <!-- put out each keyword -->
-        <xsl:for-each select="gmd:MD_Keywords/gmd:keyword">
-          <xsl:copy-of copy-namespaces="no" select="."/>
-        </xsl:for-each>
-        <!-- Add the Conformity keyword -->
-        <gmd:keyword>
-          <gmx:Anchor xlink:href="{$keywordAnchor}">
-            <xsl:value-of select="$keywordString"/>
-          </gmx:Anchor>
-        </gmd:keyword>
-        <!-- do not forget to put out sibling element type -->
-        <xsl:for-each select="gmd:MD_Keywords/gmd:type">
-          <xsl:copy-of copy-namespaces="no" select="."/>
-        </xsl:for-each>
-        <xsl:apply-templates select="gmd:type"/>
-        <!-- do not forget to put out sibling element thesaurusName -->
-        <xsl:for-each select="gmd:MD_Keywords/gmd:thesaurusName">
-          <xsl:copy-of copy-namespaces="no" select="."/>
-        </xsl:for-each>
-      </gmd:MD_Keywords>
-    </gmd:descriptiveKeywords>
-  </xsl:template>
-
-  <!-- add gmd:descriptiveKeywords using 'GDI-Vlaanderen Trefwoorden' and with the correct conformity keyword -->
+  <!-- Add gmd:descriptiveKeywords using 'GDI-Vlaanderen Trefwoorden' and with the correct conformity keyword -->
   <xsl:template name="addThesaurusAndKeyword">
     <gmd:descriptiveKeywords>
       <gmd:MD_Keywords>
