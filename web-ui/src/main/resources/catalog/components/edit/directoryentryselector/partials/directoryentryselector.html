@@ -4,6 +4,14 @@
       <span data-ng-show="templateAddAction"
             data-ng-transclude=""></span>
 
+      <button data-ng-hide="templateAddAction" type="button"
+              ng-click="updateParams(); triggerSearch()"
+              class="btn btn-default fa fa-plus">
+         <span></span>
+         <span class="caret"></span>
+      </button>
+
+      <!--
       <button class="btn btn-default" type="button"
               data-ng-show="popupAction"
               data-ng-click="openSelector()">
@@ -12,6 +20,7 @@
           {{('searchA' + templateType) | translate}}
         </span>
       </button>
+      -->
     </div>
 
     <input type="text" class="form-control"
@@ -44,7 +53,7 @@
 
           <div class="text flex-grow"> {{r.title}}</div>
 
-                    <div class="btn btn-default btn-sm pull-right"
+          <div class="btn btn-default btn-sm pull-right"
                          data-ng-if="insertAsXlink && !hasDynamicVariable"
                          data-ng-click="addEntry(r, undefined, true)">
             <i class="fa fa-link"></i>
@@ -57,9 +66,9 @@
 
           <!--Add contact as Xlink with dynamic variable -->
           <div ngeo-popover class="pull-right"
-                ngeo-popover-dismiss=".content"
-                data-ng-if="::gnConfig[gnConfig.key.isXLinkEnabled] && insertAsXlink  && hasDynamicVariable"
-                title="{{'addContactAsLink-help' | translate}}">
+               ngeo-popover-dismiss=".content"
+               data-ng-if="::gnConfig[gnConfig.key.isXLinkEnabled] && insertAsXlink  && hasDynamicVariable"
+               title="{{'addContactAsLink-help' | translate}}">
               <button ngeo-popover-anchor type="button" class="btn btn-default btn-sm">
               <i class="fa fa-link"></i>&nbsp;<span class="caret"></span>
             </button>
