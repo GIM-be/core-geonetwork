@@ -160,7 +160,7 @@
         window.open(gnHttp.getService('csv') +
             '?bucket=' + bucket, windowName, windowOption);
       };
-      this.validateMd = function(md, bucket) {
+      this.validateMd = function(md, bucket, scope) {
 
         $rootScope.$broadcast('operationOnSelectionStart');
         if (md) {
@@ -172,10 +172,21 @@
           return gnHttp.callService('../api/records/validate?' +
               'bucket=' + bucket, null, {
                     method: 'PUT'
-                  }).then(function(data) {
-            alertResult(data.data);
+                  }).then(function(response) {
+            // alertResult(data.data);
+            scope.processReport = response.data;
             $rootScope.$broadcast('operationOnSelectionStop');
             $rootScope.$broadcast('search');
+            gnUtilityService.openModal({
+              title: $translate.instant('validationReport'),
+              content: '<div gn-batch-report="processReport"></div>',
+              className: 'gn-privileges-popup',
+              onCloseCallback: function () {
+                scope.$emit('Metadatavalidated', true);
+                scope.$broadcast('operationOnSelectionStop');
+                scope.processReport = null;
+              }
+            }, scope, 'Metadatavalidated');
           });
         }
       };

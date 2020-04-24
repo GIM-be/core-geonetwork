@@ -137,7 +137,7 @@ public class ValidateApi {
             ServiceContext serviceContext = ApiUtils.createServiceContext(request);
 
             Set<String> records = ApiUtils.getUuidsParameterOrSelection(uuids, bucket, userSession);
-
+            report.setTotalRecords(records.size());
             for (String uuid : records) {
                 if (!metadataRepository.existsMetadataUuid(uuid)) {
                     report.incrementNullRecords();

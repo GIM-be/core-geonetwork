@@ -64,5 +64,6 @@
   "draftCopyRemoved": "Draft copy \"{{title}}\" verwijderd.",
   "true": "Ja",
   "false": "Nee",
-  "deletionReport": "Verwijderingsrapport"
+  "deletionReport": "Verwijderingsrapport",
+  "validationReport": "Validatierapport"
 }
