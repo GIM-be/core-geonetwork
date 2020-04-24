@@ -42,6 +42,7 @@ import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.API;
 import org.fao.geonet.api.ApiParams;
@@ -904,10 +905,10 @@ public class MetadataSharingApi {
                     String.valueOf(groupIdentifier));
                 dataManager.indexMetadata(approvedMetadata.getId() + "", true, null);
             }
-            Element root = WorkflowUtil.getNewRootElement(serviceContext, sourceUsr.intValue(), "user", "group", "", "", WorkflowUtil.getNodeType(serviceContext));
+            Element root = WorkflowUtil.getNewRootElement(serviceContext, sourceUsr.intValue(), "user", "group", StatusValue.Status.DRAFT, "", WorkflowUtil.getNodeType(serviceContext));
             WorkflowUtil.addUserContent(serviceContext, root, userIdentifier.intValue(), "targetUser", "targetGroup");
             WorkflowUtil.addMetadataContent(serviceContext, root, metadata.getUuid(), metadataUtils.extractTitle(metadata.getDataInfo().getSchemaId(), metadata.getXmlData(false)), "", null);
-            String replyTo = newOwner.getEmail();
+            String replyTo = serviceContext.getUserSession().getEmailAddr();
             String replyToDescr = null;
             if (replyTo != null) {
                 replyToDescr = newOwner.getName() + " " + newOwner.getSurname();
@@ -915,8 +916,12 @@ public class MetadataSharingApi {
                 replyTo = sm.getValue(Settings.SYSTEM_FEEDBACK_EMAIL);
                 replyToDescr = sm.getSiteName();
             }
-            WorkflowUtil.sendEmail(serviceContext, oldOwner.getEmail(), replyTo, replyToDescr, root);
-
+            if (StringUtils.isNotEmpty(oldOwner.getEmail())) {
+                WorkflowUtil.sendEmail(serviceContext, oldOwner.getEmail(), replyTo, replyToDescr, root);
+            }
+            if (StringUtils.isNotEmpty(newOwner.getEmail())) {
+                WorkflowUtil.sendEmail(serviceContext, newOwner.getEmail(), replyTo, replyToDescr, root);
+            }
             report.addMetadataId(metadata.getId());
             report.incrementProcessedRecords();
             listOfUpdatedRecords.add(metadata.getId() + "");
