@@ -105,7 +105,7 @@
       </li>
       <li  data-ng-show="!excludePattern.test('validate')"
            data-ng-if="user.isEditorOrMore()">
-        <a href="" data-ng-click="mdService.validateMd(undefined, searchResults.selectionBucket)"
+        <a href="" data-ng-click="mdService.validateMd(undefined, searchResults.selectionBucket, getCatScope())"
            data-gn-confirm-click="{{'validateSelectedRecordConfirm' | translate:searchResults}}">
           <i class="fa fa-check"></i>&nbsp;<span translate>validate</span>
         </a>

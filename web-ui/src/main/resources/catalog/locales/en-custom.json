@@ -39,5 +39,6 @@
   "draftCopyRemoved": "Draft copy \"{{title}}\" removed",
   "true": "Yes",
   "false": "No",
-  "deletionReport": "Deletion report"
+  "deletionReport": "Deletion report",
+  "validationReport": "Validation report"
 }
