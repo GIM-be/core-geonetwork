@@ -4,6 +4,20 @@
       <span data-ng-show="templateAddAction"
             data-ng-transclude=""></span>
 
+      <button class="btn btn-default fa fa-plus" type="button"
+              data-ng-show="!templateAddAction && searchResults.records.length === 0"
+              ng-click="updateParams(); triggerSearch()">
+         <span></span>
+         <span class="caret"></span>
+      </button>
+      <button class="btn btn-default fa fa-plus" type="button"
+              data-ng-show="!templateAddAction && searchResults.records.length !== 0"
+              data-ng-click="searchResults.records = []">
+        <span></span>
+         <span class="caret"></span>
+      </button>
+
+      <!--
       <button class="btn btn-default" type="button"
               data-ng-show="popupAction"
               data-ng-click="openSelector()">
@@ -12,6 +26,7 @@
           {{('searchA' + templateType) | translate}}
         </span>
       </button>
+      -->
     </div>
 
     <input type="text" class="form-control"
@@ -35,7 +50,9 @@
          data-ng-show="searchResults.records.length > 0 && !searching">
       <span class="tt-suggestions">
         <div class="tt-suggestion flex-row"
-          data-ng-repeat="r in searchResults.records">
+             ng-class="{'clickable': !hasDynamicVariable}"
+             data-ng-repeat="r in searchResults.records"
+             data-ng-click="hasDynamicVariable || (insertAsXlink ? addEntry(r, undefined, true) : addEntry(r))">
 
           <!-- Add action for simple subtemplates -->
           <gn-md-type-widget metadata="r"></gn-md-type-widget>
@@ -44,7 +61,8 @@
 
           <div class="text flex-grow"> {{r.title}}</div>
 
-                    <div class="btn btn-default btn-sm pull-right"
+          <!--
+          <div class="btn btn-default btn-sm pull-right"
                          data-ng-if="insertAsXlink && !hasDynamicVariable"
                          data-ng-click="addEntry(r, undefined, true)">
             <i class="fa fa-link"></i>
@@ -54,12 +72,13 @@
                data-ng-click="addEntry(r)">
             <i class="fa fa-plus"></i>
           </div>
+          -->
 
           <!--Add contact as Xlink with dynamic variable -->
           <div ngeo-popover class="pull-right"
-                ngeo-popover-dismiss=".content"
-                data-ng-if="::gnConfig[gnConfig.key.isXLinkEnabled] && insertAsXlink  && hasDynamicVariable"
-                title="{{'addContactAsLink-help' | translate}}">
+               ngeo-popover-dismiss=".content"
+               data-ng-if="::gnConfig[gnConfig.key.isXLinkEnabled] && insertAsXlink  && hasDynamicVariable"
+               title="{{'addContactAsLink-help' | translate}}">
               <button ngeo-popover-anchor type="button" class="btn btn-default btn-sm">
               <i class="fa fa-link"></i>&nbsp;<span class="caret"></span>
             </button>
