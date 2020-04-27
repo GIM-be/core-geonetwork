@@ -41,8 +41,8 @@
    * a action.
    */
   module.directive('gnMetadataStatusUpdater', ['$translate', '$http',
-    'gnMetadataManager',
-    function($translate, $http, gnMetadataManager) {
+    '$rootScope','gnMetadataManager',
+    function($translate, $http, $rootScope, gnMetadataManager) {
 
       return {
         restrict: 'A',
@@ -106,14 +106,18 @@
               '/status', scope.newStatus
             ).then(
               function (response) {
-                gnMetadataManager.updateMdObj(scope.md);
+                if (scope.newStatus.status==12) {
+                  $rootScope.$broadcast('search');
+                } else {
+                  gnMetadataManager.updateMdObj(scope.md);
+                }
                 scope.$emit('metadataStatusUpdated', true);
                 scope.$emit('StatusUpdated', {
                   msg: $translate.instant(
                     'metadataStatusUpdatedWithNoErrors'),
                   timeout: 2,
                   type: 'success'
-                });
+                })
               }, function (response) {
                 // scope.$emit('metadataStatusUpdated', false);
                 scope.$emit('StatusUpdated', {
