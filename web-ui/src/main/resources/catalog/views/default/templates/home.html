@@ -72,13 +72,13 @@
           <span data-translate="">browseBy</span>
           <span
             data-ng-show="searchInfo.facet['inspireThemes'].length > 0 && searchInfo.facet['topicCats'].length > 0">
-            <label data-ng-show="searchInfo.facet['inspireThemes'].length > 0">
-              <input type="radio" name="browse" value="inspire" data-ng-model="browse"/>
-              <span data-translate="">inspireThemes</span>
-            </label>
             <label data-ng-show="searchInfo.facet['topicCats'].length > 0">
               <input type="radio" name="browse" value="topics" data-ng-model="browse"/>
               <span data-translate="">topics</span>
+            </label>
+            <label data-ng-show="searchInfo.facet['inspireThemes'].length > 0">
+              <input type="radio" name="browse" value="inspire" data-ng-model="browse"/>
+              <span data-translate="">inspireThemes</span>
             </label>
           </span>
           <label
@@ -157,7 +157,7 @@
     </div>
   </div>
   <!-- /.gn-row-topics -->
-  
+
   <div class="row gn-row-info"
        data-ng-show="searchInfo.count > 0"
        data-ng-class="{'gn-info-list-blocks': type === 'blocks' || type === undefined, 'gn-info-list-large': type === 'large', 'gn-info-list-small': type === 'small'}">
