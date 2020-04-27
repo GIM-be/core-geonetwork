@@ -365,6 +365,11 @@
         data-template-type="otherConstraints"
         data-transformation="otherConstrTransform"/>
     </for>
+    <!--for name="gco:LocalName"
+         use="data-gn-keyword-picker">
+      <directiveAttributes data-include="external.theme.SpatialDataServiceType"
+                           data-thesaurus-concept-id-attribute="codeSpace"/>
+    </for-->
   </fields>
 
 
@@ -3330,6 +3335,19 @@
               </snippet>
             </template>
           </action>
+
+          <!-- Classification for services, serviceType = other -->
+          <section name="classificationSection" per="*[name(.)='srv:SV_ServiceIdentification']">
+
+            <!-- Service type -->
+            <field xpath="srv:serviceType"/>
+
+            <!-- Service couplingType -->
+            <field xpath="srv:couplingType" />
+
+            <field xpath="srv:operatesOn" />
+
+          </section>
 
           <!-- For dataset(series) and services-->
           <section name="mdConstraintsSection" per="*[name(.)='gmd:MD_DataIdentification' or name(.)='srv:SV_ServiceIdentification']" required="true()">
