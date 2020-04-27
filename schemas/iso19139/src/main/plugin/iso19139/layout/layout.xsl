@@ -237,7 +237,7 @@
   <xsl:template mode="mode-iso19139" priority="200"
                 match="*[gco:CharacterString|gmx:Anchor|gco:Integer|gco:Decimal|
        gco:Boolean|gco:Real|gco:Measure|gco:Length|gco:Distance|gco:Angle|gmx:FileName|
-       gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|gco:LocalName|gmd:PT_FreeText|
+       gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|gmd:PT_FreeText|
        gts:TM_PeriodDuration|gml:duration|gml320:duration]">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
@@ -266,7 +266,7 @@
     <!-- TODO: Support gmd:LocalisedCharacterString -->
     <xsl:variable name="monoLingualValue" select="gco:CharacterString|gmx:Anchor|gco:Integer|gco:Decimal|
       gco:Boolean|gco:Real|gco:Measure|gco:Length|gco:Distance|gco:Angle|gmx:FileName|
-      gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|gco:LocalName|
+      gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|
        gts:TM_PeriodDuration|gml:duration|gml320:duration"/>
     <xsl:variable name="theElement"
                   select="if ($isMultilingualElement and $hasOnlyPTFreeText or not($monoLingualValue))
@@ -448,12 +448,11 @@
 
 
   <xsl:template mode="mode-iso19139" match="gco:ScopedName|gco:LocalName">
-
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
 
     <xsl:call-template name="render-element">
       <xsl:with-param name="label"
-                      select="gn-fn-metadata:getLabel($schema, name(.), $labels)"/>
+                      select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', $xpath)"/>
       <xsl:with-param name="value" select="."/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>

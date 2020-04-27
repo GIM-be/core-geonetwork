@@ -74,7 +74,7 @@
           <row>
             <xsl:for-each select="col">
               <col>
-                
+
                 <xsl:if test="@del != ''">
                   <xsl:attribute name="remove" select="'true'"/>
 
@@ -165,7 +165,7 @@
 
 
   <xsl:template mode="mode-iso19139"
-                match="srv:operatesOn[(1 or @gn:addedObj = 'true') and $isFlatMode]"
+                match="srv:operatesOn[(@gn:addedObj = 'true') and $isFlatMode]"
                 priority="4000">
 
     <xsl:variable name="name"
