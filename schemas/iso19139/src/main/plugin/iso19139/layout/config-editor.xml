@@ -3345,8 +3345,26 @@
             <!-- Service couplingType -->
             <field xpath="srv:couplingType" />
 
-            <field xpath="srv:operatesOn" />
-
+            <section xpath="srv:operatesOn" />
+            <!-- Operates on -->
+            <section name="srv:operatesOn" per="srv:operatesOn" required="true()">
+              <field templateModeOnly="true" notDisplayedIfMissing="true"
+                     xpath=".">
+                <template>
+                  <values readonlyIf="true()">
+                    <key label="operatesOnXlinkHref"
+                         xpath="@xlink:href">
+                    </key>
+                    <key label="operatesOnUuidref"
+                         xpath="@uuidref">
+                    </key>
+                  </values>
+                  <snippet>
+                    <srv:operatesOn uuidref="{{operatesOnUuidref}}" xlink:href="{{operatesOnXlinkHref}}" />
+                  </snippet>
+                </template>
+              </field>
+            </section>
           </section>
 
           <!-- For dataset(series) and services-->

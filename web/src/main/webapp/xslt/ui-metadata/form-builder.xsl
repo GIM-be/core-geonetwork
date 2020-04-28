@@ -475,10 +475,10 @@
       id="gn-el-{if ($refToDelete) then $refToDelete/@ref else generate-id()}"
       data-gn-field-highlight="">
 
-      <label class="col-sm-2 control-label">
-        <xsl:value-of select="$name"/>&#160;
-      </label>
-      <div class="col-sm-9">
+<!--      <label class="col-sm-2 control-label">-->
+<!--        <xsl:value-of select="$name"/>&#160;-->
+<!--      </label>-->
+      <div class="col-sm-11">
         <!-- Create an empty input to contain the data-gn-field-tooltip
         key which is used to check if an element
         is the first element of its kind in the form. The key for a template
@@ -592,7 +592,8 @@
                         <xsl:if test="$keyRequired">
                           <xsl:attribute name="class" select="'gn-required'"/>
                         </xsl:if>
-                        <xsl:value-of select="$strings/*[name() = $valueLabelKey]"/>
+                        <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, replace(@xpath,'@',''), $labels, $qname,'','')/label"/>
+                        <xsl:value-of select="if ($labelConfig!='') then $labelConfig else $strings/*[name() = $valueLabelKey]"/>
                       </label>
                     </xsl:if>
 
@@ -1743,7 +1744,7 @@
                               <xsl:if test="@step">
                                 <xsl:attribute name="step" select="@step"/>
                               </xsl:if>
-                              <xsl:if test="$isReadonlyDueToXlink">
+                              <xsl:if test="$isReadonlyDueToXlink or @disabled">
                                 <xsl:attribute name="disabled" select="'disabled'"/>
                               </xsl:if>
                               <xsl:if test="@pattern">

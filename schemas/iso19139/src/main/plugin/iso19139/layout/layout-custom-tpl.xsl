@@ -165,7 +165,7 @@
 
 
   <xsl:template mode="mode-iso19139"
-                match="srv:operatesOn[(@gn:addedObj = 'true') and $isFlatMode]"
+                match="srv:operatesOn[1 or (@gn:addedObj = 'true') and $isFlatMode]"
                 priority="4000">
 
     <xsl:variable name="name"
@@ -182,19 +182,19 @@
       <xsl:if test="not($isEmbeddedMode) or ($isEmbeddedMode and $isFirstOfItsKind)">
         <header>
           <col>
-            <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'uuidref', $labels, '', $isoType, $xpath)/label"/>
+            <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'uuidref', $labels, 'srv:operatesOn', $isoType, $xpath)/label"/>
           </col>
           <col>
-            <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'xlink:href', $labels, '', $isoType, $xpath)/label"/>
+            <xsl:value-of select="gn-fn-metadata:getLabel($schema, 'xlink:href', $labels, 'srv:operatesOn', $isoType, $xpath)/label"/>
           </col>
         </header>
       </xsl:if>
       <xsl:for-each select="(.|following-sibling::*[name() = $name])">
         <row>
-          <col type="text" name="{concat('_', gn:element/@ref, '_uuidref')}">
+          <col type="text" name="{concat('_', gn:element/@ref, '_uuidref')}" disabled="true()">
             <value><xsl:value-of select="@uuidref"/></value>
           </col>
-          <col type="text" name="{concat('_', gn:element/@ref, '_xlinkCOLONhref')}">
+          <col type="text" name="{concat('_', gn:element/@ref, '_xlinkCOLONhref')}" disabled="true()">
             <value><xsl:value-of select="@xlink:href"/></value>
           </col>
           <col remove="true">
