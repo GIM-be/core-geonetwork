@@ -211,7 +211,7 @@
             $rootScope.$broadcast('search');
             gnUtilityService.openModal({
               title: $translate.instant('deletionReport'),
-              content: '<div gn-batch-report="processReport"></div>',
+              content: '<div gn-batch-report="processReport" data-display-stack-trace="false"></div>',
               className: 'gn-privileges-popup',
               onCloseCallback: function () {
                 scope.$emit('MetadataDeleted', true);

@@ -208,12 +208,14 @@
         restrict: 'A',
         replace: true,
         scope: {
-          processReport: '=gnBatchReport'
+          processReport: '=gnBatchReport',
+          displayStackTrace: '@'
         },
         templateUrl: '../../catalog/components/utility/' +
             'partials/batchreport.html',
         link: function(scope, element, attrs) {
           scope.$watch('processReport', function(n, o) {
+            scope.displayStackTrace = scope.displayStackTrace === undefined ? true : scope.displayStackTrace === 'true';
             if (n && n != o) {
               scope.processReportWarning = n.notFound != 0 ||
                   n.notOwner != 0 ||

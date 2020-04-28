@@ -40,5 +40,6 @@
   "true": "Yes",
   "false": "No",
   "deletionReport": "Deletion report",
-  "validationReport": "Validation report"
+  "validationReport": "Validation report",
+  "metadataErrorReport": "Error report"
 }

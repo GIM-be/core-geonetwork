@@ -1,4 +1,4 @@
-<div class="panel panel-default"
+<div class="panel panel-default batch-report"
      data-ng-show="processReport"
      data-ng-class="processReportWarning ? 'panel-warning' : 'panel-success'">
 
@@ -60,8 +60,8 @@
           <td>
             <ul>
               <li data-ng-repeat="value in errors">
-                <h4>{{value.message}}</h4>
-                <pre>{{value.stack}}</pre>
+                <span>{{value.message | translate}}</span>
+                <pre ng-show="displayStackTrace">{{value.stack}}</pre>
               </li>
             </ul>
           </td>

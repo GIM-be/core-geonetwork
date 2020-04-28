@@ -234,9 +234,11 @@ public class MetadataInsertDeleteApi {
             AbstractMetadata metadata = metadataRepository.findOneByUuid(uuid);
             if (metadata == null) {
                 report.incrementNullRecords();
-            } else if (!accessManager.canEdit(context, String.valueOf(metadata.getId()))
-                    || (metadataDraftRepository.count((Specification<MetadataDraft>) MetadataSpecs.hasMetadataUuid(uuid)) > 0)) {
+            } else if (!accessManager.canEdit(context, String.valueOf(metadata.getId()))) {
                 report.addNotEditableMetadataId(metadata.getId());
+            } else if ((metadataDraftRepository.count((Specification<MetadataDraft>) MetadataSpecs.hasMetadataUuid(uuid)) > 0)) {
+                report.addNotEditableMetadataId(metadata.getId());
+                report.addMetadataError(metadata.getId(), new SecurityException("deleteDraftFirst"));
             } else {
                 boolean isAllowed = false;
                 if (bIsMetadatacenterWorkflow) {
@@ -262,6 +264,9 @@ public class MetadataInsertDeleteApi {
 
                     report.incrementProcessedRecords();
                     report.addMetadataId(metadata.getId());
+                } else {
+                    report.addNotEditableMetadataId(metadata.getId());
+                    report.addMetadataError(metadata.getId(), new SecurityException("deleteNotAllowedByUser"));
                 }
             }
         }
