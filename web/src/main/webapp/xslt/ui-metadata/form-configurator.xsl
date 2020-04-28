@@ -584,6 +584,7 @@
               <xsl:with-param name="keyValues" select="$keyValues"/>
               <xsl:with-param name="refToDelete" select="$refToDelete/gn:element"/>
               <xsl:with-param name="isFirst" select="$forceLabel or position() = 1"/>
+              <xsl:with-param name="qname" select="name(.)"/>
             </xsl:call-template>
           </xsl:for-each>
 

@@ -123,6 +123,8 @@
   <otherConstraints>Other constraints</otherConstraints>
   <operatesOn>Coupled resource</operatesOn>
   <featureCatalogueCitationUuidref>Objectencatalogus identificator</featureCatalogueCitationUuidref>
+  <operatesOnUuidref>Identificator van de dataset waarop de service werkt</operatesOnUuidref>
+  <operatesOnXlinkHref>Link (href)</operatesOnXlinkHref>
   <extent>Geographic bounding box</extent>
   <freeTextKeywords>Other keywords</freeTextKeywords>
 
