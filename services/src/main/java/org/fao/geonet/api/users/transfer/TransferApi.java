@@ -174,21 +174,27 @@ public class TransferApi {
         if (myProfile == Profile.Administrator) {
             userGroups = userGroupRepository.findAll();
         } else {
+
             List<UserGroup> myGroups = userGroupRepository.findAll(UserGroupSpecs.hasUserId(session.getUserIdAsInt()));
-            List<Integer> userGroupIdsWithPermission = myGroups.stream()
-                .filter(grp -> grp.getProfile() != Profile.Editor)
+//            List<Integer> userGroupIdsWithPermission = myGroups.stream()
+//                .filter(grp -> grp.getProfile() != Profile.Editor)
+//                .map(grp -> grp.getGroup().getId())
+//                .collect(Collectors.toList());
+//            List<UserGroup> userGroupWithoutPermission = myGroups.stream()
+//                .filter(grp -> grp.getProfile() == Profile.Editor)
+//                .collect(Collectors.toList());
+//
+//            if (userGroupIdsWithPermission.size() > 0) {
+//                userGroups = userGroupRepository.findAll(UserGroupSpecs.hasGroupIds(userGroupIdsWithPermission));
+//                userGroups.addAll(userGroupWithoutPermission);
+//            } else {
+//                userGroups = userGroupWithoutPermission;
+//            }
+
+            List<Integer> myUserGroupIds = myGroups.stream()
                 .map(grp -> grp.getGroup().getId())
                 .collect(Collectors.toList());
-            List<UserGroup> userGroupWithoutPermission = myGroups.stream()
-                .filter(grp -> grp.getProfile() == Profile.Editor)
-                .collect(Collectors.toList());
-
-            if (userGroupIdsWithPermission.size() > 0) {
-                userGroups = userGroupRepository.findAll(UserGroupSpecs.hasGroupIds(userGroupIdsWithPermission));
-                userGroups.addAll(userGroupWithoutPermission);
-            } else {
-                userGroups = userGroupWithoutPermission;
-            }
+            userGroups = userGroupRepository.findAll(UserGroupSpecs.hasGroupIdsAndProfile(myUserGroupIds, Profile.Editor));
         }
 
         for (UserGroup ug : userGroups) {

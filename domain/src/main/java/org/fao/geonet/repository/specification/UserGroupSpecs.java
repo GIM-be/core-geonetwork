@@ -59,6 +59,16 @@ public final class UserGroupSpecs {
         };
     }
 
+    public static Specification<UserGroup> hasGroupIdsAndProfile(final List<Integer> groupId, final Profile profile) {
+        return new Specification<UserGroup>() {
+            @Override
+            public Predicate toPredicate(Root<UserGroup> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Path<Integer> grpIdAttributePath = root.get(UserGroup_.id).get(UserGroupId_.groupId);
+                Path<Profile> profileIdAttributePath = root.get(UserGroup_.id).get(UserGroupId_.profile);
+                return cb.and(grpIdAttributePath.in(groupId),cb.equal(profileIdAttributePath, cb.literal(profile)));
+            }
+        };
+    }
 
     public static Specification<UserGroup> hasUserId(final int userId) {
         return new Specification<UserGroup>() {

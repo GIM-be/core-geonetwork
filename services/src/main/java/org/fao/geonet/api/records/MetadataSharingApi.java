@@ -905,7 +905,7 @@ public class MetadataSharingApi {
                     String.valueOf(groupIdentifier));
                 dataManager.indexMetadata(approvedMetadata.getId() + "", true, null);
             }
-            Element root = WorkflowUtil.getNewRootElement(serviceContext, sourceUsr.intValue(), "user", "group", StatusValue.Status.DRAFT, "", WorkflowUtil.getNodeType(serviceContext));
+            Element root = WorkflowUtil.getNewRootElement(serviceContext, us.getUserIdAsInt(), "user", "group", StatusValue.Status.DRAFT, "", WorkflowUtil.getNodeType(serviceContext));
             WorkflowUtil.addUserContent(serviceContext, root, userIdentifier.intValue(), "targetUser", "targetGroup");
             WorkflowUtil.addMetadataContent(serviceContext, root, metadata.getUuid(), metadataUtils.extractTitle(metadata.getDataInfo().getSchemaId(), metadata.getXmlData(false)), "", null);
             String replyTo = serviceContext.getUserSession().getEmailAddr();
