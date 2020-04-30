@@ -114,8 +114,18 @@
                   select="$labels/element[@name=$escapedName and not(@context)]"/>
 
     <xsl:choose>
-      <xsl:when test="$schemaLabelWithContext">
-        <xsl:copy-of select="$schemaLabelWithContext" copy-namespaces="no"/>
+      <xsl:when test="count($schemaLabelWithContextCollection) > 0">
+        <xsl:choose>
+          <xsl:when test="$schemaLabelWithContextCollection[@context=$xpath]">
+            <xsl:copy-of select="$schemaLabelWithContextCollection[@context=$xpath]" copy-namespaces="no"/>
+          </xsl:when>
+          <xsl:when test="$schemaLabelWithContextCollection[@context=$parent]">
+            <xsl:copy-of select="$schemaLabelWithContextCollection[@context=$parent]" copy-namespaces="no"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="$schemaLabelWithContextCollection[@context=$parentIsoType]" copy-namespaces="no"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:when test="$schemaLabel">
         <xsl:copy-of select="$schemaLabel" copy-namespaces="no"/>
