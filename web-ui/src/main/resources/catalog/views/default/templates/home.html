@@ -135,7 +135,7 @@
           <span data-translate="">browseTypes</span>
         </h4>
         <div class="row">
-            <span data-ng-repeat="(key, facet) in searchInfo.facet['types']"
+            <span data-ng-repeat="(key, facet) in (searchInfo.facet['types'] | orderBy:getStaticTypeOrder)"
                   data-ng-show="facet['@label']"
                   class="col-xs-12 col-sm-6 col-md-12 chips-card">
               <div class="badge-result badge-result-type pull-left">

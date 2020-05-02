@@ -1483,17 +1483,52 @@ het gebruik van een commerci&#235;le druk of
     <!-- Used for facet translation only and not displayed in editor -->
     <entry hideInEditMode="true">
       <code>map</code>
-      <label>Map</label>
+      <label>Kaart</label>
       <description></description>
     </entry>
     <entry hideInEditMode="true">
       <code>staticMap</code>
-      <label>Static map</label>
+      <label>Statische kaart</label>
       <description></description>
     </entry>
     <entry hideInEditMode="true">
       <code>interactiveMap</code>
-      <label>Interactive map</label>
+      <label>Interactieve kaart</label>
+      <description></description>
+    </entry>
+    <entry hideInEditMode="true">
+      <code>featureCatalog</code>
+      <label>Objectencatalogus</label>
+      <description></description>
+    </entry>
+    <entry hideInEditMode="true">
+      <code>service-view</code>
+      <label>Raadpleegdienst</label>
+      <description></description>
+    </entry>
+    <entry hideInEditMode="true">
+      <code>service-discovery</code>
+      <label>Zoekdienst</label>
+      <description></description>
+    </entry>
+    <entry hideInEditMode="true">
+      <code>service-download</code>
+      <label>Downloaddienst</label>
+      <description></description>
+    </entry>
+    <entry hideInEditMode="true">
+      <code>service-transformation</code>
+      <label>Verwerkingsdienst</label>
+      <description></description>
+    </entry>
+    <entry hideInEditMode="true">
+      <code>service-invoke</code>
+      <label>Oproepdienst</label>
+      <description></description>
+    </entry>
+    <entry hideInEditMode="true">
+      <code>service-other</code>
+      <label>Andere dienst</label>
       <description></description>
     </entry>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->

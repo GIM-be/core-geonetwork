@@ -744,6 +744,20 @@
               });
         });
       };
+
+      /**
+       * Catalog facet summary static sort order
+       * sorting based on static list of types
+       * for a dataset, datasetserie,
+       * service and feature catalogue
+       */
+      $scope.getStaticTypeOrder = function(v1) {
+        var typeList = ['dataset','series','service','service-view','service-download','service-discovery',
+          'service-transformation','service-invoke','service-other','feature'];
+        var typeIndex = typeList.indexOf(v1['@name']);
+        return (typeIndex > -1 ? typeIndex : 100);
+      };
+
       $scope.userAdminMenu = gnAdminMenu.UserAdmin;
       $scope.adminMenu = gnAdminMenu.Administrator;
       $scope.$on('loadCatalogInfo', function(event, status) {
