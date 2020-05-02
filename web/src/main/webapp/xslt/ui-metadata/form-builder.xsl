@@ -1429,7 +1429,7 @@
     <xsl:variable name="fieldName"
                   select="concat('_', $ref, '_', replace($attributeName, ':', 'COLON'))"/>
 
-    <xsl:variable name="deletable" select="not($isDefaultView and $attributeName = 'xlink:href')"/>
+    <xsl:variable name="deletable" select="not($isDefaultView and $attributeName = ('xlink:href','codeSpace'))"/>
 
     <div class="form-group gn-attr-{replace($attributeName, ':', '_')}" id="gn-attr-{$fieldName}">
       <label class="col-sm-2">
@@ -1477,6 +1477,9 @@
             <input type="text" class="" name="{$fieldName}" value="{$attributeValue}" data-toggle="tooltip" title="{$attributeValue}">
               <xsl:if test="$isDefaultView and $attributeName = 'xlink:href'">
                 <xsl:attribute name="disabled"/>
+              </xsl:if>
+              <xsl:if test="$isDefaultView and $attributeName = 'codeSpace'">
+                <xsl:attribute name="readonly"/>
               </xsl:if>
             </input>
           </xsl:otherwise>

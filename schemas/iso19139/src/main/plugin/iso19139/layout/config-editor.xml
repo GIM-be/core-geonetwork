@@ -365,11 +365,10 @@
         data-template-type="otherConstraints"
         data-transformation="otherConstrTransform"/>
     </for>
-    <!--for name="gco:LocalName"
-         use="data-gn-keyword-picker">
-      <directiveAttributes data-include="external.theme.SpatialDataServiceType"
+    <for name="gco:LocalName" use="data-gn-keyword-picker">
+      <directiveAttributes data-thesaurus-key="external.theme.SpatialDataServiceType"
                            data-thesaurus-concept-id-attribute="codeSpace"/>
-    </for-->
+    </for>
   </fields>
 
 
