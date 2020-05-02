@@ -450,16 +450,30 @@
   <xsl:template mode="mode-iso19139" match="gco:ScopedName|gco:LocalName">
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
 
+    <xsl:variable name="attributes">
+      <xsl:apply-templates mode="render-for-field-for-attribute"
+                           select="@codeSpace">
+        <xsl:with-param name="ref" select="./gn:element/@ref"/>
+        <xsl:with-param name="insertRef" select="./gn:element/@ref"/>
+      </xsl:apply-templates>
+    </xsl:variable>
+    <xsl:variable name="forceDisplayAttributes" select="boolean(@codeSpace)"/>
+
     <xsl:call-template name="render-element">
       <xsl:with-param name="label"
                       select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', $xpath)"/>
       <xsl:with-param name="value" select="."/>
       <xsl:with-param name="cls" select="local-name()"/>
-      <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+      <xsl:with-param name="xpath" select="$xpath"/>
       <xsl:with-param name="type" select="gn-fn-metadata:getFieldType($editorConfig, name(), '', $xpath)"/>
+      <xsl:with-param name="directiveAttributes">
+          <xsl:copy-of select="gn-fn-metadata:getFieldDirective($editorConfig, name(), $xpath)"/>
+      </xsl:with-param>
       <xsl:with-param name="name" select="gn:element/@ref"/>
       <xsl:with-param name="editInfo" select="gn:element"/>
       <xsl:with-param name="parentEditInfo" select="../gn:element"/>
+      <xsl:with-param name="attributesSnippet" select="$attributes"/>
+      <xsl:with-param name="forceDisplayAttributes" select="$forceDisplayAttributes"/>
     </xsl:call-template>
   </xsl:template>
 
