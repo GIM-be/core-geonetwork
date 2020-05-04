@@ -192,7 +192,7 @@
 
       var finalParams = angular.extend(params, hiddenParams);
       $scope.finalParams = finalParams;
-      gnSearchManagerService.gnSearch(
+      return gnSearchManagerService.gnSearch(
                               finalParams, null,
                               $scope.searchObj.internal).then(
           function(data) {
@@ -400,6 +400,10 @@
         controller: searchFormController,
         controllerAs: 'controller',
         link: function(scope, element, attrs) {
+
+          if (scope.$parent) {
+            scope.$parent.searchFormChildScope = scope;
+          }
 
           scope.resetSearch = function(htmlElementOrDefaultSearch, preserveGeometrySearch) {
             if (angular.isObject(htmlElementOrDefaultSearch)) {

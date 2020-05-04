@@ -1,5 +1,5 @@
 <span data-ng-search-form="">
-  <div class="input-group width-100">
+  <div class="input-group width-100" ng-if="!onlyOneSubtemplate">
     <div class="input-group-btn">
       <span data-ng-show="templateAddAction"
             data-ng-transclude=""></span>
@@ -133,4 +133,14 @@
     </div>
   </div>
 
+  <div class="input-group with-100 " ng-if="onlyOneSubtemplate">
+    <button class="btn btn-default fa fa-plus" type="button"
+            ng-click="addFirstEntry(insertAsXlink);">
+      <span></span>
+    </button>
+
+    <div data-ng-if="snippet">
+      <input name="{{snippetRef}}" type="hidden" value="{{snippet}}"/>
+    </div>
+  </div>
 </span>
