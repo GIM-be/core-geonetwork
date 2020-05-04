@@ -263,6 +263,12 @@
              data-order-by-id="{$orderById}"
              data-lang="{$metadataOtherLanguagesAsJson}"
              data-textgroup-only="false">
+          <div class="col-sm-1 gn-control">
+            <xsl:call-template name="render-form-field-control-remove">
+              <xsl:with-param name="editInfo" select="gn:element"/>
+              <xsl:with-param name="parentEditInfo" select="../gn:element"/>
+            </xsl:call-template>
+          </div>
         </div>
 
         <xsl:variable name="isTypePlace"
