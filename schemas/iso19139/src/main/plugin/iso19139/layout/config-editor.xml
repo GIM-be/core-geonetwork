@@ -252,6 +252,7 @@
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:MD_AggregateInformation"}'
+        data-only-one-subtemplate="true"
         data-insert-modes="text"
         data-template-type="aggregationInfo"/>
     </for>
@@ -271,6 +272,7 @@
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:MD_Distributor"}'
+        data-only-one-subtemplate="true"
         data-insert-modes="text"
         data-template-type="distributor"/>
     </for>
@@ -289,6 +291,7 @@
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:LI_ProcessStep"}'
+        data-only-one-subtemplate="true"
         data-insert-modes="text"
         data-template-type="processStep"/>
     </for>
@@ -298,6 +301,7 @@
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:MD_Usage"}'
+        data-only-one-subtemplate="true"
         data-insert-modes="text"
         data-template-type="resourceSpecificUsage"/>
     </for>
@@ -307,6 +311,7 @@
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:LI_Source"}'
+        data-only-one-subtemplate="true"
         data-insert-modes="text"
         data-template-type="source"/>
     </for>
@@ -316,6 +321,7 @@
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:MD_DigitalTransferOptions"}'
+        data-only-one-subtemplate="true"
         data-insert-modes="text"
         data-template-type="transferOptions"/>
     </for>
@@ -325,6 +331,7 @@
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:EX_VerticalExtent"}'
+        data-only-one-subtemplate="true"
         data-insert-modes="text"
         data-template-type="verticalElement"/>
     </for>
@@ -334,6 +341,7 @@
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:MD_StandardOrderProcess"}'
+        data-only-one-subtemplate="true"
         data-insert-modes="text"
         data-template-type="distributionOrderProcess"/>
     </for>
@@ -343,6 +351,7 @@
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:CI_OnlineResource"}'
+        data-only-one-subtemplate="true"
         data-insert-modes="text"
         data-template-type="onLineResource"/>
     </for>
@@ -352,6 +361,7 @@
         data-search-action="true"
         data-popup-action="false"
         data-filter='{"_root": "gmd:EX_TemporalExtent"}'
+        data-only-one-subtemplate="true"
         data-insert-modes="text"
         data-template-type="temporalElement"/>
     </for>
@@ -3375,6 +3385,7 @@
                 data-search-action="true"
                 data-popup-action="false"
                 data-filter='{"_root": "gmd:resourceConstraints", "_typeResourceConstraints": "MD_Constraints"}'
+                data-only-one-subtemplate="true"
                 data-insert-modes="text"
                 data-template-type="resourceConstraints"
                 data-transformation="rsrcConstrTransform"/>
@@ -3455,6 +3466,7 @@
                   data-search-action="true"
                   data-popup-action="false"
                   data-filter='{"_root": "gmd:LI_ProcessStep"}'
+                  data-only-one-subtemplate="true"
                   data-insert-modes="text"
                   data-template-type="processStep"/>
               </action>
@@ -3485,6 +3497,7 @@
                   data-search-action="true"
                   data-popup-action="false"
                   data-filter='{"_root": "gmd:LI_Source"}'
+                  data-only-one-subtemplate="true"
                   data-insert-modes="text"
                   data-template-type="source"/>
               </action>

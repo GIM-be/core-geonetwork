@@ -84,7 +84,10 @@
               // Can restrict how to insert the entry (xlink, text ..)
               // insertModes: '@'
               // If true, will only show entries with a valid status of 1
-              showValidOnly: '@'
+              showValidOnly: '@',
+              // If true, no search bar will be displayed and a plus button will be displayed instead.
+              // This button will add the first subtemplate from the search results
+              onlyOneSubtemplate: '@'
             },
             templateUrl: '../../catalog/components/edit/' +
                 'directoryentryselector/partials/' +
@@ -322,6 +325,17 @@
                   scope.closeModal = function() {
                     popup.trigger('hidden.bs.modal');
                   };
+
+                  scope.addFirstEntry = function(insertAsXlink) {
+                    gnCurrentEdit.working = true;
+                    scope.updateParams();
+                    $q.when(scope.searchFormChildScope.triggerSearch()).then(function () {
+                      var firstRecord = scope.searchFormChildScope.searchResults.records[0];
+                      insertAsXlink ?
+                        scope.addEntry(firstRecord, undefined, true) :
+                        scope.addEntry(firstRecord);
+                    });
+                  }
                 }
               };
             }
