@@ -365,10 +365,11 @@
         data-template-type="otherConstraints"
         data-transformation="otherConstrTransform"/>
     </for>
-    <for name="gco:LocalName" use="data-gn-keyword-picker">
+    <for name="gco:LocalName" use="select"/>
+    <!--for name="gco:LocalName" use="data-gn-keyword-picker">
       <directiveAttributes data-thesaurus-key="external.theme.SpatialDataServiceType"
                            data-thesaurus-concept-id-attribute="codeSpace"/>
-    </for>
+    </for-->
   </fields>
 
 
@@ -3339,8 +3340,22 @@
           <section name="classificationSection" per="*[name(.)='srv:SV_ServiceIdentification']">
 
             <!-- Service type -->
-            <field xpath="srv:serviceType"/>
+            <field xpath="srv:serviceType" />
 
+<!--            <field templateModeOnly="true" notDisplayedIfMissing="true" xpath="srv:serviceType">-->
+<!--              <template>-->
+<!--                <values>-->
+<!--                  <key label="localName"-->
+<!--                       xpath="gco:LocalName"-->
+<!--                       use="data-gn-codelist-picker">-->
+<!--                    <codelist name="gmd:MD_ScopeCode"/>-->
+<!--                  </key>-->
+<!--                </values>-->
+<!--                <snippet>-->
+<!--                  <srv:serviceType><gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType">{{localName}}</gco:LocalName></srv:serviceType>-->
+<!--                </snippet>-->
+<!--              </template>-->
+<!--            </field>-->
             <!-- Service couplingType -->
             <field xpath="srv:couplingType" />
 

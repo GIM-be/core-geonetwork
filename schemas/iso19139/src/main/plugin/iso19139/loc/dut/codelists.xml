@@ -1501,37 +1501,36 @@ het gebruik van een commerci&#235;le druk of
       <label>Objectencatalogus</label>
       <description></description>
     </entry>
-    <entry hideInEditMode="true">
-      <code>service-view</code>
+    <entry hideInEditMode="true"  context="srv:serviceType">
+      <code>view</code>
       <label>Raadpleegdienst</label>
       <description></description>
     </entry>
-    <entry hideInEditMode="true">
-      <code>service-discovery</code>
+    <entry hideInEditMode="true" context="srv:serviceType">
+      <code>discovery</code>
       <label>Zoekdienst</label>
       <description></description>
     </entry>
-    <entry hideInEditMode="true">
-      <code>service-download</code>
+    <entry hideInEditMode="true" context="srv:serviceType">
+      <code>download</code>
       <label>Downloaddienst</label>
       <description></description>
     </entry>
-    <entry hideInEditMode="true">
-      <code>service-transformation</code>
+    <entry hideInEditMode="true" context="srv:serviceType">
+      <code>transformation</code>
       <label>Verwerkingsdienst</label>
       <description></description>
     </entry>
-    <entry hideInEditMode="true">
-      <code>service-invoke</code>
+    <entry hideInEditMode="true" context="srv:serviceType">
+      <code>invoke</code>
       <label>Oproepdienst</label>
       <description></description>
     </entry>
-    <entry hideInEditMode="true">
-      <code>service-other</code>
+    <entry hideInEditMode="true" context="srv:serviceType">
+      <code>other</code>
       <label>Andere dienst</label>
       <description></description>
     </entry>
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
   </codelist>
   <!-- ==================================================== -->
   <codelist name="gmd:MD_SpatialRepresentationTypeCode">
