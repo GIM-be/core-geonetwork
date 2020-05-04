@@ -233,6 +233,17 @@
     </xsl:choose>
   </xsl:function>
 
+  <xsl:function name="gn-fn-metadata:getCodeListValuesByContext" as="node()">
+    <xsl:param name="schema" as="xs:string"/>
+    <xsl:param name="name" as="xs:string"/>
+    <xsl:param name="codelists" as="node()"/>
+    <xsl:param name="context" as="xs:string"/>
+
+    <codelist>
+      <xsl:copy-of select="$codelists/codelist[@name=$name]/*[@context=$context]"/>
+    </codelist>
+  </xsl:function>
+
   <!--
     Return the list of helper for an element looking in <schema>/loc/<lang>/labels.xml
     helper tag.

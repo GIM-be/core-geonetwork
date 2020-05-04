@@ -752,8 +752,8 @@
        * service and feature catalogue
        */
       $scope.getStaticTypeOrder = function(v1) {
-        var typeList = ['dataset','series','service','service-view','service-download','service-discovery',
-          'service-transformation','service-invoke','service-other','feature'];
+        var typeList = ['dataset','series','service','view','download','discovery',
+          'transformation','invoke','other','feature'];
         var typeIndex = typeList.indexOf(v1['@name']);
         return (typeIndex > -1 ? typeIndex : 100);
       };
