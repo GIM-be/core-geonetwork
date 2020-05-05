@@ -1473,11 +1473,17 @@
               </xsl:if>
             </select>
           </xsl:when>
-          <xsl:otherwise>
-            <input type="text" class="" name="{$fieldName}" value="{$attributeValue}" data-toggle="tooltip" title="{$attributeValue}">
-              <xsl:if test="$isDefaultView and $attributeName = 'xlink:href'">
+          <xsl:when test="$attributeName = 'xlink:href'">
+            <textarea type="text" class="" name="{$fieldName}" data-toggle="tooltip" title="{$attributeValue}">
+              <xsl:if test="$isDefaultView">
                 <xsl:attribute name="disabled"/>
               </xsl:if>
+              <xsl:attribute name="rows" select="if (string-length($attributeValue) > 45) then 2 else 1"/>
+              <xsl:value-of select="$attributeValue"/>
+            </textarea>
+          </xsl:when>
+          <xsl:otherwise>
+            <input type="text" class="" name="{$fieldName}" value="{$attributeValue}" data-toggle="tooltip" title="{$attributeValue}">
               <xsl:if test="$isDefaultView and $attributeName = 'codeSpace'">
                 <xsl:attribute name="readonly"/>
               </xsl:if>
