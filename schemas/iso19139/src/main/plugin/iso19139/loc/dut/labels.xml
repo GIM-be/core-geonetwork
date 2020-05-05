@@ -3220,7 +3220,7 @@
     <label>Alternatieve titel applicatieschema</label>
     <description>Korte titel, afkorting of titel in een andere taal.</description>
   </element>
-  <element name="gmd:dateTime" context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission/gmd:dateTime">
+  <element name="gmd:dateTime" context="gmd:DQ_CompletenessOmission">
     <label>Datum meting</label>
     <description>Datum waarop de bewerkingen of metingen zijn gestart.(JJJJ-MM-DD).</description>
   </element>
@@ -3241,7 +3241,7 @@
     <label>Versiedatum specificatie</label>
     <description>Referentie datum en gebeurtenis waarmee deze wordt omschreven (JJJJ-MM-DD).</description>
   </element>
-  <element name="gmd:dateTime" context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy/gmd:dateTime">
+  <element name="gmd:dateTime" context="gmd:DQ_AbsoluteExternalPositionalAccuracy">
     <label>Datum meting</label>
     <description>Datum waarop de bewerkingen of metingen zijn gestart.(JJJJ-MM-DD).</description>
   </element>
@@ -3258,7 +3258,7 @@
     <label>Versiedatum specificatie</label>
     <description>Referentie datum en gebeurtenis waarmee deze wordt omschreven (JJJJ-MM-DD).</description>
   </element>
-  <element name="gmd:dateTime" context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:dateTime">
+  <element name="gmd:dateTime" context="gmd:DQ_ThematicClassificationCorrectness">
     <label>Datum meting</label>
     <description>Datum waarop de bewerkingen of metingen zijn gestart.(JJJJ-MM-DD).</description>
   </element>
