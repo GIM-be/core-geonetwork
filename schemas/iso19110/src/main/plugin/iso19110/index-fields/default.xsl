@@ -84,12 +84,19 @@
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- === Abstract === -->
       <xsl:apply-templates
-        select="/gfc:FC_FeatureCatalogue/gmx:scope/gco:CharacterString|
-        /gfc:FC_FeatureCatalogue/gfc:scope/gco:CharacterString|
-        /gfc:FC_FeatureType/gfc:definition/gco:CharacterString">
+        select="/gfc:FC_FeatureType/gfc:definition/gco:CharacterString">
         <xsl:with-param name="name" select="'abstract'"/>
         <xsl:with-param name="store" select="'true'"/>
       </xsl:apply-templates>
+
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+      <!-- === Revision date === -->
+      <xsl:for-each select="/gfc:FC_FeatureCatalogue/gmx:versionDate/gco:Date|
+                /gfc:FC_FeatureCatalogue/gfc:versionDate/gco:Date">
+        <Field name="revisionDate" string="{string(.)}" store="true" index="true"/>
+        <Field name="sortDate" string="{string(.)}" store="true" index="true"/>
+        <Field name="_sortDate" string="{string(.)}" store="true" index="true"/>
+      </xsl:for-each>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- === Version identifier === -->
@@ -111,6 +118,10 @@
       <xsl:apply-templates select="/gfc:FC_FeatureCatalogue/@uuid|/gfc:FC_FeatureType/@uuid">
         <xsl:with-param name="name" select="'fileId'"/>
       </xsl:apply-templates>
+
+      <xsl:for-each select="/gfc:FC_FeatureCatalogue/gmx:scope/gco:CharacterString">
+        <Field name="topicCat" string="{string(.)}" store="true" index="true"/>
+      </xsl:for-each>
 
       <xsl:variable name="jsonFeatureTypes">[
 

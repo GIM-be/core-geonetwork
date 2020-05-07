@@ -58,6 +58,12 @@
   <xsl:variable name="inspire-thesaurus" select="if ($inspire!='false') then document(concat('file:///', replace($thesauriDir, '\\', '/'), '/external/thesauri/theme/inspire-theme.rdf')) else ''"/>
   <xsl:variable name="inspire-theme" select="if ($inspire!='false') then $inspire-thesaurus//skos:Concept else ''"/>
 
+  <!-- If identification creation, publication and revision date
+    should be indexed as a temporal extent information (eg. in INSPIRE
+    metadata implementing rules, those elements are defined as part
+    of the description of the temporal extent). -->
+  <xsl:variable name="useDateAsTemporalExtent" select="false()"/>
+
   <!-- ========================================================================================= -->
   <xsl:variable name="isoDocLangId">
     <xsl:call-template name="langId19139"/>
@@ -214,19 +220,84 @@
           <Field name="altTitle" string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
+        <xsl:variable name="revisionSortDate">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
+            <xsl:sort select="." order="descending"/>
+            <xsl:if test="position()=1"><xsl:value-of select="string(gco:Date|gco:DateTime)"/></xsl:if>
+          </xsl:for-each>
+        </xsl:variable>
+
+        <xsl:variable name="creationSortDate">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date">
+            <xsl:sort select="." order="descending"/>
+            <xsl:if test="position()=1"><xsl:value-of select="string(gco:Date|gco:DateTime)"/></xsl:if>
+          </xsl:for-each>
+        </xsl:variable>
+
+        <xsl:variable name="publicationSortDate">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
+            <xsl:sort select="." order="descending"/>
+            <xsl:if test="position()=1"><xsl:value-of select="string(gco:Date|gco:DateTime)"/></xsl:if>
+          </xsl:for-each>
+        </xsl:variable>
+
+        <xsl:if test="string-length(normalize-space($publicationSortDate))>0">
+          <Field name="sortDate" string="{$publicationSortDate}" store="true" index="true"/>
+          <Field name="_sortDate" string="{$publicationSortDate}" store="true" index="true"/>
+        </xsl:if>
+        <xsl:if test="string-length(normalize-space($publicationSortDate))=0">
+          <xsl:if test="string-length(normalize-space($revisionSortDate))>0">
+            <Field name="sortDate" string="{$revisionSortDate}" store="true" index="true"/>
+            <Field name="_sortDate" string="{$revisionSortDate}" store="true" index="true"/>
+          </xsl:if>
+          <xsl:if test="string-length(normalize-space($revisionSortDate))=0">
+            <xsl:if test="string-length(normalize-space($creationSortDate))>0">
+              <Field name="sortDate" string="{$creationSortDate}" store="true" index="true"/>
+              <Field name="_sortDate" string="{$creationSortDate}" store="true" index="true"/>
+            </xsl:if>
+          </xsl:if>
+        </xsl:if>
+
         <xsl:for-each
-          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date/gco:Date">
-          <Field name="revisionDate" string="{string(.)}" store="true" index="true"/>
+          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date">
+          <Field name="revisionDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
+                 store="true" index="true"/>
+          <Field name="createDateMonth"
+                 string="{substring(gco:Date[.!='']|gco:DateTime[.!=''], 0, 8)}" store="true"
+                 index="true"/>
+          <Field name="createDateYear"
+                 string="{substring(gco:Date[.!='']|gco:DateTime[.!=''], 0, 5)}" store="true"
+                 index="true"/>
+          <xsl:if test="$useDateAsTemporalExtent">
+            <Field name="tempExtentBegin" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
+                   store="true" index="true"/>
+          </xsl:if>
         </xsl:for-each>
 
         <xsl:for-each
-          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date/gco:Date">
-          <Field name="createDate" string="{string(.)}" store="true" index="true"/>
+          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date">
+          <Field name="createDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
+                 store="true" index="true"/>
+          <Field name="createDateMonth"
+                 string="{substring(gco:Date[.!='']|gco:DateTime[.!=''], 0, 8)}" store="true"
+                 index="true"/>
+          <Field name="createDateYear"
+                 string="{substring(gco:Date[.!='']|gco:DateTime[.!=''], 0, 5)}" store="true"
+                 index="true"/>
+          <xsl:if test="$useDateAsTemporalExtent">
+            <Field name="tempExtentBegin" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
+                   store="true" index="true"/>
+          </xsl:if>
         </xsl:for-each>
 
         <xsl:for-each
-          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date">
-          <Field name="publicationDate" string="{string(.)}" store="true" index="true"/>
+          select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
+          <Field name="publicationDate" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
+                 store="true" index="true"/>
+          <xsl:if test="$useDateAsTemporalExtent">
+            <Field name="tempExtentBegin" string="{string(gco:Date[.!='']|gco:DateTime[.!=''])}"
+                   store="true" index="true"/>
+          </xsl:if>
         </xsl:for-each>
 
         <!-- fields used to search for metadata in paper or digital format -->
