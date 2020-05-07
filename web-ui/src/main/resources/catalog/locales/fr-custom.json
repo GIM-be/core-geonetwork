@@ -38,5 +38,6 @@
   "false": "Non",
   "deletionReport": "Rapport de suppression",
   "validationReport": "Rapport de validation",
-  "metadataErrorReport": "Rapport d'erreur"
+  "metadataErrorReport": "Rapport d'erreur",
+  "objCatName": "Nom du catalogue"
 }

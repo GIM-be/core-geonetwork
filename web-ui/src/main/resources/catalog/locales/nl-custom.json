@@ -66,5 +66,6 @@
   "false": "Nee",
   "deletionReport": "Verwijderingsrapport",
   "validationReport": "Validatierapport",
-  "metadataErrorReport": "Fouten rapport"
+  "metadataErrorReport": "Fouten rapport",
+  "objCatName": "Naam van de catalogus"
 }

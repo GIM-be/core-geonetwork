@@ -1596,5 +1596,32 @@
               };
             }
           };
-        }]);
+        }])
+
+     .directive('gnFeatureCatName', ['gnOnlinesrc', 'gnGlobalSettings', function (gnOnlinesrc, gnGlobalSettings) {
+       return {
+         restrict: 'A',
+         templateUrl: '../../catalog/components/edit/onlinesrc/' +
+           'partials/featureCatName.html',
+         link: function (scope, element, attrs) {
+           var featureCatUuid = element.parent().parent().find('.gn-featureCatalogueCitationUuidref input.form-control').first().val();
+           scope.objectCatalogName = "Loading ..."
+           scope.catalogUrl = "";
+
+           gnOnlinesrc.getAllResources().then(function(data) {
+             var currentObjCat = data.fcats.find(function(objCat) {
+               return objCat.id === featureCatUuid;
+             })
+             if (currentObjCat) {
+               scope.objectCatalogName = currentObjCat.title[gnGlobalSettings.iso3lang] ?
+                 currentObjCat.title[gnGlobalSettings.iso3lang] :
+                 currentObjCat.title[Object.keys(currentObjCat.title)[0]]
+               scope.catalogUrl = currentObjCat['@subtype'] ? currentObjCat.url : ('./catalog.search#/metadata/' + currentObjCat.id)
+             } else {
+               scope.objectCatalogName = "Could'tn find the object catalog title."
+             }
+           });
+         }
+       };
+     }]);
 })();
