@@ -136,26 +136,27 @@
     <!-- Search page faceted search -->
     <summaryType name="details" format="DIMENSION">
       <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
-      <item facet="mdActions"/>
       <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
-      <!--item facet="inspireThemeURI" sortBy="value" sortOrder="asc" max="35"
-            translator="term:http://inspire.ec.europa.eu/theme"/-->
-      <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
-      <item facet="inspireThemeWithAc" sortBy="value" sortOrder="asc" max="35"/>
-      <item facet="keyword" max="15"/>
-      <item facet="orgName" max="25"/>
+      <item facet="mdActions"/>
+      <item facet="serviceType"/>
+      <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
       <item facet="sourceCatalog"
             translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
+      <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
+      <item facet="keyword" max="15"/>
+      <item facet="orgName" max="25"/>
       <item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
       <item facet="format" max="15" sortBy="value" sortOrder="asc"/>
       <item facet="spatialRepresentationType"
             translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
       <item facet="maintenanceAndUpdateFrequency"
             translator="codelist:gmd:MD_MaintenanceFrequencyCode"/>
-      <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
-      <item facet="serviceType"/>
-      <item facet="denominator" sortBy="numValue" sortOrder="desc"/>
-      <item facet="resolution" sortBy="value" sortOrder="desc"/>
+      <item facet="denominator" sortBy="value" sortOrder="desc"/>
+      <item facet="resolution" sortBy="numValue" sortOrder="desc"/>
+      <!--item facet="inspireThemeURI" sortBy="value" sortOrder="asc" max="35"
+            translator="term:http://inspire.ec.europa.eu/theme"/-->
+      <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
+      <!--item facet="inspireThemeWithAc" sortBy="value" sortOrder="asc" max="35"/-->
       <!--
       <item facet="region"
             translator="term:http://geonetwork-opensource.org/thesaurus/naturalearth-and-seavox"/>
@@ -163,7 +164,6 @@
             translator="term:http://geonetwork-opensource.org/gemet"/>
       -->
 
-      <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
     </summaryType>
 
     <!-- Contribution tab faceted search -->
@@ -193,7 +193,7 @@
     <summaryType name="hits">
       <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
-      <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
+      <!--item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/-->
       <item facet="inspireThemeWithAc" sortBy="value" sortOrder="asc" max="35"/>
       <!--item facet="inspireThemeURI" sortBy="value" sortOrder="asc" max="35"
             translator="term:http://inspire.ec.europa.eu/theme"/-->
@@ -207,7 +207,7 @@
             translator="codelist:gmd:MD_MaintenanceFrequencyCode"/>
       <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
       <item facet="serviceType"/>
-      <item facet="denominator" sortBy="numValue" sortOrder="desc"/>
+      <item facet="denominator" sortBy="value" sortOrder="desc"/>
       <item facet="resolution" sortBy="numValue" sortOrder="desc"/>
       <!--<item facet="metadataPOC" max="15"/>-->
     </summaryType>
@@ -232,7 +232,7 @@
     </summaryType>
     <summaryType name="results_with_summary">
       <item facet="keyword" max="15"/>
-      <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
+      <item facet="inspireThemeWithAc" sortBy="value" sortOrder="asc" max="35"/>
       <item facet="denominator" sortBy="value" sortOrder="asc" max="20"/>
       <item facet="spatialRepresentationType"
             translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>

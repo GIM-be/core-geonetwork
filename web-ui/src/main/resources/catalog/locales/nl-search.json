@@ -109,7 +109,7 @@
     "versionIdentifier": "Versie",
     "otherConstraints": "Overige beperkingen",
     "resourceConstraints": "Bron restricties",
-    "maintenanceAndUpdateFrequencies": "Werk de frequenties bij",
+    "maintenanceAndUpdateFrequencies": "Update-frequentie bron",
     "legalConstraints": "Juridische toegangsrestricties",
     "scale": "Toepassingsschaal1",
     "resolution": "Grondresolutie",

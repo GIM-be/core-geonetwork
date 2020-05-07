@@ -1582,7 +1582,7 @@ het gebruik van een commerci&#235;le druk of
   <codelist name="gmd:MD_TopicCategoryCode" alias="topicCategory">
     <entry>
       <code>farming</code>
-      <label>landbouw en veeteelt</label>
+      <label>Landbouw en veeteelt</label>
       <description>Houden van dieren en/of verbouwen van
         planten. Vb: landbouw, irrigatie, ziekten die
         gewassen aantasten.
@@ -1591,7 +1591,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>biota</code>
-      <label>biota</label>
+      <label>Biota</label>
       <description>Flora en fauna in natuurlijke omgeving.
         Vb: habitats, ecologie.
       </description>
@@ -1599,7 +1599,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>boundaries</code>
-      <label>grenzen</label>
+      <label>Grenzen</label>
       <description>Wettelijke gebiedsbeschrijvingen.
         Vb: politieke en administratieve grenzen.
       </description>
@@ -1607,7 +1607,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>climatologyMeteorologyAtmosphere</code>
-      <label>klimatologie, meteorologie, atmosfeer</label>
+      <label>Klimatologie, meteorologie, atmosfeer</label>
       <description>Processen en fenomenen in de
         atmosfeer.
         Vb: wolkbedekking, weer, klimaat
@@ -1617,7 +1617,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>economy</code>
-      <label>economie</label>
+      <label>Economie</label>
       <description>Economische activiteiten, condities en
         werkgelegenheid.
         Vb: Werkgelegenheid, industrie,
@@ -1628,7 +1628,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>elevation</code>
-      <label>hoogte</label>
+      <label>Hoogte</label>
       <description>Hoogte boven of onder zeeniveau.
         Vb: hoogtekaart, DEM, hellingen.
       </description>
@@ -1655,7 +1655,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>health</code>
-      <label>gezondheid</label>
+      <label>Gezondheid</label>
       <description>Gezondheid(szorg), menselijke ecologie
         en veiligheid.
         Vb: ziekten, hygi&#235;ne, gezondheidszorg.
@@ -1664,7 +1664,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>imageryBaseMapsEarthCover</code>
-      <label>beelden, basiskaarten, grondgebruik</label>
+      <label>Beelden, basiskaarten, grondgebruik</label>
       <description>Basiskaarten.
         Vb: landbedekking, topografische
         kaarten, foto's, ongeclassificeerde
@@ -1674,7 +1674,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>intelligenceMilitary</code>
-      <label>inlichtingen, militaire gegevens</label>
+      <label>Inlichtingen, militaire gegevens</label>
       <description>Militaire basissen, structuren en
         activiteiten.
         Vb: barakken, oefenterreinen, militaire
@@ -1684,7 +1684,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>inlandWaters</code>
-      <label>binnenwateren</label>
+      <label>Binnenwateren</label>
       <description>Binnenwater, drainagesystemen en hun
         karakteristieken.
         Vb: Rivieren en gletsjers, dijken,
@@ -1695,7 +1695,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>location</code>
-      <label>locatie</label>
+      <label>Locatie</label>
       <description>Positionele informatie en services.
         Vb: adressen, geodetisch netwerk,
         postcode gebieden, plaatsnamen,
@@ -1705,7 +1705,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>oceans</code>
-      <label>oceanen</label>
+      <label>Oceanen</label>
       <description>Gebieden met zoutwaterlichamen (niet
         binnenlands). Vb: Getijden, tsunami's, kustinformatie,
         riffen.
@@ -1714,7 +1714,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>planningCadastre</code>
-      <label>planning, kadaster</label>
+      <label>Planning, kadaster</label>
       <description>Informatie die gebruikt wordt voor
         nodige planmatige activiteiten.
         Vb: Landgebruik, kadastrale informatie.
@@ -1723,7 +1723,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>society</code>
-      <label>maatschappij</label>
+      <label>Maatschappij</label>
       <description>Kenmerken van maatschappij en
         culturen.
         Vb: antropologie, archeologie,
@@ -1734,7 +1734,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>structure</code>
-      <label>structuur</label>
+      <label>Structuur</label>
       <description>Civiele werken (door mensen gemaakte
         structuren).
         Gebouwen, musea, kerken, winkels,
@@ -1744,7 +1744,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>transportation</code>
-      <label>vervoer</label>
+      <label>Vervoer</label>
       <description>Middelen voor vervoer van goederen
         en/of personen.
         Vb: Wegen, Vliegvelden, tunnels,
@@ -1754,7 +1754,7 @@ het gebruik van een commerci&#235;le druk of
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>utilitiesCommunication</code>
-      <label>nutsdiensten, communicatie</label>
+      <label>Nutsdiensten, communicatie</label>
       <description>Energie, waterleidingen en riolering en
         communicatie infrastructuren en
         services.

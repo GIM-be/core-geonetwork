@@ -190,16 +190,15 @@
           <h2 data-translate="">aboutThisResource</h2>
           <table class="table table-striped">
             <tbody>
-            <tr data-ng-if="mdView.current.record.inspirethemewithac.length > 0 ||
-                            mdView.current.record.inspirethemewithac.length > 0">
+            <tr data-ng-if="mdView.current.record.inspirethemewithac.length > 0">
                 <th data-translate="">inspireThemes</th>
                 <td>
                   <button
-                    data-ng-repeat="cat in mdView.current.record.inspirethemewithac"
-                    data-ng-click="search({'inspirethemewithac': cat})"
-                    class="btn btn-sm btn-default {{cat.split('|')[0]}} {{cat.split('|')[0]}}-{{langs[lang]}}"
-                    title="{{'clickToFilterOn' | translate}} {{cat.split('|')[1]}}">
-                    <span class="iti-{{cat.split('|')[0]}}"></span>
+                    data-ng-repeat="t in mdView.current.record.inspirethemewithac"
+                    data-ng-click="search({'inspirethemewithac': t})"
+                    class="btn btn-sm btn-default {{t.split('|')[0]}} {{t.split('|')[0]}}-{{langs[lang]}}"
+                    title="{{'clickToFilterOn' | translate}} {{t.split('|')[1]}}">
+                    <span class="iti-{{t.split('|')[0]}}"></span>&nbsp;{{t.split('|')[1]}}
                   </button>
                 </td>
               </tr>
@@ -570,9 +569,9 @@
                                 mdView.current.record.tempExtentEnd">
               <dt data-translate>tempExtentBegin</dt>
               <dd>
-                <span data-gn-humanize-time="{{mdView.current.record.tempExtentBegin}}"/>
+                <span data-gn-humanize-time="{{mdView.current.record.tempExtentBegin}}" data-format="YYYY-MM-DD"/>
                 &nbsp;<i class="fa fa-fw fa-forward"></i>
-                <span data-gn-humanize-time="{{mdView.current.record.tempExtentEnd}}"/>
+                <span data-gn-humanize-time="{{mdView.current.record.tempExtentEnd}}" data-format="YYYY-MM-DD"/>
               </dd>
             </dl>
             </p>
