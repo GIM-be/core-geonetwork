@@ -3913,9 +3913,10 @@
           <field xpath="/gmd:MD_Metadata/gmd:featureAttribute"/>
         </section>
         <section name="gmd:contentInfo" per="/gmd:MD_Metadata/gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
-					<field xpath="gmd:includedWithDataset"/>
-					<section name="gmd:featureCatalogueCitation" per="gmd:featureCatalogueCitation">
-						<field name="featureCatalogueCitationUuidref" templateModeOnly="true" notDisplayedIfMissing="true"
+          <field xpath="gmd:includedWithDataset"/>
+          <section name="gmd:featureCatalogueCitation" per="gmd:featureCatalogueCitation">
+            <directive data-gn-feature-cat-name=""/>
+            <field name="featureCatalogueCitationUuidref" templateModeOnly="true" notDisplayedIfMissing="true"
                    xpath=".">
               <template>
                 <values readonlyIf="true()">
