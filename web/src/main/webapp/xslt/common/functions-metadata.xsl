@@ -238,9 +238,11 @@
     <xsl:param name="name" as="xs:string"/>
     <xsl:param name="codelists" as="node()"/>
     <xsl:param name="context" as="xs:string"/>
-
+    <xsl:variable name="codelists" select="$codelists/codelist[@name=$name]"
+                  exclude-result-prefixes="#all"/>
     <codelist>
-      <xsl:copy-of select="$codelists/codelist[@name=$name]/*[@context=$context]"/>
+      <xsl:copy-of select="$codelists/@*"/>
+      <xsl:copy-of select="$codelists/*[@context=$context]"/>
     </codelist>
   </xsl:function>
 

@@ -471,11 +471,7 @@
 <!--            <xsl:copy-of select="gn-fn-metadata:getFieldDirective($editorConfig, name(), $xpath)"/>-->
 <!--        </xsl:if>-->
 <!--      </xsl:with-param>-->
-      <xsl:with-param name="listOfValues" >
-        <xsl:if test="name(.)='gco:LocalName'">
-          <xsl:copy-of select="gn-fn-metadata:getCodeListValuesByContext($schema, 'gmd:MD_ScopeCode', $codelists,name(..))"/>
-        </xsl:if>
-      </xsl:with-param>
+      <xsl:with-param name="listOfValues" select="if (name(.)='gco:LocalName') then gn-fn-metadata:getCodeListValuesByContext($schema, 'gmd:MD_ScopeCode', $codelists,name(..)) else ''" />
       <xsl:with-param name="name" select="gn:element/@ref"/>
       <xsl:with-param name="editInfo" select="gn:element"/>
       <xsl:with-param name="parentEditInfo" select="../gn:element"/>
