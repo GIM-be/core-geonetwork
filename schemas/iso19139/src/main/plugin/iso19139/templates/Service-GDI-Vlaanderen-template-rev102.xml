@@ -400,7 +400,7 @@
         </gmd:MD_LegalConstraints>
       </gmd:resourceConstraints>
       <srv:serviceType>
-        <gco:LocalName/>
+        <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType"/>
       </srv:serviceType>
       <srv:serviceTypeVersion>
         <gco:CharacterString/>
