@@ -211,7 +211,7 @@ public class MetadataInsertDeleteApi {
     )
     @ApiResponses(value = { @ApiResponse(code = 204, message = "Report about deleted records."),
             @ApiResponse(code = 403, message = ApiParams.API_RESPONSE_NOT_ALLOWED_ONLY_EDITOR) })
-    @PreAuthorize("hasRole('Editor')")
+    @PreAuthorize("hasRole('Administrator')")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public SimpleMetadataProcessingReport deleteRecords(
@@ -220,7 +220,6 @@ public class MetadataInsertDeleteApi {
             @ApiParam(value = API_PARAM_BACKUP_FIRST, required = false) @RequestParam(required = false, defaultValue = "true") boolean withBackup,
             @ApiIgnore HttpSession session, HttpServletRequest request) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
-        ApplicationContext appContext = ApplicationContextHolder.get();
 
         Set<String> records = ApiUtils.getUuidsParameterOrSelection(uuids, bucket, ApiUtils.getUserSession(session));
 

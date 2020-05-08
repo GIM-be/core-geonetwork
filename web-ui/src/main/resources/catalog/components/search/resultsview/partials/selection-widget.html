@@ -111,7 +111,7 @@
         </a>
       </li>
       <li  data-ng-show="!excludePattern.test('delete')"
-           data-ng-if="user.isEditorOrMore()">
+           data-ng-if="user.isAdministrator()">
         <a href="" data-ng-click="mdService.deleteMd(undefined, searchResults.selectionBucket, getCatScope())"
            data-gn-confirm-click="{{'deleteSelectedRecordConfirm' | translate:searchResults}}">
           <i class="fa fa-times"></i>&nbsp;<span translate>delete</span>
