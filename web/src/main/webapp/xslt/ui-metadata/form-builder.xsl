@@ -582,7 +582,7 @@
               <label
                 for="{$id}_{@label}"
                 class="col-sm-2 control-label {if ($keyRequired) then 'gn-required' else ''}">
-                <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, replace(@xpath,'@',''), $labels, $qname,'','')/label"/>
+                <xsl:variable name="labelConfig"><xsl:if test="$schema!='dcat-ap' and not (@xpath = ('','.'))"><xsl:value-of select="gn-fn-metadata:getLabel($schema, replace(@xpath,'@',''), $labels, $qname,'','')/label"/></xsl:if></xsl:variable>
                 <xsl:value-of select="if ($labelConfig!='') then $labelConfig else $strings/*[name() = $valueLabelKey]"/>
               </label>
               <div class="col-sm-9 gn-value nopadding-in-table">
