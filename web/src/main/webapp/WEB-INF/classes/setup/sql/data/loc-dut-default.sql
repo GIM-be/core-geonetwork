@@ -539,7 +539,7 @@ INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (62,'dut','Record imp
 INSERT INTO StatusValuesDes  (iddes, langid, label) VALUES (100,'dut','DOI creation requested.');
 
 
-INSERT INTO SelectionsDes (iddes, langid, label) VALUES (0,'dut','Preferred records');
+INSERT INTO SelectionsDes (iddes, langid, label) VALUES (0,'dut','Pin als favoriet');
 INSERT INTO SelectionsDes (iddes, langid, label) VALUES (1,'dut','Watch list');
 
 
