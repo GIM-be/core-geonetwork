@@ -117,8 +117,8 @@
 
 
     <div class="form-group gn-field gn-title
-                {if ($isRequired and not($requiredType)) then ' gn-required' else ''}
-                {if ($requiredType) then concat(' required-', $requiredType) else ''}"
+                {if ($isRequired and not($requiredType!='')) then ' gn-required' else ''}
+                {if ($requiredType!='') then concat(' required-', $requiredType) else ''}"
          id="gn-el-{*/gn:element/@ref}"
          data-gn-field-highlight="">
       <label class="col-sm-2 control-label">
@@ -143,7 +143,7 @@
               saxon:serialize($helper, 'default-serialize-mode'))"/>
         </textarea>
       </div>
-      <xsl:if test="$requiredType">
+      <xsl:if test="$requiredType!=''">
         <img src="{concat('../../images/required/', $requiredType, '.png')}"
              class="{$requiredType}"
              alt="{if ($labelConfig/mandatoryTooltip) then $labelConfig/mandatoryTooltip else ''}"
