@@ -253,6 +253,11 @@
         <xsl:variable name="description"
                       select="../preceding-sibling::gmd:description/gco:CharacterString"/>
         <xsl:variable name="readonly" select="ancestor-or-self::node()[@xlink:href] != ''"/>
+        <xsl:variable name="requiredType">
+          <xsl:if test="$schema = 'iso19139' and $labelConfig/mandatoryType!=''">
+            <xsl:value-of select="$labelConfig/mandatoryType"/>
+          </xsl:if>
+        </xsl:variable>
 
         <div gn-draw-bbox=""
              data-hleft="{gmd:westBoundLongitude/gco:Decimal}"
@@ -276,6 +281,12 @@
                            select="$description"/>
             <xsl:attribute name="data-description-ref"
                            select="concat('_', $description/gn:element/@ref)"/>
+          </xsl:if>
+          <xsl:if test="$requiredType!=''">
+            <img src="{concat('../../images/required/', $requiredType, '.png')}"
+               class="{$requiredType}"
+               alt="{if ($labelConfig/mandatoryTooltip) then $labelConfig/mandatoryTooltip else ''}"
+               title="{if ($labelConfig/mandatoryTooltip) then $labelConfig/mandatoryTooltip else ''}"/>
           </xsl:if>
         </div>
       </xsl:with-param>

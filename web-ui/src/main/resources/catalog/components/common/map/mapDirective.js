@@ -42,6 +42,7 @@
          return {
            restrict: 'A',
            replace: true,
+           transclude: true,
            templateUrl: '../../catalog/components/common/map/' +
            'partials/drawbbox.html',
            scope: {
