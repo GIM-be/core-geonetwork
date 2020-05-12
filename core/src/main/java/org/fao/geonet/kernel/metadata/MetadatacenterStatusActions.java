@@ -87,6 +87,7 @@ public class MetadatacenterStatusActions extends AIVStatusActions {
             if (statusId.equals(StatusValue.Status.REJECTED_FOR_RETIRE) || statusId.equals(StatusValue.Status.REJECTED_FOR_REMOVE)) {
                 MetadataStatus previousStatus = metadataStatusManager.getPreviousStatus(mid);
                 if (previousStatus != null) {
+                    notificationProperties.put("previousStatus", previousStatus.getId().getStatusId() + "");
                     StatusValueRepository statusValueRepository = context.getBean(StatusValueRepository.class);
                     StatusValue statusValue = statusValueRepository.findOne(previousStatus.getId().getStatusId());
                     MetadataStatus metadataStatus = new MetadataStatus();

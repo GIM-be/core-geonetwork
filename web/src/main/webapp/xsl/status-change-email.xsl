@@ -156,7 +156,7 @@
 		<xsl:variable name="status" select="/root/status"/>
 		<xsl:choose>
 			<xsl:when test="$status='10'">
-				<xsl:text>gedepubliceerd</xsl:text>
+				<xsl:text>ingediend voor depubliceren</xsl:text>
 			</xsl:when>
 			<xsl:when test="$status='11'">
 				<xsl:text>ingediend voor verwijderen</xsl:text>
