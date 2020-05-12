@@ -42,5 +42,8 @@
   "deletionReport": "Deletion report",
   "validationReport": "Validation report",
   "metadataErrorReport": "Error report",
-  "objCatName": "Name of the catalog"
+  "objCatName": "Name of the catalog",
+  "relations": "Relations",
+  "children" : "Children",
+  "parent": "Parent"
 }

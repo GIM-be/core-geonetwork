@@ -39,5 +39,8 @@
   "deletionReport": "Rapport de suppression",
   "validationReport": "Rapport de validation",
   "metadataErrorReport": "Rapport d'erreur",
-  "objCatName": "Nom du catalogue"
+  "objCatName": "Nom du catalogue",
+  "relations": "Relations",
+  "children" : "Enfants",
+  "parent": "Parent"
 }
