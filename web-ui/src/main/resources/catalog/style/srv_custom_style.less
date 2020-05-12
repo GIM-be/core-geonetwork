@@ -117,6 +117,10 @@
         text-decoration: underline;
       }
     }
+
+    .selected-mode {
+      font-weight: bold;
+    }
   }
 
   .gn-date {
@@ -206,6 +210,25 @@
   pre {
     width: 546px;
     height: 200px;
+  }
+}
+
+.max-width-dropdown-menu {
+  > li {
+    > a {
+      min-width: auto;
+    }
+  }
+}
+
+.disabled-action {
+  a {
+    cursor: default !important;
+    color: #a1a1a1 !important;
+
+    &:hover {
+      background-color: transparent !important;
+    }
   }
 }
 

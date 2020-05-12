@@ -67,5 +67,8 @@
   "deletionReport": "Verwijderingsrapport",
   "validationReport": "Validatierapport",
   "metadataErrorReport": "Fouten rapport",
-  "objCatName": "Naam van de catalogus"
+  "objCatName": "Naam van de catalogus",
+  "relations": "Relaties",
+  "children" : "Kinderen",
+  "parent": "Ouder"
 }
