@@ -11,17 +11,21 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
+    <!--
     <li class="dropdown-header"
         data-ng-show="canBeAdded()"
         role="menuitem"
         data-translate="">addToSelection</li>
+        -->
     <li data-ng-repeat="s in selections.list"
-        data-ng-show="canBeAdded(s)"
+        data-ng-show="canBeAdded(s) || canBeRemoved(s)"
+        ng-class="{'disabled-action': canBeRemoved(s)}"
         role="menuitem">
-      <a data-ng-click="add(s)">
+      <a data-ng-click="canBeRemoved(s) ? true : add(s)">
         {{s.label[lang] || (s.name | translate)}}
       </a>
     </li>
+    <!--
     <li class="dropdown-header"
         data-ng-show="canBeRemoved()"
         role="menuitem"
@@ -33,5 +37,6 @@
         {{s.label[lang] || (s.name | translate)}}
       </a>
     </li>
+    -->
   </ul>
 </div>
