@@ -118,7 +118,7 @@
 
     <div class="form-group gn-field gn-title
                 {if ($isRequired and not($requiredType!='')) then ' gn-required' else ''}
-                {if ($requiredType!='') then concat(' required-', $requiredType) else ''}"
+                {if ($requiredType!='') then concat(' gn-required required-', $requiredType) else ''}"
          id="gn-el-{*/gn:element/@ref}"
          data-gn-field-highlight="">
       <label class="col-sm-2 control-label">
@@ -143,13 +143,13 @@
               saxon:serialize($helper, 'default-serialize-mode'))"/>
         </textarea>
       </div>
-      <xsl:if test="$requiredType!=''">
-        <img src="{concat('../../images/required/', $requiredType, '.png')}"
-             class="{$requiredType}"
-             alt="{if ($labelConfig/mandatoryTooltip) then $labelConfig/mandatoryTooltip else ''}"
-             title="{if ($labelConfig/mandatoryTooltip) then $labelConfig/mandatoryTooltip else ''}"/>
-      </xsl:if>
       <div class="col-sm-1 col-xs-1 gn-control">
+        <xsl:if test="$requiredType!=''">
+          <img src="{concat('../../images/required/', $requiredType, '.png')}"
+               class="{$requiredType}"
+               alt="{if ($labelConfig/mandatoryTooltip) then $labelConfig/mandatoryTooltip else ''}"
+               title="{if ($labelConfig/mandatoryTooltip) then $labelConfig/mandatoryTooltip else ''}"/>
+        </xsl:if>
         <xsl:call-template name="render-form-field-control-remove">
           <xsl:with-param name="editInfo" select="*/gn:element"/>
           <xsl:with-param name="parentEditInfo" select="$refToDelete"/>

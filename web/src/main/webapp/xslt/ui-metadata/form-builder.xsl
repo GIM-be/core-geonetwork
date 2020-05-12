@@ -182,7 +182,7 @@
         <div
           class="form-group gn-field gn-{substring-after(name(), ':')}
                  {if ($isRequired and not($requiredType!='')) then ' gn-required' else ''}
-                 {if ($requiredType!='') then concat(' required-', $requiredType) else ''}
+                 {if ($requiredType!='') then concat(' gn-required required-', $requiredType) else ''}
                  {if ($isFirst) then '' else ' gn-extra-field'}"
           id="gn-el-{$editInfo/@ref}"
           data-gn-field-highlight="">
@@ -295,13 +295,14 @@
             <xsl:call-template name="get-errors"/>
 
           </div>
-          <xsl:if test="$requiredType!=''">
-            <img src="{concat('../../images/required/', $requiredType, '.png')}"
-                 class="{$requiredType}"
-                 alt="{if ($label/mandatoryTooltip) then $label/mandatoryTooltip else ''}"
-                 title="{if ($label/mandatoryTooltip) then $label/mandatoryTooltip else ''}"/>
-          </xsl:if>
+
           <div class="col-sm-1 col-xs-1 gn-control">
+            <xsl:if test="$requiredType!=''">
+              <img src="{concat('../../images/required/', $requiredType, '.png')}"
+                   class="{$requiredType}"
+                   alt="{if ($label/mandatoryTooltip) then $label/mandatoryTooltip else ''}"
+                   title="{if ($label/mandatoryTooltip) then $label/mandatoryTooltip else ''}"/>
+            </xsl:if>
             <xsl:if test="not($isDisabled)">
               <xsl:call-template name="render-form-field-control-remove">
                 <xsl:with-param name="editInfo" select="$editInfo"/>
