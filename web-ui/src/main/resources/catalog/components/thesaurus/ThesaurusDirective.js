@@ -92,6 +92,9 @@
                }
              }
 
+             $('div[data-thesaurus-key]').each(function() {
+               excludeThesaurus.push($(this).attr('data-thesaurus-key'));
+             });
 
              scope.allowFreeTextKeywords =
              (attrs.allowFreeTextKeywords === undefined) ||
