@@ -131,6 +131,8 @@
       $scope.unsupportedSchema = false;
       $scope.gnOnlinesrc = gnOnlinesrc;
       $scope.redirectUrl = null;
+      $scope.sideBarMaxHeight = 'calc(100% - 170px)';
+      $scope.sideBarMarginTop = 0;
 
       /**
        * Animation duration for slide up/down
@@ -654,6 +656,15 @@
 
       init();
 
-    }]);
+      $(window).scroll(function() {
+        var yOffset = window.pageYOffset <= 45 ? window.pageYOffset : 45;
+        if (yOffset !== -$scope.sideBarMarginTop) {
+          var maxHeightOffset = 170 - yOffset;
+          $scope.sideBarMaxHeight = 'calc(100% - ' + maxHeightOffset + 'px)';
+          $scope.sideBarMarginTop = -yOffset;
+          $scope.$digest();
+        }
+      });
 
+    }]);
 })();
