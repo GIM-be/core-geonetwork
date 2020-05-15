@@ -358,6 +358,10 @@ public class HarvestManagerImpl implements HarvestInfoProvider, HarvestManager {
                 // TODO i18n
                 name.setText("clone: " + nameStr);
             }
+            Element baseUrl = site.getChild("baseUrl");
+            if (baseUrl != null) {
+                baseUrl.setText("");
+            }
             Element url = site.getChild("url");
             if (url != null) {
                 url.setText("");
