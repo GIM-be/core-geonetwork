@@ -86,7 +86,8 @@
           <ul class="dropdown-menu" role="menu">
             <li role="menuitem"
                 data-ng-repeat="f in formatter.list"
-                data-ng-class="f === currentFormatter ? 'disabled' : ''">
+                data-ng-class="f === currentFormatter ? 'disabled' : ''"
+                data-ng-if="isFormatterAllowed(f)">
               <a href=""
                  gn-metadata-open="mdView.current.record"
                  gn-records="mdView.records"

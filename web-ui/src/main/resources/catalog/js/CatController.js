@@ -156,12 +156,25 @@
           'resultTemplate': '../../catalog/components/' +
               'search/resultsview/partials/viewtemplates/grid.html',
           'formatter': {
+            // include: the formatter will only be available for included schema  (whitelist)
+            // exclude: the formatter will not be available for excluded schema (blacklist)
+            // If include is mentioned, the exclude will be ignored.
             'list': [{
               'label': 'defaultView',
-              'url' : ''
+              'url' : '',
+              'exclude': ['iso19139']
             }, {
               'label': 'full',
-              'url' : '/formatters/xsl-view?root=div&view=advanced'
+              'url' : '/formatters/xsl-view?root=div&view=advanced',
+              'exclude': ['iso19139']
+            }, {
+              'label': 'isoDefaultView',
+              'url': '/formatters/iso-default?root=div&view=advanced',
+              'include': ['iso19139']
+            }, {
+              'label' : 'isoFullView',
+              'url': '/formatters/iso-full?root=div&view=advanced',
+              'include': ['iso19139']
             }],
             defaultUrl: ''
           },

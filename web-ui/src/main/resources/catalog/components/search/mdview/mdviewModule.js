@@ -215,5 +215,17 @@
       $scope.$watch('gnMdViewObj.from', function(v) {
         $scope.fromView = v ? v.substring(1) : v;
       });
+
+      $scope.isFormatterAllowed = function (formatter) {
+        if ($scope.mdView.current.record) {
+          if (formatter.include) {
+            return formatter.include.includes($scope.mdView.current.record['geonet:info'].schema);
+          } else if (formatter.exclude) {
+            return !formatter.exclude.includes($scope.mdView.current.record['geonet:info'].schema);
+          }
+        }
+        return true;
+      };
+
     }]);
 })();
