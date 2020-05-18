@@ -387,7 +387,7 @@
     <label>Unieke code</label>
     <description>Alphanumeric value identifying an instance in the namespace</description>
     <condition>mandatory</condition>
-    <helper rel="gmd:codeSpace" displayIf="gco:CharacterString">
+    <!--helper rel="gmd:codeSpace" displayIf="gco:CharacterString">
       <option value="5710" title="EPSG">Tweede Algemene Waterpassing (EPSG:5710)</option>
       <option value="TAW" title="NGI">Tweede Algemene Waterpassing</option>
       <option value="LAT" title="IHO-S44">Lowest Astronomical Tide</option>
@@ -397,7 +397,7 @@
       <option value="23031" title="EPSG">ED50 /UTM zone 31N (EPSG:23031)</option>
       <option value="23032" title="EPSG">ED50 / UTM zone 32N (EPSG:23032)</option>
       <option value="3812" title="EPSG">ETRS89/ Belgian Lambert 2008 (EPSG:3812)</option>
-    </helper>
+    </helper-->
     <mandatoryType>gdi</mandatoryType>
     <mandatoryTooltip>GDI-Vlaanderen Best Practices - SC-2</mandatoryTooltip>
   </element>

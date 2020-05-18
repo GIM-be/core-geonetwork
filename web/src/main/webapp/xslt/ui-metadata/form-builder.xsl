@@ -1465,7 +1465,7 @@
           </xsl:when>
           <xsl:when test="$attributeName = 'xlink:href'">
             <textarea type="text" class="" name="{$fieldName}" data-toggle="tooltip" title="{$attributeValue}">
-              <xsl:if test="$isDefaultView">
+              <xsl:if test="$isDefaultView and name(../..)!='gmd:code'">
                 <xsl:attribute name="disabled"/>
               </xsl:if>
               <xsl:attribute name="rows" select="if (string-length($attributeValue) > 45) then 2 else 1"/>
