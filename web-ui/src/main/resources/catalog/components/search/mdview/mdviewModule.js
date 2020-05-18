@@ -47,11 +47,11 @@
     '$scope', '$http', '$compile', 'gnSearchSettings', 'gnSearchLocation',
     'gnMetadataActions', 'gnAlertService', '$translate', '$location',
     'gnMdView', 'gnMdViewObj', 'gnMdFormatter', 'gnConfig',
-    'gnGlobalSettings', 'gnConfigService', '$rootScope',
+    'gnGlobalSettings', 'gnConfigService', '$rootScope', '$timeout',
     function($scope, $http, $compile, gnSearchSettings, gnSearchLocation,
              gnMetadataActions, gnAlertService, $translate, $location,
              gnMdView, gnMdViewObj, gnMdFormatter, gnConfig,
-             gnGlobalSettings, gnConfigService, $rootScope) {
+             gnGlobalSettings, gnConfigService, $rootScope, $timeout) {
 
       $scope.formatter = gnSearchSettings.formatter;
       $scope.gnMetadataActions = gnMetadataActions;
@@ -119,19 +119,16 @@
         });
 
         //Stack tabs in a dropdown if more than 5
-        var visibleTab = 0;
-        $('.nav-tabs-advanced li:not(#tab-overflow)').each(function(){
-          if($(this).is(':visible')) {
-            visibleTab++;
-            if(visibleTab > 5){
-              $('#tab-overflow .dropdown-menu').append($(this).clone());
-              $(this).remove();
-              if($('#tab-overflow').is(':hidden')) {
-                $('#tab-overflow').show();
-              }
+        $('.nav-tabs-advanced li:not(#tab-overflow)')
+          .filter(':visible')
+          .slice(5)
+          .each(function() {
+            $(this).appendTo('#tab-overflow .dropdown-menu');
+            var overflow = $('#tab-overflow');
+            if(overflow.is(':hidden')) {
+              overflow.show();
             }
-          }
-        });
+          })
 
         // show the first tab
         $('.nav-tabs-advanced a:first').tab('show');
@@ -141,18 +138,18 @@
         if ($scope.mdView.current.record == null) {
           return;
         }
-        var showApproved = $scope.mdView.current.record.draft != 'y';
-        var gn_metadata_display = $('#gn-metadata-display');
 
         $http.get(url, {
           headers: {
             Accept: 'text/html'
           },
           params: {
-            approved : showApproved
+            approved : gnSearchLocation.isApprovedView()
           }
         }).then(
           function(response,status) {
+            var gn_metadata_display = $('#gn-metadata-display');
+            gn_metadata_display.find('*').remove();
             if (response.status!=200){
               gn_metadata_display.append(
                 "<div class='alert alert-danger top-buffer'>" +
@@ -197,13 +194,20 @@
         }
       }
       // $scope.$watch('mdView.current.record', loadFormatter);
-      $rootScope.$on('$locationChangeSuccess', loadFormatter);
+      $rootScope.$on('$locationChangeSuccess', function() {
+        $timeout(function() {
+          loadFormatter();
+        }, 0);
+      });
+
       var unwatch = $scope.$watch('mdView.current.record', function () {
         if($scope.mdView.current.record != null) {
           loadFormatter();
           unwatch();
         }
       });
+      var gn_metadata_display = $('#gn-metadata-display');
+      gn_metadata_display.find('*').remove();
       loadFormatter();
 
       // Know from what path we come from

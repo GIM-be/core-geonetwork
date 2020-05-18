@@ -114,6 +114,10 @@
         }
       };
 
+      this.isApprovedView = function() {
+        return /\/metadata\//.test($location.url())
+      }
+
       this.getUuid = function() {
         if (this.isMdView()) {
           return $location.path().split('/')[2];
