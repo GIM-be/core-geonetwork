@@ -169,8 +169,16 @@
               <xsl:copy>
                 <xsl:apply-templates select="@*"/>
                 <gmd:MD_Keywords>
-                  <xsl:apply-templates select="*/gmd:keyword"/>
-
+                  <xsl:choose>
+                    <xsl:when test="*/gmd:thesaurusName">
+                      <xsl:for-each-group select="*/gmd:keyword" group-by="*/@xlink:href">
+                        <xsl:apply-templates select="current-group()[1]" />
+                      </xsl:for-each-group>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:apply-templates select="*/gmd:keyword"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
 
                   <!-- Append all keywords added by all thesaurus. -->
                   <xsl:variable name="thesaurusKey"
