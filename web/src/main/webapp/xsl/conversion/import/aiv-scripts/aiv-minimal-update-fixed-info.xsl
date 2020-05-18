@@ -132,13 +132,12 @@
   <xsl:template match="@gml:id|@gml320:id">
     <xsl:choose>
       <xsl:when test="normalize-space(.)=''">
-        <xsl:attribute name="{if ($isUsing2005Schema and not($isUsing2007Schema))
-                              then 'gml320' else 'gml'}:id">
+        <xsl:attribute name="{if ($isUsing2005Schema and not($isUsing2007Schema)) then 'gml320' else 'gml'}:id">
           <xsl:value-of select="generate-id(.)"/>
         </xsl:attribute>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy-of select="."/>
+        <xsl:copy-of select="." copy-namespaces="no"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -155,7 +154,7 @@
         </xsl:attribute>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy-of select="."/>
+        <xsl:copy-of select="." copy-namespaces="no"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -351,8 +350,7 @@ Can also be using lang=eng&amp;lang=ara.
     <xsl:call-template name="correct_ns_prefix">
       <xsl:with-param name="element" select="."/>
       <xsl:with-param name="prefix"
-                      select="if ($isUsing2005Schema and not($isUsing2007Schema))
-                              then 'gml320' else 'gml'"/>
+                      select="if ($isUsing2005Schema and not($isUsing2007Schema)) then 'gml320' else 'gml'"/>
     </xsl:call-template>
   </xsl:template>
 
@@ -389,7 +387,7 @@ Can also be using lang=eng&amp;lang=ara.
 
 
   <xsl:template match="gmd:dateTime" priority="200">
-    <xsl:variable name="child" select="gco:Date|gco:DateTime"/>
+    <xsl:variable name="child" select="string(gco:Date|gco:DateTime)"/>
     <xsl:copy copy-namespaces="no">
       <xsl:if test="normalize-space($child) = ''">
         <xsl:attribute name="gco:nilReason" select="'missing'"/>
@@ -403,7 +401,7 @@ Can also be using lang=eng&amp;lang=ara.
   </xsl:template>
 
   <xsl:template match="*[gco:DateTime]" priority="100">
-    <xsl:variable name="child" select="gco:DateTime"/>
+    <xsl:variable name="child" select="string(gco:DateTime)"/>
     <xsl:copy copy-namespaces="no">
       <xsl:if test="normalize-space($child) = ''">
         <xsl:attribute name="gco:nilReason" select="'missing'"/>
@@ -415,7 +413,7 @@ Can also be using lang=eng&amp;lang=ara.
   </xsl:template>
 
   <xsl:template match="*[gco:Date]" priority="100">
-    <xsl:variable name="child" select="gco:Date"/>
+    <xsl:variable name="child" select="string(gco:Date)"/>
     <xsl:copy copy-namespaces="no">
       <xsl:if test="normalize-space($child) = ''">
         <xsl:attribute name="gco:nilReason" select="'missing'"/>

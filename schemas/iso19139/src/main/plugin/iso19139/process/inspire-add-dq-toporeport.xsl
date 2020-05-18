@@ -51,7 +51,7 @@ INSPIRE-thema (s) gevonden. Voer deze taak uit om een topologische consistentie 
   </xsl:variable>
 
   <xsl:variable name="inspire-thesaurus-dq-topo"
-                select="document(concat('file:///', replace(util:getConfigValue('codeListDir'), '\\', '/'), '/external/thesauri/theme/httpinspireeceuropaeutheme-theme.rdf'))"/>
+                select="document(concat('file:///', replace(util:getConfigValue('codeListDir'), '\\', '/'), '/external/thesauri/theme/inspire-theme.rdf'))"/>
 
   <xsl:template name="list-inspire-add-dq-toporeport">
     <suggestion process="inspire-add-dq-toporeport"/>
