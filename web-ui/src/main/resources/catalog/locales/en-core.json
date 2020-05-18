@@ -95,7 +95,7 @@
     "deleteRecordConfirm": "Do you really want to remove '{{title}}'?",
     "deleteSelectedRecordConfirm": "Do you really want to remove the {{selectedCount}} selected record(s) ?",
     "cofirmEditApproved": "Editing an approved record will bring it back to the draft state. Do you want to continue?",
-    "denominators": "Scale",
+    "denominators": "Scale 1:",
     "docNotFound": "<strong>Warning !</strong> Page <a href='{{page}}'>{{page}}</a> not found in documentation.",
     "docPageNotFoundAtUrl": "Documentation page not available at URL:",
     "dut": "Nederlands",
