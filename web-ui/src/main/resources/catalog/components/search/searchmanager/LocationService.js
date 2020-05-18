@@ -92,12 +92,17 @@
           return undefined;
         }
       };
-      this.getFormatterPath = function() {
+      this.getFormatterPath = function(schema) {
         var tokens = $location.path().split('/');
         if (tokens.length > 2 && tokens[3] === 'formatters') {
           return '../api/records/' + $location.url().split(/^metadraf|metadata\//)[1];
         } else {
-          return undefined;
+          var defaultFormatters = gnGlobalSettings.gnCfg.mods.search.formatter.defaultFormatters;
+          if (defaultFormatters[schema]) {
+            return '../api/records/' + $location.url().split(/^metadraf|metadata\//)[1] + defaultFormatters[schema].url;
+          } else {
+            return undefined;
+          }
         }
       };
       this.setUuid = function(uuid, formatter) {

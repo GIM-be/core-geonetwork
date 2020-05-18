@@ -185,7 +185,8 @@
       // in default mode.
       function loadFormatter() {
         $scope.currentFormatter = null;
-        var f = gnSearchLocation.getFormatterPath();
+        var currentSchema = $scope.mdView.current.record ? $scope.mdView.current.record['geonet:info'].schema : undefined;
+        var f = gnSearchLocation.getFormatterPath(currentSchema);
         if (f != undefined) {
           $scope.currentFormatter = {
             url: f
