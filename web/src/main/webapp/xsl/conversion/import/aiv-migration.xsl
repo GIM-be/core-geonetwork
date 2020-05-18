@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="#all"
                 version="2.0">
-  <xsl:include href="./aiv-scripts/aiv-convert-keywords-to-anchor.xsl"/>
-  <xsl:include href="./aiv-scripts/aiv-minimal-update-fixed-info.xsl"/>
+  <xsl:output method="xml" indent="no" encoding="utf-8"/>
+  <xsl:include href="aiv-scripts/aiv-convert-keywords-to-anchor.xsl"/>
+  <xsl:include href="aiv-scripts/aiv-minimal-update-fixed-info.xsl"/>
   <xsl:include href="aiv-scripts/aiv-remove-data-quality-info-optional-elements.xsl"/>
 
   <xsl:template match="@*|node()">
