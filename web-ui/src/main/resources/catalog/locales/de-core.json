@@ -95,7 +95,7 @@
     "deleteRecordConfirm": "Wollen Sie wirklich '{{title}}' entfernen?",
     "deleteSelectedRecordConfirm": "Wollen Sie wirklich die {{selectedCount}} gewählten Einträge entfernen?",
     "cofirmEditApproved": "Durch Bearbeiten eines genehmigten Datensatzes wird wieder der Entwurfszustand hergestellt. Wollen Sie fortfahren?",
-    "denominators": "Maßstab",
+    "denominators": "Maßstab 1:",
     "docNotFound": "<strong>Achtung !</strong> Seite <a href='{{page}}'>{{page}}</a> nicht in der Dokumentation gefunden.",
     "docPageNotFoundAtUrl": "Dokumentationsseite nicht verfügbar unter URL:",
     "dut": "Nederlands",
