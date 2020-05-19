@@ -138,6 +138,9 @@
         if ($scope.mdView.current.record == null) {
           return;
         }
+        var gn_metadata_display = $('#gn-metadata-display');
+        gn_metadata_display.find('*').remove();
+        gnMdViewObj.loadingFormatter = true;
 
         $http.get(url, {
           headers: {
@@ -148,8 +151,7 @@
           }
         }).then(
           function(response,status) {
-            var gn_metadata_display = $('#gn-metadata-display');
-            gn_metadata_display.find('*').remove();
+            gnMdViewObj.loadingFormatter = false;
             if (response.status!=200){
               gn_metadata_display.append(
                 "<div class='alert alert-danger top-buffer'>" +
@@ -158,8 +160,6 @@
             } else {
               var snippet = response.data.replace(
                 '<?xml version="1.0" encoding="UTF-8"?>', '');
-
-              gn_metadata_display.find('*').remove();
 
               $scope.compileScope.$destroy();
 
@@ -174,6 +174,7 @@
             }
           },
           function(data) {
+            gnMdViewObj.loadingFormatter = false;
             gn_metadata_display.append(
               "<div class='alert alert-danger top-buffer'>" +
               $translate.instant("metadataViewLoadError") +
@@ -207,8 +208,6 @@
           unwatch();
         }
       });
-      var gn_metadata_display = $('#gn-metadata-display');
-      gn_metadata_display.find('*').remove();
       loadFormatter();
 
       // Know from what path we come from
