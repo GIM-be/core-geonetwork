@@ -50,7 +50,7 @@
   3 levels of priority are defined: 100, 50, none
 
   -->
-  <!-- tr is defined at  core-geonetwork/services/src/main/java/org/fao/geonet/api/records/formatters/SchemaLocalizations.java -->
+ <!-- tr is defined at  core-geonetwork/services/src/main/java/org/fao/geonet/api/records/formatters/SchemaLocalizations.java -->
 
   <!-- Load the editor configuration to be able
   to render the different views -->
@@ -111,18 +111,14 @@
   </xsl:template>
 
   <xsl:template mode="getMetadataThumbnail" match="gmd:MD_Metadata">
-    <xsl:value-of
-      select="gmd:identificationInfo/*/gmd:graphicOverview[1]/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString"/>
+    <xsl:value-of select="gmd:identificationInfo/*/gmd:graphicOverview[1]/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString"/>
   </xsl:template>
 
   <xsl:template mode="getOverviews" match="gmd:MD_Metadata">
     <section class="gn-md-side-overview">
       <h4>
-        <i class="fa fa-fw fa-image">
-          <xsl:comment select="'image'"/>
-        </i>
-        <span>
-          <xsl:comment select="name()"/>
+        <i class="fa fa-fw fa-image"><xsl:comment select="'image'"/></i>
+        <span><xsl:comment select="name()"/>
           <xsl:value-of select="$schemaStrings/overviews"/>
         </span>
       </h4>
@@ -167,8 +163,7 @@
     </xsl:if>
 
     <div data-ng-if="user.isEditorOrMore() &amp;&amp; md.mdStatus&lt;50 &amp;&amp; isMdWorkflowEnable">
-      <i
-        class="fa gn-aiv-workflow-status-all gn-aiv-workflow-status-{{{{(md.mdStatus==2 || md.mdStatus==3) ? 'unlocked' : 'locked'}}}} gn-aiv-workflow-status-{{{{(md.mdStatus &amp;&amp; md.mdStatus &lt; 7) ? md.mdStatus : 'x'}}}}">
+      <i class="fa gn-aiv-workflow-status-all gn-aiv-workflow-status-{{{{(md.mdStatus==2 || md.mdStatus==3) ? 'unlocked' : 'locked'}}}} gn-aiv-workflow-status-{{{{(md.mdStatus &amp;&amp; md.mdStatus &lt; 7) ? md.mdStatus : 'x'}}}}">
         <span>{{'mdStatusRecord' | translate}}: {{('mdStatus-' + md.mdStatus) | translate}}</span>
       </i>
     </div>
@@ -269,6 +264,7 @@
   </xsl:template>
 
 
+
   <!-- Override of render-layout.xsl template -->
   <xsl:template mode="render-view"
                 match="section[not(@xpath)]">
@@ -282,9 +278,8 @@
           <xsl:value-of select="$title"/>
         </xsl:element>
       </xsl:if>
-      <table
-        style="box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px; background-color: transparent; border-collapse: collapse; border-spacing: 0;"
-        class="table table-striped iso19139-md-view">
+      <table style="box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px; background-color: transparent; border-collapse: collapse; border-spacing: 0;"
+             class="table table-striped iso19139-md-view">
         <xsl:apply-templates mode="render-view"
                              select="section|field"/>&#160;
       </table>
@@ -309,8 +304,7 @@
                                   then $fieldName
                                   else tr:nodeLabel(tr:create($schema), name(), null)"/>
         </th>
-        <td>
-          <xsl:comment select="name()"/>
+        <td><xsl:comment select="name()"/>
           <xsl:apply-templates mode="render-value" select="*|*/@codeListValue"/>
           <xsl:apply-templates mode="render-value" select="@*"/>
         </td>
@@ -369,9 +363,8 @@
       <xsl:apply-templates mode="render-value"
                            select="@*"/>
     </h2>
-    <table
-      style="box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px; background-color: transparent; border-collapse: collapse; border-spacing: 0;"
-      class="table table-striped iso19139-md-view">
+    <table style="box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px; background-color: transparent; border-collapse: collapse; border-spacing: 0;"
+           class="table table-striped iso19139-md-view">
       <xsl:choose>
         <xsl:when test="count(*) > 0">
           <xsl:apply-templates mode="render-field" select="*"/>
@@ -385,17 +378,15 @@
     </table>
 
     <xsl:if test="name() = 'gmd:DQ_DataQuality'">
-      <xsl:for-each
-        select="gmd:report/gmd:DQ_DomainConsistency[contains(gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString,'2007/2/E')]">
+      <xsl:for-each select="gmd:report/gmd:DQ_DomainConsistency[contains(gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString,'2007/2/E')]">
         <h2 class="view-header"
             style="border-bottom: 2px solid rgb(229, 229, 229); margin-top: 30px;font-size: 16px;color: rgb(40, 96, 144); position: relative;">
           <xsl:value-of select="concat('INSPIRE ', tr:node-label(tr:create($schema), name(.), null))"/>
           <xsl:apply-templates mode="render-value"
                                select="@*"/>
         </h2>
-        <table
-          style="box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px; background-color: transparent; border-collapse: collapse; border-spacing: 0;"
-          class="table table-striped iso19139-md-view">
+        <table style="box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px; background-color: transparent; border-collapse: collapse; border-spacing: 0;"
+               class="table table-striped iso19139-md-view">
           <xsl:choose>
             <xsl:when test="count(*) > 0">
               <xsl:apply-templates mode="render-field" select="gmd:result"/>
@@ -427,13 +418,11 @@
         <xsl:apply-templates mode="render-value"
                              select="@*"/>
       </th>
-      <td>
-        <xsl:comment select="name()"/>
+      <td><xsl:comment select="name()"/>
         <xsl:choose>
           <xsl:when test="count(*) > 0">
-            <table
-              style="background-color: rgba(0, 0, 0, 0.035); margin-bottom: 0; box-sizing: border-box; width: 100%; max-width: 100%; border-collapse: collapse; border-spacing: 0;"
-              class="table nested-table">
+            <table style="background-color: rgba(0, 0, 0, 0.035); margin-bottom: 0; box-sizing: border-box; width: 100%; max-width: 100%; border-collapse: collapse; border-spacing: 0;"
+                   class="table nested-table">
               <xsl:apply-templates mode="render-field" select="*"/>
             </table>
           </xsl:when>
@@ -458,9 +447,7 @@
     </tr>
   </xsl:template>
 
-  <xsl:template mode="render-field"
-                match="gmd:DQ_DomainConsistency[not(contains(gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString, '2007/2/E'))]"
-                priority="10">
+  <xsl:template mode="render-field" match="gmd:DQ_DomainConsistency[not(contains(gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString, '2007/2/E'))]" priority="10">
     <tr>
       <th>
         <xsl:value-of select="tr:nodeLabel(tr:create($schema), name(), null)"/>
@@ -471,9 +458,8 @@
         <xsl:comment select="name()"/>
         <xsl:choose>
           <xsl:when test="count(*) > 0">
-            <table
-              style="background-color: rgba(0, 0, 0, 0.035); margin-bottom: 0; box-sizing: border-box; width: 100%; max-width: 100%; border-collapse: collapse; border-spacing: 0;"
-              class="table nested-table">
+            <table style="background-color: rgba(0, 0, 0, 0.035); margin-bottom: 0; box-sizing: border-box; width: 100%; max-width: 100%; border-collapse: collapse; border-spacing: 0;"
+                   class="table nested-table">
               <xsl:apply-templates mode="render-field" select="*"/>
             </table>
           </xsl:when>
@@ -514,12 +500,11 @@
       <xsl:for-each select="*/gmd:contactInfo/
                                       */gmd:address/*/gmd:electronicMailAddress">
         <xsl:apply-templates mode="render-value"
-                             select="."/>
-        <xsl:if test="position() != last()">,</xsl:if>
+                             select="."/><xsl:if test="position() != last()">, </xsl:if>
       </xsl:for-each>
     </xsl:variable>
 
-    <xsl:variable name="role" select="*/gmd:role/gmd:CI_RoleCode/@codeListValue"/>
+    <xsl:variable name="role" select="*/gmd:role/gmd:CI_RoleCode/@codeListValue" />
 
     <!-- Display name is <org name> - <individual name> (<position name>) -->
     <!-- with separator/parentheses as required -->
@@ -527,7 +512,7 @@
       <xsl:if test="*/gmd:organisationName">
         <xsl:apply-templates mode="render-value" select="*/gmd:organisationName"/>
       </xsl:if>
-      <xsl:if test="*/gmd:organisationName and */gmd:individualName|*/gmd:positionName">-</xsl:if>
+      <xsl:if test="*/gmd:organisationName and */gmd:individualName|*/gmd:positionName"> - </xsl:if>
       <xsl:if test="*/gmd:individualName">
         <xsl:apply-templates mode="render-value" select="*/gmd:individualName"/>
       </xsl:if>
@@ -545,9 +530,7 @@
 
     <tr class="gn-contact">
       <th style="color: rgb(51, 122, 183);">
-        <i class="fa fa-envelope">
-          <xsl:comment select="'email'"/>
-        </i>
+        <i class="fa fa-envelope"><xsl:comment select="'email'"/></i>
         <xsl:apply-templates mode="render-value"
                              select="*/gmd:role/*/@codeListValue"/>
       </th>
@@ -562,13 +545,11 @@
                 <xsl:choose>
                   <xsl:when test="$email">
                     <a href="mailto:{normalize-space($email)}">
-                      <xsl:copy-of select="$displayName"/>
-                      <xsl:comment select="'email'"/>
+                      <xsl:copy-of select="$displayName"/><xsl:comment select="'email'"/>
                     </a>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:copy-of select="$displayName"/>
-                    <xsl:comment select="'name'"/>
+                    <xsl:copy-of select="$displayName"/><xsl:comment select="'name'"/>
                   </xsl:otherwise>
                 </xsl:choose>
               </strong>
@@ -577,8 +558,7 @@
                 <xsl:for-each select="gmd:address/*">
                   <div itemprop="address"
                        itemscope="itemscope"
-                       itemtype="http://schema.org/PostalAddress">
-                    <xsl:comment select="'address'"/>
+                       itemtype="http://schema.org/PostalAddress"><xsl:comment select="'address'"/>
                     <xsl:for-each select="gmd:deliveryPoint">
                       <span itemprop="streetAddress">
                         <xsl:apply-templates mode="render-value" select="."/>
@@ -623,9 +603,7 @@
                     <xsl:variable name="phoneNumber">
                       <xsl:apply-templates mode="render-value" select="."/>
                     </xsl:variable>
-                    <i class="fa fa-phone">
-                      <xsl:comment select="'phone'"/>
-                    </i>
+                    <i class="fa fa-phone"><xsl:comment select="'phone'"/></i>
                     <a href="tel:{translate($phoneNumber,' ','')}">
                       <xsl:value-of select="$phoneNumber"/>
                     </a>
@@ -635,20 +613,15 @@
                   <xsl:variable name="phoneNumber">
                     <xsl:apply-templates mode="render-value" select="."/>
                   </xsl:variable>
-                  <i class="fa fa-fax">
-                    <xsl:comment select="'fax'"/>
-                  </i>
+                  <i class="fa fa-fax"><xsl:comment select="'fax'"/></i>
                   <a href="tel:{translate($phoneNumber,' ','')}">
                     <xsl:value-of select="normalize-space($phoneNumber)"/>&#160;
                   </a>
                 </xsl:for-each>
                 <xsl:for-each select="gmd:onlineResource/*/gmd:linkage/gmd:URL[normalize-space(.) != '']">
                   <xsl:variable name="web">
-                    <xsl:apply-templates mode="render-value" select="."/>
-                  </xsl:variable>
-                  <i class="fa fa-link">
-                    <xsl:comment select="'link'"/>
-                  </i>
+                    <xsl:apply-templates mode="render-value" select="."/></xsl:variable>
+                  <i class="fa fa-link"><xsl:comment select="'link'"/></i>
                   <a href="{normalize-space($web)}">
                     <xsl:value-of select="normalize-space($web)"/>
                   </a>
@@ -687,12 +660,8 @@
         <xsl:apply-templates mode="render-value" select="*"/>
         <xsl:apply-templates mode="render-value" select="@*"/>
         <a class="btn btn-default" href="{$nodeUrl}api/records/{$metadataId}/formatters/xml">
-          <i class="fa fa-file-code-o">
-            <xsl:comment select="'file'"/>
-          </i>
-          <span>
-            <xsl:value-of select="$schemaStrings/metadataInXML"/>
-          </span>
+          <i class="fa fa-file-code-o"><xsl:comment select="'file'"/></i>
+          <span><xsl:value-of select="$schemaStrings/metadataInXML"/></span>
         </a>
       </td>
     </tr>
@@ -725,23 +694,17 @@
           </xsl:choose>
         </xsl:variable>
         <a href="{$linkUrl}" title="{$linkName}">
-          <span>
-            <xsl:comment select="name()"/>
+          <span><xsl:comment select="name()"/>
             <xsl:value-of select="$linkName"/>
           </span>
         </a>
         <xsl:if test="*/gmd:protocol[normalize-space(gco:CharacterString|gmx:Anchor) != '']">
-          (
-          <span>
-            <xsl:comment select="name()"/>
-            <xsl:apply-templates mode="render-value"
-                                 select="*/gmd:protocol"/>
-          </span>
-          )
-        </xsl:if>
+        (<span><xsl:comment select="name()"/>
+          <xsl:apply-templates mode="render-value"
+                   select="*/gmd:protocol"/>
+        </span>)</xsl:if>
         <xsl:if test="*/gmd:description[normalize-space(gco:CharacterString|gmx:Anchor) != '' and * != $linkName]">
-          <p>
-            <xsl:comment select="name()"/>
+          <p><xsl:comment select="name()"/>
             <xsl:apply-templates mode="render-value"
                                  select="*/gmd:description"/>
           </p>
@@ -774,8 +737,7 @@
                                select="*/gmd:version"/>
         </xsl:if>
         <xsl:if test="*/gmd:authority">
-          <p>
-            <xsl:comment select="name()"/>
+          <p><xsl:comment select="name()"/>
             <xsl:apply-templates mode="render-field"
                                  select="*/gmd:authority"/>
           </p>
@@ -784,7 +746,7 @@
     </tr>
   </xsl:template>
 
-  <!-- Display thesaurus name and the list of keywords if at least one keyword is set -->
+ <!-- Display thesaurus name and the list of keywords if at least one keyword is set -->
   <xsl:template mode="render-field"
                 match="gmd:descriptiveKeywords[*/gmd:thesaurusName/gmd:CI_Citation/gmd:title and
                 count(*/gmd:keyword/*[. != '']) = 0]"
@@ -960,11 +922,8 @@
             <xsl:for-each select="parent::node()/*[name() = $nodeName]">
               <li>
                 <a href="{$nodeUrl}api/records/{@uuidref}">
-                  <i class="fa fa-link">
-                    <xsl:comment select="'link'"/>
-                  </i>
-                  <span>
-                    <xsl:comment select="'dataset'"/>
+                  <i class="fa fa-link"><xsl:comment select="'link'"/></i>
+                  <span><xsl:comment select="'dataset'"/>
                     <xsl:value-of select="gn-fn-render:getMetadataTitle(@uuidref, $langId)"/>
                   </span>
                 </a>
@@ -996,23 +955,19 @@
         <xsl:with-param name="langId" select="$langId"/>
       </xsl:apply-templates>
     </xsl:variable>
-    <span>
+     <span>
       <xsl:choose>
         <xsl:when test="name()='gmd:parentIdentifier'">
           <a href="{$nodeUrl}api/records/{./gco:CharacterString}">
-            <i class="fa fa-fw fa-link">
-              <xsl:comment select="'link'"/>
-            </i>
+            <i class="fa fa-fw fa-link"><xsl:comment select="'link'"/></i>
             <xsl:value-of select="gn-fn-render:getMetadataTitle(./gco:CharacterString, $langId)"/>
           </a>
         </xsl:when>
 
-      </xsl:choose>
-      <xsl:comment select="name()"/>
+    </xsl:choose><xsl:comment select="name()"/>
       <xsl:call-template name="addLineBreaksAndHyperlinks">
-        <xsl:with-param name="txt" select="$txt"/>
-      </xsl:call-template>
-    </span>
+      <xsl:with-param name="txt" select="$txt"/>
+    </xsl:call-template></span>
   </xsl:template>
 
 
@@ -1055,8 +1010,7 @@
       </xsl:otherwise>
     </xsl:choose>
 
-    <xsl:if test="@uom">
-      <xsl:comment select="name()"/>
+    <xsl:if test="@uom"><xsl:comment select="name()"/>
       <xsl:value-of select="@uom"/>
     </xsl:if>
   </xsl:template>
@@ -1087,8 +1041,7 @@
         <img src="{$href}" title="{$label}" alt="{$label}"/>
       </xsl:when>
       <xsl:otherwise>
-        <a href="{$href}">
-          <xsl:comment select="name()"/>
+        <a href="{$href}"><xsl:comment select="name()"/>
           <xsl:value-of select="$label"/>
         </a>
       </xsl:otherwise>
@@ -1098,8 +1051,7 @@
   <!-- ... URL -->
   <xsl:template mode="render-value"
                 match="gmd:URL">
-    <a href="{.}">
-      <xsl:comment select="name()"/>
+    <a href="{.}"><xsl:comment select="name()"/>
       <xsl:value-of select="."/>
     </a>
   </xsl:template>
@@ -1114,32 +1066,28 @@
 
   <xsl:template mode="render-value"
                 match="gco:Date[matches(., '[0-9]{4}-[0-9]{2}')]">
-    <span data-gn-humanize-time="{.}" data-format="MMM YYYY">
-      <xsl:comment select="name()"/>
+    <span data-gn-humanize-time="{.}" data-format="MMM YYYY"><xsl:comment select="name()"/>
       <xsl:value-of select="."/>
     </span>
   </xsl:template>
 
   <xsl:template mode="render-value"
                 match="gco:Date[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}')]">
-    <span data-gn-humanize-time="{.}" data-format="DD MMM YYYY">
-      <xsl:comment select="name()"/>
+    <span data-gn-humanize-time="{.}" data-format="DD MMM YYYY"><xsl:comment select="name()"/>
       <xsl:value-of select="."/>
     </span>
   </xsl:template>
 
   <xsl:template mode="render-value"
                 match="gco:DateTime[matches(., '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}')]">
-    <span data-gn-humanize-time="{.}">
-      <xsl:comment select="name()"/>
+    <span data-gn-humanize-time="{.}"><xsl:comment select="name()"/>
       <xsl:value-of select="."/>
     </span>
   </xsl:template>
 
   <xsl:template mode="render-value"
                 match="gco:Date|gco:DateTime">
-    <span data-gn-humanize-time="{.}">
-      <xsl:comment select="name()"/>
+    <span data-gn-humanize-time="{.}"><xsl:comment select="name()"/>
       <xsl:value-of select="."/>
     </span>
   </xsl:template>
@@ -1152,8 +1100,7 @@
 
   <xsl:template mode="render-value"
                 match="gmd:language/gco:CharacterString">
-    <span data-translate="">
-      <xsl:comment select="name()"/>
+    <span data-translate=""><xsl:comment select="name()"/>
       <xsl:value-of select="."/>
     </span>
   </xsl:template>
@@ -1228,9 +1175,7 @@
   <xsl:template mode="render-value"
                 match="@gco:nilReason[. = 'withheld']"
                 priority="100">
-    <i class="fa fa-lock text-warning" title="{{{{'withheld' | translate}}}}">
-      <xsl:comment select="'warning'"/>
-    </i>
+    <i class="fa fa-lock text-warning" title="{{{{'withheld' | translate}}}}"><xsl:comment select="'warning'"/></i>
   </xsl:template>
   <xsl:template mode="render-value"
                 match="@*"/>

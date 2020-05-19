@@ -168,14 +168,14 @@
               'exclude': ['iso19139']
             }, {
               'label': 'isoFullView',
-              'url': '/formatters/iso-full?root=div&view=advanced',
+              'url': '/formatters/xsl-view-iso?root=div&view=advanced',
               'include': ['iso19139']
             }],
             // The defaultFormatters property is used to overwrite the default index view with
             // a formatter depending on the schema (without changing the URL)
             'defaultFormatters': {
               'iso19139': {
-                'url': '/formatters/iso-default?root=div&view=advanced'
+                'url': '/formatters/xsl-view-default?root=div&view=advanced'
               }
             },
             defaultUrl: ''
