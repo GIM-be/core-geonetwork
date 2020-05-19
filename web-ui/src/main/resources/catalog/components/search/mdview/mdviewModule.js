@@ -228,5 +228,9 @@
         return true;
       };
 
+      $scope.isCurrentFormatter = function(formatter) {
+        return gnSearchLocation.isCurrentFormatter(formatter);
+      }
+
     }]);
 })();

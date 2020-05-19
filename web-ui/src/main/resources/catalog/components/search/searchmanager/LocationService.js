@@ -123,6 +123,15 @@
         return /\/metadata\//.test($location.url())
       }
 
+      this.isCurrentFormatter = function(formatterUrl) {
+        var tokens = $location.path().split('/');
+        if (tokens.length > 2 && tokens[3] === 'formatters') {
+          return formatterUrl !== '' && $location.url().endsWith(formatterUrl);
+        } else {
+          return formatterUrl === '';
+        }
+      }
+
       this.getUuid = function() {
         if (this.isMdView()) {
           return $location.path().split('/')[2];
