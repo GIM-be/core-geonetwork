@@ -203,18 +203,18 @@
           <table class="table table-striped">
             <tbody>
             <tr data-ng-if="mdView.current.record.inspirethemewithac.length > 0">
-                <th data-translate="">inspireThemes</th>
-                <td>
-                  <button
-                    data-ng-repeat="t in mdView.current.record.inspirethemewithac"
-                    data-ng-click="search({'inspirethemewithac': t})"
-                    class="btn btn-sm btn-default {{t.split('|')[0]}} {{t.split('|')[0]}}-{{langs[lang]}}"
-                    title="{{'clickToFilterOn' | translate}} {{t.split('|')[1]}}">
-                    <span class="iti-{{t.split('|')[0]}}"></span>&nbsp;{{t.split('|')[1]}}
-                  </button>
-                </td>
-              </tr>
-              <tr
+              <th data-translate="">inspireThemes</th>
+              <td>
+                <button
+                  data-ng-repeat="t in mdView.current.record.inspirethemewithac"
+                  data-ng-click="search({'inspirethemewithac': t})"
+                  class="btn btn-sm btn-default {{t.split('|')[0]}} {{t.split('|')[0]}}-{{langs[lang]}}"
+                  title="{{'clickToFilterOn' | translate}} {{t.split('|')[1]}}">
+                  <span class="iti-{{t.split('|')[0]}}"></span>&nbsp;{{t.split('|')[1]}}
+                </button>
+              </td>
+            </tr>
+            <tr
                 data-ng-if="mdView.current.record.category.length > 0 ||
                         mdView.current.record.topicCat.length > 0">
               <th data-translate="">listOfCategories</th>
@@ -290,7 +290,6 @@
                 </p>
               </td>
             </tr>
-
             <tr data-ng-if="mdView.current.record.securityConstraints">
               <th data-translate="">securityConstraints</th>
               <td>
@@ -299,8 +298,6 @@
                 </p>
               </td>
             </tr>
-
-
             <tr data-ng-if="mdView.current.record.resourceConstraints">
               <th data-translate="">resourceConstraints</th>
               <td>
@@ -309,7 +306,6 @@
                 </p>
               </td>
             </tr>
-
             <tr data-ng-if="mdView.current.record.getAllContacts().resource">
               <th data-translate="">resourceContact</th>
               <td>
@@ -344,7 +340,6 @@
             data-ng-repeat="featureType in mdView.current.record.featureTypes">
 
             <h3><span data-translate="">featureType</span>&nbsp;'{{featureType.typeName}}'</h3>
-
             <table class="table table-striped" >
               <tbody>
               <tr data-ng-if="featureType.typeName">
