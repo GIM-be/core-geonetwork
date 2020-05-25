@@ -115,10 +115,87 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Brussels Hoofdstedelijk Gewest">
 		<skos:prefLabel xml:lang="nl">Brussels Hoofdstedelijk Gewest</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Brussels Hoofdstedelijk Gewest</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Brussels Hoofdstedelijk Gewest</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Brussels Hoofdstedelijk Gewest</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.243765 50.76368</gml:lowerCorner>
+				<gml:upperCorner>4.482271 50.913901</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kruisem">
+		<skos:prefLabel xml:lang="nl">Gemeente Kruisem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kruisem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kruisem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kruisem</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.466746 50.869814</gml:lowerCorner>
+				<gml:upperCorner>3.686774 50.953074</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lievegem">
+		<skos:prefLabel xml:lang="nl">Gemeente Lievegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lievegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lievegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lievegem</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.509877 51.074139</gml:lowerCorner>
+				<gml:upperCorner>3.66721 51.175525</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Puurs-Sint-Amands">
+		<skos:prefLabel xml:lang="nl">Gemeente Puurs-Sint-Amands</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Puurs-Sint-Amands</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Puurs-Sint-Amands</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Puurs-Sint-Amands</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.18699 51.026575</gml:lowerCorner>
+				<gml:upperCorner>4.360902 51.101864</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Pelt">
+		<skos:prefLabel xml:lang="nl">Gemeente Pelt</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Pelt</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Pelt</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Pelt</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.320141 51.164261</gml:lowerCorner>
+				<gml:upperCorner>5.529057 51.2764</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
+	</skos:Concept>
+	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Oudsbergen">
+		<skos:prefLabel xml:lang="nl">Gemeente Oudsbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Oudsbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Oudsbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Oudsbergen</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.454384 51.018767</gml:lowerCorner>
+				<gml:upperCorner>5.666067 51.146348</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Boutersem">
 		<skos:prefLabel xml:lang="nl">Gemeente Boutersem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Boutersem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Boutersem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Boutersem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.796013 50.790392</gml:lowerCorner>
@@ -129,6 +206,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Bonheiden">
 		<skos:prefLabel xml:lang="nl">Gemeente Bonheiden</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Bonheiden</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Bonheiden</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Bonheiden</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.502796 50.990148</gml:lowerCorner>
@@ -139,6 +219,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Bertem">
 		<skos:prefLabel xml:lang="nl">Gemeente Bertem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Bertem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Bertem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Bertem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.546178 50.818349</gml:lowerCorner>
@@ -149,6 +232,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Heusden-Zolder">
 		<skos:prefLabel xml:lang="nl">Gemeente Heusden-Zolder</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Heusden-Zolder</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Heusden-Zolder</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Heusden-Zolder</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.224276 50.975177</gml:lowerCorner>
@@ -159,6 +245,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Dendermonde">
 		<skos:prefLabel xml:lang="nl">Gemeente Dendermonde</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Dendermonde</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Dendermonde</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Dendermonde</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.996647 50.985111</gml:lowerCorner>
@@ -169,6 +258,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Eeklo">
 		<skos:prefLabel xml:lang="nl">Gemeente Eeklo</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Eeklo</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Eeklo</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Eeklo</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.50831 51.162312</gml:lowerCorner>
@@ -179,6 +271,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zutendaal">
 		<skos:prefLabel xml:lang="nl">Gemeente Zutendaal</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zutendaal</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zutendaal</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zutendaal</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.528264 50.895065</gml:lowerCorner>
@@ -189,6 +284,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Bekkevoort">
 		<skos:prefLabel xml:lang="nl">Gemeente Bekkevoort</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Bekkevoort</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Bekkevoort</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Bekkevoort</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.919405 50.892868</gml:lowerCorner>
@@ -199,6 +297,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wellen">
 		<skos:prefLabel xml:lang="nl">Gemeente Wellen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wellen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wellen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wellen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.264773 50.811754</gml:lowerCorner>
@@ -209,6 +310,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hemiksem">
 		<skos:prefLabel xml:lang="nl">Gemeente Hemiksem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hemiksem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hemiksem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hemiksem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.322621 51.129299</gml:lowerCorner>
@@ -219,6 +323,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Bocholt">
 		<skos:prefLabel xml:lang="nl">Gemeente Bocholt</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Bocholt</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Bocholt</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Bocholt</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.477443 51.130542</gml:lowerCorner>
@@ -229,6 +336,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Alveringem">
 		<skos:prefLabel xml:lang="nl">Gemeente Alveringem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Alveringem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Alveringem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Alveringem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.590171 50.906633</gml:lowerCorner>
@@ -239,6 +349,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hoeselt">
 		<skos:prefLabel xml:lang="nl">Gemeente Hoeselt</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hoeselt</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hoeselt</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hoeselt</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.429117 50.813737</gml:lowerCorner>
@@ -249,10 +362,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zingem">
 		<skos:prefLabel xml:lang="nl">Gemeente Zingem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zingem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zingem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zingem</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.563729 50.882357</gml:lowerCorner>
+				<gml:upperCorner>3.686774 50.940163</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Opwijk">
 		<skos:prefLabel xml:lang="nl">Gemeente Opwijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Opwijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Opwijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Opwijk</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.142829 50.931984</gml:lowerCorner>
@@ -263,6 +388,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wichelen">
 		<skos:prefLabel xml:lang="nl">Gemeente Wichelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wichelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wichelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wichelen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.911384 50.971314</gml:lowerCorner>
@@ -273,10 +401,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Sint-Amands">
 		<skos:prefLabel xml:lang="nl">Gemeente Sint-Amands</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Sint-Amands</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Sint-Amands</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Sint-Amands</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.18699 51.031739</gml:lowerCorner>
+				<gml:upperCorner>4.275109 51.078353</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Niel">
 		<skos:prefLabel xml:lang="nl">Gemeente Niel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Niel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Niel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Niel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.30805 51.095674</gml:lowerCorner>
@@ -287,6 +427,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Waregem">
 		<skos:prefLabel xml:lang="nl">Gemeente Waregem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Waregem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Waregem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Waregem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.3202 50.844984</gml:lowerCorner>
@@ -297,6 +440,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Holsbeek">
 		<skos:prefLabel xml:lang="nl">Gemeente Holsbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Holsbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Holsbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Holsbeek</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.715666 50.896883</gml:lowerCorner>
@@ -307,6 +453,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lokeren">
 		<skos:prefLabel xml:lang="nl">Gemeente Lokeren</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lokeren</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lokeren</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lokeren</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.896617 51.071292</gml:lowerCorner>
@@ -317,6 +466,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Affligem">
 		<skos:prefLabel xml:lang="nl">Gemeente Affligem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Affligem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Affligem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Affligem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.074244 50.883234</gml:lowerCorner>
@@ -327,6 +479,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Westerlo">
 		<skos:prefLabel xml:lang="nl">Gemeente Westerlo</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Westerlo</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Westerlo</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Westerlo</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.811707 51.063804</gml:lowerCorner>
@@ -337,6 +492,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Buggenhout">
 		<skos:prefLabel xml:lang="nl">Gemeente Buggenhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Buggenhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Buggenhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Buggenhout</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.154298 50.982219</gml:lowerCorner>
@@ -347,6 +505,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Scherpenheuvel-Zichem">
 		<skos:prefLabel xml:lang="nl">Gemeente Scherpenheuvel-Zichem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Scherpenheuvel-Zichem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Scherpenheuvel-Zichem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Scherpenheuvel-Zichem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.902316 50.952996</gml:lowerCorner>
@@ -357,6 +518,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Meise">
 		<skos:prefLabel xml:lang="nl">Gemeente Meise</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Meise</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Meise</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Meise</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.270459 50.920714</gml:lowerCorner>
@@ -367,6 +531,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Tienen">
 		<skos:prefLabel xml:lang="nl">Gemeente Tienen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Tienen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Tienen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Tienen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.851715 50.752105</gml:lowerCorner>
@@ -377,6 +544,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Nazareth">
 		<skos:prefLabel xml:lang="nl">Gemeente Nazareth</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Nazareth</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Nazareth</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Nazareth</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.538564 50.928549</gml:lowerCorner>
@@ -387,6 +557,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Borsbeek">
 		<skos:prefLabel xml:lang="nl">Gemeente Borsbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Borsbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Borsbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Borsbeek</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.470017 51.180589</gml:lowerCorner>
@@ -397,6 +570,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Destelbergen">
 		<skos:prefLabel xml:lang="nl">Gemeente Destelbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Destelbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Destelbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Destelbergen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.756077 50.993044</gml:lowerCorner>
@@ -407,6 +583,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Edegem">
 		<skos:prefLabel xml:lang="nl">Gemeente Edegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Edegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Edegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Edegem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.397005 51.144737</gml:lowerCorner>
@@ -417,6 +596,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Koekelare">
 		<skos:prefLabel xml:lang="nl">Gemeente Koekelare</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Koekelare</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Koekelare</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Koekelare</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.899387 51.04183</gml:lowerCorner>
@@ -427,6 +609,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kortemark">
 		<skos:prefLabel xml:lang="nl">Gemeente Kortemark</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kortemark</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kortemark</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kortemark</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.928541 50.984016</gml:lowerCorner>
@@ -437,6 +622,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Maldegem">
 		<skos:prefLabel xml:lang="nl">Gemeente Maldegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Maldegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Maldegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Maldegem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.360226 51.146852</gml:lowerCorner>
@@ -447,6 +635,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ranst">
 		<skos:prefLabel xml:lang="nl">Gemeente Ranst</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ranst</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ranst</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ranst</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.530087 51.148285</gml:lowerCorner>
@@ -457,6 +648,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hooglede">
 		<skos:prefLabel xml:lang="nl">Gemeente Hooglede</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hooglede</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hooglede</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hooglede</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.018434 50.957262</gml:lowerCorner>
@@ -467,6 +661,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lierde">
 		<skos:prefLabel xml:lang="nl">Gemeente Lierde</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lierde</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lierde</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lierde</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.783478 50.774716</gml:lowerCorner>
@@ -477,6 +674,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Denderleeuw">
 		<skos:prefLabel xml:lang="nl">Gemeente Denderleeuw</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Denderleeuw</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Denderleeuw</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Denderleeuw</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.02861 50.864555</gml:lowerCorner>
@@ -487,6 +687,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wetteren">
 		<skos:prefLabel xml:lang="nl">Gemeente Wetteren</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wetteren</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wetteren</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wetteren</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.820682 50.951216</gml:lowerCorner>
@@ -497,10 +700,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kruishoutem">
 		<skos:prefLabel xml:lang="nl">Gemeente Kruishoutem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kruishoutem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kruishoutem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kruishoutem</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.466746 50.869814</gml:lowerCorner>
+				<gml:upperCorner>3.588253 50.953074</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zaventem">
 		<skos:prefLabel xml:lang="nl">Gemeente Zaventem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zaventem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zaventem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zaventem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.420868 50.834319</gml:lowerCorner>
@@ -511,6 +726,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Alken">
 		<skos:prefLabel xml:lang="nl">Gemeente Alken</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Alken</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Alken</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Alken</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.242123 50.853665</gml:lowerCorner>
@@ -521,6 +739,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zoutleeuw">
 		<skos:prefLabel xml:lang="nl">Gemeente Zoutleeuw</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zoutleeuw</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zoutleeuw</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zoutleeuw</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.043404 50.779054</gml:lowerCorner>
@@ -531,6 +752,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/As">
 		<skos:prefLabel xml:lang="nl">Gemeente As</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente As</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente As</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente As</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.528896 50.977315</gml:lowerCorner>
@@ -541,6 +765,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Moerbeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Moerbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Moerbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Moerbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Moerbeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.901789 51.13668</gml:lowerCorner>
@@ -551,6 +778,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Sint-Niklaas">
 		<skos:prefLabel xml:lang="nl">Gemeente Sint-Niklaas</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Sint-Niklaas</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Sint-Niklaas</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Sint-Niklaas</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.985325 51.129679</gml:lowerCorner>
@@ -561,6 +791,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Gingelom">
 		<skos:prefLabel xml:lang="nl">Gemeente Gingelom</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Gingelom</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Gingelom</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Gingelom</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.101536 50.695434</gml:lowerCorner>
@@ -571,6 +804,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Horebeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Horebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Horebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Horebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Horebeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.672197 50.798399</gml:lowerCorner>
@@ -581,6 +817,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Poperinge">
 		<skos:prefLabel xml:lang="nl">Gemeente Poperinge</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Poperinge</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Poperinge</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Poperinge</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.598638 50.794811</gml:lowerCorner>
@@ -591,6 +830,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Oudenaarde">
 		<skos:prefLabel xml:lang="nl">Gemeente Oudenaarde</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Oudenaarde</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Oudenaarde</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Oudenaarde</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.541091 50.790019</gml:lowerCorner>
@@ -601,6 +843,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Dessel">
 		<skos:prefLabel xml:lang="nl">Gemeente Dessel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Dessel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Dessel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Dessel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.049942 51.218693</gml:lowerCorner>
@@ -611,6 +856,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Bornem">
 		<skos:prefLabel xml:lang="nl">Gemeente Bornem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Bornem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Bornem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Bornem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.172419 51.05818</gml:lowerCorner>
@@ -621,6 +869,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Heers">
 		<skos:prefLabel xml:lang="nl">Gemeente Heers</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Heers</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Heers</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Heers</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.234355 50.715099</gml:lowerCorner>
@@ -631,6 +882,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Sint-Lievens-Houtem">
 		<skos:prefLabel xml:lang="nl">Gemeente Sint-Lievens-Houtem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Sint-Lievens-Houtem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Sint-Lievens-Houtem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Sint-Lievens-Houtem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.823454 50.902532</gml:lowerCorner>
@@ -641,6 +895,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Roosdaal">
 		<skos:prefLabel xml:lang="nl">Gemeente Roosdaal</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Roosdaal</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Roosdaal</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Roosdaal</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.040664 50.811497</gml:lowerCorner>
@@ -651,6 +908,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Sint-Pieters-Leeuw">
 		<skos:prefLabel xml:lang="nl">Gemeente Sint-Pieters-Leeuw</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Sint-Pieters-Leeuw</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Sint-Pieters-Leeuw</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Sint-Pieters-Leeuw</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.17361 50.749491</gml:lowerCorner>
@@ -661,6 +921,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Steenokkerzeel">
 		<skos:prefLabel xml:lang="nl">Gemeente Steenokkerzeel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Steenokkerzeel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Steenokkerzeel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Steenokkerzeel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.457832 50.889082</gml:lowerCorner>
@@ -671,6 +934,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Haaltert">
 		<skos:prefLabel xml:lang="nl">Gemeente Haaltert</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Haaltert</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Haaltert</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Haaltert</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.936965 50.858543</gml:lowerCorner>
@@ -681,6 +947,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kraainem">
 		<skos:prefLabel xml:lang="nl">Gemeente Kraainem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kraainem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kraainem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kraainem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.449036 50.818285</gml:lowerCorner>
@@ -691,6 +960,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kluisbergen">
 		<skos:prefLabel xml:lang="nl">Gemeente Kluisbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kluisbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kluisbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kluisbergen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.459054 50.757569</gml:lowerCorner>
@@ -701,6 +973,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Begijnendijk">
 		<skos:prefLabel xml:lang="nl">Gemeente Begijnendijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Begijnendijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Begijnendijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Begijnendijk</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.752955 50.978039</gml:lowerCorner>
@@ -711,6 +986,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/De Panne">
 		<skos:prefLabel xml:lang="nl">Gemeente De Panne</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente De Panne</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente De Panne</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente De Panne</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.541329 51.046166</gml:lowerCorner>
@@ -721,6 +999,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Berlaar">
 		<skos:prefLabel xml:lang="nl">Gemeente Berlaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Berlaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Berlaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Berlaar</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.605083 51.075227</gml:lowerCorner>
@@ -731,6 +1012,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Sint-Gillis-Waas">
 		<skos:prefLabel xml:lang="nl">Gemeente Sint-Gillis-Waas</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Sint-Gillis-Waas</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Sint-Gillis-Waas</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Sint-Gillis-Waas</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.05908 51.175441</gml:lowerCorner>
@@ -741,6 +1025,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Galmaarden">
 		<skos:prefLabel xml:lang="nl">Gemeente Galmaarden</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Galmaarden</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Galmaarden</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Galmaarden</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.931014 50.719048</gml:lowerCorner>
@@ -751,6 +1038,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Rumst">
 		<skos:prefLabel xml:lang="nl">Gemeente Rumst</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Rumst</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Rumst</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Rumst</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.359414 51.071566</gml:lowerCorner>
@@ -761,6 +1051,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wijnegem">
 		<skos:prefLabel xml:lang="nl">Gemeente Wijnegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wijnegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wijnegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wijnegem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.481255 51.215826</gml:lowerCorner>
@@ -771,6 +1064,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Waasmunster">
 		<skos:prefLabel xml:lang="nl">Gemeente Waasmunster</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Waasmunster</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Waasmunster</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Waasmunster</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.012185 51.090955</gml:lowerCorner>
@@ -781,6 +1077,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hasselt">
 		<skos:prefLabel xml:lang="nl">Gemeente Hasselt</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hasselt</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hasselt</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hasselt</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.212147 50.867554</gml:lowerCorner>
@@ -791,6 +1090,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Landen">
 		<skos:prefLabel xml:lang="nl">Gemeente Landen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Landen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Landen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Landen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.983936 50.703346</gml:lowerCorner>
@@ -801,6 +1103,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Merchtem">
 		<skos:prefLabel xml:lang="nl">Gemeente Merchtem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Merchtem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Merchtem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Merchtem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.181495 50.90893</gml:lowerCorner>
@@ -811,6 +1116,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Veurne">
 		<skos:prefLabel xml:lang="nl">Gemeente Veurne</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Veurne</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Veurne</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Veurne</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.565879 50.985329</gml:lowerCorner>
@@ -821,6 +1129,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hechtel-Eksel">
 		<skos:prefLabel xml:lang="nl">Gemeente Hechtel-Eksel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hechtel-Eksel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hechtel-Eksel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hechtel-Eksel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.26094 51.087747</gml:lowerCorner>
@@ -831,6 +1142,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Schoten">
 		<skos:prefLabel xml:lang="nl">Gemeente Schoten</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Schoten</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Schoten</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Schoten</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.455287 51.235275</gml:lowerCorner>
@@ -841,6 +1155,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Langemark-Poelkapelle">
 		<skos:prefLabel xml:lang="nl">Gemeente Langemark-Poelkapelle</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Langemark-Poelkapelle</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Langemark-Poelkapelle</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Langemark-Poelkapelle</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.843569 50.868312</gml:lowerCorner>
@@ -851,6 +1168,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Willebroek">
 		<skos:prefLabel xml:lang="nl">Gemeente Willebroek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Willebroek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Willebroek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Willebroek</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.322798 51.016381</gml:lowerCorner>
@@ -861,6 +1181,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kampenhout">
 		<skos:prefLabel xml:lang="nl">Gemeente Kampenhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kampenhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kampenhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kampenhout</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.513008 50.909307</gml:lowerCorner>
@@ -871,6 +1194,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Tremelo">
 		<skos:prefLabel xml:lang="nl">Gemeente Tremelo</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Tremelo</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Tremelo</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Tremelo</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.652882 50.979179</gml:lowerCorner>
@@ -881,6 +1207,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Moorslede">
 		<skos:prefLabel xml:lang="nl">Gemeente Moorslede</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Moorslede</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Moorslede</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Moorslede</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.027383 50.837086</gml:lowerCorner>
@@ -891,6 +1220,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Dilsen-Stokkem">
 		<skos:prefLabel xml:lang="nl">Gemeente Dilsen-Stokkem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Dilsen-Stokkem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Dilsen-Stokkem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Dilsen-Stokkem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.622462 50.995851</gml:lowerCorner>
@@ -901,6 +1233,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Knokke-Heist">
 		<skos:prefLabel xml:lang="nl">Gemeente Knokke-Heist</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Knokke-Heist</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Knokke-Heist</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Knokke-Heist</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.225127 51.296093</gml:lowerCorner>
@@ -911,6 +1246,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kapelle-op-den-Bos">
 		<skos:prefLabel xml:lang="nl">Gemeente Kapelle-op-den-Bos</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kapelle-op-den-Bos</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kapelle-op-den-Bos</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kapelle-op-den-Bos</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.319543 50.968611</gml:lowerCorner>
@@ -921,6 +1259,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Heuvelland">
 		<skos:prefLabel xml:lang="nl">Gemeente Heuvelland</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Heuvelland</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Heuvelland</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Heuvelland</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.71302 50.708283</gml:lowerCorner>
@@ -931,6 +1272,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Dentergem">
 		<skos:prefLabel xml:lang="nl">Gemeente Dentergem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Dentergem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Dentergem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Dentergem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.360808 50.91912</gml:lowerCorner>
@@ -941,6 +1285,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Oud-Heverlee">
 		<skos:prefLabel xml:lang="nl">Gemeente Oud-Heverlee</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Oud-Heverlee</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Oud-Heverlee</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Oud-Heverlee</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.632116 50.790863</gml:lowerCorner>
@@ -951,6 +1298,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vorselaar">
 		<skos:prefLabel xml:lang="nl">Gemeente Vorselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Vorselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Vorselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Vorselaar</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.726128 51.182878</gml:lowerCorner>
@@ -961,6 +1311,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wielsbeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Wielsbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wielsbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wielsbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wielsbeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.310169 50.880307</gml:lowerCorner>
@@ -971,6 +1324,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Sint-Truiden">
 		<skos:prefLabel xml:lang="nl">Gemeente Sint-Truiden</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Sint-Truiden</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Sint-Truiden</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Sint-Truiden</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.106577 50.748903</gml:lowerCorner>
@@ -981,6 +1337,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kortenaken">
 		<skos:prefLabel xml:lang="nl">Gemeente Kortenaken</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kortenaken</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kortenaken</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kortenaken</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.969194 50.845528</gml:lowerCorner>
@@ -991,6 +1350,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lochristi">
 		<skos:prefLabel xml:lang="nl">Gemeente Lochristi</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lochristi</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lochristi</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lochristi</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.786605 51.050212</gml:lowerCorner>
@@ -999,8 +1361,24 @@
 		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
+	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Deinze-tot-eind-2018">
+		<skos:prefLabel xml:lang="nl">Gemeente Deinze (tot eind 2018)</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Deinze (tot eind 2018)</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Deinze (tot eind 2018)</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Deinze (tot eind 2018)</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.413384 50.947141</gml:lowerCorner>
+				<gml:upperCorner>3.61106 51.030255</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
+	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Deinze">
 		<skos:prefLabel xml:lang="nl">Gemeente Deinze</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Deinze</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Deinze</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Deinze</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.413384 50.947141</gml:lowerCorner>
@@ -1011,6 +1389,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Diksmuide">
 		<skos:prefLabel xml:lang="nl">Gemeente Diksmuide</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Diksmuide</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Diksmuide</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Diksmuide</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.743106 50.974682</gml:lowerCorner>
@@ -1021,10 +1402,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Nevele">
 		<skos:prefLabel xml:lang="nl">Gemeente Nevele</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Nevele</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Nevele</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Nevele</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.499387 51.011126</gml:lowerCorner>
+				<gml:upperCorner>3.613169 51.101074</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Leuven">
 		<skos:prefLabel xml:lang="nl">Gemeente Leuven</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Leuven</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Leuven</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Leuven</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.640294 50.824206</gml:lowerCorner>
@@ -1035,6 +1428,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Boortmeerbeek">
 		<skos:prefLabel xml:lang="nl">Gemeente Boortmeerbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Boortmeerbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Boortmeerbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Boortmeerbeek</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.512425 50.958219</gml:lowerCorner>
@@ -1045,6 +1441,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ardooie">
 		<skos:prefLabel xml:lang="nl">Gemeente Ardooie</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ardooie</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ardooie</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ardooie</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.164235 50.944346</gml:lowerCorner>
@@ -1055,6 +1454,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Bever">
 		<skos:prefLabel xml:lang="nl">Gemeente Bever</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Bever</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Bever</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Bever</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.888733 50.688983</gml:lowerCorner>
@@ -1065,6 +1467,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Balen">
 		<skos:prefLabel xml:lang="nl">Gemeente Balen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Balen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Balen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Balen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.088714 51.116115</gml:lowerCorner>
@@ -1075,6 +1480,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Drogenbos">
 		<skos:prefLabel xml:lang="nl">Gemeente Drogenbos</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Drogenbos</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Drogenbos</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Drogenbos</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.288623 50.779707</gml:lowerCorner>
@@ -1085,6 +1493,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ieper">
 		<skos:prefLabel xml:lang="nl">Gemeente Ieper</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ieper</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ieper</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ieper</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.769051 50.793608</gml:lowerCorner>
@@ -1095,6 +1506,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zwevegem">
 		<skos:prefLabel xml:lang="nl">Gemeente Zwevegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zwevegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zwevegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zwevegem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.304913 50.73748</gml:lowerCorner>
@@ -1105,6 +1519,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Sint-Katelijne-Waver">
 		<skos:prefLabel xml:lang="nl">Gemeente Sint-Katelijne-Waver</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Sint-Katelijne-Waver</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Sint-Katelijne-Waver</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Sint-Katelijne-Waver</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.462722 51.034635</gml:lowerCorner>
@@ -1113,8 +1530,24 @@
 		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
+	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Aalter-tot-eind-2018">
+		<skos:prefLabel xml:lang="nl">Gemeente Aalter (tot eind 2018)</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Aalter (tot eind 2018)</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Aalter (tot eind 2018)</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Aalter (tot eind 2018)</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.331312 51.016464</gml:lowerCorner>
+				<gml:upperCorner>3.52572 51.122645</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
+		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
+	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Aalter">
 		<skos:prefLabel xml:lang="nl">Gemeente Aalter</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Aalter</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Aalter</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Aalter</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.331312 51.016464</gml:lowerCorner>
@@ -1125,6 +1558,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hulshout">
 		<skos:prefLabel xml:lang="nl">Gemeente Hulshout</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hulshout</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hulshout</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hulshout</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.766862 51.028318</gml:lowerCorner>
@@ -1135,6 +1571,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kruibeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Kruibeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kruibeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kruibeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kruibeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.23199 51.123522</gml:lowerCorner>
@@ -1145,6 +1584,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wervik">
 		<skos:prefLabel xml:lang="nl">Gemeente Wervik</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wervik</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wervik</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wervik</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.998527 50.769799</gml:lowerCorner>
@@ -1155,6 +1597,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Herentals">
 		<skos:prefLabel xml:lang="nl">Gemeente Herentals</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Herentals</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Herentals</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Herentals</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.775637 51.102984</gml:lowerCorner>
@@ -1165,10 +1610,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lovendegem">
 		<skos:prefLabel xml:lang="nl">Gemeente Lovendegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lovendegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lovendegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lovendegem</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.586292 51.074139</gml:lowerCorner>
+				<gml:upperCorner>3.66721 51.13897</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Gavere">
 		<skos:prefLabel xml:lang="nl">Gemeente Gavere</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Gavere</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Gavere</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Gavere</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.623964 50.902386</gml:lowerCorner>
@@ -1179,6 +1636,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kuurne">
 		<skos:prefLabel xml:lang="nl">Gemeente Kuurne</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kuurne</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kuurne</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kuurne</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.240438 50.83956</gml:lowerCorner>
@@ -1189,6 +1649,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Sint-Genesius-Rode">
 		<skos:prefLabel xml:lang="nl">Gemeente Sint-Genesius-Rode</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Sint-Genesius-Rode</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Sint-Genesius-Rode</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Sint-Genesius-Rode</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.321159 50.715101</gml:lowerCorner>
@@ -1199,6 +1662,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Antwerpen">
 		<skos:prefLabel xml:lang="nl">Gemeente Antwerpen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Antwerpen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Antwerpen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Antwerpen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.217577 51.143324</gml:lowerCorner>
@@ -1209,6 +1675,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Koksijde">
 		<skos:prefLabel xml:lang="nl">Gemeente Koksijde</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Koksijde</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Koksijde</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Koksijde</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.601783 51.081284</gml:lowerCorner>
@@ -1219,6 +1688,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Beernem">
 		<skos:prefLabel xml:lang="nl">Gemeente Beernem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Beernem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Beernem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Beernem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.272945 51.09883</gml:lowerCorner>
@@ -1229,6 +1701,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Overijse">
 		<skos:prefLabel xml:lang="nl">Gemeente Overijse</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Overijse</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Overijse</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Overijse</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.451664 50.727331</gml:lowerCorner>
@@ -1239,6 +1714,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Voeren">
 		<skos:prefLabel xml:lang="nl">Gemeente Voeren</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Voeren</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Voeren</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Voeren</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.682171 50.709865</gml:lowerCorner>
@@ -1249,6 +1727,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Herstappe">
 		<skos:prefLabel xml:lang="nl">Gemeente Herstappe</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Herstappe</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Herstappe</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Herstappe</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.415437 50.718101</gml:lowerCorner>
@@ -1259,6 +1740,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/De Haan">
 		<skos:prefLabel xml:lang="nl">Gemeente De Haan</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente De Haan</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente De Haan</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente De Haan</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.984326 51.219676</gml:lowerCorner>
@@ -1269,10 +1753,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zomergem">
 		<skos:prefLabel xml:lang="nl">Gemeente Zomergem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zomergem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zomergem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zomergem</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.509877 51.090176</gml:lowerCorner>
+				<gml:upperCorner>3.612292 51.169773</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Dilbeek">
 		<skos:prefLabel xml:lang="nl">Gemeente Dilbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Dilbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Dilbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Dilbeek</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.166009 50.812622</gml:lowerCorner>
@@ -1283,10 +1779,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Knesselare">
 		<skos:prefLabel xml:lang="nl">Gemeente Knesselare</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Knesselare</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Knesselare</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Knesselare</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.367858 51.109272</gml:lowerCorner>
+				<gml:upperCorner>3.525187 51.159897</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Nieuwpoort">
 		<skos:prefLabel xml:lang="nl">Gemeente Nieuwpoort</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Nieuwpoort</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Nieuwpoort</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Nieuwpoort</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.699807 51.086721</gml:lowerCorner>
@@ -1297,6 +1805,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Schelle">
 		<skos:prefLabel xml:lang="nl">Gemeente Schelle</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Schelle</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Schelle</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Schelle</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.307737 51.112699</gml:lowerCorner>
@@ -1307,6 +1818,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Brecht">
 		<skos:prefLabel xml:lang="nl">Gemeente Brecht</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Brecht</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Brecht</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Brecht</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.540821 51.275625</gml:lowerCorner>
@@ -1317,6 +1831,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vleteren">
 		<skos:prefLabel xml:lang="nl">Gemeente Vleteren</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Vleteren</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Vleteren</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Vleteren</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.690037 50.882085</gml:lowerCorner>
@@ -1327,6 +1844,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Aarschot">
 		<skos:prefLabel xml:lang="nl">Gemeente Aarschot</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Aarschot</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Aarschot</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Aarschot</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.773958 50.953318</gml:lowerCorner>
@@ -1337,6 +1857,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Malle">
 		<skos:prefLabel xml:lang="nl">Gemeente Malle</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Malle</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Malle</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Malle</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.63402 51.242449</gml:lowerCorner>
@@ -1347,6 +1870,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wevelgem">
 		<skos:prefLabel xml:lang="nl">Gemeente Wevelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wevelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wevelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wevelgem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.102345 50.793923</gml:lowerCorner>
@@ -1357,6 +1883,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Brakel">
 		<skos:prefLabel xml:lang="nl">Gemeente Brakel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Brakel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Brakel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Brakel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.699171 50.747489</gml:lowerCorner>
@@ -1367,6 +1896,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Avelgem">
 		<skos:prefLabel xml:lang="nl">Gemeente Avelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Avelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Avelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Avelgem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.390291 50.740343</gml:lowerCorner>
@@ -1377,6 +1909,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lendelede">
 		<skos:prefLabel xml:lang="nl">Gemeente Lendelede</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lendelede</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lendelede</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lendelede</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.188206 50.871362</gml:lowerCorner>
@@ -1387,6 +1922,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Sint-Martens-Latem">
 		<skos:prefLabel xml:lang="nl">Gemeente Sint-Martens-Latem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Sint-Martens-Latem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Sint-Martens-Latem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Sint-Martens-Latem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.591237 50.981712</gml:lowerCorner>
@@ -1397,6 +1935,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Bilzen">
 		<skos:prefLabel xml:lang="nl">Gemeente Bilzen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Bilzen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Bilzen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Bilzen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.440557 50.816353</gml:lowerCorner>
@@ -1407,6 +1948,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Aalst">
 		<skos:prefLabel xml:lang="nl">Gemeente Aalst</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Aalst</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Aalst</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Aalst</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.982446 50.899397</gml:lowerCorner>
@@ -1417,6 +1961,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Oostrozebeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Oostrozebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Oostrozebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Oostrozebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Oostrozebeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.286113 50.904286</gml:lowerCorner>
@@ -1427,6 +1974,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Spiere-Helkijn">
 		<skos:prefLabel xml:lang="nl">Gemeente Spiere-Helkijn</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Spiere-Helkijn</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Spiere-Helkijn</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Spiere-Helkijn</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.32376 50.709574</gml:lowerCorner>
@@ -1437,6 +1987,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Essen">
 		<skos:prefLabel xml:lang="nl">Gemeente Essen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Essen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Essen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Essen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.379328 51.415475</gml:lowerCorner>
@@ -1447,6 +2000,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kortenberg">
 		<skos:prefLabel xml:lang="nl">Gemeente Kortenberg</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kortenberg</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kortenberg</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kortenberg</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.515056 50.855808</gml:lowerCorner>
@@ -1457,6 +2013,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Maarkedal">
 		<skos:prefLabel xml:lang="nl">Gemeente Maarkedal</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Maarkedal</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Maarkedal</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Maarkedal</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.578115 50.764828</gml:lowerCorner>
@@ -1467,6 +2026,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Berlare">
 		<skos:prefLabel xml:lang="nl">Gemeente Berlare</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Berlare</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Berlare</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Berlare</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.928147 51.00407</gml:lowerCorner>
@@ -1477,6 +2039,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wemmel">
 		<skos:prefLabel xml:lang="nl">Gemeente Wemmel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wemmel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wemmel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wemmel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.277792 50.890389</gml:lowerCorner>
@@ -1487,6 +2052,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Herselt">
 		<skos:prefLabel xml:lang="nl">Gemeente Herselt</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Herselt</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Herselt</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Herselt</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.79901 51.01048</gml:lowerCorner>
@@ -1497,6 +2065,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Grobbendonk">
 		<skos:prefLabel xml:lang="nl">Gemeente Grobbendonk</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Grobbendonk</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Grobbendonk</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Grobbendonk</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.692336 51.149525</gml:lowerCorner>
@@ -1507,6 +2078,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wommelgem">
 		<skos:prefLabel xml:lang="nl">Gemeente Wommelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wommelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wommelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wommelgem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.482298 51.186597</gml:lowerCorner>
@@ -1517,6 +2091,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hoeilaart">
 		<skos:prefLabel xml:lang="nl">Gemeente Hoeilaart</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hoeilaart</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hoeilaart</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hoeilaart</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.40508 50.735134</gml:lowerCorner>
@@ -1527,6 +2104,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kortessem">
 		<skos:prefLabel xml:lang="nl">Gemeente Kortessem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kortessem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kortessem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kortessem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.352459 50.807774</gml:lowerCorner>
@@ -1537,6 +2117,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lede">
 		<skos:prefLabel xml:lang="nl">Gemeente Lede</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lede</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lede</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lede</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.867588 50.947547</gml:lowerCorner>
@@ -1547,6 +2130,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Bredene">
 		<skos:prefLabel xml:lang="nl">Gemeente Bredene</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Bredene</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Bredene</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Bredene</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.941544 51.214371</gml:lowerCorner>
@@ -1557,6 +2143,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ruiselede">
 		<skos:prefLabel xml:lang="nl">Gemeente Ruiselede</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ruiselede</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ruiselede</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ruiselede</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.326904 51.024155</gml:lowerCorner>
@@ -1567,6 +2156,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Arendonk">
 		<skos:prefLabel xml:lang="nl">Gemeente Arendonk</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Arendonk</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Arendonk</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Arendonk</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.029475 51.291238</gml:lowerCorner>
@@ -1577,6 +2169,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zwalm">
 		<skos:prefLabel xml:lang="nl">Gemeente Zwalm</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zwalm</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zwalm</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zwalm</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.667761 50.833161</gml:lowerCorner>
@@ -1587,6 +2182,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Oostkamp">
 		<skos:prefLabel xml:lang="nl">Gemeente Oostkamp</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Oostkamp</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Oostkamp</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Oostkamp</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.150427 51.056301</gml:lowerCorner>
@@ -1597,6 +2195,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Meerhout">
 		<skos:prefLabel xml:lang="nl">Gemeente Meerhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Meerhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Meerhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Meerhout</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.011195 51.093734</gml:lowerCorner>
@@ -1607,6 +2208,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Tongeren">
 		<skos:prefLabel xml:lang="nl">Gemeente Tongeren</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Tongeren</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Tongeren</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Tongeren</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.388968 50.720158</gml:lowerCorner>
@@ -1617,6 +2221,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lubbeek">
 		<skos:prefLabel xml:lang="nl">Gemeente Lubbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lubbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lubbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lubbeek</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.748034 50.851706</gml:lowerCorner>
@@ -1627,6 +2234,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Herk-de-Stad">
 		<skos:prefLabel xml:lang="nl">Gemeente Herk-de-Stad</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Herk-de-Stad</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Herk-de-Stad</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Herk-de-Stad</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.116679 50.892488</gml:lowerCorner>
@@ -1637,6 +2247,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Borgloon">
 		<skos:prefLabel xml:lang="nl">Gemeente Borgloon</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Borgloon</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Borgloon</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Borgloon</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.250376 50.769464</gml:lowerCorner>
@@ -1647,6 +2260,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Rotselaar">
 		<skos:prefLabel xml:lang="nl">Gemeente Rotselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Rotselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Rotselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Rotselaar</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.669977 50.928439</gml:lowerCorner>
@@ -1657,6 +2273,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Halen">
 		<skos:prefLabel xml:lang="nl">Gemeente Halen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Halen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Halen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Halen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.041507 50.90898</gml:lowerCorner>
@@ -1667,6 +2286,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Melle">
 		<skos:prefLabel xml:lang="nl">Gemeente Melle</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Melle</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Melle</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Melle</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.762894 50.971355</gml:lowerCorner>
@@ -1677,6 +2299,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Beveren">
 		<skos:prefLabel xml:lang="nl">Gemeente Beveren</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Beveren</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Beveren</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Beveren</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.152495 51.166406</gml:lowerCorner>
@@ -1687,6 +2312,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Herenthout">
 		<skos:prefLabel xml:lang="nl">Gemeente Herenthout</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Herenthout</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Herenthout</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Herenthout</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.714141 51.111755</gml:lowerCorner>
@@ -1697,6 +2325,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Asse">
 		<skos:prefLabel xml:lang="nl">Gemeente Asse</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Asse</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Asse</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Asse</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.138997 50.873441</gml:lowerCorner>
@@ -1707,6 +2338,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Leopoldsburg">
 		<skos:prefLabel xml:lang="nl">Gemeente Leopoldsburg</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Leopoldsburg</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Leopoldsburg</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Leopoldsburg</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.201487 51.095868</gml:lowerCorner>
@@ -1717,6 +2351,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Genk">
 		<skos:prefLabel xml:lang="nl">Gemeente Genk</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Genk</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Genk</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Genk</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.38483 50.913049</gml:lowerCorner>
@@ -1727,6 +2364,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Duffel">
 		<skos:prefLabel xml:lang="nl">Gemeente Duffel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Duffel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Duffel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Duffel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.464764 51.072544</gml:lowerCorner>
@@ -1737,6 +2377,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Boom">
 		<skos:prefLabel xml:lang="nl">Gemeente Boom</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Boom</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Boom</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Boom</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.340661 51.080653</gml:lowerCorner>
@@ -1747,6 +2390,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zuienkerke">
 		<skos:prefLabel xml:lang="nl">Gemeente Zuienkerke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zuienkerke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zuienkerke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zuienkerke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.061666 51.212591</gml:lowerCorner>
@@ -1757,6 +2403,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Houthalen-Helchteren">
 		<skos:prefLabel xml:lang="nl">Gemeente Houthalen-Helchteren</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Houthalen-Helchteren</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Houthalen-Helchteren</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Houthalen-Helchteren</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.335519 51.001227</gml:lowerCorner>
@@ -1767,6 +2416,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Merelbeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Merelbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Merelbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Merelbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Merelbeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.682877 50.933738</gml:lowerCorner>
@@ -1777,6 +2429,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Herzele">
 		<skos:prefLabel xml:lang="nl">Gemeente Herzele</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Herzele</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Herzele</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Herzele</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.837748 50.821631</gml:lowerCorner>
@@ -1787,6 +2442,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zonhoven">
 		<skos:prefLabel xml:lang="nl">Gemeente Zonhoven</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zonhoven</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zonhoven</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zonhoven</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.301041 50.962812</gml:lowerCorner>
@@ -1797,10 +2455,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Neerpelt">
 		<skos:prefLabel xml:lang="nl">Gemeente Neerpelt</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Neerpelt</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Neerpelt</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Neerpelt</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.399481 51.182034</gml:lowerCorner>
+				<gml:upperCorner>5.529057 51.2764</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vilvoorde">
 		<skos:prefLabel xml:lang="nl">Gemeente Vilvoorde</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Vilvoorde</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Vilvoorde</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Vilvoorde</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.360506 50.896987</gml:lowerCorner>
@@ -1811,6 +2481,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Menen">
 		<skos:prefLabel xml:lang="nl">Gemeente Menen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Menen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Menen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Menen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.08091 50.755319</gml:lowerCorner>
@@ -1821,6 +2494,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Oosterzele">
 		<skos:prefLabel xml:lang="nl">Gemeente Oosterzele</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Oosterzele</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Oosterzele</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Oosterzele</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.728151 50.894748</gml:lowerCorner>
@@ -1831,6 +2507,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Oudenburg">
 		<skos:prefLabel xml:lang="nl">Gemeente Oudenburg</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Oudenburg</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Oudenburg</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Oudenburg</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.936272 51.144463</gml:lowerCorner>
@@ -1841,6 +2520,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Nijlen">
 		<skos:prefLabel xml:lang="nl">Gemeente Nijlen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Nijlen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Nijlen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Nijlen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.597236 51.122513</gml:lowerCorner>
@@ -1851,6 +2533,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Tervuren">
 		<skos:prefLabel xml:lang="nl">Gemeente Tervuren</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Tervuren</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Tervuren</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Tervuren</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.447176 50.793874</gml:lowerCorner>
@@ -1861,6 +2546,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kaprijke">
 		<skos:prefLabel xml:lang="nl">Gemeente Kaprijke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kaprijke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kaprijke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kaprijke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.575438 51.1681</gml:lowerCorner>
@@ -1871,6 +2559,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ichtegem">
 		<skos:prefLabel xml:lang="nl">Gemeente Ichtegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ichtegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ichtegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ichtegem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.981778 51.054872</gml:lowerCorner>
@@ -1881,6 +2572,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Herent">
 		<skos:prefLabel xml:lang="nl">Gemeente Herent</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Herent</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Herent</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Herent</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.598495 50.878452</gml:lowerCorner>
@@ -1891,6 +2585,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lo-Reninge">
 		<skos:prefLabel xml:lang="nl">Gemeente Lo-Reninge</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lo-Reninge</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lo-Reninge</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lo-Reninge</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.696434 50.903547</gml:lowerCorner>
@@ -1901,6 +2598,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Maasmechelen">
 		<skos:prefLabel xml:lang="nl">Gemeente Maasmechelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Maasmechelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Maasmechelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Maasmechelen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.595352 50.910406</gml:lowerCorner>
@@ -1911,6 +2611,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Baarle-Hertog">
 		<skos:prefLabel xml:lang="nl">Gemeente Baarle-Hertog</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Baarle-Hertog</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Baarle-Hertog</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Baarle-Hertog</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.826449 51.392779</gml:lowerCorner>
@@ -1921,6 +2624,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Mol">
 		<skos:prefLabel xml:lang="nl">Gemeente Mol</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Mol</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Mol</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Mol</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.035364 51.153481</gml:lowerCorner>
@@ -1931,6 +2637,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Bierbeek">
 		<skos:prefLabel xml:lang="nl">Gemeente Bierbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Bierbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Bierbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Bierbeek</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.691231 50.788142</gml:lowerCorner>
@@ -1941,6 +2650,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hoogstraten">
 		<skos:prefLabel xml:lang="nl">Gemeente Hoogstraten</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hoogstraten</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hoogstraten</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hoogstraten</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.666586 51.375443</gml:lowerCorner>
@@ -1951,6 +2663,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zoersel">
 		<skos:prefLabel xml:lang="nl">Gemeente Zoersel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zoersel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zoersel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zoersel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.607643 51.218907</gml:lowerCorner>
@@ -1961,6 +2676,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Heist-op-den-Berg">
 		<skos:prefLabel xml:lang="nl">Gemeente Heist-op-den-Berg</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Heist-op-den-Berg</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Heist-op-den-Berg</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Heist-op-den-Berg</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.659022 50.998607</gml:lowerCorner>
@@ -1971,6 +2689,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Nieuwerkerken">
 		<skos:prefLabel xml:lang="nl">Gemeente Nieuwerkerken</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Nieuwerkerken</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Nieuwerkerken</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Nieuwerkerken</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.148432 50.851762</gml:lowerCorner>
@@ -1981,6 +2702,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lier">
 		<skos:prefLabel xml:lang="nl">Gemeente Lier</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lier</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lier</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lier</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.505843 51.072729</gml:lowerCorner>
@@ -1991,6 +2715,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Rijkevorsel">
 		<skos:prefLabel xml:lang="nl">Gemeente Rijkevorsel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Rijkevorsel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Rijkevorsel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Rijkevorsel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.717253 51.312605</gml:lowerCorner>
@@ -2001,6 +2728,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Brasschaat">
 		<skos:prefLabel xml:lang="nl">Gemeente Brasschaat</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Brasschaat</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Brasschaat</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Brasschaat</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.440186 51.268642</gml:lowerCorner>
@@ -2011,6 +2741,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Linter">
 		<skos:prefLabel xml:lang="nl">Gemeente Linter</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Linter</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Linter</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Linter</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.99218 50.776038</gml:lowerCorner>
@@ -2021,6 +2754,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/De Pinte">
 		<skos:prefLabel xml:lang="nl">Gemeente De Pinte</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente De Pinte</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente De Pinte</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente De Pinte</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.623616 50.954085</gml:lowerCorner>
@@ -2031,6 +2767,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Grimbergen">
 		<skos:prefLabel xml:lang="nl">Gemeente Grimbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Grimbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Grimbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Grimbergen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.318352 50.900929</gml:lowerCorner>
@@ -2041,6 +2780,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zwijndrecht">
 		<skos:prefLabel xml:lang="nl">Gemeente Zwijndrecht</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zwijndrecht</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zwijndrecht</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zwijndrecht</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.290099 51.185534</gml:lowerCorner>
@@ -2051,6 +2793,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Pepingen">
 		<skos:prefLabel xml:lang="nl">Gemeente Pepingen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Pepingen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Pepingen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Pepingen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.071997 50.705503</gml:lowerCorner>
@@ -2061,6 +2806,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lennik">
 		<skos:prefLabel xml:lang="nl">Gemeente Lennik</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lennik</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lennik</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lennik</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.108903 50.779665</gml:lowerCorner>
@@ -2071,6 +2819,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Erpe-Mere">
 		<skos:prefLabel xml:lang="nl">Gemeente Erpe-Mere</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Erpe-Mere</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Erpe-Mere</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Erpe-Mere</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.892731 50.87411</gml:lowerCorner>
@@ -2081,6 +2832,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Oud-Turnhout">
 		<skos:prefLabel xml:lang="nl">Gemeente Oud-Turnhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Oud-Turnhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Oud-Turnhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Oud-Turnhout</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.962176 51.276045</gml:lowerCorner>
@@ -2091,6 +2845,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kapellen">
 		<skos:prefLabel xml:lang="nl">Gemeente Kapellen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kapellen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kapellen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kapellen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.39166 51.292633</gml:lowerCorner>
@@ -2101,6 +2858,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Laakdal">
 		<skos:prefLabel xml:lang="nl">Gemeente Laakdal</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Laakdal</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Laakdal</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Laakdal</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.928518 51.034881</gml:lowerCorner>
@@ -2111,6 +2871,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Anzegem">
 		<skos:prefLabel xml:lang="nl">Gemeente Anzegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Anzegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Anzegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Anzegem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.383829 50.792536</gml:lowerCorner>
@@ -2121,6 +2884,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Olen">
 		<skos:prefLabel xml:lang="nl">Gemeente Olen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Olen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Olen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Olen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.840144 51.135827</gml:lowerCorner>
@@ -2131,6 +2897,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Putte">
 		<skos:prefLabel xml:lang="nl">Gemeente Putte</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Putte</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Putte</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Putte</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.563498 51.017186</gml:lowerCorner>
@@ -2141,6 +2910,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wachtebeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Wachtebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wachtebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wachtebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wachtebeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.829024 51.144063</gml:lowerCorner>
@@ -2151,6 +2923,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ledegem">
 		<skos:prefLabel xml:lang="nl">Gemeente Ledegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ledegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ledegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ledegem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.094526 50.847636</gml:lowerCorner>
@@ -2161,6 +2936,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Bree">
 		<skos:prefLabel xml:lang="nl">Gemeente Bree</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Bree</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Bree</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Bree</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.546453 51.102516</gml:lowerCorner>
@@ -2171,6 +2949,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Sint-Laureins">
 		<skos:prefLabel xml:lang="nl">Gemeente Sint-Laureins</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Sint-Laureins</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Sint-Laureins</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Sint-Laureins</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.47574 51.215427</gml:lowerCorner>
@@ -2181,6 +2962,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zemst">
 		<skos:prefLabel xml:lang="nl">Gemeente Zemst</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zemst</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zemst</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zemst</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.36944 50.946526</gml:lowerCorner>
@@ -2191,6 +2975,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Temse">
 		<skos:prefLabel xml:lang="nl">Gemeente Temse</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Temse</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Temse</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Temse</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.12819 51.101409</gml:lowerCorner>
@@ -2201,6 +2988,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Halle">
 		<skos:prefLabel xml:lang="nl">Gemeente Halle</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Halle</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Halle</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Halle</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.17209 50.689519</gml:lowerCorner>
@@ -2211,6 +3001,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Izegem">
 		<skos:prefLabel xml:lang="nl">Gemeente Izegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Izegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Izegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Izegem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.172479 50.890793</gml:lowerCorner>
@@ -2221,6 +3014,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Staden">
 		<skos:prefLabel xml:lang="nl">Gemeente Staden</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Staden</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Staden</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Staden</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.958979 50.916092</gml:lowerCorner>
@@ -2231,6 +3027,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Meulebeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Meulebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Meulebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Meulebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Meulebeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.229091 50.919131</gml:lowerCorner>
@@ -2241,6 +3040,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Tielt-Winge">
 		<skos:prefLabel xml:lang="nl">Gemeente Tielt-Winge</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Tielt-Winge</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Tielt-Winge</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Tielt-Winge</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.842864 50.880249</gml:lowerCorner>
@@ -2251,6 +3053,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Gent">
 		<skos:prefLabel xml:lang="nl">Gemeente Gent</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Gent</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Gent</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Gent</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.579775 50.979538</gml:lowerCorner>
@@ -2261,6 +3066,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Roeselare">
 		<skos:prefLabel xml:lang="nl">Gemeente Roeselare</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Roeselare</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Roeselare</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Roeselare</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.061915 50.887014</gml:lowerCorner>
@@ -2271,6 +3079,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Pittem">
 		<skos:prefLabel xml:lang="nl">Gemeente Pittem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Pittem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Pittem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Pittem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.221926 50.964446</gml:lowerCorner>
@@ -2281,6 +3092,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wingene">
 		<skos:prefLabel xml:lang="nl">Gemeente Wingene</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wingene</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wingene</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wingene</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.157714 51.016098</gml:lowerCorner>
@@ -2291,6 +3105,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hoegaarden">
 		<skos:prefLabel xml:lang="nl">Gemeente Hoegaarden</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hoegaarden</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hoegaarden</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hoegaarden</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.800525 50.742693</gml:lowerCorner>
@@ -2301,6 +3118,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hove">
 		<skos:prefLabel xml:lang="nl">Gemeente Hove</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hove</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hove</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hove</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.458162 51.130495</gml:lowerCorner>
@@ -2311,6 +3131,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Damme">
 		<skos:prefLabel xml:lang="nl">Gemeente Damme</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Damme</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Damme</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Damme</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.246112 51.19186</gml:lowerCorner>
@@ -2321,6 +3144,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ravels">
 		<skos:prefLabel xml:lang="nl">Gemeente Ravels</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ravels</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ravels</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ravels</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.927857 51.352726</gml:lowerCorner>
@@ -2331,6 +3157,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Aartselaar">
 		<skos:prefLabel xml:lang="nl">Gemeente Aartselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Aartselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Aartselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Aartselaar</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.353742 51.10949</gml:lowerCorner>
@@ -2341,6 +3170,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zonnebeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Zonnebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zonnebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zonnebeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zonnebeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.938273 50.800108</gml:lowerCorner>
@@ -2351,6 +3183,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Tessenderlo">
 		<skos:prefLabel xml:lang="nl">Gemeente Tessenderlo</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Tessenderlo</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Tessenderlo</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Tessenderlo</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.98008 51.015452</gml:lowerCorner>
@@ -2361,6 +3196,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Stekene">
 		<skos:prefLabel xml:lang="nl">Gemeente Stekene</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Stekene</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Stekene</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Stekene</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.971041 51.1688</gml:lowerCorner>
@@ -2371,6 +3209,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wezembeek-Oppem">
 		<skos:prefLabel xml:lang="nl">Gemeente Wezembeek-Oppem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wezembeek-Oppem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wezembeek-Oppem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wezembeek-Oppem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.470353 50.826067</gml:lowerCorner>
@@ -2381,6 +3222,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Maaseik">
 		<skos:prefLabel xml:lang="nl">Gemeente Maaseik</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Maaseik</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Maaseik</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Maaseik</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.60732 51.018778</gml:lowerCorner>
@@ -2391,6 +3235,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Brugge">
 		<skos:prefLabel xml:lang="nl">Gemeente Brugge</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Brugge</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Brugge</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Brugge</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.134176 51.15821</gml:lowerCorner>
@@ -2401,6 +3248,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Assenede">
 		<skos:prefLabel xml:lang="nl">Gemeente Assenede</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Assenede</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Assenede</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Assenede</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.612502 51.167766</gml:lowerCorner>
@@ -2411,6 +3261,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Middelkerke">
 		<skos:prefLabel xml:lang="nl">Gemeente Middelkerke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Middelkerke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Middelkerke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Middelkerke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.746186 51.094789</gml:lowerCorner>
@@ -2421,6 +3274,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Geraardsbergen">
 		<skos:prefLabel xml:lang="nl">Gemeente Geraardsbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Geraardsbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Geraardsbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Geraardsbergen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.803629 50.727525</gml:lowerCorner>
@@ -2431,6 +3287,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Keerbergen">
 		<skos:prefLabel xml:lang="nl">Gemeente Keerbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Keerbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Keerbergen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Keerbergen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.598509 50.985241</gml:lowerCorner>
@@ -2441,6 +3300,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Beerse">
 		<skos:prefLabel xml:lang="nl">Gemeente Beerse</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Beerse</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Beerse</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Beerse</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.765461 51.273143</gml:lowerCorner>
@@ -2451,6 +3313,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Machelen">
 		<skos:prefLabel xml:lang="nl">Gemeente Machelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Machelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Machelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Machelen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.415719 50.878781</gml:lowerCorner>
@@ -2461,6 +3326,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Herne">
 		<skos:prefLabel xml:lang="nl">Gemeente Herne</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Herne</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Herne</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Herne</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.958781 50.687492</gml:lowerCorner>
@@ -2471,6 +3339,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lichtervelde">
 		<skos:prefLabel xml:lang="nl">Gemeente Lichtervelde</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lichtervelde</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lichtervelde</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lichtervelde</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.09774 50.991588</gml:lowerCorner>
@@ -2481,6 +3352,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Deerlijk">
 		<skos:prefLabel xml:lang="nl">Gemeente Deerlijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Deerlijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Deerlijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Deerlijk</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.324862 50.811362</gml:lowerCorner>
@@ -2491,10 +3365,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Meeuwen-Gruitrode">
 		<skos:prefLabel xml:lang="nl">Gemeente Meeuwen-Gruitrode</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Meeuwen-Gruitrode</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Meeuwen-Gruitrode</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Meeuwen-Gruitrode</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.454384 51.029478</gml:lowerCorner>
+				<gml:upperCorner>5.666067 51.146348</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vosselaar">
 		<skos:prefLabel xml:lang="nl">Gemeente Vosselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Vosselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Vosselaar</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Vosselaar</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.837147 51.285021</gml:lowerCorner>
@@ -2505,6 +3391,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lummen">
 		<skos:prefLabel xml:lang="nl">Gemeente Lummen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lummen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lummen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lummen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.108458 50.956122</gml:lowerCorner>
@@ -2515,6 +3404,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hamont-Achel">
 		<skos:prefLabel xml:lang="nl">Gemeente Hamont-Achel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hamont-Achel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hamont-Achel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hamont-Achel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.43839 51.209932</gml:lowerCorner>
@@ -2525,6 +3417,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Linkebeek">
 		<skos:prefLabel xml:lang="nl">Gemeente Linkebeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Linkebeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Linkebeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Linkebeek</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.321603 50.756258</gml:lowerCorner>
@@ -2535,6 +3430,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Torhout">
 		<skos:prefLabel xml:lang="nl">Gemeente Torhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Torhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Torhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Torhout</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.043537 51.013543</gml:lowerCorner>
@@ -2545,6 +3443,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zottegem">
 		<skos:prefLabel xml:lang="nl">Gemeente Zottegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zottegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zottegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zottegem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.74683 50.809925</gml:lowerCorner>
@@ -2555,6 +3456,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Houthulst">
 		<skos:prefLabel xml:lang="nl">Gemeente Houthulst</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Houthulst</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Houthulst</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Houthulst</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.805653 50.931211</gml:lowerCorner>
@@ -2565,6 +3469,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Haacht">
 		<skos:prefLabel xml:lang="nl">Gemeente Haacht</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Haacht</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Haacht</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Haacht</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.585679 50.924513</gml:lowerCorner>
@@ -2575,6 +3482,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Mesen">
 		<skos:prefLabel xml:lang="nl">Gemeente Mesen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Mesen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Mesen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Mesen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.86963 50.752655</gml:lowerCorner>
@@ -2585,6 +3495,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Tielt">
 		<skos:prefLabel xml:lang="nl">Gemeente Tielt</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Tielt</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Tielt</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Tielt</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.28635 50.961075</gml:lowerCorner>
@@ -2595,6 +3508,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Geetbets">
 		<skos:prefLabel xml:lang="nl">Gemeente Geetbets</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Geetbets</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Geetbets</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Geetbets</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.065495 50.857885</gml:lowerCorner>
@@ -2605,6 +3521,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Mechelen">
 		<skos:prefLabel xml:lang="nl">Gemeente Mechelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Mechelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Mechelen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Mechelen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.370095 50.990969</gml:lowerCorner>
@@ -2615,6 +3534,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ronse">
 		<skos:prefLabel xml:lang="nl">Gemeente Ronse</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ronse</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ronse</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ronse</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.537886 50.721012</gml:lowerCorner>
@@ -2625,6 +3547,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ham">
 		<skos:prefLabel xml:lang="nl">Gemeente Ham</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ham</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ham</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ham</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.094929 51.073703</gml:lowerCorner>
@@ -2635,10 +3560,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Puurs">
 		<skos:prefLabel xml:lang="nl">Gemeente Puurs</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Puurs</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Puurs</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Puurs</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>4.248808 51.026575</gml:lowerCorner>
+				<gml:upperCorner>4.360902 51.101864</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kinrooi">
 		<skos:prefLabel xml:lang="nl">Gemeente Kinrooi</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kinrooi</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kinrooi</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kinrooi</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.658042 51.119859</gml:lowerCorner>
@@ -2649,6 +3586,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Beersel">
 		<skos:prefLabel xml:lang="nl">Gemeente Beersel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Beersel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Beersel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Beersel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.256722 50.713417</gml:lowerCorner>
@@ -2659,6 +3599,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Gooik">
 		<skos:prefLabel xml:lang="nl">Gemeente Gooik</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Gooik</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Gooik</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Gooik</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.035024 50.745401</gml:lowerCorner>
@@ -2669,6 +3612,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Diepenbeek">
 		<skos:prefLabel xml:lang="nl">Gemeente Diepenbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Diepenbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Diepenbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Diepenbeek</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.36513 50.87419</gml:lowerCorner>
@@ -2679,6 +3625,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Londerzeel">
 		<skos:prefLabel xml:lang="nl">Gemeente Londerzeel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Londerzeel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Londerzeel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Londerzeel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.221182 50.973896</gml:lowerCorner>
@@ -2689,6 +3638,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zele">
 		<skos:prefLabel xml:lang="nl">Gemeente Zele</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zele</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zele</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zele</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.971509 51.032263</gml:lowerCorner>
@@ -2699,6 +3651,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Jabbeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Jabbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Jabbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Jabbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Jabbeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.039865 51.144202</gml:lowerCorner>
@@ -2709,6 +3664,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Boechout">
 		<skos:prefLabel xml:lang="nl">Gemeente Boechout</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Boechout</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Boechout</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Boechout</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.479894 51.129628</gml:lowerCorner>
@@ -2719,10 +3677,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Overpelt">
 		<skos:prefLabel xml:lang="nl">Gemeente Overpelt</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Overpelt</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Overpelt</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Overpelt</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.320141 51.164261</gml:lowerCorner>
+				<gml:upperCorner>5.44298 51.246885</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Mortsel">
 		<skos:prefLabel xml:lang="nl">Gemeente Mortsel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Mortsel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Mortsel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Mortsel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.432949 51.161051</gml:lowerCorner>
@@ -2733,6 +3703,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Evergem">
 		<skos:prefLabel xml:lang="nl">Gemeente Evergem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Evergem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Evergem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Evergem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.632368 51.087148</gml:lowerCorner>
@@ -2743,6 +3716,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kasterlee">
 		<skos:prefLabel xml:lang="nl">Gemeente Kasterlee</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kasterlee</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kasterlee</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kasterlee</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.861707 51.194666</gml:lowerCorner>
@@ -2753,6 +3729,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Huldenberg">
 		<skos:prefLabel xml:lang="nl">Gemeente Huldenberg</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Huldenberg</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Huldenberg</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Huldenberg</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.555154 50.741031</gml:lowerCorner>
@@ -2763,6 +3742,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Retie">
 		<skos:prefLabel xml:lang="nl">Gemeente Retie</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Retie</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Retie</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Retie</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.016282 51.218188</gml:lowerCorner>
@@ -2773,6 +3755,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kalmthout">
 		<skos:prefLabel xml:lang="nl">Gemeente Kalmthout</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kalmthout</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kalmthout</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kalmthout</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.383625 51.352473</gml:lowerCorner>
@@ -2783,6 +3768,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ingelmunster">
 		<skos:prefLabel xml:lang="nl">Gemeente Ingelmunster</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ingelmunster</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ingelmunster</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ingelmunster</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.229907 50.896331</gml:lowerCorner>
@@ -2793,6 +3781,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lommel">
 		<skos:prefLabel xml:lang="nl">Gemeente Lommel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lommel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lommel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lommel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.214663 51.157626</gml:lowerCorner>
@@ -2803,6 +3794,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Blankenberge">
 		<skos:prefLabel xml:lang="nl">Gemeente Blankenberge</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Blankenberge</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Blankenberge</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Blankenberge</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.104342 51.276432</gml:lowerCorner>
@@ -2813,6 +3807,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wuustwezel">
 		<skos:prefLabel xml:lang="nl">Gemeente Wuustwezel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wuustwezel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wuustwezel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wuustwezel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.506672 51.337586</gml:lowerCorner>
@@ -2823,6 +3820,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Diest">
 		<skos:prefLabel xml:lang="nl">Gemeente Diest</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Diest</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Diest</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Diest</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.994761 50.942771</gml:lowerCorner>
@@ -2833,6 +3833,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zelzate">
 		<skos:prefLabel xml:lang="nl">Gemeente Zelzate</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zelzate</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zelzate</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zelzate</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.764647 51.181886</gml:lowerCorner>
@@ -2843,6 +3846,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Beringen">
 		<skos:prefLabel xml:lang="nl">Gemeente Beringen</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Beringen</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Beringen</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Beringen</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.12153 51.016366</gml:lowerCorner>
@@ -2853,10 +3859,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Opglabbeek">
 		<skos:prefLabel xml:lang="nl">Gemeente Opglabbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Opglabbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Opglabbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Opglabbeek</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>5.518456 51.018767</gml:lowerCorner>
+				<gml:upperCorner>5.629683 51.06433</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lint">
 		<skos:prefLabel xml:lang="nl">Gemeente Lint</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lint</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lint</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lint</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.472404 51.115639</gml:lowerCorner>
@@ -2867,6 +3885,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Riemst">
 		<skos:prefLabel xml:lang="nl">Gemeente Riemst</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Riemst</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Riemst</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Riemst</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.513542 50.763558</gml:lowerCorner>
@@ -2877,6 +3898,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Liedekerke">
 		<skos:prefLabel xml:lang="nl">Gemeente Liedekerke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Liedekerke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Liedekerke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Liedekerke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.058976 50.849709</gml:lowerCorner>
@@ -2887,6 +3911,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Glabbeek">
 		<skos:prefLabel xml:lang="nl">Gemeente Glabbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Glabbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Glabbeek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Glabbeek</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.90556 50.83123</gml:lowerCorner>
@@ -2897,10 +3924,22 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Waarschoot">
 		<skos:prefLabel xml:lang="nl">Gemeente Waarschoot</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Waarschoot</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Waarschoot</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Waarschoot</skos:prefLabel>
+		<gml:BoundedBy>
+			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
+				<gml:lowerCorner>3.561233 51.118846</gml:lowerCorner>
+				<gml:upperCorner>3.647829 51.175525</gml:upperCorner>
+			</gml:Envelope>
+		</gml:BoundedBy>
 		<skos:broader rdf:resource="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Vlaanderen"/>
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Merksplas">
 		<skos:prefLabel xml:lang="nl">Gemeente Merksplas</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Merksplas</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Merksplas</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Merksplas</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.80846 51.336483</gml:lowerCorner>
@@ -2911,6 +3950,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Harelbeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Harelbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Harelbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Harelbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Harelbeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.267291 50.817977</gml:lowerCorner>
@@ -2921,6 +3963,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lanaken">
 		<skos:prefLabel xml:lang="nl">Gemeente Lanaken</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lanaken</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lanaken</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lanaken</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.570531 50.833252</gml:lowerCorner>
@@ -2931,6 +3976,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Schilde">
 		<skos:prefLabel xml:lang="nl">Gemeente Schilde</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Schilde</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Schilde</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Schilde</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.529385 51.219763</gml:lowerCorner>
@@ -2941,6 +3989,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Geel">
 		<skos:prefLabel xml:lang="nl">Gemeente Geel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Geel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Geel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Geel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.894722 51.089257</gml:lowerCorner>
@@ -2951,6 +4002,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zandhoven">
 		<skos:prefLabel xml:lang="nl">Gemeente Zandhoven</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zandhoven</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zandhoven</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zandhoven</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.62237 51.175255</gml:lowerCorner>
@@ -2961,6 +4015,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lebbeke">
 		<skos:prefLabel xml:lang="nl">Gemeente Lebbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lebbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lebbeke</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lebbeke</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.071031 50.967013</gml:lowerCorner>
@@ -2971,6 +4028,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ternat">
 		<skos:prefLabel xml:lang="nl">Gemeente Ternat</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ternat</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ternat</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ternat</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.10611 50.840702</gml:lowerCorner>
@@ -2981,6 +4041,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Turnhout">
 		<skos:prefLabel xml:lang="nl">Gemeente Turnhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Turnhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Turnhout</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Turnhout</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.888746 51.262418</gml:lowerCorner>
@@ -2991,6 +4054,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Stabroek">
 		<skos:prefLabel xml:lang="nl">Gemeente Stabroek</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Stabroek</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Stabroek</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Stabroek</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.32617 51.29707</gml:lowerCorner>
@@ -3001,6 +4067,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zedelgem">
 		<skos:prefLabel xml:lang="nl">Gemeente Zedelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zedelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zedelgem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zedelgem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.057762 51.083906</gml:lowerCorner>
@@ -3011,6 +4080,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Laarne">
 		<skos:prefLabel xml:lang="nl">Gemeente Laarne</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Laarne</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Laarne</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Laarne</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.823083 51.017281</gml:lowerCorner>
@@ -3021,6 +4093,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kortrijk">
 		<skos:prefLabel xml:lang="nl">Gemeente Kortrijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kortrijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kortrijk</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kortrijk</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.200768 50.731031</gml:lowerCorner>
@@ -3031,6 +4106,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Zulte">
 		<skos:prefLabel xml:lang="nl">Gemeente Zulte</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Zulte</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Zulte</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Zulte</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.415355 50.896773</gml:lowerCorner>
@@ -3041,6 +4119,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Peer">
 		<skos:prefLabel xml:lang="nl">Gemeente Peer</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Peer</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Peer</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Peer</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>5.389209 51.054994</gml:lowerCorner>
@@ -3051,6 +4132,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Hamme">
 		<skos:prefLabel xml:lang="nl">Gemeente Hamme</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Hamme</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Hamme</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Hamme</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.058698 51.032188</gml:lowerCorner>
@@ -3061,6 +4145,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Lille">
 		<skos:prefLabel xml:lang="nl">Gemeente Lille</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Lille</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Lille</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Lille</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.76136 51.206942</gml:lowerCorner>
@@ -3071,6 +4158,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Gistel">
 		<skos:prefLabel xml:lang="nl">Gemeente Gistel</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Gistel</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Gistel</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Gistel</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.873721 51.110452</gml:lowerCorner>
@@ -3081,6 +4171,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Kontich">
 		<skos:prefLabel xml:lang="nl">Gemeente Kontich</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Kontich</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Kontich</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Kontich</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>4.396482 51.093023</gml:lowerCorner>
@@ -3091,6 +4184,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Ninove">
 		<skos:prefLabel xml:lang="nl">Gemeente Ninove</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Ninove</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Ninove</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Ninove</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.918233 50.771174</gml:lowerCorner>
@@ -3101,6 +4197,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Oostende">
 		<skos:prefLabel xml:lang="nl">Gemeente Oostende</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Oostende</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Oostende</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Oostende</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>2.838503 51.184586</gml:lowerCorner>
@@ -3111,6 +4210,9 @@
 	</skos:Concept>
 	<skos:Concept rdf:about="http://mir.geopunt.be/cl/Geopunt/VlaamseAdminRegios/Wortegem-Petegem">
 		<skos:prefLabel xml:lang="nl">Gemeente Wortegem-Petegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="fr">Gemeente Wortegem-Petegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="du">Gemeente Wortegem-Petegem</skos:prefLabel>
+		<skos:prefLabel xml:lang="en">Gemeente Wortegem-Petegem</skos:prefLabel>
 		<gml:BoundedBy>
 			<gml:Envelope gml:srsName="http://www.opengis.net/gml/srs/epsg.xml#epsg:4326">
 				<gml:lowerCorner>3.451289 50.805453</gml:lowerCorner>
