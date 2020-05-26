@@ -42,5 +42,7 @@
   "objCatName": "Nom du catalogue",
   "relations": "Relations",
   "children" : "Enfants",
-  "parent": "Parent"
+  "parent": "Parent",
+  "isoDefaultView": "Vue par défaut",
+  "isoFullView": "Vue ISO complète"
 }

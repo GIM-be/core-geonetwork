@@ -70,5 +70,7 @@
   "objCatName": "Naam van de catalogus",
   "relations": "Relaties",
   "children" : "Kinderen",
-  "parent": "Ouder"
+  "parent": "Ouder",
+  "isoDefaultView": "Standaart weergave",
+  "isoFullView": "ISO weergave"
 }

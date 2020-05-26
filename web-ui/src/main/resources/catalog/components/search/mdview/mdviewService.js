@@ -46,9 +46,10 @@
     'gnUrlUtils',
     'gnUtilityService',
     '$http',
+    'gnGlobalSettings',
     function(gnSearchLocation, $rootScope, gnMdFormatter, Metadata,
              gnMdViewObj, gnSearchManagerService, gnSearchSettings,
-             gnUrlUtils, gnUtilityService, $http) {
+             gnUrlUtils, gnUtilityService, $http, gnGlobalSettings) {
 
       // Keep where the metadataview come from to get back on close
       var initFromConfig = function() {
@@ -80,7 +81,8 @@
 
         // Set the route only if not same as before
         formatter = gnSearchLocation.getFormatter();
-        gnMdViewObj.usingFormatter = formatter !== undefined;
+        var defaultFormatters = gnGlobalSettings.gnCfg.mods.search.formatter.defaultFormatters
+        gnMdViewObj.usingFormatter = formatter !== undefined || (defaultFormatters[md['geonet:info'].schema] && defaultFormatters[md['geonet:info'].schema].url !== '');
         this.setLocationUuid(md.getUuid(), formatter);
 
         gnUtilityService.scrollTo();

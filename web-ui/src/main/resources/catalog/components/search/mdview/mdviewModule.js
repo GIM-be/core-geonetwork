@@ -47,11 +47,11 @@
     '$scope', '$http', '$compile', 'gnSearchSettings', 'gnSearchLocation',
     'gnMetadataActions', 'gnAlertService', '$translate', '$location',
     'gnMdView', 'gnMdViewObj', 'gnMdFormatter', 'gnConfig',
-    'gnGlobalSettings', 'gnConfigService', '$rootScope',
+    'gnGlobalSettings', 'gnConfigService', '$rootScope', '$timeout',
     function($scope, $http, $compile, gnSearchSettings, gnSearchLocation,
              gnMetadataActions, gnAlertService, $translate, $location,
              gnMdView, gnMdViewObj, gnMdFormatter, gnConfig,
-             gnGlobalSettings, gnConfigService, $rootScope) {
+             gnGlobalSettings, gnConfigService, $rootScope, $timeout) {
 
       $scope.formatter = gnSearchSettings.formatter;
       $scope.gnMetadataActions = gnMetadataActions;
@@ -119,19 +119,16 @@
         });
 
         //Stack tabs in a dropdown if more than 5
-        var visibleTab = 0;
-        $('.nav-tabs-advanced li:not(#tab-overflow)').each(function(){
-          if($(this).is(':visible')) {
-            visibleTab++;
-            if(visibleTab > 5){
-              $('#tab-overflow .dropdown-menu').append($(this).clone());
-              $(this).remove();
-              if($('#tab-overflow').is(':hidden')) {
-                $('#tab-overflow').show();
-              }
+        $('.nav-tabs-advanced li:not(#tab-overflow)')
+          .filter(':visible')
+          .slice(5)
+          .each(function() {
+            $(this).appendTo('#tab-overflow .dropdown-menu');
+            var overflow = $('#tab-overflow');
+            if(overflow.is(':hidden')) {
+              overflow.show();
             }
-          }
-        });
+          })
 
         // show the first tab
         $('.nav-tabs-advanced a:first').tab('show');
@@ -141,18 +138,20 @@
         if ($scope.mdView.current.record == null) {
           return;
         }
-        var showApproved = $scope.mdView.current.record.draft != 'y';
         var gn_metadata_display = $('#gn-metadata-display');
+        gn_metadata_display.find('*').remove();
+        gnMdViewObj.loadingFormatter = true;
 
         $http.get(url, {
           headers: {
             Accept: 'text/html'
           },
           params: {
-            approved : showApproved
+            approved : gnSearchLocation.isApprovedView()
           }
         }).then(
           function(response,status) {
+            gnMdViewObj.loadingFormatter = false;
             if (response.status!=200){
               gn_metadata_display.append(
                 "<div class='alert alert-danger top-buffer'>" +
@@ -161,8 +160,6 @@
             } else {
               var snippet = response.data.replace(
                 '<?xml version="1.0" encoding="UTF-8"?>', '');
-
-              gn_metadata_display.find('*').remove();
 
               $scope.compileScope.$destroy();
 
@@ -177,6 +174,7 @@
             }
           },
           function(data) {
+            gnMdViewObj.loadingFormatter = false;
             gn_metadata_display.append(
               "<div class='alert alert-danger top-buffer'>" +
               $translate.instant("metadataViewLoadError") +
@@ -188,7 +186,8 @@
       // in default mode.
       function loadFormatter() {
         $scope.currentFormatter = null;
-        var f = gnSearchLocation.getFormatterPath();
+        var currentSchema = $scope.mdView.current.record ? $scope.mdView.current.record['geonet:info'].schema : undefined;
+        var f = gnSearchLocation.getFormatterPath(currentSchema);
         if (f != undefined) {
           $scope.currentFormatter = {
             url: f
@@ -197,7 +196,12 @@
         }
       }
       // $scope.$watch('mdView.current.record', loadFormatter);
-      $rootScope.$on('$locationChangeSuccess', loadFormatter);
+      $rootScope.$on('$locationChangeSuccess', function() {
+        $timeout(function() {
+          loadFormatter();
+        }, 0);
+      });
+
       var unwatch = $scope.$watch('mdView.current.record', function () {
         if($scope.mdView.current.record != null) {
           loadFormatter();
@@ -211,5 +215,21 @@
       $scope.$watch('gnMdViewObj.from', function(v) {
         $scope.fromView = v ? v.substring(1) : v;
       });
+
+      $scope.isFormatterAllowed = function (formatter) {
+        if ($scope.mdView.current.record) {
+          if (formatter.include) {
+            return formatter.include.includes($scope.mdView.current.record['geonet:info'].schema);
+          } else if (formatter.exclude) {
+            return !formatter.exclude.includes($scope.mdView.current.record['geonet:info'].schema);
+          }
+        }
+        return true;
+      };
+
+      $scope.isCurrentFormatter = function(formatter) {
+        return gnSearchLocation.isCurrentFormatter(formatter);
+      }
+
     }]);
 })();

@@ -45,5 +45,7 @@
   "objCatName": "Name of the catalog",
   "relations": "Relations",
   "children" : "Children",
-  "parent": "Parent"
+  "parent": "Parent",
+  "isoDefaultView": "Default view",
+  "isoFullView": "Full ISO view"
 }
