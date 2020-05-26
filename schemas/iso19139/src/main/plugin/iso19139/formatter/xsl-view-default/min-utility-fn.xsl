@@ -22,6 +22,18 @@
   </xsl:function>
 
 
+  <xsl:function name="gn-fn-iso19139:get-schema-strings" as="xs:string">
+    <xsl:param name="strings" as="node()"/>
+    <xsl:param name="key" as="xs:string"/>
+
+    <xsl:variable name="nameInStrings"
+                  select="$strings/*[name() = $key]"/>
+    <xsl:value-of select="if ($nameInStrings != '')
+                          then $nameInStrings
+                          else $key"/>
+  </xsl:function>
+
+
   <xsl:template name="localised" mode="localised" match="*[gco:CharacterString or gmd:PT_FreeText]">
     <xsl:param name="langId"/>
     <xsl:choose>

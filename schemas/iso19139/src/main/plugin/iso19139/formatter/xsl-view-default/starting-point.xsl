@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:gn-fn-iso19139="http://geonetwork-opensource.org/xsl/functions/profiles/iso19139"
                 xmlns:saxon="http://saxon.sf.net/"
                 version="2.0">
 
@@ -75,7 +76,8 @@
                 </div>
               </xsl:if>
             </header>
-            <div class="aiv-gp-view">
+            <xsl:call-template name="render-toc"/>
+            <div class="aiv-gp-view tab-content">
               <!-- Templates defined in the file view.xsl -->
               <xsl:apply-templates mode="render-content" select="/root/gmd:MD_Metadata"/>
             </div>
@@ -91,9 +93,6 @@
       <br/>
     </div>
   </xsl:template>
-
-
-
 
 
   <xsl:template name="render-sidebar">
@@ -192,6 +191,26 @@
         </div>
       </section>
     </xsl:if>
+  </xsl:template>
+
+
+  <xsl:template name="render-toc">
+    <ul class="view-outline nav nav-tabs nav-tabs-advanced">
+      <xsl:for-each select="$tabs/tab">
+        <li>
+          <a href="#gn-tab-{string(.)}">
+            <xsl:value-of select="gn-fn-iso19139:get-schema-strings($schemaStrings, string(.))"/>
+          </a>
+        </li>
+      </xsl:for-each>
+      <li class="dropdown" role="menuitem" id="tab-overflow" style="display: none;">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="">
+          <i class="fa fa-ellipsis-h"/>
+          <b class="caret"/>
+        </a>
+        <ul class="dropdown-menu" role="menu"/>
+      </li>
+    </ul>
   </xsl:template>
 
 

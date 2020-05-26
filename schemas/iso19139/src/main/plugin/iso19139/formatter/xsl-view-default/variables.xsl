@@ -25,4 +25,13 @@
   <xsl:variable name="metadata" select="/root/gmd:MD_Metadata"/>
   <xsl:variable name="langId" select="gn-fn-iso19139:getLangId($metadata, $language)"/>
   <xsl:variable name="schemaLoc" select="tr:create($schema)"/>
+  <xsl:variable name="tabs">
+    <tab>identificationInfo</tab>
+    <tab>contentInfo</tab>
+    <tab>referenceSystemInfo</tab>
+    <tab>dataQualityInfo</tab> <!-- Also contain INSPIRE Domeinconsistentie -->
+    <tab>accessConstrainInfo</tab>
+    <tab>distributionInfo</tab>
+    <tab>metadataInfo</tab> <!-- Also contain Object catalog info -->
+  </xsl:variable>
 </xsl:stylesheet>
