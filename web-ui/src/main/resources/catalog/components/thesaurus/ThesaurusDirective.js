@@ -212,7 +212,15 @@
            },
            templateUrl: '../../catalog/components/thesaurus/' +
            'partials/keywordselector.html',
-           link: function(scope, element, attrs) {
+           link: function(scope, element, attrs, ctrl, transclude) {
+
+             // ng-transclude directive cannot be used directly in the HTML
+             // template due to a double template compilation one being done
+             // by angular and another done by the bellow call '$compile(...)'
+             transclude(function(clone) {
+               element.find('.delete-field-button').first().replaceWith(clone);
+             });
+
              $compile(element.contents())(scope);
              // pick up skos browser directive with compiler
 
