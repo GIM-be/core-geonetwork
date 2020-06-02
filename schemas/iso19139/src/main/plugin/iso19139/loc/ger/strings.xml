@@ -62,7 +62,17 @@
   <applicationSchemaInfo>Schema info</applicationSchemaInfo>
   <noThesaurusName>Keywords</noThesaurusName>
   <bboxesSection>Geographic coverage</bboxesSection>
-
+  <!-- Tabs shown in the default and extended view later -->
+  <identificationTab>Identificatie</identificationTab>
+  <contentTab>Inhoud</contentTab>
+  <referenceSystemTab>Horizontaal en/of verticaal referentiesysteem</referenceSystemTab>
+  <qualityTab>Kwaliteit</qualityTab>
+  <domainConsistancyTab>INSPIRE Domeinconsistentie</domainConsistancyTab>
+  <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
+  <distributionTab>Distributie</distributionTab>
+  <metaMetadataTab>Meta-metadata</metaMetadataTab>
+  <objectCatalogueTab>Objectencatalogus</objectCatalogueTab>
+  <otherKeywords>Andere Schlagwörter</otherKeywords>
   <!-- XSD error translation -->
   <invalidElement>Ungültiger Inhalt im Element </invalidElement>
   <onElementOf>Eines der folgenden Elemente: </onElementOf>

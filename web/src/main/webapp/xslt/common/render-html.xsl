@@ -97,19 +97,17 @@
         </div>
 
         <script type="text/javascript">
-          var visibleTab = 0;
-          $('.nav-tabs-advanced li:not(#tab-overflow)').each(function(){
-            if($(this).is(':visible')) {
-              visibleTab++;
-              if(visibleTab > 5){
-                $('#tab-overflow .dropdown-menu').append($(this).clone());
-                $(this).hide();
-                if($('#tab-overflow').is(':hidden')) {
-                  $('#tab-overflow').show();
-                }
+          $('.nav-tabs-advanced li:not(#tab-overflow)')
+            .filter(':visible')
+            .slice(5)
+            .each(function() {
+              $(this).appendTo('#tab-overflow .dropdown-menu');
+              var overflow = $('#tab-overflow');
+              if(overflow.is(':hidden')) {
+                overflow.show();
               }
             }
-          });
+          );
         </script>
       </body>
     </html>

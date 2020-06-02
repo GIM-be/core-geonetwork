@@ -62,7 +62,17 @@
   <citationProposal>Proposition de citation</citationProposal>
   <citationProposal-help>Cette proposition de citation a été générée automatiquement selon le format suggéré par DataCite. Nous vous invitons à vérifier dans les métadonnées si les auteurs n'ont pas imposé un format de citation spécifique.</citationProposal-help>
   <associatedResources>Ressources associées</associatedResources>
+  <!-- Tabs shown in the default and extended view later -->
+  <identificationTab>Identificatie</identificationTab>
+  <contentTab>Inhoud</contentTab>
+  <referenceSystemTab>Horizontaal en/of verticaal referentiesysteem</referenceSystemTab>
+  <qualityTab>Kwaliteit</qualityTab>
+  <domainConsistancyTab>INSPIRE Domeinconsistentie</domainConsistancyTab>
   <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
+  <distributionTab>Distributie</distributionTab>
+  <metaMetadataTab>Meta-metadata</metaMetadataTab>
+  <objectCatalogueTab>Objectencatalogus</objectCatalogueTab>
+  <otherKeywords>Autres mots clés</otherKeywords>
   <description>Description</description>
   <addOtherConstraints>Ajouter une autre contrainte</addOtherConstraints>
   <sourceDescription>Méthode de collecte</sourceDescription>

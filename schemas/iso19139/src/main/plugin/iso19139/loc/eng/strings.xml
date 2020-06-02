@@ -22,7 +22,7 @@
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
 
-<strings>
+<otherKeywords>
   <understandResource>Information about the dataset</understandResource>
   <relatedResources>Related services and linked data</relatedResources>
   <techInfo>Technical information</techInfo>
@@ -68,7 +68,17 @@
   <citationProposal>Citation proposal</citationProposal>
   <citationProposal-help>This proposal was automatically generated, check if the metadata authors did not specified custom citation requirements.</citationProposal-help>
   <associatedResources>Associated resources</associatedResources>
+  <!-- Tabs shown in the default and extended view later -->
+  <identificationTab>Identificatie</identificationTab>
+  <contentTab>Inhoud</contentTab>
+  <referenceSystemTab>Horizontaal en/of verticaal referentiesysteem</referenceSystemTab>
+  <qualityTab>Kwaliteit</qualityTab>
+  <domainConsistancyTab>INSPIRE Domeinconsistentie</domainConsistancyTab>
   <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
+  <distributionTab>Distributie</distributionTab>
+  <metaMetadataTab>Meta-metadata</metaMetadataTab>
+  <objectCatalogueTab>Objectencatalogus</objectCatalogueTab>
+  <otherKeywords>Other keywords</otherKeywords>
   <description>Description</description>
   <addOtherConstraints>Add another constraints</addOtherConstraints>
   <sourceDescription>Collection method</sourceDescription>

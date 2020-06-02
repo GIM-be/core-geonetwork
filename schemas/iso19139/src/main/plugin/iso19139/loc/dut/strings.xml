@@ -61,7 +61,17 @@
   <applicationSchemaInfo>Schema info</applicationSchemaInfo>
   <noThesaurusName>Trefwoorden</noThesaurusName>
   <bboxesSection>Geografische dekking</bboxesSection>
+  <!-- Tabs shown in the default and extended view later -->
+  <identificationTab>Identificatie</identificationTab>
+  <contentTab>Inhoud</contentTab>
+  <referenceSystemTab>Horizontaal en/of verticaal referentiesysteem</referenceSystemTab>
+  <qualityTab>Kwaliteit</qualityTab>
+  <domainConsistancyTab>INSPIRE Domeinconsistentie</domainConsistancyTab>
   <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
+  <distributionTab>Distributie</distributionTab>
+  <metaMetadataTab>Meta-metadata</metaMetadataTab>
+  <objectCatalogueTab>Objectencatalogus</objectCatalogueTab>
+  <otherKeywords>Overige trefwoorden</otherKeywords>
   <mdConstraintsSection>Inhoudelijke beperkingen</mdConstraintsSection>
   <mdLegalAndSecurityConstraintsSection>Legale en veiligheidsbeperkingen</mdLegalAndSecurityConstraintsSection>
   <description>Beschrijving</description>
