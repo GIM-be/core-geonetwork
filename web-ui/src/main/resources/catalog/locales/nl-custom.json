@@ -72,5 +72,7 @@
   "children" : "Kinderen",
   "parent": "Ouder",
   "isoDefaultView": "Standaart weergave",
-  "isoFullView": "ISO weergave"
+  "isoFullView": "ISO weergave",
+  "versionDate": "Versiedatum",
+  "attributeCardinality": "Cardinaliteid"
 }

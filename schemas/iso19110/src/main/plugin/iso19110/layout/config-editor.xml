@@ -107,7 +107,7 @@
         <directive data-gn-suggestion-list=""/>
         <directive data-gn-need-help="user-guide/describing-information/creating-metadata.html"/>
       </sidePanel>
-      <tab id="advanced">
+      <tab id="advanced" default="true">
         <section xpath="/gfc:FC_FeatureType"/>
         <section xpath="/gfc:FC_FeatureCatalogue"/>
       </tab>

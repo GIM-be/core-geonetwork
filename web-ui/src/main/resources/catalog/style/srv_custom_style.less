@@ -195,10 +195,30 @@
   }
 
   .current-formatter {
-     a {
-       color: rgb(0, 0, 0);
-       font-weight: bold;
-     }
+    a {
+      color: rgb(0, 0, 0);
+      font-weight: bold;
+    }
+  }
+
+  .attribute-table {
+    th, td {
+      &:nth-child(1) {
+        width: 20%;
+      }
+
+      &:nth-child(2) {
+        width: 15%;
+      }
+
+      &:nth-child(3) {
+        width: 15%;
+      }
+
+      &:nth-child(4) {
+        width: 50%;
+      }
+    }
   }
 }
 

@@ -273,7 +273,14 @@
                     select="gn-fn-render:get-schema-strings($schemaStrings, @id)"/>
 
       <div id="gn-tab-{@id}">
-        <xsl:attribute name="class" select="'tab-pane'"/>
+        <xsl:choose>
+          <xsl:when test="@default = 'true'">
+            <xsl:attribute name="class" select="'tab-pane active'"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:attribute name="class" select="'tab-pane'"/>
+          </xsl:otherwise>
+        </xsl:choose>
         <h1 class="view-header">
           <!-- If in tab mode, do not repeat the tab name as header
           as it is already displayed in the tab itself. -->

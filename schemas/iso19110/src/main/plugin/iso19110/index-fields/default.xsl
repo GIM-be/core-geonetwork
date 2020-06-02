@@ -92,7 +92,9 @@
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- === Revision date === -->
       <xsl:for-each select="/gfc:FC_FeatureCatalogue/gmx:versionDate/gco:Date|
-                /gfc:FC_FeatureCatalogue/gfc:versionDate/gco:Date">
+                            /gfc:FC_FeatureCatalogue/gfc:versionDate/gco:Date|
+                            /gfc:FC_FeatureCatalogue/gmx:versionDate/gco:DateTime|
+                            /gfc:FC_FeatureCatalogue/gfc:versionDate/gco:DateTime">
         <Field name="revisionDate" string="{string(.)}" store="true" index="true"/>
         <Field name="sortDate" string="{string(.)}" store="true" index="true"/>
         <Field name="_sortDate" string="{string(.)}" store="true" index="true"/>
@@ -104,14 +106,6 @@
              string="{string(/gfc:FC_FeatureCatalogue/gmx:versionNumber/gco:CharacterString|
         /gfc:FC_FeatureCatalogue/gfc:versionNumber/gco:CharacterString)}"
              store="true" index="true"/>
-
-      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-      <!-- === Revision date === -->
-      <xsl:for-each select="/gfc:FC_FeatureCatalogue/gmx:versionDate/gco:Date|
-        /gfc:FC_FeatureCatalogue/gfc:versionDate/gco:Date">
-        <Field name="revisionDate" string="{string(.)}" store="true" index="true"/>
-        <Field name="_sortDate" string="{string(.)}" store="true" index="true"/>
-      </xsl:for-each>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!-- === Metadata file identifier (GUID in GeoNetwork) === -->
@@ -142,11 +136,14 @@
         <xsl:if test="count($attributes) > 0">
             "attributeTable" : [
             <xsl:for-each select="$attributes">
+              <xsl:variable name="cardinality" select="*/gfc:cardinality/gco:Multiplicity/gco:range/gco:MultiplicityRange"/>
               {"name": "<xsl:value-of select="*/gfc:memberName/*/text()"/>",
               "definition": "<xsl:value-of select="*/gfc:definition/*/text()"/>",
               "code": "<xsl:value-of select="*/gfc:code/*/text()"/>",
               "link": "<xsl:value-of select="*/gfc:code/*/@xlink:href"/>",
-              "type": "<xsl:value-of select="*/gfc:valueType/gco:TypeName/gco:aName/*/text()"/>"
+              "type": "<xsl:value-of select="*/gfc:valueType/gco:TypeName/gco:aName/*/text()"/>",
+              "min": "<xsl:value-of select="$cardinality/gco:lower/*/text()"/>",
+              "max": "<xsl:value-of select="if ($cardinality/gco:upper/*/@isInfinite = 'true') then 'infinite' else $cardinality/gco:upper/*/text()"/>"
               <xsl:if test="*/gfc:listedValue">
                 ,"values": [
                 <xsl:for-each select="*/gfc:listedValue">{
