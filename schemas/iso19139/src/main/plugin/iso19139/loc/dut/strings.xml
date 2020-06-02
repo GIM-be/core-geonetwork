@@ -64,9 +64,9 @@
   <!-- Tabs shown in the default and extended view later -->
   <identificationTab>Identificatie</identificationTab>
   <contentTab>Inhoud</contentTab>
-  <referenceSystemTab>Horizontaal en/of verticaal referentiesysteem</referenceSystemTab>
+  <referenceSystemTab>Referentiesysteem</referenceSystemTab>
   <qualityTab>Kwaliteit</qualityTab>
-  <domainConsistancyTab>INSPIRE Domeinconsistentie</domainConsistancyTab>
+  <domainConsistancyTab>Conformiteit</domainConsistancyTab>
   <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
   <distributionTab>Distributie</distributionTab>
   <metaMetadataTab>Meta-metadata</metaMetadataTab>

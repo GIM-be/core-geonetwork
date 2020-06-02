@@ -55,20 +55,47 @@
         <xsl:apply-templates mode="render-content" select="gmd:identificationInfo/*"/>
       </xsl:with-param>
     </xsl:call-template>
+    <xsl:call-template name="render-tab">
+      <xsl:with-param name="tabId" select="'gn-tab-referenceSystemTab'"/>
+      <xsl:with-param name="content">
+        <xsl:call-template name="render-block">
+          <xsl:with-param name="block">
+            <xsl:apply-templates mode="render-content" select="gmd:referenceSystemInfo"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="render-tab">
+      <xsl:with-param name="tabId" select="'gn-tab-qualityTab'"/>
+      <xsl:with-param name="content">
+        <xsl:call-template name="render-block">
+          <xsl:with-param name="block">
+            <xsl:apply-templates mode="render-content" select="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/*[name()=('gmd:DQ_ThematicClassificationCorrectness','gmd:DQ_CompletenessOmission','gmd:DQ_AbsoluteExternalPositionalAccuracy')]"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="render-tab">
+      <xsl:with-param name="tabId" select="'gn-tab-domainConsistancyTab'"/>
+      <xsl:with-param name="content">
+        <xsl:call-template name="render-block">
+          <xsl:with-param name="block">
+            <xsl:apply-templates mode="render-content" select="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
   </xsl:template>
 
   <!-- Render Sections -->
   <xsl:template mode="render-content" match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation|gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation">
     <xsl:apply-templates mode="render-content" select="gmd:title"/>
     <xsl:apply-templates mode="render-content" select="gmd:alternateTitle"/>
-    <xsl:for-each select="gmd:date">
-      <xsl:apply-templates mode="render-content" select="gmd:CI_Date/gmd:date"/>
-      <xsl:apply-templates mode="render-content" select="gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode"/>
-    </xsl:for-each>
+    <xsl:apply-templates mode="render-content" select="gmd:date" />
     <xsl:apply-templates mode="render-content" select="gmd:edition"/>
     <xsl:apply-templates mode="render-content" select="gmd:editionDate"/>
     <xsl:for-each select="gmd:identifier">
-      <xsl:apply-templates mode="render-content" select="gmd:MD_Identifier/gmd:code"/>
+      <xsl:apply-templates mode="render-content" select="*/gmd:code"/>
     </xsl:for-each>
     <!--
     Optional fields and not used
@@ -173,6 +200,55 @@
     </xsl:call-template>
   </xsl:template>
 
+  <xsl:template mode="render-content" match="gmd:referenceSystemInfo">
+    <xsl:call-template name="render-block">
+      <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:referenceSystemInfo', name(..))"/>
+      <xsl:with-param name="block">
+        <xsl:apply-templates mode="render-content" select="gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code"/>
+        <xsl:apply-templates mode="render-content" select="gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:codeSpace"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template mode="render-content" match="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/*[name()=('gmd:DQ_ThematicClassificationCorrectness','gmd:DQ_CompletenessOmission','gmd:DQ_AbsoluteExternalPositionalAccuracy')]">
+    <xsl:call-template name="render-block">
+      <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
+      <xsl:with-param name="block">
+        <xsl:apply-templates mode="render-content" select="gmd:measureDescription"/>
+        <xsl:apply-templates mode="render-content" select="gmd:dateTime/gco:DateTime"/>
+        <xsl:variable name="quantitativeResult"  select="gmd:result/gmd:DQ_QuantitativeResult"/>
+        <xsl:call-template name="render-block-as-row">
+          <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'gmd:DQ_QuantitativeResult', 'gmd:result')"/>
+          <xsl:with-param name="block">
+            <xsl:apply-templates mode="render-content" select="$quantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:identifier"/>
+            <xsl:apply-templates mode="render-content" select="$quantitativeResult/gmd:value/gco:Record"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template mode="render-content" match="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency">
+    <xsl:call-template name="render-block">
+      <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
+      <xsl:with-param name="block">
+        <xsl:apply-templates mode="render-content" select="gmd:measureIdentification/*/gmd:code"/>
+        <xsl:apply-templates mode="render-content" select="gmd:measureDescription"/>
+        <xsl:apply-templates mode="render-content" select="gmd:dateTime"/>
+        <xsl:variable name="conformanceResult"  select="gmd:result/gmd:DQ_ConformanceResult"/>
+        <xsl:call-template name="render-block-as-row">
+          <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'gmd:DQ_ConformanceResult', 'gmd:result')"/>
+          <xsl:with-param name="block">
+            <xsl:apply-templates mode="render-content" select="$conformanceResult/gmd:specification/gmd:CI_Citation/gmd:title"/>
+            <xsl:apply-templates mode="render-content" select="$conformanceResult/gmd:specification/gmd:CI_Citation/gmd:date"/>
+            <xsl:apply-templates mode="render-content" select="$conformanceResult/gmd:explanation"/>
+            <xsl:apply-templates mode="render-content" select="$conformanceResult/gmd:pass"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
   <xsl:template mode="render-content" match="gmd:CI_ResponsibleParty">
     <xsl:apply-templates mode="render-content" select="gmd:individualName"/>
     <xsl:apply-templates mode="render-content" select="gmd:organisationName"/>
@@ -213,10 +289,22 @@
   </xsl:template>
 
   <!-- Generic templates -->
+  <xsl:template mode="render-content" match="gmd:date">
+    <xsl:apply-templates mode="render-content" select="gmd:CI_Date/gmd:date"/>
+    <xsl:apply-templates mode="render-content" select="gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode"/>
+  </xsl:template>
+
   <xsl:template mode="render-content" match="*[gco:CharacterString]">
     <xsl:call-template name="render-text-as-row">
       <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
       <xsl:with-param name="value" select="gco:CharacterString/text()"/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template mode="render-content" match="gml:identifier|gco:Record">
+    <xsl:call-template name="render-text-as-row">
+      <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
+      <xsl:with-param name="value" select="text()"/>
     </xsl:call-template>
   </xsl:template>
 

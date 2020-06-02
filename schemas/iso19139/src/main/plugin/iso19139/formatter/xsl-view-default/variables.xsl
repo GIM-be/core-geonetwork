@@ -29,8 +29,8 @@
     <tab>identificationTab</tab>
     <tab>contentTab</tab>
     <tab>referenceSystemTab</tab>
-    <tab>qualityTab</tab> <!-- Also contain INSPIRE Domeinconsistentie -->
-    <tab>domainConsistancyTab</tab> <!-- Also contain INSPIRE Domeinconsistentie -->
+    <tab>qualityTab</tab>
+    <tab>domainConsistancyTab</tab>
     <tab>constraintsTab</tab>
     <tab>distributionTab</tab>
     <tab>metaMetadataTab</tab>
