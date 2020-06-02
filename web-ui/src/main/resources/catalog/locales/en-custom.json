@@ -47,5 +47,7 @@
   "children" : "Children",
   "parent": "Parent",
   "isoDefaultView": "Default view",
-  "isoFullView": "Full ISO view"
+  "isoFullView": "Full ISO view",
+  "versionDate": "Version data",
+  "attributeCardinality": "Cardinality"
 }

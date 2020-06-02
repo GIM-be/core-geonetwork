@@ -1,7 +1,8 @@
-<table class="table">
+<table class="table attribute-table">
   <tr>
     <th data-translate="">attributeName</th>
     <th data-translate="" data-ng-show="showCodeColumn">attributeCode</th>
+    <th data-translate="">attributeCardinality</th>
     <th data-translate="">attributeDefinition</th>
   </tr>
   <tr data-ng-repeat-start="attribute in attributeTable track by $index">
@@ -13,6 +14,7 @@
       <strong data-ng-show="{{attribute.link == null || attribute.link == ''}}" >{{attribute.code}}</strong>
       <a href="{{attribute.link}}" data-ng-show="{{attribute.link != null && attribute.link > ''}}" >{{attribute.code}}</a>
     </td>
+    <td>[{{attribute.min}}, {{attribute.max === 'infinite' ? 'n' : attribute.max}}]</td>
     <td>
       {{attribute.definition}}
     </td>

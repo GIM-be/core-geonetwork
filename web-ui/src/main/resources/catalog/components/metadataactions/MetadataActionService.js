@@ -495,6 +495,10 @@
         }
         return allowedStatusList;
       }
+
+      this.isDateTime = function(date) {
+        return date.match(/T\d{2}:\d{2}:\d{2}$/);
+      }
     }]);
 
 
