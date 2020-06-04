@@ -3458,10 +3458,8 @@
             <section name="gmd:lineage" per="gmd:lineage" required="true()">
               <section xpath="gmd:LI_Lineage/gmd:statement"/>
               <section name="gmd:processStep" per="gmd:LI_Lineage/gmd:processStep">
-                <section name="gmd:description" per="gmd:LI_ProcessStep" required="true()">
-                  <section xpath="gmd:description"/>
-                  <section xpath="gmd:dateTime"/>
-                </section>
+                <field xpath="gmd:LI_ProcessStep/gmd:description"/>
+                <field xpath="gmd:LI_ProcessStep/gmd:dateTime"/>
                 <section xpath="gmd:LI_ProcessStep/gmd:processor" />
                 <action type="add" name="gmd:processor" or="processor" in="gmd:LI_ProcessStep"
                         addDirective="data-gn-directory-entry-selector">

@@ -4,7 +4,7 @@
                 xmlns:tr="java:org.fao.geonet.api.records.formatters.SchemaLocalizations"
                 xmlns:gn-fn-iso19139="http://geonetwork-opensource.org/xsl/functions/profiles/iso19139"
                 version="2.0">
-
+  <xsl:variable name="formatter" select="'default'"/>
   <xsl:variable name="schema" select="/root/info/record/datainfo/schemaid"/>
   <xsl:variable name="source" select="/root/info/record/sourceinfo/sourceid"/>
   <xsl:variable name="metadataId" select="/root/info/record/id"/>
@@ -26,12 +26,14 @@
   <xsl:variable name="langId" select="gn-fn-iso19139:getLangId($metadata, $language)"/>
   <xsl:variable name="schemaLoc" select="tr:create($schema)"/>
   <xsl:variable name="tabs">
-    <tab>identificationInfo</tab>
-    <tab>contentInfo</tab>
-    <tab>referenceSystemInfo</tab>
-    <tab>dataQualityInfo</tab> <!-- Also contain INSPIRE Domeinconsistentie -->
-    <tab>accessConstrainInfo</tab>
-    <tab>distributionInfo</tab>
-    <tab>metadataInfo</tab> <!-- Also contain Object catalog info -->
+    <tab>identificationTab</tab>
+    <tab>contentTab</tab>
+    <tab>referenceSystemTab</tab>
+    <tab>qualityTab</tab>
+    <tab>domainConsistancyTab</tab>
+    <tab>constraintsTab</tab>
+    <tab>distributionTab</tab>
+    <tab>metaMetadataTab</tab>
+    <tab>objectCatalogueTab</tab> <!-- Also contain Object catalog info -->
   </xsl:variable>
 </xsl:stylesheet>

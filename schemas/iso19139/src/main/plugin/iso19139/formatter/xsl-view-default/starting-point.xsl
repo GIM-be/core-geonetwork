@@ -105,18 +105,33 @@
         <i class="fa fa-fw fa-map-marker"></i>
         <span data-translate="">extent</span>
       </h2>
-      <p data-ng-if="mdView.current.record.geoDesc">
-        <ul>
-          <li data-ng-repeat="d in mdView.current.record.geoDesc">{{d}}</li>
-        </ul>
-      </p>
+      <dl data-ng-show="mdView.current.record.geoDesc">
+        <xsl:element name="dt">
+          <xsl:attribute name="data-translate"/>
+          geoDesc
+        </xsl:element>
+        <dd data-ng-repeat="d in mdView.current.record.geoDesc track by $index">{{d}}</dd>
+      </dl>
       <!-- TODO: use map config -->
-      <p data-ng-repeat="bbox in mdView.current.record.geoBox">
-        <img class="gn-img-thumbnail img-thumbnail gn-img-extent"
-             alt="{{{{'extent' | translate}}}}"
-             aria-label="{{{{'extent' | translate}}}}"
-             data-ng-src="{{{{gnUrl}}}}{{{{lang}}}}/region.getmap.png?mapsrs=EPSG:3857&amp;width=250&amp;background=settings&amp;geomsrs=EPSG:4326&amp;geom={{{{mdView.current.record.getBoxAsPolygon($index)}}}}"/>
-      </p>
+      <dl data-ng-show="mdView.current.record.geoBox">
+        <xsl:element name="dt">
+          <xsl:attribute name="data-translate"/>
+          geoBox
+        </xsl:element>
+        <dd data-ng-repeat="bbox in mdView.current.record.geoBox track by $index">
+          <img class="gn-img-thumbnail img-thumbnail gn-img-extent"
+               alt="{{{{'extent' | translate}}}}"
+               aria-label="{{{{'extent' | translate}}}}"
+               data-ng-src="{{{{gnUrl}}}}{{{{lang}}}}/region.getmap.png?mapsrs=EPSG:3857&amp;width=250&amp;background=settings&amp;geomsrs=EPSG:4326&amp;geom={{{{mdView.current.record.getBoxAsPolygon($index)}}}}"/>
+        </dd>
+      </dl>
+      <dl data-ng-show="mdView.current.record.geoDescCode">
+        <xsl:element name="dt">
+          <xsl:attribute name="data-translate"/>
+          geoDescCode
+        </xsl:element>
+        <dd>{{mdView.current.record.geoDescCode}}</dd>
+      </dl>
     </section>
 
     <section class="gn-md-side-dates"
@@ -195,7 +210,7 @@
 
 
   <xsl:template name="render-toc">
-    <ul class="view-outline nav nav-tabs nav-tabs-advanced">
+    <ul class="view-outline nav nav-tabs nav-tabs-advanced gp-nav">
       <xsl:for-each select="$tabs/tab">
         <li>
           <a href="#gn-tab-{string(.)}">
