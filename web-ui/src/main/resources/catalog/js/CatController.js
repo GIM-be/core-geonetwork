@@ -161,11 +161,12 @@
             // If include is mentioned, the exclude will be ignored.
             'list': [{
               'label': 'defaultView',
-              'url': ''
+              'url': '',
+              'exclude': ['iso19139']
             }, {
               'label': 'full',
-              'url': '/formatters/xsl-view?root=div&view=advanced'
-              //'exclude': ['iso19139']
+              'url': '/formatters/xsl-view?root=div&view=advanced',
+              'exclude': ['iso19139']
             }, {
               'label': 'isoFullView',
               'url': '/formatters/xsl-view-default?root=div&view=advanced',
@@ -175,7 +176,7 @@
             // a formatter depending on the schema (without changing the URL)
             'defaultFormatters': {
               'iso19139': {
-                'url': ''
+                'url': '/formatters/xsl-view-default?root=div&view=advanced'
               }
             },
             defaultUrl: ''
