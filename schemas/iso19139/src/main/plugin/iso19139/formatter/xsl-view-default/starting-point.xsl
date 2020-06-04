@@ -57,7 +57,7 @@
         <xsl:apply-templates mode="getMetadataTitle" select="$metadata"/>
       </xsl:variable>
       <article id="{$metadataUuid}"
-               class="gn-md-view gn-metadata-display">
+               class="gn-md-view gn-metadata-display aiv-gp-view">
         <div class="row">
           <div class="col-md-8">
             <header>
@@ -77,7 +77,7 @@
               </xsl:if>
             </header>
             <xsl:call-template name="render-toc"/>
-            <div class="aiv-gp-view tab-content">
+            <div class="tab-content">
               <!-- Templates defined in the file view.xsl -->
               <xsl:apply-templates mode="render-content" select="/root/gmd:MD_Metadata"/>
             </div>

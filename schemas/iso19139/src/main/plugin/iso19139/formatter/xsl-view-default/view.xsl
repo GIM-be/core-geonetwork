@@ -453,26 +453,28 @@
     <xsl:variable name="link" select="normalize-space(gmx:Anchor/@xlink:href)"/>
     <xsl:variable name="value" select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
     <xsl:variable name="toolTip" select="concat('{{''clickToFilterOn'' | translate}} ', $value)"/>
-    <xsl:if test="$link='' and $value!=''">
-      <xsl:value-of select="$value"/>
-    </xsl:if>
-    <xsl:if test="$link!=''">
-      <a>
-        <xsl:attribute name="href" select="$link"/>
-        <xsl:attribute name="target" select="'_blank'"/>
+    <span class="gp-keyword">
+      <xsl:if test="$link='' and $value!=''">
         <xsl:value-of select="$value"/>
-      </a>
-    </xsl:if>
-    <a>
-      <xsl:attribute name="href" select="''"/>
-      <xsl:attribute name="title" select="$toolTip"/>
-      <xsl:attribute name="aria-label" select="$toolTip"/>
-      <xsl:attribute name="data-ng-click"
-                     select="concat('search({''keyword'':''',
+      </xsl:if>
+      <xsl:if test="$link!=''">
+        <a>
+          <xsl:attribute name="href" select="$link"/>
+          <xsl:attribute name="target" select="'_blank'"/>
+          <xsl:value-of select="$value"/>
+        </a>
+      </xsl:if>
+      <a>
+        <xsl:attribute name="href" select="''"/>
+        <xsl:attribute name="title" select="$toolTip"/>
+        <xsl:attribute name="aria-label" select="$toolTip"/>
+        <xsl:attribute name="data-ng-click"
+                       select="concat('search({''keyword'':''',
                                   replace(replace($value,'$apos;','%27'),'&quot;','%22'),
                                   '''})')"/>
-      <i class="fa fa-search"></i>
-    </a>
+        <i class="fa fa-search"/>
+      </a>
+    </span>
   </xsl:template>
 
   <xsl:template mode="render-content" match="gmd:MD_TopicCategoryCode">
@@ -644,7 +646,7 @@
     <xsl:param name="header" as="xs:string"/>
     <xsl:param name="content"/>
     <tr>
-      <td colspan="2" style="padding-left:1em">
+      <td colspan="2" class="gp-nest-row">
         <h3 class="view-header gp-header"><xsl:value-of select="$header"/></h3>
         <xsl:copy-of select="$content"/>
       </td>
