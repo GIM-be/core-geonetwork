@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:tr="java:org.fao.geonet.api.records.formatters.SchemaLocalizations"
                 xmlns:gn-fn-iso19139="http://geonetwork-opensource.org/xsl/functions/profiles/iso19139"
                 version="2.0">
@@ -25,6 +26,8 @@
   <xsl:variable name="metadata" select="/root/gmd:MD_Metadata"/>
   <xsl:variable name="langId" select="gn-fn-iso19139:getLangId($metadata, $language)"/>
   <xsl:variable name="schemaLoc" select="tr:create($schema)"/>
+  <xsl:variable name="inspire-theme"
+                select="document('../../../../../config/codelist/external/thesauri/theme/inspire-theme.rdf')//skos:Concept"/>
   <xsl:variable name="tabs">
     <tab>identificationTab</tab>
     <tab>contentTab</tab>
