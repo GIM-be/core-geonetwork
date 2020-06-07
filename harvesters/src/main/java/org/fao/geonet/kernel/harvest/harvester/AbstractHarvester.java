@@ -958,6 +958,7 @@ public abstract class AbstractHarvester<T extends HarvestResult> {
             add(res, "unknownSchema", result.unknownSchema);
             add(res, "unretrievable", result.unretrievable);
             add(res, "updated", result.updatedMetadata);
+            add(res, "uuidSkipped", result.uuidSkipped);
             add(res, "thumbnails", result.thumbnails);
             add(res, "thumbnailsFailed", result.thumbnailsFailed);
         } else if (this.loadedInfo != null) {

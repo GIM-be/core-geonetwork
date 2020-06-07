@@ -97,9 +97,28 @@ Mapping between :
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+      <xsl:variable name="inspireMetadataUrl">
+        <xsl:value-of select="//inspire_common:MetadataUrl/inspire_common:URL"/>
+      </xsl:variable>
+      <xsl:variable name="leftPart" select="substring-before(upper-case($inspireMetadataUrl),'ID=')"/>
+      <xsl:variable name="rightPart" select="substring($inspireMetadataUrl,string-length($leftPart)+1)"/>
+      <xsl:variable name="idPart">
+        <xsl:if test="contains($rightPart,'&amp;')">
+          <xsl:value-of select="substring(substring-before($rightPart,'&amp;'),4)"/>
+        </xsl:if>
+        <xsl:if test="not(contains($rightPart,'&amp;'))">
+          <xsl:value-of select="substring($rightPart,4)"/>
+        </xsl:if>
+      </xsl:variable>
+
       <fileIdentifier>
         <gco:CharacterString>
-          <xsl:value-of select="$uuid"/>
+          <xsl:if test="string-length($idPart)>0">
+            <xsl:value-of select="$idPart"/>
+          </xsl:if>
+          <xsl:if test="not(string-length($idPart)>0)">
+            <xsl:value-of select="$uuid"/>
+          </xsl:if>
         </gco:CharacterString>
       </fileIdentifier>
 
