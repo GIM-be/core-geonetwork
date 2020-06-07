@@ -77,6 +77,7 @@ import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataCategoryRepository;
 import org.fao.geonet.repository.MetadataRepository;
+import org.fao.geonet.repository.SimpleMetadata;
 import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.util.Sha1Encoder;
 import org.fao.geonet.utils.BinaryFile;
@@ -260,7 +261,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
 
         dataMan.batchIndexInThreadPool(context, ids);
 
-        result.totalMetadata = result.addedMetadata + result.updatedMetadata;
+        result.totalMetadata = result.addedMetadata + result.updatedMetadata + result.uuidSkipped;
 
         //-----------------------------------------------------------------------
         //--- remove old metadata
@@ -405,7 +406,13 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
         // Save iso19119 metadata in DB
         log.info("  - Adding/updating metadata for services with " + uuid);
 
-        if (!dataMan.existsMetadataUuid(uuid)) {
+        String xmlFileIdentifier = dataMan.extractUUID(schema, md);
+        if (StringUtils.isNotEmpty(xmlFileIdentifier)) {
+            uuid = xmlFileIdentifier;
+        }
+        MetadataRepository metadataRepository = ApplicationContextHolder.get().getBean(MetadataRepository.class);
+        Metadata existingRecord = metadataRepository.findOneByUuid(uuid);
+        if (existingRecord == null) {
             //
             // insert metadata
             //
@@ -433,6 +440,11 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
             result.addedMetadata++;
             metadata = metadataManager.insertMetadata(context, metadata, md, true, false, false, UpdateDatestamp.NO, false, false);
         } else {
+            if (!existingRecord.getSourceInfo().getSourceId().equals(params.getUuid())) {
+                log.info(String.format("  - Updating an existing record with uuid %s linked to another source is not allowed.", uuid));
+                result.uuidSkipped++;
+                return uuids;
+            }
             result.updatedMetadata++;
             String id = dataMan.getMetadataId(uuid);
             metadata = metadataManager.updateMetadata(context, id, md, false, false, false,
