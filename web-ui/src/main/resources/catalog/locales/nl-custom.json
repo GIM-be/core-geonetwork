@@ -68,11 +68,13 @@
   "validationReport": "Validatierapport",
   "metadataErrorReport": "Fouten rapport",
   "objCatName": "Naam van de catalogus",
+  "coupledResourceName": "Naam van de gekoppelde bron",
+  "operatesOnName": "Datasetnaam waarop de service opereert",
   "relations": "Relaties",
   "children" : "Kinderen",
   "parent": "Ouder",
   "isoDefaultView": "Standaart weergave",
   "isoFullView": "ISO weergave",
   "versionDate": "Versiedatum",
-  "attributeCardinality": "Cardinaliteid"
+  "attributeCardinality": "Cardinaliteit"
 }

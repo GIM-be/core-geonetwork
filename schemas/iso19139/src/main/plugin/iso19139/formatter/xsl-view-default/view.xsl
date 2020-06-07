@@ -9,6 +9,7 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:tr="java:org.fao.geonet.api.records.formatters.SchemaLocalizations"
+                xmlns:gn-fn-render="http://geonetwork-opensource.org/xsl/functions/render"
                 xmlns:xslUtils="java:org.fao.geonet.util.XslUtil"
                 xmlns:gn-fn-iso19139="http://geonetwork-opensource.org/xsl/functions/profiles/iso19139"
                 xmlns:saxon="http://saxon.sf.net/"
@@ -16,9 +17,11 @@
                 extension-element-prefixes="saxon"
                 exclude-result-prefixes="#all">
 
-  <xsl:include href="./min-utility-fn.xsl"/>
-  <xsl:include href="./variables.xsl"/>
-  <xsl:include href="./starting-point.xsl"/>
+  <xsl:include href="../../index-fields/inspire-util.xsl"/>
+  <xsl:include href="min-utility-fn.xsl"/>
+  <xsl:include href="variables.xsl"/>
+  <xsl:include href="starting-point.xsl"/>
+  <xsl:include href="sharedFormatterDir/xslt/render-functions.xsl"/>
 
 
   <xsl:template mode="render-content" match="*|@*">
@@ -61,22 +64,24 @@
         <xsl:apply-templates mode="render-content" select="gmd:referenceSystemInfo"/>
       </xsl:with-param>
     </xsl:call-template>
+    <xsl:variable name="mdDataQuality" select="gmd:dataQualityInfo/gmd:DQ_DataQuality"/>
     <xsl:call-template name="render-tab">
       <xsl:with-param name="tabId" select="'gn-tab-qualityTab'"/>
       <xsl:with-param name="content">
         <xsl:call-template name="render-block">
           <xsl:with-param name="block">
-            <xsl:apply-templates mode="render-content" select="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode"/>
+            <xsl:apply-templates mode="render-content" select="$mdDataQuality/gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode"/>
+            <xsl:apply-templates mode="render-content" select="$mdDataQuality/gmd:scope/gmd:DQ_Scope/gmd:levelDescription/gmd:MD_ScopeDescription/gmd:other"/>
           </xsl:with-param>
         </xsl:call-template>
-        <xsl:apply-templates mode="render-content" select="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/*[name()=('gmd:DQ_ThematicClassificationCorrectness','gmd:DQ_CompletenessOmission','gmd:DQ_AbsoluteExternalPositionalAccuracy')]"/>
-        <xsl:apply-templates mode="render-content" select="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage"/>
+        <xsl:apply-templates mode="render-content" select="$mdDataQuality/gmd:report/*[name()=('gmd:DQ_ThematicClassificationCorrectness','gmd:DQ_CompletenessOmission','gmd:DQ_AbsoluteExternalPositionalAccuracy')]"/>
+        <xsl:apply-templates mode="render-content" select="$mdDataQuality/gmd:lineage"/>
       </xsl:with-param>
     </xsl:call-template>
     <xsl:call-template name="render-tab">
       <xsl:with-param name="tabId" select="'gn-tab-domainConsistancyTab'"/>
       <xsl:with-param name="content">
-        <xsl:apply-templates mode="render-content" select="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency"/>
+        <xsl:apply-templates mode="render-content" select="$mdDataQuality/gmd:report/gmd:DQ_DomainConsistency"/>
       </xsl:with-param>
     </xsl:call-template>
     <xsl:call-template name="render-tab">
@@ -88,6 +93,46 @@
             <xsl:apply-templates mode="render-content" select="gmd:identificationInfo/*/gmd:resourceConstraints/*[name()=('gmd:MD_LegalConstraints','gmd:MD_SecurityConstraints')]"/>
           </xsl:with-param>
         </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="render-tab">
+      <xsl:with-param name="tabId" select="'gn-tab-distributionTab'"/>
+      <xsl:with-param name="content">
+        <xsl:call-template name="render-block">
+          <xsl:with-param name="block">
+            <xsl:apply-templates mode="render-content" select="gmd:distributionInfo/gmd:MD_Distribution"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="render-tab">
+      <xsl:with-param name="tabId" select="'gn-tab-metaMetadataTab'"/>
+      <xsl:with-param name="content">
+        <xsl:call-template name="render-block">
+          <xsl:with-param name="block">
+            <xsl:apply-templates mode="render-content" select="gmd:fileIdentifier"/>
+            <xsl:apply-templates mode="render-content" select="gmd:language/gmd:LanguageCode"/>
+            <xsl:apply-templates mode="render-content" select="gmd:characterSet/gmd:MD_CharacterSetCode"/>
+            <xsl:apply-templates mode="render-content" select="gmd:parentIdentifier"/>
+            <xsl:apply-templates mode="render-content" select="gmd:hierarchyLevel/gmd:MD_ScopeCode"/>
+            <xsl:apply-templates mode="render-content" select="gmd:hierarchyLevelName"/>
+            <xsl:apply-templates mode="render-content" select="gmd:dateStamp"/>
+            <xsl:apply-templates mode="render-content" select="gmd:metadataStandardName"/>
+            <xsl:apply-templates mode="render-content" select="gmd:metadataStandardVersion"/>
+            <xsl:call-template name="render-block-as-row-with-header">
+              <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:contact', name())"/>
+              <xsl:with-param name="block">
+                <xsl:apply-templates mode="render-content" select="gmd:contact/gmd:CI_ResponsibleParty"/>
+              </xsl:with-param>
+            </xsl:call-template>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:call-template name="render-tab">
+      <xsl:with-param name="tabId" select="'gn-tab-objectCatalogueTab'"/>
+      <xsl:with-param name="content">
+        <xsl:apply-templates mode="render-content" select="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription"/>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
@@ -160,6 +205,20 @@
         <xsl:apply-templates mode="render-content" select="gmd:descriptiveKeywords[not(*/gmd:thesaurusName/gmd:CI_Citation/gmd:title) and count(gmd:MD_Keywords/gmd:keyword/*[normalize-space()!=''])>0]"/>
       </xsl:with-param>
     </xsl:call-template>
+    <xsl:call-template name="render-block">
+      <xsl:with-param name="block">
+        <xsl:apply-templates mode="render-content" select="srv:serviceType/gco:LocalName"/>
+        <xsl:apply-templates mode="render-content" select="srv:serviceTypeVersion"/>
+        <xsl:apply-templates mode="render-content" select="srv:extent"/>
+        <xsl:apply-templates mode="render-content" select="srv:coupledResource"/>
+        <xsl:apply-templates mode="render-content" select="srv:couplingType/srv:SV_CouplingType"/>
+        <xsl:if test="$formatter!='default'">
+          <xsl:apply-templates mode="render-content" select="srv:accessProperties"/>
+        </xsl:if>
+        <xsl:apply-templates mode="render-content" select="srv:containsOperations"/>
+        <xsl:apply-templates mode="render-content" select="srv:operatesOn"/>
+      </xsl:with-param>
+    </xsl:call-template>
     <xsl:for-each select="gmd:resourceSpecificUsage">
       <xsl:call-template name="render-block">
         <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
@@ -193,18 +252,23 @@
       <xsl:with-param name="block">
         <xsl:apply-templates mode="render-content" select="gmd:language/gmd:LanguageCode"/>
         <xsl:apply-templates mode="render-content" select="gmd:characterSet/gmd:MD_CharacterSetCode"/>
-        <xsl:apply-templates mode="render-content" select="gmd:topicCategory/gmd:MD_TopicCategoryCode"/>
+        <xsl:if test="count(gmd:topicCategory/gmd:MD_TopicCategoryCode) > 0">
+          <xsl:call-template name="render-block-as-row">
+            <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'gmd:MD_TopicCategoryCode', 'gmd:topicCategory')"/>
+            <xsl:with-param name="block">
+              <xsl:for-each select="gmd:topicCategory/gmd:MD_TopicCategoryCode">
+                <button class="btn btn-sm btn-default">
+                  <xsl:attribute name="data-ng-click" select="concat('search({''topicCat'':''',.,'''})')"/>
+                  <xsl:attribute name="title" select="concat('{{''clickToFilterOn'' | translate}} {{''',.,''' | translate}}')"/>
+                  <span class="{concat('fa gn-icon-',.,' topic-color')}"/><xsl:value-of select="concat('{{''',.,''' | translate}}')" />
+                </button>
+              </xsl:for-each>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:if>
         <xsl:apply-templates mode="render-content" select="gmd:environmentDescription"/>
         <xsl:apply-templates mode="render-content" select="gmd:supplementalInformation"/>
         <xsl:apply-templates mode="render-content" select="gmd:extent"/>
-        <xsl:apply-templates mode="render-content" select="srv:serviceType|srv:serviceTypeVersion"/>
-        <xsl:if test="$formatter!='default'">
-          <xsl:apply-templates mode="render-content" select="srv:accessProperties"/>
-        </xsl:if>
-        <xsl:apply-templates mode="render-content" select="srv:containsOperations"/>
-        <xsl:apply-templates mode="render-content" select="srv:operatesOn"/>
-        <xsl:apply-templates mode="render-content" select="srv:coupledResource"/>
-        <xsl:apply-templates mode="render-content" select="srv:extent"/>
         <!--
         Optional fields for service and not used
         <xs:element name="restrictions" type="gmd:MD_Constraints_PropertyType" minOccurs="0"/>
@@ -279,8 +343,13 @@
         <xsl:call-template name="render-block-as-row-with-header">
           <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:DQ_ConformanceResult', 'gmd:result')"/>
           <xsl:with-param name="block">
-            <xsl:apply-templates mode="render-content" select="$conformanceResult/gmd:specification/gmd:CI_Citation/gmd:title"/>
-            <xsl:apply-templates mode="render-content" select="$conformanceResult/gmd:specification/gmd:CI_Citation/gmd:date"/>
+            <xsl:call-template name="render-block-as-row-with-header">
+              <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:specification', 'gmd:DQ_ConformanceResult')"/>
+              <xsl:with-param name="block">
+                <xsl:apply-templates mode="render-content" select="$conformanceResult/gmd:specification/gmd:CI_Citation/gmd:title"/>
+                <xsl:apply-templates mode="render-content" select="$conformanceResult/gmd:specification/gmd:CI_Citation/gmd:date"/>
+              </xsl:with-param>
+            </xsl:call-template>
             <xsl:apply-templates mode="render-content" select="$conformanceResult/gmd:explanation"/>
             <xsl:apply-templates mode="render-content" select="$conformanceResult/gmd:pass"/>
           </xsl:with-param>
@@ -314,6 +383,82 @@
     </xsl:call-template>
   </xsl:template>
 
+  <xsl:template mode="render-content" match="gmd:MD_Distribution">
+    <xsl:call-template name="render-text-as-row">
+      <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'gmd:distributionFormat', name())"/>
+      <xsl:with-param name="value">
+        <xsl:for-each select="gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString">
+          <xsl:variable name="version" select="normalize-space(../../gmd:version/gco:CharacterString)" />
+          <xsl:variable name="toolTip" select="concat('{{''clickToFilterOn'' | translate}} ', .)"/>
+          <a>
+            <xsl:attribute name="href" select="''"/>
+            <xsl:attribute name="title" select="$toolTip"/>
+            <xsl:attribute name="aria-label" select="$toolTip"/>
+            <xsl:attribute name="data-ng-click"
+                           select="concat('search({''format'':''',.,'''})')"/>
+            <span class="badge">
+              <xsl:if test="$version!=''">
+                <xsl:value-of select="concat(.,' (Version: ', $version,')')"/>
+              </xsl:if>
+              <xsl:if test="not($version!='')">
+                <xsl:value-of select="."/>
+              </xsl:if>
+            </span>
+          </a>
+        </xsl:for-each>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:for-each select="gmd:distributor/gmd:MD_Distributor">
+      <xsl:call-template name="render-block-as-row-with-header">
+        <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:distributor', 'gmd:MD_Distribution')"/>
+        <xsl:with-param name="block">
+          <xsl:apply-templates mode="render-content" select="gmd:distributorContact/gmd:CI_ResponsibleParty"/>
+          <xsl:for-each select="gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess">
+            <xsl:call-template name="render-block-as-row-with-header">
+              <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:distributionOrderProcess', 'gmd:MD_Distributor')"/>
+              <xsl:with-param name="block">
+                <xsl:apply-templates mode="render-content" select="gmd:fees"/>
+                <xsl:apply-templates mode="render-content" select="gmd:orderingInstructions"/>
+                <xsl:apply-templates mode="render-content" select="gmd:turnaround"/>
+              </xsl:with-param>
+            </xsl:call-template>
+          </xsl:for-each>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:for-each>
+    <xsl:for-each select="gmd:transferOptions/gmd:MD_DigitalTransferOptions">
+      <xsl:call-template name="render-block-as-row-with-header">
+        <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:transferOptions', 'gmd:MD_Distribution')"/>
+        <xsl:with-param name="block">
+          <xsl:apply-templates mode="render-content" select="gmd:unitsOfDistribution"/>
+          <xsl:for-each select="gmd:onLine">
+            <xsl:call-template name="render-block-as-row-with-header">
+              <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, name(), 'gmd:MD_DigitalTransferOptions')"/>
+              <xsl:with-param name="block">
+                <xsl:apply-templates mode="render-content" select="gmd:CI_OnlineResource"/>
+              </xsl:with-param>
+            </xsl:call-template>
+          </xsl:for-each>
+          <xsl:apply-templates mode="render-content" select="gmd:offLine/gmd:MD_Medium/gmd:name/gmd:MD_MediumNameCode"/>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template mode="render-content" match="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
+    <xsl:call-template name="render-block">
+      <xsl:with-param name="block">
+        <xsl:apply-templates mode="render-content" select="gmd:includedWithDataset"/>
+        <xsl:call-template name="render-block-as-row-with-header">
+          <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:featureCatalogueCitation', name())"/>
+          <xsl:with-param name="block">
+            <xsl:apply-templates mode="render-content" select="gmd:featureCatalogueCitation/@uuidref"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
   <xsl:template mode="render-content" match="gmd:CI_ResponsibleParty">
     <xsl:apply-templates mode="render-content" select="gmd:individualName"/>
     <xsl:apply-templates mode="render-content" select="gmd:organisationName"/>
@@ -329,8 +474,19 @@
     <xsl:apply-templates mode="render-content" select="gmd:role/gmd:CI_RoleCode"/>
   </xsl:template>
 
+  <xsl:template mode="render-content" match="gmd:resourceMaintenance">
+    <xsl:apply-templates mode="render-content" select="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode"/>
+    <xsl:apply-templates mode="render-content" select="gmd:MD_MaintenanceInformation/gmd:dateOfNextUpdate"/>
+    <xsl:call-template name="render-block-as-row-with-header">
+      <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:contact', 'gmd:dateOfNextUpdate')"/>
+      <xsl:with-param name="block">
+        <xsl:apply-templates mode="render-content" select="gmd:MD_MaintenanceInformation/gmd:contact/gmd:CI_ResponsibleParty"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
   <xsl:template mode="render-content" match="gmd:descriptiveKeywords">
-    <xsl:variable name="thesaurusTitle" select="*/gmd:thesaurusName/gmd:CI_Citation/gmd:title"/>
+    <xsl:variable name="thesaurusTitle" select="*/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*"/>
     <xsl:call-template name="render-block-as-row">
       <xsl:with-param name="label" select="if ($thesaurusTitle) then $thesaurusTitle else gn-fn-iso19139:get-schema-strings($schemaStrings, 'otherKeywords')"/>
       <xsl:with-param name="block">
@@ -340,17 +496,63 @@
         </xsl:call-template-->
         <xsl:for-each select="*/gmd:keyword">
           <xsl:apply-templates mode="render-content" select="."/>
-          <xsl:if test="position() != last()">
-            <div class="gp-inline"> | </div>
-          </xsl:if>
         </xsl:for-each>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template mode="render-content" match="gmd:CI_OnlineResource">
+    <xsl:apply-templates mode="render-content" select="gmd:linkage"/>
+    <xsl:apply-templates mode="render-content" select="gmd:protocol"/>
+    <xsl:apply-templates mode="render-content" select="gmd:name"/>
+    <xsl:apply-templates mode="render-content" select="gmd:description"/>
+  </xsl:template>
+
+  <xsl:template mode="render-content" match="srv:coupledResource">
+    <xsl:call-template name="render-block-as-row-with-header">
+      <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
+      <xsl:with-param name="block">
+        <xsl:apply-templates mode="render-content" select="srv:SV_CoupledResource/srv:operationName"/>
+        <xsl:apply-templates mode="render-content" select="srv:SV_CoupledResource/srv:identifier"/>
+        <xsl:apply-templates mode="render-content" select="srv:SV_CoupledResource/gco:ScopedName"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template mode="render-content" match="srv:containsOperations">
+    <xsl:call-template name="render-block-as-row-with-header">
+      <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
+      <xsl:with-param name="block">
+        <xsl:apply-templates mode="render-content" select="srv:SV_OperationMetadata/srv:operationName"/>
+        <xsl:apply-templates mode="render-content" select="srv:SV_OperationMetadata/srv:DCP/srv:DCPList"/>
+        <xsl:apply-templates mode="render-content" select="srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template mode="render-content" match="srv:operatesOn">
+    <xsl:call-template name="render-block-as-row-with-header">
+      <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
+      <xsl:with-param name="block">
+        <xsl:apply-templates mode="render-content" select="@uuidref"/>
+        <xsl:call-template name="render-url-as-row">
+          <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'xlink:href', name())"/>
+          <xsl:with-param name="url" select="@xlink:href"/>
+        </xsl:call-template>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
   <xsl:template mode="render-content" match="gmd:MD_Usage">
     <xsl:apply-templates mode="render-content" select="gmd:specificUsage"/>
-    <xsl:apply-templates mode="render-content" select="gmd:userContactInfo/gmd:CI_ResponsibleParty"/>
+    <xsl:for-each select="gmd:userContactInfo/gmd:CI_ResponsibleParty">
+      <xsl:call-template name="render-block-as-row-with-header">
+        <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
+        <xsl:with-param name="block">
+          <xsl:apply-templates mode="render-content" select="."/>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:for-each>
   </xsl:template>
 
   <!-- Generic templates -->
@@ -374,7 +576,54 @@
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template mode="render-content" match="gml:identifier|gco:Record">
+  <xsl:template mode="render-content" match="gmd:parentIdentifier" priority="1000">
+    <xsl:variable name="identifier" select="normalize-space(gco:CharacterString)"/>
+    <xsl:if test="$identifier!=''">
+      <xsl:call-template name="render-row">
+        <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
+        <xsl:with-param name="content">
+          <a href="{concat('#/metadata/',$identifier)}">
+            <xsl:value-of select="gn-fn-render:getMetadataTitle($identifier, $langId)"/>
+          </a>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template mode="render-content" match="@uuidref|srv:identifier" priority="1000">
+    <xsl:variable name="identifier" select="normalize-space(.)"/>
+    <xsl:if test="$identifier!=''">
+      <xsl:variable name="title">
+        <xsl:choose>
+          <xsl:when test="name()='srv:identifier'"><xsl:value-of select="gn-fn-render:getMetadataTitleByDatasetIdentifier($identifier, $langId)"/></xsl:when>
+          <xsl:when test="name()='uuidref' and name(..)='srv:operatesOn'"><xsl:value-of select="gn-fn-render:getMetadataTitleByDatasetIdentifier($identifier, $langId)"/></xsl:when>
+          <xsl:otherwise><xsl:value-of select="gn-fn-render:getMetadataTitle($identifier, $langId)"/></xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:if test="$title!=$identifier">
+        <xsl:call-template name="render-row">
+          <xsl:with-param name="label">
+            <xsl:choose>
+              <xsl:when test="name()='srv:identifier'">{{'coupledResourceName' | translate}}</xsl:when>
+              <xsl:when test="name()='uuidref' and name(..)='srv:operatesOn'">{{'operatesOnName' | translate}}</xsl:when>
+              <xsl:otherwise>{{'objCatName' | translate}}</xsl:otherwise>
+            </xsl:choose>
+          </xsl:with-param>
+          <xsl:with-param name="content">
+            <a href="{concat('#/metadata/',$identifier)}">
+              <xsl:value-of select="$title"/>
+            </a>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:if>
+      <xsl:call-template name="render-row">
+        <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
+        <xsl:with-param name="content" select="$identifier"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template mode="render-content" match="gml:identifier|gco:Record|gco:LocalName|gco:ScopedName">
     <xsl:call-template name="render-text-as-row">
       <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
       <xsl:with-param name="value" select="text()"/>
@@ -426,10 +675,20 @@
   </xsl:template>
 
   <xsl:template mode="render-content" match="*[@codeListValue]">
-    <xsl:call-template name="render-codelist-as-row">
-      <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(..), name(../..))"/>
-      <xsl:with-param name="codelist" select="@codeListValue"/>
-    </xsl:call-template>
+    <xsl:if test="normalize-space(@codeListValue)">
+      <xsl:variable name="context">
+        <xsl:choose>
+          <xsl:when test="name(../..)='gmd:MD_Metadata'">
+            <xsl:value-of select="concat('/',name(../..),'/',name(..))"/></xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="name(../..)"/></xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:call-template name="render-codelist-as-row">
+        <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(..), $context)"/>
+        <xsl:with-param name="codelist" select="@codeListValue"/>
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template mode="render-content" match="*[gmd:URL]">
@@ -475,17 +734,18 @@
     </a>
   </xsl:template>
 
-  <xsl:template mode="render-content" match="gmd:MD_TopicCategoryCode">
-    <xsl:call-template name="render-button-as-row">
-      <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
-      <xsl:with-param name="button">
-        <button class="btn btn-sm btn-default">
-          <xsl:attribute name="data-ng-click" select="concat('search({''topicCat'':''',.,'''})')"/>
-          <xsl:attribute name="title" select="concat('{{''clickToFilterOn'' | translate}} {{''',.,''' | translate}}')"/>
-          <span class="{concat('fa gn-icon-',.,' topic-color')}"/><xsl:value-of select="concat('{{''',.,''' | translate}}')" />
-        </button>
-      </xsl:with-param>
-    </xsl:call-template>
+  <xsl:template mode="render-content" match="gmd:keyword[../gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[normalize-space() = ('gemet - inspire themes, version 1.0','GEMET - INSPIRE thema''s, versie 1.0')]]" priority="1000">
+    <xsl:variable name="value" select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
+    <xsl:variable name="inspireThemeAcronym">
+      <xsl:call-template name="getInspireThemeAcronym">
+        <xsl:with-param name="keyword" select="$value"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <button class="{concat('btn btn-sm btn-default ',$inspireThemeAcronym,' ',$inspireThemeAcronym,'-{{langs[lang]}}')}">
+      <xsl:attribute name="data-ng-click" select="concat('search({''inspirethemewithac'':''',$inspireThemeAcronym, '|', $value,'''})')"/>
+      <xsl:attribute name="title" select="concat('{{''clickToFilterOn'' | translate}} {{''',$value,''' | translate}}')"/>
+      <span class="{concat('iti-',$inspireThemeAcronym)}"></span> <xsl:value-of select="$value" />
+    </button>
   </xsl:template>
 
   <!-- =============================================  -->
@@ -564,28 +824,32 @@
   <xsl:template name="render-block-as-row-with-header">
     <xsl:param name="header" as="xs:string"/>
     <xsl:param name="block" as="node()"/>
-    <xsl:call-template name="render-row-with-colspan">
-      <xsl:with-param name="header" select="$header"/>
-      <xsl:with-param name="content">
-        <xsl:call-template name="render-block">
-          <xsl:with-param name="block" select="$block"/>
-        </xsl:call-template>
-      </xsl:with-param>
-    </xsl:call-template>
+    <xsl:if test="normalize-space($block)">
+      <xsl:call-template name="render-row-with-colspan">
+        <xsl:with-param name="header" select="$header"/>
+        <xsl:with-param name="content">
+          <xsl:call-template name="render-block">
+            <xsl:with-param name="block" select="$block"/>
+          </xsl:call-template>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="render-url-as-row">
     <xsl:param name="label" as="xs:string"/>
     <xsl:param name="url" as="xs:string"/>
     <xsl:param name="prefix" as="xs:string" select="''"/>
-    <xsl:call-template name="render-row">
-      <xsl:with-param name="label" select="$label"/>
-      <xsl:with-param name="content">
-        <a href="{concat($prefix, $url)}" target="_blank">
-          <xsl:value-of select="$url"/>
-        </a>
-      </xsl:with-param>
-    </xsl:call-template>
+    <xsl:if test="$url!=''">
+      <xsl:call-template name="render-row">
+        <xsl:with-param name="label" select="$label"/>
+        <xsl:with-param name="content">
+          <a href="{concat($prefix, $url)}" target="_blank">
+            <xsl:value-of select="$url"/>
+          </a>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="render-button-as-row">
@@ -617,14 +881,16 @@
   <xsl:template name="render-block">
     <xsl:param name="header" required="no"/>
     <xsl:param name="block" as="node()"/>
-    <xsl:if test="$header">
-      <h3 class="view-header gp-header"><xsl:value-of select="$header"/></h3>
+    <xsl:if test="normalize-space($block)">
+      <xsl:if test="$header">
+        <h3 class="view-header gp-header"><xsl:value-of select="$header"/></h3>
+      </xsl:if>
+      <table class="table table-striped">
+        <tbody>
+          <xsl:copy-of select="$block"/>
+        </tbody>
+      </table>
     </xsl:if>
-    <table class="table table-striped">
-      <tbody>
-        <xsl:copy-of select="$block"/>
-      </tbody>
-    </table>
   </xsl:template>
 
   <xsl:template name="render-row">

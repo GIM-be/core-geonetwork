@@ -127,4 +127,36 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
+
+  <!-- Template to get metadata title using its dataset identifier.
+         Title is loaded from current language index if available.
+         If not, default title is returned.
+         If failed, return identifier. -->
+  <xsl:function name="gn-fn-render:getMetadataTitleByDatasetIdentifier">
+    <xsl:param name="identifier" as="xs:string"/>
+    <xsl:param name="language" as="xs:string"/>
+
+    <xsl:variable name="metadataTitle" select="util:getIndexFieldByDatasetIdentifier($language,$identifier,'title',$language)"/>
+    <xsl:choose>
+      <xsl:when test="$metadataTitle=''">
+        <xsl:variable name="metadataDefaultTitle"
+                      select="util:getIndexFieldByDatasetIdentifier(
+                      $language,
+                      $identifier,
+                      '_defaultTitle',
+                      $language)"/>
+        <xsl:choose>
+          <xsl:when test="$metadataDefaultTitle=''">
+            <xsl:value-of select="$identifier"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$metadataDefaultTitle"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$metadataTitle"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 </xsl:stylesheet>

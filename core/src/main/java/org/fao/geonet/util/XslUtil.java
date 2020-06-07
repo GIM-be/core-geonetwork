@@ -477,6 +477,27 @@ public final class XslUtil {
     }
 
     /**
+     * Get field value for metadata identified by dataset identifier.
+     *
+     * @param appName Web application name to access Lucene index from environment variable
+     * @param datasetIdentifier    Metadata dataset identifier
+     * @param field   Lucene field name
+     * @param lang    Language of the index to search in
+     * @return metadata title or an empty string if Lucene index or uuid could not be found
+     */
+    public static String getIndexFieldByDatasetIdentifier(Object appName, Object datasetIdentifier, Object field, Object lang) {
+        String fieldname = field.toString();
+        String language = (lang.toString().equals("") ? null : lang.toString());
+        try {
+            String fieldValue = LuceneSearcher.getMetadataFromIndexByDatasetIdentifier(language, datasetIdentifier.toString(), fieldname);
+            return fieldValue == null ? "" : fieldValue;
+        } catch (Exception e) {
+            Log.error(Geonet.GEONETWORK, "Failed to get index field value caused by " + e.getMessage());
+            return "";
+        }
+    }
+
+    /**
      * Return a translation for a codelist or enumeration element.
      *
      * @param codelist The codelist name (eg. gmd:MD_TopicCategoryCode)

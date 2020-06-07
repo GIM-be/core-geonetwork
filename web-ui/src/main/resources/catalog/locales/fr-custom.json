@@ -40,6 +40,8 @@
   "validationReport": "Rapport de validation",
   "metadataErrorReport": "Rapport d'erreur",
   "objCatName": "Nom du catalogue",
+  "coupledResourceName": "Naam van de gekoppelde bron",
+  "operatesOnName": "Datasetnaam waarop de service opereert",
   "relations": "Relations",
   "children" : "Enfants",
   "parent": "Parent",

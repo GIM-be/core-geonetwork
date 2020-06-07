@@ -901,6 +901,14 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
     }
 
     /**
+     * Searches in Lucene index and return Lucene index field value. Metadata records is retrieved
+     * based on its dataset identifier.
+     */
+    public static String getMetadataFromIndexByDatasetIdentifier(String priorityLang, String id, String fieldname) throws Exception {
+        return LuceneSearcher.getMetadataFromIndex(priorityLang, "identifier", id, Collections.singleton(fieldname)).get(fieldname);
+    }
+
+    /**
      * TODO javadoc.
      */
     private static Map<String, String> getMetadataFromIndex(String priorityLang, String uuid, Set<String> fieldnames) throws Exception {
@@ -1406,9 +1414,9 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
                 if (owner != null) {
                 	LOGGER.trace("Search using user \"" + owner + "\".");
                     request.addContent(new Element(SearchParameter.OWNER).addContent(owner));
-                    
+
                     //If the user is editor or more, fill the editorGroup
-                    Specification<UserGroup> hasUserIdAndProfile = 
+                    Specification<UserGroup> hasUserIdAndProfile =
                     		where(
                     				where(UserGroupSpecs.hasProfile(Profile.Reviewer))
                     					.or(UserGroupSpecs.hasProfile(Profile.Editor))
@@ -1796,10 +1804,10 @@ public class LuceneSearcher extends MetaSearcher implements MetadataRecordSelect
             this.presentationLanguage = presentationLanguage;
         }
     }
-    
+
     /**
      * <p> Gets the Lucene version token. Can be used as ETag. </p>
-     */    
+     */
     public long getVersionToken() {
     	return _versionToken;
     };
