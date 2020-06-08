@@ -487,6 +487,7 @@
 
   <xsl:template mode="render-content" match="gmd:descriptiveKeywords">
     <xsl:variable name="thesaurusTitle" select="*/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*"/>
+    <xsl:variable name="isInspireThesaurus" select="$thesaurusTitle and $thesaurusTitle = ('gemet - inspire themes, version 1.0','GEMET - INSPIRE thema''s, versie 1.0')" />
     <xsl:call-template name="render-block-as-row">
       <xsl:with-param name="label" select="if ($thesaurusTitle) then $thesaurusTitle else gn-fn-iso19139:get-schema-strings($schemaStrings, 'otherKeywords')"/>
       <xsl:with-param name="block">
@@ -496,6 +497,9 @@
         </xsl:call-template-->
         <xsl:for-each select="*/gmd:keyword">
           <xsl:apply-templates mode="render-content" select="."/>
+          <xsl:if test="not($isInspireThesaurus) and position() != last()">
+            <div class="gp-inline"> | </div>
+          </xsl:if>
         </xsl:for-each>
       </xsl:with-param>
     </xsl:call-template>
