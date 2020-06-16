@@ -73,7 +73,7 @@
   "relations": "Relaties",
   "children" : "Kinderen",
   "parent": "Ouder",
-  "isoDefaultView": "Standaart",
+  "isoDefaultView": "Standaard",
   "isoFullView": "ISO",
   "versionDate": "Versiedatum",
   "attributeCardinality": "Cardinaliteit"
