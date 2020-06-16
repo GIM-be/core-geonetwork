@@ -184,10 +184,12 @@
 
       // Reset current formatter to open the next record
       // in default mode.
+      $scope.currentViewedMD = undefined;
+      $scope.currentSchema = undefined;
+
       function loadFormatter() {
         $scope.currentFormatter = null;
-        var currentSchema = $scope.mdView.current.record ? $scope.mdView.current.record['geonet:info'].schema : undefined;
-        var f = gnSearchLocation.getFormatterPath(currentSchema);
+        var f = gnSearchLocation.getFormatterPath($scope.currentSchema);
         if (f != undefined) {
           $scope.currentFormatter = {
             url: f
@@ -196,19 +198,26 @@
         }
       }
       // $scope.$watch('mdView.current.record', loadFormatter);
+
+      function checkMdChanges() {
+        if($scope.mdView.current.record != null) {
+          var uuid = gnSearchLocation.getUuid();
+          if (uuid !== $scope.currentViewedMD) {
+            $scope.currentViewedMD = uuid;
+            $scope.currentSchema = $scope.mdView.current.record['geonet:info'].schema;
+          }
+        }
+      }
+
       $rootScope.$on('$locationChangeSuccess', function() {
         $timeout(function() {
-          loadFormatter();
+          checkMdChanges()
         }, 0);
       });
 
-      var unwatch = $scope.$watch('mdView.current.record', function () {
-        if($scope.mdView.current.record != null) {
-          loadFormatter();
-          unwatch();
-        }
-      });
-      loadFormatter();
+      $scope.$watch('mdView.current.record', checkMdChanges);
+
+      $scope.$watch('currentViewedMD', loadFormatter)
 
       // Know from what path we come from
       $scope.gnMdViewObj = gnMdViewObj;
@@ -219,9 +228,9 @@
       $scope.isFormatterAllowed = function (formatter) {
         if ($scope.mdView.current.record) {
           if (formatter.include) {
-            return formatter.include.includes($scope.mdView.current.record['geonet:info'].schema);
+            return formatter.include.includes($scope.currentSchema);
           } else if (formatter.exclude) {
-            return !formatter.exclude.includes($scope.mdView.current.record['geonet:info'].schema);
+            return !formatter.exclude.includes($scope.currentSchema);
           }
         }
         return true;
