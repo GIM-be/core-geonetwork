@@ -254,11 +254,12 @@
     <xsl:call-template name="subtemplate-common-fields-or-void"/>
   </xsl:template>
 
-  <xsl:template mode="index" match="gmd:report[count(gmd:DQ_AbsoluteExternalPositionalAccuracy)>0 or count(gmd:DQ_CompletenessOmission)>0 or count(gmd:DQ_ThematicClassificationCorrectness)>0]">
+  <xsl:template mode="index" match="gmd:report[count(gmd:DQ_AbsoluteExternalPositionalAccuracy)>0 or count(gmd:DQ_CompletenessOmission)>0 or count(gmd:DQ_CompletenessCommission)>0 or count(gmd:DQ_ThematicClassificationCorrectness)>0]">
     <xsl:variable name="reportTitle"
                   select="if ($title != '') then $title
                     else if (name(*[1]) = 'gmd:DQ_AbsoluteExternalPositionalAccuracy') then 'Geometrische nauwkeurigheid'
                     else if (name(*[1]) = 'gmd:DQ_CompletenessOmission') then 'Volledigheid'
+                    else if (name(*[1]) = 'gmd:DQ_CompletenessCommission') then 'Overbodige/aanvullende data'
                     else if (name(*[1]) = 'gmd:DQ_ThematicClassificationCorrectness') then 'Thematische classificatie'
                     else ''" />
     <Field name="_title" string="{$reportTitle}" store="true" index="true"/>

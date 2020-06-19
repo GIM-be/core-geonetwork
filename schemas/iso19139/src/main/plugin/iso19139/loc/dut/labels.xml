@@ -717,7 +717,7 @@
     </description>
   </element>
   <element name="gmd:DQ_CompletenessCommission">
-    <label>Overbodigde/aanvullende data</label>
+    <label>Overbodige/aanvullende data</label>
     <description>Data die als overmatig gezien kan worden zoals beschreven in het toepassingsgebied.</description>
   </element>
   <element name="gmd:DQ_CompletenessOmission">
