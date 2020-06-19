@@ -3447,13 +3447,14 @@
                 data-template-add-action="false"
                 data-search-action="true"
                 data-popup-action="false"
-                data-filter='{"_root": "gmd:report", "_typeReport": "DQ_ThematicClassificationCorrectness or DQ_CompletenessOmission or DQ_AbsoluteExternalPositionalAccuracy"}'
+                data-filter='{"_root": "gmd:report", "_typeReport": "DQ_ThematicClassificationCorrectness or DQ_CompletenessOmission or DQ_CompletenessCommission or DQ_AbsoluteExternalPositionalAccuracy"}'
                 data-insert-modes="text"
                 data-template-type="report"
                 data-transformation="removeRoot"/>
             </action>
             <section xpath="gmd:report/gmd:DQ_ThematicClassificationCorrectness" del=".."/>
             <section xpath="gmd:report/gmd:DQ_CompletenessOmission" del=".."/>
+            <section xpath="gmd:report/gmd:DQ_CompletenessCommission" del=".."/>
             <section xpath="gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy" del=".."/>
             <section name="gmd:lineage" per="gmd:lineage" required="true()">
               <section xpath="gmd:LI_Lineage/gmd:statement"/>
@@ -3975,10 +3976,12 @@
         <for name="gmd:date"      xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation"/>
         <for name="gmd:date"      xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation"/>
         <for name="gmd:date"      xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation"/>
+        <for name="gmd:date"      xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation"/>
         <for name="gmd:date"      xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation"/>
         <for name="gmd:dateTime"  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency"/>
         <for name="gmd:dateTime"  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness"/>
         <for name="gmd:dateTime"  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission"/>
+        <for name="gmd:dateTime"  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission"/>
         <for name="gmd:dateTime"  xpath="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy"/>
       </flatModeExceptions>
 

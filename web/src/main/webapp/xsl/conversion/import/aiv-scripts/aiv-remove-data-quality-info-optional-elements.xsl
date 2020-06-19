@@ -16,6 +16,7 @@
   <xsl:template
     match="gmd:DQ_AbsoluteExternalPositionalAccuracy/gmd:measureIdentification |
       gmd:DQ_CompletenessOmission/gmd:measureIdentification |
+      gmd:DQ_CompletenessCommission/gmd:measureIdentification |
       gmd:DQ_ThematicClassificationCorrectness/gmd:measureIdentification"
     priority="1000"/>
 

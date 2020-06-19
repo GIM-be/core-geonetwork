@@ -74,7 +74,7 @@
             <xsl:apply-templates mode="render-content" select="$mdDataQuality/gmd:scope/gmd:DQ_Scope/gmd:levelDescription/gmd:MD_ScopeDescription/gmd:other"/>
           </xsl:with-param>
         </xsl:call-template>
-        <xsl:apply-templates mode="render-content" select="$mdDataQuality/gmd:report/*[name()=('gmd:DQ_ThematicClassificationCorrectness','gmd:DQ_CompletenessOmission','gmd:DQ_AbsoluteExternalPositionalAccuracy')]"/>
+        <xsl:apply-templates mode="render-content" select="$mdDataQuality/gmd:report/*[name()=('gmd:DQ_ThematicClassificationCorrectness','gmd:DQ_CompletenessOmission','gmd:DQ_CompletenessCommission','gmd:DQ_AbsoluteExternalPositionalAccuracy')]"/>
         <xsl:apply-templates mode="render-content" select="$mdDataQuality/gmd:lineage"/>
       </xsl:with-param>
     </xsl:call-template>
@@ -289,7 +289,7 @@
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template mode="render-content" match="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/*[name()=('gmd:DQ_ThematicClassificationCorrectness','gmd:DQ_CompletenessOmission','gmd:DQ_AbsoluteExternalPositionalAccuracy')]">
+  <xsl:template mode="render-content" match="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/*[name()=('gmd:DQ_ThematicClassificationCorrectness','gmd:DQ_CompletenessOmission','gmd:DQ_CompletenessCommission','gmd:DQ_AbsoluteExternalPositionalAccuracy')]">
     <xsl:call-template name="render-block">
       <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
       <xsl:with-param name="block">
