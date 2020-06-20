@@ -175,20 +175,20 @@
           <xsl:with-param name="in" select="concat('/../', @xpath)"/>
         </saxon:call-template>
       </xsl:variable>
+      <xsl:variable name="originalNode" select="gn-fn-metadata:getOriginalNode($metadata, $nodes/node())"/>
       <xsl:variable name="refToDelete">
         <xsl:call-template name="get-ref-element-to-delete">
-          <xsl:with-param name="node" select="gn-fn-metadata:getOriginalNode($metadata, $nodes/node())"/>
+          <xsl:with-param name="node" select="$originalNode"/>
           <xsl:with-param name="delXpath" select="@del"/>
         </xsl:call-template>
       </xsl:variable>
-
       <xsl:choose>
         <xsl:when test="$sectionName">
           <fieldset data-gn-field-highlight="" class="gn-{@name}">
             <legend data-gn-slide-toggle="">
               <xsl:value-of
                 select="if (contains($sectionName, ':'))
-                  then gn-fn-metadata:getLabel($schema, $sectionName, $labels)/label
+                  then gn-fn-metadata:getLabel($schema, $sectionName, $labels, name($originalNode/parent::node()),'','')/label
                   else $strings/*[name() = $sectionName]"
               />
               <xsl:if test="$refToDelete and not(@required)">
@@ -810,16 +810,16 @@
       <!-- Get label from action or from gn:child -->
       <xsl:variable name="elementName"
                     select="$nonExistingChildParent/*/gn:child[@name = $childName]/concat(@prefix, ':', @name)"/>
+      <xsl:variable name="originalNode" select="gn-fn-metadata:getOriginalNode($metadata, $nonExistingChildParent/node())"/>
       <xsl:variable name="btnOverrideName"
                     select="@name"/>
       <xsl:variable name="btnName"
                     select="if ($btnOverrideName)
                             then $strings/*[name() = $btnOverrideName]
                             else ''"/>
-
       <!-- If multiple elements $elementName contains multiple values. Use the first one in getLabel to avoid failure. -->
       <xsl:variable name="labelConfig"
-                    select="gn-fn-metadata:getLabel($schema, $elementName[1], $labels)"/>
+                    select="gn-fn-metadata:getLabel($schema, $elementName[1], $labels,name($originalNode),'','')"/>
       <xsl:variable name="name"
                     select="if ($btnName != '')
                             then $btnName

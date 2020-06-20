@@ -1978,7 +1978,7 @@
       </option>
     </subtemplate>
   </element>
-  <element name="gmd:resourceConstraints" context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:resourceConstraints">
+  <element name="gmd:resourceConstraints" context="srv:SV_ServiceIdentification">
     <label>Beperkingen van de service</label>
     <description>Geeft informatie over de beperkingen van de beschreven databron.</description>
   </element>
