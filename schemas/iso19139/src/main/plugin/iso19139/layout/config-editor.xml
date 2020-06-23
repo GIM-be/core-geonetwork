@@ -628,7 +628,8 @@
     WARNING: INSPIRE view is not compatible with ISO19139:2005 schema.
     You have to use the default ISO19139:2007 schema.
     -->
-    <view name="inspire" upAndDownControlHidden="true" displayIfServiceInfo="/settings/system/inspire/enable='true'" hideTimeInCalendar="true">
+    <!--<view name="inspire" upAndDownControlHidden="true" displayIfServiceInfo="/settings/system/inspire/enable='true'" hideTimeInCalendar="true">-->
+    <view name="inspire" upAndDownControlHidden="true" displayIfServiceInfo="false()" hideTimeInCalendar="true">
       <sidePanel>
         <directive data-gn-validation-report=""/>
         <directive data-gn-onlinesrc-list=""/>
