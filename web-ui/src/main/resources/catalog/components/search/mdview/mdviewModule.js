@@ -199,25 +199,25 @@
       }
       // $scope.$watch('mdView.current.record', loadFormatter);
 
-      function checkMdChanges() {
-        if($scope.mdView.current.record != null) {
+      function checkForViewChanges() {
+        if ($scope.mdView.current.record != null) {
           var uuid = gnSearchLocation.getUuid();
-          if (uuid !== $scope.currentViewedMD) {
+          var formatter = gnSearchLocation.getFormatterPath($scope.currentSchema);
+          if (uuid !== $scope.currentViewedMD || (formatter && (!$scope.currentFormatter || formatter !== $scope.currentFormatter.url))) {
             $scope.currentViewedMD = uuid;
             $scope.currentSchema = $scope.mdView.current.record['geonet:info'].schema;
+            loadFormatter();
           }
         }
       }
 
       $rootScope.$on('$locationChangeSuccess', function() {
         $timeout(function() {
-          checkMdChanges()
+          checkForViewChanges()
         }, 0);
       });
 
-      $scope.$watch('mdView.current.record', checkMdChanges);
-
-      $scope.$watch('currentViewedMD', loadFormatter)
+      $scope.$watch('mdView.current.record', checkForViewChanges);
 
       // Know from what path we come from
       $scope.gnMdViewObj = gnMdViewObj;
