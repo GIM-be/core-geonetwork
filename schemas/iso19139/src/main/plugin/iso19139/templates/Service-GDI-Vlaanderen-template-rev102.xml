@@ -480,8 +480,8 @@
       </srv:coupledResource>
       <srv:couplingType>
         <srv:SV_CouplingType
-          codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#SV_CouplingType"
-          codeListValue=""/>
+          codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/SV_CouplingType.xml"
+          codeListValue="tight"/>
       </srv:couplingType>
       <srv:containsOperations>
         <srv:SV_OperationMetadata>
@@ -490,7 +490,7 @@
           </srv:operationName>
           <srv:DCP>
             <srv:DCPList codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#DCPList"
-                         codeListValue=""/>
+                         codeListValue="HTTPGet"/>
           </srv:DCP>
           <srv:connectPoint>
             <gmd:CI_OnlineResource>
