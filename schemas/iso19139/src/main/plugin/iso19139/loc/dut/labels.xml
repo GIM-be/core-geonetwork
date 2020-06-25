@@ -1572,7 +1572,7 @@
       <option value="OGC:OWS Context">OGC:OWS Context</option>
     </helper>
   </element>
-  <element name="gmd:name" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name"
+  <element name="gmd:name" context="gmd:CI_Series"
            id="292.0">
     <label>Naam van de datasetserie</label>
     <description>Naam van de serie</description>
