@@ -213,7 +213,7 @@
 
   <xsl:template match="gmd:*[@codeListValue]">
     <xsl:copy copy-namespaces="no">
-      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates select="@*[name(.)!='codeList']"/>
       <xsl:attribute name="codeList">
         <xsl:value-of
           select="concat('http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#',local-name(.))"/>
@@ -224,7 +224,7 @@
   <!-- can't find the location of the 19119 codelists - so we make one up -->
   <xsl:template match="srv:*[@codeListValue]">
     <xsl:copy copy-namespaces="no">
-      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates select="@*[name(.)!='codeList']"/>
       <xsl:attribute name="codeList">
         <xsl:value-of
           select="concat('http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#',local-name(.))"/>
@@ -342,6 +342,7 @@ Can also be using lang=eng&amp;lang=ara.
       <xsl:apply-templates select="@*|node()"/>
     </xsl:element>
   </xsl:template>
+
   <xsl:template match="@gml320:*[$isUsing2007Schema]">
     <xsl:attribute name="gml:{local-name()}" select="."/>
   </xsl:template>
