@@ -498,7 +498,7 @@
 
   <!-- can't find the location of the 19119 codelists - so we make one up -->
 
-  <xsl:template match="srv:*[@codeListValue]">
+  <!--xsl:template match="srv:*[@codeListValue]">
     <xsl:copy>
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
       <xsl:attribute name="codeList">
@@ -506,7 +506,7 @@
           select="concat('http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#',local-name(.))"/>
       </xsl:attribute>
     </xsl:copy>
-  </xsl:template>
+  </xsl:template-->
 
   <!-- ================================================================= -->
 

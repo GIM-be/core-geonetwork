@@ -222,7 +222,7 @@
   </xsl:template>
 
   <!-- can't find the location of the 19119 codelists - so we make one up -->
-  <xsl:template match="srv:*[@codeListValue]">
+  <!--xsl:template match="srv:*[@codeListValue]">
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
       <xsl:attribute name="codeList">
@@ -230,7 +230,7 @@
           select="concat('http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#',local-name(.))"/>
       </xsl:attribute>
     </xsl:copy>
-  </xsl:template>
+  </xsl:template-->
 
   <!-- For XLinked subtemplates, the lang parameter MUST be in the same order as in the record.
 Main language first, then other locales. If not, then the default CharacterString does not contain

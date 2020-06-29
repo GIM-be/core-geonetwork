@@ -317,6 +317,31 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
         // md5 the full capabilities URL
         String uuid = Sha1Encoder.encodeString(capabilitiesUrl); // is the service identifier
 
+        // For AIV: make this string look a bit more like a UUID by inserting some hyphens
+        if(StringUtils.isNotEmpty(uuid)) {
+            if(uuid.length() > 8) {
+                uuid = uuid.substring(0, 8) + '-' + uuid.substring(8);
+            }
+            if(uuid.length() > 13) {
+                uuid = uuid.substring(0, 13) + '-' + uuid.substring(13);
+            }
+            if(uuid.length() > 18) {
+                uuid = uuid.substring(0, 18) + '-' + uuid.substring(18);
+            }
+            if(uuid.length() > 23) {
+                uuid = uuid.substring(0, 23) + '-' + uuid.substring(23);
+            }
+            if(uuid.length() > 28) {
+                uuid = uuid.substring(0, 28) + '-' + uuid.substring(28);
+            }
+            if(uuid.length() > 33) {
+                uuid = uuid.substring(0, 33) + '-' + uuid.substring(33);
+            }
+            if(uuid.length() > 38) {
+                uuid = uuid.substring(0, 38) + '-' + uuid.substring(38);
+            }
+        }
+
         // Metadata creation could be based on 2 scenarios:
         // 1. Use the GetCapabilities and process it using XSLT to create ISO records
         // 2. Use existing metadata templates and merge GetCapabilities information into those templates to build new metadata records.
