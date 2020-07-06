@@ -1293,6 +1293,7 @@
                    * Hide modal on success.
                    */
                   scope.linkTo = function(addOnlineSrcInDataset) {
+                    addOnlineSrcInDataset = false; // Only add operatesOn and coupledResource
                     if (scope.mode === 'service') {
                       return gnOnlinesrc.
                           linkToService(scope.srcParams, scope.popupid, addOnlineSrcInDataset);

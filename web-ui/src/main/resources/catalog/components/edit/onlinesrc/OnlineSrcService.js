@@ -449,9 +449,10 @@
           var qParams = setParams('service-add', params);
           return gnBatchProcessing.runProcessMd({
             scopedName: qParams.name || '',
-            uuidref: qParams.uuidDS,
+            uuidref: qParams.identifier,
             uuid: qParams.uuidSrv,
             source: qParams.identifier || '',
+            uuidDS: qParams.uuidDS,
             process: qParams.process
           }, true).then(addDatasetToServiceFn, function(error) {
             // Current user may not be able to edit
@@ -493,9 +494,10 @@
               // In this case, dataset-add.xsl MUST not add coupledResource
               // So setting it to empty
               scopedName: params.name === qParams.name ? '' : qParams.name,
-              uuidref: qParams.uuidDS,
+              uuidref: qParams.identifier,
               uuid: qParams.uuidSrv,
               source: qParams.identifier || '',
+              uuidDS: qParams.uuidDS,
               process: qParams.process
             }).then(function() {
               closePopup(popupid);
@@ -615,7 +617,7 @@
         removeService: function(onlinesrc) {
           var params = {
             uuid: onlinesrc.id,
-            uuidref: gnCurrentEdit.uuid
+            uuidref: gnCurrentEdit.metadata.identifier
           }, service = this;
 
           gnBatchProcessing.runProcessMd(
@@ -649,7 +651,7 @@
         removeDataset: function(onlinesrc) {
           var params = {
             uuid: gnCurrentEdit.uuid,
-            uuidref: onlinesrc.id
+            uuidref: onlinesrc.identifier
           };
           runProcess(this,
               setParams('datasets-remove', params));

@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *   <complexContent>
  *     <extension base="{}relatedItem">
  *       <sequence>
+ *         <element name="identifier" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         <element name="description">
  *           <complexType>
  *             <complexContent>
@@ -40,6 +41,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "relatedMetadataItem", propOrder = {
+    "identifier",
     "description",
     "mdType"
 })
@@ -48,12 +50,31 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class RelatedMetadataItem
     extends RelatedItem {
+    protected String identifier;
+
     @XmlElement(required = true)
     protected RelatedMetadataItem.Description description;
 
     @XmlElement(required = true)
     protected String[] mdType;
 
+    /**
+     * Gets the value of the dataset identifier property.
+     *
+     * @return possible object is {@link String }
+     */
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    /**
+     * Sets the value of the dataset identifier property.
+     *
+     * @param value allowed object is {@link String }
+     */
+    public void setIdentifier(String value) {
+        this.identifier = value;
+    }
 
     /**
      * Gets the value of the description property.

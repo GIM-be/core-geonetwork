@@ -524,7 +524,7 @@
              to link service metadata to datasets or datasets to iso19110.
          -->
         <xsl:when test="@uuidref">
-          <xsl:choose>
+          <!--xsl:choose>
             <xsl:when test="not(string(@xlink:href)) or starts-with(@xlink:href, $serviceUrl)">
               <xsl:attribute name="xlink:href">
                 <xsl:value-of
@@ -534,7 +534,8 @@
             <xsl:otherwise>
               <xsl:copy-of select="@xlink:href"/>
             </xsl:otherwise>
-          </xsl:choose>
+          </xsl:choose-->
+          <xsl:copy-of select="@xlink:href"/>
         </xsl:when>
 
         <xsl:otherwise>
