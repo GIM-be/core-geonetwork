@@ -73,4 +73,25 @@
       <!-- inspire annex cannot be established: leave empty -->
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template name="get-param-value-from-url">
+    <xsl:param name="url"/>
+    <xsl:param name="param"/>
+    <xsl:variable name="leftPart" select="substring-before(upper-case($url),concat(upper-case($param),'='))"/>
+    <xsl:variable name="rightPart" select="substring($url,string-length($leftPart)+1)"/>
+    <xsl:variable name="idPart">
+      <xsl:if test="contains($rightPart,'&amp;')">
+        <xsl:value-of select="substring(substring-before($rightPart,'&amp;'),4)"/>
+      </xsl:if>
+      <xsl:if test="not(contains($rightPart,'&amp;'))">
+        <xsl:value-of select="substring($rightPart,4)"/>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="string-length($idPart)>0">
+        <xsl:value-of select="$idPart"/>
+      </xsl:when>
+      <xsl:otherwise></xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 </xsl:stylesheet>

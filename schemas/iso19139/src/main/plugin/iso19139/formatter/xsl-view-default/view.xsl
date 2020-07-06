@@ -621,7 +621,18 @@
             </xsl:choose>
           </xsl:with-param>
           <xsl:with-param name="content">
-            <a href="{concat('#/metadata/',$identifier)}">
+            <xsl:variable name="fileIdentifier">
+              <xsl:choose>
+                <xsl:when test="name()='uuidref' and name(..)='srv:operatesOn'">
+                  <xsl:call-template name="get-param-value-from-url">
+                    <xsl:with-param name="url" select="../@xlink:href"/>
+                    <xsl:with-param name="param" select="'id'" />
+                  </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise><xsl:value-of select="$identifier"/></xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <a href="{concat('#/metadata/',$fileIdentifier)}">
               <xsl:value-of select="$title"/>
             </a>
           </xsl:with-param>

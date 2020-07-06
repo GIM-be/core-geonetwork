@@ -696,6 +696,16 @@
         <Field name="operatesOn" string="{string(.)}" store="true" index="true"/>
       </xsl:for-each>
 
+      <xsl:for-each select="srv:operatesOn/@xlink:href">
+        <xsl:variable name="fileIdentifier">
+          <xsl:call-template name="get-param-value-from-url">
+            <xsl:with-param name="url" select="."/>
+            <xsl:with-param name="param" select="'id'" />
+          </xsl:call-template>
+        </xsl:variable>
+        <Field name="operatesOn" string="{string($fileIdentifier)}" store="true" index="true"/>
+      </xsl:for-each>
+
 
       <xsl:for-each select="srv:coupledResource">
         <xsl:for-each select="srv:SV_CoupledResource/srv:identifier/gco:CharacterString">

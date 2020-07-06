@@ -36,6 +36,7 @@ attached it to the metadata for data.
                 exclude-result-prefixes="#all">
 
   <xsl:param name="uuidref"/>
+  <xsl:param name="uuidDS"/>
   <xsl:param name="scopedName"/>
   <xsl:param name="siteUrl"/>
   <xsl:param name="protocol" select="'OGC:WMS-1.1.1-http-get-map'"/>
@@ -168,7 +169,7 @@ attached it to the metadata for data.
               // the service metadata record.
               -->
               <srv:operatesOn uuidref="{$uuidref}"
-                              xlink:href="{$siteUrl}csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidref}"/>
+                              xlink:href="{$siteUrl}csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidDS}"/>
 
               <xsl:apply-templates select="*[namespace-uri()!='http://www.isotc211.org/2005/gmd' and
                                              namespace-uri()!='http://www.isotc211.org/2005/srv']"/>

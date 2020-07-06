@@ -43,6 +43,8 @@ import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.filter.ElementFilter;
 import org.jdom.xpath.XPath;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -168,7 +170,47 @@ public class ISO19139SchemaPlugin
     }
 
     public Set<String> getAssociatedDatasetUUIDs(Element metadata) {
-        return getAttributeUuidrefValues(metadata, "operatesOn", SRV);
+        String XPATH_FOR_OPERATESON = "gmd:identificationInfo/srv:SV_ServiceIdentification/srv:operatesOn";
+        Set<String> associatedDatasetUUIDs = new HashSet<String>();
+        List<?> sibs = null;
+
+        try {
+            sibs = Xml.selectNodes(
+                metadata,
+                XPATH_FOR_OPERATESON,
+                allNamespaces.asList());
+
+
+            for (Object o : sibs) {
+                try {
+                    if (o instanceof Element) {
+                        Element sib = (Element) o;
+                        String hrefAttrib = sib.getAttributeValue("href", XLINK);
+                        if (StringUtils.isNotBlank(hrefAttrib)) {
+                            MultiValueMap<String, String> params =
+                                UriComponentsBuilder.fromUriString(hrefAttrib).build().getQueryParams();
+                            String uuid = null;
+                            if (params!=null) {
+                                if  (params.containsKey("id")) {
+                                    uuid = params.get("id").get(0);
+                                } else if (params.containsKey("ID")) {
+                                    uuid = params.get("ID").get(0);
+                                }
+                            }
+                            if (StringUtils.isNotBlank(uuid)) {
+                                associatedDatasetUUIDs.add(uuid);
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.error(Log.JEEVES, "Error getting dataset UUIDs", e);
+                }
+            }
+        } catch (Exception e) {
+            Log.error(Log.JEEVES, "Error getting dataset UUIDs", e);
+        }
+        return associatedDatasetUUIDs;
+        //return getAttributeUuidrefValues(metadata, "operatesOn", SRV);
     }
 
     public Set<String> getAssociatedFeatureCatalogueUUIDs(Element metadata) {
