@@ -39,7 +39,7 @@
   <xsl:variable name="csv-info-loc">
     <msg id="a" xml:lang="eng">Add columns from CSV</msg>
     <msg id="a" xml:lang="fre">Ajouter les colonnes à partir d'un fichier CSV</msg>
-    <msg id="a" xml:lang="dut">Add columns from CSV</msg>
+    <msg id="a" xml:lang="dut">Kolommen toevoegen vanuit CSV</msg>
   </xsl:variable>
 
   <!-- Process parameters and variables-->

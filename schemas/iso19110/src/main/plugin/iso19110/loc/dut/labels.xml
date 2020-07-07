@@ -184,8 +184,8 @@
     <description></description>
   </element>
   <element name="gfc:aliases">
-    <label>Alternatieve namen entiteit</label>
-    <description></description>
+    <label>Alternatieve naam</label>
+    <description>Alternatieve naam</description>
   </element>
   <element name="gfc:FC_ListedValue">
     <label>Domein waarde</label>
