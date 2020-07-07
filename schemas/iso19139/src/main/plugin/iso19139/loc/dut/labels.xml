@@ -1662,6 +1662,8 @@
     <label>Organisatie</label>
     <description>Naam van de verantwoordelijke organisatie.</description>
     <condition>mandatory</condition>
+    <mandatoryType>gdi</mandatoryType>
+    <mandatoryTooltip>GDI-Vlaanderen Best Practices SC-3</mandatoryTooltip>
   </element>
   <element name="gmd:orientationParameterAvailability">
     <label>Beschikbaarheid ori&#233;ntatie parameters</label>
@@ -2547,6 +2549,14 @@
     <label>Versie type service</label>
     <description>De versie die hier gehanteerd dient te worden is de versie van de specificatie van de service. Niet een implementatie versie van de software die de service implementeert. Als scheidingsteken tussen de cijfers dient een punt gebruikt te worden.
     </description>
+  </element>
+  <element name="gco:lower">
+    <label>Minimale cardinaliteit</label>
+    <description>Minimale cardinaliteit</description>
+  </element>
+  <element name="gco:upper">
+    <label>Maximale cardinaliteit</label>
+    <description>Maximale cardinaliteit</description>
   </element>
   <element name="gco:LocalName" context="srv:serviceType">
     <label>Type service</label>

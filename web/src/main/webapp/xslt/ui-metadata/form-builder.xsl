@@ -118,7 +118,7 @@
           (not($parentEditInfo) and $editInfo and $editInfo/@min = 1 and $editInfo/@max = 1)">
           <xsl:value-of select="true()"/>
         </xsl:when>
-        <xsl:when test="$schema = 'iso19139' and gn-fn-metadata:getLabel($schema, name(), $labels, name(..),$isoType, $xpath)/mandatoryType != ''">
+        <xsl:when test="$schema = ('iso19110','iso19139') and gn-fn-metadata:getLabel($schema, name(), $labels, name(..),$isoType, $xpath)/mandatoryType != ''">
           <xsl:value-of select="true()"/>
         </xsl:when>
         <xsl:otherwise>
@@ -175,7 +175,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="requiredType">
-          <xsl:if test="$schema = 'iso19139' and $label/mandatoryType">
+          <xsl:if test="$schema = ('iso19110','iso19139') and $label/mandatoryType">
               <xsl:value-of select="$label/mandatoryType"/>
           </xsl:if>
         </xsl:variable>
