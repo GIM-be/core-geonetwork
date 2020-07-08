@@ -207,10 +207,10 @@
               <xsl:when test="@gravity = 'REPORT_ONLY'">
                 <li class="list-group-item text-info">
                   <div class="row">
-                    <div class="col-xs-10">
+                    <div class="col-xs-11">
                       <xsl:value-of select="."/>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-1">
                       <span class="pull-right label label-info">
                         <xsl:value-of select="@type"/>
                       </span>
@@ -221,10 +221,10 @@
               <xsl:otherwise>
                 <li class="list-group-item text-danger">
                   <div class="row">
-                    <div class="col-xs-10">
+                    <div class="col-xs-11">
                       <xsl:value-of select="."/>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-1">
                       <span class="pull-right label label-danger">
                         <xsl:value-of select="@type"/>
                       </span>
