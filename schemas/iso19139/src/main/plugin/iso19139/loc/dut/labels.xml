@@ -596,7 +596,7 @@
     <description>Contactadres van de organisatie.</description>
   </element>
   <element name="gmd:denominator">
-    <label>Toepassingsschaal1:</label>
+    <label>Toepassingsschaal 1:</label>
     <description>De beoogde schaal waarop het bestand waarheidsgetrouw gebruikt mag worden. Dit moet een positief numeriek getal zijn. (Dus u moet hier 10000 invoeren als de schaal 1:10000 betreft.)
     </description>
     <condition>mandatory</condition>
@@ -606,7 +606,7 @@
   </element>
   <!-- Move to the parent context -->
 <!--  <element name="gco:Integer" context="gmd:denominator">-->
-<!--    <label>Toepassingsschaal1:</label>-->
+<!--    <label>Toepassingsschaal 1:</label>-->
 <!--    <description>De beoogde schaal waarop het bestand waarheidsgetrouw gebruikt mag worden. Dit moet een positief numeriek getal zijn. (Dus u moet hier 10000 invoeren als de schaal 1:10000 betreft.)-->
 <!--    </description>-->
 <!--    <condition>mandatory</condition>-->
@@ -887,7 +887,7 @@
     </description>
   </element>
   <element name="gmd:equivalentScale">
-    <label>Toepassingsschaal1:</label>
+    <label>Toepassingsschaal 1:</label>
     <description>De beoogde schaal waarop het bestand waarheidsgetrouw gebruikt mag worden. Dit moet een positief numeriek getal zijn. '1:' niet mogelijk. Bij een schaal van 1:10000 dient u dus enkel de cijferreeks 10000 in te voeren.
     </description>
     <condition>conditional</condition>
@@ -2034,7 +2034,7 @@
     <condition>mandatory</condition>
   </element>
   <element name="gmd:scaleDenominator">
-    <label>Toepassingsschaal1:</label>
+    <label>Toepassingsschaal 1:</label>
     <description>Noemer van de schaalbreuk</description>
   </element>
   <element name="gmd:scaleFactor">

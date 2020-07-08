@@ -149,13 +149,10 @@
     <xsl:for-each select="gmd:identifier">
       <xsl:call-template name="render-row">
         <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'gmd:code', '/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code')"/>
-        <xsl:with-param name="content" select="*/gmd:code"/>
+        <xsl:with-param name="content" select="*/gmd:code/gco:CharacterString/text()"/>
       </xsl:call-template>
     </xsl:for-each>
-    <xsl:call-template name="render-row">
-      <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'gmd:name', 'gmd:CI_Series')"/>
-      <xsl:with-param name="content" select="gmd:series/gmd:CI_Series/gmd:name"/>
-    </xsl:call-template>
+    <xsl:apply-templates mode="render-content" select="gmd:series/gmd:CI_Series/gmd:name"/>
     <!--
     Optional fields and not used
     <xs:element name="citedResponsibleParty" type="gmd:CI_ResponsibleParty_PropertyType"
@@ -655,7 +652,7 @@
   <xsl:template mode="render-content" match="*[gco:Integer]">
     <xsl:call-template name="render-text-as-row">
       <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
-      <xsl:with-param name="value" select="gco:Integer"/>
+      <xsl:with-param name="value" select="gco:Integer/text()"/>
     </xsl:call-template>
   </xsl:template>
 
@@ -922,6 +919,7 @@
     <xsl:param name="content"/>
     <tr>
       <th>
+        <xsl:if test="name(.)='gmd:denominator'"><xsl:attribute name="style">white-space: nowrap;</xsl:attribute></xsl:if>
         <xsl:value-of select="$label"/>
       </th>
       <td>
