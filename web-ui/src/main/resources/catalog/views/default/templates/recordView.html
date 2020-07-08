@@ -305,6 +305,16 @@
                 </p>
               </td>
             </tr>
+            <tr data-ng-if="mdView.current.record.versionIdentifier">
+              <th data-translate="">versionIdentifier</th>
+              <td>{{mdView.current.record.versionIdentifier}}</td>
+            </tr>
+            <tr data-ng-if="mdView.current.record['geonet:info'].schema = 'iso19110'"
+                data-ng-repeat="revisionDate in mdView.current.record.revisionDate">
+              <th data-translate>versionDate</th>
+              <td data-gn-humanize-time="{{ revisionDate }}"
+                  data-format="{{ mdService.isDateTime(revisionDate) ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD HH:mm' }}"></td>
+            </tr>
             <tr data-ng-if="mdView.current.record.getAllContacts().resource">
               <th data-translate="">resourceContact</th>
               <td>
@@ -322,16 +332,6 @@
                   <li data-ng-repeat="s in mdView.current.record.status_text">{{s}}</li>
                 </ul>
               </td>
-            </tr>
-            <tr data-ng-if="mdView.current.record.versionIdentifier">
-              <th data-translate="">versionIdentifier</th>
-              <td>{{mdView.current.record.versionIdentifier}}</td>
-            </tr>
-            <tr data-ng-if="mdView.current.record['geonet:info'].schema = 'iso19110'"
-                data-ng-repeat="revisionDate in mdView.current.record.revisionDate">
-              <th data-translate>versionDate</th>
-              <td data-gn-humanize-time="{{ revisionDate }}"
-                  data-format="{{ mdService.isDateTime(revisionDate) ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD HH:mm' }}"></td>
             </tr>
             </tbody>
           </table>
@@ -455,11 +455,11 @@
 
           <h2 data-translate="">metadataInformation</h2>
 
-          <a class="btn btn-default gn-margin-bottom"
+          <!--a class="btn btn-default gn-margin-bottom"
             data-ng-href="../api/records/{{mdView.current.record.getUuid()}}/formatters/xml">
             <i class="fa fa-fw fa-file-code-o"/>
             <span data-translate="">metadataInXML</span>
-          </a>
+          </a-->
 
           <table class="table table-striped">
             <tbody>
