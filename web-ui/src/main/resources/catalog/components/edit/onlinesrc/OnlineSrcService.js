@@ -429,7 +429,7 @@
             if (addOnlineSrcInDataset) {
               return runProcess(scope, {
                 scopedName: qParams.name || '',
-                uuidref: qParams.uuidSrv,
+                uuidref: qParams.identifier,
                 uuid: qParams.uuidDS,
                 url: qParams.url,
                 source: qParams.identifier || '',
