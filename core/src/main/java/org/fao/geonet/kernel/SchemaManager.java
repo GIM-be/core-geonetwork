@@ -1918,4 +1918,8 @@ public class SchemaManager {
         }
         return listOfTypenames;
     }
+
+    public void rebuildSchematronRule(Element md, Path schematronFile) {
+        this.getSchema(this.autodetectSchema(md)).rebuildSchematronRule(this.basePath, schematronFile);
+    }
 }

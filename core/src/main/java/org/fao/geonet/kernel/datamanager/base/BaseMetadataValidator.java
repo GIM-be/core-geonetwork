@@ -26,6 +26,7 @@ package org.fao.geonet.kernel.datamanager.base;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import org.apache.commons.lang.StringUtils;
+import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Geonet.Namespaces;
@@ -38,6 +39,7 @@ import org.fao.geonet.domain.SchematronRequirement;
 import org.fao.geonet.exceptions.JeevesException;
 import org.fao.geonet.exceptions.SchematronValidationErrorEx;
 import org.fao.geonet.exceptions.XSDValidationErrorEx;
+import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.SchematronValidator;
 import org.fao.geonet.kernel.ThesaurusManager;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
@@ -61,6 +63,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -333,6 +336,12 @@ public class BaseMetadataValidator implements org.fao.geonet.kernel.datamanager.
                 report.setAttribute("rule", ruleId, Edit.NAMESPACE);
 
                 java.nio.file.Path schemaTronXmlXslt = metadataSchema.getSchemaDir().resolve("schematron").resolve(rule);
+
+                if (!new File(schemaTronXmlXslt.toString()).isFile()) {
+                    SchemaManager schemaManager = ApplicationContextHolder.get().getBean(SchemaManager.class);
+                    schemaManager.rebuildSchematronRule(md, schemaTronXmlXslt);
+                }
+
                 try {
                     Map<String, Object> params = new HashMap<String, Object>();
                     params.put("lang", lang);

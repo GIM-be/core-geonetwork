@@ -439,6 +439,33 @@ public class MetadataSchema {
     }
 
     /**
+     * Rebuild one specific schematron rule file and overwrite the compiled one if exist
+     * @param basePath Path of the tomcat webapps schematron dir
+     * @param schematronXslFilePath Path of the xsl schematron file in the tomcat data directory
+     */
+    public void rebuildSchematronRule(Path basePath, Path schematronXslFilePath) {
+        Path schematronResourceDir = basePath.resolve("WEB-INF").resolve("classes").resolve(SCHEMATRON_DIR);
+        Path schemaSchematronDir = schemaDir.resolve(SCHEMATRON_DIR);
+        Path schematronCompilationFile = schematronResourceDir.resolve("iso_svrl_for_xslt2.xsl");
+        Path schematronExpandFile = schematronResourceDir.resolve("iso_abstract_expand.xsl");
+
+        final String schPath = schematronXslFilePath.toAbsolutePath().toString().replace(XSL_FILE_EXTENSION, SCH_FILE_EXTENSION);
+        Path schematronPath = schematronXslFilePath.getFileSystem().getPath(schPath);
+
+        try (OutputStream schematronXsl = Files.newOutputStream(schematronXslFilePath)) {
+            Element schematronRule = Xml.loadFile(schemaSchematronDir.resolve(schematronPath));
+            Element schematronExpandXml = Xml.transform(schematronRule, schematronExpandFile);
+            Xml.transform(schematronExpandXml, schematronCompilationFile, schematronXsl);
+        } catch (FileNotFoundException e) {
+            Log.error(Geonet.SCHEMA_MANAGER, "     Schematron rule file not found " + schematronXslFilePath
+                + ". Error is " + e.getMessage());
+        } catch (Exception e) {
+            Log.error(Geonet.SCHEMA_MANAGER, "     Schematron rule compilation failed for " + schematronXslFilePath
+                + ". Error is " + e.getMessage());
+        }
+    }
+
+    /**
      * Compile and register all schematron rules available for current schema. Schematron rules
      * files are in schema schematron directory and start with "schematron-rules" prefix.
      */
