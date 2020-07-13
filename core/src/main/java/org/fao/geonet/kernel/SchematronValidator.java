@@ -45,6 +45,7 @@ import org.jdom.Element;
 import org.jdom.filter.ElementFilter;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashMap;
@@ -174,6 +175,12 @@ public class SchematronValidator {
             params.put("thesaurusDir", thesaurusManager.getThesauriDirectory().toString());
 
             Path file = schemaDir.resolve(SCHEMATRON_DIR).resolve(schematron.getFile());
+
+            if (!new File(file.toString()).isFile()) {
+                SchemaManager schemaManager = ApplicationContextHolder.get().getBean(SchemaManager.class);
+                schemaManager.rebuildSchematronRule(md, file);
+            }
+
             Element xmlReport = Xml.transform(md, file, params);
             if (xmlReport != null) {
                 report.addContent(xmlReport);
