@@ -747,9 +747,7 @@
         <xsl:attribute name="title" select="$toolTip"/>
         <xsl:attribute name="aria-label" select="$toolTip"/>
         <xsl:attribute name="data-ng-click"
-                       select="concat('search({''keyword'':''',
-                                  replace(replace($value,'$apos;','%27'),'&quot;','%22'),
-                                  '''})')"/>
+                       select="concat('search({''keyword'':''', replace($value, '''', '\\'''), '''})')"/>
         <i class="fa fa-search"/>
       </a>
     </span>
