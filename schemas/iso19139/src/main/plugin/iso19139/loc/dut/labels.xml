@@ -461,6 +461,10 @@
     <description>Alphanumeric value identifying an instance in the namespace</description>
     <condition>mandatory</condition>
   </element>
+  <element name="gmx:Anchor" context="gmd:code">
+    <label>Naam</label>
+    <description>Naam van het gebruikte referentiesysteem.</description>
+  </element>
   <element name="gmd:code" id="207.0" context="gmd:RS_Identifier">
     <label>Unique resource identifier</label>
     <description>Alphanumeric value identifying an instance in the namespace</description>

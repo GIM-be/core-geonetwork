@@ -287,8 +287,24 @@
     <xsl:call-template name="render-block">
       <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:referenceSystemInfo', name(..))"/>
       <xsl:with-param name="block">
-        <xsl:apply-templates mode="render-content" select="gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code"/>
-        <xsl:apply-templates mode="render-content" select="gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:codeSpace"/>
+        <xsl:variable name="referenceSystemIdentifier" select="gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier"/>
+        <xsl:variable name="code" select="$referenceSystemIdentifier/*/gmd:code"/>
+        <xsl:variable name="value" select="$code/*/text()"/>
+        <xsl:variable name="link" select="$code/gmx:Anchor/@xlink:href"/>
+        <xsl:if test="$link!=''">
+          <xsl:call-template name="render-anchor-as-row">
+            <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'gmx:Anchor', 'gmd:code')"/>
+            <xsl:with-param name="link" select="$link"/>
+            <xsl:with-param name="value" select="$value"/>
+          </xsl:call-template>
+        </xsl:if>
+        <xsl:if test="not($link!='')">
+          <xsl:call-template name="render-row">
+            <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'gmd:code', '/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code')"/>
+            <xsl:with-param name="content" select="$value"/>
+          </xsl:call-template>
+          <xsl:apply-templates mode="render-content" select="$referenceSystemIdentifier/gmd:RS_Identifier/gmd:codeSpace"/>
+        </xsl:if>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
@@ -673,15 +689,21 @@
   </xsl:template>
 
   <xsl:template mode="render-content" match="*[gmx:Anchor]">
+    <xsl:variable name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
     <xsl:variable name="link" select="normalize-space(gmx:Anchor/@xlink:href)"/>
-    <xsl:call-template name="render-text-as-row">
-      <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
-      <xsl:with-param name="value" select="gmx:Anchor/text()"/>
-    </xsl:call-template>
-    <xsl:if test="$link">
-      <xsl:call-template name="render-url-as-row">
-        <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'xlink:href', 'gmx:Anchor')"/>
-        <xsl:with-param name="url" select="$link"/>
+    <xsl:variable name="value" select="normalize-space(gmx:Anchor/text())"/>
+    <xsl:if test="not($link)">
+      <xsl:message select="concat('Render text', $value)" />
+      <xsl:call-template name="render-text-as-row">
+        <xsl:with-param name="label" select="$label"/>
+        <xsl:with-param name="value" select="$value"/>
+      </xsl:call-template>
+    </xsl:if>
+    <xsl:if test="$link!=''">
+      <xsl:call-template name="render-anchor-as-row">
+        <xsl:with-param name="label" select="$label"/>
+        <xsl:with-param name="link" select="$link"/>
+        <xsl:with-param name="value" select="$value"/>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
@@ -863,12 +885,26 @@
       <xsl:call-template name="render-row">
         <xsl:with-param name="label" select="$label"/>
         <xsl:with-param name="content">
-          <a href="{concat($prefix, $url)}" target="_blank">
+          <a class="gn-break" href="{concat($prefix, $url)}" target="_blank">
             <xsl:value-of select="$url"/>
           </a>
         </xsl:with-param>
       </xsl:call-template>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="render-anchor-as-row">
+    <xsl:param name="label" as="xs:string"/>
+    <xsl:param name="link" as="xs:string"/>
+    <xsl:param name="value" as="xs:string"/>
+    <xsl:call-template name="render-row">
+      <xsl:with-param name="label" select="$label"/>
+      <xsl:with-param name="content">
+        <a href="{$link}" target="_blank">
+          <xsl:value-of select="$value"/>
+        </a>
+      </xsl:with-param>
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template name="render-button-as-row">
