@@ -75,11 +75,6 @@
               <gmd:linkage>
                 <gmd:URL/>
               </gmd:linkage>
-              <gmd:function>
-                <gmd:CI_OnLineFunctionCode
-                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
-                  codeListValue=""/>
-              </gmd:function>
             </gmd:CI_OnlineResource>
           </gmd:onlineResource>
         </gmd:CI_Contact>
@@ -212,11 +207,6 @@
                   <gmd:linkage>
                     <gmd:URL/>
                   </gmd:linkage>
-                  <gmd:function>
-                    <gmd:CI_OnLineFunctionCode
-                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
-                      codeListValue=""/>
-                  </gmd:function>
                 </gmd:CI_OnlineResource>
               </gmd:onlineResource>
             </gmd:CI_Contact>
@@ -461,11 +451,6 @@
                       <gmd:linkage>
                         <gmd:URL/>
                       </gmd:linkage>
-                      <gmd:function>
-                        <gmd:CI_OnLineFunctionCode
-                          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
-                          codeListValue=""/>
-                      </gmd:function>
                     </gmd:CI_OnlineResource>
                   </gmd:onlineResource>
                 </gmd:CI_Contact>
@@ -744,11 +729,6 @@
                       <gmd:linkage>
                         <gmd:URL/>
                       </gmd:linkage>
-                      <gmd:function>
-                        <gmd:CI_OnLineFunctionCode
-                          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
-                          codeListValue=""/>
-                      </gmd:function>
                     </gmd:CI_OnlineResource>
                   </gmd:onlineResource>
                 </gmd:CI_Contact>
@@ -918,11 +898,6 @@
                           <gmd:linkage>
                             <gmd:URL/>
                           </gmd:linkage>
-                          <gmd:function>
-                            <gmd:CI_OnLineFunctionCode
-                              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
-                              codeListValue=""/>
-                          </gmd:function>
                         </gmd:CI_OnlineResource>
                       </gmd:onlineResource>
                     </gmd:CI_Contact>
@@ -992,11 +967,6 @@
                               <gmd:linkage>
                                 <gmd:URL/>
                               </gmd:linkage>
-                              <gmd:function>
-                                <gmd:CI_OnLineFunctionCode
-                                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
-                                  codeListValue=""/>
-                              </gmd:function>
                             </gmd:CI_OnlineResource>
                           </gmd:onlineResource>
                         </gmd:CI_Contact>
