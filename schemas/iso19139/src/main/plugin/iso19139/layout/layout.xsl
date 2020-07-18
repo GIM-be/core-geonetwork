@@ -279,8 +279,26 @@
     <xsl:variable name="xpath"
                   select="gn-fn-metadata:getXPathByRef(gn:element/@ref, $metadata, false())"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+    <xsl:variable name="isValidIdentifierAnchor">
+      <xsl:choose>
+        <xsl:when test="name(..)='gmd:RS_Identifier' and name(.)='gmd:code' and gmx:Anchor/@xlink:href!=''"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:otherwise><xsl:value-of select="false()"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="name">
+      <xsl:choose>
+        <xsl:when test="$isValidIdentifierAnchor=true()">gmx:Anchor</xsl:when>
+        <xsl:otherwise><xsl:value-of select="name(.)"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="parentName">
+      <xsl:choose>
+        <xsl:when test="$isValidIdentifierAnchor=true()">gmd:code</xsl:when>
+        <xsl:otherwise><xsl:value-of select="name(..)"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="labelConfig"
-                  select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+                  select="gn-fn-metadata:getLabel($schema, $name, $labels, $parentName, $isoType, $xpath)"/>
     <xsl:variable name="helper" select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
 
     <xsl:variable name="attributes">
