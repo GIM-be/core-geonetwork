@@ -971,7 +971,7 @@
     <description>Faxnummer van de verantwoordelijke persoon of organisatie.</description>
   </element>
   <element name="gmd:featureCatalogueCitation">
-    <label>Objectencatalogus citatie</label>
+    <label>Objectencatalogus citaat</label>
     <description>Volledige bibliografische referentie naar één of meerdere externe objectencatalogi</description>
     <condition>mandatory</condition>
   </element>
