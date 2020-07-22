@@ -88,10 +88,10 @@
 							<gco:range>
 								<gco:MultiplicityRange>
 									<gco:lower>
-										<gco:Integer>1</gco:Integer>
+										<gco:Integer/>
 									</gco:lower>
 									<gco:upper>
-										<gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+										<gco:UnlimitedInteger isInfinite="false" xsi:nil="true" />
 									</gco:upper>
 								</gco:MultiplicityRange>
 							</gco:range>

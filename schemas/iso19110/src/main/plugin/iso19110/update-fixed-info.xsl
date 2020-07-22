@@ -61,7 +61,7 @@
 
   <!-- =================================================================-->
 
-  <xsl:template match="gmx:versionDate|gfc:versionDate">
+  <!--xsl:template match="gmx:versionDate|gfc:versionDate">
     <xsl:choose>
       <xsl:when test="/root/env/changeDate">
         <xsl:copy>
@@ -74,7 +74,7 @@
         <xsl:copy-of select="."/>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
+  </xsl:template-->
 
   <!-- =================================================================-->
 

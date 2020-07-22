@@ -33,7 +33,7 @@
 
 
   <!-- Readonly elements -->
-  <xsl:template mode="mode-iso19110" priority="200" match="gmx:versionDate|gfc:versionDate">
+  <!--xsl:template mode="mode-iso19110" priority="200" match="gmx:versionDate|gfc:versionDate">
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
     <xsl:variable name="labelConfig"
@@ -52,8 +52,7 @@
       <xsl:with-param name="isDisabled" select="true()"/>
     </xsl:call-template>
 
-  </xsl:template>
-
+  </xsl:template-->
 
   <!-- Do not display those elements:
      * hide nested featureType elements

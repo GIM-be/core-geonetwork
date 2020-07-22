@@ -35,6 +35,7 @@
 
   <xsl:include href="utility-fn.xsl"/>
   <xsl:include href="layout-custom-fields.xsl"/>
+  <xsl:include href="layout-custom-fields-date.xsl"/>
 
   <!-- Ignore all gn element -->
   <xsl:template mode="mode-iso19110" match="gn:*|@gn:*" priority="1000"/>
