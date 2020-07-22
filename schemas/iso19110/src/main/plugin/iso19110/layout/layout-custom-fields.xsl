@@ -65,7 +65,8 @@
     gfc:FC_InheritanceRelation/gfc:featureCatalogue|
     gn:child[@name='featureCatalogue']|
     gfc:FC_InheritanceRelation/gn:child[@name='subtype']|
-    gfc:FC_InheritanceRelation/gn:child[@name='supertype']
+    gfc:FC_InheritanceRelation/gn:child[@name='supertype']|
+    gfc:FC_FeatureType/@uuid
     " priority="100"/>
 
 </xsl:stylesheet>

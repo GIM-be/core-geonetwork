@@ -39,6 +39,15 @@
     <xsl:apply-templates select="gfc:FC_FeatureCatalogue|gfc:FC_FeatureType"/>
   </xsl:template>
 
+  <!-- Empty title string -->
+  <xsl:template match="gfc:FC_FeatureCatalogue/gmx:name/gco:CharacterString">
+    <xsl:copy>
+      <xsl:if test="/root/env/uuid=../../@uuid">
+          <xsl:value-of select="."/>
+      </xsl:if>
+    </xsl:copy>
+  </xsl:template>
+
   <!-- =================================================================-->
 
   <xsl:template match="gfc:FC_FeatureCatalogue|gfc:FC_FeatureType[not(parent::node())]">
