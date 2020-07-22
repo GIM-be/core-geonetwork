@@ -65,7 +65,9 @@
   </field>
 
   <field name="gfc:FC_ListedValue">
+    <suggest name="gfc:label"/>
     <suggest name="gfc:code"/>
+    <suggest name="gfc:definition"/>
   </field>
 
   <field name="gfc:FC_AssociationRole">
