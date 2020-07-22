@@ -79,7 +79,6 @@
   </field>
 
   <field name="gfc:FC_FeatureAttribute">
-    <suggest name="gfc:code"/>
     <suggest name="gfc:memberName"/>
     <suggest name="gfc:code"/>
     <suggest name="gfc:definition"/>
@@ -89,7 +88,7 @@
 
   <field name="gfc:code">
     <suggest name="gco:CharacterString"/>
-    <suggest name="gmx:Anchor"/>
+    <!--suggest name="gmx:Anchor"/-->
   </field>
 
   <field name="gfc:inheritsTo">
@@ -98,11 +97,6 @@
 
   <field name="gfc:inheritsFrom">
     <suggest name="gfc:FC_InheritanceRelation"/>
-  </field>
-
-  <field name="gfc:code">
-    <suggest name="gco:CharacterString"/>
-    <suggest name="gmx:Anchor"/>
   </field>
 
 </fields>
