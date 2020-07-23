@@ -48,8 +48,9 @@ public interface IMetadataStatus {
     boolean isUserMetadataStatus(int userId) throws Exception;
 
     /**
-     * If groupOwner match regular expression defined in setting metadata/workflow/draftWhenInGroup, then set status to draft to enable
-     * workflow.
+     * If groupOwner match regular expression defined in setting metadata/workflow/draftWhenInGroup and
+     * if schema match regular expression defined in setting metadata/workflow/draftWhenInSchema,
+     * then set status to draft to enable workflow.
      */
     void activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner) throws Exception;
 

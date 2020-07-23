@@ -167,6 +167,8 @@
 
                 } else if ($scope.settings[i].name == 'metadata/workflow/draftWhenInGroup') {
                   $scope.draftInAllGroups = ($scope.settings[i].value == '.*');
+                } else if ($scope.settings[i].name == 'metadata/workflow/draftWhenInSchema') {
+                  $scope.draftInAllSchemas = ($scope.settings[i].value == '.*');
                 }
 
                 var tokens = $scope.settings[i].name.split('/');
