@@ -126,6 +126,20 @@
                              class="form-control" id="{{s['name']}}" name="{{s.name}}" value="{{s.value}}"
                              data-ng-disabled="draftInAllGroups == true" />
                     </div>
+                    <div data-ng-switch-when="metadata/workflow/draftWhenInSchema">
+                      <input type="radio" class="gn-no-setting" data-ng-model="draftInAllSchemas"
+                             data-ng-value="true" /> {{'draftWhenInSchema-all' | translate}}<br>
+                      <input type="radio" class="gn-no-setting" data-ng-model="draftInAllSchemas"
+                             data-ng-value="false" /> {{'draftWhenInSchema-selection' | translate}}<br>
+
+                      <input type="hidden"
+                             class="form-control" id="{{s['name']}}" name="{{s.name}}" value=".*"
+                             data-ng-disabled="draftInAllSchemas != true" />
+
+                      <input type="text"
+                             class="form-control" id="{{s['name']}}" name="{{s.name}}" value="{{s.value}}"
+                             data-ng-disabled="draftInAllSchemas == true" />
+                    </div>
                     <!-- List of user to be used as CSW contact -->
                     <select data-ng-switch-when="system/csw/contactId" class="form-control"
                             name="{{s.name}}">

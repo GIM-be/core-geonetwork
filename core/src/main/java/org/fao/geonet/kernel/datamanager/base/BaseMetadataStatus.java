@@ -205,10 +205,11 @@ public class BaseMetadataStatus implements IMetadataStatus {
     }
 
     /**
-     * If groupOwner match regular expression defined in setting
-     * metadata/workflow/draftWhenInGroup, then set status to draft to enable
-     * workflow.
+     * If groupOwner match regular expression defined in setting metadata/workflow/draftWhenInGroup and
+     * if schema match regular expression defined in setting metadata/workflow/draftWhenInSchema,
+     * then set status to draft to enable workflow.
      */
+
     @Override
     public void activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner, String message) throws Exception {
         if (StringUtils.isEmpty(groupOwner)) {
@@ -223,7 +224,7 @@ public class BaseMetadataStatus implements IMetadataStatus {
         AbstractMetadata metadata = metadataUtils.findOne(newId);
         if (metadata!=null) {
             if (metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE) {
-                if (WorkflowUtil.isGroupWithEnabledWorkflow(groupName)) {
+                if (WorkflowUtil.isSchemaWithEnabledWorkflow(metadata.getDataInfo().getSchemaId()) && WorkflowUtil.isGroupWithEnabledWorkflow(groupName)) {
                     setStatus(context, Integer.valueOf(newId), Integer.valueOf(StatusValue.Status.DRAFT), new ISODate(),
                         String.format(message, groupName, StatusValue.Status.DRAFT));
                 }

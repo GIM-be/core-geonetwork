@@ -78,6 +78,27 @@ public class WorkflowUtil {
     }
 
     /**
+     * Checks if a schema has the workflow enabled.
+     *
+     * @param schemaName Schema name
+     * @return
+     */
+    public static boolean isSchemaWithEnabledWorkflow(String schemaName) {
+        SettingManager settingManager = ApplicationContextHolder.get().getBean(SettingManager.class);
+
+        boolean isMdWorkflowEnable = settingManager.getValueAsBool(Settings.METADATA_WORKFLOW_ENABLE);
+        String schemaMatchingRegex = settingManager.getValue(Settings.METADATA_WORKFLOW_DRAFT_WHEN_IN_SCHEMA);
+
+        if (isMdWorkflowEnable && !StringUtils.isEmpty(schemaMatchingRegex)) {
+            final Pattern pattern = Pattern.compile(schemaMatchingRegex);
+            final Matcher matcher = pattern.matcher(schemaName);
+            return matcher.find();
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Inform content users of metadata records in list
      *
      * @param context      The service context
