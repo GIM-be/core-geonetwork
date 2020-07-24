@@ -242,7 +242,7 @@
                                             gmd:code/gmx:Anchor/
                                               concat('-', substring-after(text()[. != ''], 'geonetwork.thesaurus.')), ',')"/>
       -->
-      <directiveAttributes data-include="external.place.GDI-Vlaanderenregios,external.theme.inspire-theme,external.theme.gemet,external.theme.GDI-Vlaanderen-trefwoorden,external.theme.GDI-Vlaanderen-service-types,external.theme.inspire-service-taxonomy"/>
+      <directiveAttributes data-include="external.place.GDI-Vlaanderenregios,external.theme.inspire-theme,external.theme.gemet,external.theme.GDI-Vlaanderen-trefwoorden,external.theme.GDI-Vlaanderen-service-types,external.theme.inspire-service-taxonomy,external.theme.datatheme"/>
     </for>
 
     <!-- AIV custom fields -->
