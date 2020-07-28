@@ -600,9 +600,8 @@
     <description>Contactadres van de organisatie.</description>
   </element>
   <element name="gmd:denominator">
-    <label>Toepassingsschaal 1:</label>
-    <description>De beoogde schaal waarop het bestand waarheidsgetrouw gebruikt mag worden. Dit moet een positief numeriek getal zijn. (Dus u moet hier 10000 invoeren als de schaal 1:10000 betreft.)
-    </description>
+    <label>Noemer</label>
+    <description>Vul hier de noemer van de toepassingsschaal in, de schaal waarop de gebruiker best de gegevens visualiseert voor gebruik. Bijvoorbeeld: wanneer de data gebruikt moet worden op toepassingsschaal '1 : 10 000' vul je in dit element de noemer, of dus '10000' in.</description>
     <condition>mandatory</condition>
     <mandatoryType>inspire</mandatoryType>
     <mandatoryTooltip>INSPIRE B 6.2: conditioneel - ofwel schaal noemer of grondresolutie moet gespecifieerd zijn indien deze bestaat.
@@ -610,9 +609,8 @@
   </element>
   <!-- Move to the parent context -->
 <!--  <element name="gco:Integer" context="gmd:denominator">-->
-<!--    <label>Toepassingsschaal 1:</label>-->
-<!--    <description>De beoogde schaal waarop het bestand waarheidsgetrouw gebruikt mag worden. Dit moet een positief numeriek getal zijn. (Dus u moet hier 10000 invoeren als de schaal 1:10000 betreft.)-->
-<!--    </description>-->
+<!--    <label>Noemer</label>-->
+<!--    <description>Vul hier de noemer van de toepassingsschaal in, de schaal waarop de gebruiker best de gegevens visualiseert voor gebruik. Bijvoorbeeld: wanneer de data gebruikt moet worden op toepassingsschaal '1 : 10 000' vul je in dit element de noemer, of dus '10000' in.</description>-->
 <!--    <condition>mandatory</condition>-->
 <!--    <mandatoryType>inspire</mandatoryType>-->
 <!--    <mandatoryTooltip>INSPIRE B 6.2: conditioneel - ofwel schaal noemer of grondresolutie moet gespecifieerd zijn indien deze bestaat.-->
@@ -891,9 +889,8 @@
     </description>
   </element>
   <element name="gmd:equivalentScale">
-    <label>Toepassingsschaal 1:</label>
-    <description>De beoogde schaal waarop het bestand waarheidsgetrouw gebruikt mag worden. Dit moet een positief numeriek getal zijn. '1:' niet mogelijk. Bij een schaal van 1:10000 dient u dus enkel de cijferreeks 10000 in te voeren.
-    </description>
+    <label>Noemer</label>
+    <description>Vul hier de noemer van de toepassingsschaal in, de schaal waarop de gebruiker best de gegevens visualiseert voor gebruik. Bijvoorbeeld: wanneer de data gebruikt moet worden op toepassingsschaal '1 : 10 000' vul je in dit element de noemer, of dus '10000' in.</description>
     <condition>conditional</condition>
   </element>
   <element name="gmd:errorStatistic">
@@ -2038,8 +2035,8 @@
     <condition>mandatory</condition>
   </element>
   <element name="gmd:scaleDenominator">
-    <label>Toepassingsschaal 1:</label>
-    <description>Noemer van de schaalbreuk</description>
+    <label>Noemer</label>
+    <description>Vul hier de noemer van de toepassingsschaal in, de schaal waarop de gebruiker best de gegevens visualiseert voor gebruik. Bijvoorbeeld: wanneer de data gebruikt moet worden op toepassingsschaal '1 : 10 000' vul je in dit element de noemer, of dus '10000' in.</description>
   </element>
   <element name="gmd:scaleFactor">
     <label>Schaalfaktor</label>

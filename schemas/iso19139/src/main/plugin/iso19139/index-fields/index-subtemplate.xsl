@@ -318,7 +318,7 @@
            string="{
                 if ($title != '') then $title
                 else if (gmd:distance) then 'Grondresolutie'
-                else if (gmd:equivalentScale) then 'Toepassingsschaal'
+                else if (gmd:equivalentScale) then 'Noemer'
                 else ''
                }"
            store="true" index="true"/>
