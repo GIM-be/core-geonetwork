@@ -5,7 +5,7 @@
       <gco:CharacterString/>
     </gmd:useLimitation>
     <gmd:classification>
-      <gmd:MD_ClassificationCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xmll#MD_ClassificationCode" codeListValue="unclassified"/>
+      <gmd:MD_ClassificationCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xmll#MD_ClassificationCode" codeListValue="unclassified"/>
     </gmd:classification>
   </gmd:MD_SecurityConstraints>
 </gmd:resourceConstraints>

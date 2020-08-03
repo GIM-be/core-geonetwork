@@ -204,7 +204,7 @@
   <!-- codelists: set @codeList path -->
   <!-- ================================================================= -->
   <xsl:template match="gmd:LanguageCode[@codeListValue]" priority="10">
-    <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/">
+    <gmd:LanguageCode codeList="https://www.loc.gov/standards/iso639-2/">
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
     </gmd:LanguageCode>
   </xsl:template>
@@ -212,7 +212,7 @@
   <!--  only accept the pointOfContact role code for a gmd:contact element -->
   <xsl:template match="gmd:role[name(../..)='gmd:contact']" priority="100">
     <gmd:role>
-      <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+      <gmd:CI_RoleCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
     </gmd:role>
   </xsl:template>
 
@@ -221,7 +221,17 @@
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
       <xsl:attribute name="codeList">
         <xsl:value-of
-          select="concat('http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#',local-name(.))"/>
+          select="concat('https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#',local-name(.))"/>
+      </xsl:attribute>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="srv:SV_CouplingType[@codeListValue]|srv:DCPList[@codeListValue]">
+    <xsl:copy>
+      <xsl:apply-templates select="@*[name(.)!='codeList']"/>
+      <xsl:attribute name="codeList">
+        <xsl:value-of
+          select="concat('https://standards.iso.org/iso/19115/resources/Codelists/gml/',local-name(.),'.xml')"/>
       </xsl:attribute>
     </xsl:copy>
   </xsl:template>
