@@ -95,7 +95,7 @@
     <!-- /.btn-group -->
     <div class="btn-group" title="{{(isTemplate() ? 'saveTemplate' : 'saveMetadata') | translate}}">
       <button type="button"
-              data-gn-click-and-spin="save(true, false)"
+              data-gn-click-and-spin="checkSave()"
               id="gn-editor-btn-save"
               aria-label="{{(isTemplate() ? 'saveTemplate' : (gnCurrentEdit.metadata.draft === 'y' ? 'saveDraft' : 'saveMetadata')) | translate}}"
               class="btn btn-success navbar-btn">

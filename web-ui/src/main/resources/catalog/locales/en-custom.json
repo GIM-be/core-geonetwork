@@ -51,5 +51,7 @@
   "isoDefaultView": "Default view",
   "isoFullView": "Full ISO view",
   "versionDate": "Version data",
-  "attributeCardinality": "Cardinality"
+  "attributeCardinality": "Cardinality",
+  "warning": "Warning",
+  "closingInvalidMetadata": "This metadata record contains validation errors but remains published. It is preferred to resolve the validation issues or un-publish this record."
 }

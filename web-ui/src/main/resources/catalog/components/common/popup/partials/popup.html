@@ -2,6 +2,7 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal"
+              ng-if="!options.hideCancelBtn"
               aria-hidden="true">&times;</button>
       <h4 class="modal-title" id="myModalLabel">
         <span data-translate="">{{options.title}}</span></h4>
@@ -12,7 +13,7 @@
         data-ng-click="options.confirmCallback()">
         {{'confirm' | translate}}
       </button>
-      <button data-dismiss="modal" class="btn btn-default">
+      <button data-dismiss="modal" class="btn btn-default" ng-if="!options.hideCancelBtn">
         {{'cancel' | translate}}
       </button>
     </div>

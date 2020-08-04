@@ -354,7 +354,7 @@
             });
           }
         });
-        
+
       };
 
       /**
@@ -588,7 +588,26 @@
           return m;
         }
         return null;
+      }
+
+      $scope.checkSave = function() {
+        return $q(function(resolve) {
+          if (!$scope.isTemplate() && $scope.gnCurrentEdit.metadata.isPublished()) {
+            gnValidation.errorCheck().then(function(hasErrors) {
+              if (hasErrors) {
+                $('#message-editor-save').modal('show');
+              }
+              resolve();
+            })
+          } else {
+            resolve();
+          }
+        }).then(function() {
+          return $scope.save(true, false)
+        });
       };
+
+      $scope.noop = angular.noop;
 
       $scope.close = function(submit, approve) {
         // if auto unpublish is not set in the settings, or if MD is not
@@ -596,8 +615,18 @@
         if ($scope.isTemplate() ||
             !$scope.gnCurrentEdit.metadata.isPublished() ||
             !gnConfig['metadata.workflow.automaticUnpublishInvalidMd']) {
-          $scope.confirmClose(submit, approve);
-          return;
+
+          if (!$scope.isTemplate() && $scope.gnCurrentEdit.metadata.isPublished()) {
+            return gnValidation.errorCheck().then(function(hasErrors) {
+              if (hasErrors) {
+                $('#message-editor-close').modal('show');
+              } else {
+                return $scope.confirmClose(submit, approve);
+              }
+            });
+          } else {
+            return $scope.confirmClose(submit, approve);
+          }
         }
 
         // else: do a mandatory validation check to ensure that if the MD is
@@ -612,6 +641,7 @@
           }
         });
       };
+
       $scope.confirmClose = function(submit, approve) {
         var promise = gnEditor.save(false, null, true, submit, approve)
             .then(function(form) {
@@ -634,12 +664,14 @@
         $scope.savedStatus = gnCurrentEdit.savedStatus;
         return promise;
       };
+
       $scope.getSaveStatus = function() {
         if (gnCurrentEdit.savedTime) {
           return $scope.saveStatus = $translate.instant('saveAtimeAgo',
               {timeAgo: moment(gnCurrentEdit.savedTime).fromNow()});
         }
       };
+
       $scope.getCancelStatus = function() {
         if (gnCurrentEdit.sessionStartTime) {
           return $scope.cancelStatus =
