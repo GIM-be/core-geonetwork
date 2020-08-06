@@ -35,6 +35,7 @@ import jeeves.server.context.ServiceContext;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
@@ -82,10 +83,12 @@ import org.w3c.dom.Node;
 import javax.annotation.Nonnull;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -208,7 +211,17 @@ public final class XslUtil {
             if (one != null) {
                 return one.getConfiguration();
             } else {
-                return "{}";
+                String config = "{}";
+                try {
+                    Path defaultConfigPath = ServiceContext.get().getAppPath().resolve("catalog/config/uiconfig/default.json");
+                    File defaultConfig = defaultConfigPath.toFile();
+                    if (defaultConfig.exists() && defaultConfig.isFile()) {
+                        config = FileUtils.readFileToString(defaultConfig, "UTF-8");
+                    }
+                } catch (Exception ex) {
+                    // Do nothing
+                }
+                return config;
             }
         }
         return "{}";
