@@ -50,5 +50,6 @@
   "versionDate": "Date de la version",
   "attributeCardinality": "Cardinalité",
   "warning": "Attention",
-  "closingInvalidMetadata": "Cet enregistrement de métadonnées contient des erreurs de validation mais reste publié. Il est préférable de résoudre les problèmes de validation ou de dé-publier cet enregistrement."
+  "closingInvalidMetadata": "Cet enregistrement de métadonnées contient des erreurs de validation mais reste publié. Il est préférable de résoudre les problèmes de validation ou de dé-publier cet enregistrement.",
+  "createUiConfig": "Créer une configuration d'interface"
 }

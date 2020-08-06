@@ -29,8 +29,10 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import jeeves.server.UserSession;
+import jeeves.server.context.ServiceContext;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
-import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.API;
 import org.fao.geonet.api.ApiParams;
 import org.fao.geonet.api.ApiUtils;
@@ -59,10 +61,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.File;
+import java.nio.file.Path;
+import java.util.*;
 
 @RequestMapping(value = {
     "/{portal}/api/ui",
@@ -280,5 +283,37 @@ public class UiSettingApi {
             ));
         }
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+
+
+    @ApiOperation(
+        value = "Get all base UI configuration as list",
+        notes = "",
+        nickname = "getBaseUiConfiguration"
+    )
+    @RequestMapping(
+        value = "/baseconfig",
+        produces = {
+            MediaType.APPLICATION_JSON_VALUE
+        },
+        method = RequestMethod.GET
+    )
+    @ResponseStatus(HttpStatus.OK)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "UI configuration.")
+    })
+    @ResponseBody
+    public List<UiSetting> getBaseUiConfiguration(@ApiIgnore HttpServletRequest request) throws Exception {
+        ServiceContext context = ApiUtils.createServiceContext(request);
+        Path path = context.getAppPath().resolve("catalog/config/uiconfig");
+        List<UiSetting> baseConfigs = new ArrayList<>();
+        for (final File file : Objects.requireNonNull(path.toFile().listFiles())) {
+            if (!file.isDirectory()) {
+                String config = FileUtils.readFileToString(file, "UTF-8");
+                baseConfigs.add(new UiSetting(FilenameUtils.removeExtension(file.getName()), config));
+            }
+        }
+        return baseConfigs;
     }
 }

@@ -225,6 +225,7 @@
       }
     }
   }
+
   .codelist-table {
     th, td {
       &:nth-child(1) {
@@ -285,6 +286,36 @@
 
 .ellipsis .ng-binding {
   text-align: left;
+}
+
+#aiv-ui-config-dropdown {
+  #uiConfigurationPicker {
+    &::after {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      margin-left: .255em;
+      vertical-align: .255em;
+      content: "";
+      border-top: .3em solid;
+      border-right: .3em solid transparent;
+      border-bottom: 0;
+      border-left: .3em solid transparent;
+    }
+  }
+
+  .dropdown-menu {
+    margin-top: 30px;
+  }
+
+  .dropdown-item {
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e7e7e7;
+    }
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
