@@ -7,7 +7,7 @@
     </gmd:useLimitation>
     <gmd:useConstraints>
       <gmd:MD_RestrictionCode
-        codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode"
+        codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
         codeListValue="otherRestrictions">otherRestrictions
       </gmd:MD_RestrictionCode>
     </gmd:useConstraints>

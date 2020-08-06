@@ -2145,6 +2145,26 @@
       <code>WebServices</code>
       <label>Web services</label>
     </entry>
+    <entry>
+      <description>DCP is SOAP</description>
+      <code>SOAP</code>
+      <label>SOAP</label>
+    </entry>
+    <entry>
+      <description>DCP is Z3950</description>
+      <code>Z3950</code>
+      <label>Z3950</label>
+    </entry>
+    <entry>
+      <description>DCP is HTTP</description>
+      <code>HTTP</code>
+      <label>HTTP</label>
+    </entry>
+    <entry>
+      <description>DCP is FTP</description>
+      <code>FTP</code>
+      <label>FTP</label>
+    </entry>
   </codelist>
   <!--=== CouplingType from ISO19119 ===-->
   <codelist name="srv:SV_CouplingType">

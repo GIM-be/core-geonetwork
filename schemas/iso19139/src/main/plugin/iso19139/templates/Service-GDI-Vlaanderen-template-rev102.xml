@@ -12,17 +12,16 @@
     <gco:CharacterString>70e7fac8-f9c0-46a2-acf5-8572bdc73fa6</gco:CharacterString>
   </gmd:fileIdentifier>
   <gmd:language>
-    <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut" />
+    <gmd:LanguageCode codeList="https://www.loc.gov/standards/iso639-2/" codeListValue="dut">Nederlands</gmd:LanguageCode>
   </gmd:language>
   <gmd:characterSet>
     <gmd:MD_CharacterSetCode
-      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
-      codeListValue="utf8">utf8
-    </gmd:MD_CharacterSetCode>
+      codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
+      codeListValue="utf8">UTF-8</gmd:MD_CharacterSetCode>
   </gmd:characterSet>
   <gmd:hierarchyLevel>
     <gmd:MD_ScopeCode
-      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+      codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
       codeListValue="service"/>
   </gmd:hierarchyLevel>
   <gmd:hierarchyLevelName>
@@ -110,7 +109,7 @@
               </gmd:date>
               <gmd:dateType>
                 <gmd:CI_DateTypeCode
-                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                   codeListValue="revision"/>
               </gmd:dateType>
             </gmd:CI_Date>
@@ -170,7 +169,7 @@
           </gmd:contactInfo>
           <gmd:role>
             <gmd:CI_RoleCode
-              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+              codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
               codeListValue=""/>
           </gmd:role>
         </gmd:CI_ResponsibleParty>
@@ -195,7 +194,7 @@
                   </gmd:date>
                   <gmd:dateType>
                     <gmd:CI_DateTypeCode codeListValue="publication"
-                                         codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode">
+                                         codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode">
                       publication
                     </gmd:CI_DateTypeCode>
                   </gmd:dateType>
@@ -333,7 +332,7 @@
           </gmd:keyword>
           <gmd:type>
             <gmd:MD_KeywordTypeCode
-              codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode"
+              codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
               codeListValue="theme"/>
           </gmd:type>
           <gmd:thesaurusName>
@@ -348,7 +347,7 @@
                   </gmd:date>
                   <gmd:dateType>
                     <gmd:CI_DateTypeCode
-                      codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                      codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                       codeListValue="publication"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
@@ -479,8 +478,8 @@
             <gco:CharacterString>GetCapabilities</gco:CharacterString>
           </srv:operationName>
           <srv:DCP>
-            <srv:DCPList codeList="http://www.isotc211.org/2005/iso19119/resources/Codelist/gmxCodelists.xml#DCPList"
-                         codeListValue="HTTPGet"/>
+            <srv:DCPList codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/DCPList.xml"
+                         codeListValue="HTTP"/>
           </srv:DCP>
           <srv:connectPoint>
             <gmd:CI_OnlineResource>
@@ -498,7 +497,7 @@
               </gmd:description>
               <gmd:function>
                 <gmd:CI_OnLineFunctionCode
-                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
                   codeListValue=""/>
               </gmd:function>
             </gmd:CI_OnlineResource>
@@ -538,7 +537,7 @@
               </gmd:description>
               <gmd:function>
                 <gmd:CI_OnLineFunctionCode
-                  codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
                   codeListValue=""/>
               </gmd:function>
             </gmd:CI_OnlineResource>
@@ -572,16 +571,16 @@
               <gmd:specification>
                 <gmd:CI_Citation>
                   <gmd:title>
-                    <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">VERORDENING (EU) Nr. 1089/2010 VAN DE COMMISSIE van 23 november 2010 ter uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende de interoperabiliteit van verzamelingen ruimtelijke gegevens en van diensten met betrekking tot ruimtelijke gegevens</gmx:Anchor>
+                    <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/documents/technical-guidance-implementation-inspire-view-services-1">Technical Guidance for the implementation of INSPIRE View Services</gmx:Anchor>
                   </gmd:title>
                   <gmd:date>
                     <gmd:CI_Date>
                       <gmd:date>
-                        <gco:Date>2010-12-08</gco:Date>
+                        <gco:Date>22013-04-04</gco:Date>
                       </gmd:date>
                       <gmd:dateType>
                         <gmd:CI_DateTypeCode
-                          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                          codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                           codeListValue="publication">publication
                         </gmd:CI_DateTypeCode>
                       </gmd:dateType>
