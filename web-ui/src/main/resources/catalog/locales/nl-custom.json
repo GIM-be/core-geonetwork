@@ -78,5 +78,6 @@
   "versionDate": "Versiedatum",
   "attributeCardinality": "Cardinaliteit",
   "warning": "Let op",
-  "closingInvalidMetadata": "Dit metadata-record bevat validatiefouten, maar het blijft gepubliceerd. Het is wenselijk om de validatieproblemen op te lossen of dit record te de-publiceren."
+  "closingInvalidMetadata": "Dit metadata-record bevat validatiefouten, maar het blijft gepubliceerd. Het is wenselijk om de validatieproblemen op te lossen of dit record te de-publiceren.",
+  "createUiConfig": "Aanmaken UI configuratie"
 }

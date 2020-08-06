@@ -8,9 +8,22 @@
                data-ng-show="uiConfigurations.length === 0">
             <div data-translate="">noConfigDefinedUsingTheDefault</div>
             <br/>
-            <a class="btn btn-primary"
-               data-gn-click-and-spin="createDefaultUiConfig()"
-               data-translate="">createDefaultUiConfig</a>
+            <!--<a class="btn btn-primary"-->
+            <!--   data-gn-click-and-spin="createDefaultUiConfig()"-->
+            <!--   data-translate="">createDefaultUiConfig</a>-->
+            <div class="dropdown" id="aiv-ui-config-dropdown">
+              <button id="uiConfigurationPicker" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span translate="" class="ng-scope">createUiConfig</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="uiConfigurationPicker">
+                <div class="dropdown-item"
+                     data-ng-repeat="config in predefinedUiConfig"
+                     data-gn-click-and-spin="createDefaultUiConfig(config.configuration)">
+                  {{ formatConfigName(config.id) }}
+                </div>
+              </div>
+            </div>
+
             <br/>
           </div>
 

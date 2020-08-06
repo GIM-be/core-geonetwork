@@ -249,22 +249,31 @@
        * Create the default configuration based on the
        * one defined in CatController.
        */
-      $scope.createDefaultUiConfig = function() {
+      $scope.predefinedUiConfig = [];
+      $http.get('../api/ui/predefined').then(function (response) {
+        $scope.predefinedUiConfig = response.data;
+      });
+      $scope.formatConfigName = function (name) {
+        var formatted = name.replace(/-/g, ' ');
+        return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+      };
+
+      $scope.createDefaultUiConfig = function(base) {
         var defaultConfigId = 'srv';
         $scope.lastUiConfiguration = defaultConfigId;
-        $scope.createOrUpdateUiConfiguration(false, defaultConfigId);
+        $scope.createOrUpdateUiConfiguration(false, defaultConfigId, base);
       };
       $scope.updateUiConfig = function() {
         $scope.createOrUpdateUiConfiguration(true);
       };
-      $scope.createOrUpdateUiConfiguration = function(isUpdate, id) {
+      $scope.createOrUpdateUiConfiguration = function(isUpdate, id, base) {
         var newid = id || $scope.uiConfiguration.id;
         $scope.lastUiConfiguration = newid;
         if (newid) {
           $http.put('../api/ui' + (isUpdate ? '/' + newid : ''), {
             "id": newid,
             // TODO: copy an existing one?
-            "configuration": (isUpdate ? $scope.uiConfiguration.configuration : JSON.stringify(gnGlobalSettings.gnCfg))
+            "configuration": isUpdate ? $scope.uiConfiguration.configuration : (base ? base : JSON.stringify(gnGlobalSettings.gnCfg))
           }, {responseType: 'text'}).then(function(r) {
             loadUiConfigurations();
           }, function(r) {
