@@ -249,9 +249,9 @@
        * Create the default configuration based on the
        * one defined in CatController.
        */
-      $scope.predefinedUiConfig = [];
-      $http.get('../api/ui/predefined').then(function (response) {
-        $scope.predefinedUiConfig = response.data;
+      $scope.baseUiConfig = [];
+      $http.get('../api/ui/baseconfig').then(function (response) {
+        $scope.baseUiConfig = response.data;
       });
       $scope.formatConfigName = function (name) {
         var formatted = name.replace(/-/g, ' ');

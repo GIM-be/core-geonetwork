@@ -47,7 +47,6 @@ import org.fao.geonet.repository.UiSettingsRepository;
 import org.fao.geonet.repository.UserGroupRepository;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -289,12 +288,12 @@ public class UiSettingApi {
 
 
     @ApiOperation(
-        value = "Get all preconfigured UI config as list",
+        value = "Get all base UI configuration as list",
         notes = "",
-        nickname = "getPredefinedUiConfiguration"
+        nickname = "getBaseUiConfiguration"
     )
     @RequestMapping(
-        value = "/predefined",
+        value = "/baseconfig",
         produces = {
             MediaType.APPLICATION_JSON_VALUE
         },
@@ -305,16 +304,16 @@ public class UiSettingApi {
         @ApiResponse(code = 200, message = "UI configuration.")
     })
     @ResponseBody
-    public List<UiSetting> getPredefinedUiConfiguration(@ApiIgnore HttpServletRequest request) throws Exception {
+    public List<UiSetting> getBaseUiConfiguration(@ApiIgnore HttpServletRequest request) throws Exception {
         ServiceContext context = ApiUtils.createServiceContext(request);
         Path path = context.getAppPath().resolve("catalog/config/uiconfig");
-        List<UiSetting> predefinedConfigs = new ArrayList<>();
+        List<UiSetting> baseConfigs = new ArrayList<>();
         for (final File file : Objects.requireNonNull(path.toFile().listFiles())) {
             if (!file.isDirectory()) {
                 String config = FileUtils.readFileToString(file, "UTF-8");
-                predefinedConfigs.add(new UiSetting(FilenameUtils.removeExtension(file.getName()), config));
+                baseConfigs.add(new UiSetting(FilenameUtils.removeExtension(file.getName()), config));
             }
         }
-        return predefinedConfigs;
+        return baseConfigs;
     }
 }
