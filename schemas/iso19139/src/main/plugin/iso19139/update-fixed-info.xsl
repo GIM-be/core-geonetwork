@@ -759,6 +759,19 @@
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="gmd:pass" priority="100">
+    <xsl:copy>
+      <xsl:choose>
+        <xsl:when test="not(gco:Boolean) or normalize-space(gco:Boolean) = ''">
+          <xsl:attribute name="gco:nilReason" select="'unknown'"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="@*|*"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
+
   <!-- ================================================================= -->
   <!-- copy everything else as is -->
 
