@@ -766,7 +766,7 @@
           <xsl:attribute name="gco:nilReason" select="'unknown'"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates select="@*|*"/>
+          <xsl:apply-templates select="@*[not(name() = 'gco:nilReason')]|*"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:copy>
