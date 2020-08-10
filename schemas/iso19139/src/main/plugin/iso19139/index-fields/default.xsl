@@ -675,11 +675,6 @@
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <!--  Fields use to search on Service -->
 
-      <xsl:for-each select="srv:serviceType/gco:LocalName">
-        <Field name="serviceType" string="{string(.)}" store="true" index="true"/>
-        <Field  name="type" string="{string(.)}" store="true" index="true"/>
-      </xsl:for-each>
-
       <xsl:for-each select="srv:serviceTypeVersion/gco:CharacterString">
         <Field name="serviceTypeVersion" string="{string(.)}" store="true" index="true"/>
       </xsl:for-each>
@@ -942,6 +937,10 @@
       </xsl:otherwise>-->
     </xsl:choose>
 
+    <xsl:for-each select="srv:serviceType/gco:LocalName">
+      <Field name="serviceType" string="{string(.)}" store="true" index="true"/>
+      <Field name="type" string="{string(.)}" store="true" index="true"/>
+    </xsl:for-each>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <xsl:for-each select="gmd:hierarchyLevelName/gco:CharacterString">
