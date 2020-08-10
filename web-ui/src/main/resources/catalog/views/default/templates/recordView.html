@@ -342,7 +342,7 @@
           <h2 data-translate="">technicalInformation</h2>
 
           <div data-ng-if="mdView.current.record.featureTypes && mdView.current.record.featureTypes != '#tooLong'"
-            data-ng-repeat="featureType in mdView.current.record.featureTypes">
+            data-ng-repeat="featureType in mdView.current.record.featureTypes track by $index">
 
             <h3><span data-translate="">featureType</span>&nbsp;'{{featureType.typeName}}'</h3>
             <table class="table table-striped" >
