@@ -62,7 +62,7 @@
           <div class="col-md-8">
             <header>
               <h1>
-                <i class="fa gn-icon-{$type}">
+                <i class="fa gn-icon-{{{{md.type[0]}}}}">
                   <xsl:comment select="'icon'"/>
                 </i>
                 <xsl:value-of select="$title"/>
