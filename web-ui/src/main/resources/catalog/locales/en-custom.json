@@ -54,5 +54,6 @@
   "attributeCardinality": "Cardinality",
   "warning": "Warning",
   "closingInvalidMetadata": "This metadata record contains validation errors but remains published. It is preferred to resolve the validation issues or un-publish this record.",
-  "createUiConfig": "Create a UI configuration"
+  "createUiConfig": "Create a UI configuration",
+  "fieldTooLong": "This field is too long to be displayed"
 }
