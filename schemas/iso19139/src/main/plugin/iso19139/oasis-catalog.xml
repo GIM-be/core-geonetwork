@@ -35,19 +35,43 @@
          we used http://www.isotc211.org/2005/srv so remap opengis.net to
              that so all our stuff continues to work -->
 
+  <uri name="http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd"
+       uri="http://www.isotc211.org/2005/gmx"/>
+
   <uri name="http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd"
        uri="http://www.isotc211.org/2005/srv"/>
+
+  <uri name="http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd"
+       uri="http://www.isotc211.org/2005/gmd"/>
+
+  <uri name="http://www.opengis.org/gml/gml.xsd"
+       uri="http://www.opengis.net/gml"/>
+
+  <uri name="http://schemas.opengis.net/iso/19139/20070417/gmx/gmx.xsd"
+       uri="http://www.isotc211.org/2005/gmx"/>
+
+  <uri name="http://schemas.opengis.net/iso/19139/20070417/srv/1.0/srv.xsd"
+       uri="http://www.isotc211.org/2005/srv"/>
+
+  <uri name="http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd"
+       uri="http://www.isotc211.org/2005/gmd"/>
+
+  <uri name="http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd"
+       uri="http://www.isotc211.org/2005/gmd"/>
+
+  <uri name="http://schemas.opengis.net/gml/3.2.1/gml.xsd"
+       uri="http://www.opengis.net/gml/3.2"/>
 
   <!-- These are to map schemaLocation hints to local schemas to make sure that
        GeoNetwork edits and validates against a schema it knows about. -->
 
-  <system
+  <!--system
     systemId="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/gmd/gmd.xsd"
-    uri="schema/gmd/gmd.xsd"/>
-  <system
+    uri="schema/gmd/gmd.xsd"/-->
+  <!--system
     systemId="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/gco/gco.xsd"
-    uri="schema/gco/gco.xsd"/>
-  <system systemId="http://www.isotc211.org/2005/gmd/gmd.xsd"
+    uri="schema/gco/gco.xsd"/-->
+  <!--system systemId="http://www.isotc211.org/2005/gmd/gmd.xsd"
           uri="schema/gmd/gmd.xsd"/>
   <system systemId="http://www.isotc211.org/2005/gco/gco.xsd"
           uri="schema/gco/gco.xsd"/>
@@ -59,28 +83,36 @@
           uri="schema/gsr/gsr.xsd"/>
   <system systemId="http://www.isotc211.org/2005/gss/gss.xsd"
           uri="schema/gss/gss.xsd"/>
+
   <system systemId="http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd"
-          uri="schema/srv/srv.xsd"/>
+          uri="schema/srv/srv.xsd"/-->
 
-  <!-- hope this isn't being used as a schema hint but if it is, map it -->
+  <system systemId="http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd"
+       uri="schema20060504/gmx/gmx.xsd"/>
 
-  <system systemId="http://www.isotc211.org/2005/srv/srv.xsd"
-          uri="schema/srv/srv.xsd"/>
+  <system systemId="http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd"
+       uri="schema20060504/srv/srv.xsd"/>
 
-  <!-- gml (both known places for 3.1.1) -->
+  <system systemId="http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd"
+       uri="schema20060504/gmd/gmd.xsd"/>
+
+  <system systemId="http://schemas.opengis.net/iso/19139/20070417/gmx/gmx.xsd"
+       uri="schema20070417/gmx/gmx.xsd"/>
+
+  <system systemId="http://schemas.opengis.net/iso/19139/20070417/srv/1.0/srv.xsd"
+       uri="schema20070417/srv/1.0/srv.xsd"/>
+
+  <system systemId="http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd"
+          uri="schema20070417/gmd/gmd.xsd"/>
+
+  <!--system systemId="http://www.w3.org/1999/xlink.xsd"
+          uri="schema20070417/xlink/xlink.xsd"/-->
 
   <system systemId="http://www.opengis.org/gml/gml.xsd"
-          uri="schema/gml/gml.xsd"/>
-  <system systemId="http://schemas.opengis.org/gml/3.1.1/base/gml.xsd"
-          uri="schema/gml/gml.xsd"/>
+          uri="schema20060504/gml/gml.xsd"/>
 
-  <!-- xlinks -->
-  <system systemId="http://www.w3.org/1999/xlink.xsd"
-          uri="schema/xlink/xlink.xsd"/>
-  <!--
-  19139:2005 version
-  <system systemId="http://www.w3.org/1999/xlink/xlinks.xsd"
-          uri="schema/xlink/xlinks.xsd"/>-->
+  <system systemId="http://schemas.opengis.net/gml/3.2.1/gml.xsd"
+          uri="schema20070417/gml/3.2.1/gml.xsd"/>
 
   <system systemId="http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd"
           uri="schema2007/apiso/apiso.xsd"/>
