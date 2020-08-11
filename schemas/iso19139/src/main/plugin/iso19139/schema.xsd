@@ -30,11 +30,11 @@
            elementFormDefault="qualified"
 >
   <!-- 19139:2007 version -->
-  <xs:include schemaLocation="schema2007/gmd/metadataApplication.xsd"/>
-  <xs:import namespace="http://www.isotc211.org/2005/srv" schemaLocation="schema2007/srv/srv.xsd"/>
-  <xs:import namespace="http://www.isotc211.org/2005/gmx" schemaLocation="schema2007/gmx/gmx.xsd"/>
-  <!-- 19139:2005 version
-  <xs:include schemaLocation="schema/gmd/metadataApplication.xsd"/>
-  <xs:import namespace="http://www.isotc211.org/2005/srv" schemaLocation="schema/srv/srv.xsd"/>
-  <xs:import namespace="http://www.isotc211.org/2005/gmx" schemaLocation="schema/gmx/gmx.xsd"/>-->
+  <xs:include schemaLocation="schema20070417/gmd/metadataApplication.xsd"/>
+  <xs:import namespace="http://www.isotc211.org/2005/srv" schemaLocation="schema20070417/srv/1.0/srv.xsd"/>
+  <xs:import namespace="http://www.isotc211.org/2005/gmx" schemaLocation="schema20070417/gmx/gmx.xsd"/>
+  <!-- 19139:2005 version -->
+  <!--xs:include schemaLocation="schema20060504/gmd/metadataApplication.xsd"/>
+  <xs:import namespace="http://www.isotc211.org/2005/srv" schemaLocation="schema20060504/srv/srv.xsd"/>
+  <xs:import namespace="http://www.isotc211.org/2005/gmx" schemaLocation="schema20060504/gmx/gmx.xsd"/-->
 </xs:schema>
