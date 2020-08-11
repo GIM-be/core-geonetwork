@@ -9,12 +9,12 @@
     </div>
     <div class="modal-body" data-ng-transclude=""></div>
     <div class="modal-footer" ng-if="options.confirmCallback">
-      <button data-dismiss="modal" class="btn btn-primary"
+      <button data-dismiss="modal" class="btn" data-ng-class="{'btn-primary': !options.invertColors}"
         data-ng-click="options.confirmCallback()">
-        {{'confirm' | translate}}
+        {{options.confirmLabel ? options.confirmLabel : 'confirm' | translate}}
       </button>
-      <button data-dismiss="modal" class="btn btn-default" ng-if="!options.hideCancelBtn">
-        {{'cancel' | translate}}
+      <button data-dismiss="modal" class="btn btn-default" data-ng-class="{'btn-primary': options.invertColors}" ng-if="!options.hideCancelBtn">
+        {{options.cancelLabel ? options.cancelLabel : 'cancel' | translate}}
       </button>
     </div>
   </div>

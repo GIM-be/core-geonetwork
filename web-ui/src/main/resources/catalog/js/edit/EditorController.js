@@ -591,19 +591,16 @@
       }
 
       $scope.checkSave = function() {
-        return $q(function(resolve) {
+        return $scope.save(true, true).then(function() {
           if (!$scope.isTemplate() && $scope.gnCurrentEdit.metadata.isPublished()) {
-            gnValidation.errorCheck().then(function(hasErrors) {
-              if (hasErrors) {
-                $('#message-editor-save').modal('show');
-              }
-              resolve();
-            })
+            return gnValidation.errorCheck()
           } else {
-            resolve();
+            return false;
           }
-        }).then(function() {
-          return $scope.save(true, false)
+        }).then(function(hasErrors) {
+          if (hasErrors) {
+            $('#message-editor-save-on-invalid').modal('show');
+          }
         });
       };
 
@@ -617,13 +614,17 @@
             !gnConfig['metadata.workflow.automaticUnpublishInvalidMd']) {
 
           if (!$scope.isTemplate() && $scope.gnCurrentEdit.metadata.isPublished()) {
-            return gnValidation.errorCheck().then(function(hasErrors) {
+            var prom = gnEditor.save(false, true, false, submit, approve).then(function () {
+              return gnValidation.errorCheck();
+            }).then(function (hasErrors) {
               if (hasErrors) {
-                $('#message-editor-close').modal('show');
+                $('#message-editor-close-on-invalid').modal('show');
               } else {
-                return $scope.confirmClose(submit, approve);
+                return $scope.confirmCloseNoSave();
               }
             });
+            $scope.savedStatus = gnCurrentEdit.savedStatus;
+            return prom;
           } else {
             return $scope.confirmClose(submit, approve);
           }
@@ -631,7 +632,7 @@
 
         // else: do a mandatory validation check to ensure that if the MD is
         // invalid, the user can decide to stay in the editor to fix it
-        gnValidation.errorCheck().then(function(hasErrors) {
+        return gnValidation.errorCheck().then(function(hasErrors) {
           // if record unpublish on save is enabled: ask for confirmation
           // before saving and closing the editor
           if (hasErrors) {
@@ -642,7 +643,11 @@
         });
       };
 
-      $scope.confirmClose = function(submit, approve) {
+      $scope.confirmCloseNoSave = function() {
+        $scope.confirmClose(undefined, undefined, true)
+      }
+
+      $scope.confirmClose = function(submit, approve, noSave) {
         var promise = gnEditor.save(false, null, true, submit, approve)
             .then(function(form) {
               closeEditor();

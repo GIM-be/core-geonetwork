@@ -89,13 +89,13 @@
 </div>
 
 <div data-gn-modal="" class="gn-save-invalid-modal"
-     data-gn-popup-options="{title:'warning', confirmCallback: confirmClose, closeCallback: noop}"
-     id="message-editor-close">
-  <p translate>closingInvalidMetadata</p>
+     data-gn-popup-options="{title:'warning', confirmCallback: noop, hideCancelBtn: true}"
+     id="message-editor-save-on-invalid">
+  <p translate>savingInvalidMetadata</p>
 </div>
 
 <div data-gn-modal="" class="gn-save-invalid-modal"
-     data-gn-popup-options="{title:'warning', confirmCallback: noop, hideCancelBtn: true}"
-     id="message-editor-save">
+     data-gn-popup-options="{title:'warning', confirmCallback: confirmCloseNoSave, closeCallback: noop, confirmLabel: 'continue', cancelLabel: 'cancel', invertColors: true}"
+     id="message-editor-close-on-invalid">
   <p translate>closingInvalidMetadata</p>
 </div>

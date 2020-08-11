@@ -50,7 +50,9 @@
   "versionDate": "Date de la version",
   "attributeCardinality": "Cardinalité",
   "warning": "Attention",
-  "closingInvalidMetadata": "Cet enregistrement de métadonnées contient des erreurs de validation mais reste publié. Il est préférable de résoudre les problèmes de validation ou de dé-publier cet enregistrement.",
+  "savingInvalidMetadata": "Cet enregistrement de métadonnées contient des erreurs de validation mais reste publié. Il est préférable de résoudre les problèmes de validation ou de dé-publier cet enregistrement.",
+  "closingInvalidMetadata": "Cet enregistrement de métadonnées contient des erreurs de validation.\nSi vous appuyez sur \"Continuer\", cet enregistrement sera sauver et publié. Il est recommandé de d'abord résoudre les problèmes de validation (appuyez sur \"Annuler\").",
+  "continue": "Continuer",
   "createUiConfig": "Créer une configuration d'interface",
   "fieldTooLong": "Ce champ est trop long pour être affiché"
 }

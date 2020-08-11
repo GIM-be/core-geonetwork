@@ -53,7 +53,9 @@
   "versionDate": "Version data",
   "attributeCardinality": "Cardinality",
   "warning": "Warning",
-  "closingInvalidMetadata": "This metadata record contains validation errors but remains published. It is preferred to resolve the validation issues or un-publish this record.",
+  "savingInvalidMetadata": "This metadata record contains validation errors but remains published. It is preferred to resolve the validation issues or un-publish this record.",
+  "closingInvalidMetadata": "This metadata record contains validation errors.\nIf you click on \"Continue\", this record will be saved and published. It is preferred to resolve the validation issues (click on \"Cancel\").",
+  "continue": "Continue",
   "createUiConfig": "Create a UI configuration",
   "fieldTooLong": "This field is too long to be displayed"
 }
