@@ -227,7 +227,7 @@ public class BaseMetadataUtils implements IMetadataUtils {
             Element info = metadataBeforeAnyChanges.getChild(Edit.RootChild.INFO, Edit.NAMESPACE);
             boolean validate = false;
             boolean ufo = false;
-            boolean index = true;
+            boolean index = false;
             metadataBeforeAnyChanges.removeChild(Edit.RootChild.INFO, Edit.NAMESPACE);
             metadataManager.updateMetadata(context, id, metadataBeforeAnyChanges, validate, ufo,
                 index, context.getLanguage(), info.getChildText(Edit.Info.Elem.CHANGE_DATE), true);

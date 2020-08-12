@@ -66,9 +66,11 @@ import org.fao.geonet.kernel.EditLib;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.ThesaurusManager;
+import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.datamanager.base.BaseMetadataStatus;
+import org.fao.geonet.kernel.datamanager.base.BaseMetadataValidator;
 import org.fao.geonet.kernel.metadata.StatusActions;
 import org.fao.geonet.kernel.metadata.StatusActionsFactory;
 import org.fao.geonet.kernel.setting.SettingManager;
@@ -115,6 +117,12 @@ public class MetadataEditingApi {
 
     @Autowired
     LanguageUtils languageUtils;
+
+    @Autowired
+    private BaseMetadataValidator baseMetadataValidator;
+
+    @Autowired
+    private IMetadataIndexer metadataIndexer;
 
     @ApiOperation(value = "Edit a record", notes = "Return HTML form for editing.", nickname = "editor")
     @RequestMapping(value = "/{metadataUuid}/editor", method = RequestMethod.GET, consumes = {
@@ -413,6 +421,9 @@ public class MetadataEditingApi {
         DataManager dataMan = applicationContext.getBean(DataManager.class);
         ServiceContext context = ApiUtils.createServiceContext(request);
         dataMan.cancelEditingSession(context, String.valueOf(metadata.getId()));
+        metadata = ApiUtils.getRecord(metadataUuid);
+        baseMetadataValidator.doValidate(metadata, context.getLanguage());
+        metadataIndexer.indexMetadata(String.valueOf(metadata.getId()), true, null);
     }
 
     @ApiOperation(value = "Add element", notes = "", nickname = "addElement")
