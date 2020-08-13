@@ -32,6 +32,7 @@ import java.nio.file.Path;
 
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.Util;
+import org.fao.geonet.api.ApiUtils;
 import org.fao.geonet.api.records.editing.AjaxEditUtils;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
@@ -40,8 +41,10 @@ import org.fao.geonet.domain.MetadataType;
 import org.fao.geonet.domain.ReservedGroup;
 import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
+import org.fao.geonet.kernel.datamanager.base.BaseMetadataValidator;
 import org.fao.geonet.kernel.metadata.StatusActions;
 import org.fao.geonet.kernel.metadata.StatusActionsFactory;
 import org.fao.geonet.kernel.setting.SettingManager;
@@ -89,6 +92,9 @@ public class Update extends NotInReadOnlyModeService {
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
         DataManager dataMan = gc.getBean(DataManager.class);
         IMetadataValidator validator = gc.getBean(IMetadataValidator.class);
+        BaseMetadataValidator baseMetadataValidator = gc.getBean(BaseMetadataValidator.class);
+        IMetadataIndexer metadataIndexer = gc.getBean(IMetadataIndexer.class);
+
         UserSession session = context.getUserSession();
 
         String id = Utils.getIdentifierFromParameters(params, context);
@@ -125,6 +131,9 @@ public class Update extends NotInReadOnlyModeService {
             }
         } else {
             dataMan.cancelEditingSession(context, id);
+            AbstractMetadata metadata = ApiUtils.getRecord(id);
+            baseMetadataValidator.doValidate(metadata, context.getLanguage());
+            metadataIndexer.indexMetadata(String.valueOf(metadata.getId()), true, null);
         }
 
         //-----------------------------------------------------------------------
