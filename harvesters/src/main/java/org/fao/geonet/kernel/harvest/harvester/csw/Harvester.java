@@ -23,7 +23,10 @@
 
 package org.fao.geonet.kernel.harvest.harvester.csw;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -397,6 +400,24 @@ class Harvester implements IHarvester<HarvestResult> {
         request.setOutputSchema(preferredOutputSchema);
         request.setConstraintLanguage(constraintLanguage);
         request.setConstraintLangVersion(CONSTRAINT_LANGUAGE_VERSION);
+        try {
+            URL capabUrl = new URL(this.params.capabUrl);
+            if (StringUtils.isNotEmpty(capabUrl.getQuery())) {
+                String[] params = capabUrl.getQuery().split("&");
+                for (String param : params) {
+                    String[] kvp = param.split("=");
+                    if ("constraint".equalsIgnoreCase(kvp[0]) && StringUtils.isNotEmpty(kvp[1])) {
+                        if (StringUtils.isNotEmpty(constraint)) {
+                            constraint = "(" + constraint + ") AND (" + URLDecoder.decode(kvp[1], "UTF-8") + ")";
+                        } else {
+                            constraint = URLDecoder.decode(kvp[1], "UTF-8");
+                        }
+                    }
+                }
+            }
+        } catch (MalformedURLException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         request.setConstraint(constraint);
         request.setMethod(method);
 
