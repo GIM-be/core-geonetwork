@@ -29,12 +29,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
@@ -77,7 +72,6 @@ import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataCategoryRepository;
 import org.fao.geonet.repository.MetadataRepository;
-import org.fao.geonet.repository.SimpleMetadata;
 import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.util.Sha1Encoder;
 import org.fao.geonet.utils.BinaryFile;
@@ -315,8 +309,11 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
         localGroups = new GroupMapper(context);
 
         // md5 the full capabilities URL
-        String uuid = Sha1Encoder.encodeString(capabilitiesUrl); // is the service identifier
-
+        //String uuid = Sha1Encoder.encodeString(capabilitiesUrl); // is the service identifier
+        // During first harvest, we generate a real UUID and than put the new service metadata url in the capabilities.
+        // Next time we harvest, we will parse the capabilities to get the uuid from the id request parameter
+        // of the service metadata url.
+        String uuid = UUID.randomUUID().toString();
         // For AIV: make this string look a bit more like a UUID by inserting some hyphens
         if(StringUtils.isNotEmpty(uuid)) {
             if(uuid.length() > 8) {
