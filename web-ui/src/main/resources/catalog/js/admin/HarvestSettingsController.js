@@ -102,7 +102,11 @@
                   new Date($scope.harvesterSelected.searches[0].until);
                 }
 
-                if ($scope.harvesterSelected.searches[0]['bbox-xmin']) {
+                if ($scope.harvesterSelected.searches[0]['bbox-xmin'] &&
+                  !isNaN($scope.harvesterSelected.searches[0]['bbox-xmin']) &&
+                  !isNaN($scope.harvesterSelected.searches[0]['bbox-ymin']) &&
+                  !isNaN($scope.harvesterSelected.searches[0]['bbox-xmax']) &&
+                  !isNaN($scope.harvesterSelected.searches[0]['bbox-ymax'])) {
                   $scope.extent.md = [
                     parseFloat($scope.harvesterSelected.searches[0]['bbox-xmin'].value),
                     parseFloat($scope.harvesterSelected.searches[0]['bbox-ymin'].value),
@@ -567,7 +571,7 @@
           && $scope.harvesterSelected.searches
           && $scope.harvesterSelected.searches[0]
           && $scope.harvesterSelected.searches[0]['bbox-xmin']
-          && angular.isDefined($scope.harvesterSelected.searches[0]['bbox-xmin'].value)) {
+          && angular.isDefined($scope.harvesterSelected.searches[0]['bbox-xmin'].value) && !isNaN(n.md[0]) && !isNaN(n.md[1]) && !isNaN(n.md[2]) && !isNaN(n.md[3])) {
           $scope.harvesterSelected.searches[0]['bbox-xmin'].value = n.md[0];
           $scope.harvesterSelected.searches[0]['bbox-ymin'].value = n.md[1];
           $scope.harvesterSelected.searches[0]['bbox-xmax'].value = n.md[2];
@@ -652,7 +656,7 @@
                     if ($(this).attr("name") === 'BBOX') {
                       $scope.cswBboxFilter = true;
                       for (var i = 0; i < bboxProperties.length; i ++) {
-                      if (!$scope.harvesterSelected.searches[0][bboxProperties[i]])
+                      if (!$scope.harvesterSelected.searches[0][bboxProperties[i]] || isNaN($scope.harvesterSelected.searches[0][bboxProperties[i]]))
                         $scope.harvesterSelected.searches[0][bboxProperties[i]] = {value: ''};
                       }
                     }
