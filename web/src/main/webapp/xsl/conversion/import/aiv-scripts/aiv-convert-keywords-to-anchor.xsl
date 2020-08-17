@@ -30,7 +30,8 @@
     </xsl:choose>
   </xsl:variable>
 
-  <xsl:variable name="baseIso19139" select="'../../../../WEB-INF/data/config/schema_plugins/iso19139/thesauri-AIV/'"/>
+  <!--xsl:variable name="baseIso19139" select="'../../../../WEB-INF/data/config/schema_plugins/iso19139/thesauri-AIV/'"/-->
+  <xsl:variable name="baseIso19139" select="'../thesauri-AIV/'"/>
 
   <xsl:variable name="thesaurusList">
     <path><xsl:value-of select="concat($baseIso19139, 'theme/featureconcept.rdf')"/></path>
@@ -68,7 +69,7 @@
         <xsl:choose>
           <xsl:when test="gmx:Anchor">
             <xsl:choose>
-              <xsl:when test="contains($thesaurusTitle,'GEMET - INSPIRE thema')">
+              <xsl:when test="contains($thesaurusTitle,'GEMET - INSPIRE them')">
                 <xsl:variable name="xlink" select="gmx:Anchor/@xlink:href"/>
                 <xsl:variable name="mappedXlink">
                   <xsl:call-template name="mapKeywordAnchor">
@@ -128,11 +129,26 @@
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="gmd:type">
+    <xsl:variable name="thesaurusTitle" select="../gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/string()"/>
+    <xsl:variable name="codeListValue">
+      <xsl:choose>
+        <xsl:when test="@codeListValue!=''"><xsl:value-of select="@codeListValue"/></xsl:when>
+        <xsl:when test="contains($thesaurusTitle,'Vlaamse regio')">place</xsl:when>
+        <xsl:otherwise>theme</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:copy copy-namespaces="no">
+      <gmd:MD_KeywordTypeCode codeListValue="{$codeListValue}"
+                              codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"/>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:title[gmx:Anchor or gco:CharacterString]">
     <xsl:copy copy-namespaces="no">
       <xsl:variable name="thesaurusTitle" select="*[name()='gco:CharacterString' or name()='gmx:Anchor']"/>
       <xsl:choose>
-        <xsl:when test="contains($thesaurusTitle,'GEMET - INSPIRE thema')">
+        <xsl:when test="contains($thesaurusTitle,'GEMET - INSPIRE them')">
           <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/theme"><xsl:value-of select="$thesaurusTitle"/></gmx:Anchor>
         </xsl:when>
         <xsl:otherwise><xsl:apply-templates select="*"/></xsl:otherwise>
@@ -144,7 +160,7 @@
     <xsl:param name="xlink" required="yes"/>
     <xsl:param name="thesaurusTitle" required="yes"/>
     <xsl:choose>
-      <xsl:when test="contains($thesaurusTitle,'GEMET - INSPIRE thema')">
+      <xsl:when test="contains($thesaurusTitle,'GEMET - INSPIRE them')">
         <xsl:choose>
           <xsl:when test="$xlink='http://rdfdata.eionet.europa.eu/inspirethemes/themes/4'">http://inspire.ec.europa.eu/theme/au</xsl:when>
           <xsl:when test="$xlink='http://rdfdata.eionet.europa.eu/inspirethemes/themes/5'">http://inspire.ec.europa.eu/theme/ad</xsl:when>
