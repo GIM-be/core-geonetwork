@@ -310,11 +310,8 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
 
         // md5 the full capabilities URL
         //String uuid = Sha1Encoder.encodeString(capabilitiesUrl); // is the service identifier
-        // During first harvest, we generate a real UUID and than put the new service metadata url in the capabilities.
-        // Next time we harvest, we will parse the capabilities to get the uuid from the id request parameter
-        // of the service metadata url.
-        String uuid = UUID.randomUUID().toString();
         // For AIV: make this string look a bit more like a UUID by inserting some hyphens
+        /*
         if(StringUtils.isNotEmpty(uuid)) {
             if(uuid.length() > 8) {
                 uuid = uuid.substring(0, 8) + '-' + uuid.substring(8);
@@ -338,6 +335,12 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
                 uuid = uuid.substring(0, 38) + '-' + uuid.substring(38);
             }
         }
+        */
+
+        // During first harvest, we generate a real UUID and than put the new service metadata url in the capabilities.
+        // Next time we harvest, we will parse the capabilities to get the uuid from the id request parameter
+        // of the service metadata url.
+        String uuid = UUID.randomUUID().toString();
 
         // Metadata creation could be based on 2 scenarios:
         // 1. Use the GetCapabilities and process it using XSLT to create ISO records
