@@ -14,8 +14,8 @@
   <xsl:variable name="schemaLocationFor2007"
                 select="'http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd'"/>
 
-  <xsl:variable name="isUsing2005Schema" select="false()"/>
-  <xsl:variable name="isUsing2007Schema" select="true()"/>
+  <xsl:variable name="isUsing2005Schema" select="true()"/>
+  <xsl:variable name="isUsing2007Schema" select="false()"/>
 
   <!-- The default language is also added as gmd:locale
   for multilingual metadata records. -->

@@ -115,6 +115,15 @@
                 </xsl:copy>
                 <xsl:message select="concat('The gco:CharacterString keyword ',$keyword,' is transformed to a gmx:Anchor with xlink:href ', $xlink)" />
               </xsl:when>
+              <xsl:when test="$keyword=''">
+                <xsl:copy copy-namespaces="no">
+                  <xsl:attribute name="gco:nilReason" select="'missing'"/>
+                  <xsl:element name="gmx:Anchor">
+                    <xsl:attribute name="xlink:href" select="''"/>
+                  </xsl:element>
+                </xsl:copy>
+                <xsl:message select="concat('The empty gco:CharacterString keyword ',$keyword,' is transformed to an empty gmx:Anchor with empty xlink:href ')" />
+              </xsl:when>
               <xsl:otherwise>
                 <xsl:copy-of select="." copy-namespaces="no"/>
                 <xsl:message select="concat('The gco:CharacterString keyword ',$keyword,' is not transformed to a gmx:Anchor')" />
