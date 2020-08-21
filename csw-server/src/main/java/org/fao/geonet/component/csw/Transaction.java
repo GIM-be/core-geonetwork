@@ -36,11 +36,7 @@ import org.fao.geonet.csw.common.OutputSchema;
 import org.fao.geonet.csw.common.ResultType;
 import org.fao.geonet.csw.common.exceptions.CatalogException;
 import org.fao.geonet.csw.common.exceptions.NoApplicableCodeEx;
-import org.fao.geonet.domain.ISODate;
-import org.fao.geonet.domain.Pair;
-import org.fao.geonet.domain.Profile;
-import org.fao.geonet.domain.ReservedGroup;
-import org.fao.geonet.domain.ReservedOperation;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.AddElemValue;
 import org.fao.geonet.kernel.DataManager;
@@ -52,9 +48,12 @@ import org.fao.geonet.kernel.csw.services.getrecords.FieldMapper;
 import org.fao.geonet.kernel.csw.services.getrecords.SearchController;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
+import org.fao.geonet.kernel.datamanager.IMetadataValidator;
+import org.fao.geonet.kernel.datamanager.base.BaseMetadataStatus;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
+import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.utils.Log;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -271,6 +270,25 @@ public class Transaction extends AbstractOperation implements CatalogService {
         String id = dataMan.insertMetadata(context, schema, xml, uuid, userId, group, source,
             isTemplate, docType, category, createDate, changeDate, ufo, indexImmediate);
 
+        IMetadataUtils metadataUtils = gc.getBean(IMetadataUtils.class);
+        AbstractMetadata abstractMetadata = metadataUtils.findOne(id);
+
+        IMetadataValidator validator = context.getBean(IMetadataValidator.class);
+        validator.doValidate(us, schema, id, abstractMetadata.asXml(), context.getLanguage(), false);
+        new AGIVValidation(context).addConformKeywords(abstractMetadata, true);
+
+        dataMan.activateWorkflowIfConfigured(context, id, group);
+        boolean isReviewer = us.getProfile().equals(Profile.Reviewer);
+        boolean isAdmin = us.getProfile().equals(Profile.Administrator);
+        if (isReviewer || isAdmin) {
+            dataMan.setStatus(context, Integer.valueOf(id), Integer.valueOf(StatusValue.Status.APPROVED), new ISODate(), String.format("Inserted by CSWT", group, StatusValue.Status.APPROVED));
+            /*
+            BaseMetadataStatus statusRepository = gc.getBean(BaseMetadataStatus.class);
+            Integer changeToStatus = Integer.parseInt(StatusValue.Status.APPROVED);
+            statusRepository.changeCurrentStatus(us.getUserIdAsInt(), abstractMetadata.getId(), changeToStatus);
+            */
+        }
+
         // Privileges for the first group of the user that inserts the metadata
         // (same permissions as when inserting xml file from UI)
         if (group != null) {
@@ -287,7 +305,7 @@ public class Transaction extends AbstractOperation implements CatalogService {
             dataMan.setOperation(context, id, "" + ReservedGroup.all.getId(), ReservedOperation.view);
         }
 
-        dataMan.indexMetadata(id, true, null);
+        //dataMan.indexMetadata(id, true, null);
 
         documents.add(new InsertedMetadata(schema, id, xml));
 
@@ -355,7 +373,7 @@ public class Transaction extends AbstractOperation implements CatalogService {
                 changeDate = new ISODate().toString();
             }
 
-            boolean validate = false;
+            boolean validate = true;
             boolean ufo = false;
             boolean index = false;
             String language = context.getLanguage();
@@ -452,7 +470,7 @@ public class Transaction extends AbstractOperation implements CatalogService {
 
                 // Update the metadata with changes
                 if (metadataChanged) {
-                    boolean validate = false;
+                    boolean validate = true;
                     boolean ufo = false;
                     boolean index = false;
                     try {

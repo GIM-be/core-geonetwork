@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet 
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" 
-	xmlns:gco="http://www.isotc211.org/2005/gco" 
+<xsl:stylesheet
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
+	xmlns:gco="http://www.isotc211.org/2005/gco"
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" >
 
 	<xsl:output method="xml" indent="yes"/>
-	
-	<!-- Convert time elements-->	
-	<xsl:template match="gmd:dateStamp">
+
+	<!-- Convert time elements-->
+	<xsl:template match="gmd:CI_Date/gmd:date|gmd:dateOfNextUpdate|gmd:dateStamp">
 		<xsl:copy copy-namespaces="no">
 			<xsl:choose>
+        <xsl:when test="normalize-space(*[name()=('gco:Date','gco:DateTime')])=''">
+          <xsl:call-template name="logAttributesAndValue">
+            <xsl:with-param name="element" select="*[name()=('gco:Date','gco:DateTime')]" />
+          </xsl:call-template>
+          <xsl:message><xsl:value-of select="concat($logPrefix,'Setting nilReason attribute to missing')"/></xsl:message>
+          <xsl:attribute name="gco:nilReason" select="'missing'"/>
+        </xsl:when>
 				 <xsl:when test="gco:DateTime">
 					 <xsl:call-template name="logAttributesAndValue">
 						<xsl:with-param name="element" select="gco:DateTime" />
@@ -30,6 +37,6 @@
 					<xsl:apply-templates select="@*|node()"/>
 				</xsl:otherwise>
 			</xsl:choose>
-		</xsl:copy>	
+		</xsl:copy>
 	</xsl:template>
 </xsl:stylesheet>

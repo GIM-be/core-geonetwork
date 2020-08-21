@@ -47,6 +47,9 @@
   <xsl:variable name="schemaLocationFor2007"
                 select="'http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd'"/>
 
+  <xsl:variable name="metadataStandardName">ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</xsl:variable>
+  <xsl:variable name="metadataStandardVersion">GDI-Vlaanderen Best Practices - versie 2.0</xsl:variable>
+
   <!-- Try to determine if using the 2005 or 2007 version
   of ISO19139. Based on this GML 3.2.0 or 3.2.1 is used.
   Default is 2007 with GML 3.2.1.
@@ -69,8 +72,8 @@
   <!--<xsl:variable name="isUsing2007Schema"-->
   <!--              select="/root/gmd:MD_Metadata/@xsi:schemaLocation-->
   <!--                        and /root/gmd:MD_Metadata/@xsi:schemaLocation = $schemaLocationFor2007"/>-->
-  <xsl:variable name="isUsing2005Schema" select="false()"/>
-  <xsl:variable name="isUsing2007Schema" select="true()"/>
+  <xsl:variable name="isUsing2005Schema" select="true()"/>
+  <xsl:variable name="isUsing2007Schema" select="false()"/>
 
   <!-- We use the category check to find out if this is an SDS metadata. Please replace with anything better -->
   <xsl:variable name="isSDS"
@@ -245,9 +248,56 @@
 
   <!-- ================================================================= -->
 
+  <!-- Set the required hierarchyLevelName for dataset, service and series, see TG 2.0 -->
+
+  <!-- Remove gmd:hierarchyLevelName for gmd:MD_ScopeCode with codeListValue dataset, series and service -->
+  <xsl:template match="gmd:hierarchyLevelName[lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue)=('dataset','series','service')]" priority="100"/>
+
+  <!-- Change gmd:hierarchyLevelName -->
+  <xsl:template match="gmd:hierarchyLevel[lower-case(gmd:MD_ScopeCode/@codeListValue)=('dataset','series','service')]">
+    <xsl:copy copy-namespaces="no">
+      <gmd:MD_ScopeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="{lower-case(gmd:MD_ScopeCode/@codeListValue)}"/>
+    </xsl:copy>
+    <xsl:variable name="hierarchyLevelNameValue">
+      <xsl:choose>
+        <xsl:when test="lower-case(gmd:MD_ScopeCode/@codeListValue) = 'dataset'">Dataset</xsl:when>
+        <xsl:when test="lower-case(gmd:MD_ScopeCode/@codeListValue) = 'series'">Datasetserie</xsl:when>
+        <xsl:when test="lower-case(gmd:MD_ScopeCode/@codeListValue) = 'service'">Dienst</xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <gmd:hierarchyLevelName>
+      <gco:CharacterString><xsl:value-of select="$hierarchyLevelNameValue" /></gco:CharacterString>
+    </gmd:hierarchyLevelName>
+  </xsl:template>
+
+  <!-- Set the required metadataStandardName and metadataStandardVersion for dataset and series, see TG 2.0 -->
+
+  <!-- Change elements -->
+  <xsl:template match="gmd:metadataStandardName[lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]" priority="100">
+    <xsl:copy copy-namespaces="no">
+      <gco:CharacterString><xsl:value-of select="$metadataStandardName" /></gco:CharacterString>
+    </xsl:copy>
+    <xsl:if test="count(../gmd:metadataStandardVersion)=0">
+      <gmd:metadataStandardVersion>
+        <gco:CharacterString><xsl:value-of select="$metadataStandardVersion"/></gco:CharacterString>
+      </gmd:metadataStandardVersion>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="gmd:metadataStandardVersion[lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]" priority="100">
+    <xsl:if test="count(../gmd:metadataStandardName)=0">
+      <gmd:metadataStandardName>
+        <gco:CharacterString><xsl:value-of select="$metadataStandardName" /></gco:CharacterString>
+      </gmd:metadataStandardName>
+    </xsl:if>
+    <xsl:copy copy-namespaces="no">
+      <gco:CharacterString><xsl:value-of select="$metadataStandardVersion"/></gco:CharacterString>
+    </xsl:copy>
+  </xsl:template>
+
   <!-- Only set metadataStandardName and metadataStandardVersion
     if not set. -->
-  <xsl:template match="gmd:metadataStandardName[@gco:nilReason='missing' or gco:CharacterString='']"
+  <!--xsl:template match="gmd:metadataStandardName[@gco:nilReason='missing' or gco:CharacterString='']"
                 priority="10">
     <xsl:copy>
       <gco:CharacterString>ISO 19115:2003/19139</gco:CharacterString>
@@ -260,7 +310,7 @@
     <xsl:copy>
       <gco:CharacterString>1.0</gco:CharacterString>
     </xsl:copy>
-  </xsl:template>
+  </xsl:template-->
 
   <!-- ================================================================= -->
 
@@ -481,6 +531,8 @@
   <xsl:template match="gmd:LanguageCode[@codeListValue]" priority="10">
     <gmd:LanguageCode codeList="https://www.loc.gov/standards/iso639-2/">
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
+      <!-- Keep the translation for the codeListValue attribute in the xml if exists, see TG 2.0 -->
+      <xsl:apply-templates select="node()"/>
     </gmd:LanguageCode>
   </xsl:template>
 
@@ -498,6 +550,8 @@
         <xsl:value-of
           select="concat('https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#',local-name(.))"/>
       </xsl:attribute>
+      <!-- Keep the translation for the codeListValue attribute in the xml if exists and when required, see TG 2.0 -->
+      <xsl:apply-templates select="node()"/>
     </xsl:copy>
   </xsl:template>
 

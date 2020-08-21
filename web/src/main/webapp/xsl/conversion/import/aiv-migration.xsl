@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
                 exclude-result-prefixes="#all"
                 version="2.0">
   <xsl:output method="xml" indent="yes" encoding="utf-8"/>
@@ -11,9 +12,10 @@
   <xsl:include href="aiv-scripts/change-LanguageCode.xsl"/>
   <xsl:include href="aiv-scripts/change-MD_CharacterSetCode.xsl"/>
   <xsl:include href="aiv-scripts/change-metadataStandard.xsl"/>
-  <xsl:include href="aiv-scripts/change-dateStamp-format.xsl"/>
+  <xsl:include href="aiv-scripts/change-Date-and-DateTime-format.xsl"/>
   <xsl:include href="aiv-scripts/change-referenceSystemInfo.xsl"/>
   <xsl:include href="aiv-scripts/change-hierarchyLevel.xsl"/>
+  <xsl:include href="aiv-scripts/change-MD_BrowseGraphic.xsl"/>
   <xsl:variable name="logPrefix">XSL LOG: </xsl:variable>
 
   <!-- Copy all elements and attributes -->
@@ -22,6 +24,8 @@
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
+
+  <xsl:template match="@xlink:type" priority="100"/>
 
   <!-- LOG fileidentifier-->
   <xsl:template match="gmd:fileIdentifier/gco:CharacterString">
