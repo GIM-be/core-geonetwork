@@ -120,7 +120,7 @@
   <add-extent-from-geokeywords>Compute extent from keyword</add-extent-from-geokeywords>
   <add-extent-from-geokeywordsHelp>Analyze each keyword of type place and add matching extent.
   </add-extent-from-geokeywordsHelp>
-  <classificationSection>Classification of data and services</classificationSection>
+  <classificationSection>Classificatie van data en services</classificationSection>
   <temporalSection>Temporal reference</temporalSection>
   <restrictionsSection>Restrictions on access and use</restrictionsSection>
   <metadataSection>Metadata information</metadataSection>
