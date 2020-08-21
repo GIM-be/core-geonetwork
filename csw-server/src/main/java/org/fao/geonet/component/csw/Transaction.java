@@ -270,14 +270,14 @@ public class Transaction extends AbstractOperation implements CatalogService {
         String id = dataMan.insertMetadata(context, schema, xml, uuid, userId, group, source,
             isTemplate, docType, category, createDate, changeDate, ufo, indexImmediate);
 
+        dataMan.activateWorkflowIfConfigured(context, id, group);
         IMetadataUtils metadataUtils = gc.getBean(IMetadataUtils.class);
         AbstractMetadata abstractMetadata = metadataUtils.findOne(id);
 
         IMetadataValidator validator = context.getBean(IMetadataValidator.class);
-        validator.doValidate(us, schema, id, abstractMetadata.asXml(), context.getLanguage(), false);
+        validator.doValidate(us, schema, id, abstractMetadata.getXmlData(false), context.getLanguage(), false);
         new AGIVValidation(context).addConformKeywords(abstractMetadata, true);
 
-        dataMan.activateWorkflowIfConfigured(context, id, group);
         boolean isReviewer = us.getProfile().equals(Profile.Reviewer);
         boolean isAdmin = us.getProfile().equals(Profile.Administrator);
         if (isReviewer || isAdmin) {
