@@ -8,7 +8,7 @@
   <xsl:output method="xml" indent="yes" encoding="utf-8"/>
   <xsl:include href="aiv-scripts/aiv-convert-keywords-to-anchor.xsl"/>
   <xsl:include href="aiv-scripts/aiv-minimal-update-fixed-info.xsl"/>
-  <xsl:include href="aiv-scripts/aiv-remove-data-quality-info-optional-elements.xsl"/>
+  <xsl:include href="aiv-scripts/change-dataQualityInfo.xsl"/>
   <xsl:include href="aiv-scripts/change-LanguageCode.xsl"/>
   <xsl:include href="aiv-scripts/change-MD_CharacterSetCode.xsl"/>
   <xsl:include href="aiv-scripts/change-metadataStandard.xsl"/>
