@@ -338,7 +338,8 @@ USA.
             <!-- Check that INSPIRE service taxonomy is available.
                 Use INSPIRE thesaurus available on SVN to check keywords in all EU languages.
             -->
-            <sch:let name="inspire-thesaurus" value="document(concat('file:///', $thesaurusDir, '/external/thesauri/theme/inspire-service-taxonomy.rdf'))"/>
+            <sch:let name="inspire-thesaurus-path" value="replace(concat('file:///', $thesaurusDir, '/external/thesauri/theme/inspire-service-taxonomy.rdf'), '\\', '/')"/>
+            <sch:let name="inspire-thesaurus" value="document($inspire-thesaurus-path)"/>
             <sch:let name="inspire-st" value="$inspire-thesaurus//skos:Concept"/>
 
             <!-- Display error if INSPIRE thesaurus is not available. -->
@@ -501,17 +502,17 @@ USA.
                 <sch:value-of select="$loc/strings/alert.M43/div"/>
             </sch:assert>
 
-            <sch:let name="lineageDefined" value="gmd:dataQualityInfo/*/gmd:lineage/node()"/>
+            <sch:let name="lineageDefined" value="gmd:dataQualityInfo/*/gmd:lineage/node() or gmd:identificationInfo/srv:SV_ServiceIdentification"/>
             <sch:assert test="$lineageDefined" see="gmd:dataQualityInfo/gmd:DQ_DataQuality/geonet:child[@name='lineage']/@uuid">
                 <sch:value-of select="$loc/strings/alert.M43/div"/>
             </sch:assert>
 
-            <sch:let name="statementDefined" value="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/node()"/>
+            <sch:let name="statementDefined" value="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/node() or gmd:identificationInfo/srv:SV_ServiceIdentification"/>
             <sch:assert test="$statementDefined" see="gmd:dataQualityInfo/*/gmd:lineage/*/geonet:child[@name='statement']/@uuid">
                 <sch:value-of select="$loc/strings/alert.M43/div"/>
             </sch:assert>
 
-            <sch:let name="hasAtLeastOneLineage" value="count(gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement[not(@gco:nilReason)]) > 0"/>
+            <sch:let name="hasAtLeastOneLineage" value="count(gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement[not(@gco:nilReason)]) > 0 or gmd:identificationInfo/srv:SV_ServiceIdentification"/>
             <sch:assert test="$hasAtLeastOneLineage" see="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/geonet:element/@ref">
                 <sch:value-of select="$loc/strings/alert.M43/div"/>
             </sch:assert>
