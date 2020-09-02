@@ -199,6 +199,8 @@
       }
       // $scope.$watch('mdView.current.record', loadFormatter);
 
+      var featureTypesPromise = undefined
+
       function checkForViewChanges() {
         if ($scope.mdView.current.record != null) {
           var uuid = gnSearchLocation.getUuid();
@@ -208,7 +210,35 @@
             $scope.currentSchema = $scope.mdView.current.record['geonet:info'].schema;
             loadFormatter();
           }
+          if ($scope.mdView.current.record.featureTypes === '#tooLong') {
+            populateFeatureTypes();
+          } else if (featureTypesPromise) {
+            featureTypesPromise.cancel();
+          }
         }
+      }
+
+      function populateFeatureTypes() {
+        var uuid = $scope.mdView.current.record['geonet:info'].uuid
+        var prom = $http.get('../api/records/' + uuid + '/featureTypes');
+        featureTypesPromise = makeCancellablePromise(prom);
+        featureTypesPromise.then(function(response) {
+          $scope.mdView.current.record.featureTypes = response.data;
+        });
+      }
+
+      function makeCancellablePromise(promise) {
+        var rejectFn;
+        var wrappedPromise = new Promise(function(resolve, reject) {
+          rejectFn = reject;
+          Promise.resolve(promise)
+            .then(resolve)
+            .catch(reject);
+        });
+        wrappedPromise.cancel = function() {
+          rejectFn({ canceled: true });
+        };
+        return wrappedPromise;
       }
 
       $rootScope.$on('$locationChangeSuccess', function() {
