@@ -49,6 +49,7 @@ import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.SchemaManager;
+import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.mef.MEFLib;
 import org.fao.geonet.lib.Lib;
@@ -115,6 +116,9 @@ public class MetadataApi {
 
     @Autowired
     GeonetworkDataDirectory dataDirectory;
+
+    @Autowired
+    protected IMetadataSchemaUtils metadataSchemaUtils;
 
     private ApplicationContext context;
 
@@ -639,6 +643,42 @@ public class MetadataApi {
             throw new ResourceNotFoundException();
         }
 
+    }
+
+    @ApiOperation(
+        value = "Get the feature types index field for a ISO 19110 record",
+        nickname = "getFeatureTypes",
+        notes = "If the ISO 19110 metadata have too much featureType elements, " +
+            "the resulting index field will be too long to be indexed." +
+            "This endpoint can be called the fetch what would normally be " +
+            "in the index for feature types")
+    @RequestMapping(value = "/{metadataUuid}/featureTypes",
+        method = RequestMethod.GET,
+        produces = {
+            MediaType.APPLICATION_JSON_UTF8_VALUE
+        })
+    @ResponseStatus(HttpStatus.OK)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Return the feature types index field."),
+        @ApiResponse(code = 403, message = ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_VIEW)
+    })
+    @ResponseBody
+    public String getFeatureTypesField(@ApiParam(value = API_PARAM_RECORD_UUID, required = true) @PathVariable String metadataUuid,
+                                       HttpServletRequest request) throws Exception {
+        AbstractMetadata md;
+        try {
+            md = ApiUtils.canViewRecord(metadataUuid, request);
+        } catch (SecurityException e) {
+            Log.debug(API.LOG_MODULE_NAME, e.getMessage(), e);
+            throw new NotAllowedException(ApiParams.API_RESPONSE_NOT_ALLOWED_CAN_VIEW);
+        }
+        String schema = md.getDataInfo().getSchemaId();
+        if (!"iso19110".equals(schema)) {
+            throw new ResourceNotFoundException(String.format("Metadata with uuid %s is not a iso19110 record", metadataUuid));
+        } else {
+            Path styleSheet = metadataSchemaUtils.getSchemaDir(schema).resolve("extract-feature-types.xsl");
+            return Xml.transform(md.getXmlData(false), styleSheet).getText();
+        }
     }
 
 
