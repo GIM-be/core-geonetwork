@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet 
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" 
-	xmlns:gco="http://www.isotc211.org/2005/gco" 
+<xsl:stylesheet
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
+	xmlns:gco="http://www.isotc211.org/2005/gco"
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" >
 
 	<xsl:output method="xml" indent="yes"/>
 	<xsl:variable name="metadataStandardName">ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</xsl:variable>
 	<xsl:variable name="metadataStandardVersion">GDI-Vlaanderen Best Practices - versie 2.0</xsl:variable>
-	<!-- Change elements -->	
-	<xsl:template match="gmd:metadataStandardName[lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]">
+	<!-- Change elements -->
+	<xsl:template match="gmd:metadataStandardName[lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]" priority="1000">
 		<xsl:call-template name="logAttributesAndValue">
 			<xsl:with-param name="element" select="gco:CharacterString"/>
 		</xsl:call-template>
@@ -23,8 +23,8 @@
 			</gmd:metadataStandardVersion>
 		</xsl:if>
 	</xsl:template>
-	
-	<xsl:template match="gmd:metadataStandardVersion[lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]">
+
+	<xsl:template match="gmd:metadataStandardVersion[lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]" priority="1000">
 		<xsl:call-template name="logAttributesAndValue">
 			<xsl:with-param name="element" select="gco:CharacterString"/>
 		</xsl:call-template>
@@ -37,6 +37,6 @@
 		<xsl:message><xsl:value-of select=" concat($logPrefix, 'Updating gmd:metadataStandardVersion for ',../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue,'')"/></xsl:message>
 		<xsl:copy copy-namespaces="no">
 			<gco:CharacterString><xsl:value-of select="$metadataStandardVersion"/></gco:CharacterString>
-		</xsl:copy>	
+		</xsl:copy>
 	</xsl:template>
 </xsl:stylesheet>

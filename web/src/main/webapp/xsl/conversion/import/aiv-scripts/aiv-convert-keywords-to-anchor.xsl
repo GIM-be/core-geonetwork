@@ -59,7 +59,7 @@
     </xsl:for-each>
   </xsl:variable>
 
-  <xsl:template match="gmd:MD_Keywords[gmd:thesaurusName and (gmd:keyword/gco:CharacterString or gmd:keyword/gmx:Anchor)]">
+  <xsl:template match="gmd:MD_Keywords[gmd:thesaurusName and (gmd:keyword/gco:CharacterString or gmd:keyword/gmx:Anchor)]" priority="1000">
     <xsl:variable name="thesaurusTitle" select="gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[name()='gco:CharacterString' or name()='gmx:Anchor']"/>
     <xsl:variable name="currentThesaurus" select="$thesauri/thesausus[@title = $thesaurusTitle]"/>
     <xsl:message select="concat('Transforming keywords for thesaurus with name ',$thesaurusTitle,' started')" />
@@ -138,7 +138,7 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="gmd:type">
+  <xsl:template match="gmd:type" priority="1000">
     <xsl:variable name="thesaurusTitle" select="../gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/string()"/>
     <xsl:variable name="codeListValue">
       <xsl:choose>
@@ -153,7 +153,7 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:title[gmx:Anchor or gco:CharacterString]">
+  <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:title[gmx:Anchor or gco:CharacterString]" priority="1000">
     <xsl:copy copy-namespaces="no">
       <xsl:variable name="thesaurusTitle" select="*[name()='gco:CharacterString' or name()='gmx:Anchor']"/>
       <xsl:choose>

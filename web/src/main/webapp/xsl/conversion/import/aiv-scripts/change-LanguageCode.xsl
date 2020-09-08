@@ -7,7 +7,7 @@
 
 	<!-- Replace language-->
   <!--xsl:template match="gmd:language[name(..)=('gmd:MD_Metadata','gmd:MD_DataIdentification')]"-->
-  <xsl:template match="gmd:language[name(..)='gmd:MD_Metadata']">
+  <xsl:template match="gmd:language[name(..)='gmd:MD_Metadata']" priority="1000">
 		<xsl:call-template name="logAttributesAndValue">
 			<xsl:with-param name="element" select="gmd:LanguageCode"/>
 		</xsl:call-template>

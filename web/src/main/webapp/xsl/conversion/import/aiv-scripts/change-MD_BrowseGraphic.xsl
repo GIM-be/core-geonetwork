@@ -7,7 +7,7 @@
 	<xsl:output method="xml" indent="yes"/>
 
 	<!-- Convert time elements-->
-	<xsl:template match="gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString[contains(.,'metadata_thumbs')]">
+	<xsl:template match="gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString[contains(.,'metadata_thumbs')]" priority="1000">
 		<xsl:copy copy-namespaces="no"><xsl:value-of select="concat('https://metadata.vlaanderen.be/metadata_thumbs',substring-after(.,'metadata_thumbs'))"/></xsl:copy>
 	</xsl:template>
 </xsl:stylesheet>
