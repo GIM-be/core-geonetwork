@@ -7,7 +7,7 @@
 	<xsl:output method="xml" indent="yes"/>
 
 	<!-- Convert time elements-->
-	<xsl:template match="gmd:CI_Date/gmd:date|gmd:dateOfNextUpdate|gmd:dateStamp">
+	<xsl:template match="gmd:CI_Date/gmd:date|gmd:dateOfNextUpdate|gmd:dateStamp" priority="1000">
 		<xsl:copy copy-namespaces="no">
 			<xsl:choose>
         <xsl:when test="normalize-space(*[name()=('gco:Date','gco:DateTime')])=''">

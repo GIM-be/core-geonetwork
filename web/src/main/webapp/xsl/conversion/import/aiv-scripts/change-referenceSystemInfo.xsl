@@ -9,7 +9,7 @@
 	<xsl:output method="xml" indent="yes"/>
 
 	<!-- Change elements-->
-	<xsl:template match="gmd:referenceSystemIdentifier/*[name()=('gmd:RS_Identifier','gmd:MD_Identifier')]">
+	<xsl:template match="gmd:referenceSystemIdentifier/*[name()=('gmd:RS_Identifier','gmd:MD_Identifier')]" priority="1000">
 		<xsl:call-template name="logAttributesAndValue">
 			<xsl:with-param name="element" select="gmd:code/gco:CharacterString"/>
 		</xsl:call-template>
