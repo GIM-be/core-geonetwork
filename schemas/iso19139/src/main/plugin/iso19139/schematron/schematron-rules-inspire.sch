@@ -501,49 +501,56 @@ USA.
             <sch:assert test="$qualityInfoDefined" see="geonet:child[@name='dataQualityInfo']/@uuid">
                 <sch:value-of select="$loc/strings/alert.M43/div"/>
             </sch:assert>
-
-            <sch:let name="lineageDefined" value="gmd:dataQualityInfo/*/gmd:lineage/node() or gmd:identificationInfo/srv:SV_ServiceIdentification"/>
-            <sch:assert test="$lineageDefined" see="gmd:dataQualityInfo/gmd:DQ_DataQuality/geonet:child[@name='lineage']/@uuid">
-                <sch:value-of select="$loc/strings/alert.M43/div"/>
-            </sch:assert>
-
-            <sch:let name="statementDefined" value="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/node() or gmd:identificationInfo/srv:SV_ServiceIdentification"/>
-            <sch:assert test="$statementDefined" see="gmd:dataQualityInfo/*/gmd:lineage/*/geonet:child[@name='statement']/@uuid">
-                <sch:value-of select="$loc/strings/alert.M43/div"/>
-            </sch:assert>
-
-            <sch:let name="hasAtLeastOneLineage" value="count(gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement[not(@gco:nilReason)]) > 0 or gmd:identificationInfo/srv:SV_ServiceIdentification"/>
-            <sch:assert test="$hasAtLeastOneLineage" see="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/geonet:element/@ref">
-                <sch:value-of select="$loc/strings/alert.M43/div"/>
-            </sch:assert>
-            <sch:report test="$hasAtLeastOneLineage">
-                <sch:value-of select="$loc/strings/report.M43/div"/>
-            </sch:report>
-
-            <sch:let name="degree" value="count(gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:pass)"/>
-
-            <sch:assert test="$qualityInfoDefined" see="geonet:child[@name='dataQualityInfo']/@uuid">
-                   <sch:value-of select="$loc/strings/alert.M44/div"/>
-            </sch:assert>
-
-            <sch:let name="reportDefined" value="gmd:dataQualityInfo/*/gmd:report/node()"/>
-            <sch:assert test="$reportDefined" see="gmd:dataQualityInfo/*/geonet:child[@name='report']/@uuid">
-                <sch:value-of select="$loc/strings/alert.M44/div"/>
-            </sch:assert>
-
-            <sch:let name="resultDefined" value="gmd:dataQualityInfo/*/gmd:report/*/gmd:result/node()"/>
-            <sch:assert test="$resultDefined" see="gmd:dataQualityInfo/*/gmd:report/*/geonet:child[@name='result']/@uuid">
-                <sch:value-of select="$loc/strings/alert.M44/div"/>
-            </sch:assert>
-
-            <sch:assert test="$degree">
-                <sch:value-of select="$loc/strings/alert.M44/div"/><sch:value-of select="$degree>0"/>
-            </sch:assert>
-
-            <sch:report test="$degree">
-                <sch:value-of select="$loc/strings/report.M44.nonev/div"/>
-            </sch:report>
         </sch:rule>
+        <sch:rule context="/gmd:MD_Metadata[gmd:identificationInfo/gmd:MD_DataIdentification]">
+          <sch:let name="lineageDefined" value="gmd:dataQualityInfo/*/gmd:lineage/node()"/>
+          <sch:assert test="$lineageDefined"
+                      see="gmd:dataQualityInfo/gmd:DQ_DataQuality/geonet:child[@name='lineage']/@uuid">
+            <sch:value-of select="$loc/strings/alert.M43/div"/>
+          </sch:assert>
+
+          <sch:let name="statementDefined" value="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/node()"/>
+          <sch:assert test="$statementDefined"
+                      see="gmd:dataQualityInfo/*/gmd:lineage/*/geonet:child[@name='statement']/@uuid">
+            <sch:value-of select="$loc/strings/alert.M43/div"/>
+          </sch:assert>
+
+          <sch:let name="hasAtLeastOneLineage"
+                   value="count(gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement[not(@gco:nilReason)]) > 0"/>
+          <sch:assert test="$hasAtLeastOneLineage"
+                      see="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/geonet:element/@ref">
+            <sch:value-of select="$loc/strings/alert.M43/div"/>
+          </sch:assert>
+          <sch:report test="$hasAtLeastOneLineage">
+            <sch:value-of select="$loc/strings/report.M43/div"/>
+          </sch:report>
+        </sch:rule>
+        <sch:rule context="/gmd:MD_Metadata">
+          <sch:let name="qualityInfoDefined" value="gmd:dataQualityInfo/node()"/>
+          <sch:let name="degree" value="count(gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:pass)"/>
+          <sch:assert test="$qualityInfoDefined" see="geonet:child[@name='dataQualityInfo']/@uuid">
+            <sch:value-of select="$loc/strings/alert.M44/div"/>
+          </sch:assert>
+
+          <sch:let name="reportDefined" value="gmd:dataQualityInfo/*/gmd:report/node()"/>
+          <sch:assert test="$reportDefined" see="gmd:dataQualityInfo/*/geonet:child[@name='report']/@uuid">
+            <sch:value-of select="$loc/strings/alert.M44/div"/>
+          </sch:assert>
+
+          <sch:let name="resultDefined" value="gmd:dataQualityInfo/*/gmd:report/*/gmd:result/node()"/>
+          <sch:assert test="$resultDefined" see="gmd:dataQualityInfo/*/gmd:report/*/geonet:child[@name='result']/@uuid">
+            <sch:value-of select="$loc/strings/alert.M44/div"/>
+          </sch:assert>
+
+          <sch:assert test="$degree">
+            <sch:value-of select="$loc/strings/alert.M44/div"/><sch:value-of select="$degree>0"/>
+          </sch:assert>
+
+          <sch:report test="$degree">
+            <sch:value-of select="$loc/strings/report.M44.nonev/div"/>
+          </sch:report>
+        </sch:rule>
+
 
         <!-- Check specification names and status -->
         <sch:rule context="//gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*">
