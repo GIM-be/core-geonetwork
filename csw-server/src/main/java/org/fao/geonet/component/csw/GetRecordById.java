@@ -24,12 +24,14 @@
 package org.fao.geonet.component.csw;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Optional;
 
 import jeeves.server.context.ServiceContext;
 
+import org.fao.geonet.exceptions.OperationNotAllowedEx;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
@@ -60,6 +62,7 @@ import org.fao.geonet.lib.Lib;
 import org.jdom.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
 //=============================================================================
@@ -124,13 +127,24 @@ public class GetRecordById extends AbstractOperation implements CatalogService {
             while (ids.hasNext()) {
                 String uuid = ids.next().getText();
                 GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
-                String id = gc.getBean(DataManager.class).getMetadataId(uuid);
+                List<String> mdIds = gc.getBean(DataManager.class).getMetadataIds(uuid);
 
                 // Metadata not found, search for next ids
-                if (id == null)
+                if (mdIds == null)
                     continue;
                 //throw new InvalidParameterValueEx("uuid", "Can't find metadata with uuid "+uuid);
 
+                String id;
+                if (mdIds.size() == 1) {
+                    id = mdIds.get(0);
+                } else {
+                    try {
+                        Lib.resource.checkPrivilege(context, mdIds.get(1), ReservedOperation.view);
+                        id = mdIds.get(1);
+                    } catch (OperationNotAllowedEx|AccessDeniedException ex) {
+                        id = mdIds.get(0);
+                    }
+                }
 
                 // Apply CSW service specific constraint
                 String cswServiceSpecificContraint = request.getChildText(Geonet.Elem.FILTER);

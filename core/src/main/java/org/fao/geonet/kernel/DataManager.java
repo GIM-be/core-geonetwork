@@ -41,7 +41,6 @@ import org.fao.geonet.domain.MetadataStatus;
 import org.fao.geonet.domain.MetadataType;
 import org.fao.geonet.domain.MetadataValidation;
 import org.fao.geonet.domain.OperationAllowed;
-import org.fao.geonet.domain.Pair;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.domain.User;
@@ -58,7 +57,6 @@ import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.search.ISearchManager;
 import org.fao.geonet.repository.UserGroupRepository;
-import org.jdom.Document;
 import org.jdom.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -281,6 +279,11 @@ public class DataManager {
     @Deprecated
     public @Nullable String getMetadataId(@Nonnull String uuid) throws Exception {
         return metadataUtils.getMetadataId(uuid);
+    }
+
+    @Deprecated
+    public @Nullable List<String> getMetadataIds(@Nonnull String uuid) throws Exception {
+        return metadataUtils.getMetadataIds(uuid);
     }
 
     @Deprecated
