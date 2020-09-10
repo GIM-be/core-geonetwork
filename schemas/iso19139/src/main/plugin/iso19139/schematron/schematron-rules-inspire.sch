@@ -85,6 +85,7 @@ USA.
     <sch:ns prefix="srv" uri="http://www.isotc211.org/2005/srv"/>
     <sch:ns prefix="gco" uri="http://www.isotc211.org/2005/gco"/>
     <sch:ns prefix="geonet" uri="http://www.fao.org/geonetwork"/>
+    <sch:ns prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <sch:ns prefix="skos" uri="http://www.w3.org/2004/02/skos/core#"/>
     <sch:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
 
@@ -349,10 +350,11 @@ USA.
             </sch:assert>
 
             <sch:let name="keyword"
-                value="gmd:descriptiveKeywords/*/gmd:keyword/gco:CharacterString | gmd:descriptiveKeywords/*/gmd:keyword//gmd:LocalisedCharacterString |
-				gmd:descriptiveKeywords/*/gmd:keyword/gmx:Anchor"/>
+                value="gmd:descriptiveKeywords/*/gmd:keyword/gco:CharacterString | gmd:descriptiveKeywords/*/gmd:keyword//gmd:LocalisedCharacterString"/>
+            <sch:let name="keywordAsAnchor"
+                value="gmd:descriptiveKeywords/*/gmd:keyword/gmx:Anchor/@xlink:href"/>
             <sch:let name="inspire-theme-found"
-                value="count($inspire-thesaurus//skos:Concept[skos:prefLabel = $keyword])"/>
+                value="count($inspire-thesaurus//skos:Concept[skos:prefLabel = $keyword]) + count($inspire-thesaurus//skos:Concept[@rdf:about = $keywordAsAnchor])"/>
             <sch:assert test="$inspire-theme-found > 0" see="geonet:child[@name='descriptiveKeywords']/@uuid">
                 <sch:value-of select="$loc/strings/alert.M58/div"/>
             </sch:assert>

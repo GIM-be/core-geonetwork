@@ -10,15 +10,15 @@ This Schematron define INSPIRE IR on metadata for Spatial Data Service (SDS)
     @author Emanuele Tajariol - GeoSolutions, 2016
 
 
-This work is licensed under the Creative Commons Attribution 2.5 License. 
-To view a copy of this license, visit 
-    http://creativecommons.org/licenses/by/2.5/ 
+This work is licensed under the Creative Commons Attribution 2.5 License.
+To view a copy of this license, visit
+    http://creativecommons.org/licenses/by/2.5/
 
 or send a letter to:
 
-Creative Commons, 
-543 Howard Street, 5th Floor, 
-San Francisco, California, 94105, 
+Creative Commons,
+543 Howard Street, 5th Floor,
+San Francisco, California, 94105,
 USA.
 
     -->
@@ -85,8 +85,8 @@ USA.
 
         <sch:rule context="//gmd:MD_Metadata[gmd:identificationInfo/srv:SV_ServiceIdentification]/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']">
 
-            <sch:let name="anchorExists" value="count(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor)>0"/>
-            <sch:let name="anchorHref"  value="string(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href)"/>
+            <sch:let name="anchorExists" value="count(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href[contains('http://inspire.ec.europa.eu/metadata-codelist/Category/',.)])>0"/>
+            <sch:let name="anchorHref"  value="string(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href[contains('http://inspire.ec.europa.eu/metadata-codelist/Category/',.)])"/>
             <sch:let name="category"    value="lower-case(substring-after($anchorHref, 'http://inspire.ec.europa.eu/metadata-codelist/Category/' ))"/>
             <sch:let name="isValid"     value="contains('invocable|interoperable|harmonised', $category)"/>
 
@@ -154,7 +154,7 @@ USA.
 
         <sch:rule context="//gmd:MD_Metadata[gmd:identificationInfo/srv:SV_ServiceIdentification]">
 
-            <sch:let name="anchorExists" 
+            <sch:let name="anchorExists"
                      value="count(gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:description/gmx:Anchor)>0"/>
             <sch:let name="accessPointExists"
                      value="count(gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:description/gmx:Anchor
@@ -337,7 +337,7 @@ USA.
             <sch:assert test="not($existspoc) or ($existspoc and $existscustodian)"><sch:value-of select="$loc/strings/tg15.nocustodian"/></sch:assert>
 
             <sch:report test="$existscustodian"><sch:value-of select="$loc/strings/tg15.okcustodian"/></sch:report>
-            
+
         </sch:rule>
     </sch:pattern>
 
