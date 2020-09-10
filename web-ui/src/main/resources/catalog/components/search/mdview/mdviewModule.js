@@ -210,10 +210,12 @@
             $scope.currentSchema = $scope.mdView.current.record['geonet:info'].schema;
             loadFormatter();
           }
+          if (featureTypesPromise) {
+            featureTypesPromise.cancel();
+            featureTypesPromise = undefined;
+          }
           if ($scope.mdView.current.record.featureTypes === '#tooLong') {
             populateFeatureTypes();
-          } else if (featureTypesPromise) {
-            featureTypesPromise.cancel();
           }
         }
       }
@@ -224,6 +226,8 @@
         featureTypesPromise = makeCancellablePromise(prom);
         featureTypesPromise.then(function(response) {
           $scope.mdView.current.record.featureTypes = response.data;
+        }).catch(function() {
+          // Cancelled
         });
       }
 
