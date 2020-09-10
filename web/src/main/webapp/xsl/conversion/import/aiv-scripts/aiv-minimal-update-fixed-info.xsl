@@ -62,7 +62,7 @@
         <xsl:when test="$isUsing2005Schema">
           <xsl:apply-templates select="@*[name() != 'xsi:schemaLocation']"/>
           <xsl:attribute name="xsi:schemaLocation"
-                         select="'http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd http://www.isotc211.org/2005/gco http://schemas.opengis.net/iso/19139/20060504/gco/gco.xsd'"/>
+                         select="'http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd'"/>
         </xsl:when>
         <xsl:when test="$isUsing2007Schema">
           <xsl:apply-templates select="@*[name() != 'xsi:schemaLocation']"/>

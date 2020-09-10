@@ -44,6 +44,9 @@
   <uri name="http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd"
        uri="http://www.isotc211.org/2005/gmd"/>
 
+  <uri name="http://schemas.opengis.net/iso/19139/20060504/gco/gco.xsd"
+       uri="http://www.isotc211.org/2005/gco"/>
+
   <uri name="http://www.opengis.org/gml/gml.xsd"
        uri="http://www.opengis.net/gml"/>
 
@@ -56,8 +59,8 @@
   <uri name="http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd"
        uri="http://www.isotc211.org/2005/gmd"/>
 
-  <uri name="http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd"
-       uri="http://www.isotc211.org/2005/gmd"/>
+  <uri name="http://schemas.opengis.net/iso/19139/20070417/gmd/gco.xsd"
+       uri="http://www.isotc211.org/2005/gco"/>
 
   <uri name="http://schemas.opengis.net/gml/3.2.1/gml.xsd"
        uri="http://www.opengis.net/gml/3.2"/>
@@ -94,7 +97,10 @@
        uri="schema20060504/srv/srv.xsd"/>
 
   <system systemId="http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd"
-       uri="schema20060504/gmd/gmd.xsd"/>
+          uri="schema20060504/gmd/gmd.xsd"/>
+
+  <system systemId="http://schemas.opengis.net/iso/19139/20060504/gco/gco.xsd"
+          uri="schema20060504/gco/gco.xsd"/>
 
   <system systemId="http://schemas.opengis.net/iso/19139/20070417/gmx/gmx.xsd"
        uri="schema20070417/gmx/gmx.xsd"/>
@@ -105,6 +111,9 @@
   <system systemId="http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd"
           uri="schema20070417/gmd/gmd.xsd"/>
 
+  <system systemId="http://schemas.opengis.net/iso/19139/20070417/gco/gco.xsd"
+          uri="schema20070417/gco/gco.xsd"/>
+
   <!--system systemId="http://www.w3.org/1999/xlink.xsd"
           uri="schema20070417/xlink/xlink.xsd"/-->
 
@@ -112,7 +121,7 @@
           uri="schema20060504/gml/gml.xsd"/>
 
   <system systemId="http://schemas.opengis.net/gml/3.2.1/gml.xsd"
-          uri="schema20070417/gml/3.2.1/gml.xsd"/>
+          uri="schema20070417/gml/3.2.1.2/gml.xsd"/>
 
   <system systemId="http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd"
           uri="schema2007/apiso/apiso.xsd"/>
