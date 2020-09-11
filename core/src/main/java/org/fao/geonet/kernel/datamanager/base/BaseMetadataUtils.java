@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -395,6 +396,19 @@ public class BaseMetadataUtils implements IMetadataUtils {
         }
         return String.valueOf(idList.get(0));
     }
+
+    @Override
+    public @Nullable
+    List<String> getMetadataIds(@Nonnull String uuid) throws Exception {
+        final List<Integer> idList = findAllIdsBy(hasMetadataUuid(uuid));
+        if (idList.isEmpty()) {
+            return null;
+        }
+        return idList.stream()
+            .map(String::valueOf)
+            .collect(Collectors.toList());
+    }
+
 
     @Override
     public List<Integer> findAllIdsBy(Specification<? extends AbstractMetadata> specs) {

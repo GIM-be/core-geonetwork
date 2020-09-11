@@ -164,6 +164,16 @@ public interface IMetadataUtils {
     String getMetadataId(String uuid) throws Exception;
 
     /**
+     * Get the list of metadata ID's for the given UUID.
+     * The first one in the list will be the public version
+     * If exist, the second one will be the id of the draft copy
+     * @param uuid
+     * @return the identifiers of the metadata. null if no match
+     * @throws Exception
+     */
+    List<String> getMetadataIds(String uuid) throws Exception;
+
+    /**
      * Returns the version of the record with identifier id
      *
      * @param id
