@@ -85,10 +85,10 @@ USA.
 
         <sch:rule context="//gmd:MD_Metadata[gmd:identificationInfo/srv:SV_ServiceIdentification]/gmd:dataQualityInfo/gmd:DQ_DataQuality[gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode/@codeListValue='service']">
 
-            <sch:let name="anchorExists" value="count(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href[contains('http://inspire.ec.europa.eu/metadata-codelist/Category/',.)])>0"/>
-            <sch:let name="anchorHref"  value="string(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href[contains('http://inspire.ec.europa.eu/metadata-codelist/Category/',.)])"/>
+            <sch:let name="anchorExists" value="count(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[contains(@xlink:href,'http://inspire.ec.europa.eu/metadata-codelist/Category/')])>0"/>
+            <sch:let name="anchorHref"  value="string(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[contains(@xlink:href,'http://inspire.ec.europa.eu/metadata-codelist/Category/')])"/>
             <sch:let name="category"    value="lower-case(substring-after($anchorHref, 'http://inspire.ec.europa.eu/metadata-codelist/Category/' ))"/>
-            <sch:let name="isValid"     value="contains('invocable|interoperable|harmonised', $category)"/>
+            <sch:let name="isValid"     value="$category!='' and contains('invocable|interoperable|harmonised', $category)"/>
 
             <sch:assert test="$anchorExists">
                 <sch:value-of select="$loc/strings/tg5.category.noanchor"/>
