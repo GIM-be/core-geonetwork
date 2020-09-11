@@ -47,10 +47,15 @@ public interface IMetadataOperations {
     @Deprecated
     void deleteMetadataOper(ServiceContext context, String metadataId, boolean skipAllReservedGroup) throws Exception;
 
+    @Deprecated
+    void deleteMetadataOper(ServiceContext context, String metadataId, int[] excludeGroups) throws Exception;
+
     /**
      * Removes all operations stored for a metadata.
      */
     void deleteMetadataOper(String metadataId, boolean skipAllReservedGroup) throws Exception;
+
+    void deleteMetadataOper(String metadataId, int[] excludeGroups) throws Exception;
 
     /**
      * Adds a permission to a group. Metadata is not reindexed.
