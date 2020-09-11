@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -67,8 +68,6 @@ import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataStatus;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
-import org.fao.geonet.kernel.datamanager.base.BaseMetadataUtils;
-import org.fao.geonet.kernel.datamanager.draft.DraftMetadataUtils;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.GroupRepository;
@@ -286,7 +285,15 @@ public class MetadataSharingApi {
         }
 
         if (sharing.isClear()) {
-            dataManager.deleteMetadataOper(context, String.valueOf(metadata.getId()), skip);
+            List<GroupOperations> clearedPrivileges = sharing.getPrivileges().stream()
+                .filter(privilege -> privilege.getGroup() != 1)
+                .collect(Collectors.toList());
+            sharing.setPrivileges(clearedPrivileges);
+            if (skip) {
+                dataManager.deleteMetadataOper(context, String.valueOf(metadata.getId()), skip);
+            } else {
+                dataManager.deleteMetadataOper(context, String.valueOf(metadata.getId()), new int[]{1});
+            }
         }
 
         List<Operation> operationList = operationRepository.findAll();
@@ -528,7 +535,7 @@ public class MetadataSharingApi {
         if (elGroup != null) {
             for (Group g : elGroup) {
                 // Privileges for group "ALL" cannot be edited
-                if (g.getId() == 1) continue;
+                // if (g.getId() == 1) continue;
 
                 GroupPrivilege groupPrivilege = new GroupPrivilege();
                 groupPrivilege.setGroup(g.getId());

@@ -60,14 +60,14 @@
         <td data-ng-repeat="key in operations" class="text-center" ng-hide="key == 'dynamic'">
           <input type="checkbox"
                  name="{{g.group + '-' + key}}"
-                 data-ng-disabled="!isAdminOrReviewer"
+                 data-ng-disabled="!isAdminOrReviewer || g.group == 1"
                  data-ng-class="internalGroups.indexOf(g.group) != -1 &&
                                 internalOperations.indexOf(key) != -1 ? 'hidden' : ''"
                  data-ng-model="g.operations[key]"/>
         </td>
         <td data-ng-if="!disableAllCol">
           <input type="checkbox"
-                 data-ng-disabled="!isAdminOrReviewer"
+                 data-ng-disabled="!isAdminOrReviewer || g.group == 1"
                  data-ng-click="checkAll(g)"
                  data-ng-model="g.isCheckedAll"/>
         </td>
@@ -83,11 +83,12 @@
         <td data-ng-repeat="key in operations" class="text-center" ng-hide="key == 'dynamic'">
           <input type="checkbox"
                  name="{{g.group + '-' + key}}"
-                 data-ng-disabled="g.privileges[key].disabled"
+                 data-ng-disabled="g.privileges[key].disabled || g.group == 1"
                  data-ng-model="g.operations[key]"/>
         </td>
         <td data-ng-if="!disableAllCol">
           <input type="checkbox"
+                 data-ng-disabled="g.group == 1"
                  data-ng-click="checkAll(g)"
                  data-ng-model="g.isCheckedAll"/>
         </td>
@@ -105,7 +106,7 @@
 
 <div class="btn-toolbar pull-right">
   <div data-gn-need-help="user-guide/publishing/index.html"
-       data-icon-only="true"></div> 
+       data-icon-only="true"></div>
   <button type="button" class="btn btn-primary"
           id="gn-share-btn-replace"
           data-gn-click-and-spin="save(true)">

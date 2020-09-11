@@ -115,6 +115,18 @@ public class BaseMetadataOperations implements IMetadataOperations, ApplicationE
         }
     }
 
+    public void deleteMetadataOper(ServiceContext context, String metadataId, int[] excludeGroups) throws Exception {
+        deleteMetadataOper(metadataId, excludeGroups);
+    }
+
+    public void deleteMetadataOper(String metadataId, int[] excludeGroups) throws Exception {
+        if (excludeGroups == null || excludeGroups.length == 0) {
+            opAllowedRepo.deleteAllByMetadataId(Integer.parseInt(metadataId));
+        } else {
+            opAllowedRepo.deleteAllByMetadataIdExceptGroupId(Integer.parseInt(metadataId), excludeGroups);
+        }
+    }
+
     /**
      * Adds a permission to a group. Metadata is not reindexed.
      */

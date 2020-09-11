@@ -451,6 +451,11 @@ public class DataManager {
     }
 
     @Deprecated
+    public void deleteMetadataOper(ServiceContext context, String metadataId, int[] excludedGroups) throws Exception {
+        metadataOperations.deleteMetadataOper(context, metadataId, excludedGroups);
+    }
+
+    @Deprecated
     public Element getThumbnails(ServiceContext context, String metadataId) throws Exception {
         return metadataUtils.getThumbnails(context, metadataId);
     }
