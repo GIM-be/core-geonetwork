@@ -235,9 +235,9 @@
     <xsl:choose>
       <xsl:when test="/root/env/changeDate">
         <xsl:copy>
-          <gco:DateTime>
-            <xsl:value-of select="/root/env/changeDate"/>
-          </gco:DateTime>
+          <gco:Date>
+            <xsl:value-of select="format-dateTime(/root/env/changeDate,'[Y0001]-[M01]-[D01]')"/>
+          </gco:Date>
         </xsl:copy>
       </xsl:when>
       <xsl:otherwise>
@@ -299,7 +299,7 @@
     if not set. -->
   <!--xsl:template match="gmd:metadataStandardName[@gco:nilReason='missing' or gco:CharacterString='']"
                 priority="10">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <gco:CharacterString>ISO 19115:2003/19139</gco:CharacterString>
     </xsl:copy>
   </xsl:template>
@@ -307,7 +307,7 @@
   <xsl:template
     match="gmd:metadataStandardVersion[@gco:nilReason='missing' or gco:CharacterString='']"
     priority="10">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <gco:CharacterString>1.0</gco:CharacterString>
     </xsl:copy>
   </xsl:template-->
@@ -389,7 +389,7 @@
 
 
   <xsl:template match="*[gco:CharacterString|gmx:Anchor|gmd:PT_FreeText]">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*[not(name() = 'gco:nilReason') and not(name() = 'xsi:type')]"/>
 
       <!-- Add nileason if text is empty -->
@@ -544,7 +544,7 @@
   </xsl:template>
 
   <xsl:template match="gmd:*[@codeListValue]">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
       <xsl:attribute name="codeList">
         <xsl:value-of
@@ -556,7 +556,7 @@
   </xsl:template>
 
   <xsl:template match="srv:SV_CouplingType[@codeListValue]|srv:DCPList[@codeListValue]">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
       <xsl:attribute name="codeList">
         <xsl:value-of
@@ -568,7 +568,7 @@
   <!-- can't find the location of the 19119 codelists - so we make one up -->
 
   <!--xsl:template match="srv:*[@codeListValue]">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
       <xsl:attribute name="codeList">
         <xsl:value-of
@@ -585,7 +585,7 @@
         error on XSD validation. -->
 
   <xsl:template match="srv:operatesOn|gmd:featureCatalogueCitation">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@uuidref"/>
       <xsl:choose>
 
@@ -704,7 +704,7 @@
         </xsl:element>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy>
+        <xsl:copy copy-namespaces="no">
           <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
       </xsl:otherwise>
@@ -758,7 +758,7 @@
 
   <!-- DCP codelist -->
   <xsl:template match="srv:DCP[$isSDS]/srv:DCPList[@codeListValue]">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*"/>
       <xsl:attribute name="codeList">
         <xsl:value-of select="'http://inspire.ec.europa.eu/metadata-codelist/DCPList'"/>
@@ -814,7 +814,7 @@
   </xsl:template>
 
   <xsl:template match="gmd:pass" priority="100">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:choose>
         <xsl:when test="not(gco:Boolean) or normalize-space(gco:Boolean) = ''">
           <xsl:attribute name="gco:nilReason" select="'unknown'"/>
@@ -830,7 +830,7 @@
   <!-- copy everything else as is -->
 
   <xsl:template match="@*|node()">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>

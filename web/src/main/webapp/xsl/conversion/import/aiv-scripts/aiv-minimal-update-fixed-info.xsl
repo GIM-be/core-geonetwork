@@ -227,7 +227,7 @@
   </xsl:template>
 
   <xsl:template match="srv:SV_CouplingType[@codeListValue]|srv:DCPList[@codeListValue]">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
       <xsl:attribute name="codeList">
         <xsl:value-of
@@ -441,7 +441,7 @@ Can also be using lang=eng&amp;lang=ara.
   </xsl:template>
 
   <xsl:template match="gmd:pass" priority="100">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:choose>
         <xsl:when test="not(gco:Boolean) or normalize-space(gco:Boolean) = ''">
           <xsl:attribute name="gco:nilReason" select="'unknown'"/>
