@@ -166,7 +166,7 @@
               <gmd:descriptiveKeywords xlink:href="{$newUrl}"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:copy>
+              <xsl:copy copy-namespaces="no">
                 <xsl:apply-templates select="@*"/>
                 <gmd:MD_Keywords>
                   <xsl:choose>

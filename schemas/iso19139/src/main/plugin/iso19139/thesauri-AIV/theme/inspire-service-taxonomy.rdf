@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:exslt="http://exslt.org/common" xmlns:gemet="http://www.eionet.europa.eu/gemet/2004/06/gemet-schema.rdf#">
-  <skos:ConceptScheme rdf:about="http://geonetwork-opensource.org/inspire-theme">
+  <skos:ConceptScheme rdf:about="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory">
     <!--dc:title>D.4 van de verordening (EG) NR. 1205/2008 van de Commissie</dc:title-->
     <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Verordening (EG) nr. 1205/2008 van de Commissie van 3 december 2008 ter uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende metagegevens</dc:title>
     <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/" xml:lang="en">The keywords are based on the geographic services taxonomy of EN ISO 19119. This taxonomy is organised in categories, the subcategories defining the value domain of the classification of spatial data services.</dc:description>
