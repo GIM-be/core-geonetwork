@@ -286,12 +286,6 @@ public class Transaction extends AbstractOperation implements CatalogService {
         boolean isReviewer = us.getProfile().equals(Profile.Reviewer);
         boolean isAdmin = us.getProfile().equals(Profile.Administrator);
         if (isWorkflowActivated && (isReviewer || isAdmin)) {
-            //dataMan.setStatus(context, Integer.valueOf(id), Integer.valueOf(StatusValue.Status.APPROVED), new ISODate(), String.format("Inserted by CSWT", group, StatusValue.Status.APPROVED));
-
-            /*BaseMetadataStatus statusRepository = gc.getBean(BaseMetadataStatus.class);
-            Integer changeToStatus = Integer.parseInt(StatusValue.Status.APPROVED);
-            statusRepository.changeCurrentStatus(us.getUserIdAsInt(), abstractMetadata.getId(), changeToStatus);*/
-
             // --- use StatusActionsFactory and StatusActions class to
             // --- change status and carry out behaviours for status changes
             StatusActionsFactory statusActionsFactory = context.getBean(StatusActionsFactory.class);
