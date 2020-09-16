@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:exslt="http://exslt.org/common" xmlns:gemet="http://www.eionet.europa.eu/gemet/2004/06/gemet-schema.rdf#">
-  <skos:ConceptScheme rdf:about="http://geonetwork-opensource.org/gemet">
+  <skos:ConceptScheme rdf:about="http://www.eionet.europa.eu/gemet">
     <dc:title>GEMET - Concepten, versie 2.4</dc:title>
     <dc:description>GEMET thesaurus for GeoNetwork opensource.</dc:description>
     <dc:creator>
@@ -3159,7 +3159,7 @@
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/8447">
     <skos:prefLabel xml:lang="en">thermal treatment</skos:prefLabel>
-    <skos:definition xml:lang="en">1) Heating and cooling a metal or alloy to obtain desired properties or conditions. 
+    <skos:definition xml:lang="en">1) Heating and cooling a metal or alloy to obtain desired properties or conditions.
 2) Treatment of hazardous waste in a device which uses elevated temperatures as the primary means to change the chemical, physical, or biological character or composition of the hazardous waste. Examples of thermal treatment processes are incineration, molten salt, pyrolysis, calcination, wet air oxidation, and microwave discharge.
 (Source: MGH /  LEE)</skos:definition>
     <skos:prefLabel xml:lang="fr">traitement thermique</skos:prefLabel>
@@ -3702,7 +3702,7 @@
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/8487">
     <skos:prefLabel xml:lang="en">time</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The dimension of the physical universe which, at a given place, orders the sequence of events. 
+    <skos:definition xml:lang="en">1) The dimension of the physical universe which, at a given place, orders the sequence of events.
 2) A designated instant in this sequence, as the time of day. Also known as epoch.
 (Source: MGH)</skos:definition>
     <skos:prefLabel xml:lang="fr">temps (durée)</skos:prefLabel>
@@ -5550,7 +5550,7 @@
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/8265">
     <skos:prefLabel xml:lang="en">synergistic effect of toxic substances</skos:prefLabel>
-    <skos:definition xml:lang="en">1) A state in which the combined effect of two or more substances is greater than the sum of the separate effects. 
+    <skos:definition xml:lang="en">1) A state in which the combined effect of two or more substances is greater than the sum of the separate effects.
 2) An effect whereby two toxic substance together have more of an impact than anticipated.
 (Source: PORT /  GILP96)</skos:definition>
     <skos:prefLabel xml:lang="fr">effet synergique des produits toxiques</skos:prefLabel>
@@ -5690,7 +5690,7 @@
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/449">
     <skos:prefLabel xml:lang="en">animal shelter</skos:prefLabel>
-    <skos:definition xml:lang="en">A protection providing housing for animals in bad weather. 
+    <skos:definition xml:lang="en">A protection providing housing for animals in bad weather.
 
 (Source: RRDA)</skos:definition>
     <skos:prefLabel xml:lang="fr">abri pour animaux</skos:prefLabel>
@@ -6358,7 +6358,7 @@ that it should: be easy to use by the unskilled; have no difficult-to-get parts;
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/501">
     <skos:prefLabel xml:lang="en">aquaculture</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The cultivation and harvest of freshwater or marine animals and plants, in ponds, tanks, cages or on protected beds. This is usually done in inland waters, estuaries or coastal waters. It is estimated that commercial fish farming accounts for more than 10% of the world's fish needs. Fish farming usually concentrates on molluscs, including oysters, mussels and clams, because they are usually immobile and fetch high prices. Shrimps and salmon are also farmed, but the stock have to be caught in the wild first, so that they can be brought up to commercial standards in pens. Aquaculture in not new. In Asia freshwater fish have been farmed for some 4.000 years, usually on small farms. 
+    <skos:definition xml:lang="en">1) The cultivation and harvest of freshwater or marine animals and plants, in ponds, tanks, cages or on protected beds. This is usually done in inland waters, estuaries or coastal waters. It is estimated that commercial fish farming accounts for more than 10% of the world's fish needs. Fish farming usually concentrates on molluscs, including oysters, mussels and clams, because they are usually immobile and fetch high prices. Shrimps and salmon are also farmed, but the stock have to be caught in the wild first, so that they can be brought up to commercial standards in pens. Aquaculture in not new. In Asia freshwater fish have been farmed for some 4.000 years, usually on small farms.
 2) The use of artificial means to increase the production of aquatic organisms in fresh or salt water.
 (Source: WRIGHT /  LANDY)</skos:definition>
     <skos:prefLabel xml:lang="fr">aquaculture</skos:prefLabel>
@@ -6879,7 +6879,7 @@ year-round by pack ice, and the third of its area is continental shelf.
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/544">
     <skos:prefLabel xml:lang="en">distribution area</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The overall geographical distribution of a talon. 
+    <skos:definition xml:lang="en">1) The overall geographical distribution of a talon.
 2) The range occupied by a community or other group.
 (Source: LBC)</skos:definition>
     <skos:prefLabel xml:lang="fr">zone</skos:prefLabel>
@@ -9972,7 +9972,7 @@ industrial initiatives to control and/or prevent pollution, through implementati
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/798">
     <skos:prefLabel xml:lang="en">bioaccumulation</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The accumulation of pollutants in living organisms by direct adsorption or through food chains. 
+    <skos:definition xml:lang="en">1) The accumulation of pollutants in living organisms by direct adsorption or through food chains.
 2) Accumulation by an organism of materials that are not an essential component or nutrient of that organism. Usually it refers to the accumulation of metals, but it can apply to bioaccumulation of persistent synthetic substances such as organochlorine compounds. Many organisms, such as plants, fungi and bacteria, will accumulate metals when grown in solutions containing them. The process can be employed usefully as a purification process to remove toxic heavy metals from waste water and contaminated land.
 (Source: WRIGHT)</skos:definition>
     <skos:prefLabel xml:lang="fr">bioaccumulation</skos:prefLabel>
@@ -11844,7 +11844,7 @@ residues in the environment which are more harmful than the original substance. 
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/932">
     <skos:prefLabel xml:lang="en">bleaching agent</skos:prefLabel>
-    <skos:definition xml:lang="en">1) A chemical, such as an aromatic acyl peroxide or monoperoxiphthalic acid, used to bleach flour, fats, oils and other edibles. 
+    <skos:definition xml:lang="en">1) A chemical, such as an aromatic acyl peroxide or monoperoxiphthalic acid, used to bleach flour, fats, oils and other edibles.
 2) An oxidizing or reducing chemical such as sodium hypochlorite, sulfur dioxide, sodium acid sulfite, or hydrogen peroxide.
 (Source: MGH)</skos:definition>
     <skos:prefLabel xml:lang="fr">agent de blanchiment</skos:prefLabel>
@@ -11882,7 +11882,7 @@ residues in the environment which are more harmful than the original substance. 
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/934">
     <skos:prefLabel xml:lang="en">bleaching process</skos:prefLabel>
-    <skos:definition xml:lang="en">1) Removing colored components from a textile. Common bleaches are hydrogen peroxide, sodium hypochloride, and sodium chlorite. 
+    <skos:definition xml:lang="en">1) Removing colored components from a textile. Common bleaches are hydrogen peroxide, sodium hypochloride, and sodium chlorite.
 2) The brightening and delignification of pulp by the addition of oxidizing chemicals such as chlorine or reducing chemicals such as sodium hypochloride.
 (Source: LEE)</skos:definition>
     <skos:prefLabel xml:lang="fr">processus de blanchiment</skos:prefLabel>
@@ -14449,7 +14449,7 @@ residues in the environment which are more harmful than the original substance. 
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/9321">
     <skos:prefLabel xml:lang="en">wildlife sanctuary</skos:prefLabel>
-    <skos:definition xml:lang="en">1) An area, usually in natural condition, which is reserved (set aside) by a governmental or private agency for the protection of particular species of animals during part or all of the year. 
+    <skos:definition xml:lang="en">1) An area, usually in natural condition, which is reserved (set aside) by a governmental or private agency for the protection of particular species of animals during part or all of the year.
 2) An area designated for the protection of wild animals, within which hunting and fishing is either prohibited or strictly controlled.
 (Source: UNUN /  LANDY)</skos:definition>
     <skos:prefLabel xml:lang="fr">sanctuaire faunique</skos:prefLabel>
@@ -19126,7 +19126,7 @@ have to be labelled.
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/1613">
     <skos:prefLabel xml:lang="en">ecological community</skos:prefLabel>
-    <skos:definition xml:lang="en">1) All of the plants and animals in an area or volume; a complex association usually containing both animals and plants. 
+    <skos:definition xml:lang="en">1) All of the plants and animals in an area or volume; a complex association usually containing both animals and plants.
 2) Any naturally occurring group of organisms that occupy a common environment.
 (Source: LANDY /  ALL)</skos:definition>
     <skos:prefLabel xml:lang="fr">communauté écologique</skos:prefLabel>
@@ -22777,8 +22777,8 @@ dioxide, methane, CFCs, nitrous oxides, halons); emissions of acidifying gases (
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/10140">
     <skos:prefLabel xml:lang="en">altitude</skos:prefLabel>
-    <skos:definition xml:lang="en">1) In general, a term used to describe a topographic eminence. 
-2) A specific altitude or height above a given level. 
+    <skos:definition xml:lang="en">1) In general, a term used to describe a topographic eminence.
+2) A specific altitude or height above a given level.
 3) In surveying, the term refers to the angle between the horizontal and a point at a higher level.
 (Source: WHIT)</skos:definition>
     <skos:prefLabel xml:lang="fr">altitude</skos:prefLabel>
@@ -24208,7 +24208,7 @@ dioxide, methane, CFCs, nitrous oxides, halons); emissions of acidifying gases (
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/2071">
     <skos:prefLabel xml:lang="en">denitrification</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The loss of nitrogen from soil by biological or chemical means. It is a gaseous loss, unrelated to loss by physical processes such as through leachates. 
+    <skos:definition xml:lang="en">1) The loss of nitrogen from soil by biological or chemical means. It is a gaseous loss, unrelated to loss by physical processes such as through leachates.
 2) The breakdown of nitrates by soil bacteria, resulting in the release of free nitrogen. This process takes place under anaerobic conditions, such as are found in water-logged soil, and it reduces soil fertility.
 (Source: WRIGHT /  ALL)</skos:definition>
     <skos:prefLabel xml:lang="fr">dénitrification</skos:prefLabel>
@@ -26962,7 +26962,7 @@ and void under Article 85(2), unless exempted by the Commission pursuant to Arti
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/2380">
     <skos:prefLabel xml:lang="en">duration of sunshine</skos:prefLabel>
-    <skos:definition xml:lang="en">Period of the day during which the sun is shining. 
+    <skos:definition xml:lang="en">Period of the day during which the sun is shining.
 
 (Source: RAMADE)</skos:definition>
     <skos:prefLabel xml:lang="fr">durée de l'ensoleillement</skos:prefLabel>
@@ -32884,7 +32884,7 @@ and void under Article 85(2), unless exempted by the Commission pursuant to Arti
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/2857">
     <skos:prefLabel xml:lang="en">environmentalism</skos:prefLabel>
-    <skos:definition xml:lang="en">1) Concern for the environment and its protection. 
+    <skos:definition xml:lang="en">1) Concern for the environment and its protection.
 2) Theory emphasizing the primary influence of the environment on the development of groups or individuals. It stresses the importance of the physical, biological, psychological, or cultural environment as a factor influencing the structure or behaviour of animals, including humans.
 In politics, this has given rise in many countries to Green Parties, which aim to " Preserve the planet and its people".</skos:definition>
     <skos:prefLabel xml:lang="fr">écologisme</skos:prefLabel>
@@ -37848,7 +37848,7 @@ EU treaties, decides upon the validity and the meaning of Community legislation 
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/3282">
     <skos:prefLabel xml:lang="en">flaring</skos:prefLabel>
-    <skos:definition xml:lang="en">1) Flares use open flames during normal and/or emergency operations to combust hazardous gaseous. The system has no special features to control temperature or time of combustion; however, supplemental fuel may be required to sustain the combustion. Historically, flares have been used to dispose of waste gases in the oil and gas industry and at wastewater treatment plants having anaerobic digestors. Regulation for thermal destruction of hazardous wastes limit the practical use of flaring to combustion of relatively simple hydrocarbons, such as methane from digesters or landfill gas collection systems. 
+    <skos:definition xml:lang="en">1) Flares use open flames during normal and/or emergency operations to combust hazardous gaseous. The system has no special features to control temperature or time of combustion; however, supplemental fuel may be required to sustain the combustion. Historically, flares have been used to dispose of waste gases in the oil and gas industry and at wastewater treatment plants having anaerobic digestors. Regulation for thermal destruction of hazardous wastes limit the practical use of flaring to combustion of relatively simple hydrocarbons, such as methane from digesters or landfill gas collection systems.
 2) A control device that burns hazardous materials to prevent their release into the environment; may operate continuously or intermittently, usually on top a stack.
 (Source: CORBIT /  EPAGLO)</skos:definition>
     <skos:prefLabel xml:lang="fr">brûlage à la torche</skos:prefLabel>
@@ -38094,7 +38094,7 @@ societies from any normative point of view. Cultural indicators may also have an
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/11494">
     <skos:prefLabel xml:lang="en">order</skos:prefLabel>
-    <skos:definition xml:lang="en">1) A direction or command of a court. In this sense it is often used synonymously with judgment. 
+    <skos:definition xml:lang="en">1) A direction or command of a court. In this sense it is often used synonymously with judgment.
 2) The document bearing the seal of the court recording its judgment in a case.
 (Source: DICLAW)</skos:definition>
     <skos:prefLabel xml:lang="fr">ordre</skos:prefLabel>
@@ -41334,7 +41334,7 @@ societies from any normative point of view. Cultural indicators may also have an
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/3581">
     <skos:prefLabel xml:lang="en">gasification</skos:prefLabel>
-    <skos:definition xml:lang="en">1) Any chemical or heat process used to convert a substance to a gas. 
+    <skos:definition xml:lang="en">1) Any chemical or heat process used to convert a substance to a gas.
 2) The production of gaseous fuels by reacting hot carbonaceous materials with air, steam or oxygen. The process takes place at high temperature. The gasification product is a mixture of combustible gases and tar compounds, together with particles and water vapour. Depending on the gasification method, the proportion of components varies, but common to all the processes is that the gas has to be purified before it can be used directly in a gas engine or a gas turbine.
 (Source: MGH /  PORT)</skos:definition>
     <skos:prefLabel xml:lang="fr">gazéification</skos:prefLabel>
@@ -43075,8 +43075,8 @@ societies from any normative point of view. Cultural indicators may also have an
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/3754">
     <skos:prefLabel xml:lang="en">greenbelt</skos:prefLabel>
-    <skos:definition xml:lang="en">1) An area of land, not necessarily continuous, near to and sometimes surrounding a large built-up area. The area is kept open by permanent and severe restriction on building. 
-2) An irrigated, landscaped, and regularly maintained fuelbreak, usually put to some additional use, such as a golf course, park, or playground. 
+    <skos:definition xml:lang="en">1) An area of land, not necessarily continuous, near to and sometimes surrounding a large built-up area. The area is kept open by permanent and severe restriction on building.
+2) An irrigated, landscaped, and regularly maintained fuelbreak, usually put to some additional use, such as a golf course, park, or playground.
 3) A planning designation that mandates the setting aside of otherwise developable lands for the purpose of creating natural or semi-natural open spaces. Greenbelts are usually linear parkways, tracts, or belts of land running through or around urban conurbations.
 4) An area or zone of open, semi-rural, low-density land surrounding existing major urban areas, but not necessarily continuous. The zone is to be kept open by permanent and severe restrictions on new development.
 (Source: ALL /  DUNSTE /  GOOD)</skos:definition>
@@ -44493,7 +44493,7 @@ societies from any normative point of view. Cultural indicators may also have an
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/3884">
     <skos:prefLabel xml:lang="en">hearing impairment</skos:prefLabel>
-    <skos:definition xml:lang="en">A decrease in strength or any abnormality or partial or complete loss of hearing or of the function of ear, or hearing system, due directly 
+    <skos:definition xml:lang="en">A decrease in strength or any abnormality or partial or complete loss of hearing or of the function of ear, or hearing system, due directly
 or secondarily to pathology or injury; it may be either temporary or permanent.</skos:definition>
     <skos:prefLabel xml:lang="fr">trouble de l'audition</skos:prefLabel>
     <skos:prefLabel xml:lang="es">déficit auditivo</skos:prefLabel>
@@ -44613,7 +44613,7 @@ or secondarily to pathology or injury; it may be either temporary or permanent.<
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/13223">
     <skos:prefLabel xml:lang="en">mechanical equipment</skos:prefLabel>
-    <skos:definition xml:lang="en">Machines and tools employed in manual and mechanical labour. 
+    <skos:definition xml:lang="en">Machines and tools employed in manual and mechanical labour.
 
 (Source: AMHERa)</skos:definition>
     <skos:prefLabel xml:lang="fr">matériel mécanique</skos:prefLabel>
@@ -46067,8 +46067,8 @@ corrosion potential of drinking water, the primary concerns include the potentia
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/2044">
     <skos:prefLabel xml:lang="en">degreasing</skos:prefLabel>
-    <skos:definition xml:lang="en">1) Removing grease from wool with chemicals. 
-2) Removing grease from hides or skins in tanning by tumbling them in solvents. 
+    <skos:definition xml:lang="en">1) Removing grease from wool with chemicals.
+2) Removing grease from hides or skins in tanning by tumbling them in solvents.
 3) Removing grease, oil, or fatty material from a metal surface with fumes from a hot solvent.
 (Source: MGH)</skos:definition>
     <skos:prefLabel xml:lang="fr">dégraissage</skos:prefLabel>
@@ -46960,7 +46960,7 @@ corrosion potential of drinking water, the primary concerns include the potentia
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/4119">
     <skos:prefLabel xml:lang="en">hydrolysis</skos:prefLabel>
-    <skos:definition xml:lang="en">1) Decomposition or alteration of a chemical substance by water. 
+    <skos:definition xml:lang="en">1) Decomposition or alteration of a chemical substance by water.
 2) In aqueous solutions of electrolytes, the reactions of cations with water to produce a weak base or of anions to produce a weak acid.
 (Source: MGH)</skos:definition>
     <skos:prefLabel xml:lang="fr">hydrolyse</skos:prefLabel>
@@ -49278,7 +49278,7 @@ corrosion potential of drinking water, the primary concerns include the potentia
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/4300">
     <skos:prefLabel xml:lang="en">inflow</skos:prefLabel>
-    <skos:definition xml:lang="en">1) Water other than wastewater that enters a sewer system (including sewer service connections) from sources such as, but not limited to, roof leaders, cellars drains, yard drains, area drains, drains from springs and swampy areas, manhole covers, cross connections between storm sewers and sanitary sewers, catch basins, cooling towers, storm waters, surface runoff, street wash waters, or drainage. Inflow does not include, and is distinguished from, infiltration. 
+    <skos:definition xml:lang="en">1) Water other than wastewater that enters a sewer system (including sewer service connections) from sources such as, but not limited to, roof leaders, cellars drains, yard drains, area drains, drains from springs and swampy areas, manhole covers, cross connections between storm sewers and sanitary sewers, catch basins, cooling towers, storm waters, surface runoff, street wash waters, or drainage. Inflow does not include, and is distinguished from, infiltration.
 2) Action of flowing in; an inflow of effluent into a river.
 (Source: JJK /  PHC)</skos:definition>
     <skos:prefLabel xml:lang="fr">affluent</skos:prefLabel>
@@ -50968,7 +50968,7 @@ corrosion potential of drinking water, the primary concerns include the potentia
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/4454">
     <skos:prefLabel xml:lang="en">intertidal zone</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The area between land and sea which is regularly exposed to the air by the tidal movement of the sea. Marine organisms that inhabit the intertidal zones have to adapt to periods of exposure to air and to the waves created by wind, which makes it the most physically demanding of the marine habitats. 
+    <skos:definition xml:lang="en">1) The area between land and sea which is regularly exposed to the air by the tidal movement of the sea. Marine organisms that inhabit the intertidal zones have to adapt to periods of exposure to air and to the waves created by wind, which makes it the most physically demanding of the marine habitats.
 2) The shore zone between the highest and lowest tides.
 (Source: WRIGHT /  LBC)</skos:definition>
     <skos:prefLabel xml:lang="fr">zone intertidale</skos:prefLabel>
@@ -52093,7 +52093,7 @@ corrosion potential of drinking water, the primary concerns include the potentia
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/4590">
     <skos:prefLabel xml:lang="en">lake basin</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The depression in the Earth's surface occupied or formerly occupied by a lake and containing its shore features. 
+    <skos:definition xml:lang="en">1) The depression in the Earth's surface occupied or formerly occupied by a lake and containing its shore features.
 2) The area from which a lake receives drainage.
 (Source: BJGEO)</skos:definition>
     <skos:prefLabel xml:lang="fr">bassin lacustre</skos:prefLabel>
@@ -53640,7 +53640,7 @@ corrosion potential of drinking water, the primary concerns include the potentia
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/4722">
     <skos:prefLabel xml:lang="en">leaching</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The process of separating a liquid from a solid (as in waste liquid by percolation into the surrounding soil. 
+    <skos:definition xml:lang="en">1) The process of separating a liquid from a solid (as in waste liquid by percolation into the surrounding soil.
 2) Extraction of soluble components of a solid mixture by percolating a solvent through it.
 3) To lose or cause to lose soluble substances by the action of a percolating liquid.
 (Source: HARRIS /  DICCHE /  CED)</skos:definition>
@@ -59812,7 +59812,7 @@ conducted using military forces, police and civilians with the consent of the ma
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/13159">
     <skos:prefLabel xml:lang="en">business organisation</skos:prefLabel>
-    <skos:definition xml:lang="en">A particular legal arrangement for owning a firm, the principal forms are sale trades, partnerships and companies/corporations; 
+    <skos:definition xml:lang="en">A particular legal arrangement for owning a firm, the principal forms are sale trades, partnerships and companies/corporations;
 collective term for the system, function, process of planning, providing, coordinating, directing all efforts and resources in a business in order to achieve its goals.</skos:definition>
     <skos:prefLabel xml:lang="fr">organisation de l'entreprise</skos:prefLabel>
     <skos:prefLabel xml:lang="es">organización de la empresa</skos:prefLabel>
@@ -60755,7 +60755,7 @@ collective term for the system, function, process of planning, providing, coordi
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/5325">
     <skos:prefLabel xml:lang="en">model</skos:prefLabel>
-    <skos:definition xml:lang="en">1) A representation, usually on a smaller scale, of a device, structure, etc. 
+    <skos:definition xml:lang="en">1) A representation, usually on a smaller scale, of a device, structure, etc.
 2) A quantitative or mathematical representation or computer simulation which attempts to describe the characteristics or relationships of physical events.
 (Source: CED /  LEE)</skos:definition>
     <skos:prefLabel xml:lang="fr">modèle</skos:prefLabel>
@@ -60823,7 +60823,7 @@ collective term for the system, function, process of planning, providing, coordi
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/5332">
     <skos:prefLabel xml:lang="en">moisture</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The water vapour content of the atmosphere, or the total water substances (gaseous, liquid and solid) present in a given volume of air. 
+    <skos:definition xml:lang="en">1) The water vapour content of the atmosphere, or the total water substances (gaseous, liquid and solid) present in a given volume of air.
 2) Water that is dispersed through a gas in the form of water vapour or small droplets, dispersed through a solid, or condensed on the surface of a solid.
 (Source: MGH)</skos:definition>
     <skos:prefLabel xml:lang="fr">humidité</skos:prefLabel>
@@ -64338,7 +64338,7 @@ price.
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/3676">
     <skos:prefLabel xml:lang="en">glaciology</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The study of all aspects of snow and ice; the science that treats quantitatively the whole range of processes associated with all forms of solid existing water. 
+    <skos:definition xml:lang="en">1) The study of all aspects of snow and ice; the science that treats quantitatively the whole range of processes associated with all forms of solid existing water.
 2) The study of existing glaciers and ice sheets, and of their physical properties.
 (Source: BJGEO)</skos:definition>
     <skos:prefLabel xml:lang="fr">glaciologie</skos:prefLabel>
@@ -66781,7 +66781,7 @@ policies to achieve desired macroeconomic goals. Accordingly, they involve discr
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/5892">
     <skos:prefLabel xml:lang="en">organic carbon</skos:prefLabel>
-    <skos:definition xml:lang="en">Carbon which comes from an animal or plant. 
+    <skos:definition xml:lang="en">Carbon which comes from an animal or plant.
 
 (Source: PHC)</skos:definition>
     <skos:prefLabel xml:lang="fr">carbone organique</skos:prefLabel>
@@ -68022,7 +68022,7 @@ policies to achieve desired macroeconomic goals. Accordingly, they involve discr
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/6033">
     <skos:prefLabel xml:lang="en">parameter</skos:prefLabel>
-    <skos:definition xml:lang="en">1) A quantity in an equation which must be specified beside the independent variables to obtain the solution for the dependent variables. 
+    <skos:definition xml:lang="en">1) A quantity in an equation which must be specified beside the independent variables to obtain the solution for the dependent variables.
 2) A quantity which is constant under a given set of conditions, but may be different under other conditions.
 (Source: LEE /  MGH)</skos:definition>
     <skos:prefLabel xml:lang="fr">paramètre</skos:prefLabel>
@@ -68220,7 +68220,7 @@ policies to achieve desired macroeconomic goals. Accordingly, they involve discr
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/6047">
     <skos:prefLabel xml:lang="en">parking provision</skos:prefLabel>
-    <skos:definition xml:lang="en">Area where a vehicle can be left for a period of time. 
+    <skos:definition xml:lang="en">Area where a vehicle can be left for a period of time.
 
 (Source: CAMBa)</skos:definition>
     <skos:prefLabel xml:lang="fr">place de stationnement</skos:prefLabel>
@@ -68292,7 +68292,7 @@ policies to achieve desired macroeconomic goals. Accordingly, they involve discr
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/6052">
     <skos:prefLabel xml:lang="en">particle</skos:prefLabel>
-    <skos:definition xml:lang="en">1) Any very small part of matter, such as a molecule, atom, or electron. 
+    <skos:definition xml:lang="en">1) Any very small part of matter, such as a molecule, atom, or electron.
 2) Any relatively small subdivision of matter, ranging in diameter from a few angstroms to a few millimeters.
 (Source: MGH)</skos:definition>
     <skos:prefLabel xml:lang="fr">particule</skos:prefLabel>
@@ -69087,7 +69087,7 @@ policies to achieve desired macroeconomic goals. Accordingly, they involve discr
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/6149">
     <skos:prefLabel xml:lang="en">pest infestation</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The occurrence of one or more pest species in an area or location where their numbers and impact are currently or potentially at intolerable levels. 
+    <skos:definition xml:lang="en">1) The occurrence of one or more pest species in an area or location where their numbers and impact are currently or potentially at intolerable levels.
 2) A sudden increase in destructiveness or population numbers of a pest species in a given area.
 (Source: DUNSTE)</skos:definition>
     <skos:prefLabel xml:lang="fr">infestation parasitaire</skos:prefLabel>
@@ -70876,7 +70876,7 @@ policies to achieve desired macroeconomic goals. Accordingly, they involve discr
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/6327">
     <skos:prefLabel xml:lang="en">plasma technology</skos:prefLabel>
-    <skos:definition xml:lang="en">1) Common name for a number of industrial applications of plasma, such as: etching of semiconductor chips, deposition of silicon for solar cell production, deposition of silicon dioxide for passivation of surfaces, activation of surfaces, melting and welding with plasma arcs as well as plasma chemistry. 
+    <skos:definition xml:lang="en">1) Common name for a number of industrial applications of plasma, such as: etching of semiconductor chips, deposition of silicon for solar cell production, deposition of silicon dioxide for passivation of surfaces, activation of surfaces, melting and welding with plasma arcs as well as plasma chemistry.
 2) Plasma technology consists of minute gas-filled cells, which emit light when an electric current is channelled through them.
 (Source: IEAP /  Z2Z)</skos:definition>
     <skos:prefLabel xml:lang="fr">technologie du plasma</skos:prefLabel>
@@ -72620,7 +72620,7 @@ political party will advertise a common commitment by its leaders and its member
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/6498">
     <skos:prefLabel xml:lang="en">polymerisation</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The bonding of two or more monomers to produce a polymer. 
+    <skos:definition xml:lang="en">1) The bonding of two or more monomers to produce a polymer.
 2) Any chemical reaction that produces such a bonding.
 (Source: MGH)</skos:definition>
     <skos:prefLabel xml:lang="fr">polymérisation</skos:prefLabel>
@@ -78141,7 +78141,7 @@ testimony is presented by opposing parties.
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/7036">
     <skos:prefLabel xml:lang="en">refining</skos:prefLabel>
-    <skos:definition xml:lang="en">The processing of raw material to remove impurities. 
+    <skos:definition xml:lang="en">The processing of raw material to remove impurities.
 
 (Source: PHC)</skos:definition>
     <skos:prefLabel xml:lang="fr">raffinage</skos:prefLabel>
@@ -78781,7 +78781,7 @@ testimony is presented by opposing parties.
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/7102">
     <skos:prefLabel xml:lang="en">remote sensing</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The scientific detection, recognition, inventory and analysis of land and water area by the use of distant sensors or recording devices such as photography, thermal scanners, radar, etc. 
+    <skos:definition xml:lang="en">1) The scientific detection, recognition, inventory and analysis of land and water area by the use of distant sensors or recording devices such as photography, thermal scanners, radar, etc.
 2) Complex of techniques for the remote measure of electromagnetic energy emitted by objects.
 (Source: LANDY /  ZINZAN)</skos:definition>
     <skos:prefLabel xml:lang="fr">télédétection</skos:prefLabel>
@@ -79378,7 +79378,7 @@ testimony is presented by opposing parties.
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/7163">
     <skos:prefLabel xml:lang="en">resistance (biological)</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The ability of a plant to overcome, retard, suppress, or prevent infection or colonization by a pathogen, parasite, or adverse abiotic factor. 
+    <skos:definition xml:lang="en">1) The ability of a plant to overcome, retard, suppress, or prevent infection or colonization by a pathogen, parasite, or adverse abiotic factor.
 2) The ability of insects, fungi, weeds, or other pests to survive normally lethal doses of an insecticide, fungicide, herbicide, or other pesticide.
 (Source: DUNSTE)</skos:definition>
     <skos:prefLabel xml:lang="fr">résistance (biologique)</skos:prefLabel>
@@ -81017,7 +81017,7 @@ managers, the general public, news media, interest groups, etc.
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/12145">
     <skos:prefLabel xml:lang="en">hydrographic basin</skos:prefLabel>
-    <skos:definition xml:lang="en">1) The drainage basin of a stream. 
+    <skos:definition xml:lang="en">1) The drainage basin of a stream.
 2) An area occupied by a lake and its drainage basin.
 (Source: BJGEO)</skos:definition>
     <skos:prefLabel xml:lang="fr">bassin hydrographique</skos:prefLabel>
@@ -82322,7 +82322,7 @@ managers, the general public, news media, interest groups, etc.
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/7495">
     <skos:prefLabel xml:lang="en">sea</skos:prefLabel>
-    <skos:definition xml:lang="en">1) In general, the marine section of the globe as opposed to that of the land. 
+    <skos:definition xml:lang="en">1) In general, the marine section of the globe as opposed to that of the land.
 2) The name given to a body of salt water smaller than an ocean and generally in proximity to a continent.
 (Source: WHIT)</skos:definition>
     <skos:prefLabel xml:lang="fr">mer</skos:prefLabel>
@@ -84504,7 +84504,7 @@ projection, a spheroid of reference, a datum, one or more standard parallels, a 
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/7733">
     <skos:prefLabel xml:lang="en">sludge</skos:prefLabel>
-    <skos:definition xml:lang="en">1) A soft, soupy, or muddy bottom deposit, such as found on tideland or in a stream bed. 
+    <skos:definition xml:lang="en">1) A soft, soupy, or muddy bottom deposit, such as found on tideland or in a stream bed.
 2) A semifluid, slushy, murky mass of sediment resulting from treatment of water, sewage, or industrial and mining wastes, and often appearing as local bottom deposits in polluted bodies of water.
 (Source: BJGEO)</skos:definition>
     <skos:prefLabel xml:lang="fr">boue</skos:prefLabel>
@@ -85518,7 +85518,7 @@ so forth).</skos:definition>
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/7840">
     <skos:prefLabel xml:lang="en">softening agent</skos:prefLabel>
-    <skos:definition xml:lang="en">1) A substance added to another substance to increase its softness, pliability, or plasticity. 
+    <skos:definition xml:lang="en">1) A substance added to another substance to increase its softness, pliability, or plasticity.
 2) A substance, such as a zeolite, for softening water.
 (Source: CED)</skos:definition>
     <skos:prefLabel xml:lang="fr">adoucisseur</skos:prefLabel>
@@ -86305,7 +86305,7 @@ so forth).</skos:definition>
   </skos:Concept>
   <skos:Concept rdf:about="http://www.eionet.europa.eu/gemet/concept/7898">
     <skos:prefLabel xml:lang="en">soil texture</skos:prefLabel>
-    <skos:definition xml:lang="en">1) Refers to the relative proportions of the various size groups (sand, silt and clay) of the individual soil grains in a mass of soil. 
+    <skos:definition xml:lang="en">1) Refers to the relative proportions of the various size groups (sand, silt and clay) of the individual soil grains in a mass of soil.
 2) Classification of soil by the proportion and graduations of the three size groups of soil grains, i.e., sand, silt and clay, present in the soil.
 (Source: LANDY)</skos:definition>
     <skos:prefLabel xml:lang="fr">texture du sol</skos:prefLabel>
