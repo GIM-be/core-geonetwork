@@ -10,4 +10,20 @@
 	<xsl:template match="gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString[contains(.,'metadata_thumbs')]" priority="1000">
 		<xsl:copy copy-namespaces="no"><xsl:value-of select="concat('https://metadata.vlaanderen.be/metadata_thumbs',substring-after(.,'metadata_thumbs'))"/></xsl:copy>
 	</xsl:template>
+
+  <xsl:template match="gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString[text() = ('thumbnail', 'thumbnail_large')]" priority="1000">
+    <xsl:copy copy-namespaces="no">
+      <xsl:choose>
+        <xsl:when test="text() = 'thumbnail'">
+          <xsl:value-of select="'Voorbeeldweergave'"/>
+        </xsl:when>
+        <xsl:when test="text() = 'thumbnail_large'">
+          <xsl:value-of select="'Voorbeeldweergave (groot)'"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="text()"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
 </xsl:stylesheet>

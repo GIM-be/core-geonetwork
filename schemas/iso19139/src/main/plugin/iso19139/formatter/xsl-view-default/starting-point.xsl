@@ -274,23 +274,12 @@
         <img data-gn-img-modal="md"
              class="gn-img-thumbnail center-block"
              alt="{$schemaStrings/overview}"
-             title="{gmd:fileName/*}"
              src="{gmd:fileName/*}"/>
         <xsl:for-each select="gmd:fileDescription">
           <div class="gn-img-thumbnail-caption">
-            <xsl:variable name="caption">
-              <xsl:call-template name="localised">
-                <xsl:with-param name="langId" select="$langId"/>
-              </xsl:call-template>
-            </xsl:variable>
-            <xsl:choose>
-              <xsl:when test="$caption = 'thumbnail' or $caption = 'thumbnail_large'">
-                <xsl:value-of select="'Voorbeeldweergave'"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="$caption"/>
-              </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="localised">
+              <xsl:with-param name="langId" select="$langId"/>
+            </xsl:call-template>
           </div>
         </xsl:for-each>
       </xsl:for-each>
