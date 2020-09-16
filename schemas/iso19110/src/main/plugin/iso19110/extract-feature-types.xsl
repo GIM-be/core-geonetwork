@@ -37,7 +37,7 @@
             "max": "<xsl:value-of select="if ($cardinality/gco:upper/*/@isInfinite = 'true') then 'infinite' else $cardinality/gco:upper/*/text()"/>"
             <xsl:if test="*/gfc:listedValue">
               ,"values": [
-              <xsl:for-each select="*/gfc:listedValue">{
+              <xsl:for-each select="*/gfc:listedValue[normalize-space(string()) != '']">{
                 "label": "<xsl:value-of select="*/gfc:label/*/text()"/>",
                 "code": "<xsl:value-of select="*/gfc:code/*/text()"/>",
                 "definition": "<xsl:value-of select="*/gfc:definition/*/text()"/>"}
