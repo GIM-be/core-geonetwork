@@ -26,8 +26,10 @@ package org.fao.geonet.component.csw;
 import com.vividsolutions.jts.util.Assert;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.GeonetContext;
 import org.fao.geonet.Util;
+import org.fao.geonet.api.exception.FeatureNotEnabledException;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.csw.common.Csw;
@@ -50,9 +52,12 @@ import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.datamanager.base.BaseMetadataStatus;
+import org.fao.geonet.kernel.metadata.StatusActions;
+import org.fao.geonet.kernel.metadata.StatusActionsFactory;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
+import org.fao.geonet.repository.StatusValueRepository;
 import org.fao.geonet.services.validation.AGIVValidation;
 import org.fao.geonet.utils.Log;
 import org.jdom.Element;
@@ -176,6 +181,7 @@ public class Transaction extends AbstractOperation implements CatalogService {
                 }
             }
         } catch (Exception e) {
+            // TODO what's this ?
             Log.error(Geonet.CSW, "Cannot process transaction");
             Log.error(Geonet.CSW, " (C) StackTrace\n" + Util.getStackTrace(e));
 
@@ -270,7 +276,7 @@ public class Transaction extends AbstractOperation implements CatalogService {
         String id = dataMan.insertMetadata(context, schema, xml, uuid, userId, group, source,
             isTemplate, docType, category, createDate, changeDate, ufo, indexImmediate);
 
-        dataMan.activateWorkflowIfConfigured(context, id, group);
+        boolean isWorkflowActivated = dataMan.activateWorkflowIfConfigured(context, id, group);
         IMetadataUtils metadataUtils = gc.getBean(IMetadataUtils.class);
         AbstractMetadata abstractMetadata = metadataUtils.findOne(id);
 
@@ -280,13 +286,40 @@ public class Transaction extends AbstractOperation implements CatalogService {
 
         boolean isReviewer = us.getProfile().equals(Profile.Reviewer);
         boolean isAdmin = us.getProfile().equals(Profile.Administrator);
-        if (isReviewer || isAdmin) {
-            dataMan.setStatus(context, Integer.valueOf(id), Integer.valueOf(StatusValue.Status.APPROVED), new ISODate(), String.format("Inserted by CSWT", group, StatusValue.Status.APPROVED));
-            /*
-            BaseMetadataStatus statusRepository = gc.getBean(BaseMetadataStatus.class);
+        if (isWorkflowActivated && (isReviewer || isAdmin)) {
+            //dataMan.setStatus(context, Integer.valueOf(id), Integer.valueOf(StatusValue.Status.APPROVED), new ISODate(), String.format("Inserted by CSWT", group, StatusValue.Status.APPROVED));
+
+            /*BaseMetadataStatus statusRepository = gc.getBean(BaseMetadataStatus.class);
             Integer changeToStatus = Integer.parseInt(StatusValue.Status.APPROVED);
-            statusRepository.changeCurrentStatus(us.getUserIdAsInt(), abstractMetadata.getId(), changeToStatus);
-            */
+            statusRepository.changeCurrentStatus(us.getUserIdAsInt(), abstractMetadata.getId(), changeToStatus);*/
+
+            // --- use StatusActionsFactory and StatusActions class to
+            // --- change status and carry out behaviours for status changes
+            StatusActionsFactory statusActionsFactory = context.getBean(StatusActionsFactory.class);
+            StatusActions sa = statusActionsFactory.createStatusActions(context);
+
+            int author = us.getUserIdAsInt();
+
+            MetadataStatus metadataStatus = new MetadataStatus();
+
+            StatusValueRepository statusValueRepository = gc.getBean(StatusValueRepository.class);
+            int approvedStatusId = Integer.parseInt(StatusValue.Status.APPROVED);
+            StatusValue statusValue = statusValueRepository.findOne(approvedStatusId);
+
+            MetadataStatusId mdStatusId = new MetadataStatusId()
+                .setStatusId(approvedStatusId)
+                .setMetadataId(abstractMetadata.getId())
+                .setChangeDate(new ISODate())
+                .setUserId(author);
+
+            metadataStatus.setId(mdStatusId);
+            metadataStatus.setStatusValue(statusValue);
+            metadataStatus.setChangeMessage(String.format("Inserted by CSWT", group, StatusValue.Status.APPROVED));
+            metadataStatus.setOwner(author);
+
+            List<MetadataStatus> listOfStatusChange = new ArrayList<>(1);
+            listOfStatusChange.add(metadataStatus);
+            sa.onStatusChange(listOfStatusChange);
         }
 
         // Privileges for the first group of the user that inserts the metadata

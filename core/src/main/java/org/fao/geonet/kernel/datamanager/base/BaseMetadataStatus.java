@@ -23,22 +23,16 @@
 
 package org.fao.geonet.kernel.datamanager.base;
 
-import java.sql.Date;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataStatus;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.setting.SettingManager;
-import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.repository.GroupRepository;
 import org.fao.geonet.repository.MetadataStatusRepository;
 import org.fao.geonet.repository.SortUtils;
@@ -208,12 +202,13 @@ public class BaseMetadataStatus implements IMetadataStatus {
      * If groupOwner match regular expression defined in setting metadata/workflow/draftWhenInGroup and
      * if schema match regular expression defined in setting metadata/workflow/draftWhenInSchema,
      * then set status to draft to enable workflow.
+     * @return
      */
 
     @Override
-    public void activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner, String message) throws Exception {
+    public boolean activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner, String message) throws Exception {
         if (StringUtils.isEmpty(groupOwner)) {
-            return;
+            return false;
         }
 
         final Group group = groupRepository.findOne(Integer.valueOf(groupOwner));
@@ -227,13 +222,15 @@ public class BaseMetadataStatus implements IMetadataStatus {
                 if (WorkflowUtil.isSchemaWithEnabledWorkflow(metadata.getDataInfo().getSchemaId()) && WorkflowUtil.isGroupWithEnabledWorkflow(groupName)) {
                     setStatus(context, Integer.valueOf(newId), Integer.valueOf(StatusValue.Status.DRAFT), new ISODate(),
                         String.format(message, groupName, StatusValue.Status.DRAFT));
+                    return true;
                 }
             }
         }
+        return false;
     }
 
-    public void activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner) throws Exception {
-        this.activateWorkflowIfConfigured(
+    public boolean activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner) throws Exception {
+        return this.activateWorkflowIfConfigured(
             context,
             newId,
             groupOwner,
