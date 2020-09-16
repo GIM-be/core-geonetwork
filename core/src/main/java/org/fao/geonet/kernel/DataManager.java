@@ -570,8 +570,8 @@ public class DataManager {
     }
 
     @Deprecated
-    public void activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner) throws Exception {
-        metadataStatus.activateWorkflowIfConfigured(context, newId, groupOwner);
+    public boolean activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner) throws Exception {
+        return metadataStatus.activateWorkflowIfConfigured(context, newId, groupOwner);
     }
 
     @Deprecated
