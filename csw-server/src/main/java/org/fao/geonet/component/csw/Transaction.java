@@ -181,7 +181,6 @@ public class Transaction extends AbstractOperation implements CatalogService {
                 }
             }
         } catch (Exception e) {
-            // TODO what's this ?
             Log.error(Geonet.CSW, "Cannot process transaction");
             Log.error(Geonet.CSW, " (C) StackTrace\n" + Util.getStackTrace(e));
 
