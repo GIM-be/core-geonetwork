@@ -70,13 +70,7 @@ import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
-import org.fao.geonet.repository.GroupRepository;
-import org.fao.geonet.repository.MetadataRepository;
-import org.fao.geonet.repository.MetadataValidationRepository;
-import org.fao.geonet.repository.OperationAllowedRepository;
-import org.fao.geonet.repository.OperationRepository;
-import org.fao.geonet.repository.UserGroupRepository;
-import org.fao.geonet.repository.UserRepository;
+import org.fao.geonet.repository.*;
 import org.fao.geonet.repository.specification.MetadataValidationSpecs;
 import org.fao.geonet.repository.specification.OperationAllowedSpecs;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
@@ -164,6 +158,9 @@ public class MetadataSharingApi {
 
     @Autowired
     UserGroupRepository userGroupRepository;
+
+    @Autowired
+    MetadataDraftRepository metadataDraftRepository;
 
     @ApiOperation(
         value = "Set privileges for ALL group to publish the metadata for all users.",
@@ -265,6 +262,8 @@ public class MetadataSharingApi {
     )
         throws Exception {
         AbstractMetadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
+        AbstractMetadata copy = this.getCopy(metadata);
+
         ApplicationContext appContext = ApplicationContextHolder.get();
         ServiceContext context = ApiUtils.createServiceContext(request);
 
@@ -284,15 +283,22 @@ public class MetadataSharingApi {
             skip = true;
         }
 
+        List<GroupOperations> clearedPrivileges = sharing.getPrivileges().stream()
+            .filter(privilege -> privilege.getGroup() != 1)
+            .collect(Collectors.toList());
+        sharing.setPrivileges(clearedPrivileges);
+
         if (sharing.isClear()) {
-            List<GroupOperations> clearedPrivileges = sharing.getPrivileges().stream()
-                .filter(privilege -> privilege.getGroup() != 1)
-                .collect(Collectors.toList());
-            sharing.setPrivileges(clearedPrivileges);
             if (skip) {
                 dataManager.deleteMetadataOper(context, String.valueOf(metadata.getId()), skip);
+                if (copy != null) {
+                    dataManager.deleteMetadataOper(context, String.valueOf(copy.getId()), skip);
+                }
             } else {
                 dataManager.deleteMetadataOper(context, String.valueOf(metadata.getId()), new int[]{1});
+                if (copy != null) {
+                    dataManager.deleteMetadataOper(context, String.valueOf(copy.getId()), new int[]{1});
+                }
             }
         }
 
@@ -306,6 +312,11 @@ public class MetadataSharingApi {
         setOperations(sharing, dataManager, context, appContext, metadata, operationMap, privileges,
             ApiUtils.getUserSession(session).getUserIdAsInt(), null, request);
         dataManager.indexMetadata(String.valueOf(metadata.getId()), true, null);
+        if (copy != null) {
+            setOperations(sharing, dataManager, context, appContext, copy, operationMap, privileges,
+                ApiUtils.getUserSession(session).getUserIdAsInt(), null, request);
+            dataManager.indexMetadata(String.valueOf(copy.getId()), true, null);
+        }
     }
 
     @ApiOperation(
@@ -1118,6 +1129,12 @@ public class MetadataSharingApi {
             ServiceContext context = ApiUtils.createServiceContext(request);
 
             List<String> listOfUpdatedRecords = new ArrayList<>();
+
+            List<GroupOperations> clearedPrivileges = sharing.getPrivileges().stream()
+                .filter(privilege -> privilege.getGroup() != 1)
+                .collect(Collectors.toList());
+            sharing.setPrivileges(clearedPrivileges);
+
             for (String uuid : records) {
                 AbstractMetadata metadata = metadataRepository.findOneByUuid(uuid);
                 if (metadata == null) {
@@ -1130,10 +1147,20 @@ public class MetadataSharingApi {
                     if (!isAdmin && accessMan.hasReviewPermission(context, Integer.toString(metadata.getId()))) {
                         skip = true;
                     }
+                    AbstractMetadata copy = this.getCopy(metadata);
 
                     if (sharing.isClear()) {
-                        dataMan.deleteMetadataOper(context,
-                            String.valueOf(metadata.getId()), skip);
+                        if (skip) {
+                            dataMan.deleteMetadataOper(context, String.valueOf(metadata.getId()), skip);
+                            if (copy != null) {
+                                dataMan.deleteMetadataOper(context, String.valueOf(copy.getId()), skip);
+                            }
+                        } else {
+                            dataMan.deleteMetadataOper(context, String.valueOf(metadata.getId()), new int[]{1});
+                            if (copy != null) {
+                                dataMan.deleteMetadataOper(context, String.valueOf(copy.getId()), new int[]{1});
+                            }
+                        }
                     }
 
                     OperationRepository operationRepository = appContext.getBean(OperationRepository.class);
@@ -1148,6 +1175,11 @@ public class MetadataSharingApi {
                         ApiUtils.getUserSession(session).getUserIdAsInt(), report, request);
                     report.incrementProcessedRecords();
                     listOfUpdatedRecords.add(String.valueOf(metadata.getId()));
+                    if (copy != null) {
+                        setOperations(sharing, dataMan, context, appContext, copy, operationMap, privileges,
+                            ApiUtils.getUserSession(session).getUserIdAsInt(), report, request);
+                        listOfUpdatedRecords.add(String.valueOf(copy.getId()));
+                    }
                 }
             }
             dataMan.flush();
@@ -1190,6 +1222,16 @@ public class MetadataSharingApi {
         sharing.setPrivileges(privilegesList);
 
         return sharing;
+    }
+
+    private AbstractMetadata getCopy(AbstractMetadata metadata) {
+        AbstractMetadata copy;
+        if (metadata instanceof MetadataDraft) {
+            copy = ((MetadataDraft) metadata).getApprovedVersion();
+        } else {
+            copy = metadataDraftRepository.findOneByUuid(metadata.getUuid());
+        }
+        return copy;
     }
 
 }
