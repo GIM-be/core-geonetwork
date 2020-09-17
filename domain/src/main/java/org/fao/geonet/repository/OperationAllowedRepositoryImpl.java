@@ -35,13 +35,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 
-import org.fao.geonet.domain.Metadata;
-import org.fao.geonet.domain.MetadataSourceInfo_;
-import org.fao.geonet.domain.Metadata_;
-import org.fao.geonet.domain.OperationAllowed;
-import org.fao.geonet.domain.OperationAllowedId;
-import org.fao.geonet.domain.OperationAllowedId_;
-import org.fao.geonet.domain.OperationAllowed_;
+import org.fao.geonet.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,19 +72,26 @@ public class OperationAllowedRepositoryImpl implements OperationAllowedRepositor
         CriteriaQuery<OperationAllowed> query = cb.createQuery(OperationAllowed.class);
         Root<OperationAllowed> operationAllowedRoot = query.from(OperationAllowed.class);
         Root<Metadata> metadataRoot = query.from(Metadata.class);
+        Root<MetadataDraft> metadataDraftRoot = query.from(MetadataDraft.class);
 
         query.select(operationAllowedRoot);
 
-        Predicate userEqualsPredicate = cb.equal(metadataRoot.get(Metadata_.sourceInfo).get(MetadataSourceInfo_.owner), userId);
-        Predicate mdIdEquals = cb.equal(metadataRoot.get(Metadata_.id), operationAllowedRoot.get(OperationAllowed_.id).get
-            (OperationAllowedId_
-                .metadataId));
+        Predicate userEqualsPredicatePublic = cb.equal(metadataRoot.get(Metadata_.sourceInfo).get(MetadataSourceInfo_.owner), userId);
+        Predicate userEqualsPredicateDraft = cb.equal(metadataDraftRoot.get(MetadataDraft_.sourceInfo).get(MetadataSourceInfo_.owner), userId);
+        Predicate userEqualsPredicate = cb.or(userEqualsPredicatePublic, userEqualsPredicateDraft);
+
+        Predicate mdIdEqualsPublic = cb.equal(metadataRoot.get(Metadata_.id), operationAllowedRoot.get(OperationAllowed_.id).get(OperationAllowedId_.metadataId));
+        Predicate mdIdEqualsDraft = cb.equal(metadataDraftRoot.get(MetadataDraft_.id), operationAllowedRoot.get(OperationAllowed_.id).get(OperationAllowedId_.metadataId));
+        Predicate mdIdEquals = cb.or(mdIdEqualsPublic, mdIdEqualsDraft);
+
         if (specification.isPresent()) {
             Predicate otherPredicate = specification.get().toPredicate(operationAllowedRoot, query, cb);
             query.where(mdIdEquals, userEqualsPredicate, otherPredicate);
         } else {
             query.where(mdIdEquals, userEqualsPredicate);
         }
+
+        query.distinct(true);
 
         return _entityManager.createQuery(query).getResultList();
     }

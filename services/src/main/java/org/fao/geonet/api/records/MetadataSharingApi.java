@@ -262,7 +262,7 @@ public class MetadataSharingApi {
     )
         throws Exception {
         AbstractMetadata metadata = ApiUtils.canEditRecord(metadataUuid, request);
-        AbstractMetadata copy = this.getCopy(metadata);
+        AbstractMetadata copy = ApiUtils.getMetadataCopy(metadata);
 
         ApplicationContext appContext = ApplicationContextHolder.get();
         ServiceContext context = ApiUtils.createServiceContext(request);
@@ -876,7 +876,7 @@ public class MetadataSharingApi {
                                  List<String> listOfUpdatedRecords, String uuid,
                                  HttpSession session, Boolean approved) throws Exception {
         AbstractMetadata metadata = metadataUtils.findOneByUuid(uuid);
-        AbstractMetadata approvedMetadata = metadata instanceof MetadataDraft ? ((MetadataDraft) metadata).getApprovedVersion(): null;
+        AbstractMetadata copy = ApiUtils.getMetadataCopy(metadata);
 
         if (metadata == null) {
             report.incrementNullRecords();
@@ -892,8 +892,8 @@ public class MetadataSharingApi {
 
 
             updatePrivileges(groupIdentifier, report, dataManager, serviceContext, sourceUsr, sourceGrp, metadata, true);
-            if (approvedMetadata != null) {
-                updatePrivileges(groupIdentifier, report, dataManager, serviceContext, sourceUsr, sourceGrp, approvedMetadata, true);
+            if (copy != null) {
+                updatePrivileges(groupIdentifier, report, dataManager, serviceContext, sourceUsr, sourceGrp, copy, true);
             }
 
             Long metadataId = Long.parseLong(ApiUtils.getInternalId(uuid, approved));
@@ -917,11 +917,11 @@ public class MetadataSharingApi {
                 String.valueOf(userIdentifier),
                 String.valueOf(groupIdentifier));
 
-            if (approvedMetadata != null) {
-                dataManager.updateMetadataOwner(approvedMetadata.getId(),
+            if (copy != null) {
+                dataManager.updateMetadataOwner(copy.getId(),
                     String.valueOf(userIdentifier),
                     String.valueOf(groupIdentifier));
-                dataManager.indexMetadata(approvedMetadata.getId() + "", true, null);
+                dataManager.indexMetadata(copy.getId() + "", true, null);
             }
             Element root = WorkflowUtil.getNewRootElement(serviceContext, us.getUserIdAsInt(), "user", "group", StatusValue.Status.DRAFT, "", WorkflowUtil.getNodeType(serviceContext));
             WorkflowUtil.addUserContent(serviceContext, root, userIdentifier.intValue(), "targetUser", "targetGroup");
@@ -955,7 +955,8 @@ public class MetadataSharingApi {
                                   DataManager dataManager,
                                   ServiceContext serviceContext,
                                   Integer sourceUsr, Integer sourceGrp,
-                                  AbstractMetadata metadata, boolean changeReport) throws Exception {
+                                  AbstractMetadata metadata,
+                                  boolean changeReport) throws Exception {
         Vector<OperationAllowedId> sourcePriv =
             retrievePrivileges(serviceContext, String.valueOf(metadata.getId()), sourceUsr, sourceGrp);
         if (sourcePriv.size() == 0) {
@@ -1147,7 +1148,7 @@ public class MetadataSharingApi {
                     if (!isAdmin && accessMan.hasReviewPermission(context, Integer.toString(metadata.getId()))) {
                         skip = true;
                     }
-                    AbstractMetadata copy = this.getCopy(metadata);
+                    AbstractMetadata copy = ApiUtils.getMetadataCopy(metadata);
 
                     if (sharing.isClear()) {
                         if (skip) {
@@ -1223,15 +1224,4 @@ public class MetadataSharingApi {
 
         return sharing;
     }
-
-    private AbstractMetadata getCopy(AbstractMetadata metadata) {
-        AbstractMetadata copy;
-        if (metadata instanceof MetadataDraft) {
-            copy = ((MetadataDraft) metadata).getApprovedVersion();
-        } else {
-            copy = metadataDraftRepository.findOneByUuid(metadata.getUuid());
-        }
-        return copy;
-    }
-
 }
