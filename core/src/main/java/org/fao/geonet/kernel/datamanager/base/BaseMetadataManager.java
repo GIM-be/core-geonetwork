@@ -116,6 +116,7 @@ import org.fao.geonet.repository.specification.MetadataFileUploadSpecs;
 import org.fao.geonet.repository.specification.MetadataSpecs;
 import org.fao.geonet.repository.specification.OperationAllowedSpecs;
 import org.fao.geonet.services.validation.AGIVValidation;
+import org.fao.geonet.util.WorkflowUtil;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
@@ -1074,6 +1075,7 @@ public class BaseMetadataManager implements IMetadataManager {
             env.addContent(new Element("siteURL").setText(settingManager.getSiteURL(context)));
             env.addContent(new Element("nodeURL").setText(settingManager.getNodeURL()));
             env.addContent(new Element("node").setText(context.getNodeId()));
+            env.addContent(new Element("nodeType").setText(WorkflowUtil.getNodeType(context)));
 
             // Settings were defined as an XML starting with root named config
             // Only second level elements are defined (under system).
