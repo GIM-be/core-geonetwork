@@ -43,11 +43,13 @@
 
   <xsl:variable name="serviceUrl" select="/root/env/siteURL"/>
   <xsl:variable name="node" select="/root/env/node"/>
+  <xsl:variable name="nodeType" select="/root/env/nodeType"/>
 
   <xsl:variable name="schemaLocationFor2007"
                 select="'http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd'"/>
 
-  <xsl:variable name="metadataStandardName">ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</xsl:variable>
+  <xsl:variable name="metadataStandardNameForDatasetAndSeries">ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</xsl:variable>
+  <xsl:variable name="metadataStandardNameForService">ISO 19119:2005/Amd 1:2008/INSPIRE-TG2.0</xsl:variable>
   <xsl:variable name="metadataStandardVersion">GDI-Vlaanderen Best Practices - versie 2.0</xsl:variable>
 
   <!-- Try to determine if using the 2005 or 2007 version
@@ -273,7 +275,7 @@
   <!-- Set the required metadataStandardName and metadataStandardVersion for dataset and series, see TG 2.0 -->
 
   <!-- Change elements -->
-  <xsl:template match="gmd:metadataStandardName[lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]" priority="100">
+  <xsl:template match="gmd:metadataStandardName[$nodeType='Metadatacenter' and lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]" priority="100">
     <xsl:copy copy-namespaces="no">
       <gco:CharacterString><xsl:value-of select="$metadataStandardName" /></gco:CharacterString>
     </xsl:copy>
@@ -284,10 +286,33 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="gmd:metadataStandardVersion[lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]" priority="100">
+  <xsl:template match="gmd:metadataStandardVersion[$nodeType='Metadatacenter' and lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]" priority="100">
     <xsl:if test="count(../gmd:metadataStandardName)=0">
       <gmd:metadataStandardName>
         <gco:CharacterString><xsl:value-of select="$metadataStandardName" /></gco:CharacterString>
+      </gmd:metadataStandardName>
+    </xsl:if>
+    <xsl:copy copy-namespaces="no">
+      <gco:CharacterString><xsl:value-of select="$metadataStandardVersion"/></gco:CharacterString>
+    </xsl:copy>
+  </xsl:template>
+
+
+  <xsl:template match="gmd:metadataStandardName[$nodeType='Metadatacenter' and lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = 'service']" priority="1000">
+    <xsl:copy copy-namespaces="no">
+      <gco:CharacterString><xsl:value-of select="$metadataStandardNameForService" /></gco:CharacterString>
+    </xsl:copy>
+    <xsl:if test="count(../gmd:metadataStandardVersion)=0">
+      <gmd:metadataStandardVersion>
+        <gco:CharacterString><xsl:value-of select="$metadataStandardVersion"/></gco:CharacterString>
+      </gmd:metadataStandardVersion>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="gmd:metadataStandardVersion[$nodeType='Metadatacenter' and lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = 'service']" priority="1000">
+    <xsl:if test="count(../gmd:metadataStandardName)=0">
+      <gmd:metadataStandardName>
+        <gco:CharacterString><xsl:value-of select="$metadataStandardNameForService" /></gco:CharacterString>
       </gmd:metadataStandardName>
     </xsl:if>
     <xsl:copy copy-namespaces="no">

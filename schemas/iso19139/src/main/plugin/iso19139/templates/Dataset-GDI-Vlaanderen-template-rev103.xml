@@ -88,7 +88,7 @@
     <gco:Date xsi:nil="true"/>
   </gmd:dateStamp>
   <gmd:metadataStandardName>
-    <gco:CharacterString>ISO 19115/2003/Cor.1:2006/INSPIRE MD TG 2.0.1</gco:CharacterString>
+    <gco:CharacterString>ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</gco:CharacterString>
   </gmd:metadataStandardName>
   <gmd:metadataStandardVersion>
     <gco:CharacterString>GDI-Vlaanderen Best Practices – versie 2.0</gco:CharacterString>
