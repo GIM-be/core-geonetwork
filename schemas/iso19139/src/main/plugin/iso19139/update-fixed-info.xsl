@@ -277,7 +277,7 @@
   <!-- Change elements -->
   <xsl:template match="gmd:metadataStandardName[$nodeType='Metadatacenter' and lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]" priority="100">
     <xsl:copy copy-namespaces="no">
-      <gco:CharacterString><xsl:value-of select="$metadataStandardName" /></gco:CharacterString>
+      <gco:CharacterString><xsl:value-of select="$metadataStandardNameForDatasetAndSeries" /></gco:CharacterString>
     </xsl:copy>
     <xsl:if test="count(../gmd:metadataStandardVersion)=0">
       <gmd:metadataStandardVersion>
@@ -289,7 +289,7 @@
   <xsl:template match="gmd:metadataStandardVersion[$nodeType='Metadatacenter' and lower-case(../gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue) = ('series','dataset')]" priority="100">
     <xsl:if test="count(../gmd:metadataStandardName)=0">
       <gmd:metadataStandardName>
-        <gco:CharacterString><xsl:value-of select="$metadataStandardName" /></gco:CharacterString>
+        <gco:CharacterString><xsl:value-of select="$metadataStandardNameForDatasetAndSeries" /></gco:CharacterString>
       </gmd:metadataStandardName>
     </xsl:if>
     <xsl:copy copy-namespaces="no">
