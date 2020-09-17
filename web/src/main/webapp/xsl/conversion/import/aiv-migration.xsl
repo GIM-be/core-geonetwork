@@ -16,7 +16,9 @@
   <xsl:include href="aiv-scripts/change-referenceSystemInfo.xsl"/>
   <xsl:include href="aiv-scripts/change-hierarchyLevel.xsl"/>
   <xsl:include href="aiv-scripts/change-MD_BrowseGraphic.xsl"/>
+  <xsl:include href="aiv-scripts/change-DCPList.xsl"/>
   <xsl:variable name="logPrefix">XSL LOG: </xsl:variable>
+  <xsl:variable name="nodeType" select="'Metadatacenter'"/>
 
   <!-- Copy all elements and attributes -->
   <xsl:template match="@*|node()">
