@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.fao.geonet.ApplicationContextHolder;
+import org.fao.geonet.api.ApiUtils;
 import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.domain.OperationAllowedId;
 import org.fao.geonet.kernel.AccessManager;
@@ -126,40 +127,47 @@ public class BatchNewOwner {
             } else if (!accessManager.isOwner(context, id)) {
                 notOwner.add(Integer.valueOf(id));
             } else {
-
-                //-- Get existing owner and privileges for that owner - note that
-                //-- owners don't actually have explicit permissions - only their
-                //-- group does which is why we have an ownerGroup (parameter groupid)
-                Integer sourceUsr = info.getSourceInfo().getOwner();
-                Integer sourceGrp = info.getSourceInfo().getGroupOwner();
-                Vector<OperationAllowedId> sourcePriv =
-                    retrievePrivileges(context, id, sourceUsr, sourceGrp);
-
-                // -- Set new privileges for new owner from privileges of the old
-                // -- owner, if none then set defaults
-                if (sourcePriv.size() == 0) {
-                    dataManager.copyDefaultPrivForGroup(context, id, targetGrp, false);
-                    context.info("No privileges for user " + sourceUsr + " on metadata " + id + ", so setting default privileges");
-                } else {
-                    for (OperationAllowedId priv : sourcePriv) {
-                        if (sourceGrp != null) {
-                            dataManager.unsetOperation(context, id,
-                                "" + sourceGrp,
-                                "" + priv.getOperationId());
-                        }
-                        dataManager.setOperation(context, id, targetGrp,
-                            "" + priv.getOperationId());
-                    }
+                modified.add(updatePrivileges(info, id, context, targetUsr, targetGrp, dataManager));
+                AbstractMetadata copy = ApiUtils.getMetadataCopy(info);
+                if (copy != null) {
+                    updatePrivileges(copy, String.valueOf(copy.getId()), context, targetUsr, targetGrp, dataManager);
                 }
-                // -- set the new owner into the metadata record
-                dataManager.updateMetadataOwner(Integer.parseInt(id), targetUsr, targetGrp);
-
-                modified.add(Integer.valueOf(id));
             }
         }
 
         return new NewOwnerResult(modified.size(), notOwner.size(), notFound.size());
     }
+
+     private int updatePrivileges(AbstractMetadata info, String id, ServiceContext context,
+                                  String targetUsr, String targetGrp, DataManager dataManager) throws Exception {
+         //-- Get existing owner and privileges for that owner - note that
+         //-- owners don't actually have explicit permissions - only their
+         //-- group does which is why we have an ownerGroup (parameter groupid)
+         Integer sourceUsr = info.getSourceInfo().getOwner();
+         Integer sourceGrp = info.getSourceInfo().getGroupOwner();
+         Vector<OperationAllowedId> sourcePriv =
+             retrievePrivileges(context, id, sourceUsr, sourceGrp);
+
+         // -- Set new privileges for new owner from privileges of the old
+         // -- owner, if none then set defaults
+         if (sourcePriv.size() == 0) {
+             dataManager.copyDefaultPrivForGroup(context, id, targetGrp, false);
+             context.info("No privileges for user " + sourceUsr + " on metadata " + id + ", so setting default privileges");
+         } else {
+             for (OperationAllowedId priv : sourcePriv) {
+                 if (sourceGrp != null) {
+                     dataManager.unsetOperation(context, id,
+                         "" + sourceGrp,
+                         "" + priv.getOperationId());
+                 }
+                 dataManager.setOperation(context, id, targetGrp,
+                     "" + priv.getOperationId());
+             }
+         }
+         // -- set the new owner into the metadata record
+         dataManager.updateMetadataOwner(Integer.parseInt(id), targetUsr, targetGrp);
+         return Integer.parseInt(id);
+     }
 
     //--------------------------------------------------------------------------
 

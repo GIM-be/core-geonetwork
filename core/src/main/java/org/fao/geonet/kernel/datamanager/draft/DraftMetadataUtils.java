@@ -28,25 +28,7 @@ import jeeves.server.context.ServiceContext;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jetty.io.RuntimeIOException;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.domain.AbstractMetadata;
-import org.fao.geonet.domain.Group;
-import org.fao.geonet.domain.ISODate;
-import org.fao.geonet.domain.Metadata;
-import org.fao.geonet.domain.MetadataCategory;
-import org.fao.geonet.domain.MetadataDataInfo;
-import org.fao.geonet.domain.MetadataDraft;
-import org.fao.geonet.domain.MetadataFileUpload;
-import org.fao.geonet.domain.MetadataHarvestInfo;
-import org.fao.geonet.domain.MetadataRatingByIp;
-import org.fao.geonet.domain.MetadataRatingByIpId;
-import org.fao.geonet.domain.MetadataSourceInfo;
-import org.fao.geonet.domain.MetadataStatus;
-import org.fao.geonet.domain.MetadataStatusId;
-import org.fao.geonet.domain.MetadataType;
-import org.fao.geonet.domain.OperationAllowed;
-import org.fao.geonet.domain.Pair;
-import org.fao.geonet.domain.ReservedOperation;
-import org.fao.geonet.domain.StatusValue;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.UpdateDatestamp;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
@@ -536,7 +518,8 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
 
                 // Only interested in editing and reviewing privileges
                 // No one else should be able to see it
-                if (op.getId().getOperationId() == ReservedOperation.editing.getId()) {
+                // if (op.getId().getOperationId() == ReservedOperation.editing.getId()) {
+                if (op.getId().getGroupId() != ReservedGroup.all.getId()) {
                     Log.trace(Geonet.DATA_MANAGER, "Assign operation: " + op);
                     metadataOperations.forceSetOperation(context, finalId, op.getId().getGroupId(),
                         op.getId().getOperationId());

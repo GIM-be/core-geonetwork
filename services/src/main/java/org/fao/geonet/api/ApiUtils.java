@@ -47,6 +47,8 @@ import org.fao.geonet.api.exception.ResourceNotFoundException;
 import org.fao.geonet.api.tools.i18n.LanguageUtils;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.AbstractMetadata;
+import org.fao.geonet.domain.Metadata;
+import org.fao.geonet.domain.MetadataDraft;
 import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
@@ -54,6 +56,7 @@ import org.fao.geonet.kernel.SelectionManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
+import org.fao.geonet.repository.MetadataDraftRepository;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.utils.GeonetHttpRequestFactory;
 import org.fao.geonet.utils.Log;
@@ -322,5 +325,24 @@ public class ApiUtils {
         try (OutputStream out = Files.newOutputStream(outFile)) {
             ImageIO.write(bimg, type, out);
         }
+    }
+
+    /**
+     * Return a copy version of a metadata.
+     * If a draft is sent, the public version will be returned
+     * If a public version is sent, the draft version will be return if exist else return null
+     * @param metadata {@link MetadataDraft} or {@link Metadata} that might have a existing draft
+     * @return the copy version a given metadata
+     */
+    public static AbstractMetadata getMetadataCopy(AbstractMetadata metadata) {
+        ApplicationContext appContext = ApplicationContextHolder.get();
+        MetadataDraftRepository metadataDraftRepository = appContext.getBean(MetadataDraftRepository.class);
+        AbstractMetadata copy;
+        if (metadata instanceof MetadataDraft) {
+            copy = ((MetadataDraft) metadata).getApprovedVersion();
+        } else {
+            copy = metadataDraftRepository.findOneByUuid(metadata.getUuid());
+        }
+        return copy;
     }
 }
