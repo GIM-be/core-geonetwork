@@ -10,16 +10,23 @@
 		<xsl:call-template name="logAttributesAndValue">
 			<xsl:with-param name="element" select="gmd:MD_CharacterSetCode"/>
 		</xsl:call-template>
-    <xsl:variable name="codeListValue" select="gmd:MD_CharacterSetCode/@codeListValue" />
+    <xsl:variable name="currentCodeListValue" select="lower-case(gmd:MD_CharacterSetCode/@codeListValue)" />
 		<xsl:copy copy-namespaces="no">
-      <xsl:variable name="characterSetCode">
+      <xsl:variable name="newCodeListValue">
         <xsl:choose>
-          <xsl:when test="$codeListValue=('utf8','MD_CharacterSetCode_utf8')">UTF-8</xsl:when>
-          <xsl:when test="$codeListValue='8859part1'">Latin-1</xsl:when>
-          <xsl:otherwise><xsl:value-of select="gmd:LanguageCode"/></xsl:otherwise>
+          <xsl:when test="$currentCodeListValue=('utf8','md_charactersetcode_utf8')">utf8</xsl:when>
+          <xsl:when test="$currentCodeListValue='8859part1'">8859part1</xsl:when>
+          <xsl:otherwise><xsl:value-of select="gmd:MD_CharacterSetCode/@codeListValue"/></xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
-      <gmd:MD_CharacterSetCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="{$codeListValue}"><xsl:value-of select="$characterSetCode" /></gmd:MD_CharacterSetCode>
+      <xsl:variable name="characterSetCode">
+        <xsl:choose>
+          <xsl:when test="$currentCodeListValue=('utf8','md_charactersetcode_utf8')">UTF-8</xsl:when>
+          <xsl:when test="$currentCodeListValue='8859part1'">Latin-1</xsl:when>
+          <xsl:otherwise><xsl:value-of select="gmd:MD_CharacterSetCode"/></xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <gmd:MD_CharacterSetCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="{$newCodeListValue}"><xsl:value-of select="$characterSetCode" /></gmd:MD_CharacterSetCode>
 		</xsl:copy>
 	</xsl:template>
 </xsl:stylesheet>
