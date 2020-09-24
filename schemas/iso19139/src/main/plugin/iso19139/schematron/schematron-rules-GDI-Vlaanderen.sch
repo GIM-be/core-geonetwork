@@ -73,7 +73,7 @@
 	</sch:pattern>
 	<!-- GDI-Vlaanderen SC5 -->
 	<sch:pattern>
-		<sch:title>Er moet minstens één Nederlandstalig trefwoord aanwezig zijn uit de thesaurus ‘GEMET - INSPIRE thema’s, versie 1.0’ met als datum 2008-06-01 indien de MD_Metadata.language gelijk is aan NL (ISO-element 55)</sch:title>
+		<sch:title>Er moet minstens één Nederlandstalig trefwoord aanwezig zijn uit de thesaurus ‘GEMET - INSPIRE themes, version 1.0’ met als datum 2008-06-01 indien de MD_Metadata.language gelijk is aan NL (ISO-element 55)</sch:title>
 		<sch:rule context="//gmd:MD_DataIdentification[/gmd:MD_Metadata/gmd:language/*/text()='dut' or /gmd:MD_Metadata/gmd:language/gmd:LanguageCode/@codeListValue='dut']">
 			<sch:let name="inspire-thesaurus" value="document(concat('file:///', replace($thesaurusDir, '\\', '/'), '/external/thesauri/theme/inspire-theme.rdf'))"/>
 			<sch:let name="inspire-theme" value="$inspire-thesaurus//skos:Concept"/>
@@ -84,15 +84,15 @@
       <sch:let name="thesaurus_date" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:date/*/text()"/>
       <sch:let name="thesaurus_dateType" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:dateType/*/@codeListValue/normalize-space(.)"/>
 			<sch:let name="keyword" value="gmd:descriptiveKeywords/*/gmd:keyword/*[name()='gco:CharacterString' or name()='gmx:Anchor']
-					[../../gmd:thesaurusName/*/gmd:title/*/text()='GEMET - INSPIRE thema''s, versie 1.0' and
+					[../../gmd:thesaurusName/*/gmd:title/*/text()='GEMET - INSPIRE themes, version 1.0' and
 					../../gmd:thesaurusName/*/gmd:date/*/gmd:date/gco:Date/text()='2008-06-01' and
 					../../gmd:thesaurusName/*/gmd:date/*/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']"/>
 			<sch:let name="inspire-theme-selected" value="count($inspire-thesaurus//skos:Concept[skos:prefLabel[@xml:lang='nl'] = $keyword])"/>
 			<sch:assert test="$inspire-theme-selected >0">
-				Er werd geen Nederlandstalig sleutelwoord gevonden afkomstig uit de GEMET - INSPIRE thema''s, versie 1.0 thesaurus gedateerd op 2008-06-01.
+				Er werd geen Nederlandstalig sleutelwoord gevonden afkomstig uit de GEMET - INSPIRE themes, version 1.0 thesaurus gedateerd op 2008-06-01.
 			</sch:assert>
 			<sch:report test="$inspire-theme-selected > 0">
-				Er werd een Nederlandstalig sleutelwoord: <sch:value-of select="$keyword"/> gevonden dat afkomstig is uit de GEMET - INSPIRE thema''s, versie 1.0 thesaurus gedateerd op 2008-06-01.
+				Er werd een Nederlandstalig sleutelwoord: <sch:value-of select="$keyword"/> gevonden dat afkomstig is uit de GEMET - INSPIRE themes, version 1.0 thesaurus gedateerd op 2008-06-01.
 			</sch:report>
 		</sch:rule>
 	</sch:pattern>
