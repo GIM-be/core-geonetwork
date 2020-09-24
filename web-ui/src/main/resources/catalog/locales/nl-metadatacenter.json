@@ -1,0 +1,17 @@
+{
+  "mdStatus-0": "Onbekend",
+  "mdStatus-1": "Ontwerp",
+  "mdStatus-2": "Goedgekeurd door Informatie Vlaanderen en gepubliceerd",
+  "mdStatus-3": "Gedepubliceerd",
+  "mdStatus-4": "Intern ingediend",
+  "mdStatus-5": "Afgekeurd door Hoofdeditor",
+  "mdStatus-6": "Pas gecreëerd",
+  "mdStatus-7": "Intern goedgekeurd en ingediend bij Informatie Vlaanderen",
+  "mdStatus-8": "Klaar voor publicatie door Informatie Vlaanderen",
+  "mdStatus-9": "Afgekeurd door validator Informatie Vlaanderen",
+  "mdStatus-10": "Ingediend voor depubliceren",
+  "mdStatus-11": "Ingediend voor verwijderen",
+  "mdStatus-12": "Verwijderd",
+  "mdStatus-13": "Afgekeurd door validator Informatie Vlaanderen en niet gedepubliceerd",
+  "mdStatus-14": "Afgekeurd door validator Informatie Vlaanderen en niet verwijderd"
+}
