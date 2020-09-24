@@ -27,6 +27,7 @@ UPDATE statusvalues SET displayorder = 12 WHERE id = 11;  -- removedforagiv
 UPDATE statusvalues SET displayorder = 13 WHERE id = 12;  -- removed
 UPDATE statusvalues SET displayorder = 14 WHERE id = 14;  -- rejectedforremove
 
+UPDATE StatusValuesDes SET label = 'Goedgekeurd door Informatie Vlaanderen en gepubliceerd' WHERE langid = 'dut' and idDes = 2;
 
 -- Add translation for the new status
 
