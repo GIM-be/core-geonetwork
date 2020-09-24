@@ -171,9 +171,18 @@
                 <gmd:MD_Keywords>
                   <xsl:choose>
                     <xsl:when test="*/gmd:thesaurusName">
-                      <xsl:for-each-group select="*/gmd:keyword" group-by="*/@xlink:href">
-                        <xsl:apply-templates select="current-group()[1]" />
-                      </xsl:for-each-group>
+                      <xsl:choose>
+                        <xsl:when test="count(*/gmd:keyword/gmx:Anchor/@xlink:href)>0">
+                          <xsl:for-each-group select="*/gmd:keyword" group-by="gmx:Anchor/@xlink:href">
+                            <xsl:apply-templates select="current-group()[1]" />
+                          </xsl:for-each-group>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:for-each-group select="*/gmd:keyword" group-by="normalize-space(gco:CharacterString)">
+                            <xsl:apply-templates select="current-group()[1]" />
+                          </xsl:for-each-group>
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </xsl:when>
                     <xsl:otherwise>
                       <xsl:apply-templates select="*/gmd:keyword"/>
