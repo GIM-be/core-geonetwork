@@ -13,5 +13,20 @@
   "mdStatus-11": "Ingediend voor verwijderen",
   "mdStatus-12": "Verwijderd",
   "mdStatus-13": "Afgekeurd door validator Informatie Vlaanderen en niet gedepubliceerd",
-  "mdStatus-14": "Afgekeurd door validator Informatie Vlaanderen en niet verwijderd"
+  "mdStatus-14": "Afgekeurd door validator Informatie Vlaanderen en niet verwijderd",
+  "mdStatusTitle-50": "Onbekend",
+  "mdStatusTitle-51": "Ontwerp",
+  "mdStatusTitle-52": "Goedgekeurd door Informatie Vlaanderen en gepubliceerd",
+  "mdStatusTitle-53": "Gedepubliceerd",
+  "mdStatusTitle-54": "Intern ingediend",
+  "mdStatusTitle-55": "Afgekeurd door Hoofdeditor",
+  "mdStatusTitle-56": "Pas gecreëerd",
+  "mdStatusTitle-57": "Intern goedgekeurd en ingediend bij Informatie Vlaanderen",
+  "mdStatusTitle-58": "Klaar voor publicatie door Informatie Vlaanderen",
+  "mdStatusTitle-59": "Afgekeurd door validator Informatie Vlaanderen",
+  "mdStatusTitle-60": "Ingediend voor depubliceren",
+  "mdStatusTitle-61": "Ingediend voor verwijderen",
+  "mdStatusTitle-62": "Verwijderd",
+  "mdStatusTitle-63": "Afgekeurd door validator Informatie Vlaanderen en niet gedepubliceerd",
+  "mdStatusTitle-64": "Afgekeurd door validator Informatie Vlaanderen en niet verwijderd"
 }
