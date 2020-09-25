@@ -59,8 +59,8 @@
   module.constant('$LOCALES', ['core']);
 
   module.factory('localeLoader', [
-    '$http', '$q', 'gnLangs', '$translate', '$timeout',
-    function($http, $q, gnLangs, $translate, $timeout) {
+    '$http', '$q', 'gnLangs', '$translate', '$timeout', '$rootScope', 'gnMetadataActions',
+    function($http, $q, gnLangs, $translate, $timeout, $rootScope, gnMetadataActions) {
       return function(options) {
 
         function buildUrl(prefix, lang, value, suffix) {
@@ -118,11 +118,42 @@
           });
         });
 
+        var nodeTranslationProm = $q(function (resolve, reject) {
+          var unwatch = $rootScope.$watch(function () {
+            return gnMetadataActions.currentNode;
+          }, function (newValue) {
+            if (newValue) {
+              unwatch();
+              resolve(newValue);
+            }
+          });
+          $timeout(function () {
+            unwatch();
+            reject();
+          }, 2000);
+        }).then(function (node) {
+          var value = undefined;
+          if (node === 'MetadatacenterStatusActions') {
+            value = 'metadatacenter';
+          } else if (node === 'GeopuntStatusActions') {
+            value = 'geopunt';
+          }
+          if (!node) {
+            throw new Error('The current node ' + node + ' is not supported');
+          }
+          var url = buildUrl(options.prefix, options.key, value, options.suffix);
+          return $http.get(url);
+        }).then(function (response) {
+          return response.data;
+        }).catch(function() {
+          return {};
+        })
+
+        allPromises.push(nodeTranslationProm);
+
         // Finally, create a single promise containing all the promises
         // for each app module:
-        var deferred = $q.all(allPromises);
-
-        return deferred;
+        return $q.all(allPromises);
       };
     }]);
 
