@@ -36,12 +36,12 @@
     },
     "home": {
       "enabled": true,
-      "appUrl": "../../srv/{{lang}}/catalog.search#/home",
+      "appUrl": "../../{{node}}/{{lang}}/catalog.search#/home",
       "fluidLayout": true
     },
     "search": {
       "enabled": true,
-      "appUrl": "../../srv/{{lang}}/catalog.search#/search",
+      "appUrl": "../../{{node}}/{{lang}}/catalog.search#/search",
       "hitsperpageValues": [
         10,
         50,
@@ -56,6 +56,10 @@
       "facetConfig": [],
       "filters": {},
       "sortbyValues": [
+        {
+          "sortBy": "sortDate",
+          "sortOrder": ""
+        },
         {
           "sortBy": "relevance",
           "sortOrder": ""
@@ -83,13 +87,9 @@
         {
           "sortBy": "denominatorAsc",
           "sortOrder": "reverse"
-        },
-        {
-          "sortBy": "denominatorAsc",
-          "sortOrder": "reverse"
         }
       ],
-      "sortBy": "relevance",
+      "sortBy": "sortDate",
       "resultViewTpls": [
         {
           "tplUrl": "../../catalog/components/search/resultsview/partials/viewtemplates/grid.html",
@@ -163,7 +163,7 @@
     },
     "map": {
       "enabled": false,
-      "appUrl": "../../srv/{{lang}}/catalog.search#/map",
+      "appUrl": "../../{{node}}/{{lang}}/catalog.search#/map",
       "externalViewer": {
         "enabled": false,
         "baseUrl": "http://www.example.com/viewer",
@@ -257,7 +257,7 @@
     },
     "editor": {
       "enabled": true,
-      "appUrl": "../../srv/{{lang}}/catalog.edit",
+      "appUrl": "../../{{node}}/{{lang}}/catalog.edit",
       "isUserRecordsOnly": false,
       "isFilterTagsDisplayed": false,
       "fluidEditorLayout": true,
@@ -266,7 +266,7 @@
     },
     "admin": {
       "enabled": true,
-      "appUrl": "../../srv/{{lang}}/admin.console"
+      "appUrl": "../../{{node}}/{{lang}}/admin.console"
     },
     "signin": {
       "enabled": true,
@@ -278,7 +278,7 @@
     },
     "page": {
       "enabled": true,
-      "appUrl": "../../srv/{{lang}}/catalog.search#/page"
+      "appUrl": "../../{{node}}/{{lang}}/catalog.search#/page"
     }
   }
 }
