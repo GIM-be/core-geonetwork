@@ -114,13 +114,17 @@
             "url": "/formatters/xsl-view?root=div&view=advanced",
             "exclude": [
               "iso19139",
-              "iso19110"
+              "iso19110",
+              "dcat-ap"
             ]
           }
         ],
         "defaultFormatters": {
           "iso19139": {
             "url": "/formatters/xsl-view-default?root=div&view=advanced"
+          },
+          "dcat-ap": {
+            "url": "/formatters/xsl-view?root=div&view=advanced"
           }
         },
         "defaultUrl": ""
