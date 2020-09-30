@@ -18,7 +18,8 @@
   <xsl:include href="aiv-scripts/change-MD_BrowseGraphic.xsl"/>
   <xsl:include href="aiv-scripts/change-DCPList.xsl"/>
   <xsl:variable name="logPrefix">XSL LOG: </xsl:variable>
-  <xsl:variable name="nodeType" select="'Metadatacenter'"/>
+  <xsl:variable name="nodeType">Metadatacenter</xsl:variable>
+  <xsl:variable name="environment">dev</xsl:variable>
 
   <!-- Copy all elements and attributes -->
   <xsl:template match="@*|node()">
