@@ -26,4 +26,11 @@
       </xsl:choose>
     </xsl:copy>
   </xsl:template>
+
+  <xsl:template match="gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString[contains(.,'resources.get')]" priority="1000">
+    <xsl:copy copy-namespaces="no">
+      <xsl:value-of select="concat('https://',$environment,'.metadata.vlaanderen.be/')"/><xsl:if test="$nodeType='Metadatacenter'">metadatacenter</xsl:if><xsl:value-of select="concat('/srv/dut/resources.get', substring-after(.,'resources.get'))"/>
+    </xsl:copy>
+  </xsl:template>
+
 </xsl:stylesheet>
