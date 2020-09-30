@@ -13,3 +13,6 @@
 [submodule "schemas/iso19115-3.2018"]
 	path = schemas/iso19115-3.2018
 	url = https://github.com/metadata101/iso19115-3.2018
+[submodule "schemas/dcat-ap-for-services"]
+	path = schemas/dcat-ap-for-services
+	url = http://gitlab.gim.be/gim-geonetwork/dcat-ap-for-services.git
