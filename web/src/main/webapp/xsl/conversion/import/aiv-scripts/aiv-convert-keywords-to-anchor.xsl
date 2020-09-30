@@ -59,8 +59,11 @@
     </xsl:for-each>
   </xsl:variable>
 
-  <xsl:variable name="inspireThemesMappedStartString">GEMET - INSPIRE them</xsl:variable>
-  <xsl:variable name="taxonomyMappedStartString">Verordening (EG) nr. 1205/2008</xsl:variable>
+  <xsl:variable name="inspireThemesStartStringForKeywordMapping">GEMET - INSPIRE them</xsl:variable>
+  <xsl:variable name="taxonomyStartStringForKeywordMapping">Verordening (EG) nr. 1205/2008</xsl:variable>
+  <xsl:variable name="gdiVlaanderenTrefwoordenStartStringForKeywordMapping">GDI-Vlaanderen Trefwoorden</xsl:variable>
+  <xsl:variable name="gdiVlaanderenServiceTypesStartStringForKeywordMapping">GDI-Vlaanderen Service Types</xsl:variable>
+  <xsl:variable name="gdiVlaanderenRegiosStartStringForKeywordMapping">Vlaamse regio</xsl:variable>
 
   <xsl:variable name="inspireThemesStartStringToBeMapped">GEMET - INSPIRE them</xsl:variable>
   <xsl:variable name="taxonomyStartStringToBeMapped">D.4 van de verordening (EG) NR. 1205/2008</xsl:variable>
@@ -83,7 +86,7 @@
             <xsl:variable name="xlink" select="gmx:Anchor/@xlink:href"/>
             <xsl:message select="concat('It is a gmx:Anchor with link ', $xlink)" />
             <xsl:choose>
-              <xsl:when test="contains($mappedThesaurusTitle,$inspireThemesMappedStartString)">
+              <xsl:when test="contains($mappedThesaurusTitle,$inspireThemesStartStringForKeywordMapping)">
                 <xsl:variable name="mappedXlink">
                   <xsl:call-template name="mapKeywordAnchor">
                     <xsl:with-param name="xlink" select="$xlink"/>
@@ -104,7 +107,7 @@
                     <xsl:message select="concat('The xlink:href attribute ', $xlink,' of the gmx:Anchor keyword ',$keyword,' is mapped to ', $mappedXlink)" />
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:copy-of select="."/>
+                    <xsl:copy-of select="." copy-namespaces="no"/>
                     <xsl:message select="concat('The xlink:href attribute ', $xlink, ' of the gmx:Anchor keyword ',$keyword,' is not mapped')" />
                   </xsl:otherwise>
                 </xsl:choose>
@@ -115,7 +118,7 @@
               </xsl:otherwise>
             </xsl:choose>
           </xsl:when>
-          <xsl:when test="starts-with($mappedThesaurusTitle,$taxonomyMappedStartString)">
+          <xsl:when test="starts-with($mappedThesaurusTitle,$taxonomyStartStringForKeywordMapping)">
             <!--xsl:variable name="keywordListToMap">('humanCatalogueViewer',
               'humanGeographicViewer',
               'humanGeographicSpreadsheetViewer',
@@ -278,11 +281,20 @@
         </xsl:call-template>
       </xsl:variable>
       <xsl:choose>
-        <xsl:when test="contains($mappedThesaurusTitle,$inspireThemesMappedStartString)">
+        <xsl:when test="contains($mappedThesaurusTitle,$inspireThemesStartStringForKeywordMapping)">
           <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/theme"><xsl:value-of select="$mappedThesaurusTitle"/></gmx:Anchor>
         </xsl:when>
-        <xsl:when test="starts-with($mappedThesaurusTitle,$taxonomyMappedStartString)">
+        <xsl:when test="starts-with($mappedThesaurusTitle,$taxonomyStartStringForKeywordMapping)">
           <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory"><xsl:value-of select="$mappedThesaurusTitle"/></gmx:Anchor>
+        </xsl:when>
+        <xsl:when test="starts-with($mappedThesaurusTitle,$gdiVlaanderenTrefwoordenStartStringForKeywordMapping)">
+          <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"><xsl:value-of select="$mappedThesaurusTitle"/></gmx:Anchor>
+        </xsl:when>
+        <xsl:when test="starts-with($mappedThesaurusTitle,$gdiVlaanderenServiceTypesStartStringForKeywordMapping)">
+          <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types"><xsl:value-of select="$mappedThesaurusTitle"/></gmx:Anchor>
+        </xsl:when>
+        <xsl:when test="starts-with($mappedThesaurusTitle,$gdiVlaanderenRegiosStartStringForKeywordMapping)">
+          <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden"><xsl:value-of select="$mappedThesaurusTitle"/></gmx:Anchor>
         </xsl:when>
         <xsl:otherwise><xsl:apply-templates select="*"/></xsl:otherwise>
       </xsl:choose>
@@ -303,7 +315,7 @@
     <xsl:param name="thesaurusTitle" required="yes"/>
     <xsl:param name="keyword"/>
     <xsl:choose>
-      <xsl:when test="contains($thesaurusTitle,$inspireThemesMappedStartString)">
+      <xsl:when test="contains($thesaurusTitle,$inspireThemesStartStringForKeywordMapping)">
         <xsl:choose>
           <xsl:when test="$xlink='http://rdfdata.eionet.europa.eu/inspirethemes/themes/4'">http://inspire.ec.europa.eu/theme/au</xsl:when>
           <xsl:when test="$xlink='http://rdfdata.eionet.europa.eu/inspirethemes/themes/5'">http://inspire.ec.europa.eu/theme/ad</xsl:when>

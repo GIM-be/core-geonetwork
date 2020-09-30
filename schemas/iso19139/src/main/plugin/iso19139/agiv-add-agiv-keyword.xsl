@@ -6,10 +6,10 @@
   <xsl:include href="agiv-add-keyword.xsl"/>
 
   <xsl:variable name="thesaurusTitleString">GDI-Vlaanderen Trefwoorden</xsl:variable>
-  <xsl:variable name="thesaurusTitleAnchor">http://mir.geopunt.be/cl/Geopunt/v11/GDI-Vlaanderen-Trefwoorden#</xsl:variable>
+  <xsl:variable name="thesaurusTitleAnchor">https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden</xsl:variable>
   <xsl:variable name="thesaurusDate">2014-02-26</xsl:variable>
   <xsl:variable name="keywordString">Metadata GDI-Vl-conform</xsl:variable>
-  <xsl:variable name="keywordAnchor">http://mir.geopunt.be/cl/Geopunt/GDI-Vlaanderen-Trefwoorden/MDGDICONFORM</xsl:variable>
+  <xsl:variable name="keywordAnchor">https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/MDGDICONFORM</xsl:variable>
 
   <xsl:template match="/root">
     <xsl:apply-templates select="gmd:MD_Metadata"/>
