@@ -6,6 +6,8 @@
                 exclude-result-prefixes="#all"
                 version="2.0">
   <xsl:output method="xml" indent="yes" encoding="utf-8"/>
+  <xsl:variable name="logPrefix">XSL LOG: </xsl:variable>
+  <xsl:include href="aiv-scripts/set-env-variables.xsl"/>
   <xsl:include href="aiv-scripts/aiv-convert-keywords-to-anchor.xsl"/>
   <xsl:include href="aiv-scripts/aiv-minimal-update-fixed-info.xsl"/>
   <xsl:include href="aiv-scripts/change-dataQualityInfo.xsl"/>
@@ -17,9 +19,6 @@
   <xsl:include href="aiv-scripts/change-hierarchyLevel.xsl"/>
   <xsl:include href="aiv-scripts/change-MD_BrowseGraphic.xsl"/>
   <xsl:include href="aiv-scripts/change-DCPList.xsl"/>
-  <xsl:variable name="logPrefix">XSL LOG: </xsl:variable>
-  <xsl:variable name="nodeType">Metadatacenter</xsl:variable>
-  <xsl:variable name="environment">dev</xsl:variable>
 
   <!-- Copy all elements and attributes -->
   <xsl:template match="@*|node()">
