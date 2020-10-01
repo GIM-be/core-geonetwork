@@ -89,7 +89,7 @@
           "sortOrder": "reverse"
         }
       ],
-      "sortBy": "sortDate",
+      "sortBy": "relevance",
       "resultViewTpls": [
         {
           "tplUrl": "../../catalog/components/search/resultsview/partials/viewtemplates/grid.html",
