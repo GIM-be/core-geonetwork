@@ -1145,7 +1145,7 @@ public class MetadataSharingApi {
                     report.addNotEditableMetadataId(metadata.getId());
                 } else {
                     boolean skip = false;
-                    if (!isAdmin && accessMan.hasReviewPermission(context, Integer.toString(metadata.getId()))) {
+                    if (!isAdmin && !accessMan.hasReviewPermission(context, Integer.toString(metadata.getId()))) {
                         skip = true;
                     }
                     AbstractMetadata copy = ApiUtils.getMetadataCopy(metadata);
@@ -1157,9 +1157,9 @@ public class MetadataSharingApi {
                                 dataMan.deleteMetadataOper(context, String.valueOf(copy.getId()), skip);
                             }
                         } else {
-                            dataMan.deleteMetadataOper(context, String.valueOf(metadata.getId()), new int[]{1});
+                            dataMan.deleteMetadataOper(context, String.valueOf(metadata.getId()), new int[]{ReservedGroup.all.getId()});
                             if (copy != null) {
-                                dataMan.deleteMetadataOper(context, String.valueOf(copy.getId()), new int[]{1});
+                                dataMan.deleteMetadataOper(context, String.valueOf(copy.getId()), new int[]{ReservedGroup.all.getId()});
                             }
                         }
                     }
