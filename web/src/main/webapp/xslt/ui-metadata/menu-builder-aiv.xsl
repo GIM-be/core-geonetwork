@@ -141,7 +141,7 @@
                                         @displayIfServiceInfo)"/>
     <!-- When tab displayIf filter return false, the tab is disabled.
      Another option would be to completely hide it:-->
-    <xsl:if test="$isTabDisplayed">
+    <xsl:if test="$isTabDisplayed or @hideIfNotDisplayed != 'true'">
       <li role="menuitem"
         class="{if ($tab = @id) then 'active' else ''} {if ($isTabDisplayed) then '' else 'disabled'}">
         <a href="">

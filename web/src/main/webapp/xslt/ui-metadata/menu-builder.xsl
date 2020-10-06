@@ -177,17 +177,18 @@
     <xsl:if test="$isTabDisplayed">
     </xsl:if>
     -->
-    <li role="menuitem"
-      class="{if ($tab = @id) then 'active' else ''} {if ($isTabDisplayed) then '' else 'disabled'}">
-      <a href="">
-        <xsl:if test="$tab != @id and $isTabDisplayed">
-          <xsl:attribute name="data-ng-click"
-                         select="concat('switchToTab(''', @id, ''', ''', @mode, ''')')"/>
-        </xsl:if>
-        <xsl:variable name="tabId" select="@id"/>
-        <xsl:value-of select="$strings/*[name() = $tabId]"/>
-      </a>
-    </li>
-
+    <xsl:if test="$isTabDisplayed or @hideIfNotDisplayed != 'true'">
+      <li role="menuitem"
+          class="{if ($tab = @id) then 'active' else ''} {if ($isTabDisplayed) then '' else 'disabled'}">
+        <a href="">
+          <xsl:if test="$tab != @id and $isTabDisplayed">
+            <xsl:attribute name="data-ng-click"
+                           select="concat('switchToTab(''', @id, ''', ''', @mode, ''')')"/>
+          </xsl:if>
+          <xsl:variable name="tabId" select="@id"/>
+          <xsl:value-of select="$strings/*[name() = $tabId]"/>
+        </a>
+      </li>
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
