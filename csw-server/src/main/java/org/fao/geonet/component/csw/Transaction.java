@@ -51,7 +51,6 @@ import org.fao.geonet.kernel.csw.services.getrecords.SearchController;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
-import org.fao.geonet.kernel.datamanager.base.BaseMetadataStatus;
 import org.fao.geonet.kernel.metadata.StatusActions;
 import org.fao.geonet.kernel.metadata.StatusActionsFactory;
 import org.fao.geonet.kernel.schema.MetadataSchema;
@@ -281,7 +280,12 @@ public class Transaction extends AbstractOperation implements CatalogService {
 
         IMetadataValidator validator = context.getBean(IMetadataValidator.class);
         validator.doValidate(us, schema, id, abstractMetadata.getXmlData(false), context.getLanguage(), false);
-        new AGIVValidation(context).addConformKeywords(abstractMetadata, true);
+        try {
+            new AGIVValidation(context).addConformKeywords(abstractMetadata, true);
+        } catch(Exception e) {
+            Log.debug("Error saving metadata during adding conform keywords to xml for metadata record with uuid '{}': '{}'.",
+                new Object[]{uuid, e.getMessage()});
+        }
 
         boolean isReviewer = us.getProfile().equals(Profile.Reviewer);
         boolean isAdmin = us.getProfile().equals(Profile.Administrator);
@@ -354,6 +358,7 @@ public class Transaction extends AbstractOperation implements CatalogService {
     private int updateTransaction(Element request, Element xml, ServiceContext context, Set<String> toIndex) throws Exception {
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
         DataManager dataMan = gc.getBean(DataManager.class);
+        IMetadataManager metadataManager = gc.getBean(IMetadataManager.class);
 
         if (context.getUserSession().getUserId() == null) {
             throw new NoApplicableCodeEx("User not authenticated.");
@@ -403,7 +408,8 @@ public class Transaction extends AbstractOperation implements CatalogService {
             boolean ufo = false;
             boolean index = false;
             String language = context.getLanguage();
-            dataMan.updateMetadata(context, id, xml, validate, ufo, index, language, changeDate, true);
+            metadataManager.updateMetadata(context, id, xml, validate, ufo, index, language, changeDate, true);
+            //dataMan.updateMetadata(context, id, xml, validate, ufo, index, language, changeDate, true);
 
             toIndex.add(id);
 

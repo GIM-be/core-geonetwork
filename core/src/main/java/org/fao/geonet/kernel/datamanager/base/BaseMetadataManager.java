@@ -853,18 +853,22 @@ public class BaseMetadataManager implements IMetadataManager {
 
         metadataUtils.checkMetadataWithSameUuidExist(uuid, metadata.getId());
 
-        // --- write metadata to dbms
-        getXmlSerializer().update(metadataId, metadataXml, changeDate, updateDateStamp, uuid, context);
-        // Notifies the metadata change to metatada notifier service
-        metadataUtils.notifyMetadataChange(metadataXml, metadataId);
-
 		try {
 			// --- do the validation last - it throws exceptions
 			if (session != null && validate) {
 				metadataValidator.doValidate(session, schema, metadataId, metadataXml, lang, false);
-                new AGIVValidation(context).addConformKeywords(metadataId, true);
+				try {
+                    metadataXml = new AGIVValidation(context).addConformKeywordsToElement(metadataXml, schema, Integer.parseInt(metadataId)).two();
+                } catch(Exception e) {
+                    LOGGER_DATA_MANAGER.debug("Error adding conform keyword for metadata record with uuid '{}': '{}'.",
+                        new Object[]{uuid, e.getMessage()});
+                }
 			}
-		} finally {
+        } finally {
+            // --- write metadata to dbms
+            getXmlSerializer().update(metadataId, metadataXml, changeDate, updateDateStamp, uuid, context);
+            // Notifies the metadata change to metatada notifier service
+            metadataUtils.notifyMetadataChange(metadataXml, metadataId);
 			if (index) {
 				// --- update search criteria
 				metadataIndexer.indexMetadata(metadataId, true, null);
