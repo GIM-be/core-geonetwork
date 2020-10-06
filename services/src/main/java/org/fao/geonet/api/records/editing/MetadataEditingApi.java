@@ -319,7 +319,12 @@ public class MetadataEditingApi {
             // Save validation if the forceValidationOnMdSave is enabled
             if (forceValidationOnMdSave) {
                 validator.doValidate(metadata, context.getLanguage());
-                new AGIVValidation(context).addConformKeywords(metadata, true);
+                try {
+                    new AGIVValidation(context).addConformKeywords(metadata, true);
+                } catch(Exception e) {
+                    Log.debug("Error saving metadata during adding conform keywords to xml for metadata record with uuid '{}': '{}'.",
+                        new Object[]{metadataUuid, e.getMessage()});
+                }
                 reindex = true;
             }
 
