@@ -19,6 +19,7 @@
   <xsl:include href="aiv-scripts/change-hierarchyLevel.xsl"/>
   <xsl:include href="aiv-scripts/change-MD_BrowseGraphic.xsl"/>
   <xsl:include href="aiv-scripts/change-DCPList.xsl"/>
+  <xsl:include href="aiv-scripts/change-distributionInfo.xsl"/>
 
   <!-- Copy all elements and attributes -->
   <xsl:template match="@*|node()">
