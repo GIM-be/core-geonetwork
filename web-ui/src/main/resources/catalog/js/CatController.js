@@ -801,6 +801,12 @@
       $http.get('../../warninghealthcheck')
         .success(healthCheckStatus)
         .error(healthCheckStatus);
+
+      $rootScope.currentNode = undefined;
+      $http.get('../api/records/status/node').then(function(response) {
+        $rootScope.currentNode = response.data;
+      });
+
     }]);
 
 })();

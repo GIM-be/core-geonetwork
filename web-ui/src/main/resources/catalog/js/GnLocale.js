@@ -59,8 +59,8 @@
   module.constant('$LOCALES', ['core']);
 
   module.factory('localeLoader', [
-    '$http', '$q', 'gnLangs', '$translate', '$timeout', '$rootScope', 'gnMetadataActions',
-    function($http, $q, gnLangs, $translate, $timeout, $rootScope, gnMetadataActions) {
+    '$http', '$q', 'gnLangs', '$translate', '$timeout', '$rootScope',
+    function($http, $q, gnLangs, $translate, $timeout, $rootScope) {
       return function(options) {
 
         function buildUrl(prefix, lang, value, suffix) {
@@ -120,7 +120,7 @@
 
         var nodeTranslationProm = $q(function (resolve, reject) {
           var unwatch = $rootScope.$watch(function () {
-            return gnMetadataActions.currentNode;
+            return $rootScope.currentNode;
           }, function (newValue) {
             if (newValue) {
               unwatch();
