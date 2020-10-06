@@ -230,7 +230,7 @@
                   //Default tab id for dcat-ap-for-services metadata is "defaultDataset" in order to differentiate it's label
                   //with "default" view.
                   'dcat-ap-for-services': function (md) {
-                    return 'defaultDataset';
+                    return md.type.includes('dataset') ? 'defaultDataset' : 'defaultService';
                   }
                 };
                 if (schemaCustomConfig) {
