@@ -474,15 +474,9 @@
         else return crs;
       };
 
-      this.currentNode = undefined;
-      var self = this;
-      $http.get('../api/records/status/node').then(function(response) {
-        self.currentNode = response.data;
-      });
-
       this.getAllowedStatusList = function (md, user) {
         var allowedStatusList;
-        switch (this.currentNode) {
+        switch ($rootScope.currentNode) {
           case 'MetadatacenterStatusActions':
             allowedStatusList = aivMetadatacenterStatusAction.getAllowedStatusList(md, user);
             break;
