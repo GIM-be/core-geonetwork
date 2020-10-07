@@ -30,7 +30,7 @@
         </a>
       </li>
       <li role="menuitem"
-          data-ng-if="md.getSchema()=='dcat-ap' && user.canEditRecord(md) && (user.isAdmin() || user.isReviewerForGroup(md.groupOwner))"
+          data-ng-if="md.getSchema()=='dcat-ap-for-services' && user.canEditRecord(md) && (user.isAdmin() || user.isReviewerForGroup(md.groupOwner))"
           data-ng-class="(
             md.isPublished() ||
             (allowPublishInvalidMd() === true) ||
