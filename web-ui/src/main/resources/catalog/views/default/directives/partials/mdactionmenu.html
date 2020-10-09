@@ -86,7 +86,7 @@
 
       <li role="menuitem"
           data-ng-repeat="allowedStatus in mdService.getAllowedStatusList(md, user)"
-          data-ng-if="user.canEditRecord(md, true) && isMdWorkflowEnable && md.isWorkflowEnabled() && allowedStatus != md.mdStatus && mdService.currentNode && md.getSchema() != 'dcat-ap'">
+          data-ng-if="user.canEditRecord(md, true) && isMdWorkflowEnable && md.isWorkflowEnabled() && allowedStatus != md.mdStatus && $root.currentNode && md.getSchema() != 'dcat-ap'">
         <a data-ng-href=""
            data-ng-click="mdService.openUpdateStatusPanel(getScope(), 'workflow', null, allowedStatus, allowedStatus + 50)">
           <!--<i class="fa fa-fw fa-file-o"></i>&nbsp;-->
