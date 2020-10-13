@@ -654,7 +654,8 @@
         removeDataset: function(onlinesrc) {
           var params = {
             uuid: gnCurrentEdit.uuid,
-            uuidref: onlinesrc.identifier
+            uuidref: onlinesrc.identifier,
+            idRef: onlinesrc.id
           };
           runProcess(this,
               setParams('datasets-remove', params));
