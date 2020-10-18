@@ -5,7 +5,7 @@
                 xmlns:srv="http://www.isotc211.org/2005/srv"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                xmlns:xlink="http://www.w3.org/1999/xlink">
+                xmlns:xlink="http://www.w3.org/1999/xlink" exclude-result-prefixes="#all">
 
   <!-- Match "GDI-Vlaanderen Trefwoorden" descriptiveKeywords block -->
   <xsl:template match="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[name() = ('gco:CharacterString', 'gmx:Anchor')] = $thesaurusTitleString]">

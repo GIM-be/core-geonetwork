@@ -281,7 +281,14 @@
           <gmd:title>
             <xsl:choose>
               <xsl:when test="$withTitleAnchor = true()">
-                <gmx:Anchor xlink:href="{$thesauri/thesaurus[key = $currentThesaurus]/defaultNamespace}">
+                <xsl:variable name="xlinkHref" select="$thesauri/thesaurus[key = $currentThesaurus]/defaultNamespace"/>
+                <xsl:variable name="xlinkHrefToBe">
+                  <xsl:choose>
+                    <xsl:when test="contains($xlinkHref,'#')"><xsl:value-of select="substring-before($xlinkHref,'#')"/></xsl:when>
+                    <xsl:otherwise><xsl:value-of select="$xlinkHref"/></xsl:otherwise>
+                  </xsl:choose>
+                </xsl:variable>
+                <gmx:Anchor xlink:href="{$xlinkHrefToBe}">
                   <xsl:value-of select="$thesauri/thesaurus[key = $currentThesaurus]/title"/>
                 </gmx:Anchor>
               </xsl:when>
