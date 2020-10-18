@@ -60,6 +60,7 @@
   </xsl:variable>
 
   <xsl:variable name="inspireThemesStartStringForKeywordMapping">GEMET - INSPIRE them</xsl:variable>
+  <xsl:variable name="inspireConceptsStartStringForKeywordMapping">GEMET - Concept</xsl:variable>
   <xsl:variable name="taxonomyStartStringForKeywordMapping">Verordening (EG) nr. 1205/2008</xsl:variable>
   <xsl:variable name="gdiVlaanderenTrefwoordenStartStringForKeywordMapping">GDI-Vlaanderen Trefwoorden</xsl:variable>
   <xsl:variable name="gdiVlaanderenServiceTypesStartStringForKeywordMapping">GDI-Vlaanderen Service Types</xsl:variable>
@@ -99,10 +100,10 @@
                 <xsl:choose>
                   <xsl:when test="$xlink!=$mappedXlink">
                     <xsl:copy copy-namespaces="no">
-                      <xsl:element name="gmx:Anchor">
+                      <gmx:Anchor>
                         <xsl:attribute name="xlink:href" select="$mappedXlink"/>
                         <xsl:value-of select="$keyword"/>
-                      </xsl:element>
+                      </gmx:Anchor>
                     </xsl:copy>
                     <xsl:message select="concat('The xlink:href attribute ', $xlink,' of the gmx:Anchor keyword ',$keyword,' is mapped to ', $mappedXlink)" />
                   </xsl:when>
@@ -119,92 +120,16 @@
             </xsl:choose>
           </xsl:when>
           <xsl:when test="starts-with($mappedThesaurusTitle,$taxonomyStartStringForKeywordMapping)">
-            <!--xsl:variable name="keywordListToMap">('humanCatalogueViewer',
-              'humanGeographicViewer',
-              'humanGeographicSpreadsheetViewer',
-              'humanChainDefinitionEditor',
-              'humanWorkflowEnactmentManager',
-              'humanGeographicFeatureEditor',
-              'humanGeographicSymbolEditor',
-              'humanFeatureGeneralizationEditor',
-              'humanGeographicDataStructureViewer',
-              'infoManagementService',
-              'infoFeatureAccessService',
-              'infoMapAccessService',
-              'infoCoverageAccessService',
-              'infoSensorDescriptionService',
-              'infoProductAccessService',
-              'infoFeatureTypeService',
-              'infoCatalogueService',
-              'infoRegistryService',
-              'infoGazetteerService',
-              'infoOrderHandlingService',
-              'infoStandingOrderService',
-              'taskManagementService',
-              'chainDefinitionService',
-              'workflowEnactmentService',
-              'subscriptionService',
-              'spatialProcessingService',
-              'spatialCoordinateConversionService',
-              'spatialCoordinateTransformationService',
-              'spatialCoverageVectorConversionService',
-              'spatialImageCoordinateConversionService',
-              'spatialRectificationService',
-              'spatialOrthorectificationService',
-              'spatialSensorGeometryModelAdjustmentService',
-              'spatialImageGeometryModelConversionService',
-              'spatialSubsettingService',
-              'spatialSamplingService',
-              'spatialTilingChangeService',
-              'spatialDimensionMeasurementService',
-              'spatialFeatureManipulationService',
-              'spatialFeatureMatchingService',
-              'spatialFeatureGeneralizationService',
-              'spatialRouteDeterminationService',
-              'spatialPositioningService',
-              'spatialProximityAnalysisService',
-              'thematicProcessingService',
-              'thematicGoparameterCalculationService',
-              'thematicClassificationService',
-              'thematicFeatureGeneralizationService',
-              'thematicSubsettingService',
-              'thematicSpatialCountingService',
-              'thematicChangeDetectionService',
-              'thematicGeographicInformationExtractionService',
-              'thematicImageProcessingService',
-              'thematicReducedResolutionGenerationService',
-              'thematicImageManipulationService',
-              'thematicImageUnderstandingService',
-              'thematicImageSynthesisService',
-              'thematicMultibandImageManipulationService',
-              'thematicObjectDetectionService',
-              'thematicGeoparsingService',
-              'thematicGeocodingService',
-              'temporalProcessingService',
-              'temporalReferenceSystemTransformationService',
-              'temporalSubsettingService',
-              'temporalSamplingService',
-              'temporalProximityAnalysisService',
-              'metadataProcessingService',
-              'metadataStatisticalCalculationService',
-              'metadataGeographicAnnotationService',
-              'comService',
-              'comEncodingService',
-              'comTransferService',
-              'comGeographicCompressionService',
-              'comGeographicFormatConversionService',
-              'comMessagingService',
-              'comRemoteFileAndExecutableManagement')</xsl:variable-->
             <xsl:variable name="concept" select="$currentThesaurus/skos:Concept[ends-with(@rdf:about,$keyword)]" />
             <xsl:variable name="rdfAboutNL" select="$concept/skos:prefLabel[@xml:lang = 'nl']" />
             <xsl:choose>
               <xsl:when test="$rdfAboutNL!=''">
                 <xsl:message select="concat('The new concept is found ', $concept/@rdf:about)" />
                 <xsl:copy copy-namespaces="no">
-                  <xsl:element name="gmx:Anchor">
+                  <gmx:Anchor>
                     <xsl:attribute name="xlink:href" select="$concept/@rdf:about"/>
                     <xsl:value-of select="$rdfAboutNL"/>
-                  </xsl:element>
+                  </gmx:Anchor>
                 </xsl:copy>
                 <xsl:message select="concat('The gco:CharacterString keyword ',$keyword,' is transformed to a gmx:Anchor with xlink:href ', $concept/@rdf:about)" />
               </xsl:when>
@@ -226,10 +151,10 @@
               <xsl:when test="$xlink!=''">
                 <xsl:message select="concat('The concept is found ', $xlink)" />
                 <xsl:copy copy-namespaces="no">
-                  <xsl:element name="gmx:Anchor">
+                  <gmx:Anchor>
                     <xsl:attribute name="xlink:href" select="$xlink"/>
                     <xsl:value-of select="$keyword"/>
-                  </xsl:element>
+                  </gmx:Anchor>
                 </xsl:copy>
                 <xsl:message select="concat('The gco:CharacterString keyword ',$keyword,' is transformed to a gmx:Anchor with xlink:href ', $xlink)" />
               </xsl:when>
@@ -237,9 +162,9 @@
                 <xsl:message select="'The concept was not found because the keyword is empty'" />
                 <xsl:copy copy-namespaces="no">
                   <xsl:attribute name="gco:nilReason" select="'missing'"/>
-                  <xsl:element name="gmx:Anchor">
+                  <gmx:Anchor>
                     <xsl:attribute name="xlink:href" select="''"/>
-                  </xsl:element>
+                  </gmx:Anchor>
                 </xsl:copy>
                 <xsl:message select="concat('The empty gco:CharacterString keyword ',$keyword,' is transformed to an empty gmx:Anchor with empty xlink:href ')" />
               </xsl:when>
@@ -252,7 +177,17 @@
         </xsl:choose>
       </xsl:for-each>
       <xsl:message select="concat('Transforming keywords for thesaurus with name ',$thesaurusTitle,' (mapped to ', $mappedThesaurusTitle,') ended')" />
-      <xsl:apply-templates select="gmd:type"/>
+      <xsl:variable name="codeListValue">
+        <xsl:choose>
+          <xsl:when test="gmd:type/@codeListValue!=''"><xsl:value-of select="gmd:type/@codeListValue"/></xsl:when>
+          <xsl:when test="contains($thesaurusTitle,'Vlaamse regio')">place</xsl:when>
+          <xsl:otherwise>theme</xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <gmd:type>
+        <gmd:MD_KeywordTypeCode codeListValue="{$codeListValue}"
+                                codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"/>
+      </gmd:type>
       <xsl:apply-templates select="gmd:thesaurusName"/>
     </xsl:copy>
   </xsl:template>
@@ -295,6 +230,9 @@
         </xsl:when>
         <xsl:when test="starts-with($mappedThesaurusTitle,$gdiVlaanderenRegiosStartStringForKeywordMapping)">
           <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Vlaamse-Administratieve-Eenheden"><xsl:value-of select="$mappedThesaurusTitle"/></gmx:Anchor>
+        </xsl:when>
+        <xsl:when test="starts-with($mappedThesaurusTitle,$inspireConceptsStartStringForKeywordMapping)">
+          <gmx:Anchor xlink:href="http://www.eionet.europa.eu/gemet"><xsl:value-of select="$mappedThesaurusTitle"/></gmx:Anchor>
         </xsl:when>
         <xsl:otherwise><xsl:apply-templates select="*"/></xsl:otherwise>
       </xsl:choose>
@@ -366,13 +304,13 @@
     <xsl:variable name="rdfAboutEN" select="$thesaurus/skos:Concept[skos:prefLabel[@xml:lang = 'en'] = $keyword]/@rdf:about" />
     <xsl:choose>
       <xsl:when test="$rdfAboutInMdLanguage">
-        <xsl:value-of select="$rdfAboutInMdLanguage"/>
+        <xsl:value-of select="$rdfAboutInMdLanguage[1]"/>
       </xsl:when>
       <xsl:when test="$rdfAboutNL">
-        <xsl:value-of select="$rdfAboutNL"/>
+        <xsl:value-of select="$rdfAboutNL[1]"/>
       </xsl:when>
       <xsl:when test="$rdfAboutEN">
-        <xsl:value-of select="$rdfAboutEN"/>
+        <xsl:value-of select="$rdfAboutEN[1]"/>
       </xsl:when>
       <xsl:otherwise></xsl:otherwise>
     </xsl:choose>

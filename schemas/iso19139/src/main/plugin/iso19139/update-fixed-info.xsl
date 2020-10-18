@@ -236,7 +236,7 @@
   <xsl:template match="gmd:dateStamp" priority="2000">
     <xsl:choose>
       <xsl:when test="/root/env/changeDate">
-        <xsl:copy>
+        <xsl:copy copy-namespaces="no">
           <gco:Date>
             <xsl:value-of select="format-dateTime(/root/env/changeDate,'[Y0001]-[M01]-[D01]')"/>
           </gco:Date>
