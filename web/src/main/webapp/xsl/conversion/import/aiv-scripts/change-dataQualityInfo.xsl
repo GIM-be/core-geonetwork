@@ -17,6 +17,14 @@
     priority="1000"/>
 
   <xsl:template
+    match="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:explanation[@gco:nilReason='missing' or gco:CharacterString='']"
+    priority="1000">
+    <xsl:copy copy-namespaces="no">
+      <gco:CharacterString>Geharmoniseerd volgens INSPIRE verordening</gco:CharacterString>
+    </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template
     match="gmd:DQ_AbsoluteExternalPositionalAccuracy/gmd:measureIdentification |
       gmd:DQ_CompletenessOmission/gmd:measureIdentification |
       gmd:DQ_CompletenessCommission/gmd:measureIdentification |
