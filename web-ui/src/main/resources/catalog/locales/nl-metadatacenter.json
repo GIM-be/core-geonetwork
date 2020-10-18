@@ -28,5 +28,8 @@
   "mdStatusTitle-61": "Ingediend voor verwijderen",
   "mdStatusTitle-62": "Verwijderd",
   "mdStatusTitle-63": "Afgekeurd door validator Informatie Vlaanderen en niet gedepubliceerd",
-  "mdStatusTitle-64": "Afgekeurd door validator Informatie Vlaanderen en niet verwijderd"
+  "mdStatusTitle-64": "Afgekeurd door validator Informatie Vlaanderen en niet verwijderd",
+  "Administrator": "Admin",
+  "Reviewer": "Hoofdeditor",
+  "Editor": "Editor"
 }
