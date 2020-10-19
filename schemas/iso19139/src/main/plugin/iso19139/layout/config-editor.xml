@@ -525,6 +525,7 @@
       <name>srv:name</name>
       <name>srv:invocationName</name>
       <name>srv:serviceTypeVersion</name>
+      <name>srv:accessProperties</name>
       <name>srv:operationName</name>
       <name>srv:identifier</name>
       <name>srv:serviceType</name>
@@ -3369,10 +3370,11 @@
 <!--            </field>-->
             <!-- Service couplingType -->
             <field xpath="srv:couplingType" />
+            <field xpath="srv:accessProperties/gmd:MD_StandardOrderProcess/gmd:fees" del="../.."/>
 
             <section xpath="srv:operatesOn" />
             <!-- Operates on -->
-            <section name="srv:operatesOn" per="srv:operatesOn" required="true()">
+            <!--section name="srv:operatesOn" per="srv:operatesOn" required="true()">
               <field templateModeOnly="true" notDisplayedIfMissing="true"
                      xpath=".">
                 <template>
@@ -3389,7 +3391,7 @@
                   </snippet>
                 </template>
               </field>
-            </section>
+            </section-->
           </section>
 
           <!-- For dataset(series) and services-->

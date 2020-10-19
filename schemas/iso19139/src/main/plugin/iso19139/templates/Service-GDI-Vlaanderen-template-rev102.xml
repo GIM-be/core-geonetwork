@@ -394,6 +394,13 @@
       <srv:serviceTypeVersion>
         <gco:CharacterString/>
       </srv:serviceTypeVersion>
+      <srv:accessProperties>
+        <gmd:MD_StandardOrderProcess>
+          <gmd:fees gco:nilReason="missing">
+            <gco:CharacterString/>
+          </gmd:fees>
+        </gmd:MD_StandardOrderProcess>
+      </srv:accessProperties>
       <srv:extent>
         <gmd:EX_Extent>
           <gmd:description>
