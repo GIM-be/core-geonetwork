@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
   ~ Copyright (C) 2001-2016 Food and Agriculture Organization of the
   ~ United Nations (FAO-UN), United Nations World Food Programme (WFP)
@@ -22,1087 +21,793 @@
   ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
+  <!--	xmlns:wcs="http://www.opengis.net/wcs" -->
+<xsl:stylesheet 
+	xmlns="http://www.isotc211.org/2005/gmd" 
+	xmlns:gco="http://www.isotc211.org/2005/gco" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:srv="http://www.isotc211.org/2005/srv" 
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	xmlns:wfs="http://www.opengis.net/wfs" 
+	 
+	xmlns:ows="http://www.opengis.net/ows" 
+	xmlns:ows11="http://www.opengis.net/ows/1.1" 
+	xmlns:ows2="http://www.opengis.net/ows/2.0" 
 
-<xsl:stylesheet xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:srv="http://www.isotc211.org/2005/srv"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns:wfs="http://www.opengis.net/wfs"
-                xmlns:ows="http://www.opengis.net/ows"
-                xmlns:ows11="http://www.opengis.net/ows/1.1"
-                xmlns:ows2="http://www.opengis.net/ows/2.0"
-                xmlns:wcs="http://www.opengis.net/wcs"
-                xmlns:wms="http://www.opengis.net/wms"
-                xmlns:wps="http://www.opengeospatial.net/wps"
-                xmlns:wps1="http://www.opengis.net/wps/1.0.0"
-                xmlns:wps2="http://www.opengis.net/wps/2.0"
-                xmlns:gml="http://www.opengis.net/gml"
-                xmlns:math="http://exslt.org/math"
-                xmlns:exslt="http://exslt.org/common"
-                xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0"
-                version="2.0"
-                xmlns="http://www.isotc211.org/2005/gmd"
-                extension-element-prefixes="math exslt wcs ows wps wps1 wps2 ows11 wfs gml">
+	xmlns:wcs="http://www.opengis.net/wcs"
+	xmlns:wcs2="http://www.opengis.net/wcs/2.0"
+		
+	xmlns:wms="http://www.opengis.net/wms" 
+	xmlns:wmts="http://www.opengis.net/wmts/1.0" 
+	xmlns:wps="http://www.opengeospatial.net/wps" 
+	xmlns:wps1="http://www.opengis.net/wps/1.0.0" 
+	xmlns:wps2="http://www.opengis.net/wps/2.0" 
+	xmlns:gml="http://www.opengis.net/gml" 
+	xmlns:math="http://exslt.org/math" 
+	xmlns:exslt="http://exslt.org/common" 
+	xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0" 
+	xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0" 
+	xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0"
+	xmlns:gmx="http://www.isotc211.org/2005/gmx" 
+	xmlns:theme="http://inspire.ec.europa.eu/theme_register"
+    xmlns:grg="http://www.isotc211.org/2005/grg"
+	version="2.0" 
+	extension-element-prefixes="math exslt wcs wcs2 ows ows11 ows2 wps wps1 wps2 ows11 wfs gml inspire_common inspire_vs" 
+	exclude-result-prefixes="#all">
 
-  <!-- ============================================================================= -->
+	<!--variabelen gebruikt in template Keywords-->
+	<xsl:variable name="gdi-vlaanderen-regios-thesaurus" select="'GDI-Vlaanderen regio''s'"/>
+	<xsl:variable name="gdi-vlaanderen-regios-thesaurus-anchor-href" select="'https://'"/>
+	<xsl:variable name="gdi-vlaanderen-regios-thesaurus-anchor-value" select="'Regios'"/>
+	
+	<xsl:variable name="gdi-vlaanderen-service-types-thesaurus" select="'GDI-Vlaanderen Service Types'"/>
+<!--	PETER:old value	<xsl:variable name="gdi-vlaanderen-service-types-thesaurus-anchor-href" select="'https://www.geopunt.be/voor-experts/metadata/metadata-best-practices-en-richtlijnen'"/>-->
+	<xsl:variable name="gdi-vlaanderen-service-types-thesaurus-anchor-href" select="'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Service-Types'"/> 
+	<xsl:variable name="gdi-vlaanderen-service-types-thesaurus-anchor-value" select="'GDI-Vlaanderen Service Types'"/>
+	
+	<xsl:variable name="gdi-vlaanderen-trefwoorden-thesaurus" select="'GDI-Vlaanderen Trefwoorden'"/>
+<!-- PETER: old value	<xsl:variable name="gdi-vlaanderen-trefwoorden-thesaurus-anchor-href" select="'https://www.geopunt.be/voor-experts/metadata/metadata-best-practices-en-richtlijnen'"/> -->
+	<xsl:variable name="gdi-vlaanderen-trefwoorden-thesaurus-anchor-href" select="'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden'"/>
+	<xsl:variable name="gdi-vlaanderen-trefwoorden-thesaurus-anchor-value" select="'GDI-Vlaanderen Trefwoorden'"/>
+	<!--????????-->
+	<xsl:variable name="gemet-thesaurus" select="'GEMET - Concepten, versie 2.4'"/>
+	<xsl:variable name="gemet-thesaurus-anchor-href" select="'https://'"/>
+	<xsl:variable name="gemet-thesaurus-anchor-value" select="'GEMET - Concepten, versie 2.4'"/>
+	
+	<xsl:variable name="inspire-service-taxonomy-thesaurus" select="'D.4 van de verordening (EG) NR. 1205/2008 van de Commissie'"/>
+	<xsl:variable name="inspire-service-taxonomy-thesaurus-anchor-href" select="'http://data.europa.eu/eli/reg/2008/1205'"/>
+	<xsl:variable name="inspire-service-taxonomy-thesaurus-anchor-value" select="'Verordening (EG) nr. 1205/2008 van de Commissie van 3 december 2008 ter uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende metagegevens'"/>
+	
+	<xsl:variable name="inspire-theme-thesaurus" select="'GEMET - INSPIRE themes, version 1.0'"/>
+	<xsl:variable name="inspire-theme-thesaurus-anchor-href" select="'http://inspire.ec.europa.eu/theme'"/>
+	<xsl:variable name="inspire-theme-thesaurus-anchor-value" select="'GEMET - INSPIRE themes, version 1.0'"/>
 
-  <xsl:template match="*" mode="SrvDataIdentification">
-    <xsl:param name="topic"/>
-    <xsl:param name="ows"/>
+	<!-- ============================================================================= -->
+	<xsl:template match="*" mode="SrvDataIdentification">
+		<xsl:param name="topic"/> <!--parameter nodig ???-->
+		<xsl:param name="ows"/>
+		<xsl:param name="wfs"/> <!--parameter nodig ???-->
+		<xsl:variable name="s" select="Service|wfs:Service|wms:Service|ows:ServiceIdentification|ows11:ServiceIdentification|ows2:ServiceIdentification|wcs:Service"/>
+		<!-- ============================================================================= -->
+		<!-- === citation OK-->
+		<!-- ============================================================================= -->			
+		<citation>
+			<CI_Citation>
+				<title>
+					<gco:CharacterString>
+						<!--	<xsl:value-of select="$ows"/>-->
+						<xsl:choose>
+							<xsl:when test="$ows='true'">
+								<xsl:value-of select="
+								
+									
+									ows11:ServiceIdentification/ows11:Title|
+									ows:ServiceIdentification/ows:Title|							
+									ows2:ServiceIdentification/ows2:Title|
 
-    <xsl:variable name="s"
-                  select="Service|wfs:Service|wms:Service|ows:ServiceIdentification|ows11:ServiceIdentification|ows2:ServiceIdentification|wcs:Service"/>
-
-    <citation>
-      <CI_Citation>
-        <title>
-          <gco:CharacterString>
-            <xsl:choose>
-              <xsl:when test="$ows='true'">
-                <xsl:value-of select="ows:ServiceIdentification/ows:Title|
-                          ows11:ServiceIdentification/ows11:Title|
-                          /wps1:Capabilities/ows11:ServiceIdentification/ows11:Title|
-                          /wps2:Capabilities/ows2:ServiceIdentification/ows2:Title"/>
-              </xsl:when>
-              <xsl:when test="name(.)='WFS_Capabilities'">
-                <xsl:value-of select="wfs:Service/wfs:Title"/>
-              </xsl:when>
-              <xsl:when test="name(.)='WMS_Capabilities'">
-                <xsl:value-of select="wms:Service/wms:Title"/>
-              </xsl:when>
-              <xsl:when test="name(.)='WMT_MS_Capabilities'">
-                <xsl:value-of select="Service/Title"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="wcs:Service/wcs:label"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </gco:CharacterString>
-        </title>
-        <date>
-          <CI_Date>
-            <date>
-              <xsl:choose>
-                <xsl:when
-                  test="//*:ExtendedCapabilities/inspire_common:TemporalReference/inspire_common:DateOfLastRevision">
-                  <gco:Date>
-                    <xsl:value-of
-                      select="//*:ExtendedCapabilities/inspire_common:TemporalReference/inspire_common:DateOfLastRevision"/>
-                  </gco:Date>
-                </xsl:when>
-                <xsl:otherwise>
-                  <gco:DateTime>
-                    <xsl:variable name="df">[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]</xsl:variable>
-                    <xsl:value-of select="format-dateTime(current-dateTime(),$df)"/>
-                  </gco:DateTime>
-                </xsl:otherwise>
-              </xsl:choose>
-            </date>
-            <dateType>
-              <CI_DateTypeCode codeList="./resources/codeList.xml#CI_DateTypeCode"
-                               codeListValue="revision"/>
-            </dateType>
-          </CI_Date>
-        </date>
-      </CI_Citation>
-    </citation>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <abstract>
-      <gco:CharacterString>
-        <xsl:choose>
-          <xsl:when test="$ows='true'">
-            <xsl:value-of select="ows:ServiceIdentification/ows:Abstract|
+									/wcs:Capabilities/ows:ServiceIdentification/ows:Title
+									/wcs:Capabilities/ows2:ServiceIdentification/ows2:Title|
+									/wcs:Capabilities/ows11:ServiceIdentification/ows11:Title|
+								
+									/wps1:Capabilities/ows11:ServiceIdentification/ows11:Title|
+								    /wps2:Capabilities/ows2:ServiceIdentification/ows2:Title
+								  "/>
+							</xsl:when>
+							<xsl:when test="name(.)='WFS_Capabilities'">
+								<xsl:value-of select="wfs:Service/wfs:Title"/>
+							</xsl:when>
+							<xsl:when test="name(.)='WMS_Capabilities'">
+								<xsl:value-of select="wms:Service/wms:Title"/>
+							</xsl:when>
+							<xsl:when test="name(.)='WMT_MS_Capabilities'">
+								<xsl:value-of select="Service/Title"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="wcs:Service/wcs:title"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</gco:CharacterString>
+				</title>
+				<!-- DateOfLastRevision -->
+				<xsl:variable name="DateOfRevision">
+					<xsl:if test="//*:ExtendedCapabilities/inspire_common:TemporalReference/inspire_common:DateOfLastRevision">
+						<xsl:value-of select="//*:ExtendedCapabilities/inspire_common:TemporalReference/inspire_common:DateOfLastRevision"/>
+					</xsl:if>
+				</xsl:variable>
+				<xsl:if test="string-length($DateOfRevision)>0">
+					<date>
+						<CI_Date>
+							<date>
+								<gco:Date>
+									<xsl:value-of select="$DateOfRevision"/>
+								</gco:Date>
+							</date>
+							<dateType>
+								<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision"/>
+							</dateType>
+						</CI_Date>
+					</date>
+				</xsl:if>
+				<!-- DateOfCreation -->
+				<xsl:variable name="DateOfCreation">
+					<xsl:if test="//*:ExtendedCapabilities/inspire_common:TemporalReference/inspire_common:DateOfCreation">
+						<xsl:value-of select="//*:ExtendedCapabilities/inspire_common:TemporalReference/inspire_common:DateOfCreation"/>
+					</xsl:if>
+				</xsl:variable>
+				<xsl:if test="string-length($DateOfCreation)>0">
+					<date>
+						<CI_Date>
+							<date>
+								<gco:Date>
+									<xsl:value-of select="$DateOfCreation"/>
+								</gco:Date>
+							</date>
+							<dateType>
+								<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation"/>
+							</dateType>
+						</CI_Date>
+					</date>
+				</xsl:if>
+				<!-- DateOfPublication -->
+				<xsl:variable name="DateOfPublication">
+					<xsl:if test="//*:ExtendedCapabilities/inspire_common:TemporalReference/inspire_common:DateOfPublication">
+						<xsl:value-of select="//*:ExtendedCapabilities/inspire_common:TemporalReference/inspire_common:DateOfPublication"/>
+					</xsl:if>
+				</xsl:variable>
+				<xsl:if test="string-length($DateOfPublication)>0">
+					<date>
+						<CI_Date>
+							<date>
+								<gco:Date>
+									<xsl:value-of select="$DateOfPublication"/>
+								</gco:Date>
+							</date>
+							<dateType>
+								<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+							</dateType>
+						</CI_Date>
+					</date>
+				</xsl:if>
+				<!-- DateOfPublication in case of no DateOfPublication yet -->
+				<xsl:if test="string-length($DateOfPublication)=0">
+					<date>
+						<CI_Date>
+							<date>
+								<gco:Date>
+									<xsl:variable name="df">[Y0001]-[M01]-[D01]</xsl:variable>
+									<xsl:value-of select="format-date(current-date(),$df)"/>
+								</gco:Date>
+							</date>
+							<dateType>
+								<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+							</dateType>
+						</CI_Date>
+					</date>
+				</xsl:if>
+			</CI_Citation>
+		</citation>
+		
+		<!-- ============================================================================= -->
+		<!-- === abstract OK-->
+		<!-- ============================================================================= -->	
+		<abstract>
+			<gco:CharacterString>
+				<xsl:choose>
+					<xsl:when test="$ows='true'">
+						<xsl:value-of select="normalize-space(ows:ServiceIdentification/ows:Abstract|
                       ows11:ServiceIdentification/ows11:Abstract|
                       /wps1:Capabilities/ows11:ServiceIdentification/ows11:Abstract|
-                      /wps2:Capabilities/ows2:ServiceIdentification/ows2:Abstract"/>
-          </xsl:when>
-          <xsl:when test="name(.)='WFS_Capabilities'">
-            <xsl:value-of select="wfs:Service/wfs:Abstract"/>
-          </xsl:when>
-          <xsl:when test="name(.)='WMS_Capabilities'">
-            <xsl:value-of select="wms:Service/wms:Abstract"/>
-          </xsl:when>
-          <xsl:when test="name(.)='WMT_MS_Capabilities'">
-            <xsl:value-of select="Service/Abstract"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="wcs:Service/wcs:description"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </gco:CharacterString>
-    </abstract>
+                     /wps2:Capabilities/ows2:ServiceIdentification/ows2:Abstract)"/>
+					</xsl:when>
+					<xsl:when test="name(.)='WFS_Capabilities'">
+						<xsl:value-of select="wfs:Service/wfs:Abstract"/>
+					</xsl:when>
+					<xsl:when test="name(.)='WMS_Capabilities'">
+						<xsl:value-of select="wms:Service/wms:Abstract"/>
+					</xsl:when>
+					<xsl:when test="name(.)='WMT_MS_Capabilities'">
+						<xsl:value-of select="Service/Abstract"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="wcs:Service/wcs:description"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</gco:CharacterString>
+		</abstract>
 
-    <!--idPurp-->
+		<!-- ============================================================================= -->
+		<!-- === pointOfContact OK-->
+		<!-- ============================================================================= -->	
+		<xsl:for-each select="//ContactInformation|//wcs:responsibleParty|//wms:responsibleParty|wms:Service/wms:ContactInformation|//ows:ServiceProvider|//ows11:ServiceProvider">
+			<pointOfContact>
+				<CI_ResponsibleParty>
+					<xsl:apply-templates select="." mode="RespPartyCustodian"/>
+				</CI_ResponsibleParty>
+			</pointOfContact>
+		</xsl:for-each>
+		
+		<!-- ============================================================================= -->
+		<!-- === descriptiveKeywords OK-->
+		<!-- ============================================================================= -->			
+		<descriptiveKeywords>
+			<MD_Keywords>
+				<keyword>
+					<xsl:variable name="service" select="//inspire_common:MandatoryKeyword/inspire_common:KeywordValue"/>
+					<xsl:choose>
+						<xsl:when test="$service='infoMapAccessService'"> <!--WMS/WMTS-->
+							<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoMapAccessService">
+								Dienst kaarttoegang
+							</gmx:Anchor>
+						</xsl:when>
+						<xsl:when test="$service='infoFeatureAccessService'">	<!--WFS-->
+							<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureAccessService">
+								Dienst objecttoegang
+							</gmx:Anchor>
+						</xsl:when>
+						<xsl:when test="$service='infoCatalogueService'">	<!--CSW-->
+							<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService">
+								Catalogusdienst
+							</gmx:Anchor>
+						</xsl:when>
+						<xsl:when test="$service='infoCoverageAccessService'"> <!--WCS-->
+							<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCoverageAccessService">
+								Dienst rastergegevenstoegang
+							</gmx:Anchor>
+						</xsl:when>
+					</xsl:choose>
+				</keyword>
+				<thesaurusName>
+					<CI_Citation>
+						<title>
+							<gmx:Anchor xlink:href="{$inspire-service-taxonomy-thesaurus-anchor-href}">
+										<xsl:value-of select="$inspire-service-taxonomy-thesaurus-anchor-value"/>
+							</gmx:Anchor>
+						</title>
+						<date>
+							<CI_Date>
+								<date>
+									<gco:Date>2008-12-03</gco:Date>
+								</date>
+								<dateType>
+									<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+								</dateType>
+							</CI_Date>
+						</date>
+					</CI_Citation>
+				</thesaurusName>
+			</MD_Keywords>
+		</descriptiveKeywords>
+		
+		<!-- ============================================================================= -->
+		<!-- === Service Type als Keyword met Anchor voor WFS|WMTS === -->
+		<!-- ============================================================================= -->
+		<xsl:choose>
+			<xsl:when test="$ows='true'">
+				<descriptiveKeywords>
+					<MD_Keywords>
+						<keyword>
+							<gco:CharacterString>
+								<xsl:value-of select="//ows:ServiceIdentification/ows:ServiceType|//ows11:ServiceIdentification/ows11:ServiceType"/>
+							</gco:CharacterString>
+						</keyword>
+						<thesaurusName>
+							<CI_Citation>
+								<title>
+									<gmx:Anchor xlink:href="{$gdi-vlaanderen-service-types-thesaurus-anchor-href}">
+												<xsl:value-of select="$gdi-vlaanderen-service-types-thesaurus-anchor-value"/>
+									</gmx:Anchor>
+								</title>
+								<date>
+									<CI_Date>
+										<date>
+											<gco:Date>2015-03-16</gco:Date>
+										</date>
+										<dateType>
+											<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+										</dateType>
+									</CI_Date>
+								</date>
+							</CI_Citation>
+						</thesaurusName>							
+					</MD_Keywords>
+				</descriptiveKeywords>
+			</xsl:when>
+		</xsl:choose>
+		
+		<!-- ============================================================================= -->
+		<!-- === aanroepen template Keywords === -->
+		<!-- ============================================================================= -->
+		<xsl:for-each select="$s/KeywordList|$s/wms:KeywordList|$s/wfs:keywords|$s/wcs:keywords|$s/ows:Keywords|$s/ows11:Keywords">
+			<xsl:apply-templates select="." mode="Keywords"/>
+		</xsl:for-each>
+		
+		<!-- ============================================================================= -->
+		<!-- === MD_LegalConstraints OK-->
+		<!-- ============================================================================= -->
+		<resourceConstraints>
+			<MD_LegalConstraints>
+				<useLimitation>
+					<gco:CharacterString>Toegangs- en (her)gebruiksvoorwaarden</gco:CharacterString>
+				</useLimitation>
+				<useConstraints>
+					<MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions"/>
+				</useConstraints>
+				<otherConstraints>
+					<gmx:Anchor xlink:href="https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht">Gebruiksrecht geografische webdiensten (agentschap Informatie Vlaanderen)</gmx:Anchor>	
+				</otherConstraints>
+			</MD_LegalConstraints>
+		</resourceConstraints>
 
-    <status>
-      <MD_ProgressCode codeList="./resources/codeList.xml#MD_ProgressCode"
-                       codeListValue="completed"/>
-    </status>
+		<resourceConstraints>
+			<MD_LegalConstraints>
+				<useLimitation>
+					<gco:CharacterString>Beperking(en) op de publieke toegang</gco:CharacterString>
+				</useLimitation>
+				<accessConstraints>
+					<MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions"/>
+				</accessConstraints>
+				<otherConstraints>
+					<gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">Geen beperkingen op de publieke toegang</gmx:Anchor>
+				</otherConstraints>
+			</MD_LegalConstraints>
+		</resourceConstraints>
+		
+		<!-- ============================================================================= -->
+		<!-- === srv:serviceType OK-->
+		<!-- ============================================================================= -->
+		<!--
 
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		servicetype in dutch
 
-    <xsl:for-each
-      select="//ContactInformation|//wcs:responsibleParty|//wms:responsibleParty|wms:Service/wms:ContactInformation">
-      <pointOfContact>
-        <CI_ResponsibleParty>
-          <xsl:apply-templates select="." mode="RespParty"/>
-        </CI_ResponsibleParty>
-      </pointOfContact>
-    </xsl:for-each>
-    <xsl:for-each select="//ows:ServiceProvider|//ows11:ServiceProvider">
-      <pointOfContact>
-        <CI_ResponsibleParty>
-          <xsl:apply-templates select="." mode="RespParty"/>
-        </CI_ResponsibleParty>
-      </pointOfContact>
-    </xsl:for-each>
+		<xsl:variable name="ServiceType" select="//*:ExtendedCapabilities/inspire_common:SpatialDataServiceType"/>
 
-    <!-- resMaint -->
-    <!-- graphOver -->
-    <!-- dsFormat-->
-    <xsl:for-each
-      select="$s/KeywordList|$s/wfs:keywords|$s/wcs:keywords|$s/ows:Keywords|$s/ows11:Keywords|$s/ows2:Keywords">
-      <descriptiveKeywords>
-        <MD_Keywords>
-          <xsl:apply-templates select="." mode="Keywords"/>
-        </MD_Keywords>
-      </descriptiveKeywords>
-    </xsl:for-each>
-
-
-    <!-- Add keyword part of a vocabulary -->
-    <xsl:for-each-group select="$s/wms:KeywordList/wms:Keyword[@vocabulary]" group-by="@vocabulary">
-      <descriptiveKeywords>
-        <MD_Keywords>
-          <xsl:for-each select="../wms:Keyword[@vocabulary = current-grouping-key()]">
-            <keyword>
-              <gco:CharacterString>
-                <xsl:value-of select="."/>
-              </gco:CharacterString>
-            </keyword>
-          </xsl:for-each>
-          <type>
-            <MD_KeywordTypeCode codeList="./resources/codeList.xml#MD_KeywordTypeCode"
-                                codeListValue="theme"/>
-          </type>
-          <xsl:if test="current-grouping-key() != ''">
-            <thesaurusName>
-              <CI_Citation>
-                <title>
-                  <gco:CharacterString>
-                    <xsl:value-of select="current-grouping-key()"/>
-                  </gco:CharacterString>
-                </title>
-                <alternateTitle gco:nilReason="missing">
-                  <gco:CharacterString/>
-                </alternateTitle>
-                <date gco:nilReason="missing"/>
-              </CI_Citation>
-            </thesaurusName>
-          </xsl:if>
-        </MD_Keywords>
-      </descriptiveKeywords>
-    </xsl:for-each-group>
+		<xsl:variable name="ServiceTypeUrl">
+			<xsl:value-of select="concat('http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/', $ServiceType)"/>
+		</xsl:variable>
+		
+		<xsl:variable name="ServiceTypeName" select="document('https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/SpatialDataServiceType.nl.iso19135xml')//grg:RE_Register/grg:containedItem[@xlink:href=$ServiceTypeUrl]/grg:RE_RegisterItem/grg:name/gco:CharacterString"/>
+		<srv:serviceType>
+			<gco:LocalName codeSpace="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType">
+				<xsl:value-of select="$ServiceTypeName"/>
+			</gco:LocalName>
+		</srv:serviceType>-->
 
 
-    <!-- Add other WMS keywords -->
-    <xsl:if test="$s/wms:KeywordList/wms:Keyword[not(@vocabulary)]">
-      <descriptiveKeywords>
-        <MD_Keywords>
-          <xsl:for-each select="$s/wms:KeywordList/wms:Keyword[not(@vocabulary)]">
-            <keyword>
-              <gco:CharacterString>
-                <xsl:value-of select="."/>
-              </gco:CharacterString>
-            </keyword>
-          </xsl:for-each>
-          <type>
-            <MD_KeywordTypeCode codeList="./resources/codeList.xml#MD_KeywordTypeCode"
-                                codeListValue="theme"/>
-          </type>
-        </MD_Keywords>
-      </descriptiveKeywords>
-    </xsl:if>
-
-
-    <!-- Add INSPIRE classification of service -->
-    <xsl:for-each
-      select="//*:ExtendedCapabilities/inspire_common:MandatoryKeyword[@xsi:type='inspire_common:classificationOfSpatialDataService']">
-      <descriptiveKeywords>
-        <MD_Keywords>
-          <xsl:for-each select="inspire_common:KeywordValue">
-            <keyword>
-              <gco:CharacterString>
-                <xsl:value-of select="."/>
-              </gco:CharacterString>
-            </keyword>
-          </xsl:for-each>
-          <type>
-            <MD_KeywordTypeCode
-              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
-              codeListValue="theme"/>
-          </type>
-          <thesaurusName>
-            <CI_Citation>
-              <title>
-                <gco:CharacterString>INSPIRE Service taxonomy</gco:CharacterString>
-              </title>
-              <alternateTitle gco:nilReason="missing">
-                <gco:CharacterString/>
-              </alternateTitle>
-              <date>
-                <CI_Date>
-                  <date>
-                    <gco:Date>2010-04-22</gco:Date>
-                  </date>
-                  <dateType>
-                    <CI_DateTypeCode
-                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                      codeListValue="publication"/>
-                  </dateType>
-                </CI_Date>
-              </date>
-            </CI_Citation>
-          </thesaurusName>
-        </MD_Keywords>
-      </descriptiveKeywords>
-    </xsl:for-each>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <xsl:for-each select="$s/wms:AccessConstraints">
-      <resourceConstraints>
-        <MD_LegalConstraints>
-          <xsl:choose>
-            <xsl:when test=". = 'copyright'
-              or . = 'patent'
-              or . = 'patentPending'
-              or . = 'trademark'
-              or . = 'license'
-              or . = 'intellectualPropertyRight'
-              or . = 'restricted'
-              ">
-              <accessConstraints>
-                <MD_RestrictionCode
-                  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
-                  codeListValue="{.}"/>
-              </accessConstraints>
-            </xsl:when>
-            <xsl:when test="lower-case(.) = 'none'">
-              <accessConstraints>
-                <MD_RestrictionCode
-                  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
-                  codeListValue="otherRestrictions"/>
-              </accessConstraints>
-              <otherConstraints>
-                <gco:CharacterString>no conditions apply</gco:CharacterString>
-              </otherConstraints>
-            </xsl:when>
-            <xsl:otherwise>
-              <accessConstraints>
-                <MD_RestrictionCode
-                  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
-                  codeListValue="otherRestrictions"/>
-              </accessConstraints>
-              <otherConstraints>
-                <gco:CharacterString>
-                  <xsl:value-of select="."/>
-                </gco:CharacterString>
-              </otherConstraints>
-            </xsl:otherwise>
-          </xsl:choose>
-        </MD_LegalConstraints>
-      </resourceConstraints>
-
-      <xsl:if test="lower-case(.) = 'none'">
-        <resourceConstraints>
-          <MD_Constraints>
-            <useLimitation>
-              <gco:CharacterString>no conditions apply</gco:CharacterString>
-            </useLimitation>
-          </MD_Constraints>
-        </resourceConstraints>
-      </xsl:if>
-
-    </xsl:for-each>
-
-    <srv:serviceType>
-      <gco:LocalName codeSpace="www.w3c.org">
-        <xsl:choose>
-          <xsl:when test="//*:ExtendedCapabilities/inspire_common:SpatialDataServiceType">
-            <xsl:value-of select="//*:ExtendedCapabilities/inspire_common:SpatialDataServiceType"/>
-          </xsl:when>
-          <xsl:when test="name(.)='WMT_MS_Capabilities' or name(.)='WMS_Capabilities'">OGC:WMS
-          </xsl:when>
-          <xsl:when test="name(.)='WCS_Capabilities'">OGC:WCS</xsl:when>
-          <xsl:when test="name(.)='wps:Capabilities'">OGC:WPS</xsl:when>
-          <xsl:otherwise>OGC:WFS</xsl:otherwise>
-        </xsl:choose>
-      </gco:LocalName>
-    </srv:serviceType>
-    <srv:serviceTypeVersion>
-      <gco:CharacterString>
-        <xsl:value-of select='@version'/>
-      </gco:CharacterString>
-    </srv:serviceTypeVersion>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <srv:accessProperties>
-      <MD_StandardOrderProcess>
-        <fees>
-          <gco:CharacterString>
-            <xsl:value-of
-              select="$s/Fees|$s/wms:Fees|$s/wfs:Fees|$s/ows:Fees|$s/ows11:Fees|$s/wcs:fees"/>
-          </gco:CharacterString>
-        </fees>
-      </MD_StandardOrderProcess>
-    </srv:accessProperties>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        Extent in OGC spec are somehow differents !
-
-        WCS 1.0.0
-        <lonLatEnvelope srsName="WGS84(DD)">
-                <gml:pos>-130.85168 20.7052</gml:pos>
-                <gml:pos>-62.0054 54.1141</gml:pos>
-        </lonLatEnvelope>
-
-        WFS 1.1.0
-        <ows:WGS84BoundingBox>
-                <ows:LowerCorner>-124.731422 24.955967</ows:LowerCorner>
-                <ows:UpperCorner>-66.969849 49.371735</ows:UpperCorner>
-        </ows:WGS84BoundingBox>
-
-        WMS 1.1.1
-        <LatLonBoundingBox minx="-74.047185" miny="40.679648" maxx="-73.907005" maxy="40.882078"/>
-
-        WMS 1.3.0
-        <EX_GeographicBoundingBox>
-            <westBoundLongitude>-178.9988054730254</westBoundLongitude>
-            <eastBoundLongitude>179.0724773329789</eastBoundLongitude>
-            <southBoundLatitude>-0.5014529001680404</southBoundLatitude>
-            <northBoundLatitude>88.9987992292308</northBoundLatitude>
-        </EX_GeographicBoundingBox>
-        <BoundingBox CRS="EPSG:4326" minx="27.116136375774644" miny="-17.934116876940887" maxx="44.39484823803499" maxy="6.052081516030762"/>
-
-        WPS 0.4.0 : none
-
-        WPS 1.0.0 : none
-         -->
-    <xsl:if test="name(.)!='wps:Capabilities'">
-      <srv:extent>
-        <EX_Extent>
-          <geographicElement>
-            <EX_GeographicBoundingBox>
-              <xsl:choose>
-                <xsl:when test="$ows='true' or name(.)='WCS_Capabilities'">
-
-                  <xsl:variable name="boxes">
-                    <xsl:choose>
-                      <xsl:when test="$ows='true'">
-                        <xsl:for-each select="//ows:WGS84BoundingBox/ows:LowerCorner">
-                          <xmin>
-                            <xsl:value-of select="substring-before(., ' ')"/>
-                          </xmin>
-                          <ymin>
-                            <xsl:value-of select="substring-after(., ' ')"/>
-                          </ymin>
-                        </xsl:for-each>
-                        <xsl:for-each select="//ows:WGS84BoundingBox/ows:UpperCorner">
-                          <xmax>
-                            <xsl:value-of select="substring-before(., ' ')"/>
-                          </xmax>
-                          <ymax>
-                            <xsl:value-of select="substring-after(., ' ')"/>
-                          </ymax>
-                        </xsl:for-each>
-                      </xsl:when>
-                      <xsl:when test="name(.)='WCS_Capabilities'">
-                        <xsl:for-each select="//wcs:lonLatEnvelope/gml:pos[1]">
-                          <xmin>
-                            <xsl:value-of select="substring-before(., ' ')"/>
-                          </xmin>
-                          <ymin>
-                            <xsl:value-of select="substring-after(., ' ')"/>
-                          </ymin>
-                        </xsl:for-each>
-                        <xsl:for-each select="//wcs:lonLatEnvelope/gml:pos[2]">
-                          <xmax>
-                            <xsl:value-of select="substring-before(., ' ')"/>
-                          </xmax>
-                          <ymax>
-                            <xsl:value-of select="substring-after(., ' ')"/>
-                          </ymax>
-                        </xsl:for-each>
-                      </xsl:when>
-                    </xsl:choose>
-                  </xsl:variable>
-
-                  <westBoundLongitude>
-                    <gco:Decimal>
-                      <xsl:value-of select="math:min(exslt:node-set($boxes)/*[name(.)='xmin'])"/>
-                    </gco:Decimal>
-                  </westBoundLongitude>
-                  <eastBoundLongitude>
-                    <gco:Decimal>
-                      <xsl:value-of select="math:max(exslt:node-set($boxes)/*[name(.)='xmax'])"/>
-                    </gco:Decimal>
-                  </eastBoundLongitude>
-                  <southBoundLatitude>
-                    <gco:Decimal>
-                      <xsl:value-of select="math:min(exslt:node-set($boxes)/*[name(.)='ymin'])"/>
-                    </gco:Decimal>
-                  </southBoundLatitude>
-                  <northBoundLatitude>
-                    <gco:Decimal>
-                      <xsl:value-of select="math:max(exslt:node-set($boxes)/*[name(.)='ymax'])"/>
-                    </gco:Decimal>
-                  </northBoundLatitude>
-                </xsl:when>
-                <xsl:otherwise>
-                  <westBoundLongitude>
-                    <gco:Decimal>
-                      <xsl:value-of
-                        select="math:min(//wms:EX_GeographicBoundingBox/wms:westBoundLongitude|//LatLonBoundingBox/@minx|//wfs:LatLongBoundingBox/@minx)"/>
-                    </gco:Decimal>
-                  </westBoundLongitude>
-                  <eastBoundLongitude>
-                    <gco:Decimal>
-                      <xsl:value-of
-                        select="math:max(//wms:EX_GeographicBoundingBox/wms:eastBoundLongitude|//LatLonBoundingBox/@maxx|//wfs:LatLongBoundingBox/@maxx)"/>
-                    </gco:Decimal>
-                  </eastBoundLongitude>
-                  <southBoundLatitude>
-                    <gco:Decimal>
-                      <xsl:value-of
-                        select="math:min(//wms:EX_GeographicBoundingBox/wms:southBoundLatitude|//LatLonBoundingBox/@miny|//wfs:LatLongBoundingBox/@miny)"/>
-                    </gco:Decimal>
-                  </southBoundLatitude>
-                  <northBoundLatitude>
-                    <gco:Decimal>
-                      <xsl:value-of
-                        select="math:max(//wms:EX_GeographicBoundingBox/wms:northBoundLatitude|//LatLonBoundingBox/@maxy|//wfs:LatLongBoundingBox/@maxy)"/>
-                    </gco:Decimal>
-                  </northBoundLatitude>
-                </xsl:otherwise>
-              </xsl:choose>
-            </EX_GeographicBoundingBox>
-          </geographicElement>
-        </EX_Extent>
-      </srv:extent>
-    </xsl:if>
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <srv:couplingType>
-      <srv:SV_CouplingType codeList="./resources/codeList.xml#SV_CouplingType">
-        <xsl:attribute name="codeListValue">
-          <xsl:choose>
-            <xsl:when test="name(.)='wps:Capabilities' or name(.)='wps1:Capabilities' or name(.)='wps2:Capabilities'">loosely
-            </xsl:when>
-            <xsl:otherwise>tight</xsl:otherwise>
-          </xsl:choose>
-        </xsl:attribute>
-      </srv:SV_CouplingType>
-    </srv:couplingType>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-            Operation could be OGC standard operation described in specification
-            OR a specific process in a WPS. In that case, each process are described
-            as one operation.
-        -->
-
-    <xsl:for-each select="Capability/Request/*|
-                wfs:Capability/wfs:Request/*|
-                wms:Capability/wms:Request/*|
+		<srv:serviceType>
+			<gco:LocalName codeSpace="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType">
+				<xsl:value-of select="//*:ExtendedCapabilities/inspire_common:SpatialDataServiceType"/>
+			</gco:LocalName>
+		</srv:serviceType>
+		
+        <!-- ============================================================================= -->
+		<!-- === extent OK -->
+		<!-- ============================================================================= -->	
+		<xsl:if test="name(.)!='wps:Capabilities'">
+			<srv:extent>
+				<EX_Extent>
+					<geographicElement>
+						<EX_GeographicBoundingBox>
+							<xsl:choose>
+								<xsl:when test="$ows='true' or name(.)='WCS_Capabilities'">
+									<xsl:variable name="boxes">
+										<xsl:choose>
+											<xsl:when test="$ows='true'">
+												<xsl:for-each select="//ows:WGS84BoundingBox/ows:LowerCorner|//ows11:WGS84BoundingBox/ows11:LowerCorner|//ows2:WGS84BoundingBox/ows2:LowerCorner">
+													<xmin>
+														<xsl:value-of select="substring-before(., ' ')"/>
+													</xmin>
+													<ymin>
+														<xsl:value-of select="substring-after(., ' ')"/>
+													</ymin>
+												</xsl:for-each>
+												<xsl:for-each select="//ows:WGS84BoundingBox/ows:UpperCorner|//ows11:WGS84BoundingBox/ows11:UpperCorner|//ows2:WGS84BoundingBox/ows2:UpperCorner">
+													<xmax>
+														<xsl:value-of select="substring-before(., ' ')"/>
+													</xmax>
+													<ymax>
+														<xsl:value-of select="substring-after(., ' ')"/>
+													</ymax>
+												</xsl:for-each>
+											</xsl:when>
+											<xsl:when test="name(.)='WCS_Capabilities'">
+												<xsl:for-each select="//wcs:lonLatEnvelope/gml:pos[1]">
+													<xmin>
+														<xsl:value-of select="substring-before(., ' ')"/>
+													</xmin>
+													<ymin>
+														<xsl:value-of select="substring-after(., ' ')"/>
+													</ymin>
+												</xsl:for-each>
+												<xsl:for-each select="//wcs:lonLatEnvelope/gml:pos[2]">
+													<xmax>
+														<xsl:value-of select="substring-before(., ' ')"/>
+													</xmax>
+													<ymax>
+														<xsl:value-of select="substring-after(., ' ')"/>
+													</ymax>
+												</xsl:for-each>
+											</xsl:when>
+										</xsl:choose>
+									</xsl:variable>
+									<westBoundLongitude>
+										<gco:Decimal>
+											<xsl:value-of select="math:min(exslt:node-set($boxes)/*[name(.)='xmin'])"/>
+										</gco:Decimal>
+									</westBoundLongitude>
+									<eastBoundLongitude>
+										<gco:Decimal>
+											<xsl:value-of select="math:max(exslt:node-set($boxes)/*[name(.)='xmax'])"/>
+										</gco:Decimal>
+									</eastBoundLongitude>
+									<southBoundLatitude>
+										<gco:Decimal>
+											<xsl:value-of select="math:min(exslt:node-set($boxes)/*[name(.)='ymin'])"/>
+										</gco:Decimal>
+									</southBoundLatitude>
+									<northBoundLatitude>
+										<gco:Decimal>
+											<xsl:value-of select="math:max(exslt:node-set($boxes)/*[name(.)='ymax'])"/>
+										</gco:Decimal>
+									</northBoundLatitude>
+								</xsl:when>
+								<xsl:otherwise>
+									<westBoundLongitude>
+										<gco:Decimal>
+											<xsl:value-of select="math:min(//wms:EX_GeographicBoundingBox/wms:westBoundLongitude|//LatLonBoundingBox/@minx|//wfs:LatLongBoundingBox/@minx)"/>
+										</gco:Decimal>
+									</westBoundLongitude>
+									<eastBoundLongitude>
+										<gco:Decimal>
+											<xsl:value-of select="math:max(//wms:EX_GeographicBoundingBox/wms:eastBoundLongitude|//LatLonBoundingBox/@maxx|//wfs:LatLongBoundingBox/@maxx)"/>
+										</gco:Decimal>
+									</eastBoundLongitude>
+									<southBoundLatitude>
+										<gco:Decimal>
+											<xsl:value-of select="math:min(//wms:EX_GeographicBoundingBox/wms:southBoundLatitude|//LatLonBoundingBox/@miny|//wfs:LatLongBoundingBox/@miny)"/>
+										</gco:Decimal>
+									</southBoundLatitude>
+									<northBoundLatitude>
+										<gco:Decimal>
+											<xsl:value-of select="math:max(//wms:EX_GeographicBoundingBox/wms:northBoundLatitude|//LatLonBoundingBox/@maxy|//wfs:LatLongBoundingBox/@maxy)"/>
+										</gco:Decimal>
+									</northBoundLatitude>
+								</xsl:otherwise>
+							</xsl:choose>
+						</EX_GeographicBoundingBox>
+					</geographicElement>
+				</EX_Extent>
+			</srv:extent>
+		</xsl:if>
+		
+        <!-- ============================================================================= -->
+		<!-- === couplingType OK -->
+		<!-- ============================================================================= -->	
+		<srv:couplingType>
+			<srv:SV_CouplingType codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/SV_CouplingType.xml" codeListValue="tight"/>
+		</srv:couplingType>
+	
+        <!-- ============================================================================= -->
+		<!-- === containsOperations OK -->
+		<!-- ============================================================================= -->	
+		<xsl:for-each select="Capability/Request/*|
+								wfs:Capability/wfs:Request/*|
+								wms:Capability/wms:Request/*|
                                 wcs:Capability/wcs:Request/*|
                                 ows:OperationsMetadata/ows:Operation|
-                                ows11:OperationsMetadata/ows:Operation|
+                                ows11:OperationsMetadata/ows11:Operation|
                                 wps:ProcessOfferings/*|
                                 wps1:ProcessOfferings/*|
                                 wps2:Contents/*">
-      <!-- Some services provide information about ows:ExtendedCapabilities TODO ? -->
-      <srv:containsOperations>
-        <srv:SV_OperationMetadata>
-          <srv:operationName>
-            <gco:CharacterString>
-              <xsl:choose>
-                <xsl:when test="name(.)='wps:Process' or name(.)='wps:ProcessSummary'">WPS Process:
-                  <xsl:value-of select="ows:Title|ows11:Title|ows2:Title"/>
-                </xsl:when>
-                <xsl:when test="$ows='true'">
-                  <xsl:value-of select="@name"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="name(.)"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </gco:CharacterString>
-          </srv:operationName>
-          <!--  CHECKME : DCPType/SOAP ? -->
-          <xsl:for-each select="DCPType/HTTP/*|wfs:DCPType/wfs:HTTP/*|wms:DCPType/wms:HTTP/*|
-              wcs:DCPType/wcs:HTTP/*|ows:DCP/ows:HTTP/*|ows11:DCP/ows11:HTTP/*">
-            <srv:DCP>
-              <srv:DCPList codeList="./resources/codeList.xml#DCPList">
-                <xsl:variable name="dcp">
-                  <xsl:choose>
-                    <xsl:when
-                      test="name(.)='Get' or name(.)='wfs:Get' or name(.)='wms:Get' or name(.)='wcs:Get' or name(.)='ows:Get' or name(.)='ows11:Get'">
-                      HTTP-GET
-                    </xsl:when>
-                    <xsl:when
-                      test="name(.)='Post' or name(.)='wfs:Post' or name(.)='wms:Post' or name(.)='wcs:Post' or name(.)='ows:Post' or name(.)='ows11:Post'">
-                      HTTP-POST
-                    </xsl:when>
-                    <xsl:otherwise>WebServices</xsl:otherwise>
-                  </xsl:choose>
-                </xsl:variable>
-                <xsl:attribute name="codeListValue">
-                  <xsl:value-of select="$dcp"/>
-                </xsl:attribute>
-              </srv:DCPList>
-            </srv:DCP>
-          </xsl:for-each>
+			<srv:containsOperations>
+				<srv:SV_OperationMetadata>
+					<srv:operationName>
+						<gco:CharacterString>
+							<xsl:choose>
+								<xsl:when test="name(.)='wps:Process' or name(.)='wps:ProcessSummary'">
+									WPS Process: <xsl:value-of select="ows:Title|ows11:Title|ows2:Title"/>
+								</xsl:when>
+								<xsl:when test="$ows='true'">
+									<xsl:value-of select="@name"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="name(.)"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</gco:CharacterString>
+					</srv:operationName>
+					<srv:DCP>
+						<srv:DCPList codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/DCPList.xml" codeListValue="HTTP"/>
+					</srv:DCP>
+						<srv:connectPoint>
+							<CI_OnlineResource>
+								<linkage>
+									<URL>
+										<xsl:choose>
+											<xsl:when test="$ows='true'">
+												<xsl:value-of select=".//ows:Get/@xlink:href|.//ows11:Get/@xlink:href"/>
+											</xsl:when>
+											<xsl:otherwise>
+												<xsl:value-of select=".//Get/OnlineResource/@xlink:href|.//wms:Get/wms:OnlineResource/@xlink:href"/>
+											</xsl:otherwise>
+										</xsl:choose>
+									</URL>
+								</linkage>
+							</CI_OnlineResource>
+						</srv:connectPoint>
+				</srv:SV_OperationMetadata>
+			</srv:containsOperations>
+		</xsl:for-each>
 
-          <xsl:if test="name(.)='wps:Process' or name(.)='wps:ProcessSummary'">
-            <srv:operationDescription>
-              <gco:CharacterString>
-                <xsl:value-of select="ows:Abstract|ows11:Abstract|ows2:Abstract"/>
-              </gco:CharacterString>
-            </srv:operationDescription>
-            <srv:invocationName>
-              <gco:CharacterString>
-                <xsl:value-of select="ows:Identifier|ows11:Identifier|ows2:Identifier"/>
-              </gco:CharacterString>
-            </srv:invocationName>
-          </xsl:if>
-
-          <xsl:for-each
-            select="Format|wms:Format|ows:Parameter[@name='AcceptFormats' or @name='outputFormat']">
-            <srv:connectPoint>
-              <CI_OnlineResource>
-                <linkage>
-                  <URL>
-                    <xsl:choose>
-                      <xsl:when test="$ows='true'">
-                        <xsl:value-of
-                          select="..//ows:Get[1]/@xlink:href"/><!-- FIXME supposed at least one Get -->
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:value-of select="..//*[1]/OnlineResource/@xlink:href|
-                          ..//*[1]/wms:OnlineResource/@xlink:href"/>
-                      </xsl:otherwise>
-                    </xsl:choose>
-                  </URL>
-                </linkage>
-                <protocol>
-                  <gco:CharacterString>
-                    <xsl:choose>
-                      <xsl:when test="$ows='true'">
-                        <xsl:value-of select="ows:Value"/>
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:value-of select="."/>
-                      </xsl:otherwise>
-                    </xsl:choose>
-                  </gco:CharacterString>
-                </protocol>
-                <description>
-                  <gco:CharacterString>
-                    Format :
-                    <xsl:value-of select="."/>
-                  </gco:CharacterString>
-                </description>
-                <function>
-                  <CI_OnLineFunctionCode codeList="./resources/codeList.xml#CI_OnLineFunctionCode"
-                                         codeListValue="information"/>
-                </function>
-              </CI_OnlineResource>
-            </srv:connectPoint>
-          </xsl:for-each>
+        <!-- ============================================================================= -->
+		<!-- === operatesOn OK-->
+		<!-- ============================================================================= -->	
+		<!--WMS-->
+		<xsl:for-each select="//wms:Layer/wms:MetadataURL/wms:OnlineResource/@xlink:href[not(.=preceding::wms:OnlineResource/@xlink:href)]">		
+			<xsl:choose>
+				<xsl:when test="contains(.,'srv/dut/csw')">
+					<srv:operatesOn xlink:href="{.}" uuidref="{../../../wms:Identifier}"/>
+				</xsl:when>
+			</xsl:choose>
+		</xsl:for-each>
+		
+		<!--WFS-->
+		<xsl:for-each select="//wfs:FeatureTypeList/wfs:FeatureType/wfs:MetadataURL[not(.=preceding::wfs:MetadataURL)]">		
+			<xsl:choose>
+				<xsl:when test="contains(.,'srv/dut/csw')">
+					<srv:operatesOn xlink:href="{.}" uuidref="{//inspire_dls:SpatialDataSetIdentifier/inspire_common:Code}"/>
+				</xsl:when>
+			</xsl:choose>
+		</xsl:for-each>
+		
+		<!--WMTS-->
+		<xsl:for-each select="//wmts:Contents/wmts:Layer/ows11:Metadata/@xlink:href[not(.=preceding::ows11:Metadata/@xlink:href)]">		
+			<xsl:choose>
+				<xsl:when test="contains(.,'srv/dut/csw')">
+					<srv:operatesOn xlink:href="{.}" uuidref="{../../ows11:DatasetDescriptionSummary/ows11:Identifier}"/>
+				</xsl:when>
+			</xsl:choose>
+		</xsl:for-each>
+		
+	</xsl:template>
 
 
-          <!-- Some Operations in WFS 1.0.0 have no ResultFormat no CI_OnlineResource created
-                            WCS has no output format
-                    -->
-          <xsl:for-each select="wfs:ResultFormat/*">
-            <srv:connectPoint>
-              <CI_OnlineResource>
-                <linkage>
-                  <URL>
-                    <xsl:value-of select="../..//wfs:Get[1]/@onlineResource"/>
-                  </URL>
-                </linkage>
-                <protocol>
-                  <gco:CharacterString>
-                    <xsl:value-of select="name(.)"/>
-                  </gco:CharacterString>
-                </protocol>
-                <function>
-                  <CI_OnLineFunctionCode codeList="./resources/codeList.xml#CI_OnLineFunctionCode"
-                                         codeListValue="information"/>
-                </function>
-              </CI_OnlineResource>
-            </srv:connectPoint>
-          </xsl:for-each>
-        </srv:SV_OperationMetadata>
-      </srv:containsOperations>
-    </xsl:for-each>
+	<!-- ============================================================================= -->
+	<!-- === template Keywords OK=== -->
+	<!-- ============================================================================= -->
+	<xsl:template match="*" mode="Keywords">
+		<xsl:call-template name="get-vocabulary-keywords">
+			<xsl:with-param name="thesaurusTitle" select="$gdi-vlaanderen-regios-thesaurus"/>
+			<xsl:with-param name="thesaurusAnchor" select="$gdi-vlaanderen-regios-thesaurus-anchor-href"/>
+			<xsl:with-param name="thesaurusAnchorValue" select="$gdi-vlaanderen-regios-thesaurus-anchor-value"/>
+			<xsl:with-param name="thesaurusDate" select="'2013-04-18'"/>
+		</xsl:call-template>
+		<xsl:call-template name="get-vocabulary-keywords">
+			<xsl:with-param name="thesaurusTitle" select="$gdi-vlaanderen-service-types-thesaurus"/>
+			<xsl:with-param name="thesaurusAnchor" select="$gdi-vlaanderen-service-types-thesaurus-anchor-href"/>
+			<xsl:with-param name="thesaurusAnchorValue" select="$gdi-vlaanderen-service-types-thesaurus-anchor-value"/>
+			<xsl:with-param name="thesaurusDate" select="'2015-03-16'"/>
+		</xsl:call-template>
+		<xsl:call-template name="get-vocabulary-keywords">
+			<xsl:with-param name="thesaurusTitle" select="$gdi-vlaanderen-trefwoorden-thesaurus"/>
+			<xsl:with-param name="thesaurusAnchor" select="$gdi-vlaanderen-trefwoorden-thesaurus-anchor-href"/>
+			<xsl:with-param name="thesaurusAnchorValue" select="$gdi-vlaanderen-trefwoorden-thesaurus-anchor-value"/>
+			<xsl:with-param name="thesaurusDate" select="'2014-02-26'"/>
+		</xsl:call-template>
+		<xsl:call-template name="get-vocabulary-keywords">
+			<xsl:with-param name="thesaurusTitle" select="$gemet-thesaurus"/>
+			<xsl:with-param name="thesaurusAnchor" select="$gemet-thesaurus-anchor-href"/>
+			<xsl:with-param name="thesaurusAnchorValue" select="$gemet-thesaurus-anchor-value"/>
+			<xsl:with-param name="thesaurusDate" select="'2010-01-13'"/>
+		</xsl:call-template>
+		<xsl:call-template name="get-vocabulary-keywords">
+			<xsl:with-param name="thesaurusTitle" select="$inspire-service-taxonomy-thesaurus"/>
+			<xsl:with-param name="thesaurusAnchor" select="$inspire-service-taxonomy-thesaurus-anchor-href"/>
+			<xsl:with-param name="thesaurusAnchorValue" select="$inspire-service-taxonomy-thesaurus-anchor-value"/>
+			<xsl:with-param name="thesaurusDate" select="'2008-12-03'"/>
+		</xsl:call-template>
+		<xsl:call-template name="get-vocabulary-keywords">
+			<xsl:with-param name="thesaurusTitle" select="$inspire-theme-thesaurus"/>
+			<xsl:with-param name="thesaurusAnchor" select="$inspire-theme-thesaurus-anchor-href"/>
+			<xsl:with-param name="thesaurusAnchorValue" select="$inspire-theme-thesaurus-anchor-value"/>
+			<xsl:with-param name="thesaurusDate" select="'2008-06-01'"/>
+		</xsl:call-template>
+		<xsl:if test="count(Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+									lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
+									lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+									lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
+									lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
+									lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
+						count(wms:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
+										  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
+						count(ows:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
+									      lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
+									      lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
+						count(ows11:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+											lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
+											lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+											lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
+											lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
+											lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
+						count(wfs:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
+										  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
+						count(wcs:keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
+										  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) > 0">
+					
+					<!--Lijst M&R-->
+					<xsl:for-each select="ows:Keyword | ows11:Keyword | wfs:Keyword | wcs:keyword">
+						<xsl:if test=".='Lijst M&amp;R INSPIRE'">
+							<descriptiveKeywords>
+								<MD_Keywords>										
+									<keyword>
+<!--	PETER :							<gmx:Anchor xlink:href="http://mir.geopunt.be/cl/Geopunt/GDI-Vlaanderen-Trefwoorden/LIJSTMRINSPIRE"><xsl:value-of select="."/></gmx:Anchor> -->
+										<gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/LIJSTMRINSPIRE"><xsl:value-of select="."/></gmx:Anchor>
+									</keyword>
+									<thesaurusName>
+										<CI_Citation>
+											<title>
+												<gmx:Anchor xlink:href="{$gdi-vlaanderen-trefwoorden-thesaurus-anchor-href}">
+														<xsl:value-of select="$gdi-vlaanderen-trefwoorden-thesaurus-anchor-value"/>
+												</gmx:Anchor>
+											</title>
+											<date>
+												<CI_Date>
+													<date>
+														<gco:Date>2014-02-26</gco:Date>
+													</date>
+													<dateType>
+														<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+													</dateType>
+												</CI_Date>
+											</date>
+										</CI_Citation>
+									</thesaurusName>
+								</MD_Keywords>
+							</descriptiveKeywords>
+						</xsl:if>
+					</xsl:for-each>
 
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        Done by harvester after data metadata creation
-        <xsl:for-each select="//Layer[count(./*[name(.)='Layer'])=0] | FeatureType[count(./*[name(.)='FeatureType'])=0] | CoverageOfferingBrief[count(./*[name(.)='CoverageOfferingBrief'])=0]">
-                <srv:operatesOn>
-                        <MD_DataIdentification uuidref="">
-                        <xsl:value-of select="Name"/>
-                        </MD_DataIdentification>
-                </srv:operatesOn>
-        </xsl:for-each>
-        -->
+					<!--other keywords-->
+					<descriptiveKeywords>
+						<MD_Keywords>
+							<xsl:for-each select="Keyword | wms:Keyword | ows:Keyword | ows11:Keyword | wfs:Keyword | wcs:keyword">
+								<xsl:if test="lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+											  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
+											  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+											  lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
+											  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
+											  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)">
+									<xsl:variable name="keywordValue" select="normalize-space(.)" />
 
-  </xsl:template>
+									<xsl:if test="$keywordValue!='infoMapAccessService' and $keywordValue!='infoFeatureAccessService' and $keywordValue!='Lijst M&amp;R INSPIRE'">
+										<keyword>
+											<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+										</keyword>
+									</xsl:if>			
+								</xsl:if>
+							</xsl:for-each>
+						</MD_Keywords>
+					</descriptiveKeywords>
+		</xsl:if>
+	</xsl:template>
+		
+	<!-- ============================================================================= -->
+	<!-- === template get-vocabulary-keywords OK === -->
+	<!-- ============================================================================= -->
+	<xsl:template name="get-vocabulary-keywords">
+		<xsl:param name="thesaurusTitle"/>
+		<xsl:param name="thesaurusDate"/>
+		<xsl:param name="thesaurusAnchor"/>
+		<xsl:param name="thesaurusAnchorValue"/>
+		<xsl:param name="KeywordAnchor"/>
+		<xsl:variable name="lowerCaseThesaurusTitle" select="lower-case($thesaurusTitle)"/>
+		
+		<!--inspireTheme_dut-->
+		<xsl:if test="(count(//inspire_common:Keyword[ends-with(@xsi:type,'inspireTheme_dut')]/inspire_common:KeywordValue) > 0 and 
+		$lowerCaseThesaurusTitle=lower-case($inspire-theme-thesaurus)) or 
+		(count(Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wms:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(ows:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(ows11:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wfs:Keywords[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wcs:keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) > 0)">
+			<descriptiveKeywords>
+				<MD_Keywords>
+				
+					<xsl:for-each select="Keyword | wms:Keyword | ows:Keyword | ows11:Keyword | wfs:Keyword | wcs:keyword">
+						<xsl:if test="lower-case(@vocabulary)=$lowerCaseThesaurusTitle">
+							<xsl:variable name="keywordValue" select="normalize-space(.)" />
+							<xsl:if test="$keywordValue!='infoMapAccessService' and $keywordValue!='infoFeatureAccessService'">
+								<xsl:choose>
+									<xsl:when test="$keywordValue='Lijst M&amp;R INSPIRE'">
+										<keyword>
+<!--PETER: old value					<gmx:Anchor xlink:href="http://mir.geopunt.be/cl/Geopunt/GDI-Vlaanderen-Trefwoorden/LIJSTMRINSPIRE"><xsl:value-of select="."/></gmx:Anchor> -->
+										<gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/LIJSTMRINSPIRE"><xsl:value-of select="."/></gmx:Anchor>
+										</keyword>
+									</xsl:when>
+									<xsl:otherwise>
+										<keyword>
+											<gco:CharacterString><xsl:value-of select="$keywordValue"/></gco:CharacterString>
+										</keyword>
+									</xsl:otherwise>
+								</xsl:choose>								
+							</xsl:if>
+						</xsl:if>
+					</xsl:for-each>
+								
+					<xsl:if test="$lowerCaseThesaurusTitle=lower-case($inspire-theme-thesaurus)">
+						<xsl:variable name="inspire-theme-thesaurus-keywords-1"><xsl:value-of select="concat('[',string-join(Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle],'],['),']')"/></xsl:variable>
+						<xsl:variable name="inspire-theme-thesaurus-keywords-2"><xsl:value-of select="concat('[',string-join(*:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle],'],['),']')"/></xsl:variable>
+						<xsl:variable name="inspire-theme-thesaurus-keywords-3"><xsl:value-of select="concat('[',string-join(wcs:keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle],'],['),']')"/></xsl:variable>
+						<xsl:variable name="inspire-theme-thesaurus-keywords"><xsl:value-of select="concat($inspire-theme-thesaurus-keywords-1,',',$inspire-theme-thesaurus-keywords-2,',',$inspire-theme-thesaurus-keywords-3)"/></xsl:variable>
+						<xsl:for-each select="//inspire_common:Keyword[ends-with(@xsi:type,'inspireTheme_dut')]/inspire_common:KeywordValue">
+							<xsl:variable name="keywordValue" select="normalize-space(.)" />
+							<xsl:if test="$keywordValue!='infoMapAccessService' and $keywordValue!='infoFeatureAccessService' 
+							and not(contains($inspire-theme-thesaurus-keywords,concat('[',$keywordValue,']')))">
+								
+								
+								<xsl:variable name="inspireTheme" select="document('https://inspire.ec.europa.eu/theme/theme.nl.xml')//theme:register/theme:containeditems/theme:theme[theme:label=$keywordValue]/@id"/>
 
-
-  <!-- ============================================================================= -->
-  <!-- === LayerDataIdentification === -->
-  <!-- ============================================================================= -->
-
-  <xsl:template match="*" mode="LayerDataIdentification">
-    <xsl:param name="Name"/>
-    <xsl:param name="topic"/>
-    <xsl:param name="ows"/>
-    <citation>
-      <CI_Citation>
-        <title>
-          <gco:CharacterString>
-            <xsl:choose>
-              <xsl:when
-                test="name(.)='WFS_Capabilities' or name(.)='wfs:WFS_Capabilities' or $ows='true'">
-                <xsl:value-of select="//wfs:FeatureType[wfs:Name=$Name]/wfs:Title"/>
-              </xsl:when>
-              <xsl:when test="name(.)='WMS_Capabilities'">
-                <xsl:value-of select="//wms:Layer[wms:Name=$Name]/wms:Title"/>
-              </xsl:when>
-              <xsl:when test="name(.)='WMT_MS_Capabilities'">
-                <xsl:value-of select="//Layer[Name=$Name]/Title"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="//wcs:CoverageOfferingBrief[wcs:name=$Name]/wcs:label"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </gco:CharacterString>
-        </title>
-        <date>
-          <CI_Date>
-            <xsl:variable name="df">[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]</xsl:variable>
-            <date>
-              <gco:DateTime>
-                <xsl:value-of select="format-dateTime(current-dateTime(),$df)"/>
-              </gco:DateTime>
-            </date>
-            <dateType>
-              <CI_DateTypeCode codeList="./resources/codeList.xml#CI_DateTypeCode"
-                               codeListValue="revision"/>
-            </dateType>
-          </CI_Date>
-        </date>
-      </CI_Citation>
-    </citation>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <abstract>
-      <gco:CharacterString>
-        <xsl:choose>
-          <xsl:when test="name(.)='WFS_Capabilities' or $ows='true'">
-            <xsl:value-of select="//wfs:FeatureType[wfs:Name=$Name]/wfs:Abstract"/>
-          </xsl:when>
-          <xsl:when test="name(.)='WMS_Capabilities'">
-            <xsl:value-of select="//wms:Layer[wms:Name=$Name]/wms:Abstract"/>
-          </xsl:when>
-          <xsl:when test="name(.)='WMT_MS_Capabilities'">
-            <xsl:value-of select="//Layer[Name=$Name]/Abstract"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="//wcs:CoverageOfferingBrief[wcs:name=$Name]/wcs:description"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </gco:CharacterString>
-    </abstract>
-
-    <!--idPurp-->
-
-    <status>
-      <MD_ProgressCode codeList="./resources/codeList.xml#MD_ProgressCode"
-                       codeListValue="completed"/>
-    </status>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <xsl:for-each select="Service/ContactInformation|wms:Service/wms:ContactInformation">
-      <pointOfContact>
-        <CI_ResponsibleParty>
-          <xsl:apply-templates select="." mode="RespParty"/>
-        </CI_ResponsibleParty>
-      </pointOfContact>
-    </xsl:for-each>
-
-    <!-- resMaint -->
-    <!-- graphOver -->
-    <!-- dsFormat-->
-    <xsl:for-each select="//Layer[Name=$Name]/KeywordList|
-                          keywords">
-      <descriptiveKeywords>
-        <MD_Keywords>
-          <xsl:apply-templates select="." mode="Keywords"/>
-        </MD_Keywords>
-      </descriptiveKeywords>
-    </xsl:for-each>
-
-
-    <!-- If layer does not provide any keywords, put service keywords. -->
-    <xsl:choose>
-      <xsl:when test="count(//wms:Layer[wms:Name=$Name]/wms:KeywordList/wms:Keyword) > 0">
-        <xsl:for-each-group select="//wms:Layer[wms:Name=$Name]/wms:KeywordList/wms:Keyword"
-                            group-by="@vocabulary">
-          <descriptiveKeywords>
-            <MD_Keywords>
-              <xsl:for-each select="../wms:Keyword[@vocabulary = current-grouping-key()]">
-                <keyword>
-                  <gco:CharacterString>
-                    <xsl:value-of select="."/>
-                  </gco:CharacterString>
-                </keyword>
-              </xsl:for-each>
-
-              <xsl:if test="current-grouping-key() != ''">
-                <thesaurusName>
-                  <CI_Citation>
-                    <title>
-                      <gco:CharacterString>
-                        <xsl:value-of select="current-grouping-key()"/>
-                      </gco:CharacterString>
-                    </title>
-                  </CI_Citation>
-                </thesaurusName>
-              </xsl:if>
-              <type>
-                <MD_KeywordTypeCode codeList="./resources/codeList.xml#MD_KeywordTypeCode"
-                                    codeListValue="theme"/>
-              </type>
-            </MD_Keywords>
-          </descriptiveKeywords>
-        </xsl:for-each-group>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:for-each-group select="wms:Service/wms:KeywordList/wms:Keyword"
-                            group-by="@vocabulary">
-          <descriptiveKeywords>
-            <MD_Keywords>
-              <xsl:for-each select="../wms:Keyword[@vocabulary = current-grouping-key()]">
-                <keyword>
-                  <gco:CharacterString>
-                    <xsl:value-of select="."/>
-                  </gco:CharacterString>
-                </keyword>
-              </xsl:for-each>
-
-              <xsl:if test="current-grouping-key() != ''">
-                <thesaurusName>
-                  <CI_Citation>
-                    <title>
-                      <gco:CharacterString>
-                        <xsl:value-of select="current-grouping-key()"/>
-                      </gco:CharacterString>
-                    </title>
-                  </CI_Citation>
-                </thesaurusName>
-              </xsl:if>
-              <type>
-                <MD_KeywordTypeCode codeList="./resources/codeList.xml#MD_KeywordTypeCode"
-                                    codeListValue="theme"/>
-              </type>
-            </MD_Keywords>
-          </descriptiveKeywords>
-        </xsl:for-each-group>
-      </xsl:otherwise>
-    </xsl:choose>
-
-    <xsl:for-each select="//wfs:FeatureType[wfs:Name=$Name]">
-      <descriptiveKeywords>
-        <MD_Keywords>
-          <xsl:apply-templates select="." mode="Keywords"/>
-        </MD_Keywords>
-      </descriptiveKeywords>
-    </xsl:for-each>
-    <xsl:for-each select="//wfs:FeatureType[wfs:Name=$Name]/ows:Keywords">
-      <descriptiveKeywords>
-        <MD_Keywords>
-          <xsl:apply-templates select="." mode="Keywords"/>
-        </MD_Keywords>
-      </descriptiveKeywords>
-    </xsl:for-each>
-    <xsl:for-each select="//wcs:CoverageOfferingBrief[wcs:name=$Name]/wcs:keywords">
-      <descriptiveKeywords>
-        <MD_Keywords>
-          <xsl:apply-templates select="." mode="Keywords"/>
-        </MD_Keywords>
-      </descriptiveKeywords>
-    </xsl:for-each>
-    <xsl:if test="//wms:Layer[wms:Name=$Name]/wms:KeywordList/wms:Keyword[not(@vocabulary)]">
-      <descriptiveKeywords>
-        <MD_Keywords>
-          <xsl:for-each
-            select="//wms:Layer[wms:Name=$Name]/wms:KeywordList/wms:Keyword[not(@vocabulary)]">
-            <keyword>
-              <gco:CharacterString>
-                <xsl:value-of select="."/>
-              </gco:CharacterString>
-            </keyword>
-          </xsl:for-each>
-          <type>
-            <MD_KeywordTypeCode codeList="./resources/codeList.xml#MD_KeywordTypeCode"
-                                codeListValue="theme"/>
-          </type>
-        </MD_Keywords>
-      </descriptiveKeywords>
-    </xsl:if>
-
-    <xsl:choose>
-      <xsl:when test="//wfs:FeatureType">
-        <spatialRepresentationType>
-          <MD_SpatialRepresentationTypeCode
-            codeList="./resources/codeList.xml#MD_SpatialRepresentationTypeCode"
-            codeListValue="vector"/>
-        </spatialRepresentationType>
-      </xsl:when>
-      <xsl:when test="//wcs:CoverageOfferingBrief">
-        <spatialRepresentationType>
-          <MD_SpatialRepresentationTypeCode
-            codeList="./resources/codeList.xml#MD_SpatialRepresentationTypeCode"
-            codeListValue="grid"/>
-        </spatialRepresentationType>
-      </xsl:when>
-    </xsl:choose>
-
-    <!-- TODO WCS -->
-    <xsl:variable name="minScale" select="//Layer[Name=$Name]/MinScaleDenominator
-      |//wms:Layer[wms:Name=$Name]/wms:MinScaleDenominator"/>
-    <xsl:variable name="minScaleHint" select="//Layer[Name=$Name]/ScaleHint/@min"/>
-    <xsl:if test="$minScale or $minScaleHint">
-      <spatialResolution>
-        <MD_Resolution>
-          <equivalentScale>
-            <MD_RepresentativeFraction>
-              <denominator>
-                <gco:Integer>
-                  <xsl:value-of
-                    select="if ($minScale) then $minScale else format-number(round($minScaleHint div math:sqrt(2) * 72 div 2.54 * 100), '0')"/>
-                </gco:Integer>
-              </denominator>
-            </MD_RepresentativeFraction>
-          </equivalentScale>
-        </MD_Resolution>
-      </spatialResolution>
-    </xsl:if>
-    <xsl:variable name="maxScale" select="//Layer[Name=$Name]/MaxScaleDenominator
-      |//wms:Layer[wms:Name=$Name]/wms:MaxScaleDenominator"/>
-    <xsl:variable name="maxScaleHint" select="//Layer[Name=$Name]/ScaleHint/@max"/>
-    <xsl:if test="$maxScale or $maxScaleHint">
-      <spatialResolution>
-        <MD_Resolution>
-          <equivalentScale>
-            <MD_RepresentativeFraction>
-              <denominator>
-                <gco:Integer>
-                  <xsl:value-of select="if ($maxScale)
-                                    then $maxScale
-                                    else if ($maxScaleHint = 'Infinity')
-                                      then $maxScaleHint
-                                      else  format-number(round($maxScaleHint div math:sqrt(2) * 72 div 2.54 * 100), '0')"/>
-                </gco:Integer>
-              </denominator>
-            </MD_RepresentativeFraction>
-          </equivalentScale>
-        </MD_Resolution>
-      </spatialResolution>
-    </xsl:if>
-
-    <language gco:nilReason="missing">
-      <LanguageCode codeList="http://www.loc.gov/standards/iso639-2/"
-                    codeListValue=""/>
-    </language>
-
-    <characterSet>
-      <MD_CharacterSetCode
-        codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_CharacterSetCode"
-        codeListValue=""/>
-    </characterSet>
-
-    <topicCategory>
-      <MD_TopicCategoryCode>
-        <xsl:value-of select="$topic"/>
-      </MD_TopicCategoryCode>
-    </topicCategory>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <extent>
-      <EX_Extent>
-        <geographicElement>
-          <EX_GeographicBoundingBox>
-            <xsl:choose>
-              <xsl:when test="$ows='true' or name(.)='WCS_Capabilities'">
-                <xsl:variable name="boxes">
-                  <xsl:choose>
-                    <xsl:when test="$ows='true'">
-                      <xsl:for-each
-                        select="//wfs:FeatureType[wfs:Name=$Name]/ows:WGS84BoundingBox/ows:LowerCorner">
-                        <xmin>
-                          <xsl:value-of select="substring-before(., ' ')"/>
-                        </xmin>
-                        <ymin>
-                          <xsl:value-of select="substring-after(., ' ')"/>
-                        </ymin>
-                      </xsl:for-each>
-                      <xsl:for-each
-                        select="//wfs:FeatureType[wfs:Name=$Name]/ows:WGS84BoundingBox/ows:UpperCorner">
-                        <xmax>
-                          <xsl:value-of select="substring-before(., ' ')"/>
-                        </xmax>
-                        <ymax>
-                          <xsl:value-of select="substring-after(., ' ')"/>
-                        </ymax>
-                      </xsl:for-each>
-                    </xsl:when>
-                    <xsl:when test="name(.)='WCS_Capabilities'">
-                      <xsl:for-each
-                        select="//wcs:CoverageOfferingBrief[wcs:name=$Name]/wcs:lonLatEnvelope/gml:pos[1]">
-                        <xmin>
-                          <xsl:value-of select="substring-before(., ' ')"/>
-                        </xmin>
-                        <ymin>
-                          <xsl:value-of select="substring-after(., ' ')"/>
-                        </ymin>
-                      </xsl:for-each>
-                      <xsl:for-each
-                        select="//wcs:CoverageOfferingBrief[wcs:name=$Name]/wcs:lonLatEnvelope/gml:pos[2]">
-                        <xmax>
-                          <xsl:value-of select="substring-before(., ' ')"/>
-                        </xmax>
-                        <ymax>
-                          <xsl:value-of select="substring-after(., ' ')"/>
-                        </ymax>
-                      </xsl:for-each>
-                    </xsl:when>
-                  </xsl:choose>
-                </xsl:variable>
-
-                <westBoundLongitude>
-                  <gco:Decimal>
-                    <xsl:value-of select="exslt:node-set($boxes)/*[name(.)='xmin']"/>
-                  </gco:Decimal>
-                </westBoundLongitude>
-                <eastBoundLongitude>
-                  <gco:Decimal>
-                    <xsl:value-of select="exslt:node-set($boxes)/*[name(.)='xmax']"/>
-                  </gco:Decimal>
-                </eastBoundLongitude>
-                <southBoundLatitude>
-                  <gco:Decimal>
-                    <xsl:value-of select="exslt:node-set($boxes)/*[name(.)='ymin']"/>
-                  </gco:Decimal>
-                </southBoundLatitude>
-                <northBoundLatitude>
-                  <gco:Decimal>
-                    <xsl:value-of select="exslt:node-set($boxes)/*[name(.)='ymax']"/>
-                  </gco:Decimal>
-                </northBoundLatitude>
-              </xsl:when>
-              <xsl:when test="name(.)='WFS_Capabilities'">
-                <westBoundLongitude>
-                  <gco:Decimal>
-                    <xsl:value-of
-                      select="//wfs:FeatureType[wfs:Name=$Name]/wfs:LatLongBoundingBox/@minx"/>
-                  </gco:Decimal>
-                </westBoundLongitude>
-                <eastBoundLongitude>
-                  <gco:Decimal>
-                    <xsl:value-of
-                      select="//wfs:FeatureType[wfs:Name=$Name]/wfs:LatLongBoundingBox/@maxx"/>
-                  </gco:Decimal>
-                </eastBoundLongitude>
-                <southBoundLatitude>
-                  <gco:Decimal>
-                    <xsl:value-of
-                      select="//wfs:FeatureType[wfs:Name=$Name]/wfs:LatLongBoundingBox/@miny"/>
-                  </gco:Decimal>
-                </southBoundLatitude>
-                <northBoundLatitude>
-                  <gco:Decimal>
-                    <xsl:value-of
-                      select="//wfs:FeatureType[wfs:Name=$Name]/wfs:LatLongBoundingBox/@maxy"/>
-                  </gco:Decimal>
-                </northBoundLatitude>
-              </xsl:when>
-              <xsl:otherwise>
-                <westBoundLongitude>
-                  <gco:Decimal>
-                    <xsl:value-of select="//Layer[Name=$Name]/LatLonBoundingBox/@minx|
-                      //wms:Layer[wms:Name=$Name]/wms:EX_GeographicBoundingBox/wms:westBoundLongitude"/>
-                  </gco:Decimal>
-                </westBoundLongitude>
-                <eastBoundLongitude>
-                  <gco:Decimal>
-                    <xsl:value-of select="//Layer[Name=$Name]/LatLonBoundingBox/@maxx|
-                      //wms:Layer[wms:Name=$Name]/wms:EX_GeographicBoundingBox/wms:eastBoundLongitude"/>
-                  </gco:Decimal>
-                </eastBoundLongitude>
-                <southBoundLatitude>
-                  <gco:Decimal>
-                    <xsl:value-of select="//Layer[Name=$Name]/LatLonBoundingBox/@miny|
-                      //wms:Layer[wms:Name=$Name]/wms:EX_GeographicBoundingBox/wms:southBoundLatitude"/>
-                  </gco:Decimal>
-                </southBoundLatitude>
-                <northBoundLatitude>
-                  <gco:Decimal>
-                    <xsl:value-of select="//Layer[Name=$Name]/LatLonBoundingBox/@maxy|
-                      //wms:Layer[wms:Name=$Name]/wms:EX_GeographicBoundingBox/wms:northBoundLatitude"/>
-                  </gco:Decimal>
-                </northBoundLatitude>
-              </xsl:otherwise>
-            </xsl:choose>
-          </EX_GeographicBoundingBox>
-        </geographicElement>
-      </EX_Extent>
-    </extent>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-            TODO : could be added to the GUI ?
-        <xsl:for-each select="tpCat">
-            <topicCategory>
-                <MD_TopicCategoryCode codeList="./resources/codeList.xml#MD_TopicCategoryCode" codeListValue="{TopicCatCd/@value}" />
-            </topicCategory>
-        </xsl:for-each>
-
-          - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-  </xsl:template>
-
-  <!-- ============================================================================= -->
-  <!-- === Keywords === -->
-  <!-- ============================================================================= -->
-
-  <xsl:template match="*" mode="Keywords">
-    <!-- TODO : tokenize WFS 100 keywords list -->
-    <xsl:for-each select="Keyword|wms:Keyword|ows:Keyword|ows11:Keyword|ows2:Keyword|wfs:Keywords|wcs:keyword">
-      <keyword>
-        <gco:CharacterString>
-          <xsl:value-of select="."/>
-        </gco:CharacterString>
-      </keyword>
-    </xsl:for-each>
-  </xsl:template>
+								<keyword>
+									<gmx:Anchor xlink:href="{$inspireTheme}">
+											<xsl:value-of select="$keywordValue"/>
+									</gmx:Anchor>
+								</keyword>
+							</xsl:if>
+						</xsl:for-each>
+					</xsl:if>
+					<thesaurusName>
+						<CI_Citation>
+							<title>
+								<gmx:Anchor xlink:href="{$thesaurusAnchor}">
+										<xsl:value-of select="$thesaurusAnchorValue"/>
+								</gmx:Anchor>
+							</title>
+							<date>
+								<CI_Date>
+									<date>
+										<gco:Date><xsl:value-of select="$thesaurusDate"/></gco:Date>
+									</date>
+									<dateType>
+										<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+									</dateType>
+								</CI_Date>
+							</date>
+						</CI_Citation>
+					</thesaurusName>
+				</MD_Keywords>
+			</descriptiveKeywords>
+		</xsl:if>
+	</xsl:template>
 
 </xsl:stylesheet>
