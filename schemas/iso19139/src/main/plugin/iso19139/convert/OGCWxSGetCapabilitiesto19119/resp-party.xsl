@@ -99,7 +99,79 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <gmd:role>
-      <gmd:CI_RoleCode codeList="./resources/codeList.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+
+      <gmd:CI_RoleCode
+		  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">Contactpunt</gmd:CI_RoleCode>
+    </gmd:role>
+
+  </xsl:template>
+
+  <!-- ============================================================================= -->
+
+  <xsl:template match="*" mode="RespPartyCustodian">
+
+    <xsl:for-each
+      select="(ContactPersonPrimary/ContactPerson|
+      wms:ContactPersonPrimary/wms:ContactPerson|
+      wcs:individualName|
+      ows:ServiceContact/ows:IndividualName|
+      ows11:ServiceContact/ows11:IndividualName|
+      ows2:ServiceContact/ows2:IndividualName)[. != '']">
+
+     <gmd:individualName>
+       <gco:CharacterString>
+         <xsl:value-of select="."/>
+       </gco:CharacterString>
+     </gmd:individualName>
+
+    </xsl:for-each>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <xsl:for-each
+      select="(ContactPersonPrimary/ContactOrganization|
+      wms:ContactPersonPrimary/wms:ContactOrganization|
+      wcs:organisationName|
+      ows:ProviderName|
+      ows11:ProviderName|
+      ows2:ProviderName)[. != '']">
+      <gmd:organisationName>
+        <gco:CharacterString>
+          <xsl:value-of select="."/>
+        </gco:CharacterString>
+      </gmd:organisationName>
+    </xsl:for-each>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <xsl:for-each
+      select="(ContactPosition|wms:ContactPosition|
+      wcs:positionName|
+      ows:ServiceContact/ows:PositionName|
+      ows11:ServiceContact/ows11:PositionName|
+      ows2:ServiceContact/ows2:PositionName)[. != '']">
+      <gmd:positionName>
+        <gco:CharacterString>
+          <xsl:value-of select="."/>
+        </gco:CharacterString>
+      </gmd:positionName>
+    </xsl:for-each>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <gmd:contactInfo>
+      <gmd:CI_Contact>
+        <xsl:apply-templates select="." mode="Contact"/>
+      </gmd:CI_Contact>
+    </gmd:contactInfo>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <gmd:role>
+
+      <gmd:CI_RoleCode
+		  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="custodian">Beheerder
+      </gmd:CI_RoleCode>
     </gmd:role>
 
   </xsl:template>
@@ -142,6 +214,7 @@
     </xsl:if>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <xsl:for-each select="ContactAddress|
               ../wms:ContactInformation/wms:ContactAddress|
               wcs:contactInfo|
@@ -154,28 +227,26 @@
           <xsl:apply-templates select="." mode="Address"/>
         </gmd:CI_Address>
       </gmd:address>
+
+
     </xsl:for-each>
 
-    <!--cntOnLineRes-->
-    <!--cntHours -->
-    <!--cntInstr -->
-    <xsl:variable name="url" select="//Service/OnlineResource/@xlink:href|
-      //wms:Service/wms:OnlineResource/@xlink:href|
-      ows:ProviderSite/@xlink:href|
-      ows11:ProviderSite/@xlink:href|
-      ows2:ProviderSite/@xlink:href"/>
-    <xsl:if test="$url != ''">
-      <gmd:onlineResource>
-        <gmd:CI_OnlineResource>
-          <gmd:linkage>
-            <gmd:URL>
-              <xsl:value-of select="$url"/>
-            </gmd:URL>
-          </gmd:linkage>
-        </gmd:CI_OnlineResource>
-      </gmd:onlineResource>
-    </xsl:if>
-  </xsl:template>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+	<gmd:onlineResource>
+		<gmd:CI_OnlineResource>
+			<gmd:linkage>
+				<xsl:variable name="urls" select="//Service/OnlineResource/@xlink:href|ows:ProviderSite/@xlink:href|ows2:ProviderSite/@xlink:href|ows11:ProviderSite/@xlink:href"/>
+				<xsl:if test="normalize-space($urls)!=''">
+					<gmd:URL>
+						<xsl:value-of select="$urls"/>
+					</gmd:URL>
+				</xsl:if>
+			</gmd:linkage>
+		</gmd:CI_OnlineResource>
+	</gmd:onlineResource>
+
+	</xsl:template>
 
 
   <!-- ============================================================================= -->
@@ -241,5 +312,7 @@
       </gmd:electronicMailAddress>
     </xsl:for-each>
   </xsl:template>
+
+
 
 </xsl:stylesheet>
