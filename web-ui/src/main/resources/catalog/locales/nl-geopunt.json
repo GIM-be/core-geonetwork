@@ -13,7 +13,7 @@
   "mdStatusTitle-54": "Intern ingediend",
   "mdStatusTitle-55": "Afgekeurd door Hoofdeditor",
   "mdStatusTitle-56": "Pas gecreëerd",
-  "Administrator": "Admin",
-  "Reviewer": "Hoofdeditor",
-  "Editor": "Editor"
+  "administrator": "Admin",
+  "reviewer": "Hoofdeditor",
+  "editor": "Editor"
 }

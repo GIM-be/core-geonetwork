@@ -7,8 +7,8 @@
 
 	<xsl:output method="xml" indent="yes"/>
 
-  <xsl:template match="srv:SV_CouplingType[$nodeType='Geopunt']" priority="1000">
-    <srv:SV_CouplingType codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/SV_CouplingType.xml" codeListValue="tight" />
+  <xsl:template match="srv:couplingType [$nodeType='Geopunt']" priority="1000">
+    <srv:couplingType><srv:SV_CouplingType codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/SV_CouplingType.xml" codeListValue="tight" /></srv:couplingType>
   </xsl:template>
 
   <xsl:template match="srv:serviceType/gco:LocalName[$nodeType='Geopunt']" priority="1000">
