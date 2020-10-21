@@ -155,10 +155,10 @@ public class TransferApi {
         }
 
         List<UserGroupsResponse> list = new ArrayList<>();
+        List<User> allAdmin = userRepository.findAllByProfile(Profile.Administrator);
 
         if (myProfile == Profile.Administrator || myProfile == Profile.UserAdmin) {
             // add all admins first
-            List<User> allAdmin = userRepository.findAllByProfile(Profile.Administrator);
             Group adminGroup = new Group();
             adminGroup.setName("allAdmins");
             for (User u : allAdmin) {
@@ -198,9 +198,12 @@ public class TransferApi {
         }
 
         for (UserGroup ug : userGroups) {
-            list.add(
-                new UserGroupsResponse(ug.getUser(), ug.getGroup(), ug.getProfile().name())
-            );
+            // If user is an admin, don't add it as a UserGroup
+            if (allAdmin.stream().noneMatch(user -> user.getId() == ug.getUser().getId())) {
+                list.add(
+                    new UserGroupsResponse(ug.getUser(), ug.getGroup(), ug.getProfile().name())
+                );
+            }
         }
         return list;
     }
