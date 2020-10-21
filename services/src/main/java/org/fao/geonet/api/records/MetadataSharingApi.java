@@ -957,21 +957,30 @@ public class MetadataSharingApi {
                                   Integer sourceUsr, Integer sourceGrp,
                                   AbstractMetadata metadata,
                                   boolean changeReport) throws Exception {
-        Vector<OperationAllowedId> sourcePriv =
-            retrievePrivileges(serviceContext, String.valueOf(metadata.getId()), sourceUsr, sourceGrp);
+        Vector<OperationAllowedId> sourcePriv = sourceGrp != ReservedGroup.intranet.getId() ?
+            retrievePrivileges(serviceContext, String.valueOf(metadata.getId()), sourceUsr, sourceGrp):
+            new Vector<>();
         if (sourcePriv.size() == 0) {
-            dataManager.copyDefaultPrivForGroup(
-                serviceContext,
-                String.valueOf(metadata.getId()),
-                String.valueOf(groupIdentifier),
-                false);
+            if (groupIdentifier != ReservedGroup.intranet.getId()) {
+                dataManager.copyDefaultPrivForGroup(
+                    serviceContext,
+                    String.valueOf(metadata.getId()),
+                    String.valueOf(groupIdentifier),
+                    false);
 
-            if (changeReport) {
+                if (changeReport) {
+                    report.addMetadataInfos(metadata.getId(), String.format(
+                        "No privileges for user '%s' on metadata '%s', so setting default privileges",
+                        sourceUsr, metadata.getUuid()
+                    ));
+                }
+            } else if (changeReport) {
                 report.addMetadataInfos(metadata.getId(), String.format(
-                    "No privileges for user '%s' on metadata '%s', so setting default privileges",
-                    sourceUsr, metadata.getUuid()
+                    "Current target user being and administrator, no privileges are set for metadata '%s'",
+                    metadata.getUuid()
                 ));
             }
+
         } else {
             for (OperationAllowedId priv : sourcePriv) {
                 if (sourceGrp != null) {
@@ -980,10 +989,12 @@ public class MetadataSharingApi {
                         sourceGrp,
                         priv.getOperationId());
                 }
-                dataManager.setOperation(serviceContext,
-                    metadata.getId(),
-                    groupIdentifier,
-                    priv.getOperationId());
+                if (groupIdentifier != ReservedGroup.intranet.getId()) {
+                    dataManager.setOperation(serviceContext,
+                        metadata.getId(),
+                        groupIdentifier,
+                        priv.getOperationId());
+                }
             }
         }
     }
