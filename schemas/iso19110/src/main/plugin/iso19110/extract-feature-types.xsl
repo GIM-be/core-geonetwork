@@ -12,6 +12,7 @@
   <xsl:template match="/">
     <xsl:variable name="jsonFeatureTypes">[
       <xsl:for-each select="/gfc:FC_FeatureCatalogue/gfc:featureType">{
+
         "typeName" : "<xsl:value-of select="gn-fn-index:json-escape(gfc:FC_FeatureType/gfc:typeName/*/text())"/>",
         "definition" :"<xsl:value-of select="gn-fn-index:json-escape(gfc:FC_FeatureType/gfc:definition/*/text())"/>",
         "code" :"<xsl:value-of select="gfc:FC_FeatureType/gfc:code/*/text()"/>",
@@ -28,19 +29,19 @@
           "attributeTable" : [
           <xsl:for-each select="$attributes">
             <xsl:variable name="cardinality" select="*/gfc:cardinality/gco:Multiplicity/gco:range/gco:MultiplicityRange"/>
-            {"name": "<xsl:value-of select="*/gfc:memberName/*/text()"/>",
+            {"name": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:memberName/*/text())"/>",
             "definition": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:definition/*/text())"/>",
-            "code": "<xsl:value-of select="*/gfc:code/*/text()"/>",
+            "code": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:code/*/text())"/>",
             "link": "<xsl:value-of select="*/gfc:code/*/@xlink:href"/>",
-            "type": "<xsl:value-of select="*/gfc:valueType/gco:TypeName/gco:aName/*/text()"/>",
-            "min": "<xsl:value-of select="$cardinality/gco:lower/*/text()"/>",
-            "max": "<xsl:value-of select="if ($cardinality/gco:upper/*/@isInfinite = 'true') then 'infinite' else $cardinality/gco:upper/*/text()"/>"
+            "type": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:valueType/gco:TypeName/gco:aName/*/text())"/>",
+            "min": "<xsl:value-of select="gn-fn-index:json-escape($cardinality/gco:lower/*/text())"/>",
+            "max": "<xsl:value-of select="if ($cardinality/gco:upper/*/@isInfinite = 'true') then 'infinite' else gn-fn-index:json-escape($cardinality/gco:upper/*/text())"/>"
             <xsl:if test="*/gfc:listedValue">
               ,"values": [
               <xsl:for-each select="*/gfc:listedValue[normalize-space(string()) != '']">{
-                "label": "<xsl:value-of select="*/gfc:label/*/text()"/>",
-                "code": "<xsl:value-of select="*/gfc:code/*/text()"/>",
-                "definition": "<xsl:value-of select="*/gfc:definition/*/text()"/>"}
+                "label": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:label/*/text())"/>",
+                "code": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:code/*/text())"/>",
+                "definition": "<xsl:value-of select="gn-fn-index:json-escape(*/gfc:definition/*/text())"/>"}
                 <xsl:if test="position() != last()">,</xsl:if>
               </xsl:for-each>
               ]

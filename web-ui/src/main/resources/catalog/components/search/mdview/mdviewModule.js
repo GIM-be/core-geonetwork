@@ -214,8 +214,13 @@
             featureTypesPromise.cancel();
             featureTypesPromise = undefined;
           }
-          if ($scope.mdView.current.record.featureTypes === '#tooLong') {
-            populateFeatureTypes();
+          if (typeof $scope.mdView.current.record.featureTypes === 'string') {
+            if ($scope.mdView.current.record.featureTypes === '#tooLong') {
+              populateFeatureTypes();
+            } else {
+              // Avoid displaying the feature types in cases the JSON get corrupted
+              $scope.mdView.current.record.featureTypes = [];
+            }
           }
         }
       }
