@@ -1,6 +1,6 @@
 @import "./mixin.less";
 
-.aiv-header {
+#aiv-header {
   font-family: flanders-sans, sans-serif;
   background-color: white;
   height: 45px;
@@ -256,7 +256,7 @@
 
 [ng-app="gn_admin"] {
   body {
-    padding-top: 0;
+    padding-top: 0 !important;
   }
 
   .aiv {
@@ -267,10 +267,10 @@
   }
 
   .gn-top-bar {
-    top: 45px;
+    top: 45px !important;
   }
 
   [data-ng-controller="GnAdminController"] {
-    padding-top: 48px;
+    padding-top: 48px !important;
   }
 }
