@@ -1,4 +1,3 @@
-@import "./fonts.less";
 @import "./mixin.less";
 
 .aiv-footer {
@@ -9,51 +8,63 @@
   border-top: 1px solid #cbd2da;
   width: 100%;
   position: relative;
+
   a {
     color: #000;
     text-decoration: none;
     transition: all 0.2s ease;
+
     &:hover {
       color: #06c;
     }
   }
+
   .header-slash {
     margin-left: 15px;
     .aiv-slash(15px, 70px);
   }
+
   .footer-wrapper {
     position: relative;
+
     .brand-wrapper {
       float: left;
       padding: 20px;
+
       .logo-wrapper {
         display: inline-block;
         float: left;
         position: relative;
       }
+
       .logo-text {
         display: inline-block;
         padding-left: 30px;
         padding-top: 5px;
+
         div {
           display: block;
         }
+
         .logo-text-grp {
           font-weight: 500;
           font-size: 20px;
           color: #333332;
         }
+
         .logo-text-quote {
           font-size: 14px;
           color: #3b3b3c;
         }
       }
+
       @media screen and (max-width: 900px) {
         float: none;
         margin: auto;
         width: 350px;
       }
     }
+
     .managed-wrapper {
       font-size: 16px;
       padding: 42px 0 42px 0;
@@ -63,6 +74,7 @@
       @media screen and (max-width: 1310px) {
         padding: 30px 0 30px 0;
       }
+
       .managed-text {
       }
     }
