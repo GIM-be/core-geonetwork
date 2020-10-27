@@ -636,6 +636,7 @@
           <xsl:with-param name="content">
             <xsl:variable name="fileIdentifier">
               <xsl:choose>
+                <xsl:when test="name()='srv:identifier'"><xsl:value-of select="gn-fn-render:getMetadataFileIdentifierByDatasetIdentifier($identifier, $langId)"/></xsl:when>
                 <xsl:when test="name()='uuidref' and name(..)='srv:operatesOn'">
                   <xsl:call-template name="get-param-value-from-url">
                     <xsl:with-param name="url" select="../@xlink:href"/>

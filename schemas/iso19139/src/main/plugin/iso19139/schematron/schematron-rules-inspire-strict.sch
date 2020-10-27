@@ -109,21 +109,21 @@
                 <sch:value-of select="concat('''', $correctTitle, '''')"/>
 
             </sch:assert>
-            <sch:assert test="$has_specification_title">
+            <sch:assert test="$has_specification_title[1]">
                 <sch:value-of select="$loc/strings/assert.M44.title/div"/>
             </sch:assert>
 
             <sch:let name="specification_date" value="$specification_inspire/*/gmd:date/*/gmd:date/*/text()[string-length(.) > 0]"/>
-            <sch:let name="specification_dateType" value="normalize-space($specification_inspire/*/gmd:date/*/gmd:dateType/*/@codeListValue)"/>
+            <sch:let name="specification_dateType" value="$specification_inspire/*/gmd:date/*/gmd:dateType/*/normalize-space(@codeListValue)"/>
 
             <!-- Ignore specification date checks if no inspire specification -->
-            <sch:assert test="not($specification_inspire) or ($specification_date and $specification_dateType)">
+            <sch:assert test="not($specification_inspire[1]) or ($specification_date[1] and $specification_dateType[1])">
                 <sch:value-of select="$loc/strings/assert.M44.date/div"/>
             </sch:assert>
 
-            <sch:report test="$has_specification_title">
+            <sch:report test="$has_specification_title[1]">
                 <sch:value-of select="$loc/strings/report.M44.spec/div"/>
-                <sch:value-of select="$has_specification_title"/>, (<sch:value-of select="$specification_date"/>, <sch:value-of select="$specification_dateType"/>)
+                <sch:value-of select="$has_specification_title[1]"/>, (<sch:value-of select="$specification_date[1]"/>, <sch:value-of select="$specification_dateType[1]"/>)
             </sch:report>
             <sch:report test="$degree">
                 <sch:value-of select="$loc/strings/report.M44.degree/div"/>

@@ -622,7 +622,7 @@ USA.
                 <sch:value-of select="$loc/strings/alert.M45.ca/div"/>
             </sch:assert>
             <sch:report test="$accessConstraints_found">
-                <sch:value-of select="$accessConstraints_count"/> <sch:value-of select="$loc/strings/report.M45.ca/div"/>
+                <sch:value-of select="$loc/strings/report.M45.ca/div"/> <sch:value-of select="$accessConstraints_count"/>
             </sch:report>
 
             <sch:assert test="not($accessConstraints)" see="gmd:resourceConstraints/*/gmd:accessConstraints/geonet:element/@ref">
