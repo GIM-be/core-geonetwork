@@ -159,4 +159,21 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
+
+  <!-- Template to get metadata fileIdentifier using its dataset identifier.
+         If failed, return identifier. -->
+  <xsl:function name="gn-fn-render:getMetadataFileIdentifierByDatasetIdentifier">
+    <xsl:param name="identifier" as="xs:string"/>
+    <xsl:param name="language" as="xs:string"/>
+
+    <xsl:variable name="fileIdentifier" select="util:getIndexFieldByDatasetIdentifier($language,$identifier,'fileId',$language)"/>
+    <xsl:choose>
+      <xsl:when test="$fileIdentifier=''">
+        <xsl:value-of select="$identifier"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$fileIdentifier"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 </xsl:stylesheet>

@@ -75,6 +75,16 @@
     </xsl:copy>
   </xsl:template>
 
+  <!-- Reinitialize feature catalogue description -->
+  <xsl:template match="gmd:MD_FeatureCatalogueDescription">
+    <gmd:MD_FeatureCatalogueDescription>
+      <gmd:includedWithDataset>
+        <gco:Boolean>true</gco:Boolean>
+      </gmd:includedWithDataset>
+      <gmd:featureCatalogueCitation uuidref=""/>
+    </gmd:MD_FeatureCatalogueDescription>
+  </xsl:template>
+
   <!-- copy everything else as is -->
   <xsl:template match="@*|node()">
     <xsl:copy>

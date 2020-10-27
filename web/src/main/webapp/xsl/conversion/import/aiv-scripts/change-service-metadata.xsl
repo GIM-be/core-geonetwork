@@ -23,6 +23,8 @@
 
   <xsl:template match="srv:serviceTypeVersion[$nodeType='Geopunt']" priority="1000"/>
 
+  <xsl:template match="srv:coupledResource[$nodeType='Geopunt']" priority="1000"/>
+
   <xsl:template match="srv:operatesOn[$nodeType='Geopunt']" priority="1000">
     <xsl:if test="@xlink:href!=''">
       <srv:operatesOn xlink:href="{concat('https://',if ($environment!='prod') then concat($environment,'.') else '','metadata.vlaanderen.be/srv/dut/csw',substring-after(@xlink:href,'csw'))}" uuidref="{@uuidref}" />
