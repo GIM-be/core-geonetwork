@@ -24,10 +24,13 @@
 package jeeves.config.springutil;
 
 import org.fao.geonet.NodeInfo;
+import org.fao.geonet.kernel.setting.SettingManager;
+import org.fao.geonet.kernel.setting.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.util.RedirectUrlBuilder;
 
 import java.io.IOException;
 
@@ -54,6 +57,13 @@ public class JeevesNodeAwareRedirectStrategy extends DefaultRedirectStrategy imp
         NodeInfo nodeInfo = applicationContext.getBean(NodeInfo.class);
 
         String newUrl = url.replace("@@nodeId@@", nodeInfo.getId());
+
+        SettingManager settingManager = applicationContext.getBean(SettingManager.class);
+        String protocol = settingManager.getValue(Settings.SYSTEM_SERVER_PROTOCOL);
+
+        if ("https".equals(protocol) && newUrl.startsWith("http:")) {
+            newUrl = newUrl.replace("http",protocol);
+        }
 
         super.sendRedirect(request, response, newUrl);
     }

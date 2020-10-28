@@ -174,9 +174,12 @@
     <property name="authenticationSuccessHandler">
       <bean
         class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-        <property name="defaultTargetUrl" value="/"/>
+        <property name="defaultTargetUrl" value="https://localhost/"/>
         <property name="targetUrlParameter" value="redirectUrl"/>
         <property name="requestCache" ref="requestCache" />
+        <property name="redirectStrategy">
+          <bean class="jeeves.config.springutil.JeevesNodeAwareRedirectStrategy"/>
+        </property>
       </bean>
     </property>
     <property name="sessionAuthenticationStrategy">
@@ -237,6 +240,7 @@
   <bean id="defaultAuthenticationEntryPoint"
         class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
     <constructor-arg name="loginFormUrl" value="${loginForm}"/>
+    <!--property name="forceHttps" value="${forceHttps}" /-->
   </bean>
 
   <bean id="ajaxEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint" />
