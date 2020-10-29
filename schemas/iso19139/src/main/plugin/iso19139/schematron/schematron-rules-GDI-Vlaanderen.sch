@@ -8,6 +8,7 @@
 	<sch:ns prefix="srv" uri="http://www.isotc211.org/2005/srv"/>
 	<sch:ns prefix="gco" uri="http://www.isotc211.org/2005/gco"/>
 	<sch:ns prefix="geonet" uri="http://www.fao.org/geonetwork"/>
+  <sch:ns prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
 	<sch:ns prefix="skos" uri="http://www.w3.org/2004/02/skos/core#"/>
 	<sch:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
 	<!-- GDI-Vlaanderen SC1 -->
@@ -96,4 +97,33 @@
 			</sch:report>
 		</sch:rule>
 	</sch:pattern>
+  <!-- GDI-Vlaanderen SC6 -->
+  <sch:pattern>
+    <sch:let name="thesaurusName" value="'INSPIRE - Spatial scope'" />
+    <sch:let name="thesaurusDate" value="'2019-05-22'" />
+    <sch:let name="thesaurusNameWithDate" value="concat('''',$thesaurusName,''' thesaurus gedateerd op ',$thesaurusDate)" />
+    <sch:title>Er moet minstens één Nederlandstalig trefwoord aanwezig zijn uit de thesaurus ‘INSPIRE - Spatial scope’ met als datum 2019-05-22 indien de MD_Metadata.language gelijk is aan NL (ISO-element 55)</sch:title>
+    <!--sch:title><sch:value-of select="concat('Er moet minstens één Nederlandstalig trefwoord aanwezig zijn uit de ',' indien de MD_Metadata.language gelijk is aan NL (ISO-element 55)')"/></sch:title-->
+    <sch:rule context="//gmd:MD_DataIdentification[/gmd:MD_Metadata/gmd:language/*/text()='dut' or /gmd:MD_Metadata/gmd:language/gmd:LanguageCode/@codeListValue='dut']">
+      <sch:let name="spatial-scope-thesaurus" value="document(concat('file:///', replace($thesaurusDir, '\\', '/'), '/external/thesauri/theme/SpatialScope.rdf'))"/>
+      <sch:let name="spatial-scope" value="$spatial-scope-thesaurus//rdf:Description"/>
+      <sch:assert test="count($spatial-scope) > 0">
+        <sch:value-of select="$thesaurusName"/> niet gevonden.
+      </sch:assert>
+      <sch:let name="thesaurus_name" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:title/*/text()"/>
+      <sch:let name="thesaurus_date" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:date/*/text()"/>
+      <sch:let name="thesaurus_dateType" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:dateType/*/@codeListValue/normalize-space(.)"/>
+      <sch:let name="keyword" value="gmd:descriptiveKeywords/*/gmd:keyword/*[name()='gco:CharacterString' or name()='gmx:Anchor']
+					[../../gmd:thesaurusName/*/gmd:title/*/text()='INSPIRE - Spatial scope' and
+					../../gmd:thesaurusName/*/gmd:date/*/gmd:date/gco:Date/text()=$thesaurusDate and
+					../../gmd:thesaurusName/*/gmd:date/*/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']"/>
+      <sch:let name="spatial-scope-found" value="count($spatial-scope-thesaurus//rdf:Description[skos:prefLabel[@xml:lang='nl'] = $keyword])"/>
+      <sch:assert test="$spatial-scope-found >0">
+        Er werd geen Nederlandstalig sleutelwoord gevonden afkomstig uit de <sch:value-of select="$thesaurusNameWithDate"/>.
+      </sch:assert>
+      <sch:report test="$spatial-scope-found > 0">
+        Er werd een Nederlandstalig sleutelwoord: <sch:value-of select="$keyword"/> gevonden dat afkomstig is uit de <sch:value-of select="$thesaurusNameWithDate"/>.
+      </sch:report>
+    </sch:rule>
+  </sch:pattern>
 </sch:schema>

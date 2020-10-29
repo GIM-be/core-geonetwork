@@ -49,11 +49,17 @@
       <xsl:variable name="currentDoc" select="document(.)"/>
       <thesausus>
         <xsl:attribute name="title" select="string($currentDoc/rdf:RDF/skos:ConceptScheme/dc:title[1])"/>
-        <xsl:for-each select="$currentDoc/rdf:RDF/skos:Concept">
+        <xsl:for-each select="$currentDoc/rdf:RDF//skos:Concept">
           <xsl:copy copy-namespaces="no">
             <xsl:copy-of select="@*"/>
             <xsl:copy-of select="skos:prefLabel[@xml:lang = ($iso2charLang,'en','de','nl','fr')]"/>
           </xsl:copy>
+        </xsl:for-each>
+        <xsl:for-each select="$currentDoc/rdf:RDF//rdf:Description">
+          <skos:Concept>
+            <xsl:copy-of select="@*"/>
+            <xsl:copy-of select="skos:prefLabel[@xml:lang = ($iso2charLang,'en','de','nl','fr')]"/>
+          </skos:Concept>
         </xsl:for-each>
       </thesausus>
     </xsl:for-each>
@@ -61,13 +67,56 @@
 
   <xsl:variable name="inspireThemesStartStringForKeywordMapping">GEMET - INSPIRE them</xsl:variable>
   <xsl:variable name="inspireConceptsStartStringForKeywordMapping">GEMET - Concept</xsl:variable>
+  <xsl:variable name="inspirePriorityDatasetStartStringForKeywordMapping">INSPIRE priority data</xsl:variable>
   <xsl:variable name="taxonomyStartStringForKeywordMapping">Verordening (EG) nr. 1205/2008</xsl:variable>
   <xsl:variable name="gdiVlaanderenTrefwoordenStartStringForKeywordMapping">GDI-Vlaanderen Trefwoorden</xsl:variable>
   <xsl:variable name="gdiVlaanderenServiceTypesStartStringForKeywordMapping">GDI-Vlaanderen Service Types</xsl:variable>
   <xsl:variable name="gdiVlaanderenRegiosStartStringForKeywordMapping">Vlaamse regio</xsl:variable>
 
   <xsl:variable name="inspireThemesStartStringToBeMapped">GEMET - INSPIRE them</xsl:variable>
+  <xsl:variable name="inspirePriorityDatasetStartStringToBeMapped">INSPIRE priority data</xsl:variable>
   <xsl:variable name="taxonomyStartStringToBeMapped">D.4 van de verordening (EG) NR. 1205/2008</xsl:variable>
+
+  <xsl:template match="gmd:descriptiveKeywords[$hierarchyLevel!='service']" priority="1000">
+    <xsl:variable name="previousDescriptiveKeywordsSiblingsCount"
+                  select="count(preceding-sibling::*[name(.) = 'gmd:descriptiveKeywords'])"/>
+    <xsl:if test="$previousDescriptiveKeywordsSiblingsCount=0">
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword>
+            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional">Regionaal</gmx:Anchor>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode
+              codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+              codeListValue="theme"/>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope">INSPIRE - Spatial scope</gmx:Anchor>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>2019-05-22</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode
+                      codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                      codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords>
+    </xsl:if>
+    <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
 
   <xsl:template match="gmd:MD_Keywords[gmd:thesaurusName and (gmd:keyword/gco:CharacterString or gmd:keyword/gmx:Anchor)]" priority="1000">
     <xsl:variable name="thesaurusTitle" select="gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[name()='gco:CharacterString' or name()='gmx:Anchor']"/>
@@ -76,6 +125,7 @@
         <xsl:with-param name="thesaurusTitle" select="$thesaurusTitle"/>
       </xsl:call-template>
     </xsl:variable>
+    <xsl:message select="concat('Comparing with ',$thesauri/thesausus[@title = $mappedThesaurusTitle]/@title)"/>
     <xsl:variable name="currentThesaurus" select="$thesauri/thesausus[@title = $mappedThesaurusTitle]"/>
     <xsl:message select="concat('Transforming keywords for thesaurus with name ',$thesaurusTitle,' (mapped to ',$mappedThesaurusTitle,') started')" />
     <xsl:copy copy-namespaces="no">
@@ -222,6 +272,9 @@
         <xsl:when test="starts-with($mappedThesaurusTitle,$taxonomyStartStringForKeywordMapping)">
           <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory"><xsl:value-of select="$mappedThesaurusTitle"/></gmx:Anchor>
         </xsl:when>
+        <xsl:when test="starts-with($mappedThesaurusTitle,$inspirePriorityDatasetStartStringForKeywordMapping)">
+          <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope"><xsl:value-of select="$mappedThesaurusTitle"/></gmx:Anchor>
+        </xsl:when>
         <xsl:when test="starts-with($mappedThesaurusTitle,$gdiVlaanderenTrefwoordenStartStringForKeywordMapping)">
           <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"><xsl:value-of select="$mappedThesaurusTitle"/></gmx:Anchor>
         </xsl:when>
@@ -243,6 +296,7 @@
     <xsl:param name="thesaurusTitle" required="yes"/>
     <xsl:choose>
       <xsl:when test="contains($thesaurusTitle,$inspireThemesStartStringToBeMapped)">GEMET - INSPIRE themes, version 1.0</xsl:when>
+      <xsl:when test="contains($thesaurusTitle,$inspirePriorityDatasetStartStringToBeMapped)">INSPIRE priority data set</xsl:when>
       <xsl:when test="starts-with($thesaurusTitle, $taxonomyStartStringToBeMapped)">Verordening (EG) nr. 1205/2008 van de Commissie van 3 december 2008 ter uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende metagegevens</xsl:when>
       <xsl:otherwise><xsl:value-of select="$thesaurusTitle"/></xsl:otherwise>
     </xsl:choose>

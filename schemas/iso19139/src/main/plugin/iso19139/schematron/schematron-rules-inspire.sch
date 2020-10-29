@@ -331,6 +331,48 @@ USA.
 
     </sch:pattern>
 
+  <sch:pattern>
+    <sch:title>$loc/strings/spatialscope</sch:title>
+
+    <sch:rule context="//gmd:MD_DataIdentification|
+			//*[@gco:isoType='gmd:MD_DataIdentification']">
+      <!-- Check that INSPIRE Spatial Scope are available.
+      -->
+
+      <sch:let name="spatial-scope-thesaurusURL" value="concat('file:///', replace($thesaurusDir, '\\', '/'), '/external/thesauri/theme/SpatialScope.rdf')"/>
+      <sch:let name="spatial-scope-thesaurus" value="document($spatial-scope-thesaurusURL)"/>
+      <sch:let name="spatial-scope" value="$spatial-scope-thesaurus//rdf:Description"/>
+
+      <!-- Display error if SpatialScope thesaurus is not available. -->
+      <sch:assert test="count($spatial-scope) > 0">
+        INSPIRE - Spatial scope thesaurus not found (at <sch:value-of select="$spatial-scope-thesaurusURL" />. Check installation in codelist/external/thesauri/theme.
+        Download thesaurus from INSPIRE Registry.
+      </sch:assert>
+
+      <sch:let name="thesaurus_name" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:title/*/text()"/>
+      <sch:let name="thesaurus_date" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:date/*/text()"/>
+      <sch:let name="thesaurus_dateType" value="gmd:descriptiveKeywords/*/gmd:thesaurusName/*/gmd:date/*/gmd:dateType/*/@codeListValue/normalize-space(.)"/>
+      <sch:let name="keyword"
+               value="gmd:descriptiveKeywords/*/gmd:keyword/gco:CharacterString|
+				gmd:descriptiveKeywords/*/gmd:keyword/gmx:Anchor"/>
+
+      <sch:let name="spatial-scope-found"
+               value="count($spatial-scope-thesaurus//rdf:Description[skos:prefLabel = $keyword])"/>
+
+      <sch:assert test="$spatial-scope-found > 0" see="geonet:child[@name='descriptiveKeywords']/@uuid">
+        <sch:value-of select="$loc/strings/alert.M70/div"/>
+      </sch:assert>
+
+      <sch:report test="$spatial-scope-found > 0">
+        <sch:value-of select="$spatial-scope-found"/> <sch:value-of select="$loc/strings/report.M70/div"/>
+      </sch:report>
+
+      <sch:report test="$thesaurus_name">Thesaurus:
+        <sch:value-of select="$thesaurus_name"/>, <sch:value-of select="$thesaurus_date"/> (<sch:value-of select="$thesaurus_dateType"/>)
+      </sch:report>
+    </sch:rule>
+
+  </sch:pattern>
 
     <sch:pattern>
         <sch:title>$loc/strings/serviceTaxonomy</sch:title>

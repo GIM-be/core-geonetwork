@@ -31,6 +31,7 @@
   <dataIdentification>Data Identification</dataIdentification>
   <serviceIdentification>Service Identification</serviceIdentification>
   <theme>Keyword and INSPIRE themes</theme>
+  <spatialscope>Keyword and INSPIRE - Spatial scope</spatialscope>
   <serviceTaxonomy>INSPIRE Service taxonomy</serviceTaxonomy>
   <geo>Geographic location</geo>
   <temporal>Temporal reference</temporal>
@@ -595,5 +596,7 @@
   <report.M60>
     <div>Service type is:</div>
   </report.M60>
+  <alert.M70><h2>INSPIRE - Spatial scope keyword is mandatory</h2></alert.M70>
+  <report.M70> INSPIRE - Spatial scope keyword(s) found.</report.M70>
   <!-- INSPIRE metadata rules translation / END -->
 </strings>

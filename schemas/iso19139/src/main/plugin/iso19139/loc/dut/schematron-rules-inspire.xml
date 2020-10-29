@@ -7,6 +7,7 @@
     <dataIdentification>Data Identificatie</dataIdentification>
     <serviceIdentification>Service Identificatie</serviceIdentification>
     <theme>Sleutelwoorden en INSPIRE data thema's</theme>
+    <spatialscope>Sleutelwoorden en INSPIRE - Spatial scope</spatialscope>
     <serviceTaxonomy>INSPIRE Service taxonomy</serviceTaxonomy>
     <geo>Geografische locatie</geo>
     <temporal>Temporele referentie</temporal>
@@ -50,7 +51,7 @@
         Implementatieregels voor metadata zijn afgeleid van de catgeorieën van sectie B.5.27 van ISO 19115.
          </div></alert.M39>
     <report.M39><div>Categorie (ISO topic category) is:</div></report.M39>
-    <alert.M40><div><h2>INSPIRE thema is verplicht</h2><br/>Dit moet opgegeven worden als sleutelwoord uit de GEMET INSPIRE data thema's thesaurus. </div></alert.M40>
+    <alert.M40><div><h2>INSPIRE thema is verplicht</h2><br/> moet opgegeven worden als sleutelwoord uit de GEMET INSPIRE data thema's thesaurus. </div></alert.M40>
     <report.M40><div> INSPIRE thema(s) gevonden.</div></report.M40>
     <alert.M41><div><h2>INSPIRE - Omschrijvende rechthoek is verplicht.</h2><br/>
         <ul>
@@ -231,5 +232,7 @@
         <b>Example:</b> 'view', 'discovery', 'download', 'transformation', 'invoke', 'other'
     </div></alert.M60>
     <report.M60><div>Service type is:</div></report.M60>
+    <alert.M70><div><h2>INSPIRE - Spatial scope sleutelwoord is verplicht</h2><br/> Dit moet opgegeven worden als sleutelwoord uit de INSPIRE Spatial scope thesaurus. </div></alert.M70>
+    <report.M70><div> INSPIRE - Spatial scope sleutelwoord gevonden.</div></report.M70>
     <!-- INSPIRE metadata rules translation / END -->
 </strings>
