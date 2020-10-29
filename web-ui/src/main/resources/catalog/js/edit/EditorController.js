@@ -220,6 +220,12 @@
                   //  }
                   //  return defaultTab;
                   //}
+
+                  //Default tab id for iso19139 metadata is "identificationTab" in order to differentiate it's label
+                  //with "default" view.
+                  'iso19139': function (md) {
+                    return 'identificationTab';
+                  }
                 };
                 if (schemaCustomConfig) {
                   var fn = schemaCustomConfig[$scope.mdSchema];
