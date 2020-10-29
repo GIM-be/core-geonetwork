@@ -29,6 +29,7 @@
   <dataIdentification>Identification des données ou collections</dataIdentification>
   <serviceIdentification>Identification des services</serviceIdentification>
   <theme>Mots-clés &amp; thèmes INSPIRE</theme>
+  <spatialscope>Mots-clés &amp; INSPIRE - Spatial scope</spatialscope>
   <serviceTaxonomy>Taxonomy des services</serviceTaxonomy>
   <geo>Localisation géographique</geo>
   <temporal>Référence temporelle</temporal>
@@ -52,7 +53,7 @@
   <alert.M39><div>Une catégorie de sujet ISO (i.e. thématique) est manquant</div></alert.M39>
   <report.M39><div>Catégorie de sujet ISO est :</div></report.M39>
   <alert.M40><div>Un mot-clé provenant du thésaurus GEMET est manquant (saisir une valeur dans le thésaurus "gemet" ou "inspire")</div></alert.M40>
-  <report.M40><div> thème(s) INSPIRE trouvés.</div></report.M40>
+  <report.M40><div> thème(s) INSPIRE trouvé(s).</div></report.M40>
   <alert.M41><div>L'étendue géographique de la ressource est manquante</div></alert.M41>
 
   <alert.M41.N><div>Borne nord manquante ou la valeur est invalide.</div></alert.M41.N>
@@ -137,5 +138,7 @@
   <alert.M62><div>[ISO19119 for Services] Le nom de l'opération est obligatoire</div></alert.M62>
   <alert.M63><div>[ISO19119 for Services] Le type de communication est obligatoire</div></alert.M63>
   <alert.M64><div>[ISO19119 for Services] Au moins une source en ligne est obligatoire</div></alert.M64>
+  <alert.M70><div>Un mot-clé provenant du thésaurus INSPIRE - Spatial scope est manquant (saisir une valeur dans le thésaurus INSPIRE - Spatial scope)</div></alert.M70>
+  <report.M70><div> mot(s)-clé INSPIRE - Spatial scope trouvé(s).</div></report.M70>
 
 </strings>

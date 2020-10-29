@@ -22,6 +22,8 @@
   <xsl:include href="aiv-scripts/change-distributionInfo.xsl"/>
   <xsl:include href="aiv-scripts/change-service-metadata.xsl"/>
 
+  <xsl:variable name="hierarchyLevel" select="//gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue"/>
+
   <!-- Copy all elements and attributes -->
   <xsl:template match="@*|node()">
     <xsl:copy copy-namespaces="no">
