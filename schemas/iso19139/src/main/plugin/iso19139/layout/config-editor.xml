@@ -4076,7 +4076,7 @@
           </action>
         </section>
       </tab>
-      <tab id="metaMetadataTab" mode="flat" toggle="true">
+      <tab id="metaMetadataTab" mode="flat">
         <section name="gmd:MD_Metadata">
           <field xpath="/gmd:MD_Metadata/gmd:fileIdentifier"/>
           <field xpath="/gmd:MD_Metadata/gmd:language" or="language" in="/gmd:MD_Metadata"/>
@@ -4099,10 +4099,10 @@
           <field xpath="/gmd:MD_Metadata/gmd:featureAttribute"/>
         </section>
       </tab>
-      <tab id="objectCatalogueTab" mode="flat" toggle="true" displayIfRecord="count(/gmd:MD_Metadata/gmd:contentInfo/gmd:MD_FeatureCatalogueDescription) > 0">
-        <section name="gmd:contentInfo" per="/gmd:MD_Metadata/gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
-          <field xpath="gmd:includedWithDataset"/>
-          <section name="gmd:featureCatalogueCitation" per="gmd:featureCatalogueCitation">
+      <tab id="objectCatalogueTab" mode="flat" displayIfRecord="count(gmd:MD_Metadata/gmd:contentInfo) > 0">
+        <section name="gmd:contentInfo" per="/gmd:MD_Metadata/gmd:contentInfo">
+          <field xpath="gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset"/>
+          <section name="gmd:featureCatalogueCitation" per="gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation">
             <directive data-gn-feature-cat-name=""/>
             <field name="featureCatalogueCitationUuidref" templateModeOnly="true" notDisplayedIfMissing="true"
                    xpath=".">
@@ -4121,10 +4121,10 @@
           </section>
         </section>
       </tab>
-      <tab id="applicationSchemaInfoTab" mode="flat" toggle="true" displayIfRecord="count(/gmd:MD_Metadata/gmd:applicationSchemaInfo) > 0">
+      <tab id="applicationSchemaInfoTab" mode="flat" displayIfRecord="count(gmd:MD_Metadata/gmd:applicationSchemaInfo) > 0">
         <section xpath="/gmd:MD_Metadata/gmd:applicationSchemaInfo" or="applicationSchemaInfo" in="/gmd:MD_Metadata"/>
       </tab>
-      <tab id="spatialRepresentationInfoTab" mode="flat" toggle="true" displayIfRecord="count(/gmd:MD_Metadata/gmd:spatialRepresentationInfo) > 0">
+      <tab id="spatialRepresentationInfoTab" mode="flat" displayIfRecord="count(gmd:MD_Metadata/gmd:spatialRepresentationInfo) > 0">
         <section xpath="/gmd:MD_Metadata/gmd:spatialRepresentationInfo"/>
       </tab>
 
