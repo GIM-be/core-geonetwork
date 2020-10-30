@@ -51,7 +51,7 @@
   <distributionInfo>Distribution</distributionInfo>
   <dataQualityInfo>Qualité</dataQualityInfo>
   <spatialRepresentationInfo>Information spatiale</spatialRepresentationInfo>
-  <referenceSystemInfo>Système de réf.</referenceSystemInfo>
+  <referenceSystemInfo>Système de réference</referenceSystemInfo>
   <contentInfo>Contenu</contentInfo>
   <portrayalCatalogueInfo>Représentation</portrayalCatalogueInfo>
   <metadataConstraints>Md. contraintes</metadataConstraints>
@@ -67,7 +67,7 @@
   <contentTab>Inhoud</contentTab>
   <referenceSystemTab>Referentiesysteem</referenceSystemTab>
   <applicationSchemaInfoTab>Schema info</applicationSchemaInfoTab>
-  <spatialRepresentationInfoTab>Ruimtelijke rep.</spatialRepresentationInfoTab>
+  <spatialRepresentationInfoTab>Ruimtelijke informatie</spatialRepresentationInfoTab>
   <qualityTab>Kwaliteit</qualityTab>
   <domainConsistancyTab>Conformiteit</domainConsistancyTab>
   <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
