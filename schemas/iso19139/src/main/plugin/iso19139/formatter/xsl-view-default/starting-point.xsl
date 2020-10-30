@@ -68,13 +68,13 @@
                 <xsl:value-of select="$title"/>
               </h1>
               <xsl:apply-templates mode="getMetadataHeader" select="$metadata"/>
-              <xsl:if test="$related != ''">
+              <!--xsl:if test="$related != ''">
                 <div gn-related="md"
                      data-user="user"
                      data-types="{$related}">
                   <xsl:comment select="'icon'"/>
                 </div>
-              </xsl:if>
+              </xsl:if-->
             </header>
             <xsl:call-template name="render-toc"/>
             <div class="tab-content">
