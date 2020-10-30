@@ -67,7 +67,7 @@
   <contentTab>Inhoud</contentTab>
   <referenceSystemTab>Referentiesysteem</referenceSystemTab>
   <applicationSchemaInfoTab>Schema info</applicationSchemaInfoTab>
-  <spatialRepresentationInfoTab>Ruimtelijke representatie</spatialRepresentationInfoTab>
+  <spatialRepresentationInfoTab>Ruimtelijke informatie</spatialRepresentationInfoTab>
   <qualityTab>Kwaliteit</qualityTab>
   <domainConsistancyTab>Conformiteit</domainConsistancyTab>
   <constraintsTab>Toegangs- en gebruiksbeperkingen</constraintsTab>
