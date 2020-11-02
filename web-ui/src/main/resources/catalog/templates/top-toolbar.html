@@ -83,7 +83,7 @@
               <i class="fa fa-fw fa-upload"></i>&nbsp;<span translate>ImportRecord</span>
             </a>
           </li>
-          <li class="gn-menuitem-xs" role="menuitem">
+          <li class="gn-menuitem-xs" role="menuitem" ng-if="user.isAdministratorOrMore()">
             <a data-gn-active-tb-item="{{gnCfg.mods.editor.appUrl}}#/directory">
               <i class="fa fa-fw fa-bookmark"></i>&nbsp;<span translate>directoryManager</span>
             </a>
