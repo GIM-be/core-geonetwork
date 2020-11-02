@@ -212,16 +212,14 @@
 
                   <div class="flex-spacer flex-grow"></div>
 
-                  <div class="btn-group">
+                  <div class="btn-group" data-ng-if="user.isAdministratorOrMore()">
                     <button class="btn btn-default btn-sm dropdown-toggle"
                       data-toggle="dropdown">
                       {{'actions' |  translate}}
                       &nbsp;<i class="caret"/>
                     </button>
                     <ul class="dropdown-menu pull-right" role="menu">
-                      <li><a href
-                             data-ng-if="user.canEditRecord(md)"
-                             ng-click="startEditing(md)">
+                      <li><a href ng-click="startEditing(md)">
                         <i class="fa fa-pencil fa-fw" />&nbsp;
                         {{'edit' | translate}}</a>
                       </li>
@@ -229,9 +227,7 @@
                         <i class="fa fa-copy fa-fw" />&nbsp;
                         {{'duplicate' | translate}}</a>
                       </li>
-                      <li><a href
-                             data-ng-if="user.canEditRecord(md)"
-                             ng-click="startPermissionsEdit(md)">
+                      <li><a href ng-click="startPermissionsEdit(md)">
                         <i class="fa fa-key fa-fw" />&nbsp;
                         {{'directoryEntryPermissions' | translate}}</a>
                       </li>
@@ -287,12 +283,12 @@
 
                   <gn-md-type-widget metadata="md"></gn-md-type-widget>
 
-                  <a href ng-click="startEditing(md)" title="{{md.title}}">
+                  <a href ng-click="user.isAdministratorOrMore() ? startEditing(md) : ''" title="{{md.title}}">
                     {{md.title || md.defaultTitle}}</a>
 
                   <div class="flex-spacer flex-grow"></div>
 
-                  <div class="btn-group">
+                  <div class="btn-group" data-ng-if="user.isAdministratorOrMore()">
                     <button class="btn btn-default btn-sm dropdown-toggle"
                       data-toggle="dropdown">
                       {{'actions' |  translate}}
@@ -315,6 +311,7 @@
                   </div>
 
                   <button class="btn btn-default btn-sm" ng-click="delEntry(md)"
+                          data-ng-if="user.isAdministratorOrMore()"
                     title="{{'delete' | translate}}">
                     <i class="fa fa-times text-danger" />
                   </button>

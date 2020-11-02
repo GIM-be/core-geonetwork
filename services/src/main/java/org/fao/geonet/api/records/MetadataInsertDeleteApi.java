@@ -309,9 +309,14 @@ public class MetadataInsertDeleteApi {
             @ApiParam(value = API_PARAM_FORCE_SCHEMA, required = false) @RequestParam(required = false) String schema,
             @ApiParam(value = "(experimental) Add extra information to the record.", required = false) @RequestParam(required = false) final String extra,
             HttpServletRequest request) throws Exception {
+        ServiceContext context = ApiUtils.createServiceContext(request);
+        boolean isAdmin = Profile.Administrator == context.getUserSession().getProfile();
+        if (!isAdmin && (metadataType == MetadataType.SUB_TEMPLATE || metadataType == MetadataType.TEMPLATE_OF_SUB_TEMPLATE)) {
+            throw new SecurityException("User is not allowed to create SUB_TEMPLATE or TEMPLATE_OF_SUB_TEMPLATE metadata.");
+        }
+
         if (url == null && xml == null && serverFolder == null) {
-            throw new IllegalArgumentException(
-                    String.format("XML fragment or a URL or a server folder MUST be provided."));
+            throw new IllegalArgumentException("XML fragment or a URL or a server folder MUST be provided.");
         }
         SimpleMetadataProcessingReport report = new SimpleMetadataProcessingReport();
 
@@ -379,7 +384,6 @@ public class MetadataInsertDeleteApi {
                 throw new Exception(
                         String.format("No XML or MEF or ZIP file found in server folder '%s'.", serverFolder));
             }
-            ServiceContext context = ApiUtils.createServiceContext(request);
             for (Path f : files) {
                 if (MEFLib.isValidArchiveExtensionForMEF(f.getFileName().toString())) {
                     try {
@@ -446,6 +450,12 @@ public class MetadataInsertDeleteApi {
             @ApiParam(value = "Is child of the record to copy?", required = false, defaultValue = "false") @RequestParam(required = false, defaultValue = "false") final boolean isChildOfSource,
             @ApiIgnore @ApiParam(hidden = true) HttpSession httpSession, HttpServletRequest request) throws Exception {
 
+        ServiceContext context = ApiUtils.createServiceContext(request);
+        boolean isAdmin = Profile.Administrator == context.getUserSession().getProfile();
+        if (!isAdmin && (metadataType == MetadataType.SUB_TEMPLATE || metadataType == MetadataType.TEMPLATE_OF_SUB_TEMPLATE)) {
+            throw new SecurityException("User is not allowed to duplicate SUB_TEMPLATE or TEMPLATE_OF_SUB_TEMPLATE metadata.");
+        }
+
         AbstractMetadata sourceMetadata = ApiUtils.getRecord(sourceUuid);
 
         boolean generateUuid = settingManager.getValueAsBool(Settings.SYSTEM_METADATACREATE_GENERATE_UUID);
@@ -482,7 +492,6 @@ public class MetadataInsertDeleteApi {
             }
         }
 
-        ServiceContext context = ApiUtils.createServiceContext(request);
         String newId = dataManager.createMetadata(context, String.valueOf(sourceMetadata.getId()), group,
                 settingManager.getSiteId(), context.getUserSession().getUserIdAsInt(),
                 isChildOfSource ? sourceMetadata.getUuid() : null, metadataType.toString(), isVisibleByAllGroupMembers,
