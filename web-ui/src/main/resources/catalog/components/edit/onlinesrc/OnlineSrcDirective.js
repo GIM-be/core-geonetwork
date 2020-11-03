@@ -1629,5 +1629,19 @@
            }
          }
        };
-     }]);
+     }])
+
+    .directive('gimAddFeatureCatSrc', ['gnOnlinesrc', function(gnOnlinesrc) {
+      return {
+        restrict: 'A',
+        templateUrl: '../../catalog/components/edit/onlinesrc/' +
+          'partials/addFeatureCatSrc.html',
+        link: function(scope, element, attrs) {
+          scope.openPopup = function() {
+            gnOnlinesrc.onOpenPopup('fcats');
+          }
+        }
+      }
+    }]);
+
 })();

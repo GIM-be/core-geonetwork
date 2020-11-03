@@ -4119,6 +4119,7 @@
               </template>
             </field>
           </section>
+          <directive data-gim-add-feature-cat-src=""/>
         </section>
       </tab>
       <tab id="applicationSchemaInfoTab" mode="flat" displayIfRecord="count(gmd:MD_Metadata/gmd:applicationSchemaInfo) > 0">
