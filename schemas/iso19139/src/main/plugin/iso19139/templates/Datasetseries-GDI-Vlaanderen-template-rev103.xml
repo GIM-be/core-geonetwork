@@ -113,7 +113,7 @@
         <gmd:CI_Citation>
           <gmd:title>
             <gco:CharacterString>
-              Sjabloon voor Metadata van Geografische datasetseries, conform GDI-Vlaanderen Best Practices v2.0 (new version to be validated)
+              Geografische gegevens: Sjabloon voor Metadata van Geografische datasetseries, conform GDI-Vlaanderen Best Practices v2.0
             </gco:CharacterString>
           </gmd:title>
           <gmd:alternateTitle>
