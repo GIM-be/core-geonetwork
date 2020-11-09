@@ -318,6 +318,27 @@
                     scope.groups = data;
                   }
 
+                  var priorityGroups = ['Agentschap Informatie Vlaanderen', 'Informatie Vlaanderen']
+
+                  var priorities = scope.groups.filter(function(grp) {
+                    return priorityGroups.includes(grp.name);
+                  });
+
+                  var sorted = scope.groups.filter(function(grp) {
+                    return !priorityGroups.includes(grp.name);
+                  });
+                  sorted.sort(function(a, b) {
+                    if (a.name > b.name) {
+                      return 1;
+                    } else if (a.name < b.name) {
+                      return -1;
+                    } else {
+                      return 0;
+                    }
+                  });
+
+                  scope.groups = priorities.concat(sorted);
+
                   // Select by default the first group.
                   if (setDefaultValue && (angular.isUndefined(scope.ownerGroup) ||
                     scope.ownerGroup === '' ||
