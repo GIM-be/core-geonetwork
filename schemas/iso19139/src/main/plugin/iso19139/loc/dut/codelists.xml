@@ -784,8 +784,6 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
     <entry>
       <code>composite</code>
-      <label>composite</label>
-      <description>connected set of curves, solids or surfaces</description>
       <label>Composiet</label>
       <description>Verbonden sets van curves, volumes of oppervlaktes.</description>
     </entry>
