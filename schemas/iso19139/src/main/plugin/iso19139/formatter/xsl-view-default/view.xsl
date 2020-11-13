@@ -4,7 +4,7 @@
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:srv="http://www.isotc211.org/2005/srv"
-                xmlns:gml="http://www.opengis.net/gml/3.2"
+                xmlns:gml="http://www.opengis.net/gml"
                 xmlns:gml320="http://www.opengis.net/gml"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -248,7 +248,12 @@
       <xsl:call-template name="render-block">
         <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
         <xsl:with-param name="block">
-          <xsl:apply-templates mode="render-content" select="gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator"/>
+          <xsl:if test="count(gmd:MD_Resolution/gmd:equivalentScale) > 0">
+            <xsl:apply-templates mode="render-content" select="gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator"/>
+          </xsl:if>
+          <xsl:if test="count(gmd:MD_Resolution/gmd:distance) > 0">
+            <xsl:apply-templates mode="render-content" select="gmd:MD_Resolution/gmd:distance"/>
+          </xsl:if>
         </xsl:with-param>
       </xsl:call-template>
     </xsl:for-each>
@@ -319,8 +324,14 @@
         <xsl:call-template name="render-block-as-row-with-header">
           <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:DQ_QuantitativeResult', 'gmd:result')"/>
           <xsl:with-param name="block">
-            <xsl:apply-templates mode="render-content" select="$quantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:identifier"/>
-            <xsl:apply-templates mode="render-content" select="$quantitativeResult/gmd:value/gco:Record"/>
+            <!--xsl:apply-templates mode="render-content" select="$quantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:identifier"/>
+            <xsl:apply-templates mode="render-content" select="$quantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:identifier/@codeSpace"/-->
+            <xsl:apply-templates mode="render-content" select="$quantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:name"/>
+            <!--xsl:apply-templates mode="render-content" select="$quantitativeResult/gmd:value/gco:Record"/-->
+            <xsl:call-template name="render-text-as-row">
+              <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name($quantitativeResult/gmd:value/gco:Record), name($quantitativeResult/gmd:value))"/>
+              <xsl:with-param name="value" select="concat($quantitativeResult/gmd:value/gco:Record/text(),' ',$quantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:identifier)"/>
+            </xsl:call-template>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:with-param>
@@ -659,7 +670,7 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template mode="render-content" match="gml:identifier|gco:Record|gco:LocalName|gco:ScopedName">
+  <xsl:template mode="render-content" match="gml:identifier|gco:Record|gco:LocalName|gco:ScopedName|gml:name|@codeSpace" priority="1000">
     <xsl:call-template name="render-text-as-row">
       <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
       <xsl:with-param name="value" select="text()"/>
@@ -670,6 +681,13 @@
     <xsl:call-template name="render-text-as-row">
       <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
       <xsl:with-param name="value" select="gco:Integer/text()"/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template mode="render-content" match="*[gco:Distance]">
+    <xsl:call-template name="render-text-as-row">
+      <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
+      <xsl:with-param name="value" select="concat(gco:Distance/text(),' ',gco:Distance/@uom)"/>
     </xsl:call-template>
   </xsl:template>
 
