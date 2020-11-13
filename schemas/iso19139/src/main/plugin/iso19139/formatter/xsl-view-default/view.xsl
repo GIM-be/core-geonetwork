@@ -518,7 +518,7 @@
 
   <xsl:template mode="render-content" match="gmd:descriptiveKeywords">
     <xsl:variable name="thesaurusTitle" select="*/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*"/>
-    <xsl:variable name="isInspireThesaurus" select="$thesaurusTitle and $thesaurusTitle = ('gemet - inspire themes, version 1.0','GEMET - INSPIRE thema''s, versie 1.0')" />
+    <xsl:variable name="isInspireThesaurus" select="$thesaurusTitle and lower-case($thesaurusTitle) = ('gemet - inspire themes, version 1.0','gemet - inspire thema''s, versie 1.0')" />
     <xsl:call-template name="render-block-as-row">
       <xsl:with-param name="label" select="if ($thesaurusTitle) then $thesaurusTitle else gn-fn-iso19139:get-schema-strings($schemaStrings, 'otherKeywords')"/>
       <xsl:with-param name="block">
@@ -794,7 +794,7 @@
     </span>
   </xsl:template>
 
-  <xsl:template mode="render-content" match="gmd:keyword[../gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[normalize-space() = ('gemet - inspire themes, version 1.0','GEMET - INSPIRE thema''s, versie 1.0')]]" priority="1000">
+  <xsl:template mode="render-content" match="gmd:keyword[../gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[lower-case(normalize-space()) = ('gemet - inspire themes, version 1.0','gemet - inspire thema''s, versie 1.0')]]" priority="1000">
     <xsl:variable name="value" select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
     <xsl:variable name="inspireThemeAcronym">
       <xsl:call-template name="getInspireThemeAcronym">
@@ -802,8 +802,8 @@
       </xsl:call-template>
     </xsl:variable>
     <button class="{concat('btn btn-sm btn-default ',$inspireThemeAcronym,' ',$inspireThemeAcronym,'-{{langs[lang]}}')}">
-      <xsl:attribute name="data-ng-click" select="concat('search({''inspirethemewithac'':''',$inspireThemeAcronym, '|', $value,'''})')"/>
-      <xsl:attribute name="title" select="concat('{{''clickToFilterOn'' | translate}} {{''',$value,''' | translate}}')"/>
+      <xsl:attribute name="data-ng-click" select="concat('search({''inspirethemewithac'':''',$inspireThemeAcronym, '|', replace($value, '''', '\\'''),'''})')"/>
+      <xsl:attribute name="title" select="concat('{{''clickToFilterOn'' | translate}} ',$value)"/>
       <span class="{concat('iti-',$inspireThemeAcronym)}"></span> <xsl:value-of select="$value" />
     </button>
   </xsl:template>
