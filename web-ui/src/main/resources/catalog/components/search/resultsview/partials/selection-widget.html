@@ -43,11 +43,11 @@
           <span translate>exportMEF</span>
         </a>
       </li>
-      <li data-ng-show="!excludePattern.test('exportPDF')">
+      <!--li data-ng-show="!excludePattern.test('exportPDF')">
         <a href="" data-ng-click="mdService.metadataPrint(searchObj.params, searchResults.selectionBucket)">
           <i class="fa fa-file-pdf-o"></i>&nbsp;<span translate>exportPDF</span>
         </a>
-      </li>
+      </li-->
       <li data-ng-show="!excludePattern.test('exportCSV')">
         <a href="" data-ng-click="mdService.exportCSV(searchResults.selectionBucket)">
           <i class="fa fa-file-excel-o"></i>&nbsp;<span translate>exportCSV</span>
