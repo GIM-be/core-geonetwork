@@ -99,9 +99,10 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <gmd:role>
-
-      <gmd:CI_RoleCode
-		  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">Contactpunt</gmd:CI_RoleCode>
+ 
+      <gmd:CI_RoleCode 
+		  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">Contactpunt
+	  </gmd:CI_RoleCode>
     </gmd:role>
 
   </xsl:template>
@@ -168,8 +169,8 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <gmd:role>
-
-      <gmd:CI_RoleCode
+ 
+      <gmd:CI_RoleCode 
 		  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="custodian">Beheerder
       </gmd:CI_RoleCode>
     </gmd:role>
@@ -214,7 +215,7 @@
     </xsl:if>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
+    
     <xsl:for-each select="ContactAddress|
               ../wms:ContactInformation/wms:ContactAddress|
               wcs:contactInfo|
@@ -227,12 +228,12 @@
           <xsl:apply-templates select="." mode="Address"/>
         </gmd:CI_Address>
       </gmd:address>
-
-
+    
+      
     </xsl:for-each>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
+    
 	<gmd:onlineResource>
 		<gmd:CI_OnlineResource>
 			<gmd:linkage>
