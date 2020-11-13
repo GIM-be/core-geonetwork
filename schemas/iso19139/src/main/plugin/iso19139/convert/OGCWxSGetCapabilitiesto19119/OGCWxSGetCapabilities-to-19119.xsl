@@ -34,39 +34,13 @@ Mapping between:
 - WPS 2.0.0
 ... to ISO19119.
  -->
- <!--	xmlns:wcs="http://www.opengis.net/wcs" -->
-<xsl:stylesheet 
-	xmlns:gco="http://www.isotc211.org/2005/gco" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:srv="http://www.isotc211.org/2005/srv" 
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-	xmlns:xlink="http://www.w3.org/1999/xlink" 
-	xmlns:wfs="http://www.opengis.net/wfs" 
-
-	xmlns:wcs="http://www.opengis.net/wcs"
-	xmlns:wcs2="http://www.opengis.net/wcs/2.0"
-	
-	xmlns:wms="http://www.opengis.net/wms" 
-	xmlns:wmts="http://www.opengis.net/wmts/1.0" 
-	xmlns:ows="http://www.opengis.net/ows" 
-	xmlns:owsg="http://www.opengeospatial.net/ows" 
-	xmlns:ows11="http://www.opengis.net/ows/1.1" 
-	xmlns:ows2="http://www.opengis.net/ows/2.0" 
-	xmlns:wps="http://www.opengeospatial.net/wps" 
-	xmlns:wps1="http://www.opengis.net/wps/1.0.0" 
-	xmlns:wps2="http://www.opengis.net/wps/2.0" 
-	xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0" 
-	xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0" 
-	xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0" 
-	xmlns:gmx="http://www.isotc211.org/2005/gmx" 
-	xmlns:gml="http://www.opengis.net/gml/3.2" version="2.0" xmlns="http://www.isotc211.org/2005/gmd" 
-	extension-element-prefixes="wcs wcs2 ows wfs ows11 wps wps1 wps2 owsg inspire_common inspire_vs"
-        exclude-result-prefixes="#all">
-
+<!--	xmlns:wcs="http://www.opengis.net/wcs" -->
+<xsl:stylesheet xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wcs="http://www.opengis.net/wcs/2.0" xmlns:wcscrs="http://www.opengis.net/wcs/service-extension/crs/1.0" xmlns:wms="http://www.opengis.net/wms" xmlns:wmts="http://www.opengis.net/wmts/1.0" xmlns:ows="http://www.opengis.net/ows" xmlns:owsg="http://www.opengeospatial.net/ows" xmlns:ows11="http://www.opengis.net/ows/1.1" xmlns:ows2="http://www.opengis.net/ows/2.0" xmlns:wps="http://www.opengeospatial.net/wps" xmlns:wps1="http://www.opengis.net/wps/1.0.0" xmlns:wps2="http://www.opengis.net/wps/2.0" xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0" xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0" xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gml="http://www.opengis.net/gml/3.2" version="2.0" xmlns="http://www.isotc211.org/2005/gmd" extension-element-prefixes="wcs wcscrs ows wfs ows11 wps wps1 wps2 owsg inspire_common inspire_vs" exclude-result-prefixes="#all">
 	<!-- ============================================================================= -->
 	<xsl:param name="uuid">uuid</xsl:param>
 	<xsl:param name="lang">dut</xsl:param>
-	<xsl:param name="topic"/> <!--parameter nodig ???-->
+	<xsl:param name="topic"/>
+	<!--parameter nodig ???-->
 	<!-- ============================================================================= -->
 	<xsl:include href="resp-party.xsl"/>
 	<xsl:include href="ref-system.xsl"/>
@@ -82,15 +56,16 @@ Mapping between:
 	<!-- ============================================================================= -->
 	<xsl:template match="WMT_MS_Capabilities|wfs:WFS_Capabilities
 		
-		|wcs:WCS_Capabilities|wcs2:Capabilities|wcs:Capabilities|wcs2:WCS_Capabilities|
+		|wcs:Capabilities|
          
          wps:Capabilities|wps1:Capabilities|wps2:Capabilities|wms:WMS_Capabilities|wmts:Capabilities">
+		<!--Variable ows = true voor WCS, WFS en WMTS-->
 		<xsl:variable name="ows">
 			<xsl:choose>
-
+				<!--  or (local-name(.)='WCS_Capabilities' and namespace-uri(.)='http://www.opengis.net/wcs') -->
 				<xsl:when test="(local-name(.)='WFS_Capabilities' and (namespace-uri(.)='http://www.opengis.net/wfs' 
 				  or namespace-uri(.)='http://www.opengis.net/wfs/2.0') and (@version='1.1.0' or @version='2.0.0'))
-				  or (local-name(.)='WCS_Capabilities' and namespace-uri(.)='http://www.opengis.net/wcs') 
+
 				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wcs/2.0') 
 				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/ows/2.0') 
 				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wmts/1.0') 
@@ -100,38 +75,32 @@ Mapping between:
 				<xsl:otherwise>false</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-
-		<xsl:variable name="wfs"> <!-- variabele wordt niet gebruikt! -->
+		<xsl:variable name="wfs">
+			<!-- variabele wordt niet gebruikt! -->
 			<xsl:choose>
-				<xsl:when
-					test="local-name(.)='WFS_Capabilities' and (namespace-uri(.)='http://www.opengis.net/wfs' 
-					or namespace-uri(.)='http://www.opengis.net/ows') and @version='1.1.0'"><xsl:value-of select="true()"/>
+				<xsl:when test="local-name(.)='WFS_Capabilities' and (namespace-uri(.)='http://www.opengis.net/wfs' 
+					or namespace-uri(.)='http://www.opengis.net/ows') and @version='1.1.0'">
+					<xsl:value-of select="true()"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="false()"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-		
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-		
 		<MD_Metadata>
-		
-                        <xsl:call-template name="add-namespaces"/>
-                        <xsl:choose>
-                            <xsl:when test="$isUsing2005Schema">
-                                <xsl:attribute name="xsi:schemaLocation"
-                                       select="'http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd'"/>
-                            </xsl:when>
-                            <xsl:when test="$isUsing2007Schema">
-                                <xsl:attribute name="xsi:schemaLocation"
-                                       select="'http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20070417/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20070417/srv/1.0/srv.xsd http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd'"/>
-                            </xsl:when>
-                        </xsl:choose>
-
+			<xsl:call-template name="add-namespaces"/>
+			<xsl:choose>
+				<xsl:when test="$isUsing2005Schema">
+					<xsl:attribute name="xsi:schemaLocation" select="'http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd'"/>
+				</xsl:when>
+				<xsl:when test="$isUsing2007Schema">
+					<xsl:attribute name="xsi:schemaLocation" select="'http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20070417/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20070417/srv/1.0/srv.xsd http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20070417/gmd/gmd.xsd'"/>
+				</xsl:when>
+			</xsl:choose>
 			<!-- ============================================================================= -->
-			<!-- === fileIdentifier OK-->
-			<!-- ============================================================================= -->	
+			<!-- === fileIdentifier WCS OK-->
+			<!-- ============================================================================= -->
 			<xsl:variable name="inspireMetadataUrl">
 				<xsl:value-of select="//inspire_common:MetadataUrl/inspire_common:URL"/>
 			</xsl:variable>
@@ -145,7 +114,6 @@ Mapping between:
 					<xsl:value-of select="substring($rightPart,4)"/>
 				</xsl:if>
 			</xsl:variable>
-
 			<fileIdentifier>
 				<gco:CharacterString>
 					<xsl:if test="string-length($idPart)>0">
@@ -156,35 +124,31 @@ Mapping between:
 					</xsl:if>
 				</gco:CharacterString>
 			</fileIdentifier>
-
 			<!-- ============================================================================= -->
-			<!-- === language OK-->
-			<!-- ============================================================================= -->	
+			<!-- === language WCS OK-->
+			<!-- ============================================================================= -->
 			<language>
 				<!--<gco:CharacterString>JUST TO TEST</gco:CharacterString>-->
 				<LanguageCode codeList="https://www.loc.gov/standards/iso639-2" codeListValue="{$lang}">Nederlands</LanguageCode>
 			</language>
-
 			<!-- ============================================================================= -->
-			<!-- === characterSet OK-->
-			<!-- ============================================================================= -->	
+			<!-- === characterSet WCS OK-->
+			<!-- ============================================================================= -->
 			<characterSet>
 				<MD_CharacterSetCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8">UTF-8</MD_CharacterSetCode>
 			</characterSet>
-
 			<!-- ============================================================================= -->
-			<!-- === hierarchyLevel and hierarchyLevelName OK-->
-			<!-- ============================================================================= -->	
+			<!-- === hierarchyLevel and hierarchyLevelName WCS OK-->
+			<!-- ============================================================================= -->
 			<hierarchyLevel>
 				<MD_ScopeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="service"/>
 			</hierarchyLevel>
 			<hierarchyLevelName>
 				<gco:CharacterString>Dienst</gco:CharacterString>
 			</hierarchyLevelName>
-
 			<!-- ============================================================================= -->
-			<!-- === contact OK-->
-			<!-- ============================================================================= -->	
+			<!-- === contact WCS OK-->
+			<!-- ============================================================================= -->
 			<xsl:choose>
 				<xsl:when test="Service/ContactInformation| wfs:Service/wfs:ContactInformation|
 								wms:Service/wms:ContactInformation|
@@ -192,7 +156,7 @@ Mapping between:
 								owsg:ServiceProvider|
 								ows11:ServiceProvider|
 								ows2:ServiceProvider">
-								<xsl:for-each select="Service/ContactInformation|
+					<xsl:for-each select="Service/ContactInformation|
 										wfs:Service/wfs:ContactInformation|
 										wms:Service/wms:ContactInformation|
 										ows:ServiceProvider|
@@ -210,30 +174,27 @@ Mapping between:
 					<contact gco:nilReason="missing"/>
 				</xsl:otherwise>
 			</xsl:choose>
-
 			<!-- ============================================================================= -->
-			<!-- === dateStamp OK-->
-			<!-- ============================================================================= -->	
+			<!-- === dateStamp WCS OK-->
+			<!-- ============================================================================= -->
 			<xsl:variable name="df">[Y0001]-[M01]-[D01]</xsl:variable>
 			<dateStamp>
 				<gco:Date>
 					<xsl:value-of select="format-date(current-date(),$df)"/>
 				</gco:Date>
 			</dateStamp>
-			
 			<!-- ============================================================================= -->
-			<!-- === metadataStandardName and metadataStandardVersion OK-->
-			<!-- ============================================================================= -->	
+			<!-- === metadataStandardName and metadataStandardVersion WCS OK-->
+			<!-- ============================================================================= -->
 			<metadataStandardName>
 				<gco:CharacterString>ISO 19119:2005/Amd 1:2008/INSPIRE-TG2.0</gco:CharacterString>
 			</metadataStandardName>
 			<metadataStandardVersion>
 				<gco:CharacterString>GDI-Vlaanderen Best Practices - versie 2.0</gco:CharacterString>
 			</metadataStandardVersion>
-			
 			<!-- ============================================================================= -->
-			<!-- === referenceSystemInfo OK-->
-			<!-- ============================================================================= -->	
+			<!-- === referenceSystemInfo WCS OK-->
+			<!-- ============================================================================= -->
 			<!-- 
 			WMS-raadpleegdiensten (geoservices en inspire): Op hoofd-layer-niveau zijn de verschillende CRS'en gedefinieerd
 			WMTS: 3 TileMatrixSets zijn gedefinieerd met telkens een SupportedCRS
@@ -243,7 +204,11 @@ Mapping between:
 			CRS:84 en EPSG:102100 hebben een specifieke URL
 			URL-definities kunnen zo gebruikt worden
 			Anders wordt ref-system.xsl aangeroepen-->
-			<xsl:for-each select="wms:Capability/wms:Layer/wms:CRS|wfs:FeatureTypeList/wfs:FeatureType/wfs:DefaultSRS[not(.=preceding::wfs:DefaultSRS)]|wfs:FeatureTypeList/wfs:FeatureType/wfs:OtherSRS[not(.=preceding::wfs:OtherSRS)]|wmts:Contents/wmts:TileMatrixSet/ows11:SupportedCRS">
+			<xsl:for-each select="wcs:ServiceMetadata/wcs:Extension/wcscrs:crsSupported|
+								wms:Capability/wms:Layer/wms:CRS|
+								wfs:FeatureTypeList/wfs:FeatureType/wfs:DefaultSRS[not(.=preceding::wfs:DefaultSRS)]|
+								wfs:FeatureTypeList/wfs:FeatureType/wfs:OtherSRS[not(.=preceding::wfs:OtherSRS)]|
+								wmts:Contents/wmts:TileMatrixSet/ows11:SupportedCRS">
 				<referenceSystemInfo>
 					<MD_ReferenceSystem>
 						<xsl:choose>
@@ -283,25 +248,42 @@ Mapping between:
 					</MD_ReferenceSystem>
 				</referenceSystemInfo>
 			</xsl:for-each>
-
 			<!-- ============================================================================= -->
-			<!-- === identificationInfo NOK-->
-			<!-- ============================================================================= -->				
+			<!-- === identificationInfo -->
+			<!-- ============================================================================= -->
 			<identificationInfo>
 				<srv:SV_ServiceIdentification>
 					<xsl:apply-templates select="." mode="SrvDataIdentification">
-						<xsl:with-param name="topic"><xsl:value-of select="$topic"/></xsl:with-param> <!--parameter nodig ???-->
-						<xsl:with-param name="ows"><xsl:value-of select="$ows"/></xsl:with-param>
-						<xsl:with-param name="wfs"><xsl:value-of select="$wfs" /></xsl:with-param> <!--parameter nodig ???-->
+						<xsl:with-param name="topic">
+							<xsl:value-of select="$topic"/>
+						</xsl:with-param>
+						<!--parameter nodig ???-->
+						<xsl:with-param name="ows">
+							<xsl:value-of select="$ows"/>
+						</xsl:with-param>
+						<xsl:with-param name="wfs">
+							<xsl:value-of select="$wfs"/>
+						</xsl:with-param>
+						<!--parameter nodig ???-->
 					</xsl:apply-templates>
 				</srv:SV_ServiceIdentification>
 			</identificationInfo>
-
 			<!-- ============================================================================= -->
-			<!-- === distributionInfo OK-->
-			<!-- ============================================================================= -->					
+			<!-- === distributionInfo WCS OK-->
+			<!-- ============================================================================= -->
 			<distributionInfo>
 				<MD_Distribution>
+					<!--   PETER: ADDED distribution format. ticket 121555-->
+					<distributionFormat>
+						<MD_Format>
+							<name>
+								<gco:CharacterString>XML</gco:CharacterString>
+							</name>
+							<version>
+								<gco:CharacterString>1.0</gco:CharacterString>
+							</version>
+						</MD_Format>
+					</distributionFormat>
 					<transferOptions>
 						<MD_DigitalTransferOptions>
 							<onLine>
@@ -309,7 +291,7 @@ Mapping between:
 									<linkage>
 										<URL>
 											<xsl:choose>
-												<!--WFS of WMTS-->
+												<!--WFS of WMTS of WCS-->
 												<xsl:when test="$ows='true'">
 													<xsl:variable name="ows_capabilities">
 														<xsl:value-of select="//ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href|
@@ -317,12 +299,18 @@ Mapping between:
                                                 //ows2:Operation[@name='GetCapabilities']/ows2:DCP/ows2:HTTP/ows2:Get/@xlink:href"/>
 													</xsl:variable>
 													<xsl:choose>
-														<xsl:when test="local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wmts/1.0'"><!--WMTS-->
+														<xsl:when test="local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wmts/1.0'">
+															<!--WMTS-->
 															<xsl:value-of select="concat(normalize-space($ows_capabilities),'service=WMTS&amp;version=1.0.0&amp;request=getcapabilities')"/>
 														</xsl:when>
-														<xsl:otherwise><!--WFS-->
+														<xsl:otherwise>
 															<xsl:choose>
-																<xsl:when test="ends-with($ows_capabilities,'?')">
+                                <!--WCS-->
+                                <xsl:when test="ends-with($ows_capabilities,'wcs?')">
+                                  <xsl:value-of select="concat(normalize-space($ows_capabilities),'service=WCS&amp;request=getcapabilities')"/>
+                                </xsl:when>
+                                <!--WFS-->
+                                <xsl:when test="ends-with($ows_capabilities,'wfs?')">
 																	<xsl:value-of select="concat(normalize-space($ows_capabilities),'service=WFS&amp;request=getcapabilities')"/>
 																</xsl:when>
 																<xsl:otherwise>
@@ -330,11 +318,11 @@ Mapping between:
 																</xsl:otherwise>
 															</xsl:choose>
 														</xsl:otherwise>
-													</xsl:choose>                                                
+													</xsl:choose>
 												</xsl:when>
 												<!--WMS-->
 												<xsl:when test="name(.)='WMS_Capabilities'">
-													<xsl:variable name="capabilities">													
+													<xsl:variable name="capabilities">
 														<xsl:value-of select="//wms:GetCapabilities/wms:DCPType/wms:HTTP/wms:Get/wms:OnlineResource/@xlink:href"/>
 													</xsl:variable>
 													<xsl:choose>
@@ -361,11 +349,15 @@ Mapping between:
 									<protocol>
 										<xsl:variable name="protocol">
 											<xsl:choose>
-												<!--WFS of WMTS-->
+												<!--WFS of WMTS of WCS-->
 												<xsl:when test="$ows='true'">
 													<xsl:choose>
-														<xsl:when test="local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wmts/1.0'">WMTS</xsl:when><!--WMTS-->
-														<xsl:otherwise>WFS</xsl:otherwise><!--WFS-->
+                            <!--WMTS-->
+                            <xsl:when test="local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wmts/1.0'">WMTS</xsl:when>
+                            <!--WFS-->
+                            <xsl:when test="contains(namespace-uri(.), 'wfs')">WFS</xsl:when>
+                            <!--WCS-->
+														<xsl:otherwise>WCS</xsl:otherwise>
 													</xsl:choose>
 												</xsl:when>
 												<!--WMS-->
@@ -375,15 +367,18 @@ Mapping between:
 										<xsl:variable name="protocolStandaard">
 											<xsl:value-of select="concat('http://www.opengeospatial.org/standards/', lower-case($protocol))"/>
 										</xsl:variable>
-										<gmx:Anchor xlink:href="{$protocolStandaard}">OGC:<xsl:value-of select="$protocol"/></gmx:Anchor>
+										<!--										<gmx:Anchor xlink:href="{$protocolStandaard}">OGC:<xsl:value-of select="$protocol"/></gmx:Anchor>-->
+										<gco:CharacterString>OGC:<xsl:value-of select="$protocol"/>
+										</gco:CharacterString>
 									</protocol>
 									<name>
 										<xsl:variable name="ServiceTitel">
 											<xsl:choose>
-												<!--WFS | WMTS-->
+												<!--WFS | WMTS | WCS-->
 												<xsl:when test="$ows='true'">
 													<xsl:value-of select="ows:ServiceIdentification/ows:Title|
 													  ows11:ServiceIdentification/ows11:Title|
+													  ows2:ServiceIdentification/ows2:Title|
 													  /wps1:Capabilities/ows11:ServiceIdentification/ows11:Title|
 													  /wps2:Capabilities/ows2:ServiceIdentification/ows2:Title"/>
 												</xsl:when>
@@ -393,7 +388,8 @@ Mapping between:
 												</xsl:when>
 											</xsl:choose>
 										</xsl:variable>
-										<gco:CharacterString>Capabilities van de webdienst <xsl:value-of select="$ServiceTitel"/></gco:CharacterString>
+										<gco:CharacterString>Capabilities van de webdienst <xsl:value-of select="$ServiceTitel"/>
+										</gco:CharacterString>
 									</name>
 									<description>
 										<gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">access point</gmx:Anchor>
@@ -407,10 +403,9 @@ Mapping between:
 					</transferOptions>
 				</MD_Distribution>
 			</distributionInfo>
-
 			<!-- ============================================================================= -->
-			<!-- === dataQualityInfo OK-->
-			<!-- ============================================================================= -->				
+			<!-- === dataQualityInfo WCS OK-->
+			<!-- ============================================================================= -->
 			<dataQualityInfo>
 				<DQ_DataQuality>
 					<scope>
@@ -427,14 +422,14 @@ Mapping between:
 							</levelDescription>
 						</DQ_Scope>
 					</scope>
-					
+					<!--PETER: mag weg ticket 123188-->
+					<!--
 					<xsl:variable name="inspireCommonUri">
 						<xsl:value-of select="//inspire_common:Conformity/inspire_common:Specification/inspire_common:URI"/>
 					</xsl:variable>
 					<xsl:variable name="inspireCommonConformanceDegree">
 						<xsl:value-of select="//inspire_common:Conformity/inspire_common:Degree"/>
-					</xsl:variable>					
-					
+					</xsl:variable>
 					<xsl:if test="starts-with($inspireCommonUri,'OJ:L:2010:323:0011:0102:')">
 						<report>
 							<DQ_DomainConsistency>
@@ -477,7 +472,7 @@ Mapping between:
 							</DQ_DomainConsistency>
 						</report>
 					</xsl:if>
-					
+					-->
 					<report>
 						<DQ_DomainConsistency>
 							<result>
@@ -508,8 +503,7 @@ Mapping between:
 								</DQ_ConformanceResult>
 							</result>
 						</DQ_DomainConsistency>
-					</report>					
-					
+					</report>
 					<xsl:variable name="NetwerkDienst">
 						<xsl:choose>
 							<!--WFS of WMTS-->
@@ -517,7 +511,7 @@ Mapping between:
 								<xsl:choose>
 									<!--WMTS-->
 									<xsl:when test="local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wmts/1.0'">View</xsl:when>
-									<!--WFS-->
+									<!--WFS | WCS-->
 									<xsl:otherwise>Download</xsl:otherwise>
 								</xsl:choose>
 							</xsl:when>
@@ -525,7 +519,6 @@ Mapping between:
 							<xsl:when test="name(.)='WMS_Capabilities'">View</xsl:when>
 						</xsl:choose>
 					</xsl:variable>
-					
 					<report>
 						<DQ_DomainConsistency>
 							<result>
@@ -575,23 +568,23 @@ Mapping between:
 			</dataQualityInfo>
 		</MD_Metadata>
 	</xsl:template>
-        <xsl:template name="add-namespaces">
-            <xsl:namespace name="xsi" select="'http://www.w3.org/2001/XMLSchema-instance'"/>
-            <xsl:namespace name="gco" select="'http://www.isotc211.org/2005/gco'"/>
-            <xsl:namespace name="gmd" select="'http://www.isotc211.org/2005/gmd'"/>
-            <xsl:namespace name="gmx" select="'http://www.isotc211.org/2005/gmx'"/>
-            <xsl:namespace name="gts" select="'http://www.isotc211.org/2005/gts'"/>
-            <xsl:namespace name="gsr" select="'http://www.isotc211.org/2005/gsr'"/>
-            <xsl:namespace name="gmi" select="'http://www.isotc211.org/2005/gmi'"/>
-            <xsl:namespace name="srv" select="'http://www.isotc211.org/2005/srv'"/>
-            <xsl:choose>
-                <xsl:when test="$isUsing2005Schema and not($isUsing2007Schema)">
-                    <xsl:namespace name="gml" select="'http://www.opengis.net/gml'"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:namespace name="gml" select="'http://www.opengis.net/gml/3.2'"/>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:namespace name="xlink" select="'http://www.w3.org/1999/xlink'"/>
-        </xsl:template>
+	<xsl:template name="add-namespaces">
+		<xsl:namespace name="xsi" select="'http://www.w3.org/2001/XMLSchema-instance'"/>
+		<xsl:namespace name="gco" select="'http://www.isotc211.org/2005/gco'"/>
+		<xsl:namespace name="gmd" select="'http://www.isotc211.org/2005/gmd'"/>
+		<xsl:namespace name="gmx" select="'http://www.isotc211.org/2005/gmx'"/>
+		<xsl:namespace name="gts" select="'http://www.isotc211.org/2005/gts'"/>
+		<xsl:namespace name="gsr" select="'http://www.isotc211.org/2005/gsr'"/>
+		<xsl:namespace name="gmi" select="'http://www.isotc211.org/2005/gmi'"/>
+		<xsl:namespace name="srv" select="'http://www.isotc211.org/2005/srv'"/>
+		<xsl:choose>
+			<xsl:when test="$isUsing2005Schema and not($isUsing2007Schema)">
+				<xsl:namespace name="gml" select="'http://www.opengis.net/gml'"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:namespace name="gml" select="'http://www.opengis.net/gml/3.2'"/>
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:namespace name="xlink" select="'http://www.w3.org/1999/xlink'"/>
+	</xsl:template>
 </xsl:stylesheet>

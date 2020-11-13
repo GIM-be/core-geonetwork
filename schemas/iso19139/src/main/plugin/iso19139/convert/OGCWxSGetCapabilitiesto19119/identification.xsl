@@ -35,8 +35,7 @@
 	xmlns:ows11="http://www.opengis.net/ows/1.1" 
 	xmlns:ows2="http://www.opengis.net/ows/2.0" 
 
-	xmlns:wcs="http://www.opengis.net/wcs"
-	xmlns:wcs2="http://www.opengis.net/wcs/2.0"
+	xmlns:wcs="http://www.opengis.net/wcs/2.0"
 		
 	xmlns:wms="http://www.opengis.net/wms" 
 	xmlns:wmts="http://www.opengis.net/wmts/1.0" 
@@ -53,7 +52,7 @@
 	xmlns:theme="http://inspire.ec.europa.eu/theme_register"
     xmlns:grg="http://www.isotc211.org/2005/grg"
 	version="2.0" 
-	extension-element-prefixes="math exslt wcs wcs2 ows ows11 ows2 wps wps1 wps2 ows11 wfs gml inspire_common inspire_vs" 
+	extension-element-prefixes="math exslt wcs ows ows11 ows2 wps wps1 wps2 wfs gml inspire_common inspire_vs" 
 	exclude-result-prefixes="#all">
 
 	<!--variabelen gebruikt in template Keywords-->
@@ -78,11 +77,23 @@
 	<xsl:variable name="inspire-service-taxonomy-thesaurus" select="'D.4 van de verordening (EG) NR. 1205/2008 van de Commissie'"/>
 	<xsl:variable name="inspire-service-taxonomy-thesaurus-anchor-href" select="'http://data.europa.eu/eli/reg/2008/1205'"/>
 	<xsl:variable name="inspire-service-taxonomy-thesaurus-anchor-value" select="'Verordening (EG) nr. 1205/2008 van de Commissie van 3 december 2008 ter uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende metagegevens'"/>
+
+
+	<!--oorspronkelijk-->
+	<!--
+	<xsl:variable name="inspire-theme-thesaurus" select="'GEMET - INSPIRE thema''s, versie 1.0'"/>
+	<xsl:variable name="inspire-theme-thesaurus-anchor-href" select="'https://www.eionet.europa.eu/gemet/nl/inspire-themes/'"/>
+	<xsl:variable name="inspire-theme-thesaurus-anchor-value" select="'GEMET - INSPIRE thema''s, versie 1.0'"/>
+	-->
 	
+	<!--aangepast door Gustaaf -->
+	<!--DIT MOET HET ZIJN!!! -->
+	<!--afgeckecked met Geraldine-->
+
 	<xsl:variable name="inspire-theme-thesaurus" select="'GEMET - INSPIRE themes, version 1.0'"/>
 	<xsl:variable name="inspire-theme-thesaurus-anchor-href" select="'http://inspire.ec.europa.eu/theme'"/>
 	<xsl:variable name="inspire-theme-thesaurus-anchor-value" select="'GEMET - INSPIRE themes, version 1.0'"/>
-
+	
 	<!-- ============================================================================= -->
 	<xsl:template match="*" mode="SrvDataIdentification">
 		<xsl:param name="topic"/> <!--parameter nodig ???-->
@@ -90,7 +101,7 @@
 		<xsl:param name="wfs"/> <!--parameter nodig ???-->
 		<xsl:variable name="s" select="Service|wfs:Service|wms:Service|ows:ServiceIdentification|ows11:ServiceIdentification|ows2:ServiceIdentification|wcs:Service"/>
 		<!-- ============================================================================= -->
-		<!-- === citation OK-->
+		<!-- === citation WCS OK-->
 		<!-- ============================================================================= -->			
 		<citation>
 			<CI_Citation>
@@ -100,15 +111,13 @@
 						<xsl:choose>
 							<xsl:when test="$ows='true'">
 								<xsl:value-of select="
-								
+
 									
 									ows11:ServiceIdentification/ows11:Title|
 									ows:ServiceIdentification/ows:Title|							
 									ows2:ServiceIdentification/ows2:Title|
 
-									/wcs:Capabilities/ows:ServiceIdentification/ows:Title
-									/wcs:Capabilities/ows2:ServiceIdentification/ows2:Title|
-									/wcs:Capabilities/ows11:ServiceIdentification/ows11:Title|
+
 								
 									/wps1:Capabilities/ows11:ServiceIdentification/ows11:Title|
 								    /wps2:Capabilities/ows2:ServiceIdentification/ows2:Title
@@ -209,13 +218,14 @@
 		</citation>
 		
 		<!-- ============================================================================= -->
-		<!-- === abstract OK-->
+		<!-- === abstract WCS OK-->
 		<!-- ============================================================================= -->	
 		<abstract>
 			<gco:CharacterString>
 				<xsl:choose>
 					<xsl:when test="$ows='true'">
 						<xsl:value-of select="normalize-space(ows:ServiceIdentification/ows:Abstract|
+						ows2:ServiceIdentification/ows2:Abstract|
                       ows11:ServiceIdentification/ows11:Abstract|
                       /wps1:Capabilities/ows11:ServiceIdentification/ows11:Abstract|
                      /wps2:Capabilities/ows2:ServiceIdentification/ows2:Abstract)"/>
@@ -237,9 +247,9 @@
 		</abstract>
 
 		<!-- ============================================================================= -->
-		<!-- === pointOfContact OK-->
+		<!-- === pointOfContact WCS OK-->
 		<!-- ============================================================================= -->	
-		<xsl:for-each select="//ContactInformation|//wcs:responsibleParty|//wms:responsibleParty|wms:Service/wms:ContactInformation|//ows:ServiceProvider|//ows11:ServiceProvider">
+		<xsl:for-each select="//ContactInformation|//wcs:responsibleParty|//wms:responsibleParty|wms:Service/wms:ContactInformation|//ows:ServiceProvider|//ows11:ServiceProvider|//ows2:ServiceProvider">
 			<pointOfContact>
 				<CI_ResponsibleParty>
 					<xsl:apply-templates select="." mode="RespPartyCustodian"/>
@@ -248,7 +258,7 @@
 		</xsl:for-each>
 		
 		<!-- ============================================================================= -->
-		<!-- === descriptiveKeywords OK-->
+		<!-- === descriptiveKeywords WCS OK-->
 		<!-- ============================================================================= -->			
 		<descriptiveKeywords>
 			<MD_Keywords>
@@ -300,7 +310,7 @@
 		</descriptiveKeywords>
 		
 		<!-- ============================================================================= -->
-		<!-- === Service Type als Keyword met Anchor voor WFS|WMTS === -->
+		<!-- === Service Type als Keyword met Anchor voor WFS|WMTS|WCS === -->
 		<!-- ============================================================================= -->
 		<xsl:choose>
 			<xsl:when test="$ows='true'">
@@ -308,7 +318,7 @@
 					<MD_Keywords>
 						<keyword>
 							<gco:CharacterString>
-								<xsl:value-of select="//ows:ServiceIdentification/ows:ServiceType|//ows11:ServiceIdentification/ows11:ServiceType"/>
+								<xsl:value-of select="//ows:ServiceIdentification/ows:ServiceType|//ows11:ServiceIdentification/ows11:ServiceType|//ows2:ServiceIdentification/ows2:ServiceType"/>
 							</gco:CharacterString>
 						</keyword>
 						<thesaurusName>
@@ -338,12 +348,12 @@
 		<!-- ============================================================================= -->
 		<!-- === aanroepen template Keywords === -->
 		<!-- ============================================================================= -->
-		<xsl:for-each select="$s/KeywordList|$s/wms:KeywordList|$s/wfs:keywords|$s/wcs:keywords|$s/ows:Keywords|$s/ows11:Keywords">
+		<xsl:for-each select="$s/KeywordList|$s/wms:KeywordList|$s/wfs:keywords|$s/wcs:keywords|$s/ows:Keywords|$s/ows11:Keywords|$s/ows2:Keywords">
 			<xsl:apply-templates select="." mode="Keywords"/>
 		</xsl:for-each>
 		
 		<!-- ============================================================================= -->
-		<!-- === MD_LegalConstraints OK-->
+		<!-- === MD_LegalConstraints WCS OK-->
 		<!-- ============================================================================= -->
 		<resourceConstraints>
 			<MD_LegalConstraints>
@@ -374,7 +384,7 @@
 		</resourceConstraints>
 		
 		<!-- ============================================================================= -->
-		<!-- === srv:serviceType OK-->
+		<!-- === srv:serviceType WCS OK-->
 		<!-- ============================================================================= -->
 		<!--
 
@@ -400,8 +410,8 @@
 			</gco:LocalName>
 		</srv:serviceType>
 		
-        <!-- ============================================================================= -->
-		<!-- === extent OK -->
+    <!-- ============================================================================= -->
+		<!-- === extent WCS OK -->
 		<!-- ============================================================================= -->	
 		<xsl:if test="name(.)!='wps:Capabilities'">
 			<srv:extent>
@@ -500,14 +510,14 @@
 			</srv:extent>
 		</xsl:if>
 		
-        <!-- ============================================================================= -->
-		<!-- === couplingType OK -->
+    <!-- ============================================================================= -->
+		<!-- === couplingType WCS OK -->
 		<!-- ============================================================================= -->	
 		<srv:couplingType>
 			<srv:SV_CouplingType codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/SV_CouplingType.xml" codeListValue="tight"/>
 		</srv:couplingType>
 	
-        <!-- ============================================================================= -->
+    <!-- ============================================================================= -->
 		<!-- === containsOperations OK -->
 		<!-- ============================================================================= -->	
 		<xsl:for-each select="Capability/Request/*|
@@ -516,6 +526,7 @@
                                 wcs:Capability/wcs:Request/*|
                                 ows:OperationsMetadata/ows:Operation|
                                 ows11:OperationsMetadata/ows11:Operation|
+                                ows2:OperationsMetadata/ows2:Operation|
                                 wps:ProcessOfferings/*|
                                 wps1:ProcessOfferings/*|
                                 wps2:Contents/*">
@@ -545,7 +556,7 @@
 									<URL>
 										<xsl:choose>
 											<xsl:when test="$ows='true'">
-												<xsl:value-of select=".//ows:Get/@xlink:href|.//ows11:Get/@xlink:href"/>
+												<xsl:value-of select=".//ows:Get/@xlink:href|.//ows11:Get/@xlink:href|.//ows2:Get/@xlink:href"/>
 											</xsl:when>
 											<xsl:otherwise>
 												<xsl:value-of select=".//Get/OnlineResource/@xlink:href|.//wms:Get/wms:OnlineResource/@xlink:href"/>
@@ -559,8 +570,8 @@
 			</srv:containsOperations>
 		</xsl:for-each>
 
-        <!-- ============================================================================= -->
-		<!-- === operatesOn OK-->
+    <!-- ============================================================================= -->
+		<!-- === operatesOn WCS OK-->
 		<!-- ============================================================================= -->	
 		<!--WMS-->
 		<xsl:for-each select="//wms:Layer/wms:MetadataURL/wms:OnlineResource/@xlink:href[not(.=preceding::wms:OnlineResource/@xlink:href)]">		
@@ -579,8 +590,17 @@
 				</xsl:when>
 			</xsl:choose>
 		</xsl:for-each>
-		
-		<!--WMTS-->
+
+    <!--WCS-->
+    <xsl:for-each select="//wcs:Contents/wcs:CoverageSummary/ows2:Metadata/@xlink:href[not(.=preceding::ows2:Metadata/@xlink:href)]">
+      <xsl:choose>
+        <xsl:when test="contains(.,'srv/dut/csw')">
+          <srv:operatesOn xlink:href="{.}" uuidref="{//inspire_dls:SpatialDataSetIdentifier/inspire_common:Code}"/>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+
+    <!--WMTS-->
 		<xsl:for-each select="//wmts:Contents/wmts:Layer/ows11:Metadata/@xlink:href[not(.=preceding::ows11:Metadata/@xlink:href)]">		
 			<xsl:choose>
 				<xsl:when test="contains(.,'srv/dut/csw')">
@@ -656,6 +676,12 @@
 											lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
 											lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
 											lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
+            count(ows2:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+											lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
+											lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+											lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
+											lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
+											lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
 						count(wfs:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
 										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
 										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
@@ -670,7 +696,7 @@
 										  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) > 0">
 					
 					<!--Lijst M&R-->
-					<xsl:for-each select="ows:Keyword | ows11:Keyword | wfs:Keyword | wcs:keyword">
+					<xsl:for-each select="ows:Keyword | ows11:Keyword | ows2:Keyword | wfs:Keyword | wcs:keyword">
 						<xsl:if test=".='Lijst M&amp;R INSPIRE'">
 							<descriptiveKeywords>
 								<MD_Keywords>										
@@ -705,7 +731,8 @@
 					<!--other keywords-->
 					<descriptiveKeywords>
 						<MD_Keywords>
-							<xsl:for-each select="Keyword | wms:Keyword | ows:Keyword | ows11:Keyword | wfs:Keyword | wcs:keyword">
+
+							<xsl:for-each select="Keyword | wms:Keyword | ows:Keyword | ows11:Keyword | ows2:Keyword | wfs:Keyword | wcs:keyword">
 								<xsl:if test="lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
 											  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
 											  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
@@ -714,7 +741,7 @@
 											  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)">
 									<xsl:variable name="keywordValue" select="normalize-space(.)" />
 
-									<xsl:if test="$keywordValue!='infoMapAccessService' and $keywordValue!='infoFeatureAccessService' and $keywordValue!='Lijst M&amp;R INSPIRE'">
+									<xsl:if test="$keywordValue!='infoMapAccessService' and $keywordValue!='infoFeatureAccessService' and $keywordValue!='Lijst M&amp;R INSPIRE' and  $keywordValue!='infoCoverageAccessService'">
 										<keyword>
 											<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
 										</keyword>
@@ -740,11 +767,11 @@
 		<!--inspireTheme_dut-->
 		<xsl:if test="(count(//inspire_common:Keyword[ends-with(@xsi:type,'inspireTheme_dut')]/inspire_common:KeywordValue) > 0 and 
 		$lowerCaseThesaurusTitle=lower-case($inspire-theme-thesaurus)) or 
-		(count(Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wms:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(ows:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(ows11:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wfs:Keywords[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wcs:keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) > 0)">
+		(count(Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wms:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(ows:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(ows11:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(ows2:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wfs:Keywords[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wcs:keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) > 0)">
 			<descriptiveKeywords>
 				<MD_Keywords>
 				
-					<xsl:for-each select="Keyword | wms:Keyword | ows:Keyword | ows11:Keyword | wfs:Keyword | wcs:keyword">
+					<xsl:for-each select="Keyword | wms:Keyword | ows:Keyword | ows11:Keyword | ows2:Keyword | wfs:Keyword | wcs:keyword">
 						<xsl:if test="lower-case(@vocabulary)=$lowerCaseThesaurusTitle">
 							<xsl:variable name="keywordValue" select="normalize-space(.)" />
 							<xsl:if test="$keywordValue!='infoMapAccessService' and $keywordValue!='infoFeatureAccessService'">
@@ -772,7 +799,7 @@
 						<xsl:variable name="inspire-theme-thesaurus-keywords"><xsl:value-of select="concat($inspire-theme-thesaurus-keywords-1,',',$inspire-theme-thesaurus-keywords-2,',',$inspire-theme-thesaurus-keywords-3)"/></xsl:variable>
 						<xsl:for-each select="//inspire_common:Keyword[ends-with(@xsi:type,'inspireTheme_dut')]/inspire_common:KeywordValue">
 							<xsl:variable name="keywordValue" select="normalize-space(.)" />
-							<xsl:if test="$keywordValue!='infoMapAccessService' and $keywordValue!='infoFeatureAccessService' 
+							<xsl:if test="$keywordValue!='infoMapAccessService' and $keywordValue!='infoFeatureAccessService' and $keywordValue!='infoCoverageAccessService' 
 							and not(contains($inspire-theme-thesaurus-keywords,concat('[',$keywordValue,']')))">
 								
 								

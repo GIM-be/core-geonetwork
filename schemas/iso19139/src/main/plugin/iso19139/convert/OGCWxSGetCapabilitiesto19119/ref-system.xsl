@@ -24,7 +24,6 @@
 <xsl:stylesheet
     xmlns:gco="http://www.isotc211.org/2005/gco"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:wms="http://www.opengis.net/wms"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:gmx="http://www.isotc211.org/2005/gmx"
     xmlns:gml="http://www.opengis.net/gml/3.2"
