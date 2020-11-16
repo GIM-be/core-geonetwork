@@ -328,10 +328,12 @@
             <xsl:apply-templates mode="render-content" select="$quantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:identifier/@codeSpace"/-->
             <xsl:apply-templates mode="render-content" select="$quantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:name"/>
             <!--xsl:apply-templates mode="render-content" select="$quantitativeResult/gmd:value/gco:Record"/-->
-            <xsl:call-template name="render-text-as-row">
-              <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name($quantitativeResult/gmd:value/gco:Record), name($quantitativeResult/gmd:value))"/>
-              <xsl:with-param name="value" select="concat($quantitativeResult/gmd:value/gco:Record/text(),' ',$quantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:identifier)"/>
-            </xsl:call-template>
+            <xsl:for-each select="$quantitativeResult/gmd:value">
+              <xsl:call-template name="render-text-as-row">
+                <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(gco:Record), name(.))"/>
+                <xsl:with-param name="value" select="concat(gco:Record/text(),' ',$quantitativeResult/gmd:valueUnit/gml:UnitDefinition/gml:identifier)"/>
+              </xsl:call-template>
+            </xsl:for-each>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:with-param>
