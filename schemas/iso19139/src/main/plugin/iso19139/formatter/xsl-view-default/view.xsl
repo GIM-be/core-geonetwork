@@ -300,7 +300,7 @@
           <xsl:call-template name="render-anchor-as-row">
             <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'gmx:Anchor', 'gmd:code')"/>
             <xsl:with-param name="link" select="$link"/>
-            <xsl:with-param name="value" select="$value"/>
+            <xsl:with-param name="value" select="if ($value!='') then $value else $link"/>
           </xsl:call-template>
         </xsl:if>
         <xsl:if test="not($link!='')">
@@ -519,7 +519,7 @@
   </xsl:template>
 
   <xsl:template mode="render-content" match="gmd:descriptiveKeywords">
-    <xsl:variable name="thesaurusTitle" select="*/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*"/>
+    <xsl:variable name="thesaurusTitle" select="*/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[name()=('gco:CharacterString','gmx:Anchor')]"/>
     <xsl:variable name="isInspireThesaurus" select="$thesaurusTitle and lower-case($thesaurusTitle) = ('gemet - inspire themes, version 1.0','gemet - inspire thema''s, versie 1.0')" />
     <xsl:call-template name="render-block-as-row">
       <xsl:with-param name="label" select="if ($thesaurusTitle) then $thesaurusTitle else gn-fn-iso19139:get-schema-strings($schemaStrings, 'otherKeywords')"/>
@@ -714,7 +714,6 @@
     <xsl:variable name="link" select="normalize-space(gmx:Anchor/@xlink:href)"/>
     <xsl:variable name="value" select="normalize-space(gmx:Anchor/text())"/>
     <xsl:if test="not($link)">
-      <xsl:message select="concat('Render text', $value)" />
       <xsl:call-template name="render-text-as-row">
         <xsl:with-param name="label" select="$label"/>
         <xsl:with-param name="value" select="$value"/>
@@ -724,7 +723,7 @@
       <xsl:call-template name="render-anchor-as-row">
         <xsl:with-param name="label" select="$label"/>
         <xsl:with-param name="link" select="$link"/>
-        <xsl:with-param name="value" select="$value"/>
+        <xsl:with-param name="value" select="if ($value!='') then $value else $link"/>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
@@ -796,7 +795,7 @@
     </span>
   </xsl:template>
 
-  <xsl:template mode="render-content" match="gmd:keyword[../gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[lower-case(normalize-space()) = ('gemet - inspire themes, version 1.0','gemet - inspire thema''s, versie 1.0')]]" priority="1000">
+  <xsl:template mode="render-content" match="gmd:keyword[../gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[name()=('gco:CharacterString','gmx:Anchor') and lower-case(normalize-space()) = ('gemet - inspire themes, version 1.0','gemet - inspire thema''s, versie 1.0')]]" priority="1000">
     <xsl:variable name="value" select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
     <xsl:variable name="inspireThemeAcronym">
       <xsl:call-template name="getInspireThemeAcronym">
