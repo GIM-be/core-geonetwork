@@ -193,30 +193,45 @@
       </xsl:if>
     </xsl:variable>
 
+    <xsl:variable name="attrs">
+      <xsl:for-each select="@*">
+        <xsl:value-of select="concat(name(), '=&quot;', string(), '&quot; ')"/>
+      </xsl:for-each>
+    </xsl:variable>
 
-    <xsl:call-template name="render-element">
-      <xsl:with-param name="label"
-                      select="$labelConfig"/>
-      <xsl:with-param name="name" select="gn:element/@ref"/>
-      <xsl:with-param name="value" select="text()"/>
-      <xsl:with-param name="cls" select="local-name()"/>
-      <xsl:with-param name="xpath" select="$xpath"/>
-      <!--
-          Default field type is Date.
+    <div class="form-group gn-field gn-date gn-required required-inspire has-error"
+         id="gn-el-{gn:element/@ref}"
+         data-gn-field-highlight="">
+      <label class="col-sm-2 control-label">
+        <xsl:value-of select="$labelConfig/label"/>
+      </label>
+      <div class="col-sm-9 gn-value">
+        <div data-gn-date-picker="{.}"
+             data-gn-field-tooltip="{concat('iso19139', '|', name(.), '|', name(..), '|', $xpath)}"
+             data-label=""
+             data-element-name="{name()}"
+             data-tag-name="{name()}"
+             data-element-ref="{concat('_X', ../gn:element/@ref)}"
+             data-existing-attrs="{$attrs}"
+             data-hide-select="true"
+             data-hide-time="true">
+        </div>
+      </div>
+    </div>
 
-          TODO : Add the capability to edit those elements as:
-           * xs:time
-           * xs:dateTime
-           * xs:anyURI
-           * xs:decimal
-           * gml:CalDate
-          See http://trac.osgeo.org/geonetwork/ticket/661
-        -->
-      <xsl:with-param name="type"
-                      select="if (string-length($value) = 10 or $value = '') then 'date' else 'datetime'"/>
-      <xsl:with-param name="editInfo" select="gn:element"/>
-      <xsl:with-param name="attributesSnippet" select="$attributes"/>
-    </xsl:call-template>
+
+    <!--<xsl:call-template name="render-element">-->
+    <!--  <xsl:with-param name="label"-->
+    <!--                  select="$labelConfig"/>-->
+    <!--  <xsl:with-param name="name" select="gn:element/@ref"/>-->
+    <!--  <xsl:with-param name="value" select="text()"/>-->
+    <!--  <xsl:with-param name="cls" select="local-name()"/>-->
+    <!--  <xsl:with-param name="xpath" select="$xpath"/>-->
+    <!--  <xsl:with-param name="type"-->
+    <!--                  select="if (string-length($value) = 10 or $value = '') then 'date' else 'datetime'"/>-->
+    <!--  <xsl:with-param name="editInfo" select="gn:element"/>-->
+    <!--  <xsl:with-param name="attributesSnippet" select="$attributes"/>-->
+    <!--</xsl:call-template>-->
   </xsl:template>
 
   <xsl:template mode="mode-iso19139" match="gmd:EX_GeographicBoundingBox" priority="2000">

@@ -52,7 +52,9 @@
              tagName: '@',
              indeterminatePosition: '@',
              required: '@',
-             hideTime: '@'
+             hideTime: '@',
+             hideSelect: '@',
+             existingAttrs: '@'
            },
            templateUrl: '../../catalog/components/edit/datepicker/partials/' +
            'datepicker.html',
@@ -144,8 +146,7 @@
                  // Check date against simple date pattern
                  // to add a css class to highlight error.
                  // Input will be saved anyway.
-                 scope.isValidDate =
-                 scope.dateInput.match(datePattern) !== null;
+                 scope.isValidDate = scope.dateInput.match(datePattern) !== null;
 
                  if (scope.dateInput === undefined) {
                    return;
@@ -177,6 +178,10 @@
                  scope.indeterminatePosition !== '') {
                    attribute = ' indeterminatePosition="' +
                    scope.indeterminatePosition + '"';
+                 }
+
+                 if (scope.existingAttrs && scope.existingAttrs !== '') {
+                   attribute += ' ' + scope.existingAttrs;
                  }
 
                  if (scope.dateTime == null) {
