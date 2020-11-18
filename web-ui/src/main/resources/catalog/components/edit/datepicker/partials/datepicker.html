@@ -8,7 +8,7 @@
 
 
     <div class="input-group gn-date-picker"
-         data-ng-class="{'gn-time-with-ind-position': withIndeterminatePosition}"
+         data-ng-class="{'gn-time-with-ind-position': withIndeterminatePosition, 'simple-date-picker': hideSelect === 'true'}"
          data-ng-show="dateTypeSupported === true">
       <div class="input-group gn-indeterminate-position"
            data-ng-show="withIndeterminatePosition"
@@ -35,7 +35,7 @@
              data-ng-class="hideTime == 'true' ? 'hidden' : ''"
              data-ng-model="time"
              data-ng-show="mode === ''"/>
-      <div class="input-group-btn">
+      <div class="input-group-btn" data-ng-if="hideSelect !== 'true'">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-clock-o"></i>&nbsp;<span class="caret"></span>
         </button>
