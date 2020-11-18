@@ -265,8 +265,9 @@
           $http.get('../api/status', {cache: true})
             .success(function (data) {
               var res = [];
+              var excludedStatusIds = [0,6];
               for (var i = 0; i < data.length; i++) {
-                if(data[i].id < 50) {
+                if(data[i].id < 50 && !excludedStatusIds.includes(data[i].id)) {
                   res.push({
                     id: data[i].id,
                     name: data[i].label.dut ? data[i].label.dut: data[i].name
