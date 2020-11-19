@@ -65,9 +65,9 @@ public class RdfOutputManager {
     public RdfOutputManager(Element thesaurusEl, int pageSize) {
         this.thesaurusEl = thesaurusEl;
         PAGE_SIZE = pageSize;
-    	
+
     }
-    
+
     /**
      * Creates an rdf file with all the public metadata from the catalogue that fits the search
      * criteria.
@@ -75,14 +75,14 @@ public class RdfOutputManager {
      * @return Name of the temporal file
      */
     public File createRdfFile(ServiceContext context, RdfSearcher searcher) throws Exception {
-    	try {
+        try {
         List<Element> results = searcher.search(context);
-    	return createRdfFile(context,results,1,"");
-    	}
-    	 finally {
+        return createRdfFile(context,results,1,"");
+        }
+         finally {
              searcher.close();
          }
-    }    
+    }
 
     /**
      * Creates an rdf file with all the public metadata from the catalogue that fits the search
@@ -192,14 +192,14 @@ public class RdfOutputManager {
                 Log.info(Geonet.GEONETWORK, "DCAT - ... Writing catalog records");
                 reader2 = new BufferedReader(new InputStreamReader(new FileInputStream(recordsFile), Charset.forName("UTF-8")));
                 IOUtils.copy(reader2, outputRdfFile);
-                
+
                 // Close dcat:Catalog
                 outputRdfFile.write("</dcat:Catalog>");
                 outputRdfFile.write("\n");
 
                 // File footer
                 Log.info(Geonet.GEONETWORK, "DCAT - ... Writing file footer");
-                writeFileFooter(outputRdfFile);                                
+                writeFileFooter(outputRdfFile);
             } finally {
                 IOUtils.closeQuietly(outputRdfFile);
                 IOUtils.closeQuietly(reader1);
@@ -243,7 +243,7 @@ public class RdfOutputManager {
             }
 
         } else {
-        	output.write(pagingInformation);
+            output.write(pagingInformation);
             Namespace nsDcat = Namespace.getNamespace("dcat", "http://www.w3.org/ns/dcat#");
             output.write("\n");
             Element mdDcatCatalog = rdf.getChild("Catalog", nsDcat);
@@ -271,7 +271,7 @@ public class RdfOutputManager {
             if (page == 1) {
                 // For first results page, write also the Organisation section that is between Catalog
                 // and CatalogRecords sections (same in all pages)
-            	output.write("<dcat:dataset>");
+                output.write("<dcat:dataset>");
                 output.write("\n");
                 String result = Xml.getString(mdDcat);
                 output.write(removeNamespaces(result));
@@ -322,6 +322,7 @@ public class RdfOutputManager {
 
         Element serverEl = new Element("server");
         serverEl.addContent(new Element("port").setText(sm.getValue(Settings.SYSTEM_SERVER_PORT)));
+        serverEl.addContent(new Element("sercurePort").setText(sm.getValue(Settings.SYSTEM_SERVER_SECURE_PORT)));
         serverEl.addContent(new Element("host").setText(sm.getValue(Settings.SYSTEM_SERVER_HOST)));
         serverEl.addContent(new Element("protocol").setText(sm.getValue(Settings.SYSTEM_SERVER_PROTOCOL)));
 
@@ -359,13 +360,15 @@ public class RdfOutputManager {
      * the header.
      */
     private String removeNamespaces(String xml) {
-        return xml.replace("xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"", "").
-            replace("xmlns:dct=\"http://purl.org/dc/terms/\"", "").
-            replace("xmlns:dcat=\"http://www.w3.org/ns/dcat#\"", "").
-            replace("xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"", "").
-            replace("xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"", "").
-            replace("xmlns:void=\"http://www.w3.org/TR/void/\"", "").
-            replace("xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"", "").
-            replace("xmlns:locn=\"http://www.w3.org/ns/locn#\"", "");
+        return xml.replace(" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"", "").
+            replace(" xmlns:dct=\"http://purl.org/dc/terms/\"", "").
+            replace(" xmlns:dcat=\"http://www.w3.org/ns/dcat#\"", "").
+            replace(" xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"", "").
+            replace(" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"", "").
+            replace(" xmlns:void=\"http://www.w3.org/TR/void/\"", "").
+            replace(" xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"", "").
+            replace(" xmlns:locn=\"http://www.w3.org/ns/locn#\"", "").
+            replace(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", "").
+            replace(" xmlns:geonet=\"http://www.fao.org/geonetwork\"", "");
     }
 }

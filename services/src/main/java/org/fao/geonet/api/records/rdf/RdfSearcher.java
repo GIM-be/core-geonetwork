@@ -59,21 +59,21 @@ public class RdfSearcher {
 
     }
 
-    public List search(ServiceContext context) throws Exception {
+    public List<Element> search(ServiceContext context) throws Exception {
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
         SearchManager searchMan = gc.getBean(SearchManager.class);
         searcher = searchMan.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE);
 
         ServiceConfig config = new ServiceConfig();
 
-      
+
         searcher.search(context, searchRequest, config);
-        
+
         numberMatched = searcher.getSize();
-        _versionToken = searcher.getVersionToken(); 
-        
+        _versionToken = searcher.getVersionToken();
+
         searchRequest.addContent(new Element(Geonet.SearchResult.BUILD_SUMMARY).setText("false"));
-                  
+
         return searcher.present(context, searchRequest, config).getChildren();
     }
 
@@ -84,16 +84,16 @@ public class RdfSearcher {
             // Ignore exception
         }
     }
-    
+
     private int numberMatched;
     public int getSize() {
         return numberMatched;
     }
-    
+
     /**
      * <p> Gets the Lucene version token. Can be used as ETag. </p>
-     */      
+     */
     public long getVersionToken(){
-    	return _versionToken;
-    };    
+        return _versionToken;
+    };
 }
