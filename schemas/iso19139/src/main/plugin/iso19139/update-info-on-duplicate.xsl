@@ -38,6 +38,12 @@
     <xsl:apply-templates select="*:MD_Metadata"/>
   </xsl:template>
 
+  <xsl:template match="gmd:MD_Metadata">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+
   <!-- Empty titles string -->
   <xsl:template match="gmd:identificationInfo/*/gmd:citation/*/gmd:title">
     <gmd:title gco:nilReason="missing">
@@ -60,7 +66,7 @@
   <!-- Set a new RS_Identifier or gmd:MD_Identifier -->
   <xsl:template match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier|
                        gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:copy-of select="@*"/>
       <gmd:code>
         <gco:CharacterString>
@@ -87,7 +93,7 @@
 
   <!-- copy everything else as is -->
   <xsl:template match="@*|node()">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>

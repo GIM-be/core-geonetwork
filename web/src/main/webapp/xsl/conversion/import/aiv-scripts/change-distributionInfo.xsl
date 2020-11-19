@@ -60,7 +60,9 @@
 
   <xsl:template match="gmd:protocol" priority="1000">
     <xsl:copy copy-namespaces="no">
+      <xsl:apply-templates select="@*"/>
       <xsl:variable name="protocol" select="*/normalize-space(text())"/>
+      <xsl:message select="concat('Handling protocol ',$protocol)" />
       <xsl:variable name="mappedProtocol">
         <xsl:call-template name="mapProtocol">
           <xsl:with-param name="protocol" select="$protocol"/>

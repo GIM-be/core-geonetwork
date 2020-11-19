@@ -28,14 +28,15 @@
     xmlns:gmx="http://www.isotc211.org/2005/gmx"
     xmlns:gml="http://www.opengis.net/gml/3.2"
                 version="1.0"
-    xmlns="http://www.isotc211.org/2005/gmd">
-    
+    xmlns="http://www.isotc211.org/2005/gmd"
+    exclude-result-prefixes="#all">
+
     <!-- ============================================================================= -->
 	<!-- Waarde wordt afgekapt na EPSG: voor de voorstellingen EPSG:31370 en urn:ogc:def:crs:EPSG:31370
 	daarna wordt het afgekapte deel getest op de aanwezigheid van een ':' omdat voor WMTS volgende waarde aanwezig is: urn:ogc:def:crs:EPSG:6.3:4326
 	indien er ':' aanwezig is wordt dit nogmaals afgekapt
-	het overgebleven deel wordt dan achter de basis URL geplakt-->    
-    
+	het overgebleven deel wordt dan achter de basis URL geplakt-->
+
     <xsl:template match="*" mode="RefSystemTypes">
 		<xsl:variable name="CRS">
 			<xsl:value-of select="substring-after(., 'EPSG:')"/>
