@@ -18,8 +18,14 @@
     <xsl:apply-templates select="gmd:MD_Metadata"/>
   </xsl:template>
 
-  <xsl:template match="@*|node()">
+  <xsl:template match="gmd:MD_Metadata">
     <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="@*|node()">
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
