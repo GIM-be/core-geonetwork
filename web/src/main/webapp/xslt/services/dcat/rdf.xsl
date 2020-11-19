@@ -29,6 +29,7 @@
                 xmlns:void="http://www.w3.org/TR/void/"
                 xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+                xmlns:java="java:org.fao.geonet.util.XslUtil"
                 version="2.0"
                 extension-element-prefixes="saxon" exclude-result-prefixes="#all">
 
@@ -37,29 +38,9 @@
   <xsl:include href="../../common/base-variables.xsl"/>
   <xsl:include href="../../common/profiles-loader-tpl-rdf.xsl"/>
 
-  <xsl:variable name="port">
-    <xsl:choose>
-      <xsl:when test="$env/system/server/protocol = 'https'">
-        <xsl:value-of select="$env/system/server/securePort"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$env/system/server/port"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
-  <xsl:variable name="url"
-                select="concat($env/system/server/protocol, '://',
-                          $env/system/server/host,
-                          if (($env/system/server/protocol = 'http' and $port = '80') or
-                              ($env/system/server/protocol = 'https' and $port = '443')) then '' else concat(':', $port),
-                          /root/gui/url)"/>
-
+  <xsl:variable name="serviceUrl" select="/root/env/siteURL"/>
+  <xsl:variable name="iso2letterLanguageCode" select="lower-case(java:twoCharLangCode(/root/gui/language))"/>
   <xsl:variable name="resourcePrefix" select="$env/metadata/resourceIdentifierPrefix"/>
-
-  <!-- TODO: should use Java language code mapper -->
-  <xsl:variable name="iso2letterLanguageCode" select="substring(/root/gui/language, 1, 2)"/>
-
 
   <xsl:template match="/">
     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -74,7 +55,7 @@
 
       <xsl:apply-templates mode="to-dcat" select="/root/*|/root/search/response/*"/>
 
-      <xsl:apply-templates mode="references" select="/root/*|/root/search/response/*"/>
+      <!--  <xsl:apply-templates mode="references" select="/root/*|/root/search/response/*"/> -->
     </rdf:RDF>
 
   </xsl:template>
@@ -94,31 +75,90 @@
         <xsl:value-of select="$env/system/site/name"/>
       </dct:title>
 
-      <!-- free-text account of the catalog. -->
-      <dct:description/>
+      <!-- The language of the catalog  -->
+      <dct:language>
+        <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NLD">
+          <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
+          <skos:prefLabel xml:lang="nl">Nederlands</skos:prefLabel>
+          <skos:prefLabel xml:lang="en">Dutch</skos:prefLabel>
+          <skos:prefLabel xml:lang="fr">néerlandais</skos:prefLabel>
+          <skos:prefLabel xml:lang="de">Niederländisch</skos:prefLabel>
+          <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language"/>
+        </skos:Concept>
+      </dct:language>
 
-      <rdfs:label xml:lang="{$iso2letterLanguageCode}">
+
+      <!-- free-text account of the catalog. -->
+      <dct:description xml:lang="{$iso2letterLanguageCode}">
         <xsl:value-of select="$env/system/site/name"/> (<xsl:value-of
         select="$env/system/site/organization"/>)
-      </rdfs:label>
+      </dct:description>
+
+      <!-- The entity responsible for making the catalog online. -->
+      <dct:publisher>
+    	<!-- Organization in charge of the catalogue defined in the administration > system configuration -->
+	    <foaf:Agent rdf:about="{$resourcePrefix}/organizations/{encode-for-uri($env/system/site/organization)}">
+	      <foaf:name xml:lang="{$iso2letterLanguageCode}">
+	        <xsl:value-of select="$env/system/site/organization"></xsl:value-of>
+	      </foaf:name>
+	    </foaf:Agent>
+      </dct:publisher>
 
       <!-- The homepage of the catalog -->
       <foaf:homepage>
-        <xsl:value-of select="/root/gui/nodeUrl"/>
+			<foaf:Document rdf:about="{$serviceUrl}">
+				<foaf:name xml:lang="{$iso2letterLanguageCode}"><xsl:value-of select="$env/system/site/name"/></foaf:name>
+			</foaf:Document>
       </foaf:homepage>
 
-      <!-- FIXME : void:Dataset -->
+      <!-- The license of the catalog -->
+      <dct:license>
+        <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0">
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/licencetype/PublicDomain">
+              <skos:prefLabel xml:lang="nl">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Public domain</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
+            </skos:Concept>
+          </dct:type>
+          <dct:title xml:lang="nl">Creative Commons Zero verklaring</dct:title>
+          <dct:description xml:lang="nl">De instantie doet afstand van haar intellectuele eigendomsrechten voor zover dit wettelijk mogelijk is. Hierdoor kan de gebruiker de data hergebruiken voor eender welk doel, zonder een verplichting op naamsvermelding. Deze is de welbekende CC0 licentie.</dct:description>
+          <dct:identifier>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</dct:identifier>
+        </dct:LicenseDocument>
+      </dct:license>
+
+      <dct:issued>
+        <xsl:attribute name="rdf:datatype" select="'http://www.w3.org/2001/XMLSchema#date'"/>
+        <xsl:value-of select="'2019-09-01'"/>
+      </dct:issued>
+      <dct:modified>
+        <xsl:attribute name="rdf:datatype" select="'http://www.w3.org/2001/XMLSchema#date'"/>
+        <xsl:value-of select="'2019-09-01'"/>
+      </dct:modified>
+
+      <!--
       <void:openSearchDescription><xsl:value-of select="/root/gui/nodeUrl"/>eng/portal.opensearch</void:openSearchDescription>
       <void:uriLookupEndpoint><xsl:value-of select="/root/gui/nodeUrl"/>eng/rdf.search?any=</void:uriLookupEndpoint>
-
-
-      <!-- The entity responsible for making the catalog online. -->
-      <dct:publisher rdf:resource="{$resourcePrefix}/organizations/{encode-for-uri($env/system/site/organization)}"/>
+	  -->
 
       <!-- The knowledge organization system (KOS) used to classify catalog's datasets.
       -->
       <xsl:for-each select="/root/gui/thesaurus/thesauri/thesaurus">
-        <dcat:themes rdf:resource="{$resourcePrefix}/registries/vocabularies/{key}"/>
+        <dcat:themeTaxonomy>
+	    <!-- ConceptScheme describes all thesaurus available in the catalogue
+	      * Resource identifier is a local identifier for local thesaurus or public URI if external
+	    -->
+		      <skos:ConceptScheme rdf:about="{$resourcePrefix}/registries/vocabularies/{key}">
+		        <dct:title xml:lang="{$iso2letterLanguageCode}">
+		          <xsl:value-of select="title"/>
+		        </dct:title>
+		        <foaf:isPrimaryTopicOf><xsl:value-of select="$serviceUrl"/>thesaurus.download?ref=<xsl:value-of
+		          select="key"/>
+		        </foaf:isPrimaryTopicOf>
+		      </skos:ConceptScheme>
+        </dcat:themeTaxonomy>
       </xsl:for-each>
 
 
@@ -130,10 +170,15 @@
 
         Multiple values can be used. The publisher might also choose to describe
         the language on the dataset level (see dataset language).
-      -->
+
       <dct:language>
-        <xsl:value-of select="/root/gui/language"/>
+			<skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/{/root/gui/language}">
+				<rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
+				<skos:prefLabel xml:lang="{$iso2letterLanguageCode}"><xsl:value-of select="/root/gui/language"/></skos:prefLabel>
+				<skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language"/>
+			</skos:Concept>
       </dct:language>
+      -->
 
 
       <!-- This describes the license under which the catalog can be used/reused and not the datasets.
@@ -147,49 +192,20 @@
 
 
       <!-- The geographical area covered by the catalog.
-      <dct:Location>
-
-       </dct:Location> -->
+      <dct:location>
+       </dct:location> -->
 
       <!-- List all catalogue records
         <dcat:dataset rdf:resource="http://localhost:8080/geonetwork/dataset/1"/>
         <dcat:record rdf:resource="http://localhost:8080/geonetwork/metadata/1"/>
-      -->
+
       <xsl:apply-templates mode="record-reference" select="/root/*|/root/search/response/*"/>
+      -->
 
     </dcat:Catalog>
 
-    <!-- Organization in charge of the catalogue defined in the administration
-    > system configuration -->
-    <foaf:Organization rdf:about="{$resourcePrefix}/organizations/{encode-for-uri($env/system/site/organization)}">
-      <foaf:name>
-        <xsl:value-of select="$env/system/site/organization"></xsl:value-of>
-      </foaf:name>
-    </foaf:Organization>
 
-    <!-- ConceptScheme describes all thesaurus available in the catalogue
-      * Resource identifier is a local identifier for local thesaurus or public URI if external
-    -->
-    <xsl:for-each select="/root/gui/thesaurus/thesauri/thesaurus">
-      <skos:ConceptScheme rdf:about="{$resourcePrefix}/registries/vocabularies/{key}">
-        <dct:title>
-          <xsl:value-of select="title"/>
-        </dct:title>
-        <!-- TODO : add conceptSchemes
-          <dc:description>Thesaurus name.</dc:description>
-          <dc:creator>
-          <foaf:Organization>
-          <foaf:name>Thesaurus org</foaf:name>
-          </foaf:Organization>
-          </dc:creator>-->
-        <dct:uri><xsl:value-of select="$url"/>/srv/eng/thesaurus.download?ref=<xsl:value-of
-          select="key"/>
-        </dct:uri>
-        <!--
-          <dct:issued>2008-06-01</dct:issued>
-          <dct:modified>2008-06-01</dct:modified>-->
-      </skos:ConceptScheme>
-    </xsl:for-each>
+
   </xsl:template>
 
 
@@ -202,7 +218,7 @@
 
   <xsl:template mode="record-reference" match="metadata" priority="2">
     <dcat:dataset rdf:resource="{$resourcePrefix}/datasets/{geonet:info/uuid}"/>
-    <dcat:record rdf:resource="{$resourcePrefix}/records/{geonet:info/uuid}"/>
+    <!--   <dcat:record rdf:resource="{$resourcePrefix}/records/{geonet:info/uuid}"/> -->
   </xsl:template>
 
 
