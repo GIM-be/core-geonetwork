@@ -170,7 +170,7 @@
         </div>
 
       </div>
-      <div data-ng-if="md.mdStatus<50">
+      <div data-ng-if="user.isEditorOrMore() && md.mdStatus<50 && isMdWorkflowEnable">
         <i class="fa gn-aiv-workflow-status-all gn-aiv-workflow-status-{{(md.mdStatus==2 || md.mdStatus==3) ? 'unlocked' : 'locked'}} gn-aiv-workflow-status-{{(md.mdStatus && md.mdStatus < 7) ? md.mdStatus : 'x'}}">
           <span>{{'mdStatusRecord' | translate}}: {{('mdStatus-' + md.mdStatus) | translate}}</span>
         </i>
