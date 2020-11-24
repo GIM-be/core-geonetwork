@@ -1122,7 +1122,8 @@
                              string-join($phone, ','), '|',
                              $uuid, '|',
                              $position, '|',
-                             $website)}"
+                             $website, '|',
+                             $role)}"
            store="true" index="false"/>
 
     <xsl:for-each select="$email">

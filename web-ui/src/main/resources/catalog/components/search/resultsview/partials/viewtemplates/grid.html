@@ -101,12 +101,12 @@
 
         <div class="row gn-md-details">
           <p ng-if="::!md.getAllContacts().resource">&nbsp;</p>
-          <p data-ng-repeat="c in ::md.getAllContacts().resource">
-            <img data-ng-if="::c.logo"
-                 data-ng-src="{{::c.logo}}"
+          <p data-ng-repeat="c in ::md.getMainContact()">
+            <img data-ng-if="c.logo"
+                 data-ng-src="{{c.logo}}"
                  class="gn-source-logo"
-                 title="{{::c.name}} ({{::c.role}})"/>
-            {{::c.name}}
+                 title="{{c.name}} ({{c.role}})"/>
+            {{c.org || c.name}}
           </p>
         </div>
       </div>

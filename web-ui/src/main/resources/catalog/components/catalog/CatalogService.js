@@ -772,7 +772,8 @@
               position: s[6] || '',
               address: s[7] || '',
               phone: s[8] || '',
-              website: s[11] || ''
+              website: s[11] || '',
+              roleCodeListValue: s[12] || ''
             };
             if (s[1] === 'resource') {
               this.allContacts.resource.push(contact);
@@ -782,6 +783,23 @@
           }
         }
         return this.allContacts;
+      },
+      /**
+       * Sorting based on static list of roles
+       * for all contacts and return the first
+       *
+       * @return {Array}
+       */
+      getMainContact: function() {
+        var roleList = ['pointOfContact','owner','custodian','publisher','distributor'];
+        var allContacts = this.getAllContacts().resource.sort(function(c1,c2) {
+          var c1Index = roleList.indexOf(c1.roleCodeListValue);
+          var c2Index = roleList.indexOf(c2.roleCodeListValue);
+          c1Index = c1Index > -1 ? c1Index : 100;
+          c2Index = c2Index > -1 ? c2Index : 100;
+          return (c1Index - c2Index);
+        });
+        return allContacts.slice(0,1);
       },
       /**
        * Deprecated. Use getAllContacts instead
