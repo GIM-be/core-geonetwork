@@ -266,11 +266,14 @@
             .success(function (data) {
               var res = [];
               var excludedStatusIds = [0,6];
-              for (var i = 0; i < data.length; i++) {
-                if(data[i].id < 50 && !excludedStatusIds.includes(data[i].id)) {
+              var sortedStatusList = data.sort(function(s1,s2) {
+                return (s1.displayOrder - s2.displayOrder);
+              });
+              for (var i = 0; i < sortedStatusList.length; i++) {
+                if(sortedStatusList[i].id < 50 && !excludedStatusIds.includes(sortedStatusList[i].id)) {
                   res.push({
-                    id: data[i].id,
-                    name: data[i].label.dut ? data[i].label.dut: data[i].name
+                    id: sortedStatusList[i].id,
+                    name: sortedStatusList[i].label.dut ? sortedStatusList[i].label.dut: sortedStatusList[i].name
                   });
                 }
               }
