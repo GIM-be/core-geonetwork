@@ -359,4 +359,9 @@
                 match="gmd:locale[*/gmd:languageCode/*/@codeListValue =
                                   ../gmd:language/*/@codeListValue]"
                 priority="2000"/>
+
+  <!-- Do not display empty fieldset for Vertical CS or Vertical datum. -->
+  <xsl:template mode="mode-iso19139"
+                match="*:verticalCS[$isFlatMode and count(*[local-name(.)='VerticalCS'])=0]|*:verticalDatum[$isFlatMode and count(*[local-name(.)='VerticalDatum'])=0]"
+                priority="2000"/>
 </xsl:stylesheet>

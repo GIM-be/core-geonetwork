@@ -345,6 +345,19 @@
 
   <!-- ================================================================= -->
 
+  <xsl:template match="gml:verticalCS|gml:verticalDatum|gml320:verticalCS|gml320:verticalDatum" priority="2000">
+    <xsl:variable name="childExists" select="count(*[local-name(.)='VerticalCS']) + count(*[local-name(.)='VerticalDatum']) != 0"/>
+    <xsl:copy copy-namespaces="no">
+      <xsl:if test="$childExists">
+        <xsl:apply-templates select="@*[local-name(.)!='nilReason']"/>
+        <xsl:apply-templates select="node()"/>
+      </xsl:if>
+      <xsl:if test="not($childExists)">
+        <xsl:attribute name="nilReason" select="'missing'"/>
+      </xsl:if>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="@gml:id|@gml320:id" priority="1000">
     <xsl:attribute name="gml:id" namespace="{if ($isUsing2005Schema and not($isUsing2007Schema)) then 'http://www.opengis.net/gml' else 'http://www.opengis.net/gml/3.2'}">
       <xsl:variable name="idValue">

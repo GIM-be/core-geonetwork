@@ -444,6 +444,8 @@
     <name context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier">gmd:MD_Identifier</name>
     <name context="gmd:result">gmd:DQ_ConformanceResult</name>
     <name context="gmd:result">gmd:DQ_QuantitativeResult</name>
+    <name context="gml:VerticalCRS">gml:verticalCS</name>
+    <name context="gml:VerticalCRS">gml:verticalDatum</name>
   </hideRefToDeleteFieldset>
 
   <multilingualFields>
