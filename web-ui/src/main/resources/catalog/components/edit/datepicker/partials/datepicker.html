@@ -8,7 +8,7 @@
 
 
     <div class="input-group gn-date-picker"
-         data-ng-class="{'gn-time-with-ind-position': withIndeterminatePosition, 'simple-date-picker': hideSelect === 'true'}"
+         data-ng-class="{'gn-time-with-ind-position': withIndeterminatePosition}"
          data-ng-show="dateTypeSupported === true">
       <div class="input-group gn-indeterminate-position"
            data-ng-show="withIndeterminatePosition"
@@ -24,18 +24,16 @@
              data-ng-show="mode === 'year'"/>
       <input type="text" class="form-control month-datepicker"
              placeholder="Month yyyy"
-             data-ng-model="monthDatePicker"
              data-ng-show="mode === 'month'"/>
       <input type="text" class="form-control full-datepicker"
              placeholder="dd/mm/yyyy"
-             data-ng-model="fullDatePicker"
              data-ng-class="hideTime == 'true' ? 'gn-notime' : ''"
              data-ng-show="mode === ''"/>
       <input type="time" class="form-control"
              data-ng-class="hideTime == 'true' ? 'hidden' : ''"
              data-ng-model="time"
              data-ng-show="mode === ''"/>
-      <div class="input-group-btn" data-ng-if="hideSelect !== 'true'">
+      <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-clock-o"></i>&nbsp;<span class="caret"></span>
         </button>

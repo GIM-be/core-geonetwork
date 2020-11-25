@@ -53,7 +53,6 @@
              indeterminatePosition: '@',
              required: '@',
              hideTime: '@',
-             hideSelect: '@',
              existingAttrs: '@'
            },
            templateUrl: '../../catalog/components/edit/datepicker/partials/' +
@@ -90,7 +89,7 @@
              });
 
              scope.mode = scope.year = scope.month = scope.time =
-             scope.date = scope.dateDropDownInput = '';
+               scope.date = scope.dateDropDownInput = '';
              scope.withIndeterminatePosition =
              attrs.indeterminatePosition !== undefined;
 
@@ -224,11 +223,15 @@
                fullDatePickerEl.datepicker('setDate', scope.date)
              }
 
-             scope.$watch('fullDatePicker', function() {
+             scope.$watch(function() {
+               return $filter('date')(fullDatePickerEl.datepicker('getDate'), 'yyyy-MM-dd');
+             }, function() {
                scope.date = fullDatePickerEl.datepicker('getDate');
              });
 
-             scope.$watch('monthDatePicker', function() {
+             scope.$watch(function() {
+               return $filter('date')(monthDatePickerEl.datepicker('getDate'), 'yyyy-MM')
+             }, function () {
                scope.month = monthDatePickerEl.datepicker('getDate');
              });
            }
