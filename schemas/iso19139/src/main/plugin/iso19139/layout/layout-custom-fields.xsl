@@ -213,7 +213,6 @@
              data-tag-name="{name()}"
              data-element-ref="{concat('_X', ../gn:element/@ref)}"
              data-existing-attrs="{$attrs}"
-             data-hide-select="true"
              data-hide-time="true">
         </div>
       </div>
