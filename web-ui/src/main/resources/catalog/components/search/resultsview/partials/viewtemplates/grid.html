@@ -100,14 +100,20 @@
         </div>
 
         <div class="row gn-md-details">
-          <p ng-if="::!md.getAllContacts().resource">&nbsp;</p>
-          <p data-ng-repeat="c in ::md.getMainContact()">
-            <img data-ng-if="c.logo"
-                 data-ng-src="{{c.logo}}"
-                 class="gn-source-logo"
-                 title="{{c.name}} ({{c.role}})"/>
-            {{c.org || c.name}}
-          </p>
+          <div ng-if="::!md.getAllContacts().resource">&nbsp;</div>
+          <div data-ng-repeat="c in ::md.getMainContact()" class="one-line-ellipsis">
+            <small>
+              <img data-ng-if="c.logo"
+                   data-ng-src="{{c.logo}}"
+                   class="gn-source-logo"
+                   title="{{c.name}} ({{c.role}})"/>
+              {{c.org || c.name}}
+            </small>
+          </div>
+          <div class="one-line-ellipsis" ng-if="user.isEditorOrMore()">
+            <small><span data-translate="">owner</span>:</small>
+            <small>{{md.getOwnername()}}</small>
+          </div>
         </div>
       </div>
 
@@ -135,7 +141,7 @@
       </div>
     </div>
     <div data-ng-if="user.isEditorOrMore() && md.mdStatus<50 && isMdWorkflowEnable">
-      <i class="fa gn-aiv-workflow-status-all gn-aiv-workflow-status-{{(md.mdStatus==2 || md.mdStatus==3) ? 'unlocked' : 'locked'}} gn-aiv-workflow-status-{{(md.mdStatus && md.mdStatus < 7) ? md.mdStatus : 'x'}}">
+      <i class="fa gn-aiv-workflow-status-all gn-aiv-workflow-search-page gn-aiv-workflow-status-{{(md.mdStatus==2 || md.mdStatus==3) ? 'unlocked' : 'locked'}} gn-aiv-workflow-status-{{(md.mdStatus && md.mdStatus < 7) ? md.mdStatus : 'x'}}">
         <span>{{'mdStatusRecord' | translate}}: {{('mdStatus-' + md.mdStatus) | translate}}</span>
       </i>
     </div>

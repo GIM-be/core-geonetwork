@@ -162,6 +162,10 @@
       </script>
     </xsl:if>
 
+    <p>
+      <span data-translate="">owner</span>: {{md.getOwnername()}}
+    </p>
+
     <div data-ng-if="user.isEditorOrMore() &amp;&amp; md.mdStatus&lt;50 &amp;&amp; isMdWorkflowEnable">
       <i class="fa gn-aiv-workflow-status-all gn-aiv-workflow-status-{{{{(md.mdStatus==2 || md.mdStatus==3) ? 'unlocked' : 'locked'}}}} gn-aiv-workflow-status-{{{{(md.mdStatus &amp;&amp; md.mdStatus &lt; 7) ? md.mdStatus : 'x'}}}}">
         <span>{{'mdStatusRecord' | translate}}: {{('mdStatus-' + md.mdStatus) | translate}}</span>
