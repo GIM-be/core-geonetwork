@@ -76,6 +76,7 @@
              dd-text-collapse dd-text-collapse-max-length="350"
              dd-text-collapse-text="{{md.abstract || md.defaultAbstract}}"></p>
           <address ng-if="md.getMainContact().length>0">{{::md.getMainContact()[0].org}}</address>
+          <p><span data-translate="">owner</span>: {{md.getOwnername()}}</p>
         </div>
 
         <div gn-grid-related
