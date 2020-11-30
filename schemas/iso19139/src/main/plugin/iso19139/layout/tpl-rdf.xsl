@@ -75,6 +75,8 @@
                xmlns:xlink  = "http://www.w3.org/1999/xlink"
                xmlns:xsi    = "http://www.w3.org/2001/XMLSchema-instance"
                xmlns:xsl    = "http://www.w3.org/1999/XSL/Transform"
+               xmlns:geonet = "http://www.fao.org/geonetwork"
+               xmlns:xs     = "http://www.w3.org/2001/XMLSchema"
                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs"
                version="2.0">
 
@@ -1146,42 +1148,91 @@
                 </xsl:for-each>
               </xsl:variable>
               <xsl:variable name="TitleAndDescription">
-                <!--
-                                <xsl:for-each select="gmd:name/gco:CharacterString">
-                                  <dct:title xml:lang="{$MetadataLanguage}"><xsl:value-of select="."/></dct:title>
-                                </xsl:for-each>
-                                <xsl:for-each select="gmd:description/gco:CharacterString">
-                                  <dct:description xml:lang="{$MetadataLanguage}"><xsl:value-of select="."/></dct:description>
-                                </xsl:for-each>
-                -->
                 <xsl:copy-of select="$Title"/>
                 <xsl:copy-of select="$Description"/>
               </xsl:variable>
+              <xsl:variable name="Protocol" select="gmd:protocol/*/text()"/>
 
               <xsl:variable name="linkage" select="gmd:linkage"/>
 
-              <xsl:for-each select="$Encoding/dct:format">
-                <dcat:distribution>
-                  <dcat:Distribution>
-                    <!-- Title and description -->
-                    <xsl:copy-of select="$TitleAndDescription"/>
-                    <!-- Access URL -->
-                    <xsl:for-each select="$linkage/gmd:URL">
-                      <dcat:accessURL rdf:resource="{.}"/>
-                    </xsl:for-each>
-                    <!-- Constraints related to access and use -->
-                    <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
-                    <!-- Spatial representation type (tentative) -->
-                    <xsl:copy-of select="$SpatialRepresentationType"/>
-                    <!-- Encoding -->
-                    <xsl:copy-of select="."/>
-                    <!-- Resource character encoding -->
-                    <xsl:if test="$profile = $extended">
-                      <xsl:copy-of select="$ResourceCharacterEncoding"/>
-                    </xsl:if>
-                  </dcat:Distribution>
-                </dcat:distribution>
-              </xsl:for-each>
+              <xsl:choose>
+                <xsl:when test="starts-with($Protocol, 'WWW:DOWNLOAD-1.0') or $Protocol = 'LINK download-store'">
+                  <xsl:for-each select="$Encoding/dct:format">
+                    <dcat:distribution>
+                      <dcat:Distribution>
+                        <!-- Title and description -->
+                        <xsl:copy-of select="$TitleAndDescription"/>
+                        <!-- Access URL -->
+                        <xsl:for-each select="$linkage/gmd:URL">
+                          <dcat:accessURL rdf:resource="{.}"/>
+                        </xsl:for-each>
+                        <!-- Constraints related to access and use -->
+                        <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
+                        <!-- Spatial representation type (tentative) -->
+                        <xsl:copy-of select="$SpatialRepresentationType"/>
+                        <!-- Encoding -->
+                        <xsl:copy-of select="."/>
+                        <!-- Resource character encoding -->
+                        <xsl:if test="$profile = $extended">
+                          <xsl:copy-of select="$ResourceCharacterEncoding"/>
+                        </xsl:if>
+
+                        <!-- Conform to standard -->
+                        <dct:conformsTo rdf:parseType="Resource">
+                          <dct:title>
+                            <xsl:value-of select="$Protocol"/>
+                          </dct:title>
+                        </dct:conformsTo>
+                      </dcat:Distribution>
+                    </dcat:distribution>
+                  </xsl:for-each>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:variable name="format">
+                    <xsl:call-template name="Map-format">
+                      <xsl:with-param name="protocol" select="$Protocol"/>
+                      <xsl:with-param name="url" select="$linkage/gmd:URL[1]"/>
+                    </xsl:call-template>
+                  </xsl:variable>
+
+                  <dcat:distribution>
+                    <dcat:Distribution>
+                      <!-- Title and description -->
+                      <xsl:copy-of select="$TitleAndDescription"/>
+                      <!-- Access URL -->
+                      <xsl:for-each select="$linkage/gmd:URL">
+                        <dcat:accessURL rdf:resource="{.}"/>
+                      </xsl:for-each>
+                      <!-- Constraints related to access and use -->
+                      <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
+                      <!-- Spatial representation type (tentative) -->
+                      <xsl:copy-of select="$SpatialRepresentationType"/>
+                      <!-- Encoding -->
+                      <xsl:if test="$format != ''">
+                        <dct:format rdf:parseType="Resource">
+                          <skos:prefLabel>
+                            <xsl:value-of select="$format"/>
+                          </skos:prefLabel>
+                          <rdfs:label>
+                            <xsl:value-of select="$format"/>
+                          </rdfs:label>
+                        </dct:format>
+                      </xsl:if>
+                      <!-- Resource character encoding -->
+                      <xsl:if test="$profile = $extended">
+                        <xsl:copy-of select="$ResourceCharacterEncoding"/>
+                      </xsl:if>
+
+                      <!-- Conform to standard -->
+                      <dct:conformsTo rdf:parseType="Resource">
+                        <dct:title>
+                          <xsl:value-of select="$Protocol"/>
+                        </dct:title>
+                      </dct:conformsTo>
+                    </dcat:Distribution>
+                  </dcat:distribution>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:for-each>
           </xsl:for-each>
         </xsl:when>
@@ -3030,4 +3081,47 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="Map-format">
+    <xsl:param name="protocol"/>
+    <xsl:param name="url"/>
+
+    <xsl:choose>
+
+      <xsl:when test="ends-with($protocol, 'get-capabilities')">
+        <xsl:value-of select="'application/xml'"/>
+      </xsl:when>
+
+      <xsl:when test="ends-with($protocol, 'get-map')">
+        <xsl:value-of select="geonet:getQueryParamValue($url, 'format')"/>
+      </xsl:when>
+
+      <xsl:when test="ends-with($protocol, 'get-tile')">
+        <xsl:value-of select="geonet:getQueryParamValue($url, 'format')"/>
+      </xsl:when>
+
+      <xsl:when test="ends-with($protocol, 'get-coverage')">
+        <xsl:value-of select="geonet:getQueryParamValue($url, 'format')"/>
+      </xsl:when>
+
+      <xsl:when test="ends-with($protocol, 'get-feature')">
+        <xsl:variable name="format" select="geonet:getQueryParamValue($url, 'outputFormat')"/>
+        <xsl:choose>
+          <xsl:when test="$format">
+            <xsl:value-of select="$format"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="'GML'"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:function name="geonet:getQueryParamValue">
+    <xsl:param name="url" as="xs:string"/>
+    <xsl:param name="queryParam" as="xs:string"/>
+    <xsl:variable name="value" select="substring-after(lower-case($url), concat(lower-case($queryParam), '='))"/>
+    <xsl:value-of select="normalize-space(if (contains($value, '&amp;')) then substring-before($value, '&amp;') else $value)"/>
+  </xsl:function>
 </xsl:transform>
