@@ -1176,6 +1176,13 @@
                         <xsl:if test="$profile = $extended">
                           <xsl:copy-of select="$ResourceCharacterEncoding"/>
                         </xsl:if>
+
+                        <!-- Conform to standard -->
+                        <dct:conformsTo rdf:parseType="Resource">
+                          <dct:title>
+                            <xsl:value-of select="$Protocol"/>
+                          </dct:title>
+                        </dct:conformsTo>
                       </dcat:Distribution>
                     </dcat:distribution>
                   </xsl:for-each>
