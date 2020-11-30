@@ -449,8 +449,8 @@
         link: function(scope, element, attrs) {
           var ownerId = parseInt(attrs['gnTransferMdOwner']);
           var groupOwner = parseInt(attrs['gnTransferMdGroupOwner']);
-          var bucket = attrs['selectionBucket'];
           var mdUuid = attrs['gnTransferOwnership'];
+          scope.bucket = attrs['selectionBucket'];
           scope.selectedUserGroup = null;
           scope.groupsLoaded = false;
           scope.userGroupDefined = false;
@@ -470,6 +470,17 @@
                   $scope.editorGroups = uniqueGroup;
                 });
           };
+
+          scope.currentOwner = function() {
+            if (scope.groupsLoaded) {
+              var userGroupKey = Object.keys(scope.userGroups).find(function(key) {
+                return scope.userGroups[key].userId === ownerId;
+              });
+              return userGroupKey ? scope.userGroups[userGroupKey] : {};
+            } else {
+              return {};
+            }
+          }
 
           scope.selectGroup = function(group) {
             scope.selectedGroup = group;
@@ -493,6 +504,16 @@
                   scope.userGroupDefined = false;
                 }
               }).finally(function() {
+                var currentUserId = parseInt(scope.$parent.user.id);
+                if (scope.bucket === 'null' && currentUserId !== ownerId) {
+                  var userGroupKey = Object.keys(scope.userGroups).find(function(key) {
+                    return scope.userGroups[key].userId === currentUserId;
+                  });
+                  if (scope.userGroups[userGroupKey]) {
+                    scope.selectedUserGroup = scope.userGroups[userGroupKey];
+                  }
+                }
+
                 scope.groupsLoaded = true;
           });
 
@@ -501,8 +522,8 @@
               return;
             }
             var url = '../api/records/';
-            if (bucket != 'null') {
-              url += 'ownership?bucket=' + bucket + '&';
+            if (scope.bucket !== 'null') {
+              url += 'ownership?bucket=' + scope.bucket + '&';
             } else {
               url += mdUuid + '/ownership?';
             }
@@ -522,7 +543,7 @@
                     content: '<div gn-batch-report="processReport"></div>',
                     className: 'gn-privileges-popup',
                     onCloseCallback: function() {
-                      if (bucket != 'null') {
+                      if (scope.bucket !== 'null') {
                         scope.$emit('search', true);
                         scope.$broadcast('operationOnSelectionStop');
                       }

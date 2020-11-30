@@ -8,6 +8,16 @@
     <i class="fa fa-pencil"></i>
   </a>
 
+  <a class="gn-md-edit-btn btn btn-default"
+     style="width: 38px"
+     data-ng-show="md.isTemplate == 'n' && user.isEditorOrMore() && user.canEditRecord(md, true)"
+     data-ng-href=""
+     data-ng-click="mdService.openTransferOwnership(md, null, getCatScope())"
+     title="{{'transferOwnership' | translate}}"
+     aria-label="{{'transferOwnership' | translate}}">
+    <i class="fa fa-fw fa-user" style="width: 12px"></i>&nbsp;
+  </a>
+
   <div class="btn-group"
        data-gn-saved-selections-action="MyFrequentlyUsedRecords"
        data-record="md"

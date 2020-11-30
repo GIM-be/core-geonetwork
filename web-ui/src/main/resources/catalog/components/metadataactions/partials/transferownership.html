@@ -1,9 +1,20 @@
-<div class="row">
-  <div class="col-md-12" data-ng-show="userGroupDefined">
+<div class="row transfer-ownership">
+  <div class="col-md-1 current-owner" data-ng-show="userGroupDefined && bucket === 'null'">
+    <strong>{{'from' | translate}}:</strong>
+  </div>
+
+  <div class="col-md-11 current-owner" data-ng-show="userGroupDefined && bucket === 'null'">
+    <span>{{currentOwner().userName}}</span>
+  </div>
+
+  <div class="col-md-1" style="margin-top: 5px" data-ng-show="userGroupDefined">
+    <strong>{{'to' | translate}}:</strong>
+  </div>
+
+  <div class="col-md-11" data-ng-show="userGroupDefined">
     <select class="form-control"
             data-ng-model="selectedUserGroup"
-            data-ng-options="g.userName group by g.groupNameTranslated
-                    for (key, g) in userGroups">
+            data-ng-options="g.userName group by g.groupNameTranslated for (key, g) in userGroups">
     </select>
     <br/>
   </div>
