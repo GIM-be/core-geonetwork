@@ -506,11 +506,11 @@
               }).finally(function() {
                 var currentUserId = parseInt(scope.$parent.user.id);
                 if (scope.bucket === 'null' && currentUserId !== ownerId) {
-                  var userGroupKey = Object.keys(scope.userGroups).find(function(key) {
+                  var currentUserGroupKey = Object.keys(scope.userGroups).find(function(key) {
                     return scope.userGroups[key].userId === currentUserId;
                   });
-                  if (scope.userGroups[userGroupKey]) {
-                    scope.selectedUserGroup = scope.userGroups[userGroupKey];
+                  if (scope.userGroups[currentUserGroupKey]) {
+                    scope.selectedUserGroup = scope.userGroups[currentUserGroupKey];
                   }
                 }
 
