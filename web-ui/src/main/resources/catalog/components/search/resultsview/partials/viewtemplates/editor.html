@@ -54,7 +54,7 @@
             </a>
             <!-- TODO: subtemplate link for editing is different -->
             <a class="btn btn-default"
-               data-ng-show="user.canEditRecord(md) && md.isTemplate != 's' && (user.isReviewerOrMore() || md.mdStatus != 4 || !isMdWorkflowEnable)"
+               data-ng-show="md.isTemplate == 'n' && user.isEditorOrMore() && user.canEditRecord(md, (!isMdWorkflowEnable || (md.mdStatus == 2 && md.draft == 'n')))"
                data-ng-href="#/metadata/{{md['geonet:info'].id}}?redirectUrl=catalog.edit"
                title="{{'edit' | translate}}">
               <i class="fa fa-pencil"></i>

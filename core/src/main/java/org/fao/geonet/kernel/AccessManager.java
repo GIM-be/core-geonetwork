@@ -37,32 +37,15 @@ import java.util.StringTokenizer;
 import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.domain.AbstractMetadata;
-import org.fao.geonet.domain.Group;
-import org.fao.geonet.domain.MetadataSourceInfo;
-import org.fao.geonet.domain.Operation;
-import org.fao.geonet.domain.OperationAllowed;
-import org.fao.geonet.domain.Pair;
-import org.fao.geonet.domain.Profile;
-import org.fao.geonet.domain.ReservedGroup;
-import org.fao.geonet.domain.ReservedOperation;
-import org.fao.geonet.domain.Setting;
-import org.fao.geonet.domain.User;
-import org.fao.geonet.domain.UserGroup;
-import org.fao.geonet.domain.User_;
+import org.fao.geonet.domain.*;
+import org.fao.geonet.kernel.datamanager.IMetadataStatus;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.setting.Settings;
-import org.fao.geonet.repository.GroupRepository;
-import org.fao.geonet.repository.GroupRepositoryCustom;
-import org.fao.geonet.repository.OperationAllowedRepository;
-import org.fao.geonet.repository.OperationRepository;
-import org.fao.geonet.repository.SettingRepository;
-import org.fao.geonet.repository.SortUtils;
-import org.fao.geonet.repository.UserGroupRepository;
-import org.fao.geonet.repository.UserRepository;
+import org.fao.geonet.repository.*;
 import org.fao.geonet.repository.specification.UserGroupSpecs;
 import org.fao.geonet.utils.Log;
 import org.jdom.Element;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
@@ -240,7 +223,7 @@ public class AccessManager {
      * @param id The metadata internal identifier
      */
     public boolean canEdit(final ServiceContext context, final String id) throws Exception {
-        return isOwner(context, id);
+        return isOwner(context, id) || (hasEditPermission(context, id) && isMetadataPublic(context, id));
     }
 
     /**
@@ -252,7 +235,7 @@ public class AccessManager {
     public boolean canReview(final ServiceContext context, final String id) throws Exception {
         return isOwner(context, id) || hasReviewPermission(context, id);
     }
-    
+
     /**
      * Returns true if, and only if, at least one of these conditions is satisfied: <ul> <li>the
      * user is owner (@see #isOwner)</li> <li>the user has reviewing rights over owning group of the metadata</li> </ul>
@@ -441,7 +424,7 @@ public class AccessManager {
         return hasEditingPermissionWithProfile(context, id, Profile.Editor);
 
     }
-    
+
     /**
      * Check if current user can review the metadata according to the groups where the metadata is
      * editable.
@@ -486,6 +469,12 @@ public class AccessManager {
 
     }
 
+    private boolean isMetadataPublic(final ServiceContext context, final String mdId) throws Exception {
+        IMetadataStatus metadataStatus = context.getBean(IMetadataStatus.class);
+        String status = metadataStatus.getCurrentStatus(Integer.parseInt(mdId));
+        return "2".equals(status);
+    }
+
     /**
      * Check if current user is reviewer of the owner group for this metadata
      *
@@ -500,12 +489,12 @@ public class AccessManager {
         OperationAllowedRepository opAllowedRepository = context.getBean(OperationAllowedRepository.class);
         UserGroupRepository userGroupRepository = context.getBean(UserGroupRepository.class);
         IMetadataUtils metadataUtils = context.getBean(IMetadataUtils.class);
-        
+
         Specifications spec = where(UserGroupSpecs.hasProfile(Profile.Reviewer)).and(UserGroupSpecs.hasUserId(us.getUserIdAsInt()));
 
         List<Integer> opAlloweds = new ArrayList<Integer>();
         opAlloweds.add(metadataUtils.findOne(id).getSourceInfo().getGroupOwner());
-        
+
         spec = spec.and(UserGroupSpecs.hasGroupIds(opAlloweds));
 
         return (!userGroupRepository.findAll(spec).isEmpty());

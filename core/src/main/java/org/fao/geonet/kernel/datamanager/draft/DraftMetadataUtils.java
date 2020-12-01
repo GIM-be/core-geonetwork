@@ -485,7 +485,9 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
         if (groupOwner != null) {
             newMetadata.getSourceInfo().setGroupOwner(Integer.valueOf(groupOwner));
         }
-        newMetadata.getSourceInfo().setOwner(owner);
+
+        String currentUserId = context.getUserSession().getUserId();
+        newMetadata.getSourceInfo().setOwner(Integer.parseInt(currentUserId));
 
         if (source != null) {
             newMetadata.getSourceInfo().setSourceId(source);
