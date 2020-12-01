@@ -1,11 +1,21 @@
 <div class="gn-md-links">
 
   <a class="gn-md-edit-btn btn btn-default"
-     data-ng-show="user.canEditRecord(md)"
+     data-ng-show="md.isTemplate == 'n' && user.isEditorOrMore() && user.canEditRecord(md, (!isMdWorkflowEnable || (md.mdStatus == 2 && md.draft == 'n')))"
      data-ng-href="catalog.edit#/metadata/{{md['geonet:info'].id}}?redirectUrl=catalog.search%23%2Fmetadata%2F{{md['geonet:info'].uuid}}"
      title="{{'edit' | translate}}"
      aria-label="{{'edit' | translate}}">
     <i class="fa fa-pencil"></i>
+  </a>
+
+  <a class="gn-md-edit-btn btn btn-default"
+     style="width: 38px"
+     data-ng-show="md.isTemplate == 'n' && user.isEditorOrMore() && user.canEditRecord(md, true)"
+     data-ng-href=""
+     data-ng-click="mdService.openTransferOwnership(md, null, getCatScope())"
+     title="{{'transferOwnership' | translate}}"
+     aria-label="{{'transferOwnership' | translate}}">
+    <i class="fa fa-fw fa-user" style="width: 12px"></i>&nbsp;
   </a>
 
   <div class="btn-group"

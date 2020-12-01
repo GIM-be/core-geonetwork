@@ -144,6 +144,7 @@
           </div>
           <!--Edit button-->
           <a class="btn btn-default pull-left"
+             data-ng-show="md.isTemplate == 'n' && user.isEditorOrMore() && user.canEditRecord(md, (!isMdWorkflowEnable || (md.mdStatus == 2 && md.draft == 'n')))"
              ng-href="catalog.edit#/metadata/{{md['geonet:info'].id}}">
             <i class="fa fa-pencil"></i>
             <span data-translate="" class="sr-only">edit</span>

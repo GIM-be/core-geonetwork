@@ -288,7 +288,7 @@
 
       this.openTransferOwnership = function(md, bucket, scope) {
         var uuid = md ? md.getUuid() : '';
-        var ownerId = md ? md.getOwnerId() : '';
+        var ownerId = md ? (md.getOwnerId() || md.owner || '' ) : '';
         var groupOwner = md ? md.getGroupOwner() : '';
         gnUtilityService.openModal({
           title: 'transferOwnership',

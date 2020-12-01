@@ -122,7 +122,7 @@
 
         <div class="btn-group pull-right" role="group">
           <a class="btn btn-default gn-md-edit-btn"
-            data-ng-show="user.canEditRecord(mdView.current.record)"
+            data-ng-show="md.isTemplate == 'n' && user.isEditorOrMore() && user.canEditRecord(md, (!isMdWorkflowEnable || (md.mdStatus == 2 && md.draft == 'n')))"
             ng-if="mdView.current.record.draft !== 'e'"
             data-ng-href="catalog.edit#/metadata/{{mdView.current.record.getId()}}?redirectUrl=catalog.search%23%2Fmetadata%2F{{mdView.current.record.getUuid()}}"
             title="{{'edit' | translate}}">
