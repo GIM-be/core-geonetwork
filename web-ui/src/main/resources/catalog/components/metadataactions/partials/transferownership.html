@@ -1,22 +1,35 @@
 <div class="row transfer-ownership">
-  <div class="col-md-1 current-owner" data-ng-show="userGroupDefined && bucket === 'null'">
-    <strong>{{'from' | translate}}:</strong>
+
+  <div class="col-md-12 current-owner" data-ng-show="userGroupDefined && bucket === 'null'">
+    <div class="row">
+      <div class="col-md-1">
+        <strong>{{'from' | translate}}:</strong>
+      </div>
+
+      <div class="col-md-11" ng-show="currentOwner().userName">
+        <span>{{currentOwner().userName}}</span>
+      </div>
+
+      <div class="col-md-11" ng-hide="currentOwner().userName">
+        <span><i>{{'noUserDetailsAvailable' | translate}}</i></span>
+      </div>
+    </div>
   </div>
 
-  <div class="col-md-11 current-owner" data-ng-show="userGroupDefined && bucket === 'null'">
-    <span>{{currentOwner().userName}}</span>
-  </div>
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-1" style="margin-top: 5px" data-ng-show="userGroupDefined">
+        <strong>{{'to' | translate}}:</strong>
+      </div>
 
-  <div class="col-md-1" style="margin-top: 5px" data-ng-show="userGroupDefined">
-    <strong>{{'to' | translate}}:</strong>
-  </div>
-
-  <div class="col-md-11" data-ng-show="userGroupDefined">
-    <select class="form-control"
-            data-ng-model="selectedUserGroup"
-            data-ng-options="g.userName group by g.groupNameTranslated for (key, g) in userGroups">
-    </select>
-    <br/>
+      <div class="col-md-11" data-ng-show="userGroupDefined">
+        <select class="form-control"
+                data-ng-model="selectedUserGroup"
+                data-ng-options="g.userName group by g.groupNameTranslated for (key, g) in userGroups">
+        </select>
+        <br/>
+      </div>
+    </div>
   </div>
 
   <div class="btn-toolbar col-md-12" data-ng-show="userGroupDefined">
@@ -29,7 +42,6 @@
             class="ng-scope">Save</span>
     </button>
   </div>
-
 
   <div class="col-md-12" data-ng-show="!groupsLoaded">
     <p class="text-center">

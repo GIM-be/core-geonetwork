@@ -82,5 +82,6 @@
   "closingInvalidMetadata": "Dit metadata-record bevat validatiefouten! Het is aangewezen om de validatieproblemen eerst op te lossen (druk \"Keer terug\"). Als u \"Ga verder\" drukt, wordt dit metadata-record bewaard en gepubliceerd, met validatiefouten.",
   "continue": "Ga verder",
   "createUiConfig": "Aanmaken UI configuratie",
-  "fieldTooLong": "Dit veld is te lang om te worden weergegeven"
+  "fieldTooLong": "Dit veld is te lang om te worden weergegeven",
+  "noUserDetailsAvailable": "Geen details beschikbaar voor deze gebruiker"
 }

@@ -57,5 +57,6 @@
   "closingInvalidMetadata": "This metadata record contains validation errors.\nIf you click on \"Continue\", this record will be saved and published. It is preferred to resolve the validation issues (click on \"Cancel\").",
   "continue": "Continue",
   "createUiConfig": "Create a UI configuration",
-  "fieldTooLong": "This field is too long to be displayed"
+  "fieldTooLong": "This field is too long to be displayed",
+  "noUserDetailsAvailable": "No details available for this user"
 }

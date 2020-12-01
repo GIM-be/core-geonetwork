@@ -54,5 +54,6 @@
   "closingInvalidMetadata": "Cet enregistrement de métadonnées contient des erreurs de validation.\nSi vous appuyez sur \"Continuer\", cet enregistrement sera sauver et publié. Il est recommandé de d'abord résoudre les problèmes de validation (appuyez sur \"Annuler\").",
   "continue": "Continuer",
   "createUiConfig": "Créer une configuration d'interface",
-  "fieldTooLong": "Ce champ est trop long pour être affiché"
+  "fieldTooLong": "Ce champ est trop long pour être affiché",
+  "noUserDetailsAvailable": "Aucun détails disponible pour cet utilisateur"
 }
