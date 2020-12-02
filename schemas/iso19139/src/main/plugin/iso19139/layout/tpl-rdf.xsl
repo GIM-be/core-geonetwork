@@ -1178,10 +1178,12 @@
                         </xsl:if>
 
                         <!-- Conform to standard -->
-                        <dct:conformsTo rdf:parseType="Resource">
-                          <dct:title>
-                            <xsl:value-of select="$Protocol"/>
-                          </dct:title>
+                        <dct:conformsTo>
+                          <dct:Standard>
+                            <dct:title>
+                              <xsl:value-of select="$Protocol"/>
+                            </dct:title>
+                          </dct:Standard>
                         </dct:conformsTo>
                       </dcat:Distribution>
                     </dcat:distribution>
@@ -1224,10 +1226,12 @@
                       </xsl:if>
 
                       <!-- Conform to standard -->
-                      <dct:conformsTo rdf:parseType="Resource">
-                        <dct:title>
-                          <xsl:value-of select="$Protocol"/>
-                        </dct:title>
+                      <dct:conformsTo>
+                        <dct:Standard>
+                          <dct:title>
+                            <xsl:value-of select="$Protocol"/>
+                          </dct:title>
+                        </dct:Standard>
                       </dct:conformsTo>
                     </dcat:Distribution>
                   </dcat:distribution>
