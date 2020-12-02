@@ -74,5 +74,6 @@
   "linkToDcatapsource": "Associer à une donnée source",
   "linkToDcatapsourceTitle": "Associer une donnée source utilisée pour créer ce jeu de données",
   "linkToDcataprelation": "Associer à une donnée en relation",
-  "linkToDcataprelationTitle": "Associer une donnée en relation utilisée pour créer ce jeu de données"
+  "linkToDcataprelationTitle": "Associer une donnée en relation utilisée pour créer ce jeu de données",
+  "changelog": "Changelog"
 }

@@ -77,5 +77,6 @@
   "linkToDcatapsource": "Link to a source dataset",
   "linkToDcatapsourceTitle": "Link a source dataset to the current metadata",
   "linkToDcataprelation": "Link to a related dataset",
-  "linkToDcataprelationTitle": "Link a related dataset to the current metadata"
+  "linkToDcataprelationTitle": "Link a related dataset to the current metadata",
+  "changelog": "Changelog"
 }

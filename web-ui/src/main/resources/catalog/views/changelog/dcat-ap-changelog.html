@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Metadata voor services</title>
+</head>
+<body>
+<h1>Changelog</h1>
+
+<section>
+  <h3>20/10/2020</h3>
+  <ol>
+    <li>Fixed a bug where a dct:identifier was added when clicking on the + button to add a keyword</li>
+    <li>Fixing few translations: labels sometimes starting with lower case, sometime with upper-case => All changed to
+      upper-case
+    </li>
+    <li>Fixed a bug where the content of vcard:hasUrl was edited instead of the vcard:hasUrl/@rdf:resource attribute
+    </li>
+    <li>Better indexing for the services metadata for fields
+      <ul>
+        <li>dcat:servesDataset</li>
+        <li>dcat:endpointUrl</li>
+        <li>dcat:endpointDescription</li>
+        <li>dcat:landingPage</li>
+      </ul>
+    </li>
+    <li>Improve view:
+      <ul>
+        <li>dcat:endpointDescription is now displayed. If it contains links, they will be clickable</li>
+        <li>Added missing translations for the side bar</li>
+        <li>Fixed styles for nested tables</li>
+      </ul>
+    </li>
+    <li>Update schematron rules to prevent error when editing a services (error of type "dcat:dataset is a required
+      property…") allowing to have valid service records
+    </li>
+    <li>Added schematron validation rules for
+      <ul>
+        <li>dcat:endpointUrl</li>
+        <li>dcat:DataService/dcat:contactPoint</li>
+        <li>dcat:servesDataset</li>
+        <li>dcat:landingPage</li>
+      </ul>
+    </li>
+    <li>Added the @rdf:about attributes on dcat:DataService schema and handle it when creating a new service record</li>
+  </ol>
+</section>
+
+<section>
+  <h3>14/10/2020</h3>
+  <ol>
+    <li>New elements have been added to the XSD and the editor. Here is the list of all the editable fields for dcat-ap
+      services metadata:
+      <ul>
+        <li>dct:identifier</li>
+        <li>dct:title</li>
+        <li>dct:description</li>
+        <li>dcat:endpointUrl</li>
+        <li>dcat:endpointDescription</li>
+        <li>dcat:servesDataset</li>
+        <li>dcat:landingPage</li>
+        <li>dcat:contactPoint</li>
+        <li>dcat:keyword</li>
+        <li>dct:language</li>
+        <li>owl:versionInfo</li>
+      </ul>
+    </li>
+    <li>Translations have been fixed for existing fields and added for the new ones</li>
+    <li>We can now couple a dataset to a service via the search box. Doing so will add a new dcat:servesDataset element
+      pointing at the dataset. (Please notice that this must be done by clicking the first "Link naar een dataset"
+      button
+      in the dropdown of the "Toevoegen" button. The two others button in this dropdown must be evaluated and maybe
+      removed).
+      <br>
+      <img src="img/linkToDataset.png" alt="Link naar een dataset">
+    </li>
+    <li>The coupled dataset will be displayed in the editor and in the view as a related dataset (on the right side bar)
+    </li>
+    <li>The title and the description of services are now displayed in the search and view pages (instead of a blank
+      lines). The rest of the view was not changed yet; which mean that some field might be missing from the view.
+    </li>
+    <li>Modified the template for services to add the new elements. However, this is not necessary to recreate existing
+      metadata from this template. The new elements can be added via the + button in the editor.
+    </li>
+  </ol>
+</section>
+</body>
+</html>
