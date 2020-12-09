@@ -13,6 +13,8 @@
   <xsl:variable name="language" select="/root/lang/text()"/>
   <xsl:variable name="nodeUrl" select="/root/gui/nodeUrl"/>
   <xsl:variable name="schemaStrings" select="/root/schemas/*[name() = $schema]/strings"/>
+  <xsl:variable name="schemaCodeLists" select="/root/schemas/*[name() = $schema]/codelists"/>
+
   <xsl:variable name="dateFormats">
     <dateTime>
       <for lang="eng" default="true">[H1]:[m01]:[s01] on [D1] [MNn] [Y]</for>

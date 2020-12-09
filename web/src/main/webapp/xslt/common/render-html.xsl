@@ -112,6 +112,36 @@
       </body>
     </html>
   </xsl:template>
+
+  <xsl:template name="render-pdf">
+    <xsl:param name="content"/>
+    <xsl:param name="title"
+               select="/root/gui/systemConfig/settings/system/site/name"/>
+
+    <html ng-app="{$angularModule}" lang="{$lang2chars}" id="ng-app">
+      <head>
+        <title><xsl:value-of select="$title"/></title>
+        <meta charset="utf-8"/>
+        <link href="{/root/gui/url}/static/{$customFilename}.css?v={$buildNumber}&amp;{$minimizedParam}" rel="stylesheet"
+              media="print"/>
+        <link href="{/root/gui/url}/static/custom/aiv.css?v={$buildNumber}&amp;{$minimizedParam}" rel="stylesheet"
+              media="print"/>
+        <link href="{/root/gui/url}/static/srv_custom_style.css?v={$buildNumber}&amp;{$minimizedParam}" rel="stylesheet"
+              media="print"/>
+        <link href="{/root/gui/url}/static/gn_metadata_pdf.css?v={$buildNumber}&amp;{$minimizedParam}" rel="stylesheet"
+              media="print"/>
+      </head>
+
+      <body class="gn-nojs {$cssClass}">
+        <div class="gn-full">
+          <div class="container" role="main">
+            <xsl:copy-of select="$content"/>
+          </div>
+        </div>
+      </body>
+    </html>
+  </xsl:template>
+
 </xsl:stylesheet>
 
 
