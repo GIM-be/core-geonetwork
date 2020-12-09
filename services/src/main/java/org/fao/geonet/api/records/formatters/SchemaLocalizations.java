@@ -35,6 +35,7 @@ import com.vividsolutions.jts.util.Assert;
 
 import groovy.util.slurpersupport.GPathResult;
 
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.api.records.formatters.groovy.CurrentLanguageHolder;
 import org.fao.geonet.api.tools.i18n.LanguageUtils;
@@ -122,7 +123,11 @@ public class SchemaLocalizations {
         HttpServletRequest request = attributes.getRequest();
 
         final ApplicationContext appContext = ApplicationContextHolder.get();
-        final String lang3 =  appContext.getBean(LanguageUtils.class).getIso3langCode(request.getLocales());
+        String language = request.getParameter("language");
+        if (StringUtils.isBlank(language)) {
+            language = appContext.getBean(LanguageUtils.class).getIso3langCode(request.getLocales());
+        }
+        final String lang3 = language;
         final String lang2 = appContext.getBean(IsoLanguagesMapper.class).iso639_2_to_iso639_1(lang3);
         CurrentLanguageHolder languageHolder = new CurrentLanguageHolder() {
             @Override

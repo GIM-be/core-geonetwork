@@ -14,12 +14,23 @@
   <xsl:param name="template" select="''"/>
   <xsl:param name="sideRelated"
              select="'parent|children|services|datasets|hassources|sources|fcats|siblings|associated'"/>
+  <xsl:param name="output"/>
 
   <xsl:include href="../../formatter/jsonld/iso19139-to-jsonld.xsl"/>
   <xsl:include href="common/render-html.xsl"/>
 
   <xsl:template match="/">
     <xsl:choose>
+      <xsl:when test="$output = 'pdf'">
+        <xsl:call-template name="render-pdf">
+          <xsl:with-param name="content">
+            <xsl:call-template name="render-record"/>
+          </xsl:with-param>
+          <xsl:with-param name="title">
+            <xsl:apply-templates mode="getMetadataTitle" select="$metadata"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:when>
       <xsl:when test="$root = 'div'">
         <!-- Render only a DIV with the record details -->
         <xsl:call-template name="render-record"/>
@@ -28,7 +39,9 @@
         <!-- Render complete HTML page -->
         <xsl:call-template name="render-html">
           <xsl:with-param name="content">
+            <div>Begin rendering record</div>
             <xsl:call-template name="render-record"/>
+            <div>End rendering record</div>
           </xsl:with-param>
           <xsl:with-param name="title">
             <xsl:apply-templates mode="getMetadataTitle" select="$metadata"/>
@@ -47,7 +60,6 @@
     </xsl:choose>
   </xsl:template>
 
-
   <xsl:template name="render-record">
     <div class="container-fluid gn-metadata-view gn-schema-{$schema}">
       <xsl:variable name="type">
@@ -62,9 +74,11 @@
           <div class="col-md-8">
             <header>
               <h1>
-                <i class="fa gn-icon-{{{{md.type[0]}}}}">
-                  <xsl:comment select="'icon'"/>
-                </i>
+                <xsl:if test="$output!='pdf'">
+                  <i class="fa gn-icon-{{{{md.type[0]}}}}">
+                    <xsl:comment select="'icon'"/>
+                  </i>
+                </xsl:if>
                 <xsl:value-of select="$title"/>
               </h1>
               <xsl:apply-templates mode="getMetadataHeader" select="$metadata"/>
@@ -76,17 +90,21 @@
                 </div>
               </xsl:if-->
             </header>
-            <xsl:call-template name="render-toc"/>
+            <xsl:if test="$output!='pdf'">
+              <xsl:call-template name="render-toc"/>
+            </xsl:if>
             <div class="tab-content">
               <!-- Templates defined in the file view.xsl -->
               <xsl:apply-templates mode="render-content" select="/root/gmd:MD_Metadata"/>
             </div>
           </div>
-          <div class="gn-md-side gn-md-side-advanced col-md-4">
-            <xsl:call-template name="render-sidebar">
-              <xsl:with-param name="metadata" select="$metadata"/>
-            </xsl:call-template>
-          </div>
+          <xsl:if test="$output!='pdf'">
+            <div class="gn-md-side gn-md-side-advanced col-md-4">
+              <xsl:call-template name="render-sidebar">
+                <xsl:with-param name="metadata" select="$metadata"/>
+              </xsl:call-template>
+            </div>
+          </xsl:if>
         </div>
       </article>
       <br/>
@@ -295,26 +313,26 @@
         </xsl:call-template>
       </xsl:for-each>
     </div>
-    <xsl:if test="$withJsonLd = 'true'">
-      <script type="application/ld+json">
-        <xsl:apply-templates mode="getJsonLD"
-                             select="$metadata"/>
-      </script>
+    <xsl:if test="$output!='pdf'">
+      <xsl:if test="$withJsonLd = 'true'">
+        <script type="application/ld+json">
+          <xsl:apply-templates mode="getJsonLD"
+                               select="$metadata"/>
+        </script>
+      </xsl:if>
+      <div class="one-line-ellipsis" ng-if="user.isEditorOrMore()">
+        <p>
+          <span data-translate="">owner</span>: {{md.getOwnername()}}
+        </p>
+      </div>
+
+      <div data-ng-if="user.isEditorOrMore() &amp;&amp; md.mdStatus&lt;50 &amp;&amp; isMdWorkflowEnable">
+        <i
+          class="fa gn-aiv-workflow-status-all gn-aiv-workflow-status-{{{{(md.mdStatus==2 || md.mdStatus==3) ? 'unlocked' : 'locked'}}}} gn-aiv-workflow-status-{{{{(md.mdStatus &amp;&amp; md.mdStatus &lt; 7) ? md.mdStatus : 'x'}}}}">
+          <span>{{'mdStatusRecord' | translate}}: {{('mdStatus-' + md.mdStatus) | translate}}</span>
+        </i>
+      </div>
     </xsl:if>
-
-    <div class="one-line-ellipsis" ng-if="user.isEditorOrMore()">
-      <p>
-        <span data-translate="">owner</span>: {{md.getOwnername()}}
-      </p>
-    </div>
-
-    <div data-ng-if="user.isEditorOrMore() &amp;&amp; md.mdStatus&lt;50 &amp;&amp; isMdWorkflowEnable">
-      <i
-        class="fa gn-aiv-workflow-status-all gn-aiv-workflow-status-{{{{(md.mdStatus==2 || md.mdStatus==3) ? 'unlocked' : 'locked'}}}} gn-aiv-workflow-status-{{{{(md.mdStatus &amp;&amp; md.mdStatus &lt; 7) ? md.mdStatus : 'x'}}}}">
-        <span>{{'mdStatusRecord' | translate}}: {{('mdStatus-' + md.mdStatus) | translate}}</span>
-      </i>
-    </div>
-
   </xsl:template>
 
 
