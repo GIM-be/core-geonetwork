@@ -309,7 +309,7 @@
               <th data-translate="">versionIdentifier</th>
               <td>{{mdView.current.record.versionIdentifier}}</td>
             </tr>
-            <tr data-ng-if="mdView.current.record['geonet:info'].schema = 'iso19110'"
+            <tr data-ng-if="mdView.current.record['geonet:info'].schema == 'iso19110'"
                 data-ng-repeat="revisionDate in mdView.current.record.revisionDate">
               <th data-translate>versionDate</th>
               <td data-gn-humanize-time="{{ revisionDate }}"
