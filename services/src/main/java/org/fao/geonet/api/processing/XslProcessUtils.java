@@ -28,10 +28,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.annotation.Nonnull;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.api.processing.report.XsltMetadataProcessingReport;
 import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.domain.ISODate;
@@ -136,7 +138,7 @@ public class XslProcessUtils {
                     String key = parameter.getKey();
                     // Add extra metadata
                     if (key.equals("extra_metadata_uuid")
-                        && !value.equals("")) {
+                        && StringUtils.isNotBlank(value)) {
                         String extraMetadataId = dataMan.getMetadataId(value);
                         if (extraMetadataId != null) {
                             Element extraMetadata = dataMan.getMetadata(context,
@@ -146,12 +148,35 @@ public class XslProcessUtils {
                                 .addContent(extraMetadata));
                             xslParameter.put(key, value);
                         }
+                    } else if (key.equals("uuidref")
+                        && StringUtils.isNotBlank(value)) {
+                        AbstractMetadata mdToBeAggregated = metadataRepository.findOneByUuid(value);
+                        if (mdToBeAggregated!=null) {
+                            md.addContent(new Element("extra").addContent(new Element("mdToBeAggregated").addContent(mdToBeAggregated.getXmlData(false))));
+                        }
+                        xslParameter.put(key, value);
+                    } else if (key.equals("uuids")
+                        && StringUtils.isNotBlank(value)) {
+                        Element mdToBeAggregatedElem = new Element("mdToBeAggregated");
+                        StringTokenizer st = new StringTokenizer(value, ",");
+                        while (st.hasMoreTokens()) {
+                            String uuid = st.nextToken().trim();
+                            if (uuid.contains("#")) {
+                                StringTokenizer st2 = new StringTokenizer(uuid, "#");
+                                uuid = st2.nextToken();
+                            }
+                            AbstractMetadata mdToBeAggregated = metadataRepository.findOneByUuid(uuid);
+                            if (mdToBeAggregated!=null) {
+                                mdToBeAggregatedElem.addContent(mdToBeAggregated.getXmlData(false));
+                            }
+                        }
+                        md.addContent(new Element("extra").addContent(mdToBeAggregatedElem));
+                        xslParameter.put(key, value);
                     } else {
                         // Or add parameter
                         xslParameter.put(key, value);
                     }
                 }
-
 
                 xslParameter.put("siteUrl", siteUrl);
 

@@ -44,6 +44,8 @@ Stylesheet used to add a reference to a related record using aggregation info.
   <!-- (optional) The initiative type. -->
   <xsl:param name="initiativeType" select="''"/>
 
+  <!-- (optional) The metadata to be aggregated. -->
+  <xsl:variable name="mdToBeAggregated" select="//extra/mdToBeAggregated"/>
 
   <xsl:template match="gmd:identificationInfo/*">
     <xsl:copy>
@@ -129,26 +131,91 @@ Stylesheet used to add a reference to a related record using aggregation info.
       and gmd:initiativeType/gmd:DS_InitiativeTypeCode/@codeListValue = $initiativeType
       ]) = 0"/>
     <xsl:if test="$notExist">
+      <xsl:variable name="citation" select="$mdToBeAggregated/gmd:MD_Metadata[normalize-space(gmd:fileIdentifier/gco:CharacterString)=$uuid]/gmd:identificationInfo/*[name()=('gmd:MD_DataIdentification','srv:SV_ServiceIdentification')]/gmd:citation/gmd:CI_Citation" />
+      <xsl:variable name="title" select="$citation/gmd:title/gco:CharacterString"/>
+      <xsl:variable name="alternateTitle" select="$citation/gmd:alternateTitle/gco:CharacterString"/>
+      <xsl:variable name="creationDate" select="$citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date[../../gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']"/>
+      <xsl:message select="$creationDate" />
+      <xsl:variable name="revisionDate" select="$citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date[../../gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']"/>
+      <xsl:variable name="publicationDate" select="$citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date[../../gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']"/>
+      <xsl:variable name="edition" select="$citation/gmd:edition/gco:CharacterString"/>
+      <xsl:variable name="datasetIdentifier" select="$citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"/>
       <gmd:aggregationInfo>
         <gmd:MD_AggregateInformation>
+          <gmd:aggregateDataSetName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gco:CharacterString><xsl:value-of select="$title"/></gco:CharacterString>
+              </gmd:title>
+              <xsl:if test="$alternateTitle!=''">
+                <gmd:alternateTitle>
+                  <gco:CharacterString><xsl:value-of select="$alternateTitle"/></gco:CharacterString>
+                </gmd:alternateTitle>
+              </xsl:if>
+              <xsl:if test="$creationDate!=''">
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date><xsl:value-of select="$creationDate" /></gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+              </xsl:if>
+              <xsl:if test="$revisionDate!=''">
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date><xsl:value-of select="$revisionDate" /></gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+              </xsl:if>
+              <xsl:if test="$publicationDate!=''">
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date><xsl:value-of select="$publicationDate" /></gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+              </xsl:if>
+              <gmd:edition>
+                <gco:CharacterString><xsl:value-of select="$edition"/></gco:CharacterString>
+              </gmd:edition>
+              <gmd:identifier>
+                <gmd:MD_Identifier>
+                  <gmd:code>
+                    <gco:CharacterString><xsl:value-of select="$uuid"/></gco:CharacterString>
+                  </gmd:code>
+                </gmd:MD_Identifier>
+              </gmd:identifier>
+            </gmd:CI_Citation>
+          </gmd:aggregateDataSetName>
           <gmd:aggregateDataSetIdentifier>
             <gmd:MD_Identifier>
               <gmd:code>
-                <gco:CharacterString>
-                  <xsl:value-of select="$uuid"/>
-                </gco:CharacterString>
+                <gco:CharacterString><xsl:value-of select="$datasetIdentifier"/></gco:CharacterString>
               </gmd:code>
             </gmd:MD_Identifier>
           </gmd:aggregateDataSetIdentifier>
           <gmd:associationType>
             <gmd:DS_AssociationTypeCode
-              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_AssociationTypeCode"
+              codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_AssociationTypeCode"
               codeListValue="{$associationType}"/>
           </gmd:associationType>
           <xsl:if test="$initiativeType != ''">
             <gmd:initiativeType>
               <gmd:DS_InitiativeTypeCode
-                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_InitiativeTypeCode"
+                codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_InitiativeTypeCode"
                 codeListValue="{$initiativeType}"/>
             </gmd:initiativeType>
           </xsl:if>
@@ -156,6 +223,8 @@ Stylesheet used to add a reference to a related record using aggregation info.
       </gmd:aggregationInfo>
     </xsl:if>
   </xsl:template>
+
+  <xsl:template match="extra" priority="2"/>
 
   <!-- Do a copy of every nodes and attributes -->
   <xsl:template match="@*|node()">
