@@ -64,9 +64,7 @@
              gn-metadata-open="mdView.records[mdView.current.index + 1]"
              gn-records="mdView.records"
              gn-formatter="formatter.defaultUrl"
-             data-ng-class="{'disabled': mdView.current.index === mdView.records.length - 1 &&
-                            searchObj.params.to > searchInfo.count &&
-                            searchInfo.count > searchObj.params.from}"
+             data-ng-class="{'disabled': mdView.current.index === mdView.records.length - 1}"
              data-ng-show="mdView.records.length > 1">
 <!--            <span data-ng-show="mdView.current.index === mdView.records.length - 1" data-translate="">nextPage</span>-->
             <span data-translate="">next</span>
