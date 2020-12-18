@@ -226,12 +226,12 @@
         lastRecords: {
           title: 'lastRecords',
           titleInfo: '',
-          active: true
+          active: false
         },
         preferredRecords: {
           title: 'preferredRecords',
           titleInfo: '',
-          active: false
+          active: true
         }};
 
       // Set the default browse mode for the home page
