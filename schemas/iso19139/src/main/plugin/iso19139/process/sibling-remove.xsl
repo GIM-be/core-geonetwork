@@ -29,7 +29,8 @@ Stylesheet used to remove a reference to a parent record.
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0">
 
-  <xsl:param name="uuidref"/>
+  <xsl:param name="onlineSourceUuid"/>
+  <xsl:param name="associationType"/>
 
   <!-- Do a copy of every nodes and attributes -->
   <xsl:template match="@*|node()">
@@ -40,6 +41,6 @@ Stylesheet used to remove a reference to a parent record.
 
   <!-- Remove geonet:* elements. -->
   <xsl:template
-    match="geonet:*|gmd:aggregationInfo[*/gmd:aggregateDataSetIdentifier/*/gmd:code/* = $uuidref]"
+    match="geonet:*|gmd:aggregationInfo[*/gmd:aggregateDataSetIdentifier/*/gmd:code/* = $onlineSourceUuid and gmd:MD_AggregateInformation/gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = $associationType]"
     priority="2"/>
 </xsl:stylesheet>

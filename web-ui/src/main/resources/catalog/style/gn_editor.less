@@ -933,7 +933,9 @@ gn-draft-validation-widget {
 .gn-editor-sidebar {
   margin-top: 15px;
   padding-bottom: 150px;
+  min-height: 500px;
 }
+
 @media (min-width: @screen-md-min) {
   .scrollbar-white() {
     &::-webkit-scrollbar-track, &::-webkit-scrollbar-thumb {
@@ -950,6 +952,7 @@ gn-draft-validation-widget {
     overflow: auto;
     max-height: 100%;
     padding-bottom: 110px;
+    min-height: 500px;
     // Scrollbar not visible in Chrome
     //.scrollbar-white();
   }

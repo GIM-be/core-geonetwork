@@ -37,27 +37,18 @@
             </span>
             <input class="form-control"
                    data-ng-change="updateParams();triggerSearch();" type="text"
-                   data-toggle="dropdown"
                    data-ng-model="searchObj.any"
                    data-ng-model-options="modelOptions"
-                   placeholder="{{'search' | translate}}"/>
-            <ul class="dropdown-menu" role="menu">
-              <li data-ng-repeat="md in searchResults.records">
-                <a href=""
-                   data-ng-click="addToSelection(md, config.associationType, config.initiativeType)">
-                  {{md.title || md.defaultTitle}}
-                </a>
-              </li>
-            </ul>
+                   placeholder="{{'search' | translate}}" autofocus="">
           </div>
         </div>
       </div>
-      <div>
+      <!--div>
         <ul class="list-group">
           <li class="list-group-item gn-record"
               data-ng-repeat="obj in selection">
             {{obj.md.title || obj.md.defaultTitle}}
-              <span><i>({{obj.associationType}}
+            <span><i>({{obj.associationType}}
                 <span data-ng-show="obj.initiativeType">/ {{obj.initiativeType}}</span>)
               </i></span>
             <a data-ng-click="removeFromSelection(obj)" href="">
@@ -65,11 +56,19 @@
             </a>
           </li>
         </ul>
+      </div-->
+      <div data-gn-search-form-results=""
+           data-gn-search-form-results-mode="title"
+           data-gn-search-form-results-selection-mode="local simple"
+           data-search-results="searchResults"
+           data-select-records="selectRecords"
+           data-pagination-info="paginationInfo">
       </div>
       <div class="">
         <button type="button" class="btn navbar-btn btn-success"
-                data-gn-click-and-spin="linkToResource()"
-                data-ng-disabled="selection.length < 1">
+                data-gn-click-and-spin="addToSelection(selectRecords[0], config.associationType, config.initiativeType);linkToResource()"
+                data-ng-class="{'disabled': (selectRecords.length < 1) || config.associationType==null}"
+                data-ng-disabled="(selectRecords.length < 1) || config.associationType==null">
           <i class="fa gn-icon-sibling"/>&nbsp;
           <span data-translate="">saveLinkToSibling</span>
         </button>
