@@ -710,7 +710,8 @@
         removeSibling: function(onlinesrc) {
           var params = {
             uuid: gnCurrentEdit.uuid,
-            uuidref: onlinesrc.id
+            onlineSourceUuid: onlinesrc.id,
+            associationType: onlinesrc.associationType
           };
           runProcess(this,
               setParams('sibling-remove', params));

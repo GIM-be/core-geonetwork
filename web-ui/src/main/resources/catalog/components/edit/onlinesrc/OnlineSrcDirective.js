@@ -1438,7 +1438,8 @@
                       from: 1,
                       to: 50,
                       sortBy: 'title',
-                      sortOrder: 'reverse'
+                      sortOrder: 'reverse',
+                      _schema: 'iso19139'
                       // resultType: 'hits'
                     }
                   };

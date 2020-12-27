@@ -128,14 +128,14 @@ Stylesheet used to add a reference to a related record using aggregation info.
     <xsl:variable name="notExist" select="count($context/gmd:aggregationInfo/gmd:MD_AggregateInformation[
       gmd:aggregateDataSetIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString = $uuid
       and gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue = $associationType
-      and gmd:initiativeType/gmd:DS_InitiativeTypeCode/@codeListValue = $initiativeType
-      ]) = 0"/>
+      and ((gmd:initiativeType/gmd:DS_InitiativeTypeCode/@codeListValue and gmd:initiativeType/gmd:DS_InitiativeTypeCode/@codeListValue=$initiativeType) or
+      (not(gmd:initiativeType/gmd:DS_InitiativeTypeCode/@codeListValue) and $initiativeType=''))
+      ])=0"/>
     <xsl:if test="$notExist">
       <xsl:variable name="citation" select="$mdToBeAggregated/gmd:MD_Metadata[normalize-space(gmd:fileIdentifier/gco:CharacterString)=$uuid]/gmd:identificationInfo/*[name()=('gmd:MD_DataIdentification','srv:SV_ServiceIdentification')]/gmd:citation/gmd:CI_Citation" />
       <xsl:variable name="title" select="$citation/gmd:title/gco:CharacterString"/>
       <xsl:variable name="alternateTitle" select="$citation/gmd:alternateTitle/gco:CharacterString"/>
       <xsl:variable name="creationDate" select="$citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date[../../gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']"/>
-      <xsl:message select="$creationDate" />
       <xsl:variable name="revisionDate" select="$citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date[../../gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']"/>
       <xsl:variable name="publicationDate" select="$citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date[../../gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']"/>
       <xsl:variable name="edition" select="$citation/gmd:edition/gco:CharacterString"/>
@@ -194,7 +194,7 @@ Stylesheet used to add a reference to a related record using aggregation info.
               <gmd:identifier>
                 <gmd:MD_Identifier>
                   <gmd:code>
-                    <gco:CharacterString><xsl:value-of select="$uuid"/></gco:CharacterString>
+                    <gco:CharacterString><xsl:value-of select="$datasetIdentifier"/></gco:CharacterString>
                   </gmd:code>
                 </gmd:MD_Identifier>
               </gmd:identifier>
@@ -203,7 +203,7 @@ Stylesheet used to add a reference to a related record using aggregation info.
           <gmd:aggregateDataSetIdentifier>
             <gmd:MD_Identifier>
               <gmd:code>
-                <gco:CharacterString><xsl:value-of select="$datasetIdentifier"/></gco:CharacterString>
+                <gco:CharacterString><xsl:value-of select="$uuid"/></gco:CharacterString>
               </gmd:code>
             </gmd:MD_Identifier>
           </gmd:aggregateDataSetIdentifier>
