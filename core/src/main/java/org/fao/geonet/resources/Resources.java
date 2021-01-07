@@ -40,12 +40,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.channels.Channels;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Path;
@@ -461,6 +456,28 @@ public class Resources {
             context.warning("Cannot copy icon -> " + e.getMessage());
             context.warning(" (C) Source : " + icon);
             context.warning(" (C) Destin : " + des);
+        }
+    }
+
+    /**
+     * Delete all logo for a given harvester UUID
+     * @param context a possibly null context for searching for the source icon
+     * @param uuid of the harvester
+     */
+    public static void deleteLogos(ServiceContext context, String uuid) {
+        Path logoPath = Resources.locateLogosDir(context);
+        File dir = new File(logoPath.toString());
+        String[] logos = dir.list((dir1, name) -> name.startsWith(uuid));
+
+        if (logos != null) {
+            for (String logo: logos) {
+                try {
+                    java.nio.file.Files.delete(logoPath.resolve(logo));
+                } catch (IOException e) {
+                    context.warning("Cannot delete logo -> " + e.getMessage());
+                    context.warning(" (C) Logo : " + logoPath.resolve(logo));
+                }
+            }
         }
     }
 

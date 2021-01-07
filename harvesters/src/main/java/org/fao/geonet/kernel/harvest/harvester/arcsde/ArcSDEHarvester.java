@@ -462,6 +462,9 @@ public class ArcSDEHarvester extends AbstractHarvester<HarvestResult> {
         //--- update database
         storeNode(copy, path);
 
+        // Delete previous logo before deleting them again
+        Resources.deleteLogos(context, copy.getUuid());
+
         //--- we update a copy first because if there is an exception ArcSDEParams
         //--- could be half updated and so it could be in an inconsistent state
 
