@@ -80,7 +80,7 @@
                 thesaurus: thesaurus,
                 rows: max,
                 q: filter || '',
-                uri: ('*' + filter + '*') || '',
+                uri: filter || '',
                 lang: lang || 'eng'
               };
               if (outputLang) {
@@ -288,16 +288,13 @@
               parseKeywordsResponse: parseKeywordsResponse,
               getKeywords: function(filter, thesaurus, lang, max, typeSearch) {
                 var defer = $q.defer();
-                var url = getKeywordsSearchUrl(filter,
-                    thesaurus, lang, max, typeSearch);
-                $http.get(url, { cache: true }).
-                    success(function(data, status) {
-                      defer.resolve(parseKeywordsResponse(data));
-                    }).
-                    error(function(data, status) {
-                      //                TODO handle error
-                      //                defer.reject(error);
-                    });
+                var url = getKeywordsSearchUrl(filter, thesaurus, lang, max, typeSearch);
+                $http.get(url, { cache: true }).success(function(data, status) {
+                  defer.resolve(parseKeywordsResponse(data));
+                }).error(function(data, status) {
+                  // TODO handle error
+                  // defer.reject(error);
+                });
                 return defer.promise;
               },
 
