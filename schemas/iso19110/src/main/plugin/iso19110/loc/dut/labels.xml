@@ -108,7 +108,7 @@
     <description>Alternatieve naam</description>
   </element>
   <element name="gfc:cardinality">
-    <label>Cardinaliteit attribuut</label>
+    <label>Cardinaliteit</label>
     <description>Cardinaliteit van het attribuut</description>
   </element>
   <element name="gfc:label">
@@ -192,7 +192,7 @@
     <description></description>
   </element>
   <element name="gfc:valueType">
-    <label>Data type attribuut</label>
+    <label>Type</label>
     <description></description>
   </element>
   <element name="gfc:memberName">
