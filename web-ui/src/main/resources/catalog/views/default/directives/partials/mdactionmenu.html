@@ -232,7 +232,7 @@
         </a>
       </li>
       <li role="menuitem">
-        <a data-ng-href="../api/records/{{md.getUuid()}}/formatters/xsl-view{{md.getSchema()=='iso19139'?'-default':''}}?output=pdf&language={{lang}}&approved={{mdView.current.record.draft != 'y'}}"
+        <a data-ng-href="../api/records/{{md.getUuid()}}/formatters/xsl-view{{md.getSchema()=='iso19110' || md.getSchema()=='iso19139'?'-default':''}}?output=pdf&language={{lang}}&approved={{mdView.current.record.draft != 'y'}}"
            target="_blank">
           <i class="fa fa-fw fa-file-pdf-o"></i>&nbsp;
           <span data-translate="">exportPDF</span>
