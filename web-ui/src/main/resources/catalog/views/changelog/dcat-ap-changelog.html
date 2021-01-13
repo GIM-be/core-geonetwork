@@ -24,9 +24,11 @@
       min-width: 800px;
       padding: 10px;
     }
+
     li {
       padding: 2px;
     }
+
     section {
       padding: 5px 0;
     }
@@ -35,18 +37,31 @@
       animation: blink 1.5s infinite;
     }
 
+    img {
+      max-width: 70%;
+    }
+
     @keyframes blink {
-      0% {opacity: 1}
-      50% {opacity: 0.4}
-      100% {opacity: 1}
+      0% {
+        opacity: 1
+      }
+      50% {
+        opacity: 0.4
+      }
+      100% {
+        opacity: 1
+      }
     }
 
   </style>
   <script>
     let target;
+    let timeout;
+
     function updateSelected() {
       if (target) {
         target.classList.remove('selected');
+        clearTimeout(timeout);
       }
       let hash = window.location.hash;
       let newTarget = null;
@@ -58,6 +73,9 @@
         }
       }
       target = newTarget;
+      timeout = setTimeout(function() {
+        target.classList.remove('selected');
+      }, 5000);
     }
 
     window.onhashchange = updateSelected;
@@ -69,16 +87,23 @@
   <h1>Changelog</h1>
 
   <ul>
-    <li><a href="#xx-12-2020">xx/10/2020</a></li>
+    <li><a href="#13-01-2021">13/01/2021</a></li>
     <li><a href="#07-12-2020">07/12/2020</a></li>
     <li><a href="#20-10-2020">20/10/2020</a></li>
     <li><a href="#14-10-2020">14/10/2020</a></li>
   </ul>
-  <section id="xx-12-2020">
-    <h3>xx/10/2020</h3>
+  <section id="13-01-2021">
+    <h3>13/01/2021</h3>
     <ol>
-      <li>Slightly improve changelog's readability</li>
-      <li>Added fields </li>
+      <li>Slightly improved changelog's readability</li>
+      <li>Added the field dcat:accessService to dataset distribution</li>
+      <li>Modified view to display the content of dcat:accessService as a clickable link and added translations</li>
+      <li>Updated the dcat-ap plugin and the core with the latest changes of the dcat-ap 1.2 branch</li>
+      <li>When linking a dataset to a service, we now can also modify the linked dataset with the URL of the service in
+        the mean time:
+        <img src="img/modifyDatasetWhenLinkingToService.png" alt="Checkbox to modify the linked dataset">
+      </li>
+      <li>Fixed a file encoding issue</li>
     </ol>
   </section>
   <section id="07-12-2020">
@@ -174,7 +199,7 @@
         in the dropdown of the "Toevoegen" button. The two others button in this dropdown must be evaluated and maybe
         removed).
         <br>
-        <img src="img/linkToDataset.png" alt="Link naar een dataset">
+        <img src="img/linkToDataset.png" alt="Link to a dataset">
       </li>
       <li>The coupled dataset will be displayed in the editor and in the view as a related dataset (on the right side
         bar)
