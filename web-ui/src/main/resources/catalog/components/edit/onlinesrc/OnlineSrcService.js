@@ -508,7 +508,8 @@
           };
 
           if (addOnlineSrcToDataset) {
-            var qParams = setParams('onlinesrc-add', params);
+            var processName = params.schema === 'dcat-ap-for-services' ? 'service-add' : 'onlinesrc-add';
+            var qParams = setParams(processName, params);
             return gnBatchProcessing.runProcessMd({
               name: qParams.name,
               desc: qParams.desc,
@@ -517,7 +518,8 @@
               uuid: qParams.uuidDS,
               source: qParams.source,
               protocol: qParams.protocol,
-              process: qParams.process
+              process: qParams.process,
+              uuidSrv: gnCurrentEdit.uuid
             }, true).then(addDatasetToServiceFn, function(error) {
               // Current user may not be able to edit
               // the targeted dataset. Notify user in this case

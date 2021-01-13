@@ -1257,7 +1257,7 @@
                         scope.srcParams.uuidDS = gnCurrentEdit.uuid;
                         //the uuid of the source catalog (harvester)
                         scope.srcParams.source = gnCurrentEdit.metadata.source;
-
+                        scope.srcParams.schema = md.getSchema();
 
                         if (links.length > 0) {
                           scope.onlineSrcLink = links[0].url;
@@ -1282,6 +1282,7 @@
                         scope.srcParams.url = scope.onlineSrcLink;
                         scope.srcParams.identifier = (md.identifier && md.identifier[0]) ? md.identifier[0] : '';
                         scope.srcParams.source = md.source;
+                        scope.srcParams.schema = md.getSchema();
                       }
                     }
                   });
