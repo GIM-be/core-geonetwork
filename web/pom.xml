@@ -536,7 +536,7 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>schema-dcat-ap-for-services</artifactId>
+      <artifactId>schema-dcat-metadata</artifactId>
       <version>${gn.schemas.version}</version>
     </dependency>
 
@@ -773,7 +773,7 @@
                   </targetPath>
                 </resource>
                 <resource>
-                  <directory>${project.basedir}/../schemas/dcat-ap-for-services/src/main/plugin</directory>
+                  <directory>${project.basedir}/../schemas/dcat-metadata/src/main/plugin</directory>
                   <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
                 </resource>
                 <!-- Copy the documentation in the webapp. -->
