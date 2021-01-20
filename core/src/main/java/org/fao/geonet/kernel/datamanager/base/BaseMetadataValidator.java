@@ -334,6 +334,7 @@ public class BaseMetadataValidator implements org.fao.geonet.kernel.datamanager.
                 String ruleId = rule.substring(0, rule.indexOf(".xsl"));
                 Element report = new Element("report", Edit.NAMESPACE);
                 report.setAttribute("rule", ruleId, Edit.NAMESPACE);
+                report.setAttribute("required", String.valueOf(SchematronRequirement.REQUIRED), Edit.NAMESPACE);
 
                 java.nio.file.Path schemaTronXmlXslt = metadataSchema.getSchemaDir().resolve("schematron").resolve(rule);
 

@@ -831,7 +831,7 @@ public class MetadataInsertDeleteApi {
             // TODO: Check that the schema is supported
         }
 
-        if (rejectIfInvalid) {
+        if (rejectIfInvalid || publishToAll) {
             try {
                 DataManager.validateMetadata(schema, xmlElement, context);
             } catch (XSDValidationErrorEx e) {
@@ -890,10 +890,10 @@ public class MetadataInsertDeleteApi {
         // Set template
         dataManager.setTemplate(iId, metadataType, null);
 
+        IMetadataValidator validator = context.getBean(IMetadataValidator.class);
+        validator.doValidate(context.getUserSession(), schema, Integer.toString(iId), xmlElement, context.getLanguage(), false);
+        new AGIVValidation(context).addConformKeywords(Integer.toString(iId), true);
         if (publishToAll) {
-            IMetadataValidator validator = context.getBean(IMetadataValidator.class);
-            validator.doValidate(context.getUserSession(), schema, Integer.toString(iId), xmlElement, context.getLanguage(), false);
-            new AGIVValidation(context).addConformKeywords(Integer.toString(iId), true);
             dataManager.setOperation(context, iId, ReservedGroup.all.getId(), ReservedOperation.view.getId());
             dataManager.setOperation(context, iId, ReservedGroup.all.getId(), ReservedOperation.download.getId());
             dataManager.setOperation(context, iId, ReservedGroup.all.getId(), ReservedOperation.dynamic.getId());
