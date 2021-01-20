@@ -41,6 +41,10 @@
       max-width: 70%;
     }
 
+    code {
+      background-color: #d2d2d2;
+    }
+
     @keyframes blink {
       0% {
         opacity: 1
@@ -73,7 +77,7 @@
         }
       }
       target = newTarget;
-      timeout = setTimeout(function() {
+      timeout = setTimeout(function () {
         target.classList.remove('selected');
       }, 5000);
     }
@@ -85,13 +89,22 @@
 <body>
 <div class="container">
   <h1>Changelog</h1>
-
   <ul>
+    <li><a href="#20-01-2021">20/01/2021</a></li>
     <li><a href="#13-01-2021">13/01/2021</a></li>
     <li><a href="#07-12-2020">07/12/2020</a></li>
     <li><a href="#20-10-2020">20/10/2020</a></li>
     <li><a href="#14-10-2020">14/10/2020</a></li>
   </ul>
+  <section id="20-01-2021">
+    <h3>20/01/2021</h3>
+    <ol>
+      <li>Rename plugin name from "dcat-ap-for-servives" to "dcat-metadata"</li>
+      <li>Update with latest changes done on dcat-ap v1.2 plugin</li>
+      <li>Change XML namespace from <code>http://data.vlaanderen.be/ns/metadata-dcat#</code> to <code>http://data.vlaanderen.be/ns/metadata-dcat#</code>
+      </li>
+    </ol>
+  </section>
   <section id="13-01-2021">
     <h3>13/01/2021</h3>
     <ol>
@@ -111,7 +124,7 @@
     <ol>
       <li>Added changelog page</li>
       <li>Added link to the changelog page in the top toolbar</li>
-      <li>Added the namespace <i>&lt;http://data.vlaanderen.be/ns/metadata-voor-servicesl#&gt;</i> to the dcat-ap plugin
+      <li>Added the namespace <i>&lt;http://data.vlaanderen.be/ns/metadata-dcat#&gt;</i> to the dcat-ap plugin
       </li>
       <li>Added the new elements to the schema and makes them viewable and editable in the new section "Service
         informatie"
