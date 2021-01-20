@@ -569,6 +569,15 @@ USA.
                 <sch:value-of select="$loc/strings/report.requiredContact"/>
             </sch:report>
         </sch:rule>
+        <sch:rule context="/*/gmd:dateStamp">
+          <sch:let name="dateStamp" value="gco:Date/text()"/>
+          <sch:assert test="$dateStamp">
+            <sch:value-of select="$loc/strings/alert.requiredDateStamp"/>
+          </sch:assert>
+          <sch:report test="$dateStamp">
+            <sch:value-of select="concat($loc/strings/report.requiredDateStamp, ': ', $dateStamp)"/>
+          </sch:report>
+        </sch:rule>
         <sch:rule context="/*/gmd:language">
             <sch:assert test="node() | @gco:nilReason">
                 <sch:value-of select="$loc/strings/alert.requiredLanguage"/>
@@ -579,10 +588,10 @@ USA.
         </sch:rule>
         <sch:rule context="//gmd:identificationInfo/*/gmd:language">
             <sch:assert test="node() | @gco:nilReason">
-                <sch:value-of select="$loc/strings/alert.requiredLanguage"/>
+                <sch:value-of select="$loc/strings/alert.requiredIdentificationLanguage"/>
             </sch:assert>
             <sch:report test="node() | @gco:nilReason" >
-                <sch:value-of select="$loc/strings/report.requiredLanguage"/>
+                <sch:value-of select="$loc/strings/report.requiredIdentificationLanguage"/>
             </sch:report>
         </sch:rule>
     </sch:pattern>

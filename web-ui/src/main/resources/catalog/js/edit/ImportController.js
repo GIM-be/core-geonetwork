@@ -59,7 +59,7 @@
         url: '',
         serverFolder: '',
         recursiveSearch: false,
-        rejectIfInvalid: false,
+        rejectIfInvalid: true,
         publishToAll: false,
         assignToCatalog: true,
         transformWith: '_none_',

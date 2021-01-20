@@ -274,11 +274,13 @@
   <report.requiredDateType>Data Identification Citation DateType is found</report.requiredDateType>
   <alert.requiredContact>Contact is a required Element</alert.requiredContact>
   <report.requiredContact>Contact found</report.requiredContact>
+  <alert.requiredDateStamp>Metadata changedate (format YYYY-MM-DD) is a required element</alert.requiredDateStamp>
+  <report.requiredDateStamp>Metadata changedate (format YYYY-MM-DD) found</report.requiredDateStamp>
   <alert.requiredLanguage>Language is a required element</alert.requiredLanguage>
   <report.requiredLanguage>Language found</report.requiredLanguage>
-  <alert.requiredLanguage>Data Identification Language is a required element
-  </alert.requiredLanguage>
-  <report.requiredLanguage>Data Identification Language found</report.requiredLanguage>
+  <alert.requiredIdentificationLanguage>Data Identification Language is a required element
+  </alert.requiredIdentificationLanguage>
+  <report.requiredIdentificationLanguage>Data Identification Language found</report.requiredIdentificationLanguage>
   <alert.requiredCitation>Data Identification Citation is a required element
   </alert.requiredCitation>
   <report.requiredCitation>Data Identification Citation found</report.requiredCitation>
