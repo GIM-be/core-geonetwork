@@ -78,7 +78,9 @@
       }
       target = newTarget;
       timeout = setTimeout(function () {
-        target.classList.remove('selected');
+        if (target) {
+          target.classList.remove('selected');
+        }
       }, 5000);
     }
 
@@ -90,21 +92,21 @@
 <div class="container">
   <h1>Changelog</h1>
   <ul>
-    <li><a href="#20-01-2021">20/01/2021</a></li>
+    <li><a href="#21-01-2021">21/01/2021</a></li>
     <li><a href="#13-01-2021">13/01/2021</a></li>
     <li><a href="#07-12-2020">07/12/2020</a></li>
     <li><a href="#20-10-2020">20/10/2020</a></li>
     <li><a href="#14-10-2020">14/10/2020</a></li>
   </ul>
-  <section id="20-01-2021">
-    <h3>20/01/2021</h3>
+  <section id="21-01-2021">
+    <h3>21/01/2021</h3>
     <ol>
-      <li>Rename plugin name from "dcat-ap-for-servives" to "dcat-metadata"</li>
-      <li>Update with latest changes done on dcat-ap v1.2 plugin</li>
-      <li>Change XML namespace from <code>http://data.vlaanderen.be/ns/metadata-dcat#</code> to <code>http://data.vlaanderen.be/ns/metadata-dcat#</code></li>
+      <li>Renamed plugin from "dcat-ap-for-servives" to "dcat-metadata"</li>
+      <li>Updated with latest changes done on dcat-ap v1.2 plugin</li>
+      <li>Changed XML namespace from <code>http://data.vlaanderen.be/ns/metadata-dcat#</code> to <code>http://data.vlaanderen.be/ns/metadata-dcat#</code></li>
       <li>Added two new thesauri for mvs:statusVanGebruik and mvs:statusVanOntwikkeling and update editor to use them</li>
-      <li>Added dct:publisher in services metadata schema and editable and viewable</li>
-      <li>Update service's fields with latest cardinalities</li>
+      <li>Added dct:publisher in services metadata schema and make it editable and viewable</li>
+      <li>Updated service's fields with latest cardinalities</li>
     </ol>
   </section>
   <section id="13-01-2021">
