@@ -76,8 +76,8 @@
              dd-text-collapse dd-text-collapse-max-length="350"
              dd-text-collapse-text="{{md.abstract || md.defaultAbstract}}"></p>
           <address ng-if="md.getMainContact().length>0">{{::md.getMainContact()[0].org}}</address>
-          <p><span data-translate="">owner</span>: {{md.getOwnername()}}</p>
-        </div>
+          <p ng-if="user.isEditorOrMore()"><span data-translate="">modifiedBy</span>: {{md.getOwnername()}}</p>
+        </p>
 
         <div gn-grid-related
              gn-grid-related-uuid="::md.getUuid()"
@@ -114,7 +114,7 @@
             </ul>
           </div>
 
-          <div class="btn-group" ng-if="layers.length > 0">
+          <!--div class="btn-group" ng-if="layers.length > 0">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
               <span class="fa fa-globe"></span>
               {{::layers.length}}
@@ -136,7 +136,7 @@
                 <a href="#">Add all layers</a>
               </li>
             </ul>
-          </div>
+          </div-->
           <!-- Display the first metadata status (apply to ISO19139 record) -->
           <div data-ng-if="md.status_text.length > 0"
                title="{{md.status_text[0]}}"
