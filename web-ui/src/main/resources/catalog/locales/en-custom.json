@@ -58,5 +58,7 @@
   "continue": "Continue",
   "createUiConfig": "Create a UI configuration",
   "fieldTooLong": "This field is too long to be displayed",
-  "noUserDetailsAvailable": "No details available for this user"
+  "noUserDetailsAvailable": "No details available for this user",
+  "transferFrom" : "From",
+  "transferTo" : "To"
 }

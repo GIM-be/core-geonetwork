@@ -55,5 +55,7 @@
   "continue": "Continuer",
   "createUiConfig": "Créer une configuration d'interface",
   "fieldTooLong": "Ce champ est trop long pour être affiché",
-  "noUserDetailsAvailable": "Aucun détails disponible pour cet utilisateur"
+  "noUserDetailsAvailable": "Aucun détails disponible pour cet utilisateur",
+  "transferFrom" : "De",
+  "transferTo" : "À"
 }

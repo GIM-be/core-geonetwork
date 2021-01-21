@@ -83,5 +83,7 @@
   "continue": "Ga verder",
   "createUiConfig": "Aanmaken UI configuratie",
   "fieldTooLong": "Dit veld is te lang om te worden weergegeven",
-  "noUserDetailsAvailable": "Geen details beschikbaar voor deze gebruiker"
+  "noUserDetailsAvailable": "Geen details beschikbaar voor deze gebruiker",
+  "transferFrom" : "Van",
+  "transferTo" : "Naar"
 }
