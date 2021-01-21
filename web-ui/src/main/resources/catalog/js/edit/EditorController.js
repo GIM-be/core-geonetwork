@@ -227,9 +227,9 @@
                     return 'identificationTab';
                   },
 
-                  //Default tab id for dcat-metadata metadata is "defaultDataset" in order to differentiate it's label
+                  //Default tab id for metadata-dcat metadata is "defaultDataset" in order to differentiate it's label
                   //with "default" view.
-                  'dcat-metadata': function (md) {
+                  'metadata-dcat': function (md) {
                     return md.type.includes('dataset') ? 'defaultDataset' : 'defaultService';
                   }
                 };

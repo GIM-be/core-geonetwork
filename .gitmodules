@@ -13,6 +13,6 @@
 [submodule "schemas/iso19115-3.2018"]
 	path = schemas/iso19115-3.2018
 	url = https://github.com/metadata101/iso19115-3.2018
-[submodule "schemas/dcat-metadata"]
-	path = schemas/dcat-metadata
-	url = http://gitlab.gim.be/gim-geonetwork/dcat-metadata.git
+[submodule "schemas/metadata-dcat"]
+	path = schemas/metadata-dcat
+	url = http://gitlab.gim.be/gim-geonetwork/metadata-dcat.git

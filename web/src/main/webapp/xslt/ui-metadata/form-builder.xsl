@@ -535,7 +535,7 @@
 
               <label
                 class="col-sm-2 control-label">
-                <xsl:if test="$schema!='dcat-metadata' and $hasAddAction and not($addDirective != '')"><xsl:value-of select="$name"/></xsl:if>&#160;
+                <xsl:if test="$schema!='metadata-dcat' and $hasAddAction and not($addDirective != '')"><xsl:value-of select="$name"/></xsl:if>&#160;
               </label>
               <div class="col-sm-9 btn-group nopadding-in-table" data-gn-template-field-add-button="{$id}">
                 <xsl:if test="$hasMultipleChoice">
@@ -598,7 +598,7 @@
                 for="{$id}_{@label}"
                 class="col-sm-2 control-label {if ($keyRequired) then 'gn-required' else ''}">
                 <xsl:variable name="labelConfig">
-                  <xsl:if test="$schema!='dcat-metadata' and not (@xpath = ('','.'))">
+                  <xsl:if test="$schema!='metadata-dcat' and not (@xpath = ('','.'))">
                     <xsl:value-of select="gn-fn-metadata:getLabel($schema, replace(@xpath,'@',''), $labels, $qname,'','')/label"/>
                   </xsl:if>
                 </xsl:variable>

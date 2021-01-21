@@ -508,7 +508,7 @@
           };
 
           if (addOnlineSrcToDataset) {
-            var processName = params.schema === 'dcat-metadata' ? 'service-add' : 'onlinesrc-add';
+            var processName = params.schema === 'metadata-dcat' ? 'service-add' : 'onlinesrc-add';
             var qParams = setParams(processName, params);
             return gnBatchProcessing.runProcessMd({
               name: qParams.name,

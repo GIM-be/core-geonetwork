@@ -224,7 +224,7 @@ public class MetadataUtils {
                 }
             }
 
-            if(schemaIdentifier.equals("dcat-metadata")) {
+            if(schemaIdentifier.equals("metadata-dcat")) {
                 DcatapAssociatedResourcesSchemaPlugin dcatapSchemaPlugin = (DcatapAssociatedResourcesSchemaPlugin)schemaPlugin;
                 if (listOfTypes.size() == 0 ||
                     listOfTypes.contains(RelatedItemType.dcatapsources)) {
