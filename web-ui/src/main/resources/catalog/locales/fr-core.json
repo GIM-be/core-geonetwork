@@ -182,6 +182,7 @@
     "organization": "Organisation",
     "originator": "A l’origine de",
     "owner": "Propriétaire",
+    "modifiedBy": "Dernière modification par",
     "mapLoadError": "Échec du chargement de la carte à partir de '{{url}}'.",
     "emptyMapLoadError": "La carte '{{url}}' est vide.\n",
     "pointOfContact": "Point de contact",
