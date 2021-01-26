@@ -256,7 +256,7 @@ ul.gn-resultview {
     .gn-md-abstract {
       p {
         font-size: 1em;
-        color: @text-muted;
+        color: #000;
         &:empty {
           display: none;
         }
@@ -283,6 +283,20 @@ ul.gn-resultview {
     }
     &:hover {
       background-color: rgba(240, 240, 240, 0.5)
+    }
+    .gn-md-details {
+      max-height: 50px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      address {
+        margin-bottom: 0;
+      }
+      small {
+        color: #6a6a6a;
+      }
+    }
+    .gn-related-list {
+      padding-top: 10px;
     }
   }
 }

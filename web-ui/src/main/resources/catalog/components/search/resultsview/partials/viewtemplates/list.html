@@ -75,9 +75,11 @@
           <p class="text-justify"
              dd-text-collapse dd-text-collapse-max-length="350"
              dd-text-collapse-text="{{md.abstract || md.defaultAbstract}}"></p>
-          <address ng-if="md.getMainContact().length>0">{{::md.getMainContact()[0].org}}</address>
-          <p ng-if="user.isEditorOrMore()"><span data-translate="">modifiedBy</span>: {{md.getOwnername()}}</p>
-        </p>
+          <div class="row gn-md-details">
+            <address ng-if="md.getMainContact().length>0"><small>{{::md.getMainContact()[0].org}}</small></address>
+            <p ng-if="user.isEditorOrMore()"><small><span data-translate="">modifiedBy</span>: {{md.getOwnername()}}</small></p>
+          </div>
+        </div>
 
         <div gn-grid-related
              gn-grid-related-uuid="::md.getUuid()"
