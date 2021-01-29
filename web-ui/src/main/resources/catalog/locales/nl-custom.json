@@ -102,9 +102,5 @@
   "standardName": "Profiel",
   "changelog": "Changelog",
   "searchAlicence": "Selecteer een licentie ...",
-  "linkToDcatapsource": "Link naar brondataset",
-  "linkToDcatapsourceTitle": "Link een bron dataset met de huidige metadata",
-  "linkToDcataprelation": "Link naar gerelateerde dataset",
-  "linkToDcataprelationTitle": "Link een gerelateerde dataset met de huidige metadata",
   "changelog": "Changelog"
 }

@@ -53,7 +53,6 @@ import org.fao.geonet.kernel.datamanager.IMetadataValidator;
 import org.fao.geonet.kernel.mef.MEFLib;
 import org.fao.geonet.kernel.schema.AssociatedResource;
 import org.fao.geonet.kernel.schema.AssociatedResourcesSchemaPlugin;
-import org.fao.geonet.kernel.schema.DcatapAssociatedResourcesSchemaPlugin;
 import org.fao.geonet.kernel.schema.SchemaPlugin;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
@@ -173,9 +172,7 @@ public class MetadataUtils {
             listOfTypes.size() == 0 ||
                 listOfTypes.contains(RelatedItemType.datasets) ||
                 listOfTypes.contains(RelatedItemType.fcats) ||
-                listOfTypes.contains(RelatedItemType.sources) ||
-                listOfTypes.contains(RelatedItemType.dcatapsources) ||
-                listOfTypes.contains(RelatedItemType.dcataprelations)
+                listOfTypes.contains(RelatedItemType.sources)
         )) {
             // Get datasets related to service search
             if (listOfTypes.size() == 0 ||
@@ -221,27 +218,6 @@ public class MetadataUtils {
 
                 if (fcat != null) {
                     relatedRecords.addContent(fcat);
-                }
-            }
-
-            if(schemaIdentifier.equals("metadata-dcat")) {
-                DcatapAssociatedResourcesSchemaPlugin dcatapSchemaPlugin = (DcatapAssociatedResourcesSchemaPlugin)schemaPlugin;
-                if (listOfTypes.size() == 0 ||
-                    listOfTypes.contains(RelatedItemType.dcatapsources)) {
-                    Set<String> listOfUUIDs = dcatapSchemaPlugin.getAssociatedSourceUUIDs(md);
-                    if (listOfUUIDs != null && listOfUUIDs.size() > 0) {
-                        String joinedUUIDs = Joiner.on(" or ").join(listOfUUIDs);
-                        relatedRecords.addContent(search(joinedUUIDs, "dcatapsources", context, from, to, fast));
-                    }
-                }
-
-                if (listOfTypes.size() == 0 ||
-                    listOfTypes.contains(RelatedItemType.dcataprelations)) {
-                    Set<String> listOfUUIDs = dcatapSchemaPlugin.getAssociatedRelationUUIDs(md);
-                    if (listOfUUIDs != null && listOfUUIDs.size() > 0) {
-                        String joinedUUIDs = Joiner.on(" or ").join(listOfUUIDs);
-                        relatedRecords.addContent(search(joinedUUIDs, "dcataprelations", context, from, to, fast));
-                    }
                 }
             }
         }
@@ -299,8 +275,7 @@ public class MetadataUtils {
             }
             else if ("datasets".equals(type) || "fcats".equals(type) ||
                 "sources".equals(type) || "siblings".equals(type) ||
-                "parent".equals(type) || "dcatapsources".equals(type) ||
-                "dcataprelations".equals(type))
+                "parent".equals(type))
                 parameters.addContent(new Element("uuid").setText(uuid));
 
             parameters.addContent(new Element("fast").addContent("index"));

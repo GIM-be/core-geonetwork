@@ -188,8 +188,6 @@ public class RelatedResponse {
     protected RelatedResponse.Related related;
     protected RelatedResponse.Online onlines;
     protected RelatedResponse.Thumbnail thumbnails;
-    protected RelatedResponse.Dcatapsource dcatapsources;
-    protected RelatedResponse.Dcataprelation dcataprelations;
 
     /**
      * Gets the value of the children property.
@@ -423,45 +421,6 @@ public class RelatedResponse {
      */
     public void setThumbnails(RelatedResponse.Thumbnail value) {
         this.thumbnails = value;
-    }
-
-
-
-    /**
-     * Gets the value of the dcatapsource property.
-     *
-     * @return possible object is {@link RelatedResponse.Source }
-     */
-    public RelatedResponse.Dcatapsource getDcatapsources() {
-        return dcatapsources;
-    }
-
-    /**
-     * Sets the value of the dcatapsource property.
-     *
-     * @param value allowed object is {@link RelatedResponse.Dcatapsource }
-     */
-    public void setDcatapsources(RelatedResponse.Dcatapsource value) {
-        this.dcatapsources = value;
-    }
-
-
-    /**
-     * Gets the value of the dcatapsource property.
-     *
-     * @return possible object is {@link RelatedResponse.Source }
-     */
-    public RelatedResponse.Dcataprelation getDcataprelations() {
-        return dcataprelations;
-    }
-
-    /**
-     * Sets the value of the dcataprelation property.
-     *
-     * @param value allowed object is {@link RelatedResponse.Dcataprelation }
-     */
-    public void setDcataprelations(RelatedResponse.Dcataprelation value) {
-        this.dcataprelations = value;
     }
 
 
@@ -1136,37 +1095,4 @@ public class RelatedResponse {
         }
 
     }
-
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "item"
-    })
-    public static class Dcatapsource implements IListOnlyClassToArray {
-
-        protected List<RelatedMetadataItem> item;
-
-        public List<RelatedMetadataItem> getItem() {
-            if (item == null) {
-                item = new ArrayList<RelatedMetadataItem>();
-            }
-            return this.item;
-        }
-    }
-
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "item"
-    })
-    public static class Dcataprelation implements IListOnlyClassToArray {
-
-        protected List<RelatedMetadataItem> item;
-
-        public List<RelatedMetadataItem> getItem() {
-            if (item == null) {
-                item = new ArrayList<RelatedMetadataItem>();
-            }
-            return this.item;
-        }
-    }
-
 }

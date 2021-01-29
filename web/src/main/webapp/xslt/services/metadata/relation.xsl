@@ -153,8 +153,7 @@
 
   <xsl:template mode="relation" match="related|services|datasets|children|
                       parent|sources|hasfeaturecats|
-                      siblings|associated|sources|hassources|
-                      dcatapsources|dcataprelations">
+                      siblings|associated|sources|hassources">
     <xsl:variable name="type" select="name(.)"/>
 
     <xsl:if test="response/metadata|response/sibling">
