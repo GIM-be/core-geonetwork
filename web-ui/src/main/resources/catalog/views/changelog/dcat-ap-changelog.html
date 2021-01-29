@@ -2,91 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Metadata voor services</title>
-  <style>
-    html {
-      scroll-behavior: smooth;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    html, body {
-      margin: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      width: 100%;
-    }
-
-    .container {
-      margin: auto;
-      width: 80%;
-      min-width: 800px;
-      padding: 10px;
-    }
-
-    li {
-      padding: 2px;
-    }
-
-    section {
-      padding: 5px 0;
-    }
-
-    .selected h3 {
-      animation: blink 1.5s infinite;
-    }
-
-    img {
-      max-width: 70%;
-    }
-
-    code {
-      background-color: #d2d2d2;
-    }
-
-    @keyframes blink {
-      0% {
-        opacity: 1
-      }
-      50% {
-        opacity: 0.4
-      }
-      100% {
-        opacity: 1
-      }
-    }
-
-  </style>
-  <script>
-    let target;
-    let timeout;
-
-    function updateSelected() {
-      if (target) {
-        target.classList.remove('selected');
-        clearTimeout(timeout);
-      }
-      let hash = window.location.hash;
-      let newTarget = null;
-      if (hash !== '') {
-        hash = hash.substring(1);
-        newTarget = document.getElementById(hash);
-        if (newTarget) {
-          newTarget.classList.add('selected');
-        }
-      }
-      target = newTarget;
-      timeout = setTimeout(function () {
-        if (target) {
-          target.classList.remove('selected');
-        }
-      }, 5000);
-    }
-
-    window.onhashchange = updateSelected;
-    window.onload = updateSelected;
-  </script>
+  <title>Metadata-dcat changelog</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" rel="script"></script>
 </head>
 <body>
 <div class="container">
@@ -104,6 +22,8 @@
     <ol>
       <li>Fixed advanced view in editor for services metadata</li>
       <li>"Vlaamse Open data" keyword is no longer automatically added for services metadata</li>
+      <li>Fixed cardinality for fields dct:title, dct:description, dcat:endpointUrl and dcat:endpointDescription</li>
+      <li>Added dcat-ap 2.0 dct:accessRight and dct:license elements to the XSD schema</li>
     </ol>
   </section>
   <section id="21-01-2021">
