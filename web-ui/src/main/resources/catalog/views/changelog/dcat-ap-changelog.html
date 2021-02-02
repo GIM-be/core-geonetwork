@@ -10,20 +10,74 @@
 <div class="container">
   <h1>Changelog</h1>
   <ul>
-    <li><a href="#xx-01-2021">xx/01/2021</a></li>
+    <li><a href="#02-02-2021">02/02/2021</a></li>
     <li><a href="#21-01-2021">21/01/2021</a></li>
     <li><a href="#13-01-2021">13/01/2021</a></li>
     <li><a href="#07-12-2020">07/12/2020</a></li>
     <li><a href="#20-10-2020">20/10/2020</a></li>
     <li><a href="#14-10-2020">14/10/2020</a></li>
   </ul>
-  <section id="xx-01-2021">
-    <h3>xx/01/2021</h3>
+  <section id="02-02-2021">
+    <h3>02/02/2021</h3>
     <ol>
       <li>Fixed advanced view in editor for services metadata</li>
       <li>"Vlaamse Open data" keyword is no longer automatically added for services metadata</li>
       <li>Fixed cardinality for fields dct:title, dct:description, dcat:endpointUrl and dcat:endpointDescription</li>
-      <li>Added dcat-ap 2.0 dct:accessRight and dct:license elements to the XSD schema</li>
+      <li>Change "Straat" label to "Straat en huisnummer"</li>
+      <li>Added support for dcat-ap 2.0 Resource abstract class fields and new distribution's fields. These fields are
+        not editable nor viewable but have been added for dcat-ap 2.0 compliance and can exist in the metadata XML:
+        <ul>
+          <li><strong>dcat:Catalog</strong>
+            <ul>
+              <li>dcat:contactPoint</li>
+              <li>dcat:keyword</li>
+              <li>dcat:landingPage</li>
+              <li>dcat:qualifiedRelation</li>
+              <li>dcat:theme</li>
+              <li>dct:accessRights</li>
+              <li>dct:conformsTo</li>
+              <li>dct:creator</li>
+              <li>dct:identifier</li>
+              <li>dct:isReferencedBy</li>
+              <li>dct:relation</li>
+              <li>dct:type</li>
+            </ul>
+          </li>
+          <li><strong>dcat:Dataset</strong>
+            <ul>
+              <li>dcat:qualifiedRelation</li>
+              <li>dct:creator</li>
+              <li>dct:isReferencedBy</li>
+              <li>dct:license</li>
+              <li>dct:rights</li>
+            </ul>
+          </li>
+          <li><strong>dcat:Distribution</strong>
+            <ul>
+              <li>dcat:compressFormat</li>
+              <li>dcat:packageFormat</li>
+              <li>dcat:spatialResolutionInMeters</li>
+              <li>dcat:temporalResolution</li>
+            </ul>
+          </li>
+          <li><strong>dcat:DataService</strong>
+            <ul>
+              <li>dcat:qualifiedRelation</li>
+              <li>dcat:theme</li>
+              <li>dct:accessRights</li>
+              <li>dct:conformsTo</li>
+              <li>dct:creator</li>
+              <li>dct:isReferencedBy</li>
+              <li>dct:issued</li>
+              <li>dct:license</li>
+              <li>dct:modified</li>
+              <li>dct:relation</li>
+              <li>dct:rights</li>
+              <li>dct:type</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
     </ol>
   </section>
   <section id="21-01-2021">
@@ -31,8 +85,10 @@
     <ol>
       <li>Renamed plugin from "dcat-ap-for-servives" to "metadata-dcat"</li>
       <li>Updated with latest changes done on dcat-ap v1.2 plugin</li>
-      <li>Changed XML namespace from <code>http://data.vlaanderen.be/ns/metadata-dcat#</code> to <code>http://data.vlaanderen.be/ns/metadata-dcat#</code></li>
-      <li>Added two new thesauri for mvs:statusVanGebruik and mvs:statusVanOntwikkeling and update editor to use them</li>
+      <li>Changed XML namespace from <code>http://data.vlaanderen.be/ns/metadata-dcat#</code> to <code>http://data.vlaanderen.be/ns/metadata-dcat#</code>
+      </li>
+      <li>Added two new thesauri for mvs:statusVanGebruik and mvs:statusVanOntwikkeling and update editor to use them
+      </li>
       <li>Added dct:publisher in services metadata schema and make it editable and viewable</li>
       <li>Updated service's fields with latest cardinalities</li>
     </ol>
