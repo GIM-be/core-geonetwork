@@ -1651,6 +1651,20 @@
           }
         }
       }
+    }])
+
+    .directive('gimAddDataset', ['gnOnlinesrc', function(gnOnlinesrc) {
+      return {
+        restrict: 'A',
+        replace: true,
+        templateUrl: '../../catalog/components/edit/onlinesrc/' +
+          'partials/addDataset.html',
+        link: function(scope, element, attrs) {
+          scope.openPopup = function() {
+            gnOnlinesrc.onOpenPopup('dataset');
+          }
+        }
+      }
     }]);
 
 })();
