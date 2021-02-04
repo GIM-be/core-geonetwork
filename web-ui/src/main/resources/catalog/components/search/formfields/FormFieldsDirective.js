@@ -318,7 +318,7 @@
                     scope.groups = data;
                   }
 
-                  var priorityGroups = ['Agentschap Informatie Vlaanderen', 'Informatie Vlaanderen']
+                  var priorityGroups = ['Agentschap Informatie Vlaanderen', 'Informatie Vlaanderen', 'Digitaal Vlaanderen']
 
                   var priorities = scope.groups.filter(function(grp) {
                     return priorityGroups.includes(grp.name);
