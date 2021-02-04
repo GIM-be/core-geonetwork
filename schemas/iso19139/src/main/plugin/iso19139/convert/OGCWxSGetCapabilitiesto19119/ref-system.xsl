@@ -52,7 +52,7 @@
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="URL">
-			<xsl:value-of select="concat('http://www.opengis.net/def/crs/EPSG/0/', $CRS2)"/>
+			<xsl:value-of select="concat('https://www.opengis.net/def/crs/EPSG/0/', $CRS2)"/>
 		</xsl:variable>
 		<referenceSystemIdentifier>
 			<RS_Identifier>
