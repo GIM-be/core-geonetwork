@@ -937,7 +937,7 @@
       </xsl:otherwise>-->
     </xsl:choose>
 
-    <xsl:for-each select="srv:serviceType/gco:LocalName">
+    <xsl:for-each select="gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName">
       <Field name="serviceType" string="{string(.)}" store="true" index="true"/>
       <Field name="type" string="{string(.)}" store="true" index="true"/>
     </xsl:for-each>
