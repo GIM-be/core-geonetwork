@@ -271,7 +271,8 @@ public class BaseMetadataValidator implements org.fao.geonet.kernel.datamanager.
         metadataManager.getEditLib().enumerateTree(md);
 
         // get an xml version of the schematron errors and return for error display
-        Element schemaTronXmlReport = getSchemaTronXmlReport(schema, md, lang, null);
+//        Element schemaTronXmlReport = getSchemaTronXmlReport(schema, md, lang, null);
+        Element schemaTronXmlReport = applyCustomSchematronRules(schema, 0, md, lang, null);
 
         // remove editing info added by enumerateTree
         metadataManager.getEditLib().removeEditingInfo(md);
