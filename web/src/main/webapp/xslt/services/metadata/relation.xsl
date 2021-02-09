@@ -183,8 +183,9 @@
               </value>
             </title>
             <url>
-              <xsl:value-of
-                select="concat(util:getSettingValue('nodeUrl'), 'api/records/', $uuid)"/>
+              <value lang="{$lang}">
+                <xsl:value-of select="concat(util:getSettingValue('nodeUrl'), 'api/records/', $uuid)"/>
+              </value>
             </url>
             <logo>
               <xsl:value-of select="$metadata/logo"/>
@@ -220,6 +221,22 @@
             </xsl:if>
           </item>
         </xsl:for-each>
+        <xsl:if test="$type = 'datasets'">
+          <xsl:for-each select="../externalDatasets/url">
+            <item>
+              <title>
+                <value lang="{$lang}">
+                  <xsl:value-of select="concat('External: ', tokenize(., '/')[last()])"/>
+                </value>
+              </title>
+              <url>
+                <value lang="{$lang}">
+                  <xsl:value-of select="."/>
+                </value>
+              </url>
+            </item>
+          </xsl:for-each>
+        </xsl:if>
       </xsl:element>
     </xsl:if>
   </xsl:template>

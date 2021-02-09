@@ -57,6 +57,7 @@ import org.fao.geonet.kernel.schema.SchemaPlugin;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.SearcherType;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataValidationRepository;
 import org.fao.geonet.repository.specification.MetadataValidationSpecs;
@@ -182,6 +183,14 @@ public class MetadataUtils {
                     String joinedUUIDs = Joiner.on(" or ").join(listOfUUIDs);
                     relatedRecords.addContent(search(joinedUUIDs, "datasets", context, from, to, fast));
                 }
+
+                String nodeUrl = context.getBean(SettingManager.class).getNodeURL();
+                Set<String> externalLinks = schemaPlugin.getAssociatedExternalDatasetLinks(md, nodeUrl);
+                Element externalDatasets = new Element("externalDatasets");
+                for (String externalLink: externalLinks) {
+                    externalDatasets.addContent(new Element("url").addContent(externalLink));
+                }
+                relatedRecords.addContent(externalDatasets);
             }
             // if source, return source datasets defined in the current record
             if (listOfTypes.size() == 0 ||
