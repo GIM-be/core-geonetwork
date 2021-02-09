@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Metadata-dcat changelog</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" rel="script"></script>
+</head>
+<body>
+<div class="container">
+  <h1>Changelog</h1>
+  <ul>
+    <li><a href="#03-02-2021">03/02/2021</a></li>
+    <li><a href="#02-02-2021">02/02/2021</a></li>
+    <li><a href="#21-01-2021">21/01/2021</a></li>
+    <li><a href="#13-01-2021">13/01/2021</a></li>
+    <li><a href="#07-12-2020">07/12/2020</a></li>
+    <li><a href="#20-10-2020">20/10/2020</a></li>
+    <li><a href="#14-10-2020">14/10/2020</a></li>
+  </ul>
+  <section id="xx-02-2021">
+    <h3>xx/02/2021</h3>
+    <ol>
+      <li>Display external linked dataset in the editor and the view</li>
+    </ol>
+  </section>
+  <section id="03-02-2021">
+    <h3>03/02/2021</h3>
+    <ol>
+      <li>Added a plus button to add empty dcat:servesDataset</li>
+      <li>Added a shortcut button bellow the dcat:servesDataset field to link to a dataset</li>
+      <li>Fixed dcat:endpointDescription type from string literal to rdf:Resource</li>
+      <li>Added schematron rule 300, 301, 302, 303, 350, 351, 352 for dcat services metadata</li>
+      <li>Remove dct:license from dcat:Dataset XSD</li>
+    </ol>
+  </section>
+  <section id="02-02-2021">
+    <h3>02/02/2021</h3>
+    <ol>
+      <li>Fixed advanced view in editor for services metadata</li>
+      <li>"Vlaamse Open data" keyword is no longer automatically added for services metadata</li>
+      <li>Fixed cardinality for fields dct:title, dct:description, dcat:endpointUrl and dcat:endpointDescription</li>
+      <li>Change "Straat" label to "Straat en huisnummer"</li>
+      <li>Added support for dcat-ap 2.0 Resource abstract class fields and new distribution's fields. These fields are
+        not editable nor viewable but have been added for dcat-ap 2.0 compliance and can exist in the metadata XML:
+        <ul>
+          <li><strong>dcat:Catalog</strong>
+            <ul>
+              <li>dcat:contactPoint</li>
+              <li>dcat:keyword</li>
+              <li>dcat:landingPage</li>
+              <li>dcat:qualifiedRelation</li>
+              <li>dcat:theme</li>
+              <li>dct:accessRights</li>
+              <li>dct:conformsTo</li>
+              <li>dct:creator</li>
+              <li>dct:identifier</li>
+              <li>dct:isReferencedBy</li>
+              <li>dct:relation</li>
+              <li>dct:type</li>
+            </ul>
+          </li>
+          <li><strong>dcat:Dataset</strong>
+            <ul>
+              <li>dcat:qualifiedRelation</li>
+              <li>dct:creator</li>
+              <li>dct:isReferencedBy</li>
+              <li>dct:license</li>
+              <li>dct:rights</li>
+            </ul>
+          </li>
+          <li><strong>dcat:Distribution</strong>
+            <ul>
+              <li>dcat:compressFormat</li>
+              <li>dcat:packageFormat</li>
+              <li>dcat:spatialResolutionInMeters</li>
+              <li>dcat:temporalResolution</li>
+            </ul>
+          </li>
+          <li><strong>dcat:DataService</strong>
+            <ul>
+              <li>dcat:qualifiedRelation</li>
+              <li>dcat:theme</li>
+              <li>dct:accessRights</li>
+              <li>dct:conformsTo</li>
+              <li>dct:creator</li>
+              <li>dct:isReferencedBy</li>
+              <li>dct:issued</li>
+              <li>dct:license</li>
+              <li>dct:modified</li>
+              <li>dct:relation</li>
+              <li>dct:rights</li>
+              <li>dct:type</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+  <section id="21-01-2021">
+    <h3>21/01/2021</h3>
+    <ol>
+      <li>Renamed plugin from "dcat-ap-for-servives" to "metadata-dcat"</li>
+      <li>Updated with latest changes done on dcat-ap v1.2 plugin</li>
+      <li>Changed XML namespace from <code>http://data.vlaanderen.be/ns/metadata-dcat#</code> to <code>http://data.vlaanderen.be/ns/metadata-dcat#</code>
+      </li>
+      <li>Added two new thesauri for mvs:statusVanGebruik and mvs:statusVanOntwikkeling and update editor to use them
+      </li>
+      <li>Added dct:publisher in services metadata schema and make it editable and viewable</li>
+      <li>Updated service's fields with latest cardinalities</li>
+    </ol>
+  </section>
+  <section id="13-01-2021">
+    <h3>13/01/2021</h3>
+    <ol>
+      <li>Slightly improved changelog's readability</li>
+      <li>Added the field dcat:accessService to dataset distribution</li>
+      <li>Modified view to display the content of dcat:accessService as a clickable link and added translations</li>
+      <li>Updated the dcat-ap plugin and the core with the latest changes of the dcat-ap 1.2 branch</li>
+      <li>When linking a dataset to a service, we now can also modify the linked dataset with the URL of the service in
+        the mean time:
+        <img src="img/modifyDatasetWhenLinkingToService.png" alt="Checkbox to modify the linked dataset">
+      </li>
+      <li>Fixed a file encoding issue</li>
+    </ol>
+  </section>
+  <section id="07-12-2020">
+    <h3>07/12/2020</h3>
+    <ol>
+      <li>Added changelog page</li>
+      <li>Added link to the changelog page in the top toolbar</li>
+      <li>Added the namespace <i>&lt;http://data.vlaanderen.be/ns/metadata-dcat#&gt;</i> to the dcat-ap plugin
+      </li>
+      <li>Added the new elements to the schema and makes them viewable and editable in the new section "Service
+        informatie"
+        <ul>
+          <li>mvs:authenticatie</li>
+          <li>mvs:dienstverleningsKwaliteit</li>
+          <li>mvs:doelpopulatie</li>
+          <li>mvs:gebruiksbepaling</li>
+          <li>mvs:statusVanGebruik</li>
+          <li>mvs:statusVanOntwikkeling</li>
+          <li>mvs:wettelijkeBeperkingen</li>
+        </ul>
+      </li>
+      <li>Added translations and tooltips for these new fields</li>
+    </ol>
+  </section>
+  <section id="20-10-2020">
+    <h3>20/10/2020</h3>
+    <ol>
+      <li>Fixed a bug where a dct:identifier was added when clicking on the + button to add a keyword</li>
+      <li>Fixing few translations: labels sometimes starting with lower case, sometime with upper-case => All changed to
+        upper-case
+      </li>
+      <li>Fixed a bug where the content of vcard:hasUrl was edited instead of the vcard:hasUrl/@rdf:resource attribute
+      </li>
+      <li>Better indexing for the services metadata for fields
+        <ul>
+          <li>dcat:servesDataset</li>
+          <li>dcat:endpointUrl</li>
+          <li>dcat:endpointDescription</li>
+          <li>dcat:landingPage</li>
+        </ul>
+      </li>
+      <li>Improve view:
+        <ul>
+          <li>dcat:endpointDescription is now displayed. If it contains links, they will be clickable</li>
+          <li>Added missing translations for the side bar</li>
+          <li>Fixed styles for nested tables</li>
+        </ul>
+      </li>
+      <li>Update schematron rules to prevent error when editing a services (error of type "dcat:dataset is a required
+        property…") allowing to have valid service records
+      </li>
+      <li>Added schematron validation rules for
+        <ul>
+          <li>dcat:endpointUrl</li>
+          <li>dcat:DataService/dcat:contactPoint</li>
+          <li>dcat:servesDataset</li>
+          <li>dcat:landingPage</li>
+        </ul>
+      </li>
+      <li>Added the @rdf:about attributes on dcat:DataService schema and handle it when creating a new service record
+      </li>
+    </ol>
+  </section>
+  <section id="14-10-2020">
+    <h3>14/10/2020</h3>
+    <ol>
+      <li>New elements have been added to the XSD and the editor. Here is the list of all the editable fields for
+        dcat-ap services metadata:
+        <ul>
+          <li>dct:identifier</li>
+          <li>dct:title</li>
+          <li>dct:description</li>
+          <li>dcat:endpointUrl</li>
+          <li>dcat:endpointDescription</li>
+          <li>dcat:servesDataset</li>
+          <li>dcat:landingPage</li>
+          <li>dcat:contactPoint</li>
+          <li>dcat:keyword</li>
+          <li>dct:language</li>
+          <li>owl:versionInfo</li>
+        </ul>
+      </li>
+      <li>Translations have been fixed for existing fields and added for the new ones</li>
+      <li>We can now couple a dataset to a service via the search box. Doing so will add a new dcat:servesDataset
+        element pointing at the dataset. (Please notice that this must be done by clicking the first "Link naar een
+        dataset" button in the dropdown of the "Toevoegen" button. The two others button in this dropdown must be
+        evaluated and maybe removed).
+        <br>
+        <img src="img/linkToDataset.png" alt="Link to a dataset">
+      </li>
+      <li>The coupled dataset will be displayed in the editor and in the view as a related dataset (on the right side
+        bar)
+      </li>
+      <li>The title and the description of services are now displayed in the search and view pages (instead of a blank
+        lines). The rest of the view was not changed yet; which mean that some field might be missing from the view.
+      </li>
+      <li>Modified the template for services to add the new elements. However, this is not necessary to recreate
+        existing metadata from this template. The new elements can be added via the + button in the editor.
+      </li>
+    </ol>
+  </section>
+</div>
+</body>
+</html>
