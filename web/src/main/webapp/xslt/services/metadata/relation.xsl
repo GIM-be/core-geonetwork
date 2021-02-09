@@ -222,23 +222,33 @@
           </item>
         </xsl:for-each>
         <xsl:if test="$type = 'datasets'">
-          <xsl:for-each select="../externalDatasets/url">
-            <item>
-              <title>
-                <value lang="{$lang}">
-                  <xsl:value-of select="concat('External: ', tokenize(., '/')[last()])"/>
-                </value>
-              </title>
-              <url>
-                <value lang="{$lang}">
-                  <xsl:value-of select="."/>
-                </value>
-              </url>
-            </item>
-          </xsl:for-each>
+          <xsl:apply-templates mode="relation" select="../externalDatasets"/>
         </xsl:if>
       </xsl:element>
     </xsl:if>
+
+    <xsl:if test="$type = 'datasets' and not(response/metadata|response/sibling) and ../externalDatasets/url">
+      <xsl:element name="{$type}">
+        <xsl:apply-templates mode="relation" select="../externalDatasets"/>
+      </xsl:element>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template mode="relation" match="externalDatasets">
+    <xsl:for-each select="url">
+      <item>
+        <title>
+          <value lang="{$lang}">
+            <xsl:value-of select="concat('External: ', tokenize(., '/')[last()])"/>
+          </value>
+        </title>
+        <url>
+          <value lang="{$lang}">
+            <xsl:value-of select="."/>
+          </value>
+        </url>
+      </item>
+    </xsl:for-each>
   </xsl:template>
 
   <!-- Add the default title as title. This may happen when title is retrieve
