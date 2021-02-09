@@ -76,21 +76,21 @@ public class Utils {
                 String uuid = Util.getParam(params, uuidParamName);
                 // lookup ID by UUID
                 id = dm.getMetadataId(uuid);
-                
+
                 //Do we want the draft version?
                 Boolean approved = Util.getParam(params, "approved", true);
                 if(!approved) {
                     //Is the user editor for this metadata?
                 	AccessManager am = context.getBean(AccessManager.class);
                 	if(am.canEdit(context, id)) {
-                		AbstractMetadata draft = gc.getBean(MetadataDraftRepository.class).findOneByUuid(uuid);
+                		AbstractMetadata draft = gc.getBean(MetadataDraftRepository.class).findOneByUuidIgnoreCase(uuid);
                 		if(draft != null) {
                 			id = String.valueOf(draft.getId());
-                		}	
+                		}
                 	}
                 }
-                
-                
+
+
             } catch (MissingParameterEx x) {
                 // request does not contain UUID; use ID from request
                 try {

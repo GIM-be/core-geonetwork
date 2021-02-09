@@ -48,7 +48,6 @@ import org.fao.geonet.events.history.RecordCategoryChangeEvent;
 import org.fao.geonet.kernel.AccessManager;
 import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
-import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.repository.MetadataCategoryRepository;
 import org.fao.geonet.repository.MetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -310,7 +309,7 @@ public class MetadataTagApi {
 
             List<String> listOfUpdatedRecords = new ArrayList<>();
             for (String uuid : records) {
-                AbstractMetadata info = metadataRepository.findOneByUuid(uuid);
+                AbstractMetadata info = metadataRepository.findOneByUuidIgnoreCase(uuid);
                 Set<MetadataCategory> before = info.getCategories();
                 if (info == null) {
                     report.incrementNullRecords();
@@ -340,7 +339,7 @@ public class MetadataTagApi {
                     }
                 }
 
-                info = metadataRepository.findOneByUuid(uuid);
+                info = metadataRepository.findOneByUuidIgnoreCase(uuid);
                 Set<MetadataCategory> after = info.getCategories();
                 UserSession userSession = ApiUtils.getUserSession(request.getSession());
                 new RecordCategoryChangeEvent(info.getId(), userSession.getUserIdAsInt(), ObjectJSONUtils.convertObjectInJsonObject(before, RecordCategoryChangeEvent.FIELD), ObjectJSONUtils.convertObjectInJsonObject(after, RecordCategoryChangeEvent.FIELD)).publish(context);;
@@ -408,7 +407,7 @@ public class MetadataTagApi {
 
             List<String> listOfUpdatedRecords = new ArrayList<>();
             for (String uuid : records) {
-                AbstractMetadata info = metadataRepository.findOneByUuid(uuid);
+                AbstractMetadata info = metadataRepository.findOneByUuidIgnoreCase(uuid);
                 Set<MetadataCategory> before = info.getCategories();
                 if (info == null) {
                     report.incrementNullRecords();
@@ -421,7 +420,7 @@ public class MetadataTagApi {
                     report.incrementProcessedRecords();
                 }
 
-                info = metadataRepository.findOneByUuid(uuid);
+                info = metadataRepository.findOneByUuidIgnoreCase(uuid);
                 Set<MetadataCategory> after = info.getCategories();
                 UserSession userSession = ApiUtils.getUserSession(request.getSession());
                 new RecordCategoryChangeEvent(info.getId(), userSession.getUserIdAsInt(), ObjectJSONUtils.convertObjectInJsonObject(before, RecordCategoryChangeEvent.FIELD), ObjectJSONUtils.convertObjectInJsonObject(after, RecordCategoryChangeEvent.FIELD)).publish(context);;

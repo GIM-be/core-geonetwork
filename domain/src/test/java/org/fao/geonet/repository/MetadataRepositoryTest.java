@@ -107,8 +107,8 @@ public class MetadataRepositoryTest extends AbstractSpringDataTest {
 
         assertEquals(1, _repo.count());
 
-        assertSameContents(metadata, _repo.findOneByUuid(metadata.getUuid()));
-        assertNull(_repo.findOneByUuid("wrong uuid"));
+        assertSameContents(metadata, _repo.findOneByUuidIgnoreCase(metadata.getUuid()));
+        assertNull(_repo.findOneByUuidIgnoreCase("wrong uuid"));
     }
 
     @Test

@@ -83,7 +83,7 @@ public final class MetadataSpecs {
             @Override
             public Predicate toPredicate(Root<AbstractMetadata> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Path<String> userNameAttributePath = root.get(AbstractMetadata_.uuid);
-                return cb.equal(userNameAttributePath, cb.literal(uuid));
+                return cb.equal(cb.lower(userNameAttributePath), cb.lower(cb.literal(uuid)));
             }
         };
     }

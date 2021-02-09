@@ -48,7 +48,6 @@ import org.fao.geonet.api.tools.i18n.LanguageUtils;
 import org.fao.geonet.api.userfeedback.UserFeedbackUtils.RatingAverage;
 import org.fao.geonet.api.userfeedback.service.IUserFeedbackService;
 import org.fao.geonet.api.users.recaptcha.RecaptchaChecker;
-import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.domain.userfeedback.RatingCriteria;
 import org.fao.geonet.domain.userfeedback.RatingsSetting;
@@ -605,7 +604,7 @@ public class UserFeedbackAPI {
         toAddress.add(to);
         if (isNotBlank(metadataEmail)) {
             //Check metadata email belongs to metadata security!!
-            AbstractMetadata md = metadataRepository.findOneByUuid(metadataUuid);
+            AbstractMetadata md = metadataRepository.findOneByUuidIgnoreCase(metadataUuid);
             if(md.getData().indexOf(metadataEmail) > 0) {
                 toAddress.add(metadataEmail);
             }

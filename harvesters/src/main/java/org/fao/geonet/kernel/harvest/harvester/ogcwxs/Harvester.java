@@ -436,7 +436,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
             uuid = xmlFileIdentifier;
         }
         MetadataRepository metadataRepository = ApplicationContextHolder.get().getBean(MetadataRepository.class);
-        Metadata existingRecord = metadataRepository.findOneByUuid(uuid);
+        Metadata existingRecord = metadataRepository.findOneByUuidIgnoreCase(uuid);
         if (existingRecord == null) {
             //
             // insert metadata
@@ -514,7 +514,7 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
         // Check first that this record has not been generated in the past.
         // The UUID is a hash of the capabilities URL
         MetadataRepository metadataRepository = ApplicationContextHolder.get().getBean(MetadataRepository.class);
-        Metadata existingRecord = metadataRepository.findOneByUuid(uuid);
+        Metadata existingRecord = metadataRepository.findOneByUuidIgnoreCase(uuid);
         Element existingRecordXml;
         Element md;
         String schema = null;

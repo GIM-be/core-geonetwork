@@ -115,7 +115,7 @@ public class ApproveRecord implements ApplicationListener<MetadataStatusChanged>
     private void removeDraft(AbstractMetadata md) throws Exception {
 
         if (!(md instanceof MetadataDraft)) {
-            md = metadataDraftRepository.findOneByUuid(md.getUuid());
+            md = metadataDraftRepository.findOneByUuidIgnoreCase(md.getUuid());
         }
 
         if (md != null) {
@@ -129,7 +129,7 @@ public class ApproveRecord implements ApplicationListener<MetadataStatusChanged>
 
         if (md instanceof MetadataDraft) {
             draft = md;
-            md = metadataRepository.findOneByUuid(draft.getUuid());
+            md = metadataRepository.findOneByUuidIgnoreCase(draft.getUuid());
 
             // This status should be associated to original record, not draft
             MetadataStatus status = new MetadataStatus();
@@ -146,7 +146,7 @@ public class ApproveRecord implements ApplicationListener<MetadataStatusChanged>
             metadataStatus.setStatusExt(status);
 
         } else if (md instanceof Metadata) {
-            draft = metadataDraftRepository.findOneByUuid(md.getUuid());
+            draft = metadataDraftRepository.findOneByUuidIgnoreCase(md.getUuid());
         }
 
         if (draft != null) {

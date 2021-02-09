@@ -216,7 +216,7 @@ public class UserFeedbackDatabaseService implements IUserFeedbackService {
             final User approver = userRepository.findOneByUsername(userFeedback.getApprover().getUsername());
             userFeedback.setApprover(approver);
         }
-        final AbstractMetadata metadata = metadataRepository.findOneByUuid(userFeedback.getMetadata().getUuid());
+        final AbstractMetadata metadata = metadataRepository.findOneByUuidIgnoreCase(userFeedback.getMetadata().getUuid());
         userFeedback.setMetadata((Metadata)metadata);
 
         if (userFeedback.getCreationDate() == null) {

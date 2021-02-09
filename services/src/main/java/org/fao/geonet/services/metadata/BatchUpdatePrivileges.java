@@ -91,7 +91,7 @@ public class BatchUpdatePrivileges extends NotInReadOnlyModeService {
 
                 //--- check access
 
-                AbstractMetadata info = context.getBean(MetadataRepository.class).findOneByUuid(uuid);
+                AbstractMetadata info = context.getBean(MetadataRepository.class).findOneByUuidIgnoreCase(uuid);
                 if (info == null) {
                     notFound.add(uuid);
                 } else if (!accessMan.isOwner(context, String.valueOf(info.getId()))) {

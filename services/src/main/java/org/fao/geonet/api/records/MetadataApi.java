@@ -291,7 +291,7 @@ public class MetadataApi {
         //Here we just care if we need the approved version explicitly.
         //ApiUtils.canViewRecord already filtered draft for non editors.
         if (approved) {
-            mdId = String.valueOf(metadataRepository.findOneByUuid(metadata.getUuid()).getId());
+            mdId = String.valueOf(metadataRepository.findOneByUuidIgnoreCase(metadata.getUuid()).getId());
         }
 
         Element xml = withInfo ?
@@ -419,7 +419,7 @@ public class MetadataApi {
             Integer id = -1;
 
             if (approved) {
-                id = metadataRepository.findOneByUuid(metadataUuid).getId();
+                id = metadataRepository.findOneByUuidIgnoreCase(metadataUuid).getId();
             } else {
                 id = metadataUtils.findOneByUuid(metadataUuid).getId();
             }

@@ -953,10 +953,21 @@ public class LuceneQueryBuilder {
     private void addUUIDQuery(String fieldValue, String similarity, boolean criteriaIsASet, BooleanQuery bq, BooleanQuery query) {
         // the uuid param is an 'or' separated list. Remove the 'or's and handle like an 'or' query if more
         // than one uuid parameter is set, then a 'and' query is made
-        if (fieldValue.contains(OR_SEPARATOR)) {
+        StringTokenizer st = new StringTokenizer(fieldValue.toLowerCase(), "or");
+        String uuids = null;
+        while (st.hasMoreTokens()) {
+            String token = st.nextToken().trim().toLowerCase();
+            if (uuids == null) {
+                uuids = "";
+            } else {
+                uuids += " or ";
+            }
+            uuids += token + " or " + token.toUpperCase();
+        }
+        if (uuids.contains(OR_SEPARATOR)) {
             // Add all separated values to the boolean query
             BooleanQuery uuidBooleanQuery = new BooleanQuery();
-            addSeparatedTextField(fieldValue, OR_SEPARATOR, LuceneIndexField.UUID, uuidBooleanQuery);
+            addSeparatedTextField(uuids, OR_SEPARATOR, LuceneIndexField.UUID, uuidBooleanQuery);
             BooleanClause booleanClause = new BooleanClause(uuidBooleanQuery, BooleanClause.Occur.MUST);
             if (criteriaIsASet) {
                 bq.add(booleanClause);

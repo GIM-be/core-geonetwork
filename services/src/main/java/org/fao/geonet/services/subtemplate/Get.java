@@ -32,7 +32,6 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.constants.Params;
 import org.fao.geonet.domain.AbstractMetadata;
 import org.fao.geonet.domain.MetadataType;
-import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -80,7 +79,7 @@ public class Get implements Service {
 
         // Retrieve template
         final MetadataRepository metadataRepository = context.getBean(MetadataRepository.class);
-        final AbstractMetadata metadata = metadataRepository.findOneByUuid(uuid);
+        final AbstractMetadata metadata = metadataRepository.findOneByUuidIgnoreCase(uuid);
 
         if (metadata == null) {
             Log.error(Geonet.DATA_MANAGER, String.format("Subtemplate '%s' not found. Check records related to this directory entry.", uuid));

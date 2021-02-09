@@ -81,7 +81,7 @@ public class Insert implements Service {
         if (metadataEmail != null) {
             //Check metadata email belongs to metadata
             //security!!
-            AbstractMetadata md = gc.getBean(MetadataRepository.class).findOneByUuid(uuid);
+            AbstractMetadata md = gc.getBean(MetadataRepository.class).findOneByUuidIgnoreCase(uuid);
             if(md.getData().indexOf(metadataEmail) > 0) {
                 toAddress.add(metadataEmail);
             }
