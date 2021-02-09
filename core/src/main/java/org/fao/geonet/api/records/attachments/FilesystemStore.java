@@ -35,7 +35,6 @@ import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.MetadataResource;
 import org.fao.geonet.domain.MetadataResourceVisibility;
 import org.fao.geonet.kernel.AccessManager;
-import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.setting.SettingManager;
@@ -110,7 +109,7 @@ public class FilesystemStore implements Store {
     @Deprecated
     public List<MetadataResource> getResources(ServiceContext context, String metadataUuid,
                                                MetadataResourceVisibility visibility,
-                                               String filter) throws Exception {	
+                                               String filter) throws Exception {
     	return getResources(context, metadataUuid, visibility, filter, true);
     }
 
@@ -196,7 +195,7 @@ public class FilesystemStore implements Store {
             }
         }
 
-        
+
         if (resourceFile != null && Files.exists(resourceFile)) {
             if (resourceFile.getParent().getFileName().toString().equals(
                 MetadataResourceVisibility.PRIVATE.toString()) && !canDownload) {
@@ -292,7 +291,7 @@ public class FilesystemStore implements Store {
 
         return getResourceDescription(metadataUuid, visibility, filePath);
     }
-    
+
     private Path getPath(String metadataUuid, MetadataResourceVisibility visibility, String fileName, Boolean approved) throws Exception {
         ApplicationContext _appContext = ApplicationContextHolder.get();
         GeonetworkDataDirectory dataDirectory = _appContext.getBean(GeonetworkDataDirectory.class);
@@ -373,7 +372,7 @@ public class FilesystemStore implements Store {
     @Override
     public MetadataResource patchResourceStatus(ServiceContext context, String metadataUuid,
                                                 String resourceId,
-                                                MetadataResourceVisibility visibility, 
+                                                MetadataResourceVisibility visibility,
                                                 Boolean approved) throws Exception {
         ApplicationContext _appContext = ApplicationContextHolder.get();
         AccessManager accessManager = _appContext.getBean(AccessManager.class);
@@ -417,10 +416,10 @@ public class FilesystemStore implements Store {
                 "Metadata with UUID '%s' not found.", metadataUuid
             ));
         }
-        
+
         if(approved) {
         	 metadataId = String.valueOf(_appContext.getBean(MetadataRepository.class)
-        			 				.findOneByUuid(metadataUuid).getId());
+        			 				.findOneByUuidIgnoreCase(metadataUuid).getId());
         }
         return metadataId;
     }

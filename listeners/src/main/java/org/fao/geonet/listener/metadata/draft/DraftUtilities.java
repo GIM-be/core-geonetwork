@@ -59,7 +59,7 @@ public class DraftUtilities {
 
     @Autowired
     private MetadataRatingByIpRepository metadataRatingByIpRepository;
-    
+
     @Autowired
     private DraftMetadataUtils draftMetadataUtils;
 
@@ -72,7 +72,7 @@ public class DraftUtilities {
      * @return
      */
     public AbstractMetadata replaceMetadataWithDraft(AbstractMetadata md) {
-        AbstractMetadata draft = metadataDraftRepository.findOneByUuid(md.getUuid());
+        AbstractMetadata draft = metadataDraftRepository.findOneByUuidIgnoreCase(md.getUuid());
 
         if (draft != null) {
             return replaceMetadataWithDraft(md, draft);

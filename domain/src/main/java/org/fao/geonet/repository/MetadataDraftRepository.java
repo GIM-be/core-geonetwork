@@ -33,14 +33,14 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 /**
  * Data Access object for the {@link MetadataDraft} entities.
- * 
+ *
  * The use of this class is discouraged, you should use IMetadataUtils or IMetadataManager instead.
  *
  * @author Jesse
  */
 public interface MetadataDraftRepository
-        extends GeonetRepository<MetadataDraft, Integer>, 
-        MetadataRepositoryCustom<MetadataDraft>, 
+        extends GeonetRepository<MetadataDraft, Integer>,
+        MetadataRepositoryCustom<MetadataDraft>,
         JpaSpecificationExecutor<MetadataDraft> {
     /**
      * Find one metadata by the metadata's uuid.
@@ -49,8 +49,8 @@ public interface MetadataDraftRepository
      * @return one metadata or null.
      */
     @Nullable
-    MetadataDraft findOneByUuid(@Nonnull String uuid);
-    
+    MetadataDraft findOneByUuidIgnoreCase(@Nonnull String uuid);
+
     /**
      * Find all metadata by the metadata's uuid.
      *
@@ -58,7 +58,7 @@ public interface MetadataDraftRepository
      * @return one metadata or null.
      */
     @Nullable
-    List<MetadataDraft> findAllByUuid(@Nonnull String uuid);
+    List<MetadataDraft> findAllByUuidIgnoreCase(@Nonnull String uuid);
 
     /**
      * Find all metadata harvested by the identified harvester.

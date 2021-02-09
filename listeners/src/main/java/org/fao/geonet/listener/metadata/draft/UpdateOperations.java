@@ -92,7 +92,7 @@ public class UpdateOperations implements ApplicationListener<MetadataShare> {
             if (md instanceof MetadataDraft) {
                 Log.trace(Geonet.DATA_MANAGER, "Draft privileges are handled on approved record: " + event.getOp());
             } else {
-                MetadataDraft draft = metadataDraftRepository.findOneByUuid(md.getUuid());
+                MetadataDraft draft = metadataDraftRepository.findOneByUuidIgnoreCase(md.getUuid());
 
                 if (draft != null) {
                     // Copy privileges from original metadata

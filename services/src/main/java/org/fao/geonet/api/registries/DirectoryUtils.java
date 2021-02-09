@@ -271,7 +271,7 @@ public class DirectoryUtils {
                     Element subTemplateElement = null;
                     // Search in DB by UUID matching entry UUID
                     if (StringUtils.isEmpty(searchIndexField)) {
-                        AbstractMetadata subTemplate = metadataRepository.findOneByUuid(uuid);
+                        AbstractMetadata subTemplate = metadataRepository.findOneByUuidIgnoreCase(uuid);
                         if (subTemplate != null) {
                             subTemplateElement = subTemplate.getXmlData(false);
                         }

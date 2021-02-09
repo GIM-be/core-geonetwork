@@ -51,7 +51,6 @@ import org.fao.geonet.domain.Metadata;
 import org.fao.geonet.domain.MetadataDraft;
 import org.fao.geonet.domain.ReservedOperation;
 import org.fao.geonet.kernel.AccessManager;
-import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.SelectionManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.setting.SettingManager;
@@ -125,7 +124,7 @@ public class ApiUtils {
         } else if(approved) {
             //It was a UUID, check if draft or approved version
             id = String.valueOf(ApplicationContextHolder.get().getBean(MetadataRepository.class)
-                .findOneByUuid(uuidOrInternalId).getId());
+                .findOneByUuidIgnoreCase(uuidOrInternalId).getId());
         }
 
         if (StringUtils.isEmpty(id)) {
@@ -341,7 +340,7 @@ public class ApiUtils {
         if (metadata instanceof MetadataDraft) {
             copy = ((MetadataDraft) metadata).getApprovedVersion();
         } else {
-            copy = metadataDraftRepository.findOneByUuid(metadata.getUuid());
+            copy = metadataDraftRepository.findOneByUuidIgnoreCase(metadata.getUuid());
         }
         return copy;
     }

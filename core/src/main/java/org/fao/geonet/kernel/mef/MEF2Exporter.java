@@ -86,7 +86,7 @@ class MEF2Exporter {
                                 boolean removeXlinkAttribute, boolean skipError, boolean addSchemaLocation) throws Exception {
     	return doExport(context, uuids, format, skipUUID, stylePath, resolveXlink, removeXlinkAttribute, skipError, addSchemaLocation, false);
     }
-    
+
     /**
      * Create a MEF2 file in ZIP format.
      *
@@ -137,17 +137,17 @@ class MEF2Exporter {
                 try {
                     IndexSearcher searcher = new IndexSearcher(indexReaderAndTaxonomy.indexReader);
                     BooleanQuery query = new BooleanQuery();
-                    
+
                     AbstractMetadata md = context.getBean(IMetadataUtils.class).findOneByUuid(uuid);
-                    
+
                     //Here we just care if we need the approved version explicitly.
                     //IMetadataUtils already filtered draft for non editors.
-                    
+
                     if(approved) {
-                    	md = context.getBean(MetadataRepository.class).findOneByUuid(uuid);
+                    	md = context.getBean(MetadataRepository.class).findOneByUuidIgnoreCase(uuid);
                     }
                     String id = String.valueOf(md.getId());
-                    
+
                     query.add(new BooleanClause(new TermQuery(new Term(LuceneIndexField.ID, id)), BooleanClause.Occur.MUST));
                     query.add(new BooleanClause(new TermQuery(new Term(LOCALE, contextLang)), BooleanClause.Occur.SHOULD));
                     TopDocs topDocs = searcher.search(query, NoFilterFilter.instance(), 5);

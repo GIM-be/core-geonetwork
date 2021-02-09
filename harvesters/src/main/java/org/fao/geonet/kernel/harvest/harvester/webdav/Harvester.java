@@ -238,7 +238,7 @@ class Harvester extends BaseAligner<WebDavParams> implements IHarvester<HarvestR
             result.datasetUuidExist++;
             switch(params.getOverrideUuid()){
             case OVERRIDE:
-                Metadata existingMetadata = metadataRepository.findOneByUuid(uuid);
+                Metadata existingMetadata = metadataRepository.findOneByUuidIgnoreCase(uuid);
                 RecordInfo existingRecordInfo = new RecordInfo(existingMetadata);
                 updateMetadata(rf, existingRecordInfo, true);
                 log.info("Overriding record with uuid " + uuid);

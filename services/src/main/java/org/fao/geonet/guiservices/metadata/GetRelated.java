@@ -169,7 +169,7 @@ public class GetRelated implements Service, RelatedMetadata {
                 throw new IllegalArgumentException("No Metadata found with id " + id);
             }
         } else {
-            md = metadataRepository.findOneByUuid(uuid);
+            md = metadataRepository.findOneByUuidIgnoreCase(uuid);
 
             if (md == null) {
                 throw new IllegalArgumentException("No Metadata found with uuid " + uuid);

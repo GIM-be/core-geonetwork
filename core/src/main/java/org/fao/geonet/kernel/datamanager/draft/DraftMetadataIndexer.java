@@ -63,7 +63,7 @@ public class DraftMetadataIndexer extends BaseMetadataIndexer implements IMetada
             Log.trace(Geonet.DATA_MANAGER, "We are indexing a draft with uuid " + fullMd.getUuid());
             moreFields.addElement(SearchManager.makeField(Geonet.IndexFieldNames.DRAFT, "y", true, true));
         } else {
-            if (metadataDraftRepository.findOneByUuid(fullMd.getUuid()) != null) {
+            if (metadataDraftRepository.findOneByUuidIgnoreCase(fullMd.getUuid()) != null) {
                 Log.trace(Geonet.DATA_MANAGER,
                     "We are indexing a record with a draft associated with uuid " + fullMd.getUuid());
                 moreFields.addElement(SearchManager.makeField(Geonet.IndexFieldNames.DRAFT, "e", true, true));

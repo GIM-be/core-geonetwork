@@ -36,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Data Access object for the {@link Metadata} entities.
- * 
+ *
  * The use of this class is discouraged, you should use IMetadataUtils or IMetadataManager instead.
  *
  * @author Jesse
@@ -50,9 +50,9 @@ public interface MetadataRepository extends GeonetRepository<Metadata, Integer>,
      * @return one metadata or null.
      */
     @Nullable
-    Metadata findOneByUuid(@Nonnull String uuid);
-    
-    
+    Metadata findOneByUuidIgnoreCase(@Nonnull String uuid);
+
+
     /**
      * Find all metadata by the metadata's uuid.
     *
@@ -60,7 +60,7 @@ public interface MetadataRepository extends GeonetRepository<Metadata, Integer>,
     * @return a list of metadata.
     */
    @Nullable
-   List<Metadata> findAllByUuid(@Nonnull String uuid);
+   List<Metadata> findAllByUuidIgnoreCase(@Nonnull String uuid);
 
     /**
      * Find all metadata harvested by the identified harvester.

@@ -60,7 +60,6 @@ import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -247,13 +246,13 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
         AbstractMetadata md = super.findOneByUuid(uuid);
         try {
             if (md != null && am.canTakeover(context, Integer.toString(md.getId()))) {
-                AbstractMetadata tmp = metadataDraftRepository.findOneByUuid(uuid);
+                AbstractMetadata tmp = metadataDraftRepository.findOneByUuidIgnoreCase(uuid);
                 if (tmp != null) {
                     md = tmp;
                 }
             } else if (md == null) {
                 // A draft without an approved md
-                md = metadataDraftRepository.findOneByUuid(uuid);
+                md = metadataDraftRepository.findOneByUuidIgnoreCase(uuid);
             }
         } catch (Exception e) {
             Log.error(Geonet.DATA_MANAGER, e, e);
@@ -268,7 +267,7 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
     public List<? extends AbstractMetadata> findAllByUuid(String uuid) {
         List<AbstractMetadata> res = new LinkedList<AbstractMetadata>();
         res.addAll(super.findAllByUuid(uuid));
-        res.addAll(metadataDraftRepository.findAllByUuid(uuid));
+        res.addAll(metadataDraftRepository.findAllByUuidIgnoreCase(uuid));
         return res;
     }
 
@@ -417,8 +416,8 @@ public class DraftMetadataUtils extends BaseMetadataUtils {
         }
 
         // Do we have a metadata draft already?
-        if (metadataDraftRepository.findOneByUuid(md.getUuid()) != null) {
-            id = Integer.toString(metadataDraftRepository.findOneByUuid(md.getUuid()).getId());
+        if (metadataDraftRepository.findOneByUuidIgnoreCase(md.getUuid()) != null) {
+            id = Integer.toString(metadataDraftRepository.findOneByUuidIgnoreCase(md.getUuid()).getId());
 
             Log.trace(Geonet.DATA_MANAGER, "Editing draft with id " + id);
         } else if ((context.getBean(IMetadataManager.class) instanceof DraftMetadataManager)

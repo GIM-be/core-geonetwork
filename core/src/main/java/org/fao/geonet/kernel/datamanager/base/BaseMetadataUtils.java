@@ -895,7 +895,7 @@ public class BaseMetadataUtils implements IMetadataUtils {
     public AbstractMetadata findOneByUuid(String uuid) {
     	AbstractMetadata metadata = null;
         try {
-            metadata = metadataRepository.findOneByUuid(uuid);
+            metadata = metadataRepository.findOneByUuidIgnoreCase(uuid);
         } catch (IncorrectResultSizeDataAccessException e){
             Log.warning(Geonet.GEONETWORK, String.format(
                 "More than one record found with UUID '%s'. Error is '%s'.",
@@ -906,7 +906,7 @@ public class BaseMetadataUtils implements IMetadataUtils {
 
     @Override
     public List<? extends AbstractMetadata> findAllByUuid(String uuid) {
-        return metadataRepository.findAllByUuid(uuid);
+        return metadataRepository.findAllByUuidIgnoreCase(uuid);
     }
 
     @Override
@@ -996,7 +996,7 @@ public class BaseMetadataUtils implements IMetadataUtils {
     @Override
     public boolean checkMetadataWithSameUuidExist(String uuid, int id) {
         // Check if another record exist with that UUID
-        Metadata recordWithThatUuid = getMetadataRepository().findOneByUuid(uuid);
+        Metadata recordWithThatUuid = getMetadataRepository().findOneByUuidIgnoreCase(uuid);
         if (recordWithThatUuid != null && recordWithThatUuid.getId() != id) {
             // If yes, this would have triggered a DataIntegrityViolationException
             throw new IllegalArgumentException(String.format(

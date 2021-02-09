@@ -230,7 +230,7 @@ public class MetadataInsertDeleteApi {
         List<Object[]> contentUsers = new ArrayList<Object[]>();
         Map<String, Map<String, String>> allMetadataIdsToInformAdministrators = new HashMap<String, Map<String, String>>();
         for (String uuid : records) {
-            AbstractMetadata metadata = metadataRepository.findOneByUuid(uuid);
+            AbstractMetadata metadata = metadataRepository.findOneByUuidIgnoreCase(uuid);
             if (metadata == null) {
                 report.incrementNullRecords();
             } else if (!accessManager.canEdit(context, String.valueOf(metadata.getId()))) {
@@ -858,7 +858,7 @@ public class MetadataInsertDeleteApi {
         }
 
         if (uuidProcessing == MEFLib.UuidAction.NOTHING) {
-            AbstractMetadata md = metadataRepository.findOneByUuid(uuid);
+            AbstractMetadata md = metadataRepository.findOneByUuidIgnoreCase(uuid);
             if (md != null) {
                 throw new IllegalArgumentException(
                         String.format("A record with UUID '%s' already exist and you choose no "

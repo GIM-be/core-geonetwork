@@ -72,7 +72,6 @@ import org.fao.geonet.kernel.DataManager;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.SpringLocalServiceInvoker;
 import org.fao.geonet.kernel.UpdateDatestamp;
-import org.fao.geonet.kernel.mef.MEFLib;
 import org.fao.geonet.kernel.mef.MEFLibIntegrationTest;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataRepository;
@@ -115,7 +114,7 @@ public class MetadataApiTest extends AbstractServiceIntegrationTest {
     private EntityManager _entityManager;
 
     @Autowired private MetadataRepository metadataRepository;
-    
+
     private String uuid;
     private int id;
     private AbstractMetadata md;
@@ -360,7 +359,7 @@ public class MetadataApiTest extends AbstractServiceIntegrationTest {
         _entityManager.flush();
         _entityManager.clear();
 
-        int newPopularity = metadataRepository.findOneByUuid(this.uuid).getDataInfo().getPopularity();
+        int newPopularity = metadataRepository.findOneByUuidIgnoreCase(this.uuid).getDataInfo().getPopularity();
         Assert.assertThat("Popularity has not been incremented by one", newPopularity, equalTo(popularity + 1));
 
         popularity = newPopularity;
@@ -381,7 +380,7 @@ public class MetadataApiTest extends AbstractServiceIntegrationTest {
         _entityManager.flush();
         _entityManager.clear();
 
-        newPopularity = metadataRepository.findOneByUuid(this.uuid).getDataInfo().getPopularity();
+        newPopularity = metadataRepository.findOneByUuidIgnoreCase(this.uuid).getDataInfo().getPopularity();
         Assert.assertThat("Popularity has changed", newPopularity, equalTo(popularity));
     }
 
