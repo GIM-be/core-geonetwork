@@ -205,7 +205,7 @@
       </xsl:choose>
 
     -->
-    "publisher": [
+    "creator": [
       <xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact/*">
         {
         <!-- TODO: Id could also be website if set -->
@@ -326,10 +326,41 @@
       -->
     </xsl:for-each>
 
-    <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints">
+    <!--xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints">
       ,"license": <xsl:apply-templates mode="toJsonLDLocalized"
                                       select="."/>
-    </xsl:for-each>
+
+    </xsl:for-each-->
+
+
+<!-- to be continued - Changed by BartCosyn-->
+    <!-- array of licenses is allowed, not multiple licenses-->
+    <xsl:if test="count(gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[normalize-space(.) != '']) > 0"> 
+      ,"license":  [<xsl:for-each 
+        select="gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints">
+        <xsl:choose>
+          <xsl:when test="starts-with(normalize-space(string-join(gco:CharacterString/text(),'')),'http') or starts-with(normalize-space(string-join(gco:CharacterString/text(),'')),'//')">
+            "<xsl:value-of select="normalize-space(string-join(gco:CharacterString/text(),''))"/>"
+          </xsl:when>
+          <xsl:when test="starts-with(string-join(gmx:Anchor/@xlink:href,''),'http') or starts-with(./@xlink:href,'//')">
+            "<xsl:value-of select="string-join(gmx:Anchor/@xlink:href,'')"/>"
+          </xsl:when>
+          <!--xsl:otherwise>
+            {
+              "@type": "GDI-Vlaanderen",
+		"name": "GDI",
+              "description": <xsl:apply-templates mode="toJsonLDLocalized" select="."/>
+            }
+          </xsl:otherwise-->
+          <xsl:otherwise>
+              "https://metadata.vlaanderen.be/"
+          </xsl:otherwise>
+
+        </xsl:choose>
+          <xsl:if test="position() != last()">,</xsl:if></xsl:for-each> ]
+    </xsl:if>
+<!-- End of change -->
+
 
     <!-- TODO: When a dataset derives from or aggregates several originals, use the isBasedOn property. -->
     <!-- TODO: hasPart -->
