@@ -511,7 +511,8 @@ public class Transaction extends AbstractOperation implements CatalogService {
                         changeDate = new ISODate().toString();
                     }
                     String language = context.getLanguage();
-                    dataMan.updateMetadata(context, id, metadata, validate, ufo, index, language, changeDate, true);
+                    metadataManager.updateMetadata(context, id, metadata, validate, ufo, index, language, changeDate, true);
+                    //dataMan.updateMetadata(context, id, metadata, validate, ufo, index, language, changeDate, true);
 
                     updatedMd.add(id);
 
