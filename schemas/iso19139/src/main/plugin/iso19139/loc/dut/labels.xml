@@ -830,57 +830,57 @@
     <description>Versie of editie.</description>
   </element>
   <element name="gmd:electronicMailAddress">
-    <label>Email</label>
-    <description>Email adres van de verantwoordelijke organisatie of persoon.</description>
+    <label>E-mail</label>
+    <description>E-mail adres van de verantwoordelijke organisatie of persoon.</description>
   </element>
   <element name="gmd:electronicMailAddress" context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress">
-    <label>Email</label>
-    <description>Email adres van de verantwoordelijke organisatie of persoon.</description>
+    <label>E-mail</label>
+    <description>E-mail adres van de verantwoordelijke organisatie of persoon.</description>
     <condition>mandatory</condition>
     <mandatoryType>inspire</mandatoryType>
-    <mandatoryTooltip>INSPIRE B 9.1: Email adres is verplicht.</mandatoryTooltip>
+    <mandatoryTooltip>INSPIRE B 9.1: E-mail adres is verplicht.</mandatoryTooltip>
   </element>
   <element name="gmd:electronicMailAddress" context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:sourceStep/gmd:LI_ProcessStep/gmd:processor/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress">
-    <label>Email</label>
-    <description>Email adres van de verantwoordelijke organisatie of persoon.</description>
+    <label>E-mail</label>
+    <description>E-mail adres van de verantwoordelijke organisatie of persoon.</description>
     <condition>mandatory</condition>
     <mandatoryType>inspire</mandatoryType>
-    <mandatoryTooltip>INSPIRE B 9.1: Email adres is verplicht.</mandatoryTooltip>
+    <mandatoryTooltip>INSPIRE B 9.1: E-mail adres is verplicht.</mandatoryTooltip>
   </element>
   <element name="gmd:electronicMailAddress" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:userContactInfo/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress">
-    <label>Email</label>
-    <description>Email adres van de verantwoordelijke organisatie of persoon.</description>
+    <label>E-mail</label>
+    <description>E-mail adres van de verantwoordelijke organisatie of persoon.</description>
     <condition>mandatory</condition>
     <mandatoryType>inspire</mandatoryType>
-    <mandatoryTooltip>INSPIRE B 9.1: Email adres is verplicht.</mandatoryTooltip>
+    <mandatoryTooltip>INSPIRE B 9.1: E-mail adres is verplicht.</mandatoryTooltip>
   </element>
   <element name="gmd:electronicMailAddress" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress">
-    <label>Email</label>
-    <description>Email adres van de verantwoordelijke organisatie of persoon.</description>
+    <label>E-mail</label>
+    <description>E-mail adres van de verantwoordelijke organisatie of persoon.</description>
     <condition>mandatory</condition>
     <mandatoryType>inspire</mandatoryType>
-    <mandatoryTooltip>INSPIRE B 9.1: Email adres is verplicht.</mandatoryTooltip>
+    <mandatoryTooltip>INSPIRE B 9.1: E-mail adres is verplicht.</mandatoryTooltip>
   </element>
   <element name="gmd:electronicMailAddress" context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress">
-    <label>Email</label>
-    <description>Email adres van de verantwoordelijke organisatie of persoon.</description>
+    <label>E-mail</label>
+    <description>E-mail adres van de verantwoordelijke organisatie of persoon.</description>
     <condition>mandatory</condition>
     <mandatoryType>inspire</mandatoryType>
-    <mandatoryTooltip>INSPIRE B 9.1: Email adres is verplicht.</mandatoryTooltip>
+    <mandatoryTooltip>INSPIRE B 9.1: E-mail adres is verplicht.</mandatoryTooltip>
   </element>
   <element name="gmd:electronicMailAddress" context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:processor/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress">
-    <label>Email</label>
-    <description>Email adres van de verantwoordelijke organisatie of persoon.</description>
+    <label>E-mail</label>
+    <description>E-mail adres van de verantwoordelijke organisatie of persoon.</description>
     <condition>mandatory</condition>
     <mandatoryType>inspire</mandatoryType>
-    <mandatoryTooltip>INSPIRE B 9.1: Email adres is verplicht.</mandatoryTooltip>
+    <mandatoryTooltip>INSPIRE B 9.1: E-mail adres is verplicht.</mandatoryTooltip>
   </element>
   <element name="gmd:electronicMailAddress" context="/gmd:MD_Metadata/gmd:contact/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress">
-    <label>Email</label>
-    <description>Email adres van de verantwoordelijke organisatie of persoon.</description>
+    <label>E-mail</label>
+    <description>E-mail adres van de verantwoordelijke organisatie of persoon.</description>
     <condition>mandatory</condition>
     <mandatoryType>inspire</mandatoryType>
-    <mandatoryTooltip>INSPIRE B 10.1: Email adres van de organisatie verantwoordelijk voor de metadata is verplicht.
+    <mandatoryTooltip>INSPIRE B 10.1: E-mail adres van de organisatie verantwoordelijk voor de metadata is verplicht.
     </mandatoryTooltip>
   </element>
   <element name="gmd:environmentDescription">

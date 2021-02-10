@@ -142,7 +142,7 @@
     <alert.M46><div><h2>INSPIRE - Toegangsbeprkingen zijn verplicht.</h2></div></alert.M46>
 
     <alert.M47><div><h2>INSPIRE - Verantwoordelijke organisatie is verplicht.</h2><br/>
-       Zowel de naam van de organisatie als het Email adres moeten gegeven worden.
+       Zowel de naam van de organisatie als het E-mail adres moeten gegeven worden.
         <br/>
         Zie  / point of contact.
     </div></alert.M47>
@@ -154,8 +154,8 @@
      </div></alert.M48>
     <alert.M48.role><div>Rol van de verantwoordelijke voor de metadata is niet ingevuld.</div></alert.M48.role>
     <report.M48><div>Metadata contactpunt (auteur) aanwezig.</div></report.M48>
-    <alert.M48.info><div>Organisatie naam en/of Email niet aanwezig voor de metadata auteur.</div></alert.M48.info>
-    <report.M48.info><div>Organisatie naam en/of Email aanwezig:</div></report.M48.info>
+    <alert.M48.info><div>Organisatie naam en/of E-mail niet aanwezig voor de metadata auteur.</div></alert.M48.info>
+    <report.M48.info><div>Organisatie naam en/of E-mail aanwezig:</div></report.M48.info>
 
     <alert.M49><div><h2>INSPIRE - Metadata taal is verplicht</h2><br/>
     </div></alert.M49>
