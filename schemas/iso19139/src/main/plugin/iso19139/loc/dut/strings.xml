@@ -101,7 +101,7 @@
   <pointOfContact>Contactgegevens voor de data</pointOfContact>
   <metadataPointOfContact>Contact for the metadata</metadataPointOfContact>
   <organisationName>Organisation name</organisationName>
-  <electronicMailAddress>Email</electronicMailAddress>
+  <electronicMailAddress>E-mail</electronicMailAddress>
   <role>Role</role>
   <encoding>Encoding</encoding>
   <inspireTheme>INSPIRE themes</inspireTheme>
