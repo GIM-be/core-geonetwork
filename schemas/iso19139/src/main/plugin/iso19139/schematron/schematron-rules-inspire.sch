@@ -774,14 +774,14 @@ USA.
         <sch:title>$loc/strings/metadata</sch:title>
         <sch:rule context="//gmd:MD_Metadata">
             <!--  Date stamp -->
-            <!--sch:let name="dateStamp" value="gmd:dateStamp/*/text()"/>
+            <sch:let name="dateStamp" value="gmd:dateStamp/gco:Date/text()"/>
             <sch:assert test="$dateStamp">
                 <sch:value-of select="$loc/strings/alert.M50/div"/>
             </sch:assert>
             <sch:report test="$dateStamp">
                 <sch:value-of select="$loc/strings/report.M50/div"/>
                 <sch:value-of select="$dateStamp"/>
-            </sch:report-->
+            </sch:report>
 
 
             <!--  Language -->
