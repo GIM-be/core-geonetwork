@@ -267,5 +267,9 @@
   <report.requiredCitation>Data Identification Citation found</report.requiredCitation>
   <requiredElements>Required Elements</requiredElements>
   <requireCitation>Citation</requireCitation>
+  <alert.countConformanceResult>Multiple DQ_ConformanceResult are not allowed in the same report</alert.countConformanceResult>
+  <alert.countQuantitativeResult>Multiple DQ_QuantitativeResult are not allowed in the same report</alert.countQuantitativeResult>
+  <alert.minimumOneConformanceResultOrQuantitativeResult>Minimum one of DQ_ConformanceResult or DQ_QuantitativeResult is required in the same report</alert.minimumOneConformanceResultOrQuantitativeResult>
+  <report.minimumOneConformanceResultOrQuantitativeResult>Minimum one of DQ_ConformanceResult or DQ_QuantitativeResult found</report.minimumOneConformanceResultOrQuantitativeResult>
 
 </strings>
