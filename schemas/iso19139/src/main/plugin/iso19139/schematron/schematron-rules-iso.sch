@@ -594,6 +594,24 @@ USA.
                 <sch:value-of select="$loc/strings/report.requiredIdentificationLanguage"/>
             </sch:report>
         </sch:rule>
+        <sch:rule context="//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report">
+            <sch:let name="countConformanceResult"
+                     value="count(*/gmd:result/gmd:DQ_ConformanceResult)"/>
+            <sch:let name="countQuantitativeResult"
+                     value="count(*/gmd:result/gmd:DQ_QuantitativeResult)"/>
+            <sch:assert test="$countConformanceResult &lt; 2 ">
+              <sch:value-of select="concat($loc/strings/alert.countConformanceResult,' (Check the results in report ',position()-1,')')"/>
+            </sch:assert>
+            <sch:assert test="$countQuantitativeResult &lt; 2">
+              <sch:value-of select="concat($loc/strings/alert.countQuantitativeResult,' (Check the results in report ',position()-1,')')"/>
+            </sch:assert>
+            <sch:assert test="($countConformanceResult + $countQuantitativeResult) > 0">
+              <sch:value-of select="concat($loc/strings/alert.minimumOneConformanceResultOrQuantitativeResult,' (Check the results in report ',position()-1,')')"/>
+            </sch:assert>
+            <sch:report test="($countConformanceResult = 1 or $countQuantitativeResult = 1) and not($countConformanceResult > 1 or $countQuantitativeResult >1)">
+              <sch:value-of select="concat($loc/strings/report.minimumOneConformanceResultOrQuantitativeResult,' (Report ',position()-1,')')"/>
+            </sch:report>
+        </sch:rule>
     </sch:pattern>
 
     <sch:pattern>
@@ -607,5 +625,4 @@ USA.
             </sch:report>
         </sch:rule>
     </sch:pattern>
-
 </sch:schema>
