@@ -3320,7 +3320,7 @@
         -->
         <directive data-gn-overview-manager=""/>
         <directive data-gn-onlinesrc-list=""
-                   data-types="onlinesrc|parent|dataset|service|source|sibling|associated|fcats"/>
+                   data-types="onlinesrc|parent|children|dataset|service|source|sibling|associated|fcats"/>
 
         <directive gn-geo-publisher=""
                    data-ng-if="gnCurrentEdit.geoPublisherConfig"

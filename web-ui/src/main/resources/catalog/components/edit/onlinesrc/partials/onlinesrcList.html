@@ -309,6 +309,29 @@
         </li>
       </ul>
 
+      <!--******* List of children ******* -->
+      <h2 class="onlinesrc-title"
+          data-ng-show="::isCategoryEnable('children') && relations.children">
+        <i class="fa fa-sitemap" data-ng-class="onlinesrcService.reload ? 'fa-spin' : ''"></i>
+        <i class="icon-external-link"></i>&nbsp;
+        <span data-translate="">childrenMd</span>
+      </h2>
+      <ul class="list-group"
+          data-ng-show="::isCategoryEnable('children') && relations.children">
+        <li class="list-group-item"
+            data-ng-repeat="resource in relations.children | orderBy:'sortDate'">
+          <div class="row">
+            <div class="col-md-11"
+                 title="{{resource.description | gnLocalized: lang}}">
+              <a target="_blank"
+                 data-ng-href="{{'catalog.search#/metadata/' + resource.id}}">
+                {{resource.title | gnLocalized: lang}}
+              </a>
+            </div>
+          </div>
+        </li>
+      </ul>
+
       <!-- ******* List of sources ******* -->
       <h2 class="onlinesrc-title"
           data-ng-show="::isCategoryEnable('source') && relations.sources">

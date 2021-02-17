@@ -250,6 +250,7 @@
     "overviews": "Überblicke",
     "overwrite": "Daten mit derselben UUID überschreiben",
     "parentMd": "Elternmetadatensatz",
+    "childrenMd": "Kindermetadatensatz",
     "print_layout": "Layout",
     "print_scale": "Scale",
     "process": "Verarbeiten",
