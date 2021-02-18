@@ -60,5 +60,14 @@
   "fieldTooLong": "This field is too long to be displayed",
   "noUserDetailsAvailable": "No details available for this user",
   "transferFrom" : "From",
-  "transferTo" : "To"
+  "transferTo" : "To",
+  "metadata/workflow/draftWhenInSchema": "Activate workflow for record with schema in ",
+  "draftWhenInSchema-all": "Any schema",
+  "draftWhenInSchema-selection": "Selected schemas",
+  "metadata/workflow/draftWhenInSchema-help": "Regular expression for matching schemas where record needs to be set with draft status automatically. eg. iso.* to match all iso schemas starting with iso, iso19139|iso19110 to match iso19139 or iso19110.",
+  "modifiedBy": "Last modified by",
+  "childrenMd": "Child records",
+  "geoDesc": "Omschrijving geografische begrenzing",
+  "geoBox": "Omschrijvende rechthoek",
+  "geoDescCode": "Identificator geografische begrenzing"
 }

@@ -57,5 +57,14 @@
   "fieldTooLong": "Ce champ est trop long pour être affiché",
   "noUserDetailsAvailable": "Aucun détails disponible pour cet utilisateur",
   "transferFrom" : "De",
-  "transferTo" : "À"
+  "transferTo" : "À",
+  "metadata/workflow/draftWhenInSchema": "Activer le workflow pour les fiches avec schema dans ",
+  "draftWhenInSchema-all": "Tous les schemas",
+  "draftWhenInSchema-selection": "Les schemas suivants",
+  "metadata/workflow/draftWhenInSchema-help": "Expression régulière pour identifier les schemas dans lesquelles, les fiches doivent être dans le statut brouillon par défaut. eg. iso.* pour tous les schemas commençant par iso, iso19139|iso19110 pour le schema iso19139 ou le iso19110.",
+  "modifiedBy": "Dernière modification par",
+  "childrenMd": "Fiches enfant",
+  "geoDesc": "Omschrijving geografische begrenzing",
+  "geoBox": "Omschrijvende rechthoek",
+  "geoDescCode": "Identificator geografische begrenzing"
 }

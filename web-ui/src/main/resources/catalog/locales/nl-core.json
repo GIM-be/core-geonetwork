@@ -182,7 +182,6 @@
     "organization": "Organisatie",
     "originator": "Bron",
     "owner": "Eigenaar",
-    "modifiedBy": "Laatst bijgewerkt door",
     "mapLoadError": "Mislukt om kaart te laden van '{{url}}'",
     "emptyMapLoadError": "Kaart op '{{url}}' is leeg",
     "pointOfContact": "Contact gegevens",
