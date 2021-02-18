@@ -85,5 +85,17 @@
   "fieldTooLong": "Dit veld is te lang om te worden weergegeven",
   "noUserDetailsAvailable": "Geen details beschikbaar voor deze gebruiker",
   "transferFrom" : "Van",
-  "transferTo" : "Naar"
+  "transferTo" : "Naar",
+  "metadata/workflow/draftWhenInSchema": "Activeer workflow voor record met schema in ",
+  "draftWhenInSchema-all": "Ieder schema",
+  "draftWhenInSchema-selection": "Geselecteerde schemas",
+  "metadata/workflow/draftWhenInSchema-help": "Regular expression for matching schemas where record needs to be set with draft status automatically. eg. iso.* to match all iso schemas starting with iso, iso19139|iso19110 to match iso19139 or iso19110.",
+  "modifiedBy": "Laatst bijgewerkt door",
+  "childrenMd": "Child records",
+  "geoDesc": "Omschrijving geografische begrenzing",
+  "geoBox": "Omschrijvende rechthoek",
+  "geoDescCode": "Identificator geografische begrenzing",
+  "cswCapabilitiesProperties": "CSW Service-informatie",
+  "system/csw/contactId": "contact",
+  "system/csw/contactId-help": "Kies het contact wordt toegevoegd aan de GetCapabilities aanvraag. Maak een aangepaste gebruikersinterface in het gebruikersbeheer pagina indien nodig."
 }
