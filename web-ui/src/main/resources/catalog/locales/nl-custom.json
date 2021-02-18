@@ -94,5 +94,8 @@
   "childrenMd": "Child records",
   "geoDesc": "Omschrijving geografische begrenzing",
   "geoBox": "Omschrijvende rechthoek",
-  "geoDescCode": "Identificator geografische begrenzing"
+  "geoDescCode": "Identificator geografische begrenzing",
+  "cswCapabilitiesProperties": "CSW Service-informatie",
+  "system/csw/contactId": "contact",
+  "system/csw/contactId-help": "Kies het contact wordt toegevoegd aan de GetCapabilities aanvraag. Maak een aangepaste gebruikersinterface in het gebruikersbeheer pagina indien nodig."
 }
