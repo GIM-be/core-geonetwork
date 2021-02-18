@@ -103,7 +103,7 @@
     <facet name="isHarvested" indexKey="_isHarvested" label="isHarvested"/>
     <facet name="mdStatus" indexKey="_status" label="mdStatus"/>
     <facet name="status" indexKey="cl_status" label="status"/>
-    <facet name="sourceCatalog" indexKey="_source" label="sourceCatalog"/>
+    <facet name="sourceCatalog" indexKey="_nonOgcwxsSource" label="sourceCatalog"/>
     <facet name="standard" indexKey="_schema" label="standards"/>
     <facet name="subTemplateType" indexKey="_root" label="subTemplateTypes"/>
     <facet name="recordOwner" indexKey="recordOwner" label="recordOwner"/>
