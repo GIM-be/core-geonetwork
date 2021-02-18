@@ -667,6 +667,7 @@ public final class Geonet {
         public static final String DATABASE_CREATE_DATE = "_createDate";
         public static final String DATABASE_CHANGE_DATE = "_changeDate";
         public static final String SOURCE = "_source";
+        public static final String NON_OGCWXS_SOURCE = "_nonOgcwxsSource";
         public static final String IS_TEMPLATE = "_isTemplate";
         public static final String UUID = "_uuid";
         public static final String IS_HARVESTED = "_isHarvested";

@@ -50,12 +50,7 @@ import org.fao.geonet.domain.StatusValueType;
 import org.fao.geonet.domain.User;
 import org.fao.geonet.domain.userfeedback.RatingsSetting;
 import org.fao.geonet.events.md.MetadataIndexCompleted;
-import org.fao.geonet.kernel.GeonetworkDataDirectory;
-import org.fao.geonet.kernel.IndexMetadataTask;
-import org.fao.geonet.kernel.SchemaManager;
-import org.fao.geonet.kernel.SelectionManager;
-import org.fao.geonet.kernel.SvnManager;
-import org.fao.geonet.kernel.XmlSerializer;
+import org.fao.geonet.kernel.*;
 import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
@@ -120,6 +115,8 @@ public class BaseMetadataIndexer implements IMetadataIndexer, ApplicationEventPu
 
     private IMetadataUtils metadataUtils;
     private IMetadataManager metadataManager;
+    @Autowired(required = false)
+    private HarvestInfoProvider harvestInfoProvider;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -152,6 +149,11 @@ public class BaseMetadataIndexer implements IMetadataIndexer, ApplicationEventPu
 
     public void init(ServiceContext context, Boolean force) throws Exception {
         servContext = context;
+        try {
+            harvestInfoProvider = context.getBean(HarvestInfoProvider.class);
+        } catch (Exception e) {
+            // If it doesn't exist, that's fine
+        }
     }
 
     @Override
@@ -422,6 +424,21 @@ public class BaseMetadataIndexer implements IMetadataIndexer, ApplicationEventPu
             moreFields
                 .add(SearchManager.makeField(Geonet.IndexFieldNames.DATABASE_CHANGE_DATE, changeDate, true, true));
             moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.SOURCE, source, true, true));
+            boolean bAddNonOgcwxsSource = true;
+            if (fullMd.getHarvestInfo().isHarvested()) {
+                if (harvestInfoProvider != null) {
+                    Element info = harvestInfoProvider.getHarvestInfo(source, metadataId, uuid);
+                    if (info!=null) {
+                        String type = info.getChildText("type");
+                        if (type!=null && type.equals("ogcwxs")) {
+                            bAddNonOgcwxsSource = false;
+                        }
+                    }
+                }
+            }
+            if (bAddNonOgcwxsSource) {
+                moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.NON_OGCWXS_SOURCE, source, true, true));
+            }
             moreFields.add(
                 SearchManager.makeField(Geonet.IndexFieldNames.IS_TEMPLATE, metadataType.codeString, true, true));
             moreFields.add(SearchManager.makeField(Geonet.IndexFieldNames.UUID, uuid, true, true));
