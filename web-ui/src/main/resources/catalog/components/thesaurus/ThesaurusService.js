@@ -224,7 +224,7 @@
                * eg. to-iso19139-keyword for default form.
                */
               getXML: function(thesaurus,
-                  keywordUris, transformation, lang, textgroupOnly) {
+                  keywordUris, transformation, lang, textgroupOnly, originator) {
                 // http://localhost:8080/geonetwork/srv/eng/
                 // xml.keyword.get?thesaurus=external.place.regions&id=&
                 // multiple=false&transformation=to-iso19139-keyword&
@@ -233,7 +233,8 @@
                   thesaurus: thesaurus,
                   id: keywordUris instanceof Array ?
                       keywordUris.join(',') : keywordUris || '',
-                  transformation: transformation || 'to-iso19139-keyword'
+                  transformation: transformation || 'to-iso19139-keyword',
+                  originator: originator || ''
                 };
                 if (lang) {
                   params.lang = lang;

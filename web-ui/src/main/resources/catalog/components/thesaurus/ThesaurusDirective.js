@@ -204,6 +204,7 @@
              lang: '@',
              orderById: '@',
              textgroupOnly: '@',
+             originator: '@',
 
              // Max number of tags allowed. Use 1 to restrict to only
              // on keyword.
@@ -484,7 +485,7 @@
                gnThesaurusService
                 .getXML(scope.thesaurusKey,
                getKeywordIds(), scope.currentTransformation, scope.langs,
-                   scope.textgroupOnly).then(
+                   scope.textgroupOnly, scope.originator).then(
                function(data) {
                  scope.snippet = data;
                });
