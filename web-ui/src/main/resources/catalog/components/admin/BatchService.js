@@ -69,14 +69,14 @@
          *                           to the related dataset.
          * @return {HttpPromise}
          */
-        runProcessMd: function(params, skipSave) {
+        runProcessMd: function(params, skipSave, skipCommit) {
           if (!params.id && !params.uuid) {
             angular.extend(params, {
               id: gnCurrentEdit.id
             });
           }
           var defer = $q.defer();
-          gnEditor.save(false, true)
+          (skipCommit ? $q.when() : gnEditor.save(false, true))
               .then(function() {
                 if (!skipSave) {
                   $http.post('../api/records/' + (params.id || params.uuid) +

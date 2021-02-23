@@ -145,8 +145,8 @@
        * response and reload the updated online resources list.
        * The first save is done in 'runProcessMd'
        */
-      var runProcess = function(scope, params) {
-        return gnBatchProcessing.runProcessMd(params).then(function(data) {
+      var runProcess = function(scope, params, skipCommit) {
+        return gnBatchProcessing.runProcessMd(params, false, skipCommit).then(function(data) {
           refreshForm(scope, $(data.data));
         }, function(error) {
           $rootScope.$broadcast('StatusUpdated', {
@@ -427,18 +427,22 @@
           var scope = this;
 
           // Add link of the service in the dataset (optional)
+          var isMdDcat = params.schema === 'metadata-dcat';
+
           var addDatasetToServiceFn = function(r) {
             var qParams = setParams('dataset-add', params);
             if (addOnlineSrcInDataset) {
               return runProcess(scope, {
                 scopedName: qParams.name || '',
                 uuidref: qParams.identifier,
-                uuid: qParams.uuidDS,
+                uuid: isMdDcat ? qParams.uuidSrv : qParams.uuidDS,
                 url: qParams.url,
                 source: qParams.identifier || '',
+                uuidDS: qParams.uuidDS,
+                uuidSrv: qParams.uuidSrv,
                 protocol: qParams.protocol,
                 process: qParams.process
-              }).then(function () {
+              }, isMdDcat).then(function () {
                 closePopup(popupid);
               });
             } else {
@@ -453,9 +457,10 @@
           return gnBatchProcessing.runProcessMd({
             scopedName: qParams.name || '',
             uuidref: qParams.identifier,
-            uuid: qParams.uuidSrv,
+            uuid: isMdDcat ? qParams.uuidDS : qParams.uuidSrv,
             source: qParams.identifier || '',
             uuidDS: qParams.uuidDS,
+            uuidSrv: qParams.uuidSrv,
             process: qParams.process
           }, true).then(addDatasetToServiceFn, function(error) {
             // Current user may not be able to edit
@@ -620,9 +625,10 @@
          * @param {Object} onlinesrc the online resource to remove
          */
         removeService: function(onlinesrc) {
+          var isMdDcat = gnCurrentEdit.schema === 'metadata-dcat';
           var params = {
-            uuid: onlinesrc.id,
-            uuidref: gnCurrentEdit.metadata.identifier
+            uuid: isMdDcat ? gnCurrentEdit.uuid : onlinesrc.id,
+            uuidref: isMdDcat ? onlinesrc.id : gnCurrentEdit.metadata.identifier
           }, service = this;
 
           gnBatchProcessing.runProcessMd(
