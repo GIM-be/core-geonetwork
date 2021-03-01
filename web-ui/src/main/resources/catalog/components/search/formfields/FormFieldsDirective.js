@@ -299,7 +299,9 @@
             if (attrs.profile) {
               url = '../api/groups?profile=' + attrs.profile;
             }
-            var optional = scope.optional != 'false' ? true : false;
+            //var optional = scope.optional != 'false' ? true : false;
+            // Make group required in the front-end too, to avoid issues with missing rights on metadata records for AIV
+            var optional = false;
             var setDefaultValue = attrs['setDefaultValue'] == 'false' ? false : true;
             scope.disabled = scope.disabled ? true : false;
 
