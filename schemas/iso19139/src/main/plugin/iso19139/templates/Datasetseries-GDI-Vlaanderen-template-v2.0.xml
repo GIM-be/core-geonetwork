@@ -238,7 +238,7 @@
           </gmd:fileName>
         </gmd:MD_BrowseGraphic>
       </gmd:graphicOverview>
-      <gmd:descriptiveKeywords>
+      <!--gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
             <gmx:Anchor/>
@@ -272,7 +272,7 @@
             </gmd:CI_Citation>
           </gmd:thesaurusName>
         </gmd:MD_Keywords>
-      </gmd:descriptiveKeywords>
+      </gmd:descriptiveKeywords-->
       <gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
@@ -364,7 +364,7 @@
           </gmd:thesaurusName>
         </gmd:MD_Keywords>
       </gmd:descriptiveKeywords>
-      <gmd:descriptiveKeywords>
+      <!--gmd:descriptiveKeywords>
         <gmd:MD_Keywords>
           <gmd:keyword>
             <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional">Regionaal</gmx:Anchor>
@@ -388,6 +388,35 @@
                     <gmd:CI_DateTypeCode
                       codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                       codeListValue="publication"/>
+                  </gmd:dateType>
+                </gmd:CI_Date>
+              </gmd:date>
+            </gmd:CI_Citation>
+          </gmd:thesaurusName>
+        </gmd:MD_Keywords>
+      </gmd:descriptiveKeywords-->
+      <gmd:descriptiveKeywords>
+        <gmd:MD_Keywords>
+          <gmd:keyword>
+            <gmx:Anchor/>
+          </gmd:keyword>
+          <gmd:type>
+            <gmd:MD_KeywordTypeCode codeListValue="theme"
+                                    codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"/>
+          </gmd:type>
+          <gmd:thesaurusName>
+            <gmd:CI_Citation>
+              <gmd:title>
+                <gmx:Anchor xlink:href="http://vocab.belgif.be/auth/datatheme">Data.gov.be themes</gmx:Anchor>
+              </gmd:title>
+              <gmd:date>
+                <gmd:CI_Date>
+                  <gmd:date>
+                    <gco:Date>2019-01-31</gco:Date>
+                  </gmd:date>
+                  <gmd:dateType>
+                    <gmd:CI_DateTypeCode codeListValue="publication"
+                                         codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
                   </gmd:dateType>
                 </gmd:CI_Date>
               </gmd:date>
@@ -808,7 +837,7 @@
           </gmd:level>
         </gmd:DQ_Scope>
       </gmd:scope>
-      <gmd:report>
+      <!--gmd:report>
         <gmd:DQ_DomainConsistency>
           <gmd:result>
             <gmd:DQ_ConformanceResult>
@@ -841,7 +870,7 @@
             </gmd:DQ_ConformanceResult>
           </gmd:result>
         </gmd:DQ_DomainConsistency>
-      </gmd:report>
+      </gmd:report-->
       <gmd:lineage>
         <gmd:LI_Lineage>
           <gmd:statement>
