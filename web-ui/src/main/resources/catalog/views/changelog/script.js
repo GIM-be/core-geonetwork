@@ -15,6 +15,24 @@ function createSummary() {
   });
 }
 
+function createSummary() {
+  let sections = document.querySelectorAll('.container section');
+  let summary = document.getElementById('summary');
+  sections.forEach(function(section) {
+    let title = document.createElement('h3');
+    title.textContent = section.id;
+    console.log(title)
+    section.prepend(title);
+
+    let link = document.createElement('a');
+    link.text = section.id;
+    link.href = '#' + section.id;
+    let bullet = document.createElement('li');
+    bullet.append(link);
+    summary.append(bullet);
+  });
+}
+
 function updateSelected() {
   if (target) {
     target.classList.remove('selected');

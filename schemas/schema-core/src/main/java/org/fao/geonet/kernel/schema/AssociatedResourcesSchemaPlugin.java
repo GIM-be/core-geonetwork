@@ -53,4 +53,8 @@ public interface AssociatedResourcesSchemaPlugin {
     public abstract Set<String> getAssociatedFeatureCatalogueUUIDs(Element metadata);
 
     public abstract Set<String> getAssociatedSourceUUIDs(Element metadata);
+
+    public default Set<String> getAssociatedServices(Element metadata) {
+        return null;
+    }
 }
