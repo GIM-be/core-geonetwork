@@ -239,9 +239,14 @@
       <item>
         <title>
           <value lang="{$lang}">
-            <xsl:value-of select="concat('External: ', tokenize(., '/')[last()])"/>
+            <xsl:value-of select="'Dataset'"/>
           </value>
         </title>
+        <description>
+          <value lang="{$lang}">
+            <xsl:value-of select="."/>
+          </value>
+        </description>
         <url>
           <value lang="{$lang}">
             <xsl:value-of select="."/>
