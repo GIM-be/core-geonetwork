@@ -315,9 +315,14 @@ public class MetadataInsertDeleteApi {
             throw new SecurityException("User is not allowed to create SUB_TEMPLATE or TEMPLATE_OF_SUB_TEMPLATE metadata.");
         }
 
+        if (StringUtils.isBlank(group) || "undefined".equals(group)){
+            throw new SecurityException("groupIsRequired");
+        }
+
         if (url == null && xml == null && serverFolder == null) {
             throw new IllegalArgumentException("XML fragment or a URL or a server folder MUST be provided.");
         }
+
         SimpleMetadataProcessingReport report = new SimpleMetadataProcessingReport();
 
         if (xml != null) {
@@ -456,6 +461,10 @@ public class MetadataInsertDeleteApi {
             throw new SecurityException("User is not allowed to duplicate SUB_TEMPLATE or TEMPLATE_OF_SUB_TEMPLATE metadata.");
         }
 
+        if (StringUtils.isBlank(group) || "undefined".equals(group)){
+            throw new SecurityException("groupIsRequired");
+        }
+
         AbstractMetadata sourceMetadata = ApiUtils.getRecord(sourceUuid);
 
         boolean generateUuid = settingManager.getValueAsBool(Settings.SYSTEM_METADATACREATE_GENERATE_UUID);
@@ -574,6 +583,11 @@ public class MetadataInsertDeleteApi {
         if (file == null) {
             throw new IllegalArgumentException(String.format("A file MUST be provided."));
         }
+
+        if (StringUtils.isBlank(group) || "undefined".equals(group)){
+            throw new SecurityException("groupIsRequired");
+        }
+
         SimpleMetadataProcessingReport report = new SimpleMetadataProcessingReport();
         if (file != null) {
             ServiceContext context = ApiUtils.createServiceContext(request);

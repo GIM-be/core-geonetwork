@@ -233,6 +233,7 @@
             true
         ).error(function(data) {
           $rootScope.$broadcast('StatusUpdated', {
+            msg: $translate.instant(data.description),
             title: $translate.instant('createMetadataError'),
             error: data.error,
             timeout: 0,
