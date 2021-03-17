@@ -21,7 +21,6 @@ function createSummary() {
   sections.forEach(function(section) {
     let title = document.createElement('h3');
     title.textContent = section.id;
-    console.log(title)
     section.prepend(title);
 
     let link = document.createElement('a');

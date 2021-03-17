@@ -12,7 +12,7 @@
   <ul id="summary"></ul>
 
   <h1>Changelog</h1>
-  <section id="xx/03/2021">
+  <section id="22/03/2021">
     <ol>
       <li>Implement link from dataset to service</li>
       <li>Renamed the two templates to "Sjabloon voor metadata-dcat van Dataset" and "Sjabloon voor metadata-dcat van
@@ -23,6 +23,83 @@
       </li>
       <li>Remove the default title when creating a service from the template</li>
       <li>Improved external linked dataset on services</li>
+      <li>Remove wettelijkeBeperkingen and doelpopulatie elements</li>
+      <li>Rename XML namespace from <code>mvs</code> to <code>mdcat</code></li>
+      <li>Rename elements:
+        <table class="bullet-table">
+          <tr>
+            <td>•</td>
+            <td>authenticatie</td>
+            <td> ➔</td>
+            <td>landingspaginaVoorAuthenticatie</td>
+          </tr>
+          <tr>
+            <td>•</td>
+            <td>dienstverleningsKwaliteit</td>
+            <td> ➔</td>
+            <td>landingspaginaVoorStatusinformatie</td>
+          </tr>
+          <tr>
+            <td>•</td>
+            <td>gebruiksbepaling</td>
+            <td> ➔</td>
+            <td>landingspaginaVoorGebruiksinformatie</td>
+          </tr>
+          <tr>
+            <td>•</td>
+            <td>statusVanGebruik</td>
+            <td> ➔</td>
+            <td>levensfase</td>
+          </tr>
+          <tr>
+            <td>•</td>
+            <td>statusVanOntwikkeling</td>
+            <td> ➔</td>
+            <td>ontwikkelingstoestand</td>
+          </tr>
+        </table>
+      </li>
+      <li>Update the DataService fields labels in the view and the editor according to the
+        <a href="https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/" target="_blank">metadata-dcat
+          applicatieprofiel</a></li>
+      <li>Move landingspaginaVoorAuthenticatie, landingspaginaVoorStatusinformatie, landingspaginaVoorGebruiksinformatie
+        from the service information section to the usage information section
+      </li>
+      <li>Renamed schematron validation rules set. We now have the three following schematrons:
+        <table class="bullet-table">
+          <tr>
+            <td>•</td>
+            <td>schematron-rules-dcat-ap</td>
+            <td> ➔</td>
+            <td>Mandatory rules for dcat-ap 2.0</td>
+          </tr>
+          <tr>
+            <td>•</td>
+            <td>schematron-rules-dcat-ap-recommendations</td>
+            <td> ➔</td>
+            <td>Recommended rules for dcat-ap 2.0</td>
+          </tr>
+          <tr>
+            <td>•</td>
+            <td>schematron-rules-metadata-dcat</td>
+            <td> ➔</td>
+            <td>Mandatory rules metadata-dcat</td>
+          </tr>
+        </table>
+        <br>
+        <strong>Notes:</strong> No changes to the validation rule implementations have yet been made
+      </li>
+      <li>Fix issue where, sometimes, the wrong label was used</li>
+      <li>dcat:DataService/dct:accessRight added to the default view of the editor and with default value "public" in
+        the template
+      </li>
+      <li>Thesauri for <code>mdcat:levensfase</code> and <code>mdcat:ontwikkelingstoestand</code> have been updated to
+        point to their correct new scheme:
+        <ul>
+          <li><a target="_blank" href="https://data.vlaanderen.be/id/conceptscheme/levensfase">https://data.vlaanderen.be/id/conceptscheme/levensfase</a></li>
+          <li><a target="_blank" href="https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand">https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand</a></li>
+        </ul>
+      </li>
     </ol>
   </section>
 
