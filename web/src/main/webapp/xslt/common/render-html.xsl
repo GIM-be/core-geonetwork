@@ -93,30 +93,15 @@
           <div class="container" role="main">
             <xsl:copy-of select="$content"/>
           </div>
-          <xsl:call-template name="footer"/>
+          <!--<xsl:call-template name="footer"/>-->
         </div>
-
-        <script type="text/javascript">
-          $('.nav-tabs-advanced li:not(#tab-overflow)')
-            .filter(':visible')
-            .slice(5)
-            .each(function() {
-              $(this).appendTo('#tab-overflow .dropdown-menu');
-              var overflow = $('#tab-overflow');
-              if(overflow.is(':hidden')) {
-                overflow.show();
-              }
-            }
-          );
-        </script>
       </body>
     </html>
   </xsl:template>
 
   <xsl:template name="render-pdf">
     <xsl:param name="content"/>
-    <xsl:param name="title"
-               select="/root/gui/systemConfig/settings/system/site/name"/>
+    <xsl:param name="title" select="/root/gui/systemConfig/settings/system/site/name"/>
 
     <html ng-app="{$angularModule}" lang="{$lang2chars}" id="ng-app">
       <head>
