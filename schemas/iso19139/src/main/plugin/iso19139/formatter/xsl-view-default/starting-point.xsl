@@ -39,9 +39,7 @@
         <!-- Render complete HTML page -->
         <xsl:call-template name="render-html">
           <xsl:with-param name="content">
-            <div>Begin rendering record</div>
             <xsl:call-template name="render-record"/>
-            <div>End rendering record</div>
           </xsl:with-param>
           <xsl:with-param name="title">
             <xsl:apply-templates mode="getMetadataTitle" select="$metadata"/>
@@ -74,7 +72,7 @@
           <div class="col-md-8">
             <header>
               <h1>
-                <xsl:if test="$output!='pdf'">
+                <xsl:if test="$output != 'pdf' and $output != 'html'">
                   <i class="fa gn-icon-{{{{md.type[0]}}}}">
                     <xsl:comment select="'icon'"/>
                   </i>
@@ -90,7 +88,7 @@
                 </div>
               </xsl:if-->
             </header>
-            <xsl:if test="$output!='pdf'">
+            <xsl:if test="$output != 'pdf' and $output != 'html'">
               <xsl:call-template name="render-toc"/>
             </xsl:if>
             <div class="tab-content">
@@ -98,13 +96,22 @@
               <xsl:apply-templates mode="render-content" select="/root/gmd:MD_Metadata"/>
             </div>
           </div>
-          <xsl:if test="$output!='pdf'">
-            <div class="gn-md-side gn-md-side-advanced col-md-4">
-              <xsl:call-template name="render-sidebar">
-                <xsl:with-param name="metadata" select="$metadata"/>
-              </xsl:call-template>
-            </div>
-          </xsl:if>
+          <xsl:choose>
+            <xsl:when test="$output = 'html'">
+              <div class="gn-md-side gn-md-side-advanced col-md-4">
+                <xsl:call-template name="render-html-sidebar">
+                  <xsl:with-param name="metadata" select="$metadata"/>
+                </xsl:call-template>
+              </div>
+            </xsl:when>
+            <xsl:when test="$output != 'pdf'">
+              <div class="gn-md-side gn-md-side-advanced col-md-4">
+                <xsl:call-template name="render-sidebar">
+                  <xsl:with-param name="metadata" select="$metadata"/>
+                </xsl:call-template>
+              </div>
+            </xsl:when>
+          </xsl:choose>
         </div>
       </article>
       <br/>
@@ -226,6 +233,10 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template name="render-html-sidebar">
+    <xsl:param name="metadata"/>
+    <xsl:apply-templates mode="getOverviews" select="$metadata"/>
+  </xsl:template>
 
   <xsl:template name="render-toc">
     <ul class="view-outline nav nav-tabs nav-tabs-advanced gp-nav">
@@ -289,17 +300,19 @@
         </span>
       </h4>
       <xsl:for-each select="gmd:identificationInfo/*/gmd:graphicOverview/*">
-        <img data-gn-img-modal="md"
-             class="gn-img-thumbnail center-block"
-             alt="{$schemaStrings/overview}"
-             src="{gmd:fileName/*}"/>
-        <xsl:for-each select="gmd:fileDescription">
-          <div class="gn-img-thumbnail-caption">
-            <xsl:call-template name="localised">
-              <xsl:with-param name="langId" select="$langId"/>
-            </xsl:call-template>
-          </div>
-        </xsl:for-each>
+        <xsl:if test="normalize-space(gmd:fileName/*) != ''">
+          <img data-gn-img-modal="md"
+               class="gn-img-thumbnail center-block"
+               alt="{$schemaStrings/overview}"
+               src="{gmd:fileName/*}"/>
+          <xsl:for-each select="gmd:fileDescription">
+            <div class="gn-img-thumbnail-caption">
+              <xsl:call-template name="localised">
+                <xsl:with-param name="langId" select="$langId"/>
+              </xsl:call-template>
+            </div>
+          </xsl:for-each>
+        </xsl:if>
       </xsl:for-each>
     </section>
   </xsl:template>
@@ -313,13 +326,13 @@
         </xsl:call-template>
       </xsl:for-each>
     </div>
-    <xsl:if test="$output!='pdf'">
-      <xsl:if test="$withJsonLd = 'true'">
-        <script type="application/ld+json">
-          <xsl:apply-templates mode="getJsonLD"
-                               select="$metadata"/>
-        </script>
-      </xsl:if>
+    <xsl:if test="$output != 'pdf' and $withJsonLd = 'true'">
+      <xsl:element name="script">
+        <xsl:attribute name="type" select="'application/ld+json'"/>
+        <xsl:apply-templates mode="getJsonLD" select="$metadata"/>
+      </xsl:element>
+    </xsl:if>
+    <xsl:if test="$output != 'pdf' and $output != 'html'">
       <div class="one-line-ellipsis" ng-if="user.isEditorOrMore()">
         <p>
           <span data-translate="">owner</span>: {{md.getOwnername()}}

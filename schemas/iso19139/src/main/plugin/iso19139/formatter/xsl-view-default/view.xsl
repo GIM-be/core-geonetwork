@@ -197,7 +197,7 @@
       <xsl:call-template name="render-block">
         <xsl:with-param name="block">
           <xsl:apply-templates mode="render-content" select="gmd:resourceMaintenance"/>
-          <xsl:if test="$output='pdf'">
+          <xsl:if test="$output = ('pdf', 'html')">
             <xsl:for-each select="gmd:graphicOverview/*">
               <xsl:call-template name="render-row">
                 <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(..), '')"/>
@@ -277,7 +277,7 @@
                 <xsl:variable name="isFirst"
                                 select="../count(preceding-sibling::*[name() = 'gmd:topicCategory']) = 0"/>
                 <xsl:choose>
-                  <xsl:when test="$output='pdf'"><xsl:if test="not($isFirst)"><text>, </text></xsl:if><span><xsl:variable name="topicCategoryCode" select="."/><xsl:value-of select="$schemaCodeLists/*[@name='gmd:MD_TopicCategoryCode']/entry[code=$topicCategoryCode]/label" /></span></xsl:when>
+                  <xsl:when test="$output = ('pdf', 'html')"><xsl:if test="not($isFirst)"><text>, </text></xsl:if><span><xsl:variable name="topicCategoryCode" select="."/><xsl:value-of select="$schemaCodeLists/*[@name='gmd:MD_TopicCategoryCode']/entry[code=$topicCategoryCode]/label" /></span></xsl:when>
                   <xsl:otherwise>
                     <button class="btn btn-sm btn-default">
                       <xsl:attribute name="data-ng-click" select="concat('search({''topicCat'':''',.,'''})')"/>
@@ -301,7 +301,7 @@
       </xsl:with-param>
     </xsl:call-template>
 
-    <xsl:if test="$output='pdf'">
+    <xsl:if test="$output = ('pdf', 'html')">
       <xsl:for-each select="gmd:extent">
         <xsl:variable name="geographicElement" select="gmd:EX_Extent/gmd:geographicElement" />
         <xsl:call-template name="render-block-as-row-with-header">
@@ -578,7 +578,7 @@
           <xsl:apply-templates mode="render-content" select="."/>
           <xsl:if test="not($isInspireThesaurus) and position() != last()">
             <xsl:choose>
-              <xsl:when test="$output='pdf'"><text>, </text></xsl:when>
+              <xsl:when test="$output = ('pdf', 'html')"><text>, </text></xsl:when>
               <xsl:otherwise>
                 <div class="gp-inline"> | </div>
               </xsl:otherwise>
@@ -833,7 +833,7 @@
     <xsl:variable name="toolTip" select="concat('{{''clickToFilterOn'' | translate}} ', $value)"/>
     <span class="gp-keyword">
       <xsl:choose>
-        <xsl:when test="$output='pdf'">
+        <xsl:when test="$output = ('pdf', 'html')">
           <xsl:value-of select="$value"/>
         </xsl:when>
         <xsl:otherwise>
@@ -868,7 +868,7 @@
       </xsl:call-template>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="$output='pdf'">
+      <xsl:when test="$output = ('pdf', 'html')">
         <xsl:if test="position() != last()"><text>, </text></xsl:if>
         <xsl:value-of select="$value" />
       </xsl:when>
@@ -931,7 +931,7 @@
       <xsl:with-param name="content">
         <xsl:if test="$codelistDesc">
           <xsl:choose>
-            <xsl:when test="$output='pdf'">
+            <xsl:when test="$output = ('pdf', 'html')">
               <xsl:value-of select="concat($codelistLabel, ': ')"/>
             </xsl:when>
             <xsl:otherwise>
@@ -986,7 +986,7 @@
         <xsl:with-param name="label" select="$label"/>
         <xsl:with-param name="content">
           <xsl:choose>
-            <xsl:when test="$output='pdf'">
+            <xsl:when test="$output = 'pdf'">
               <xsl:value-of select="$url"/>
             </xsl:when>
             <xsl:otherwise>
@@ -1008,7 +1008,7 @@
       <xsl:with-param name="label" select="$label"/>
       <xsl:with-param name="content">
         <xsl:choose>
-          <xsl:when test="$output='pdf'">
+          <xsl:when test="$output = ('pdf', 'html')">
             <xsl:value-of select="$value"/>
           </xsl:when>
           <xsl:otherwise>
@@ -1040,7 +1040,7 @@
     <xsl:param name="tabId" as="xs:string"/>
     <xsl:param name="content"/>
     <xsl:if test="normalize-space($content)">
-      <xsl:if test="$output='pdf'">
+      <xsl:if test="$output = ('pdf', 'html')">
         <h2><xsl:value-of select="gn-fn-iso19139:get-schema-strings($schemaStrings, substring-after($tabId,'gn-tab-'))"/></h2>
       </xsl:if>
       <div class="tab-pane">

@@ -180,11 +180,13 @@ public class MetadataApi {
         }
         List<String> accept = Arrays.asList(acceptHeader.split(","));
 
-        String defaultFormatter = "xsl-view";
+        String schema = ApiUtils.getRecord(metadataUuid).getDataInfo().getSchemaId();
+        String defaultFormatter = schema.equals("iso19139") ? "xsl-view-default" : "xsl-view";
         if (accept.contains(MediaType.TEXT_HTML_VALUE)
-            || accept.contains(MediaType.APPLICATION_XHTML_XML_VALUE)
-            || accept.contains("application/pdf")) {
-            return "forward:" + (metadataUuid + "/formatters/" + defaultFormatter);
+            || accept.contains(MediaType.APPLICATION_XHTML_XML_VALUE)) {
+            return "forward:" + (metadataUuid + "/formatters/" + defaultFormatter + "?output=html&language=dut");
+        } else if (accept.contains("application/pdf")) {
+            return "forward:" + (metadataUuid + "/formatters/" + defaultFormatter + "?output=pdf&language=dut");
         } else if (accept.contains(MediaType.APPLICATION_XML_VALUE)
             || accept.contains(MediaType.APPLICATION_JSON_VALUE)) {
             return "forward:" + (metadataUuid + "/formatters/xml");
