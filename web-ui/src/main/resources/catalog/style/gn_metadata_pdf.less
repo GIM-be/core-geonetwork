@@ -1,53 +1,69 @@
+@import "./custom/aiv.less";
+
 .gn-top-bar, .gn-bottom-bar {
   display: none;
 }
+
 .gn-metadata-view {
-  font-family: Verdana, Arial, "Helvetica Neue", Helvetica, sans-serif!important;
-  font-size: 12px!important;
+  font-family: Verdana, Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+  font-size: 12px !important;
+
   h1, h2, h3, h4, h5 {
     font-weight: 500;
     line-height: 1.1;
-    color: #2e456b!important;
+    color: #2e456b !important;
   }
+
   h1 {
     font-size: 24px;
   }
+
   h3 {
     font-size: 18px;
     font-family: "Arial Bold", "Helvetica Bold", Arial, Helvetica, sans-serif;
   }
+
   a {
-    color: #707070!important;;
+    color: #5B5B5B !important;;
   }
+
   strong {
-    color: #707070;
-    font-weight: normal!important;
+    color: #5B5B5B;
+    font-weight: normal !important;
   }
+
   .toggler {
     display: none;
   }
+
   div.md-text {
     display: table;
     width: 100%;
     border-spacing: 10px 0;
+
     dd, dt {
       display: table-cell;
     }
   }
+
   blockquote {
     margin-left: 0;
+
     em {
       margin-bottom: 5px;
     }
   }
+
   dl {
     margin: 0;
     border-top: 1px solid #999999;
   }
+
   dt, dd {
     line-height: 1.428571429;
     padding: 10px 0;
   }
+
   dt {
     clear: left;
     width: 300px;
@@ -59,29 +75,32 @@
     white-space: nowrap;
     float: left;
   }
+
   dd {
     display: block;
     margin-left: 300px;
     padding-left: 10px;
     border-left: 1px solid #999999;
     font-size: 13px;
+
     ul {
       padding-left: 01.5em;
       margin: 0;
     }
+
     p {
       margin: 8px 0;
     }
   }
+
   .overview dd {
     margin-left: 1em;
   }
+
   .entry {
     margin: 10px 0 20px 0;
   }
-  // div.md-text {
-  //   border-spacing: 10px 0;
-  // }
+
   ul.container-list {
     list-style-type: none;
     background: #eeeeee;
@@ -89,36 +108,77 @@
     padding-left: 1em;
     margin-left: 1em;
   }
+
   ul.md-value-list > li {
     list-style-type: none;
     border-left: 1px solid #999999;
     padding-left: 1em;
     background: #eeeeee;
   }
+
   table {
-    border: 0px!important;
+    border: solid 1px #e8e8e8 !important;
     width: 100%;
+
+    th {
+      border: 0 !important;
+      background-color: #d6e2f7 !important;
+      color: #2e456b !important;
+      font-weight: normal !important;
+    }
+
+    td {
+      border: 0 !important;
+      vertical-align: top;
+      color: #5b5b5b !important;
+    }
+
+    &.table-striped {
+      td {
+        padding-left: 5px;
+      }
+
+      & > tbody > tr:nth-child(odd) > td {
+        background-color: rgb(249, 249, 249) !important;
+      }
+    }
+
+    &.data-table {
+      td, th {
+        width: auto !important;
+        min-width: 80px !important;
+      }
+
+      .data-table {
+        label {
+          font-weight: normal;
+        }
+        th[colspan="3"] {
+          width: 100% !important;
+
+          label {
+            width: 100% !important;
+          }
+        }
+      }
+
+      .table-title {
+        text-align: center;
+      }
+    }
   }
-  th {
-    border: 0px!important;
-    background-color: #d6e2f7!important;
-    color: #2e456b!important;
-    font-weight: normal!important;
+
+  span {
+    color: #5B5B5B !important;
   }
-  td {
-    border: 0px!important;
-    vertical-align: top;
-    width: 50%;
-    color: #707070!important;
-  }
-  span{
-    color: #707070!important;
-  }
+
   a > img.graphic-overview {
     display: none;
   }
+
   .extent {
     page-break-before: always;
+
     img {
       border: 1px solid #ccc;
       margin-top: 20px;
@@ -126,13 +186,15 @@
       display: block;
       clear: both;
     }
-    .coord{
+
+    .coord {
       float: left;
       display: block;
       border: 1px solid #ccc;
       background: #fff;
       margin-right: 20px;
       margin-bottom: 20px;
+
       input {
         text-align: left;
         border: 0;
@@ -140,6 +202,7 @@
         width: 114px;
         background: #fff;
       }
+
       span.input-group-addon {
         background-color: #eeeeee;
         border-left: 1px solid #ccc;

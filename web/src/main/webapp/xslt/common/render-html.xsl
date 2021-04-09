@@ -107,14 +107,9 @@
       <head>
         <title><xsl:value-of select="$title"/></title>
         <meta charset="utf-8"/>
-        <link href="{/root/gui/url}/static/{$customFilename}.css?v={$buildNumber}&amp;{$minimizedParam}" rel="stylesheet"
-              media="print"/>
-        <link href="{/root/gui/url}/static/custom/aiv.css?v={$buildNumber}&amp;{$minimizedParam}" rel="stylesheet"
-              media="print"/>
-        <link href="{/root/gui/url}/static/srv_custom_style.css?v={$buildNumber}&amp;{$minimizedParam}" rel="stylesheet"
-              media="print"/>
-        <link href="{/root/gui/url}/static/gn_metadata_pdf.css?v={$buildNumber}&amp;{$minimizedParam}" rel="stylesheet"
-              media="print"/>
+        <link href="{/root/gui/url}/static/{$customFilename}.css?v={$buildNumber}&amp;{$minimizedParam}" rel="stylesheet" />
+        <link href="{/root/gui/url}/static/srv_custom_style.css?v={$buildNumber}&amp;{$minimizedParam}" rel="stylesheet" />
+        <link href="{/root/gui/url}/static/gn_metadata_pdf.css?v={$buildNumber}&amp;{$minimizedParam}" rel="stylesheet" />
       </head>
 
       <body class="gn-nojs {$cssClass}">

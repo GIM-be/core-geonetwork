@@ -92,7 +92,7 @@
           <xsl:call-template name="render-block-as-row-with-header">
             <xsl:with-param name="header" select="'Attributentabel'"/>
             <xsl:with-param name="block">
-              <table>
+              <table class="table table-striped data-table">
                 <tbody>
                   <tr>
                     <th><xsl:value-of select="tr:nodeLabel($schemaLoc,'gfc:memberName','gfc:FC_FeatureAttribute')"/></th>
@@ -141,9 +141,11 @@
           <tr>
             <td colspan="5">
               <div>
-                <h5>Lijst met waarden</h5>
-                <table>
+                <table class="table table-striped data-table">
                   <tbody>
+                    <tr>
+                      <th colspan="3" class="table-title"><label>Lijst met waarden</label></th>
+                    </tr>
                     <tr>
                       <th><label><xsl:value-of select="tr:nodeLabel($schemaLoc,'gfc:code','gfc:FC_ListedValue')"/></label></th>
                       <th><label><xsl:value-of select="tr:nodeLabel($schemaLoc,'gfc:label','gfc:FC_ListedValue')"/></label></th>
@@ -375,11 +377,7 @@
     <xsl:if test="normalize-space($block)">
       <xsl:call-template name="render-row-with-colspan">
         <xsl:with-param name="header" select="$header"/>
-        <xsl:with-param name="content">
-          <xsl:call-template name="render-block">
-            <xsl:with-param name="block" select="$block"/>
-          </xsl:call-template>
-        </xsl:with-param>
+        <xsl:with-param name="content" select="$block"/>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>

@@ -567,13 +567,9 @@
   <xsl:template mode="render-content" match="gmd:descriptiveKeywords">
     <xsl:variable name="thesaurusTitle" select="*/gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[name()=('gco:CharacterString','gmx:Anchor')]"/>
     <xsl:variable name="isInspireThesaurus" select="$thesaurusTitle and lower-case($thesaurusTitle) = ('gemet - inspire themes, version 1.0','gemet - inspire thema''s, versie 1.0')" />
-    <xsl:call-template name="render-block-as-row">
+    <xsl:call-template name="render-row">
       <xsl:with-param name="label" select="if ($thesaurusTitle) then $thesaurusTitle else gn-fn-iso19139:get-schema-strings($schemaStrings, 'otherKeywords')"/>
-      <xsl:with-param name="block">
-        <!--xsl:call-template name="render-text-as-row">
-          <xsl:with-param name="label" select="gn-fn-iso19139:get-schema-strings($schemaStrings, 'otherKeywords')"/>
-          <xsl:with-param name="value" select="string-join(*/gmd:keyword,', ')"/>
-        </xsl:call-template-->
+      <xsl:with-param name="content">
         <xsl:for-each select="*/gmd:keyword">
           <xsl:apply-templates mode="render-content" select="."/>
           <xsl:if test="not($isInspireThesaurus) and position() != last()">

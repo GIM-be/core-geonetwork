@@ -16,17 +16,42 @@
 
   <xsl:include href="common/render-html.xsl"/>
   <xsl:template match="/">
-    <xsl:call-template name="render-pdf">
-      <xsl:with-param name="content">
+    <xsl:choose>
+      <xsl:when test="$output = 'pdf'">
+        <xsl:call-template name="render-pdf">
+          <xsl:with-param name="content">
+            <xsl:call-template name="render-record">
+              <xsl:with-param name="fullWidth" select="true()"/>
+            </xsl:call-template>
+          </xsl:with-param>
+          <xsl:with-param name="title">
+            <xsl:apply-templates mode="getMetadataTitle" select="$metadata"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="$root = 'div'">
         <xsl:call-template name="render-record"/>
-      </xsl:with-param>
-      <xsl:with-param name="title">
-        <xsl:apply-templates mode="getMetadataTitle" select="$metadata"/>
-      </xsl:with-param>
-    </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="render-html">
+          <xsl:with-param name="content">
+            <xsl:call-template name="render-record">
+              <xsl:with-param name="fullWidth" select="true()"/>
+            </xsl:call-template>
+          </xsl:with-param>
+          <xsl:with-param name="title">
+            <xsl:apply-templates mode="getMetadataTitle" select="$metadata"/>
+          </xsl:with-param>
+          <xsl:with-param name="description">
+            <xsl:apply-templates mode="getMetadataAbstract" select="$metadata"/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="render-record">
+    <xsl:param name="fullWidth" select="false()"/>
     <div class="container-fluid gn-metadata-view gn-schema-{$schema}">
       <xsl:variable name="title">
         <xsl:apply-templates mode="getMetadataTitle" select="$metadata"/>
@@ -34,7 +59,7 @@
       <article id="{$metadataUuid}"
                class="gn-md-view gn-metadata-display aiv-gp-view">
         <div class="row">
-          <div class="col-md-8">
+          <div class="{if ($fullWidth) then 'col-md-12' else 'col-md-8'}">
             <header>
               <h1>
                 <xsl:value-of select="$title"/>
