@@ -17,7 +17,7 @@
   <xsl:include href="common/render-html.xsl"/>
   <xsl:template match="/">
     <xsl:choose>
-      <xsl:when test="$output = ('pdf', 'html')">
+      <xsl:when test="$output = 'pdf'">
         <xsl:call-template name="render-pdf">
           <xsl:with-param name="content">
             <xsl:call-template name="render-record">
@@ -35,7 +35,9 @@
       <xsl:otherwise>
         <xsl:call-template name="render-html">
           <xsl:with-param name="content">
-            <xsl:call-template name="render-record"/>
+            <xsl:call-template name="render-record">
+              <xsl:with-param name="fullWidth" select="true()"/>
+            </xsl:call-template>
           </xsl:with-param>
           <xsl:with-param name="title">
             <xsl:apply-templates mode="getMetadataTitle" select="$metadata"/>
