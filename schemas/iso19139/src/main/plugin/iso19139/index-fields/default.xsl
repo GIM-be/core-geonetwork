@@ -431,9 +431,9 @@
                    string="{substring-after($thesaurusIdentifier,'geonetwork.thesaurus.')}"
                    store="true" index="true"/>
           </xsl:if>
-          <xsl:if test="gmd:title/gco:CharacterString/text() != ''">
+          <xsl:if test="gmd:title/*[1]/text() != ''">
             <Field name="thesaurusName"
-                   string="{gmd:title/gco:CharacterString/text()}"
+                   string="{gmd:title/*[1]/text()}"
                    store="true" index="true"/>
           </xsl:if>
 
@@ -607,13 +607,13 @@
                    string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
-        <xsl:for-each select="gmd:useLimitation/gmx:Anchor[not(string(@xlink:href))]">
-            <Field name="{$fieldPrefix}UseLimitation"
+        <xsl:for-each select="gmd:otherConstraints/gmx:Anchor[not(string(@xlink:href))]">
+            <Field name="{$fieldPrefix}OtherConstraints"
                    string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
-        <xsl:for-each select="gmd:useLimitation/gmx:Anchor[string(@xlink:href)]">
-            <Field name="{$fieldPrefix}UseLimitation"
+        <xsl:for-each select="gmd:otherConstraints/gmx:Anchor[string(@xlink:href)]">
+            <Field name="{$fieldPrefix}OtherConstraints"
                    string="{concat('link|',string(@xlink:href), '|', string(.))}" store="true" index="true"/>
         </xsl:for-each>
 
