@@ -13,10 +13,16 @@
 
   <h1>Changelog</h1>
 
-  <section id="xx/03/2021">
+  <section id="26/04/2021">
     <ol>
-
+      <li>Update metadata-dcat schema cardinalities</li>
+      <li>Add dcat:CatalogRecord element</li>
+      <li>Change metadata identifier to use the CatalogRecord identifier</li>
+      <li>Change the metadata modified date to use the CatalogRecord identifier</li>
+      <li>Update DCAT harvester to harvest DataServices</li>
+      <li>Update DCAT harvester to harvest CatalogRecord <strong>(Still TODO: Datasets and services without a CatalogRecord in the harvested feed are currently ignored)</strong></li>
     </ol>
+    <strong>Notes:</strong> All the previously created metadata were not migrated to use the CatalogRecord identifier and the editor will not work properly when trying to edit them.
   </section>
 
   <section id="22/03/2021">
