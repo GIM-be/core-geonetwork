@@ -61,20 +61,20 @@
 
   <!-- =================================================================-->
 
-  <!--xsl:template match="gmx:versionDate|gfc:versionDate">
-    <xsl:choose>
-      <xsl:when test="/root/env/changeDate">
-        <xsl:copy>
-          <gco:DateTime>
-            <xsl:value-of select="/root/env/changeDate"/>
-          </gco:DateTime>
-        </xsl:copy>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:copy-of select="."/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template-->
+  <xsl:template match="gmx:versionDate/gco:Date|
+                       gfc:versionDate/gco:Date|
+                       gmx:versionDate/gco:DateTime|
+                       gfc:versionDate/gco:DateTime">
+    <xsl:variable name="date">
+      <xsl:if test="contains(.,':')">
+        <xsl:value-of select="substring-before(upper-case(.),'T')" />
+      </xsl:if>
+      <xsl:if test="not(contains(.,':'))">
+        <xsl:value-of select="." />
+      </xsl:if>
+    </xsl:variable>
+    <gco:Date><xsl:value-of select="$date"/></gco:Date>
+  </xsl:template>
 
   <!-- =================================================================-->
 

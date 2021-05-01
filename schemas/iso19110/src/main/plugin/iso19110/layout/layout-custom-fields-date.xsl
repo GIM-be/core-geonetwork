@@ -66,20 +66,25 @@
         </xsl:choose>
       </label>
       <xsl:variable name="bMissingChild" select="not(gco:Date|gco:DateTime)"/>
+      <xsl:variable name="isDateTime" select="not(gco:Date) and gco:DateTime"/>
       <xsl:variable name="newElement">
         <xsl:if test="$bMissingChild">
-          <xsl:element name="gco:DateTime" />
+          <xsl:element name="gco:Date" />
+        </xsl:if>
+        <xsl:if test="not($bMissingChild) and $isDateTime">
+          <xsl:element name="gco:Date">
+            <xsl:value-of select="substring-before(upper-case(gco:DateTime),'T')" />
+          </xsl:element>
         </xsl:if>
       </xsl:variable>
       <div class="col-sm-9 col-xs-11 gn-value nopadding-in-table">
-        <div data-gn-date-picker="{if (bMissingChild) then $newElement else (gco:Date|gco:DateTime)}"
+        <div data-gn-date-picker="{if ($bMissingChild or $isDateTime) then $newElement else (gco:Date)}"
              data-gn-field-tooltip="{$tooltip}"
              data-label=""
-             data-element-name="{if (bMissingChild) then name($newElement) else name(gco:Date|gco:DateTime)}"
+             data-element-name="{if ($bMissingChild or $isDateTime) then name($newElement) else name(gco:Date)}"
              data-element-ref="{concat('_X', gn:element/@ref)}"
-             data-hide-time="{if ($viewConfig/@hideTimeInCalendar = 'true' and not(($bMissingChild and $newElement/name(*[1])='gco:DateTime') or gco:DateTime)) then 'true' else 'false'}">
+             data-hide-time="true">
         </div>
-
 
         <!-- Create form for all existing attribute (not in gn namespace)
          and all non existing attributes not already present. -->

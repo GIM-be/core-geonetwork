@@ -31,6 +31,7 @@
                 xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gfc="http://www.isotc211.org/2005/gfc"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 version="2.0"
                 extension-element-prefixes="saxon" exclude-result-prefixes="#all">
 
@@ -61,7 +62,20 @@
 
       <!-- Metadata change date.
       "The date is encoded as a literal in "YYYY-MM-DD" form (ISO 8601 Date and Time Formats)." -->
-      <xsl:variable name="date" select="substring-before(gfc:versionDate/gco:DateTime, 'T')"/>
+      <xsl:variable name="dateValue">
+        <xsl:value-of select="gmx:versionDate/gco:Date|
+                            gfc:versionDate/gco:Date|
+                            gmx:versionDate/gco:DateTime|
+                            gfc:versionDate/gco:DateTime"/>
+      </xsl:variable>
+      <xsl:variable name="date">
+        <xsl:if test="contains($dateValue,':')">
+          <xsl:value-of select="substring-before(upper-case($dateValue),'T')" />
+        </xsl:if>
+        <xsl:if test="not(contains($dateValue,':'))">
+          <xsl:value-of select="$dateValue" />
+        </xsl:if>
+      </xsl:variable>
       <dct:issued>
         <xsl:value-of select="$date"/>
       </dct:issued>
