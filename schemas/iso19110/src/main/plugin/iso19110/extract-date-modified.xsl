@@ -24,13 +24,23 @@
   -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:gfc="http://www.isotc211.org/2005/gfc"
-                xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                version="1.0"
->
+                xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                version="1.0">
 
   <xsl:template match="gfc:FC_FeatureCatalogue">
     <dateStamp>
-      <xsl:value-of select="gmx:versionDate|gfc:versionDate"/>
+      <xsl:variable name="date">
+        <xsl:value-of select="gmx:versionDate/gco:Date|
+                            gfc:versionDate/gco:Date|
+                            gmx:versionDate/gco:DateTime|
+                            gfc:versionDate/gco:DateTime"/>
+      </xsl:variable>
+      <xsl:if test="contains($date,':')">
+        <xsl:value-of select="substring-before(upper-case($date),'T')" />
+      </xsl:if>
+      <xsl:if test="not(contains($date,':'))">
+        <xsl:value-of select="$date" />
+      </xsl:if>
     </dateStamp>
   </xsl:template>
 

@@ -261,9 +261,25 @@
   </xsl:template>
 
   <xsl:template mode="render-content" match="*[gco:Date|gco:DateTime]">
+    <xsl:variable name="dateValue">
+      <xsl:value-of select="gco:Date|gco:DateTime"/>
+    </xsl:variable>
+    <xsl:variable name="date">
+      <xsl:if test="local-name(.)='versionDate'">
+        <xsl:if test="contains($dateValue,':')">
+          <xsl:value-of select="substring-before(upper-case($dateValue),'T')" />
+        </xsl:if>
+        <xsl:if test="not(contains($dateValue,':'))">
+          <xsl:value-of select="$dateValue" />
+        </xsl:if>
+      </xsl:if>
+      <xsl:if test="local-name(.)!='versionDate'">
+        <xsl:value-of select="$dateValue" />
+      </xsl:if>
+    </xsl:variable>
     <xsl:call-template name="render-date-as-row">
       <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, name(), name(..))"/>
-      <xsl:with-param name="date" select="gco:Date/text()|gco:DateTime/text()"/>
+      <xsl:with-param name="date" select="$date"/>
     </xsl:call-template>
   </xsl:template>
 
@@ -323,7 +339,7 @@
                 <xsl:otherwise/>
               </xsl:choose>
             </xsl:attribute>
-            <xsl:value-of select="."/>
+            <xsl:value-of select="$date"/>
           </span>
         </xsl:with-param>
       </xsl:call-template>

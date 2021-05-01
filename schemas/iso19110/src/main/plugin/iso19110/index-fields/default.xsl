@@ -95,9 +95,17 @@
                             /gfc:FC_FeatureCatalogue/gfc:versionDate/gco:Date|
                             /gfc:FC_FeatureCatalogue/gmx:versionDate/gco:DateTime|
                             /gfc:FC_FeatureCatalogue/gfc:versionDate/gco:DateTime">
-        <Field name="revisionDate" string="{string(.)}" store="true" index="true"/>
-        <Field name="sortDate" string="{string(.)}" store="true" index="true"/>
-        <Field name="_sortDate" string="{string(.)}" store="true" index="true"/>
+        <xsl:variable name="date">
+          <xsl:if test="contains(.,':')">
+            <xsl:value-of select="substring-before(upper-case(.),'T')" />
+          </xsl:if>
+          <xsl:if test="not(contains(.,':'))">
+            <xsl:value-of select="." />
+          </xsl:if>
+        </xsl:variable>
+        <Field name="revisionDate" string="{$date}" store="true" index="true"/>
+        <Field name="sortDate" string="{$date}" store="true" index="true"/>
+        <Field name="_sortDate" string="{$date}" store="true" index="true"/>
       </xsl:for-each>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

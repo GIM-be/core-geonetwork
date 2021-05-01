@@ -71,9 +71,17 @@
                 <dc:relation><xsl:value-of select="."/></dc:relation>
                 </xsl:for-each>-->
 
-      <xsl:for-each select="gmx:versionDate/gco:DateTime|gfc:versionDate/gco:DateTime">
+      <xsl:for-each select="gmx:versionDate/gco:DateTime|gfc:versionDate/gco:DateTime|gmx:versionDate/gco:Date|gfc:versionDate/gco:Date">
+        <xsl:variable name="date">
+          <xsl:if test="contains(.,':')">
+            <xsl:value-of select="substring-before(upper-case(.),'T')" />
+          </xsl:if>
+          <xsl:if test="not(contains(.,':'))">
+            <xsl:value-of select="." />
+          </xsl:if>
+        </xsl:variable>
         <dct:modified>
-          <xsl:value-of select="."/>
+          <xsl:value-of select="$date"/>
         </dct:modified>
       </xsl:for-each>
 

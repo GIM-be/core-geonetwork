@@ -43,11 +43,11 @@
 
       <xsl:variable name="df">[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]</xsl:variable>
       <gfc:versionDate>
-        <gco:DateTime>
+        <gco:Date>
           <!--
                     <xsl:value-of select="format-dateTime(current-dateTime(),$df)"/>
 -->
-        </gco:DateTime>
+        </gco:Date>
       </gfc:versionDate>
 
       <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

@@ -311,7 +311,7 @@
                 data-ng-repeat="revisionDate in mdView.current.record.revisionDate">
               <th data-translate>versionDate</th>
               <td data-gn-humanize-time="{{ revisionDate }}"
-                  data-format="{{ mdService.isDateTime(revisionDate) ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD HH:mm' }}"></td>
+                  data-format="YYYY-MM-DD"></td>
             </tr>
             <tr data-ng-if="mdView.current.record.getAllContacts().resource">
               <th data-translate="">resourceContact</th>
