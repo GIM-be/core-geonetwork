@@ -228,7 +228,7 @@ public class Aligner extends BaseAligner<CswParams> {
                             addMetadata(ri, UUID.randomUUID().toString());
                             break;
                         case SKIP:
-                            log.debug("Skipping record with uuid " + ri.uuid);
+                            log.error("  - Skipping metadata managed by another harvesting node. uuid:" + ri.uuid + ", name:" + params.getName());
                             result.uuidSkipped++;
                         default:
                             break;
@@ -292,6 +292,7 @@ public class Aligner extends BaseAligner<CswParams> {
         Element md = retrieveMetadata(ri.uuid);
 
         if (md == null) {
+            log.error("  - Unretrievable metadata managed by another harvesting node. uuid:" + ri.uuid + ", name:" + params.getName());
             result.unretrievable++;
             return;
         }
@@ -405,7 +406,7 @@ public class Aligner extends BaseAligner<CswParams> {
         String date = localUuids.getChangeDate(ri.uuid);
 
         if (date == null && !force) {
-            log.debug("  - Skipped metadata managed by another harvesting node. uuid:" + ri.uuid + ", name:" + params.getName());
+            log.error("  - Skipped metadata managed by another harvesting node. uuid:" + ri.uuid + ", name:" + params.getName());
         } else {
             if (!force && !ri.isMoreRecentThan(date)) {
                 log.debug("  - Metadata XML not changed for uuid:" + ri.uuid);
@@ -496,7 +497,7 @@ public class Aligner extends BaseAligner<CswParams> {
             try {
                 params.getValidate().validate(context.getBean(DataManager.class), context, response);
             } catch (Exception e) {
-                log.debug("Ignoring invalid metadata with uuid " + uuid);
+                log.error("  - Ignoring invalid metadata. uuid:" + uuid + ", name:" + params.getName());
                 result.doesNotValidate++;
                 return null;
             }
