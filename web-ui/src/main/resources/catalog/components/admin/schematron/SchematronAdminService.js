@@ -284,6 +284,9 @@
                 success(function(data) {
                   putDataIntoCache('criteriaTypes', data);
                   angular.forEach(data.schemas, function(schema) {
+                    if (!Array.isArray(schema.schematron)) {
+                      schema.schematron = [ schema.schematron ];
+                    }
                     schema.schematron.sort(sortByDisplayPriority);
                   });
                   successCallback(data);
