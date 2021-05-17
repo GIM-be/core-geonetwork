@@ -149,7 +149,7 @@ public class XslProcessUtils {
                             xslParameter.put(key, value);
                         }
                     } else if (key.equals("uuidref")
-                        && StringUtils.isNotBlank(value) && !schema.equals("metadata-dcat")) {
+                        && StringUtils.isNotBlank(value) && !schema.equals("dcat2")) {
                         AbstractMetadata mdToBeAggregated = metadataRepository.findOneByUuid(value);
                         if (mdToBeAggregated!=null) {
                             md.addContent(new Element("extra").addContent(new Element("mdToBeAggregated").addContent(mdToBeAggregated.getXmlData(false))));

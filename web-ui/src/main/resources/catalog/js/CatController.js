@@ -168,7 +168,7 @@
               'exclude': [
                 'iso19139',
                 'iso19110',
-                'metadata-dcat'
+                'dcat2'
               ]
             }],
             // The defaultFormatters property is used to overwrite the default index view with
@@ -177,7 +177,7 @@
               'iso19139': {
                 'url': '/formatters/xsl-view-default?root=div&view=advanced'
               },
-              'metadata-dcat': {
+              'dcat2': {
                 'url': '/formatters/xsl-view?root=div&view=advanced'
               }
             },

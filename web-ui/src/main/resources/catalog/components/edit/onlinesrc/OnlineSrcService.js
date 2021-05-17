@@ -427,7 +427,7 @@
           var scope = this;
 
           // Add link of the service in the dataset (optional)
-          var isMdDcat = params.schema === 'metadata-dcat';
+          var isMdDcat = params.schema === 'dcat2';
 
           var addDatasetToServiceFn = function(r) {
             var qParams = setParams('dataset-add', params);
@@ -513,7 +513,7 @@
           };
 
           if (addOnlineSrcToDataset) {
-            var processName = params.schema === 'metadata-dcat' ? 'service-add' : 'onlinesrc-add';
+            var processName = params.schema === 'dcat2' ? 'service-add' : 'onlinesrc-add';
             var qParams = setParams(processName, params);
             return gnBatchProcessing.runProcessMd({
               name: qParams.name,
@@ -625,7 +625,7 @@
          * @param {Object} onlinesrc the online resource to remove
          */
         removeService: function(onlinesrc) {
-          var isMdDcat = gnCurrentEdit.schema === 'metadata-dcat';
+          var isMdDcat = gnCurrentEdit.schema === 'dcat2';
           var params = {
             uuid: isMdDcat ? gnCurrentEdit.uuid : onlinesrc.id,
             uuidref: isMdDcat ? onlinesrc.id : gnCurrentEdit.metadata.identifier
