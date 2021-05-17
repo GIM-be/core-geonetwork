@@ -67,5 +67,6 @@
   "geoDesc": "Omschrijving geografische begrenzing",
   "geoBox": "Omschrijvende rechthoek",
   "geoDescCode": "Identificator geografische begrenzing",
-  "groupIsRequired": "Gelieve een groep te selecteren. Het metadatarecord komt in het beheer van de geselecteerde organisatie."
+  "groupIsRequired": "Gelieve een groep te selecteren. Het metadatarecord komt in het beheer van de geselecteerde organisatie.",
+  "standardName": "Profile"
 }

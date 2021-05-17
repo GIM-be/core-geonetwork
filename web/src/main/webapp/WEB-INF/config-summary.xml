@@ -105,6 +105,7 @@
     <facet name="status" indexKey="cl_status" label="status"/>
     <facet name="sourceCatalog" indexKey="_nonOgcwxsSource" label="sourceCatalog"/>
     <facet name="standard" indexKey="_schema" label="standards"/>
+    <facet name="standardName" indexKey="standardName" label="standardName"/>
     <facet name="subTemplateType" indexKey="_root" label="subTemplateTypes"/>
     <facet name="recordOwner" indexKey="recordOwner" label="recordOwner"/>
     <facet name="groupOwner" indexKey="_groupOwner" label="groupOwners"/>
@@ -136,6 +137,8 @@
     <!-- Search page faceted search -->
     <summaryType name="details" format="DIMENSION">
       <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
+      <item facet="standard" sortBy="value"/>
+      <item facet="standardName" sortBy="value"/>
       <item facet="mdActions"/>
       <item facet="serviceType"/>
       <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
@@ -169,6 +172,8 @@
     <!-- Contribution tab faceted search -->
     <summaryType name="manager" format="DIMENSION">
       <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
+      <item facet="standard" sortBy="value"/>
+      <item facet="standardName" sortBy="value"/>
       <item facet="mdActions"/>
       <item facet="serviceType"/>
       <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
@@ -184,7 +189,6 @@
       <item facet="recordOwner" max="45" sortBy="value"/>
       <item facet="publishedForGroup" max="199" sortBy="value"
             translator="db:org.fao.geonet.repository.GroupRepository:findOneByName"/>
-      <item facet="standard" max="15" sortBy="value"/>
       <item facet="isHarvested" max="2" sortBy="value" translator="apploc:"/>
       <item facet="metadataType" max="3" sortBy="value" translator="apploc:recordType-"/>
 	    <item facet="isPublishedToAll" max="2" sortBy="value" translator="apploc:"/>
