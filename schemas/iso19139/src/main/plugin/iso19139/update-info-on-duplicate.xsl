@@ -81,6 +81,12 @@
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString">
+    <xsl:copy copy-namespaces="no">
+      <xsl:value-of select="replace(.,/root/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString,/root/env/uuid)"/>
+    </xsl:copy>
+  </xsl:template>
+
   <!-- Reinitialize feature catalogue description -->
   <xsl:template match="gmd:MD_FeatureCatalogueDescription">
     <gmd:MD_FeatureCatalogueDescription>
