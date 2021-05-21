@@ -1365,7 +1365,7 @@
                    * Register a method on popup open to reset
                    * the search form and trigger a search.
                    */
-                  gnOnlinesrc.register(scope.mode, function() {
+                  gnOnlinesrc.register(scope.mode, function(additionalParams) {
                     $(scope.popupid).modal('show');
                     var searchParams = {};
                     if (scope.mode === 'fcats') {
@@ -1375,6 +1375,11 @@
                       scope.btn = {
                         label: $translate.instant('linkToFeatureCatalog')
                       };
+                      if (additionalParams && additionalParams.featureCatUuid) {
+                        scope.featureCatUuid = additionalParams.featureCatUuid;
+                      } else {
+                        scope.featureCatUuid = "";
+                      }
                     }
                     else if (scope.mode === 'parent') {
                       searchParams = {
@@ -1605,21 +1610,22 @@
          restrict: 'A',
          templateUrl: '../../catalog/components/edit/onlinesrc/' +
            'partials/featureCatName.html',
+         scope: {},
          link: function (scope, element, attrs) {
-           var featureCatUuid = element.parent().parent().find('.gn-featureCatalogueCitationUuidref input.form-control').first().val();
+           var featureCatUuid = element.parent().find('.gn-featureCatalogueCitationUuidref input.form-control').first().val();
 
            if (featureCatUuid && featureCatUuid !== "") {
              scope.objectCatalogName = "Loading ..."
              scope.catalogUrl = "";
 
-             gnOnlinesrc.getAllResources().then(function(data) {
+           gnOnlinesrc.getAllResources().then(function(data) {
                var currentObjCat = data.fcats ? data.fcats.find(function (objCat) {
-                 return objCat.id === featureCatUuid;
-               }) : undefined;
-               if (currentObjCat) {
+                   return objCat.id === featureCatUuid;
+                 }) : undefined;
+                 if (currentObjCat) {
                  scope.objectCatalogName = currentObjCat.title[gnGlobalSettings.iso3lang] ?
-                   currentObjCat.title[gnGlobalSettings.iso3lang] :
-                   currentObjCat.title[Object.keys(currentObjCat.title)[0]]
+                     currentObjCat.title[gnGlobalSettings.iso3lang] :
+                     currentObjCat.title[Object.keys(currentObjCat.title)[0]]
                  scope.catalogUrl = currentObjCat['@subtype'] ? currentObjCat.url : ('./catalog.search#/metadata/' + currentObjCat.id)
                } else {
                  scope.objectCatalogName = "Could'tn find the object catalog title."
@@ -1638,8 +1644,9 @@
         templateUrl: '../../catalog/components/edit/onlinesrc/' +
           'partials/addFeatureCatSrc.html',
         link: function(scope, element, attrs) {
+          var featureCatUuid = element.parent().find('.gn-featureCatalogueCitationUuidref input.form-control')[0].value;
           scope.openPopup = function() {
-            gnOnlinesrc.onOpenPopup('fcats');
+            gnOnlinesrc.onOpenPopup('fcats', {featureCatUuid: featureCatUuid});
           }
         }
       }
