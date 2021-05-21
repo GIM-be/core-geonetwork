@@ -360,13 +360,16 @@
          * @param {Object} record metadata to link.
          * @param {string} popupid id of the popup to close after process.
          */
-        linkToMd: function(mode, record, popupid) {
+        linkToMd: function(mode, record, popupid, featureCatUuid) {
           var md = new Metadata(record);
           var params = {
             process: mode + '-add'
           };
           if (mode == 'fcats') {
             params.uuidref = md.getUuid();
+            if (featureCatUuid) {
+              params.featureCatUuid = featureCatUuid;
+            }
           }
           else {
             params[mode + 'Uuid'] = md.getUuid();

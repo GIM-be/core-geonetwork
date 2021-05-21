@@ -4101,7 +4101,7 @@
           <field xpath="/gmd:MD_Metadata/gmd:featureAttribute"/>
         </section>
       </tab>
-      <tab id="objectCatalogueTab" mode="flat" displayIfRecord="count(gmd:MD_Metadata/gmd:contentInfo) > 0">
+      <tab id="objectCatalogueTab" mode="flat">
         <section name="gmd:contentInfo" per="/gmd:MD_Metadata/gmd:contentInfo">
           <field xpath="gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset"/>
           <section name="gmd:featureCatalogueCitation" per="gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation">
@@ -4122,6 +4122,24 @@
             </field>
           </section>
           <directive data-gim-add-feature-cat-src=""/>
+        </section>
+        <section>
+          <action type="add"
+                  name="gmd:featureCatalogueCitation" or="contentInfo"
+                  in="/gmd:MD_Metadata">
+            <template>
+              <snippet>
+                <gmd:contentInfo>
+                  <gmd:MD_FeatureCatalogueDescription>
+                    <gmd:includedWithDataset>
+                      <gco:Boolean>true</gco:Boolean>
+                    </gmd:includedWithDataset>
+                    <gmd:featureCatalogueCitation uuidref="" />
+                  </gmd:MD_FeatureCatalogueDescription>
+                </gmd:contentInfo>
+              </snippet>
+            </template>
+          </action>
         </section>
       </tab>
       <tab id="applicationSchemaInfoTab" mode="flat" displayIfRecord="count(gmd:MD_Metadata/gmd:applicationSchemaInfo) > 0">
