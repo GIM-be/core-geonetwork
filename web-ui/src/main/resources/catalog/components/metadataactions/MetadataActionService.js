@@ -94,7 +94,7 @@
             url += 'create?from=' + id;
           }
         }
-        window.open(url, '_blank');
+        window.location=url;
       };
 
       /**
