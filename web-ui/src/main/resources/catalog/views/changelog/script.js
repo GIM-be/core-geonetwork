@@ -23,11 +23,8 @@ function createSummary() {
     title.textContent = section.id;
     section.prepend(title);
 
-    let link = document.createElement('a');
-    link.text = section.id;
-    link.href = '#' + section.id;
     let bullet = document.createElement('li');
-    bullet.append(link);
+    bullet.innerHTML = `<a href="#${section.id}">${section.id}</a>`;
     summary.append(bullet);
   });
 }
