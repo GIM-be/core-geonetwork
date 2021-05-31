@@ -904,9 +904,11 @@ public class MetadataInsertDeleteApi {
         // Set template
         dataManager.setTemplate(iId, metadataType, null);
 
-        IMetadataValidator validator = context.getBean(IMetadataValidator.class);
-        validator.doValidate(context.getUserSession(), schema, Integer.toString(iId), xmlElement, context.getLanguage(), false);
-        new AGIVValidation(context).addConformKeywords(Integer.toString(iId), true);
+        if (!(metadataType == MetadataType.SUB_TEMPLATE || metadataType == MetadataType.TEMPLATE_OF_SUB_TEMPLATE)) {
+            IMetadataValidator validator = context.getBean(IMetadataValidator.class);
+            validator.doValidate(context.getUserSession(), schema, Integer.toString(iId), xmlElement, context.getLanguage(), false);
+            new AGIVValidation(context).addConformKeywords(Integer.toString(iId), true);
+        }
         if (publishToAll) {
             dataManager.setOperation(context, iId, ReservedGroup.all.getId(), ReservedOperation.view.getId());
             dataManager.setOperation(context, iId, ReservedGroup.all.getId(), ReservedOperation.download.getId());
