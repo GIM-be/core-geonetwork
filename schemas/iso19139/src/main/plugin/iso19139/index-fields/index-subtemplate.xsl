@@ -275,7 +275,8 @@
     <xsl:variable name="specificationTitle" select="//gmd:title/gmx:Anchor"/>
     <xsl:variable name="reportTitle"
                   select="if ($title != '') then $title
-                    else if ($specificationTitle and contains(normalize-space($specificationTitle),'1089/2010')) then '* INSPIRE domeinconsistentie (verordening)'
+                    else if ($specificationTitle and contains(normalize-space($specificationTitle),'1089/2010')) then '* INSPIRE verordening (EU) Nr. 1089/2010 [dataset(serie)]'
+                    else if ($specificationTitle and contains(normalize-space($specificationTitle),'976/2009')) then '* INSPIRE verordening (EG) Nr. 976/2009 [netwerkdiensten]'
                     else if ($specificationTitle and normalize-space($specificationTitle) != '') then normalize-space($specificationTitle)
                     else ''" />
     <Field name="_title" string="{$reportTitle}" store="true" index="true"/>
