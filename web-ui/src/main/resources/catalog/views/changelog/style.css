@@ -1,0 +1,56 @@
+html {
+  scroll-behavior: smooth;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html, body {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+}
+
+.container {
+  margin: auto;
+  width: 80%;
+  min-width: 800px;
+  padding: 10px;
+}
+
+li {
+  padding: 5px 0;
+}
+
+section {
+  padding: 5px 0;
+}
+
+.selected h3 {
+  animation: blink 1.5s infinite;
+}
+
+img {
+  max-width: 70%;
+}
+
+code {
+  background-color: #d2d2d2;
+}
+
+.bullet-table tr td:first-child {
+  padding-right: 5px;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1
+  }
+  50% {
+    opacity: 0.4
+  }
+  100% {
+    opacity: 1
+  }
+}
