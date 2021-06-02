@@ -28,5 +28,6 @@
 
   <advanced>Complet</advanced>
   <default>Senzill</default>
+  <featureType>Feature type</featureType>
   <xml>XML</xml>
 </strings>

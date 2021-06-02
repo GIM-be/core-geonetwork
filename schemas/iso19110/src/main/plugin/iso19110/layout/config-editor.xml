@@ -23,7 +23,7 @@
   -->
 
 <editor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../../config-editor.xsd">
+        xsi:noNamespaceSchemaLocation="../../../../../../config-editor.xsd">
 
   <!-- Form field type configuration. Default is text. -->
   <fields>
@@ -92,8 +92,11 @@
                  in="/gfc:FC_FeatureCatalogue"/>
           <field xpath="/gfc:FC_FeatureCatalogue/gfc:functionalLanguage" or="functionalLanguage"
                  in="/gfc:FC_FeatureCatalogue"/>
-          <field xpath="/gfc:FC_FeatureCatalogue/gfc:featureType" or="featureType" in="/gfc:FC_FeatureCatalogue"/>
-
+        </section>
+      </tab>
+      <tab id="featureType">
+        <section name="gfc:FC_FeatureCatalogue">
+          <field xpath="/gfc:FC_FeatureCatalogue/gfc:featureType[1]" or="featureType" in="/gfc:FC_FeatureCatalogue"/>
           <action type="suggest"
                   process="add-columns-from-csv"/>
         </section>

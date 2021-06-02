@@ -28,5 +28,6 @@
 
   <advanced>Completo</advanced>
   <default>Simple</default>
+  <featureType>Feature type</featureType>
   <xml>XML</xml>
 </strings>
