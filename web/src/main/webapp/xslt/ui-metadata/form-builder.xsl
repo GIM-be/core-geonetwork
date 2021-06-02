@@ -184,8 +184,10 @@
                  {if ($isRequired and not($requiredType!='')) then ' gn-required' else ''}
                  {if ($requiredType!='') then concat(' gn-required required-', $requiredType) else ''}
                  {if ($isFirst) then '' else ' gn-extra-field'}"
-          id="gn-el-{$editInfo/@ref}"
-          data-gn-field-highlight="">
+          id="gn-el-{$editInfo/@ref}">
+          <xsl:if test="not($lightMode)">
+            <xsl:attribute name="data-gn-field-highlight" select="''"/>
+          </xsl:if>
           <label
             for="gn-field-{$editInfo/@ref}"
             class="col-sm-2 control-label">
@@ -373,8 +375,10 @@
     <xsl:variable name="hasXlink" select="@xlink:href"/>
 
     <fieldset id="{concat('gn-el-', if ($editInfo) then $editInfo/@ref else generate-id())}"
-              data-gn-field-highlight=""
               class="{if ($hasXlink) then 'gn-has-xlink' else ''} gn-{substring-after(name(), ':')}">
+      <xsl:if test="not($lightMode)">
+        <xsl:attribute name="data-gn-field-highlight" select="''"/>
+      </xsl:if>
 
       <legend class="{$cls}"
               data-gn-slide-toggle=""
@@ -465,8 +469,10 @@
 
     <div
       class="form-group gn-field gn-{$firstFieldKey} {if ($isFirst) then '' else 'gn-extra-field'} {if ($isAddAction) then 'gn-add-field' else ''} {$class}"
-      id="gn-el-{if ($refToDelete) then $refToDelete/@ref else generate-id()}"
-      data-gn-field-highlight="">
+      id="gn-el-{if ($refToDelete) then $refToDelete/@ref else generate-id()}">
+      <xsl:if test="not($lightMode)">
+        <xsl:attribute name="data-gn-field-highlight" select="''"/>
+      </xsl:if>
 
       <!--label class="col-sm-2 control-label">
         <xsl:value-of select="$name"/>&#160;
@@ -836,8 +842,10 @@
       <div
         class="form-group gn-field {if ($isRequired) then 'gn-required' else ''} {if ($isFirst) then '' else 'gn-extra-field'} gn-add-field {if ($isHidden) then 'hidden' else ''} {$class}"
         id="gn-el-{$id}"
-        data-gn-cardinality="{$childEditInfo/@min}-{$childEditInfo/@max}"
-        data-gn-field-highlight="">
+        data-gn-cardinality="{$childEditInfo/@min}-{$childEditInfo/@max}">
+        <xsl:if test="not($lightMode)">
+          <xsl:attribute name="data-gn-field-highlight" select="''"/>
+        </xsl:if>
         <label class="col-sm-2 control-label"
                data-gn-field-tooltip="{$schema}|{$qualifiedName}|{$parentName}|">
           <xsl:if test="normalize-space($label) != ''">

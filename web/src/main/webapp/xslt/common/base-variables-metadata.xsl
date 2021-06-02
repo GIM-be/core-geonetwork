@@ -113,6 +113,8 @@
   <xsl:variable name="thesaurusList"
                 select="$editorConfig/editor/views/view[tab/@id = $tab]/thesaurusList"/>
 
+  <xsl:variable name="lightMode" select="$viewConfig/@light = 'true'"/>
+
   <xsl:variable name="isFlatMode"
                 select="if (/root/request/flat) then /root/request/flat = 'true'
     else $tabConfig/@mode = 'flat'"/>

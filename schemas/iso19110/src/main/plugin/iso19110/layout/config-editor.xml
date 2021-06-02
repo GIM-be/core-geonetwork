@@ -67,7 +67,7 @@
 
   <!-- View configuration -->
   <views>
-    <view name="default">
+    <view name="default" light="true" class="gim-no-gradient">
       <sidePanel>
         <directive data-gn-validation-report=""/>
         <directive data-gn-suggestion-list=""/>
@@ -96,7 +96,7 @@
       </tab>
       <tab id="featureType">
         <section name="gfc:FC_FeatureCatalogue">
-          <field xpath="/gfc:FC_FeatureCatalogue/gfc:featureType[1]" or="featureType" in="/gfc:FC_FeatureCatalogue"/>
+          <field xpath="/gfc:FC_FeatureCatalogue/gfc:featureType" or="featureType" in="/gfc:FC_FeatureCatalogue"/>
           <action type="suggest"
                   process="add-columns-from-csv"/>
         </section>
