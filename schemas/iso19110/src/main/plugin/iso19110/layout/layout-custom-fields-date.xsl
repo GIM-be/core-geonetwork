@@ -53,8 +53,10 @@
 
     <xsl:variable name="isRequired" select="gn:element/@min = 1"/>
     <div class="form-group gn-field gn-date {if ($isRequired) then 'gn-required' else ''}"
-         id="gn-el-{$dateTypeElementRef}"
-         data-gn-field-highlight="">
+         id="gn-el-{$dateTypeElementRef}">
+      <xsl:if test="not($lightMode)">
+        <xsl:attribute name="data-gn-field-highlight" select="''"/>
+      </xsl:if>
       <label class="col-sm-2 control-label">
         <xsl:choose>
           <xsl:when test="$overrideLabel != ''">

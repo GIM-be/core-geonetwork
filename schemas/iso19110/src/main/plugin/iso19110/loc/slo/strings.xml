@@ -27,5 +27,6 @@
 
   <advanced>Celý rozsah</advanced>
   <default>Jednoduchý</default>
+  <featureType>Feature type</featureType>
   <xml>XML</xml>
 </strings>

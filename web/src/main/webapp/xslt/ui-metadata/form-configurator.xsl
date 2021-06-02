@@ -66,7 +66,10 @@
 
       <xsl:choose>
         <xsl:when test="$sectionName">
-          <fieldset data-gn-field-highlight="" class="gn-{@name}">
+          <fieldset class="gn-{@name}">
+            <xsl:if test="not($lightMode)">
+              <xsl:attribute name="data-gn-field-highlight" select="''"/>
+            </xsl:if>
             <!-- Get translation for labels.
             If labels contains ':', search into labels.xml. -->
             <legend data-gn-slide-toggle="">
@@ -184,7 +187,10 @@
       </xsl:variable>
       <xsl:choose>
         <xsl:when test="$sectionName">
-          <fieldset data-gn-field-highlight="" class="gn-{@name}">
+          <fieldset class="gn-{@name}">
+            <xsl:if test="not($lightMode)">
+              <xsl:attribute name="data-gn-field-highlight" select="''"/>
+            </xsl:if>
             <legend data-gn-slide-toggle="">
               <xsl:value-of
                 select="if (contains($sectionName, ':'))
