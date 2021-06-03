@@ -97,6 +97,8 @@ attached it to the metadata for data.
                                   xlink:href="{$siteUrl}csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidref}"/>/>
   </xsl:template>
 
+  <xsl:template match="extra" priority="2"/>
+
   <!-- Do a copy of every nodes and attributes -->
   <xsl:template match="@*|node()">
     <xsl:copy copy-namespaces="no">
