@@ -268,6 +268,7 @@ attached it to the metadata for data.
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="extra" priority="2"/>
 
   <!-- Do a copy of every nodes and attributes -->
   <xsl:template match="@*|node()">
