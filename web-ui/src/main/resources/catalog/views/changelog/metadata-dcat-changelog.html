@@ -16,6 +16,8 @@
   <section id="wip">
     <ol>
       <li>Fix ContactPoint cardinality for dcat:Dataset</li>
+      <li>Add dct:rights to default editor view</li>
+      <li>Apply metadata-dcat schematron validation rules only for records conform to the metadata-dcat profile</li>
     </ol>
   </section>
 
@@ -55,33 +57,23 @@
       <li>Rename elements:
         <table class="bullet-table">
           <tr>
-            <td>•</td>
             <td>authenticatie</td>
-            <td> ➔</td>
             <td>landingspaginaVoorAuthenticatie</td>
           </tr>
           <tr>
-            <td>•</td>
             <td>dienstverleningsKwaliteit</td>
-            <td> ➔</td>
             <td>landingspaginaVoorStatusinformatie</td>
           </tr>
           <tr>
-            <td>•</td>
             <td>gebruiksbepaling</td>
-            <td> ➔</td>
             <td>landingspaginaVoorGebruiksinformatie</td>
           </tr>
           <tr>
-            <td>•</td>
             <td>statusVanGebruik</td>
-            <td> ➔</td>
             <td>levensfase</td>
           </tr>
           <tr>
-            <td>•</td>
             <td>statusVanOntwikkeling</td>
-            <td> ➔</td>
             <td>ontwikkelingstoestand</td>
           </tr>
         </table>
@@ -95,21 +87,15 @@
       <li>Renamed schematron validation rules set. We now have the three following schematrons:
         <table class="bullet-table">
           <tr>
-            <td>•</td>
             <td>schematron-rules-dcat-ap</td>
-            <td> ➔</td>
             <td>Mandatory rules for dcat-ap 2.0</td>
           </tr>
           <tr>
-            <td>•</td>
             <td>schematron-rules-dcat-ap-recommendations</td>
-            <td> ➔</td>
             <td>Recommended rules for dcat-ap 2.0</td>
           </tr>
           <tr>
-            <td>•</td>
             <td>schematron-rules-metadata-dcat</td>
-            <td> ➔</td>
             <td>Mandatory rules metadata-dcat</td>
           </tr>
         </table>
