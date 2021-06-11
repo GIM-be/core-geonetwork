@@ -17,7 +17,13 @@
     <ol>
       <li>Fix ContactPoint cardinality for dcat:Dataset</li>
       <li>Add dct:rights to default editor view</li>
-      <li>Apply metadata-dcat schematron validation rules only for records conform to the metadata-dcat profile</li>
+      <li>Apply schematron validation rules based on the record profile</li>
+      <li>Hide profile specific extension fields from editor when template profile doesn't match</li>
+      <li>Add templates for DCAT-AP VL records</li>
+      <li>Add validation rules specific to DCAT-AP VL records</li>
+      <li>Enforce "Vlaamse Open Data" dcat:theme on DCAT-AP VL records. (WIP: There is still no way of selecting themes
+        from another vocabulary. data.gov.be theme are still the only one that can be manually selected)
+      </li>
     </ol>
   </section>
 
@@ -36,9 +42,11 @@
       <li>Change metadata identifier to use the CatalogRecord identifier</li>
       <li>Change the metadata modified date to use the CatalogRecord identifier</li>
       <li>Update DCAT harvester to harvest DataServices</li>
-      <li>Update DCAT harvester to harvest CatalogRecord <strong>(Still TODO: Datasets and services without a CatalogRecord in the harvested feed are currently ignored)</strong></li>
+      <li>Update DCAT harvester to harvest CatalogRecord <strong>(Still TODO: Datasets and services without a
+        CatalogRecord in the harvested feed are currently ignored)</strong></li>
     </ol>
-    <strong>Notes:</strong> All the previously created metadata were not migrated to use the CatalogRecord identifier and the editor will not work properly when trying to edit them.
+    <strong>Notes:</strong> All the previously created metadata were not migrated to use the CatalogRecord identifier
+    and the editor will not work properly when trying to edit them.
   </section>
 
   <section id="22/03/2021">
@@ -109,8 +117,12 @@
       <li>Thesauri for <code>mdcat:levensfase</code> and <code>mdcat:ontwikkelingstoestand</code> have been updated to
         point to their correct new scheme:
         <ul>
-          <li><a target="_blank" href="https://data.vlaanderen.be/id/conceptscheme/levensfase">https://data.vlaanderen.be/id/conceptscheme/levensfase</a></li>
-          <li><a target="_blank" href="https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand">https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand</a></li>
+          <li>
+            <a target="_blank" href="https://data.vlaanderen.be/id/conceptscheme/levensfase">https://data.vlaanderen.be/id/conceptscheme/levensfase</a>
+          </li>
+          <li>
+            <a target="_blank" href="https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand">https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand</a>
+          </li>
         </ul>
       </li>
     </ol>
