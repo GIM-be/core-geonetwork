@@ -140,21 +140,20 @@
                                         @displayIfRecord,
                                         @displayIfServiceInfo)"/>
     <!-- When tab displayIf filter return false, the tab is disabled.
-     Another option would be to completely hide it:
+     Another option would be to completely hide it:-->
     <xsl:if test="$isTabDisplayed">
+      <li role="menuitem"
+        class="{if ($tab = @id) then 'active' else ''} {if ($isTabDisplayed) then '' else 'disabled'}">
+        <a href="">
+          <xsl:if test="$tab != @id and $isTabDisplayed">
+            <xsl:attribute name="data-ng-click"
+                           select="concat('switchToTab(''', @id, ''', ''', @mode, ''')')"/>
+          </xsl:if>
+          <xsl:variable name="tabId" select="@id"/>
+          <xsl:value-of select="$strings/*[name() = $tabId]"/>
+        </a>
+      </li>
     </xsl:if>
-    -->
-    <li role="menuitem"
-      class="{if ($tab = @id) then 'active' else ''} {if ($isTabDisplayed) then '' else 'disabled'}">
-      <a href="">
-        <xsl:if test="$tab != @id and $isTabDisplayed">
-          <xsl:attribute name="data-ng-click"
-                         select="concat('switchToTab(''', @id, ''', ''', @mode, ''')')"/>
-        </xsl:if>
-        <xsl:variable name="tabId" select="@id"/>
-        <xsl:value-of select="$strings/*[name() = $tabId]"/>
-      </a>
-    </li>
 
   </xsl:template>
 </xsl:stylesheet>

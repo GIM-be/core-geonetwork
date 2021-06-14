@@ -29,5 +29,19 @@
   <advanced>Full</advanced>
   <default>Simple</default>
   <featureType>Feature type</featureType>
+  <featureType1>Feature types (1-5)</featureType1>
+  <featureType2>Feature types (6-10)</featureType2>
+  <featureType3>Feature types (11-15)</featureType3>
+  <featureType4>Feature types (16-20)</featureType4>
+  <featureType5>Feature types (21-25)</featureType5>
+  <featureType6>Feature types (26-30)</featureType6>
+  <featureType7>Feature types (31-..)</featureType7>
+  <advancedFeatureType1>Feature types (1-5)</advancedFeatureType1>
+  <advancedFeatureType2>Feature types (6-10)</advancedFeatureType2>
+  <advancedFeatureType3>Feature types (11-15)</advancedFeatureType3>
+  <advancedFeatureType4>Feature types (16-20)</advancedFeatureType4>
+  <advancedFeatureType5>Feature types (21-25)</advancedFeatureType5>
+  <advancedFeatureType6>Feature types (26-30)</advancedFeatureType6>
+  <advancedFeatureType7>Feature types (31-..)</advancedFeatureType7>
   <xml>XML</xml>
 </strings>
