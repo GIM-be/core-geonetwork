@@ -49,4 +49,13 @@
     <xsl:param name="in"/>
     <xsl:copy-of select="saxon:evaluate(concat('$p1', $in), $base)"/>
   </xsl:template>
+
+  <!-- Evaluate XPath returning a boolean value. -->
+  <xsl:template name="evaluate-iso19110-boolean">
+    <xsl:param name="base" as="node()"/>
+    <xsl:param name="in"/>
+
+    <xsl:value-of select="saxon:evaluate(concat('$p1', $in), $base)"/>
+  </xsl:template>
+
 </xsl:stylesheet>
