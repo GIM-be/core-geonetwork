@@ -1148,6 +1148,11 @@
                       // ie. dataset, series, ...
                       searchParams['without-type'] = 'service';
                     }
+
+                    if (gnCurrentEdit.metadata.getSchema() === 'dcat2') {
+                      searchParams['without-serviceType'] = ['view', 'discovery', 'Raadpleegdienst'];
+                    }
+
                     scope.$broadcast('resetSearch', searchParams);
                     scope.layers = [];
 

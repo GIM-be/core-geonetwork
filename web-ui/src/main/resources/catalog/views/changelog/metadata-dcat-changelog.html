@@ -13,15 +13,24 @@
 
   <h1>Changelog</h1>
 
-  <section id="wip">
+  <section id="21/06/2021">
     <ol>
-      <li>The required "mailto:" prefix on vcard:hasEmail element is now automatically added when missing</li>
-      <li>Fix bug where an XSD validation error would sometimes occurs when saving and quiting the editor causing a metadata to be invalid and unpublished</li>
+      <li>When missing, the required "mailto:" prefix on vcard:hasEmail element is now automatically added to the XML
+        when saving, before any validation
+      </li>
+      <li>Fix bug where an XSD validation error would sometimes occurs when saving and quiting the editor causing a
+        metadata to be invalid and unpublished
+      </li>
       <li>Add the services mdcat extension elements to the Open DCAT editor</li>
       <li>Add dct:subject element to the XSD</li>
-      <li>Define the "GDI-Vlaanderen-trefwoorden" vocabulary for the dct:subject element (WIP: Multiple thesauri should be accepted in dct:subject. It is only the case for "GDI-Vlaanderen-trefwoorden" currently)</li>
+      <li>Define the "GDI-Vlaanderen-trefwoorden" vocabulary for the dct:subject element (WIP: Multiple thesauri should
+        be accepted in dct:subject. It is only the case for "GDI-Vlaanderen-trefwoorden" currently)
+      </li>
       <li>Automatically add the "Vlaamse Open data" keyword as a dct:subject when editing a dcat-ap-vl metadata</li>
       <li>Improve dcat-ap-vl validation rules and update metadata-dcat validation with latest changes</li>
+      <li>When linking a dataset to a service, the services list to pick from is now filtered to only display
+        downloadable services
+      </li>
     </ol>
   </section>
 
