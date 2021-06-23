@@ -187,7 +187,7 @@ public class BaseMetadataOperations implements IMetadataOperations, ApplicationE
 
             //If it is published/unpublished, throw event
             if (opId == ReservedOperation.view.getId()
-                && grpId == ReservedGroup.all.getId()) {
+                && grpId == ReservedGroup.all.getId() && !"csw-publication".equals(context.getService())) {
                 Log.trace(Geonet.DATA_MANAGER, "This is a publish event");
                 this.eventPublisher.publishEvent(new MetadataPublished(
                     metadataUtils.findOne(Integer.valueOf(mdId))));
