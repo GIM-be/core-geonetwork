@@ -303,10 +303,12 @@ public class Transaction extends AbstractOperation implements CatalogService {
             int approvedStatusId = Integer.parseInt(StatusValue.Status.APPROVED);
             StatusValue statusValue = statusValueRepository.findOne(approvedStatusId);
 
+            // We add one second to the current time stamp, to avoid more entries in the metadatastatus
+            // table with the same change date producing issue with the indexing of the metadata status
             MetadataStatusId mdStatusId = new MetadataStatusId()
                 .setStatusId(approvedStatusId)
                 .setMetadataId(abstractMetadata.getId())
-                .setChangeDate(new ISODate())
+                .setChangeDate(new ISODate((new ISODate().getTimeInSeconds()+1)*1000))
                 .setUserId(author);
 
             metadataStatus.setId(mdStatusId);
