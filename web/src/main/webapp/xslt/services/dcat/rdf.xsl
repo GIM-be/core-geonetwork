@@ -106,9 +106,12 @@
 
       <!-- The homepage of the catalog -->
       <foaf:homepage>
-			<foaf:Document rdf:about="{$serviceUrl}">
-				<foaf:name xml:lang="{$iso2letterLanguageCode}"><xsl:value-of select="$env/system/site/name"/></foaf:name>
-			</foaf:Document>
+        <foaf:Document>
+          <xsl:if test="normalize-space($serviceUrl) != ''">
+            <xsl:attribute name="rdf:about" select="$serviceUrl"/>
+          </xsl:if>
+          <foaf:name xml:lang="{$iso2letterLanguageCode}"><xsl:value-of select="$env/system/site/name"/></foaf:name>
+        </foaf:Document>
       </foaf:homepage>
 
       <!-- The license of the catalog -->

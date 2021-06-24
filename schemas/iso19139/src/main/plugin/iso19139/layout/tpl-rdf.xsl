@@ -1283,7 +1283,10 @@
         -->
         <xsl:choose>
           <xsl:when test="$MetadataUri != ''">
-            <rdf:Description rdf:about="{$MetadataUri}">
+            <rdf:Description>
+              <xsl:if test="normalize-space($MetadataUri) != ''">
+                <xsl:attribute name="rdf:about" select="$MetadataUri"/>
+              </xsl:if>
               <rdf:type rdf:resource="{$dcat}CatalogRecord"/>
               <foaf:primaryTopic rdf:resource="{$ResourceUri}"/>
               <xsl:copy-of select="$MetadataDescription"/>
@@ -1302,7 +1305,10 @@
         <!--
                 </xsl:if>
         -->
-        <rdf:Description rdf:about="{$ResourceUri}">
+        <rdf:Description>
+          <xsl:if test="normalize-space($ResourceUri) != ''">
+            <xsl:attribute name="rdf:about" select="$ResourceUri"/>
+          </xsl:if>
           <xsl:copy-of select="$ResourceDescription"/>
         </rdf:Description>
       </xsl:when>
@@ -1583,7 +1589,10 @@
             <org:memberOf>
               <xsl:choose>
                 <xsl:when test="$OrganisationURI != ''">
-                  <foaf:Organization rdf:about="{$OrganisationURI}">
+                  <foaf:Organization>
+                    <xsl:if test="normalize-space($OrganisationURI) != ''">
+                      <xsl:attribute name="rdf:about" select="$OrganisationURI"/>
+                    </xsl:if>
                     <!--
                                         <foaf:name xml:lang="{$MetadataLanguage}"><xsl:value-of select="$OrganisationName"/></foaf:name>
                     -->
@@ -2461,7 +2470,10 @@
                   <xsl:choose>
                     <xsl:when test="$keywordAbout">
                       <dcat:theme>
-                        <skos:Concept rdf:about="{$keywordAbout}">
+                        <skos:Concept>
+                          <xsl:if test="normalize-space($keywordAbout) != ''">
+                            <xsl:attribute name="rdf:about" select="$keywordAbout"/>
+                          </xsl:if>
                           <skos:prefLabel xml:lang="{$MetadataLanguage}">
                             <xsl:value-of select="normalize-space(gco:CharacterString)"/>
                           </skos:prefLabel>
@@ -2519,7 +2531,10 @@
               <xsl:choose>
                 <xsl:when test="$ResourceType != 'service'">
                   <dcat:theme>
-                    <skos:Concept rdf:about="{gmx:Anchor/@xlink:href}">
+                    <skos:Concept>
+                      <xsl:if test="normalize-space(gmx:Anchor/@xlink:href) != ''">
+                        <xsl:attribute name="rdf:about" select="gmx:Anchor/@xlink:href"/>
+                      </xsl:if>
                       <skos:prefLabel xml:lang="{$MetadataLanguage}">
                         <xsl:value-of select="gmx:Anchor"/>
                       </skos:prefLabel>
@@ -2812,7 +2827,10 @@
     <xsl:choose>
       <xsl:when test="starts-with($code, 'http://') or starts-with($code, 'https://')">
         <dct:conformsTo>
-          <rdf:Description rdf:about="{$code}">
+          <rdf:Description>
+            <xsl:if test="normalize-space($code) != ''">
+              <xsl:attribute name="rdf:about" select="$code"/>
+            </xsl:if>
             <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
           </rdf:Description>
         </dct:conformsTo>
@@ -2831,7 +2849,10 @@
                 <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
                 <dct:identifier rdf:datatype="{$xsd}anyURI"><xsl:value-of select="$code"/></dct:identifier>
                 <skos:inScheme>
-                  <skos:ConceptScheme rdf:about="{$EpsgSrsBaseUri}">
+                  <skos:ConceptScheme>
+                    <xsl:if test="normalize-space($EpsgSrsBaseUri) != ''">
+                      <xsl:attribute name="rdf:about" select="$EpsgSrsBaseUri"/>
+                    </xsl:if>
                     <dct:title xml:lang="en"><xsl:value-of select="$EpsgSrsName"/></dct:title>
                   </skos:ConceptScheme>
                 </skos:inScheme>
@@ -2867,7 +2888,10 @@
                 <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
                 <dct:identifier rdf:datatype="{$xsd}anyURI"><xsl:value-of select="concat($EpsgSrsBaseUrn,':',$version,':',$code)"/></dct:identifier>
                 <skos:inScheme>
-                  <skos:ConceptScheme rdf:about="{$EpsgSrsBaseUri}">
+                  <skos:ConceptScheme>
+                    <xsl:if test="normalize-space($EpsgSrsBaseUri) != ''">
+                      <xsl:attribute name="rdf:about" select="$EpsgSrsBaseUri"/>
+                    </xsl:if>
                     <dct:title xml:lang="en"><xsl:value-of select="$EpsgSrsName"/></dct:title>
                   </skos:ConceptScheme>
                 </skos:inScheme>
@@ -2879,12 +2903,18 @@
           </xsl:when>
           <xsl:when test="translate(normalize-space(translate($code,$uppercase,$lowercase)),': ','') = 'etrs89'">
             <dct:conformsTo>
-              <rdf:Description rdf:about="{$Etrs89Uri}">
+              <rdf:Description>
+                <xsl:if test="normalize-space($Etrs89Uri) != ''">
+                  <xsl:attribute name="rdf:about" select="$Etrs89Uri"/>
+                </xsl:if>
                 <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
                 <dct:identifier rdf:datatype="{$xsd}anyURI"><xsl:value-of select="$Etrs89Urn"/></dct:identifier>
                 <skos:prefLabel xml:lang="en">ETRS89 - European Terrestrial Reference System 1989</skos:prefLabel>
                 <skos:inScheme>
-                  <skos:ConceptScheme rdf:about="{$EpsgSrsBaseUri}">
+                  <skos:ConceptScheme>
+                    <xsl:if test="normalize-space($EpsgSrsBaseUri) != ''">
+                      <xsl:attribute name="rdf:about" select="$EpsgSrsBaseUri"/>
+                    </xsl:if>
                     <dct:title xml:lang="en"><xsl:value-of select="$EpsgSrsName"/></dct:title>
                   </skos:ConceptScheme>
                 </skos:inScheme>
@@ -2896,12 +2926,18 @@
           </xsl:when>
           <xsl:when test="translate(normalize-space(translate($code,$uppercase,$lowercase)),': ','') = 'crs84'">
             <dct:conformsTo>
-              <rdf:Description rdf:about="{$Crs84Uri}">
+              <rdf:Description>
+                <xsl:if test="normalize-space($Crs84Uri) != ''">
+                  <xsl:attribute name="rdf:about" select="$Crs84Uri"/>
+                </xsl:if>
                 <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
                 <dct:identifier rdf:datatype="{$xsd}anyURI"><xsl:value-of select="$Crs84Urn"/></dct:identifier>
                 <skos:prefLabel xml:lang="en">CRS84</skos:prefLabel>
                 <skos:inScheme>
-                  <skos:ConceptScheme rdf:about="{$OgcSrsBaseUri}">
+                  <skos:ConceptScheme>
+                    <xsl:if test="normalize-space($OgcSrsBaseUri) != ''">
+                      <xsl:attribute name="rdf:about" select="$OgcSrsBaseUri"/>
+                    </xsl:if>
                     <dct:title xml:lang="en"><xsl:value-of select="$OgcSrsName"/></dct:title>
                   </skos:ConceptScheme>
                 </skos:inScheme>
