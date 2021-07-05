@@ -140,7 +140,7 @@
       <item facet="standard" sortBy="value"/>
       <item facet="standardName" sortBy="value"/>
       <item facet="mdActions"/>
-      <item facet="serviceType"/>
+      <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
       <item facet="sourceCatalog"
             translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
