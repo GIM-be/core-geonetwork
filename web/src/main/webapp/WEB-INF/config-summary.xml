@@ -140,7 +140,7 @@
       <item facet="standard" sortBy="value"/>
       <item facet="standardName" sortBy="value"/>
       <item facet="mdActions"/>
-      <item facet="serviceType"/>
+      <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
       <item facet="sourceCatalog"
             translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
@@ -175,7 +175,7 @@
       <item facet="standard" sortBy="value"/>
       <item facet="standardName" sortBy="value"/>
       <item facet="mdActions"/>
-      <item facet="serviceType"/>
+      <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
       <item facet="sourceCatalog"
             translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
@@ -213,7 +213,7 @@
       <item facet="maintenanceAndUpdateFrequency"
             translator="codelist:gmd:MD_MaintenanceFrequencyCode"/>
       <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
-      <item facet="serviceType"/>
+      <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="denominator" sortBy="value" sortOrder="desc"/>
       <item facet="resolution" sortBy="numValue" sortOrder="desc"/>
       <!--<item facet="metadataPOC" max="15"/>-->
@@ -245,7 +245,7 @@
             translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
       <item facet="orgName" max="15"/>
       <item facet="metadataPOC" max="15"/>
-      <item facet="serviceType"/>
+      <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="createDateYear" sortOrder="asc" max="40"/>
     </summaryType>
@@ -258,7 +258,7 @@
             translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
       <item facet="orgName" max="100"/>
       <item facet="metadataPOC"/>
-      <item facet="serviceType"/>
+      <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="createDateYear" sortOrder="asc"/>
       <item facet="fileId"/>
