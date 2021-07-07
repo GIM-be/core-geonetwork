@@ -46,39 +46,40 @@
 -->
 
 <xsl:stylesheet xmlns:adms   = "http://www.w3.org/ns/adms#"
-               xmlns:cnt    = "http://www.w3.org/2011/content#"
-               xmlns:dc     = "http://purl.org/dc/elements/1.1/"
-               xmlns:dcat   = "http://www.w3.org/ns/dcat#"
-               xmlns:dct    = "http://purl.org/dc/terms/"
-               xmlns:dctype = "http://purl.org/dc/dcmitype/"
-               xmlns:earl   = "http://www.w3.org/ns/earl#"
-               xmlns:foaf   = "http://xmlns.com/foaf/0.1/"
-               xmlns:gco    = "http://www.isotc211.org/2005/gco"
-               xmlns:gmd    = "http://www.isotc211.org/2005/gmd"
-               xmlns:gml    = "http://www.opengis.net/gml/3.2"
-               xmlns:gml320 = "http://www.opengis.net/gml"
-               xmlns:gmx    = "http://www.isotc211.org/2005/gmx"
-               xmlns:gsp    = "http://www.opengis.net/ont/geosparql#"
-               xmlns:i      = "http://inspire.ec.europa.eu/schemas/common/1.0"
-               xmlns:i-gp   = "http://inspire.ec.europa.eu/schemas/geoportal/1.0"
-               xmlns:locn   = "http://www.w3.org/ns/locn#"
-               xmlns:owl    = "http://www.w3.org/2002/07/owl#"
-               xmlns:org    = "http://www.w3.org/ns/org#"
-               xmlns:prov   = "http://www.w3.org/ns/prov#"
-               xmlns:rdf    = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-               xmlns:rdfs   = "http://www.w3.org/2000/01/rdf-schema#"
-               xmlns:schema = "http://schema.org/"
-               xmlns:skos   = "http://www.w3.org/2004/02/skos/core#"
-               xmlns:srv    = "http://www.isotc211.org/2005/srv"
-               xmlns:vcard  = "http://www.w3.org/2006/vcard/ns#"
-               xmlns:wdrs   = "http://www.w3.org/2007/05/powder-s#"
-               xmlns:xlink  = "http://www.w3.org/1999/xlink"
-               xmlns:xsi    = "http://www.w3.org/2001/XMLSchema-instance"
-               xmlns:xsl    = "http://www.w3.org/1999/XSL/Transform"
-               xmlns:geonet = "http://www.fao.org/geonetwork"
-               xmlns:xs     = "http://www.w3.org/2001/XMLSchema"
-               exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype owl dc gml320 xs prov gsp org"
-               version="2.0">
+                xmlns:cnt    = "http://www.w3.org/2011/content#"
+                xmlns:dc     = "http://purl.org/dc/elements/1.1/"
+                xmlns:dcat   = "http://www.w3.org/ns/dcat#"
+                xmlns:dct    = "http://purl.org/dc/terms/"
+                xmlns:dctype = "http://purl.org/dc/dcmitype/"
+                xmlns:earl   = "http://www.w3.org/ns/earl#"
+                xmlns:foaf   = "http://xmlns.com/foaf/0.1/"
+                xmlns:gco    = "http://www.isotc211.org/2005/gco"
+                xmlns:gmd    = "http://www.isotc211.org/2005/gmd"
+                xmlns:gml    = "http://www.opengis.net/gml/3.2"
+                xmlns:gml320 = "http://www.opengis.net/gml"
+                xmlns:gmx    = "http://www.isotc211.org/2005/gmx"
+                xmlns:gsp    = "http://www.opengis.net/ont/geosparql#"
+                xmlns:i      = "http://inspire.ec.europa.eu/schemas/common/1.0"
+                xmlns:i-gp   = "http://inspire.ec.europa.eu/schemas/geoportal/1.0"
+                xmlns:locn   = "http://www.w3.org/ns/locn#"
+                xmlns:owl    = "http://www.w3.org/2002/07/owl#"
+                xmlns:org    = "http://www.w3.org/ns/org#"
+                xmlns:prov   = "http://www.w3.org/ns/prov#"
+                xmlns:rdf    = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                xmlns:rdfs   = "http://www.w3.org/2000/01/rdf-schema#"
+                xmlns:schema = "http://schema.org/"
+                xmlns:skos   = "http://www.w3.org/2004/02/skos/core#"
+                xmlns:srv    = "http://www.isotc211.org/2005/srv"
+                xmlns:vcard  = "http://www.w3.org/2006/vcard/ns#"
+                xmlns:wdrs   = "http://www.w3.org/2007/05/powder-s#"
+                xmlns:xlink  = "http://www.w3.org/1999/xlink"
+                xmlns:xsi    = "http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:xsl    = "http://www.w3.org/1999/XSL/Transform"
+                xmlns:geonet = "http://www.fao.org/geonetwork"
+                xmlns:xs     = "http://www.w3.org/2001/XMLSchema"
+                xmlns:uuid="java:java.util.UUID"
+                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype owl dc gml320 xs prov gsp org uuid"
+                version="2.0">
 
   <xsl:output method="xml"
               indent="yes"
@@ -249,43 +250,14 @@
    -->
   <xsl:template match="gmd:MD_Metadata|//gmd:MD_Metadata" mode="to-dcat">
     <!--
-
-      Parameters to create HTTP URIs for the resource and the corresponding metadata record
-      =====================================================================================
-
-      These parameters must be customised depending on the strategy used to assign HTTP URIs.
-
-      The default rule implies that HTTP URIs are specified for the metadata file identifier
-      (metadata URI) and the resource identifier (resource URI).
-
+      Other parameters
+      ================
     -->
-
-    <!--  update by GIM: turn into GeoNetwork-style URI -->
-    <xsl:param name="ResourceUri">
-      <xsl:variable name="rURI" select="concat($resourcePrefix, '/', gmd:fileIdentifier/gco:CharacterString)"/>
-      <!-- <xsl:variable name="rURI" select="concat($resourcePrefix,'/resources/',gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/*/gmd:code/gco:CharacterString)"/>  -->
-      <xsl:if test="$rURI != '' and ( starts-with($rURI, 'http://') or starts-with($rURI, 'https://') )">
-        <xsl:value-of select="$rURI"/>
-      </xsl:if>
-    </xsl:param>
-
-    <xsl:param name="MetadataUri">
-      <xsl:variable name="mURI" select="concat($resourcePrefix,'/records/',gmd:fileIdentifier/gco:CharacterString)"/>
-      <xsl:if test="$mURI != '' and ( starts-with($mURI, 'http://') or starts-with($mURI, 'https://') )">
-        <xsl:value-of select="$mURI"/>
-      </xsl:if>
-    </xsl:param>
 
     <xsl:param name="MetadataViewUrl">
       <xsl:value-of select="concat($catalogUrl, '/catalog.search#/metadata/', gmd:fileIdentifier/gco:CharacterString)"/>
     </xsl:param>
 
-    <!--
-
-      Other parameters
-      ================
-
-    -->
 
     <!-- Metadata language: corresponding Alpha-2 codes -->
 
@@ -410,86 +382,6 @@
       </xsl:choose>
     </xsl:param>
 
-    <xsl:param name="ResourceLanguage">
-      <xsl:choose>
-        <xsl:when test="$orrlang = 'bul'">
-          <xsl:text>bg</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'cze'">
-          <xsl:text>cs</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'dan'">
-          <xsl:text>da</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'ger'">
-          <xsl:text>de</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'gre'">
-          <xsl:text>el</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'eng'">
-          <xsl:text>en</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'spa'">
-          <xsl:text>es</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'est'">
-          <xsl:text>et</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'fin'">
-          <xsl:text>fi</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'fre'">
-          <xsl:text>fr</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'gle'">
-          <xsl:text>ga</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'hrv'">
-          <xsl:text>hr</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'ita'">
-          <xsl:text>it</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'lav'">
-          <xsl:text>lv</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'lit'">
-          <xsl:text>lt</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'hun'">
-          <xsl:text>hu</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'mlt'">
-          <xsl:text>mt</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'dut'">
-          <xsl:text>nl</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'pol'">
-          <xsl:text>pl</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'por'">
-          <xsl:text>pt</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'rum'">
-          <xsl:text>ru</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'slo'">
-          <xsl:text>sk</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'slv'">
-          <xsl:text>sl</xsl:text>
-        </xsl:when>
-        <xsl:when test="$orrlang = 'swe'">
-          <xsl:text>sv</xsl:text>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$orrlang"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:param>
-
     <xsl:param name="IsoScopeCode">
       <xsl:value-of select="normalize-space(gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue)"/>
     </xsl:param>
@@ -514,11 +406,7 @@
     <xsl:param name="ServiceType">
       <xsl:value-of select="gmd:identificationInfo/*/srv:serviceType/gco:LocalName"/>
     </xsl:param>
-    <!--
-        <xsl:param name="ResourceTitle">
-          <xsl:value-of select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:title/gco:CharacterString"/>
-        </xsl:param>
-    -->
+
     <xsl:param name="ResourceTitle">
       <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:title">
         <dct:title xml:lang="{$MetadataLanguage}">
@@ -529,11 +417,7 @@
         </xsl:call-template>
       </xsl:for-each>
     </xsl:param>
-    <!--
-        <xsl:param name="ResourceAbstract">
-          <xsl:value-of select="gmd:identificationInfo[1]/*/gmd:abstract/gco:CharacterString"/>
-        </xsl:param>
-    -->
+
     <xsl:param name="ResourceAbstract">
       <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:abstract">
         <dct:description xml:lang="{$MetadataLanguage}">
@@ -544,11 +428,7 @@
         </xsl:call-template>
       </xsl:for-each>
     </xsl:param>
-    <!--
-        <xsl:param name="Lineage">
-          <xsl:value-of select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement/gco:CharacterString"/>
-        </xsl:param>
-    -->
+
     <xsl:param name="Lineage">
       <xsl:for-each select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement">
         <dct:provenance>
@@ -575,6 +455,8 @@
       </xsl:choose>
     </xsl:param>
 
+    <xsl:param name="uuidRegex" select="'([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}'"/>
+
     <xsl:param name="UniqueResourceIdentifier">
       <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
         <xsl:choose>
@@ -587,6 +469,34 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
+    </xsl:param>
+
+    <xsl:param name="RecordUUID" select="string(gmd:fileIdentifier/gco:CharacterString)"/>
+
+    <xsl:param name="ResourceUUID">
+      <xsl:choose>
+        <xsl:when test="$UniqueResourceIdentifier[matches(., $uuidRegex)][1]">
+          <xsl:value-of select="$UniqueResourceIdentifier[matches(., $uuidRegex)][1]"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <!-- This should not happen -->
+          <xsl:value-of select="uuid:toString(uuid:randomUUID())"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:param>
+
+    <xsl:param name="MetadataUri">
+      <xsl:variable name="mURI" select="concat($resourcePrefix,'/records/', $RecordUUID)"/>
+      <xsl:if test="$mURI != '' and (starts-with($mURI, 'http://') or starts-with($mURI, 'https://'))">
+        <xsl:value-of select="$mURI"/>
+      </xsl:if>
+    </xsl:param>
+
+    <xsl:param name="ResourceUri">
+      <xsl:variable name="rURI" select="concat($resourcePrefix, '/', $ResourceType, '/', $ResourceUUID)"/>
+      <xsl:if test="$rURI != '' and (starts-with($rURI, 'http://') or starts-with($rURI, 'https://'))">
+        <xsl:value-of select="$rURI"/>
+      </xsl:if>
     </xsl:param>
 
     <xsl:param name="ConstraintsRelatedToAccessAndUse">
@@ -746,6 +656,9 @@
 
     <xsl:param name="MetadataDescription">
       <!-- Metadata language -->
+      <dct:identifier>
+        <xsl:value-of select="$RecordUUID"/>
+      </dct:identifier>
       <xsl:if test="$ormlang != ''">
         <xsl:variable name="languageConcept">
           <xsl:call-template name="Map-language">
@@ -847,10 +760,10 @@
             <rdf:type rdf:resource="{$dcat}Catalog"/>
           </xsl:if>
         </xsl:when>
-        <xsl:otherwise>
-          <xsl:message select="$ResourceType"/>
-        </xsl:otherwise>
       </xsl:choose>
+      <dct:identifier>
+        <xsl:value-of select="$ResourceUUID"/>
+      </dct:identifier>
       <xsl:if test="$profile = $extended">
         <xsl:if test="$InspireResourceType != ''">
           <dct:type rdf:resource="{$ResourceTypeCodelistUri}/{$ResourceType}"/>
@@ -2728,7 +2641,6 @@
         <xsl:value-of select="'dcat:DataService'"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:message select="$description"/>
         <xsl:message select="concat('WARNING: &quot;', $type, '&quot; does not have an element name')"/>
         <xsl:value-of select="'dcat:Dataset'"/>
       </xsl:otherwise>
