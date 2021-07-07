@@ -45,7 +45,7 @@
 
 -->
 
-<xsl:transform xmlns:adms   = "http://www.w3.org/ns/adms#"
+<xsl:stylesheet xmlns:adms   = "http://www.w3.org/ns/adms#"
                xmlns:cnt    = "http://www.w3.org/2011/content#"
                xmlns:dc     = "http://purl.org/dc/elements/1.1/"
                xmlns:dcat   = "http://www.w3.org/ns/dcat#"
@@ -521,7 +521,9 @@
     -->
     <xsl:param name="ResourceTitle">
       <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:title">
-        <dct:title xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></dct:title>
+        <dct:title xml:lang="{$MetadataLanguage}">
+          <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+        </dct:title>
         <xsl:call-template name="LocalisedString">
           <xsl:with-param name="term">dct:title</xsl:with-param>
         </xsl:call-template>
@@ -534,7 +536,9 @@
     -->
     <xsl:param name="ResourceAbstract">
       <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:abstract">
-        <dct:description xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></dct:description>
+        <dct:description xml:lang="{$MetadataLanguage}">
+          <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+        </dct:description>
         <xsl:call-template name="LocalisedString">
           <xsl:with-param name="term">dct:description</xsl:with-param>
         </xsl:call-template>
@@ -549,7 +553,9 @@
       <xsl:for-each select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement">
         <dct:provenance>
           <dct:ProvenanceStatement>
-            <rdfs:label xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></rdfs:label>
+            <rdfs:label xml:lang="{$MetadataLanguage}">
+              <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+            </rdfs:label>
             <xsl:call-template name="LocalisedString">
               <xsl:with-param name="term">rdfs:label</xsl:with-param>
             </xsl:call-template>
@@ -573,7 +579,8 @@
       <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
         <xsl:choose>
           <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
-            <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(),gmd:code/gco:CharacterString/text())"/>
+            <xsl:value-of
+              select="concat(gmd:codeSpace/gco:CharacterString/text(),gmd:code/gco:CharacterString/text())"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>
@@ -605,7 +612,7 @@
           <keyword>modellicentie_hergebruik_tegen_vergoeding</keyword>
         </license>
         <license>
-          <url>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0 </url>
+          <url>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</url>
           <keyword>creative-commons-zero-verklaring</keyword>
           <keyword>creative_commons_zero_verklaring</keyword>
           <keyword>cc0</keyword>
@@ -617,7 +624,9 @@
           <xsl:variable name="currentUrl" select="translate(@xlink:href, $uppercase, $lowercase)"/>
           <xsl:for-each select="$modelLicencieKeywords/license/keyword">
             <xsl:if test="contains($currentUrl, string())">
-              <license><xsl:value-of select="string(../url)"/></license>
+              <license>
+                <xsl:value-of select="string(../url)"/>
+              </license>
             </xsl:if>
           </xsl:for-each>
         </xsl:for-each>
@@ -631,7 +640,8 @@
         </xsl:when>
         <xsl:when test="$licensesConstraintsCharacterString[contains(., 'Gratis Open Data licentie')]">
           <xsl:element name="dct:license">
-            <xsl:attribute name="rdf:resource" select="'http://overheid.vlaanderen.be/hergebruik/licenties/v1-0/html/modellicentie-gratis-hergebruik'"/>
+            <xsl:attribute name="rdf:resource"
+                           select="'http://overheid.vlaanderen.be/hergebruik/licenties/v1-0/html/modellicentie-gratis-hergebruik'"/>
           </xsl:element>
         </xsl:when>
         <xsl:otherwise>
@@ -647,7 +657,9 @@
       <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:specification/gmd:CI_Citation">
         <xsl:variable name="specTitle">
           <xsl:for-each select="gmd:title">
-            <dct:title xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></dct:title>
+            <dct:title xml:lang="{$MetadataLanguage}">
+              <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+            </dct:title>
             <xsl:call-template name="LocalisedString">
               <xsl:with-param name="term">dct:title</xsl:with-param>
             </xsl:call-template>
@@ -672,7 +684,9 @@
         </xsl:variable>
         <xsl:variable name="explanation">
           <xsl:for-each select="../../gmd:explanation">
-            <dct:description xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></dct:description>
+            <dct:description xml:lang="{$MetadataLanguage}">
+              <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+            </dct:description>
             <xsl:call-template name="LocalisedString">
               <xsl:with-param name="term">dct:description</xsl:with-param>
             </xsl:call-template>
@@ -767,7 +781,9 @@
       <!-- Metadata file identifier (tentative): only for the extended profile -->
       <xsl:if test="$profile = $extended">
         <xsl:for-each select="gmd:fileIdentifier/gco:CharacterString">
-          <dct:identifier rdf:datatype="{$xsd}string"><xsl:value-of select="."/></dct:identifier>
+          <dct:identifier rdf:datatype="{$xsd}string">
+            <xsl:value-of select="."/>
+          </dct:identifier>
         </xsl:for-each>
       </xsl:if>
       <!-- Metadata standard (tentative): only for the extended profile -->
@@ -775,7 +791,9 @@
         <xsl:variable name="MetadataStandardURI" select="gmd:metadataStandardName/gmx:Anchor/@xlink:href"/>
         <xsl:variable name="MetadataStandardName">
           <xsl:for-each select="gmd:metadataStandardName">
-            <dct:title xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(*[self::gco:CharacterString|self::gmx:Anchor])"/></dct:title>
+            <dct:title xml:lang="{$MetadataLanguage}">
+              <xsl:value-of select="normalize-space(*[self::gco:CharacterString|self::gmx:Anchor])"/>
+            </dct:title>
             <xsl:call-template name="LocalisedString">
               <xsl:with-param name="term">dct:title</xsl:with-param>
             </xsl:call-template>
@@ -799,7 +817,9 @@
                   <xsl:copy-of select="$MetadataStandardName"/>
                   <xsl:if test="$MetadataStandardVersion != ''">
                     <!-- Metadata standard version -->
-                    <owl:versionInfo xml:lang="{$MetadataLanguage}"><xsl:value-of select="$MetadataStandardVersion"/></owl:versionInfo>
+                    <owl:versionInfo xml:lang="{$MetadataLanguage}">
+                      <xsl:value-of select="$MetadataStandardVersion"/>
+                    </owl:versionInfo>
                   </xsl:if>
                 </dct:conformsTo>
               </xsl:when>
@@ -932,7 +952,9 @@
             <xsl:for-each select="gmd:transferOptions/*/gmd:onLine/*[not(gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue = ('information'))]">
               <xsl:variable name="Title">
                 <xsl:for-each select="gmd:name">
-                  <dct:title xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></dct:title>
+                  <dct:title xml:lang="{$MetadataLanguage}">
+                    <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+                  </dct:title>
                   <xsl:call-template name="LocalisedString">
                     <xsl:with-param name="term">dct:title</xsl:with-param>
                   </xsl:call-template>
@@ -949,7 +971,9 @@
               </xsl:variable>
               <xsl:variable name="Description">
                 <xsl:for-each select="gmd:description">
-                  <dct:description xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></dct:description>
+                  <dct:description xml:lang="{$MetadataLanguage}">
+                    <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+                  </dct:description>
                   <xsl:call-template name="LocalisedString">
                     <xsl:with-param name="term">dct:description</xsl:with-param>
                   </xsl:call-template>
@@ -1179,7 +1203,9 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:param>
-    <dct:identifier rdf:datatype="{$idDatatypeURI}"><xsl:value-of select="$id"/></dct:identifier>
+    <dct:identifier rdf:datatype="{$idDatatypeURI}">
+      <xsl:value-of select="$id"/>
+    </dct:identifier>
   </xsl:template>
 
   <!-- Responsible Organisation -->
@@ -1203,7 +1229,9 @@
     </xsl:param>
     <xsl:param name="IndividualName-FOAF">
       <xsl:for-each select="gmd:individualName">
-        <foaf:name xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/></foaf:name>
+        <foaf:name xml:lang="{$MetadataLanguage}">
+          <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
+        </foaf:name>
         <xsl:call-template name="LocalisedString">
           <xsl:with-param name="term">foaf:name</xsl:with-param>
         </xsl:call-template>
@@ -1211,7 +1239,9 @@
     </xsl:param>
     <xsl:param name="IndividualName-vCard">
       <xsl:for-each select="gmd:individualName">
-        <vcard:fn xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/></vcard:fn>
+        <vcard:fn xml:lang="{$MetadataLanguage}">
+          <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
+        </vcard:fn>
         <xsl:call-template name="LocalisedString">
           <xsl:with-param name="term">vcard:fn</xsl:with-param>
         </xsl:call-template>
@@ -1235,7 +1265,9 @@
     </xsl:param>
     <xsl:param name="OrganisationName-FOAF">
       <xsl:for-each select="gmd:organisationName">
-        <foaf:name xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/></foaf:name>
+        <foaf:name xml:lang="{$MetadataLanguage}">
+          <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
+        </foaf:name>
         <xsl:call-template name="LocalisedString">
           <xsl:with-param name="term">foaf:name</xsl:with-param>
         </xsl:call-template>
@@ -1243,7 +1275,9 @@
     </xsl:param>
     <xsl:param name="OrganisationName-vCard">
       <xsl:for-each select="gmd:organisationName">
-        <vcard:organization-name xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/></vcard:organization-name>
+        <vcard:organization-name xml:lang="{$MetadataLanguage}">
+          <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
+        </vcard:organization-name>
         <xsl:call-template name="LocalisedString">
           <xsl:with-param name="term">vcard:organization-name</xsl:with-param>
         </xsl:call-template>
@@ -1251,7 +1285,9 @@
     </xsl:param>
     <xsl:param name="OrganisationNameAsIndividualName-vCard">
       <xsl:for-each select="gmd:organisationName">
-        <vcard:fn xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/></vcard:fn>
+        <vcard:fn xml:lang="{$MetadataLanguage}">
+          <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
+        </vcard:fn>
         <xsl:call-template name="LocalisedString">
           <xsl:with-param name="term">vcard:fn</xsl:with-param>
         </xsl:call-template>
@@ -1298,19 +1334,29 @@
           <locn:address>
             <locn:Address>
               <xsl:if test="$deliveryPoint != ''">
-                <locn:thoroughfare><xsl:value-of select="$deliveryPoint"/></locn:thoroughfare>
+                <locn:thoroughfare>
+                  <xsl:value-of select="$deliveryPoint"/>
+                </locn:thoroughfare>
               </xsl:if>
               <xsl:if test="$city != ''">
-                <locn:postName><xsl:value-of select="$city"/></locn:postName>
+                <locn:postName>
+                  <xsl:value-of select="$city"/>
+                </locn:postName>
               </xsl:if>
               <xsl:if test="$administrativeArea != ''">
-                <locn:adminUnitL2><xsl:value-of select="$administrativeArea"/></locn:adminUnitL2>
+                <locn:adminUnitL2>
+                  <xsl:value-of select="$administrativeArea"/>
+                </locn:adminUnitL2>
               </xsl:if>
               <xsl:if test="$postalCode != ''">
-                <locn:postCode><xsl:value-of select="$postalCode"/></locn:postCode>
+                <locn:postCode>
+                  <xsl:value-of select="$postalCode"/>
+                </locn:postCode>
               </xsl:if>
               <xsl:if test="$country != ''">
-                <locn:adminUnitL1><xsl:value-of select="$country"/></locn:adminUnitL1>
+                <locn:adminUnitL1>
+                  <xsl:value-of select="$country"/>
+                </locn:adminUnitL1>
               </xsl:if>
             </locn:Address>
           </locn:address>
@@ -1318,19 +1364,29 @@
           <vcard:hasAddress>
             <vcard:Address>
               <xsl:if test="$deliveryPoint != ''">
-                <vcard:street-address><xsl:value-of select="$deliveryPoint"/></vcard:street-address>
+                <vcard:street-address>
+                  <xsl:value-of select="$deliveryPoint"/>
+                </vcard:street-address>
               </xsl:if>
               <xsl:if test="$city != ''">
-                <vcard:locality><xsl:value-of select="$city"/></vcard:locality>
+                <vcard:locality>
+                  <xsl:value-of select="$city"/>
+                </vcard:locality>
               </xsl:if>
               <xsl:if test="$administrativeArea != ''">
-                <vcard:locality><xsl:value-of select="$administrativeArea"/></vcard:locality>
+                <vcard:locality>
+                  <xsl:value-of select="$administrativeArea"/>
+                </vcard:locality>
               </xsl:if>
               <xsl:if test="$postalCode != ''">
-                <vcard:postal-code><xsl:value-of select="$postalCode"/></vcard:postal-code>
+                <vcard:postal-code>
+                  <xsl:value-of select="$postalCode"/>
+                </vcard:postal-code>
               </xsl:if>
               <xsl:if test="$country != ''">
-                <vcard:country-name><xsl:value-of select="$country"/></vcard:country-name>
+                <vcard:country-name>
+                  <xsl:value-of select="$country"/>
+                </vcard:country-name>
               </xsl:if>
             </vcard:Address>
           </vcard:hasAddress>
@@ -1348,19 +1404,29 @@
           <vcard:hasAddress>
             <vcard:Address>
               <xsl:if test="$deliveryPoint != ''">
-                <vcard:street-address><xsl:value-of select="$deliveryPoint"/></vcard:street-address>
+                <vcard:street-address>
+                  <xsl:value-of select="$deliveryPoint"/>
+                </vcard:street-address>
               </xsl:if>
               <xsl:if test="$city != ''">
-                <vcard:locality><xsl:value-of select="$city"/></vcard:locality>
+                <vcard:locality>
+                  <xsl:value-of select="$city"/>
+                </vcard:locality>
               </xsl:if>
               <xsl:if test="$administrativeArea != ''">
-                <vcard:region><xsl:value-of select="$administrativeArea"/></vcard:region>
+                <vcard:region>
+                  <xsl:value-of select="$administrativeArea"/>
+                </vcard:region>
               </xsl:if>
               <xsl:if test="$postalCode != ''">
-                <vcard:postal-code><xsl:value-of select="$postalCode"/></vcard:postal-code>
+                <vcard:postal-code>
+                  <xsl:value-of select="$postalCode"/>
+                </vcard:postal-code>
               </xsl:if>
               <xsl:if test="$country != ''">
-                <vcard:country-name><xsl:value-of select="$country"/></vcard:country-name>
+                <vcard:country-name>
+                  <xsl:value-of select="$country"/>
+                </vcard:country-name>
               </xsl:if>
             </vcard:Address>
           </vcard:hasAddress>
@@ -1515,7 +1581,9 @@
     <xsl:param name="ResourceType"/>
     <xsl:choose>
       <xsl:when test="$ResourceType = 'dataset' or $ResourceType = 'series'">
-        <dct:title xml:lang="{$MetadataLanguage}"><xsl:value-of select="../gmd:description/gco:CharacterString"/></dct:title>
+        <dct:title xml:lang="{$MetadataLanguage}">
+          <xsl:value-of select="../gmd:description/gco:CharacterString"/>
+        </dct:title>
         <dcat:accessURL rdf:resource="{gmd:URL}"/>
       </xsl:when>
     </xsl:choose>
@@ -1564,10 +1632,14 @@
             <dct:hasPart rdf:parseType="Resource">
               <xsl:choose>
                 <xsl:when test="starts-with($resID, 'http://') or starts-with($resID, 'https://')">
-                  <dct:identifier rdf:datatype="{$xsd}anyURI"><xsl:value-of select="$resID"/></dct:identifier>
+                  <dct:identifier rdf:datatype="{$xsd}anyURI">
+                    <xsl:value-of select="$resID"/>
+                  </dct:identifier>
                 </xsl:when>
                 <xsl:otherwise>
-                  <dct:identifier rdf:datatype="{$xsd}string"><xsl:value-of select="$resID"/></dct:identifier>
+                  <dct:identifier rdf:datatype="{$xsd}string">
+                    <xsl:value-of select="$resID"/>
+                  </dct:identifier>
                 </xsl:otherwise>
               </xsl:choose>
               <xsl:if test="$href != '' and $href != '' and (starts-with($href, 'http://') or starts-with($href, 'https://'))">
@@ -1656,7 +1728,9 @@
         <dct:spatial rdf:parseType="Resource">
           <xsl:choose>
             <xsl:when test="$GeoURN != ''">
-              <dct:identifier rdf:datatype="{$xsd}anyURI"><xsl:value-of select="$GeoURN"/></dct:identifier>
+              <dct:identifier rdf:datatype="{$xsd}anyURI">
+                <xsl:value-of select="$GeoURN"/>
+              </dct:identifier>
             </xsl:when>
             <xsl:otherwise>
               <skos:prefLabel xml:lang="{$MetadataLanguage}">
@@ -1683,9 +1757,9 @@
 
   <xsl:template name="GeographicBoundingBox" match="gmd:EX_GeographicBoundingBox">
     <xsl:param name="north" select="gmd:northBoundLatitude/gco:Decimal"/>
-    <xsl:param name="east"  select="gmd:eastBoundLongitude/gco:Decimal"/>
+    <xsl:param name="east" select="gmd:eastBoundLongitude/gco:Decimal"/>
     <xsl:param name="south" select="gmd:southBoundLatitude/gco:Decimal"/>
-    <xsl:param name="west"  select="gmd:westBoundLongitude/gco:Decimal"/>
+    <xsl:param name="west" select="gmd:westBoundLongitude/gco:Decimal"/>
 
     <!-- Bbox as GML (GeoSPARQL) -->
     <!--  Update by GIM: use polygon encoding for bbox -->
@@ -1715,9 +1789,15 @@
       <!-- Additional geometry encodings -->
       <!-- Recommended geometry encodings -->
       <dct:Location>
-        <locn:geometry rdf:datatype="{$geojsonMediaTypeUri}"><xsl:value-of select="$GeoJSONLiteral"/></locn:geometry>
-        <locn:geometry rdf:datatype="{$gsp}wktLiteral"><xsl:value-of select="$WKTLiteral"/></locn:geometry>
-        <locn:geometry rdf:datatype="{$gsp}gmlLiteral"><xsl:value-of select="$GMLLiteral-Polygon"/></locn:geometry>
+        <locn:geometry rdf:datatype="{$geojsonMediaTypeUri}">
+          <xsl:value-of select="$GeoJSONLiteral"/>
+        </locn:geometry>
+        <locn:geometry rdf:datatype="{$gsp}wktLiteral">
+          <xsl:value-of select="$WKTLiteral"/>
+        </locn:geometry>
+        <locn:geometry rdf:datatype="{$gsp}gmlLiteral">
+          <xsl:value-of select="$GMLLiteral-Polygon"/>
+        </locn:geometry>
       </dct:Location>
     </dct:spatial>
   </xsl:template>
@@ -1729,20 +1809,32 @@
       <xsl:if test="local-name(.) = 'TimeInstant' or ( local-name(.) = 'TimePeriod' and (gml:beginPosition or gml320:beginPosition) and (gml:endPosition or gml320:endPosition) )">
         <xsl:variable name="dateStart">
           <xsl:choose>
-            <xsl:when test="local-name(.) = 'TimeInstant'"><xsl:value-of select="gml:timePosition|gml320:timePosition"/></xsl:when>
-            <xsl:otherwise><xsl:value-of select="gml:beginPosition|gml320:beginPosition"/></xsl:otherwise>
+            <xsl:when test="local-name(.) = 'TimeInstant'">
+              <xsl:value-of select="gml:timePosition|gml320:timePosition"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="gml:beginPosition|gml320:beginPosition"/>
+            </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
         <xsl:variable name="dateEnd">
           <xsl:choose>
-            <xsl:when test="local-name(.) = 'TimeInstant'"><xsl:value-of select="gml:timePosition|gml320:timePosition"/></xsl:when>
-            <xsl:otherwise><xsl:value-of select="gml:endPosition|gml320:endPosition"/></xsl:otherwise>
+            <xsl:when test="local-name(.) = 'TimeInstant'">
+              <xsl:value-of select="gml:timePosition|gml320:timePosition"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="gml:endPosition|gml320:endPosition"/>
+            </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
         <dct:temporal>
           <dct:PeriodOfTime>
-            <schema:startDate rdf:datatype="{$xsd}date"><xsl:value-of select="$dateStart"/></schema:startDate>
-            <schema:endDate rdf:datatype="{$xsd}date"><xsl:value-of select="$dateEnd"/></schema:endDate>
+            <schema:startDate rdf:datatype="{$xsd}date">
+              <xsl:value-of select="$dateStart"/>
+            </schema:startDate>
+            <schema:endDate rdf:datatype="{$xsd}date">
+              <xsl:value-of select="$dateEnd"/>
+            </schema:endDate>
           </dct:PeriodOfTime>
         </dct:temporal>
       </xsl:if>
@@ -1794,7 +1886,9 @@
         <xsl:when test="normalize-space(gco:CharacterString) != ''">
           <dct:license>
             <dct:LicenseDocument>
-              <rdfs:label xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></rdfs:label>
+              <rdfs:label xml:lang="{$MetadataLanguage}">
+                <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+              </rdfs:label>
               <xsl:call-template name="LocalisedString">
                 <xsl:with-param name="term">rdfs:label</xsl:with-param>
               </xsl:call-template>
@@ -1816,9 +1910,13 @@
           <dct:license>
             <dct:LicenseDocument>
               <xsl:if test="$use-constraints-code != ''">
-                <dct:identifier rdf:datatype="{$xsd}string"><xsl:value-of select="$use-constraints-code"/></dct:identifier>
+                <dct:identifier rdf:datatype="{$xsd}string">
+                  <xsl:value-of select="$use-constraints-code"/>
+                </dct:identifier>
               </xsl:if>
-              <rdfs:label xml:lang="{$MetadataLanguage}"><xsl:value-of select="$use-constraints-text"/></rdfs:label>
+              <rdfs:label xml:lang="{$MetadataLanguage}">
+                <xsl:value-of select="$use-constraints-text"/>
+              </rdfs:label>
               <xsl:call-template name="LocalisedString">
                 <xsl:with-param name="term">rdfs:label</xsl:with-param>
               </xsl:call-template>
@@ -1838,7 +1936,9 @@
         <xsl:when test="normalize-space(gco:CharacterString) != ''">
           <dct:accessRights>
             <dct:RightsStatement>
-              <rdfs:label xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></rdfs:label>
+              <rdfs:label xml:lang="{$MetadataLanguage}">
+                <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+              </rdfs:label>
               <xsl:call-template name="LocalisedString">
                 <xsl:with-param name="term">rdfs:label</xsl:with-param>
               </xsl:call-template>
@@ -1860,9 +1960,13 @@
           <dct:accessRights>
             <dct:RightsStatement>
               <xsl:if test="$access-constraints-code != ''">
-                <dct:identifier rdf:datatype="{$xsd}string"><xsl:value-of select="$access-constraints-code"/></dct:identifier>
+                <dct:identifier rdf:datatype="{$xsd}string">
+                  <xsl:value-of select="$access-constraints-code"/>
+                </dct:identifier>
               </xsl:if>
-              <rdfs:label xml:lang="{$MetadataLanguage}"><xsl:value-of select="$access-constraints-text"/></rdfs:label>
+              <rdfs:label xml:lang="{$MetadataLanguage}">
+                <xsl:value-of select="$access-constraints-text"/>
+              </rdfs:label>
               <xsl:call-template name="LocalisedString">
                 <xsl:with-param name="term">rdfs:label</xsl:with-param>
               </xsl:call-template>
@@ -1915,14 +2019,18 @@
           <xsl:choose>
             <xsl:when test="$ResourceType = 'service'">
               <xsl:if test="$profile = $extended">
-                <dc:subject xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></dc:subject>
+                <dc:subject xml:lang="{$MetadataLanguage}">
+                  <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+                </dc:subject>
                 <xsl:call-template name="LocalisedString">
                   <xsl:with-param name="term">dc:subject</xsl:with-param>
                 </xsl:call-template>
               </xsl:if>
             </xsl:when>
             <xsl:otherwise>
-              <dcat:keyword xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></dcat:keyword>
+              <dcat:keyword xml:lang="{$MetadataLanguage}">
+                <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+              </dcat:keyword>
               <xsl:call-template name="LocalisedString">
                 <xsl:with-param name="term">dcat:keyword</xsl:with-param>
               </xsl:call-template>
@@ -1992,7 +2100,9 @@
                   </xsl:choose>
 
                   <!-- Workaround: Always add a dcat:keyword alongs with the dcat:theme -->
-                  <dcat:keyword xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gco:CharacterString)"/></dcat:keyword>
+                  <dcat:keyword xml:lang="{$MetadataLanguage}">
+                    <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+                  </dcat:keyword>
                   <xsl:call-template name="LocalisedString">
                     <xsl:with-param name="term">dcat:keyword</xsl:with-param>
                   </xsl:call-template>
@@ -2035,7 +2145,9 @@
                     </skos:Concept>
                   </dcat:theme>
                   <!-- Workaround: Always add a dcat:keyword alongs with the dcat:theme -->
-                  <dcat:keyword xml:lang="{$MetadataLanguage}"><xsl:value-of select="normalize-space(gmx:Anchor)"/></dcat:keyword>
+                  <dcat:keyword xml:lang="{$MetadataLanguage}">
+                    <xsl:value-of select="normalize-space(gmx:Anchor)"/>
+                  </dcat:keyword>
                   <xsl:call-template name="LocalisedString">
                     <xsl:with-param name="term">dcat:keyword</xsl:with-param>
                   </xsl:call-template>
@@ -2056,7 +2168,9 @@
   <!-- Topic category -->
 
   <xsl:template name="TopicCategory" match="gmd:identificationInfo/*/gmd:topicCategory">
-    <xsl:param name="TopicCategory"><xsl:value-of select="normalize-space(gmd:MD_TopicCategoryCode)"/></xsl:param>
+    <xsl:param name="TopicCategory">
+      <xsl:value-of select="normalize-space(gmd:MD_TopicCategoryCode)"/>
+    </xsl:param>
     <xsl:if test="$TopicCategory != ''">
       <dct:subject rdf:resource="{$TopicCategoryCodelistUri}/{$TopicCategory}"/>
     </xsl:if>
@@ -2184,7 +2298,9 @@
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
-    <cnt:characterEncoding rdf:datatype="{$xsd}string"><xsl:value-of select="$CharSetCode"/></cnt:characterEncoding>
+    <cnt:characterEncoding rdf:datatype="{$xsd}string">
+      <xsl:value-of select="$CharSetCode"/>
+    </cnt:characterEncoding>
   </xsl:template>
 
   <!-- Encoding -->
@@ -2196,8 +2312,12 @@
       </xsl:when>
       <xsl:otherwise>
         <dct:format rdf:parseType="Resource">
-          <skos:prefLabel><xsl:value-of select="."/></skos:prefLabel>
-          <rdfs:label><xsl:value-of select="."/></rdfs:label>
+          <skos:prefLabel>
+            <xsl:value-of select="."/>
+          </skos:prefLabel>
+          <rdfs:label>
+            <xsl:value-of select="."/>
+          </rdfs:label>
         </dct:format>
       </xsl:otherwise>
     </xsl:choose>
@@ -2287,17 +2407,23 @@
             <dct:conformsTo>
               <rdf:Description rdf:about="{$EpsgSrsBaseUri}/{$srid}">
                 <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
-                <dct:identifier rdf:datatype="{$xsd}anyURI"><xsl:value-of select="$code"/></dct:identifier>
+                <dct:identifier rdf:datatype="{$xsd}anyURI">
+                  <xsl:value-of select="$code"/>
+                </dct:identifier>
                 <skos:inScheme>
                   <skos:ConceptScheme>
                     <xsl:if test="normalize-space($EpsgSrsBaseUri) != ''">
                       <xsl:attribute name="rdf:about" select="$EpsgSrsBaseUri"/>
                     </xsl:if>
-                    <dct:title xml:lang="en"><xsl:value-of select="$EpsgSrsName"/></dct:title>
+                    <dct:title xml:lang="en">
+                      <xsl:value-of select="$EpsgSrsName"/>
+                    </dct:title>
                   </skos:ConceptScheme>
                 </skos:inScheme>
                 <xsl:if test="$sridVersion != ''">
-                  <owl:versionInfo xml:lang="{$MetadataLanguage}"><xsl:value-of select="$sridVersion"/></owl:versionInfo>
+                  <owl:versionInfo xml:lang="{$MetadataLanguage}">
+                    <xsl:value-of select="$sridVersion"/>
+                  </owl:versionInfo>
                 </xsl:if>
               </rdf:Description>
             </dct:conformsTo>
@@ -2305,16 +2431,22 @@
           <xsl:otherwise>
             <dct:conformsTo rdf:parseType="Resource">
               <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
-              <dct:identifier rdf:datatype="{$xsd}anyURI"><xsl:value-of select="$code"/></dct:identifier>
+              <dct:identifier rdf:datatype="{$xsd}anyURI">
+                <xsl:value-of select="$code"/>
+              </dct:identifier>
               <xsl:if test="$codespace != ''">
                 <skos:inScheme>
                   <skos:ConceptScheme>
-                    <dct:title xml:lang="{$MetadataLanguage}"><xsl:value-of select="$codespace"/></dct:title>
+                    <dct:title xml:lang="{$MetadataLanguage}">
+                      <xsl:value-of select="$codespace"/>
+                    </dct:title>
                   </skos:ConceptScheme>
                 </skos:inScheme>
               </xsl:if>
               <xsl:if test="$version != ''">
-                <owl:versionInfo xml:lang="{$MetadataLanguage}"><xsl:value-of select="$version"/></owl:versionInfo>
+                <owl:versionInfo xml:lang="{$MetadataLanguage}">
+                  <xsl:value-of select="$version"/>
+                </owl:versionInfo>
               </xsl:if>
             </dct:conformsTo>
           </xsl:otherwise>
@@ -2326,17 +2458,23 @@
             <dct:conformsTo>
               <rdf:Description rdf:about="{$EpsgSrsBaseUri}/{$code}">
                 <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
-                <dct:identifier rdf:datatype="{$xsd}anyURI"><xsl:value-of select="concat($EpsgSrsBaseUrn,':',$version,':',$code)"/></dct:identifier>
+                <dct:identifier rdf:datatype="{$xsd}anyURI">
+                  <xsl:value-of select="concat($EpsgSrsBaseUrn,':',$version,':',$code)"/>
+                </dct:identifier>
                 <skos:inScheme>
                   <skos:ConceptScheme>
                     <xsl:if test="normalize-space($EpsgSrsBaseUri) != ''">
                       <xsl:attribute name="rdf:about" select="$EpsgSrsBaseUri"/>
                     </xsl:if>
-                    <dct:title xml:lang="en"><xsl:value-of select="$EpsgSrsName"/></dct:title>
+                    <dct:title xml:lang="en">
+                      <xsl:value-of select="$EpsgSrsName"/>
+                    </dct:title>
                   </skos:ConceptScheme>
                 </skos:inScheme>
                 <xsl:if test="$version != ''">
-                  <owl:versionInfo xml:lang="{$MetadataLanguage}"><xsl:value-of select="$version"/></owl:versionInfo>
+                  <owl:versionInfo xml:lang="{$MetadataLanguage}">
+                    <xsl:value-of select="$version"/>
+                  </owl:versionInfo>
                 </xsl:if>
               </rdf:Description>
             </dct:conformsTo>
@@ -2348,18 +2486,24 @@
                   <xsl:attribute name="rdf:about" select="$Etrs89Uri"/>
                 </xsl:if>
                 <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
-                <dct:identifier rdf:datatype="{$xsd}anyURI"><xsl:value-of select="$Etrs89Urn"/></dct:identifier>
+                <dct:identifier rdf:datatype="{$xsd}anyURI">
+                  <xsl:value-of select="$Etrs89Urn"/>
+                </dct:identifier>
                 <skos:prefLabel xml:lang="en">ETRS89 - European Terrestrial Reference System 1989</skos:prefLabel>
                 <skos:inScheme>
                   <skos:ConceptScheme>
                     <xsl:if test="normalize-space($EpsgSrsBaseUri) != ''">
                       <xsl:attribute name="rdf:about" select="$EpsgSrsBaseUri"/>
                     </xsl:if>
-                    <dct:title xml:lang="en"><xsl:value-of select="$EpsgSrsName"/></dct:title>
+                    <dct:title xml:lang="en">
+                      <xsl:value-of select="$EpsgSrsName"/>
+                    </dct:title>
                   </skos:ConceptScheme>
                 </skos:inScheme>
                 <xsl:if test="$version != ''">
-                  <owl:versionInfo xml:lang="{$MetadataLanguage}"><xsl:value-of select="$version"/></owl:versionInfo>
+                  <owl:versionInfo xml:lang="{$MetadataLanguage}">
+                    <xsl:value-of select="$version"/>
+                  </owl:versionInfo>
                 </xsl:if>
               </rdf:Description>
             </dct:conformsTo>
@@ -2371,18 +2515,24 @@
                   <xsl:attribute name="rdf:about" select="$Crs84Uri"/>
                 </xsl:if>
                 <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
-                <dct:identifier rdf:datatype="{$xsd}anyURI"><xsl:value-of select="$Crs84Urn"/></dct:identifier>
+                <dct:identifier rdf:datatype="{$xsd}anyURI">
+                  <xsl:value-of select="$Crs84Urn"/>
+                </dct:identifier>
                 <skos:prefLabel xml:lang="en">CRS84</skos:prefLabel>
                 <skos:inScheme>
                   <skos:ConceptScheme>
                     <xsl:if test="normalize-space($OgcSrsBaseUri) != ''">
                       <xsl:attribute name="rdf:about" select="$OgcSrsBaseUri"/>
                     </xsl:if>
-                    <dct:title xml:lang="en"><xsl:value-of select="$OgcSrsName"/></dct:title>
+                    <dct:title xml:lang="en">
+                      <xsl:value-of select="$OgcSrsName"/>
+                    </dct:title>
                   </skos:ConceptScheme>
                 </skos:inScheme>
                 <xsl:if test="$version != ''">
-                  <owl:versionInfo xml:lang="{$MetadataLanguage}"><xsl:value-of select="$version"/></owl:versionInfo>
+                  <owl:versionInfo xml:lang="{$MetadataLanguage}">
+                    <xsl:value-of select="$version"/>
+                  </owl:versionInfo>
                 </xsl:if>
               </rdf:Description>
             </dct:conformsTo>
@@ -2390,16 +2540,22 @@
           <xsl:otherwise>
             <dct:conformsTo rdf:parseType="Resource">
               <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
-              <skos:prefLabel xml:lang="{$MetadataLanguage}"><xsl:value-of select="$code"/></skos:prefLabel>
+              <skos:prefLabel xml:lang="{$MetadataLanguage}">
+                <xsl:value-of select="$code"/>
+              </skos:prefLabel>
               <xsl:if test="$codespace != ''">
                 <skos:inScheme>
                   <skos:ConceptScheme>
-                    <dct:title xml:lang="{$MetadataLanguage}"><xsl:value-of select="$codespace"/></dct:title>
+                    <dct:title xml:lang="{$MetadataLanguage}">
+                      <xsl:value-of select="$codespace"/>
+                    </dct:title>
                   </skos:ConceptScheme>
                 </skos:inScheme>
               </xsl:if>
               <xsl:if test="$version != ''">
-                <owl:versionInfo xml:lang="{$MetadataLanguage}"><xsl:value-of select="$version"/></owl:versionInfo>
+                <owl:versionInfo xml:lang="{$MetadataLanguage}">
+                  <xsl:value-of select="$version"/>
+                </owl:versionInfo>
               </xsl:if>
             </dct:conformsTo>
           </xsl:otherwise>
@@ -2427,7 +2583,9 @@
       </xsl:variable>
       <xsl:if test="$value != ''">
         <xsl:element name="{$term}">
-          <xsl:attribute name="xml:lang"><xsl:value-of select="$langs"/></xsl:attribute>
+          <xsl:attribute name="xml:lang">
+            <xsl:value-of select="$langs"/>
+          </xsl:attribute>
           <xsl:value-of select="$value"/>
         </xsl:element>
       </xsl:if>
@@ -2604,4 +2762,5 @@
     <xsl:variable name="value" select="substring-after(lower-case($url), concat(lower-case($queryParam), '='))"/>
     <xsl:value-of select="normalize-space(if (contains($value, '&amp;')) then substring-before($value, '&amp;') else $value)"/>
   </xsl:function>
-</xsl:transform>
+
+</xsl:stylesheet>
