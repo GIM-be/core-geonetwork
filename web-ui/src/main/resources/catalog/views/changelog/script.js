@@ -37,8 +37,20 @@ function updateSelected() {
   }, 5000);
 }
 
+function formatBulletTables() {
+  document.querySelectorAll('.bullet-table tr').forEach(row => {
+    const bullet = document.createElement('td');
+    bullet.textContent = '•';
+    const arrow = document.createElement('td');
+    arrow.textContent = ' ➔ ';
+    row.insertBefore(bullet, row.children[0]);
+    row.insertBefore(arrow, row.children[2]);
+  });
+}
+
 window.onhashchange = updateSelected;
 window.onload = function () {
   createSummary();
   updateSelected();
+  formatBulletTables();
 };
