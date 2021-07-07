@@ -488,14 +488,14 @@
     <xsl:param name="MetadataUri">
       <xsl:variable name="mURI" select="concat($resourcePrefix,'/records/', $RecordUUID)"/>
       <xsl:if test="$mURI != '' and (starts-with($mURI, 'http://') or starts-with($mURI, 'https://'))">
-        <xsl:value-of select="$mURI"/>
+        <xsl:value-of select="geonet:escapeURI($mURI)"/>
       </xsl:if>
     </xsl:param>
 
     <xsl:param name="ResourceUri">
       <xsl:variable name="rURI" select="concat($resourcePrefix, '/', $ResourceType, '/', $ResourceUUID)"/>
       <xsl:if test="$rURI != '' and (starts-with($rURI, 'http://') or starts-with($rURI, 'https://'))">
-        <xsl:value-of select="$rURI"/>
+        <xsl:value-of select="geonet:escapeURI($rURI)"/>
       </xsl:if>
     </xsl:param>
 
@@ -545,18 +545,17 @@
       <xsl:choose>
         <xsl:when test="$modelLicencie and normalize-space($modelLicencie) != ''">
           <xsl:element name="dct:license">
-            <xsl:attribute name="rdf:resource" select="$modelLicencie/license[1]"/>
+            <xsl:attribute name="rdf:resource" select="geonet:escapeURI($modelLicencie/license[1])"/>
           </xsl:element>
         </xsl:when>
         <xsl:when test="$licensesConstraintsCharacterString[contains(., 'Gratis Open Data licentie')]">
           <xsl:element name="dct:license">
-            <xsl:attribute name="rdf:resource"
-                           select="'http://overheid.vlaanderen.be/hergebruik/licenties/v1-0/html/modellicentie-gratis-hergebruik'"/>
+            <xsl:attribute name="rdf:resource" select="'http://overheid.vlaanderen.be/hergebruik/licenties/v1-0/html/modellicentie-gratis-hergebruik'"/>
           </xsl:element>
         </xsl:when>
         <xsl:otherwise>
           <xsl:element name="dct:license">
-            <xsl:attribute name="rdf:resource" select="$MetadataViewUrl"/>
+            <xsl:attribute name="rdf:resource" select="geonet:escapeURI($MetadataViewUrl)"/>
           </xsl:element>
         </xsl:otherwise>
       </xsl:choose>
@@ -605,13 +604,13 @@
         <xsl:variable name="Activity">
           <prov:Activity>
             <xsl:if test="$ResourceUri != ''">
-              <prov:used rdf:resource="{$ResourceUri}"/>
+              <prov:used rdf:resource="{geonet:escapeURI($ResourceUri)}"/>
             </xsl:if>
             <prov:qualifiedAssociation rdf:parseType="Resource">
               <prov:hadPlan rdf:parseType="Resource">
                 <xsl:choose>
                   <xsl:when test="../@xlink:href and ../@xlink:href != ''">
-                    <prov:wasDerivedFrom rdf:resource="{../@xlink:href}"/>
+                    <prov:wasDerivedFrom rdf:resource="{geonet:escapeURI(../@xlink:href)}"/>
                   </xsl:when>
                   <xsl:otherwise>
                     <prov:wasDerivedFrom rdf:parseType="Resource">
@@ -622,7 +621,7 @@
               </prov:hadPlan>
             </prov:qualifiedAssociation>
             <prov:generated rdf:parseType="Resource">
-              <dct:type rdf:resource="{$degree}"/>
+              <dct:type rdf:resource="{geonet:escapeURI($degree)}"/>
               <xsl:copy-of select="$explanation"/>
             </prov:generated>
           </prov:Activity>
@@ -672,7 +671,7 @@
             </dct:language>
           </xsl:when>
           <xsl:otherwise>
-            <dct:language rdf:resource="{concat($oplang, translate($ormlang, $lowercase, $uppercase))}"/>
+            <dct:language rdf:resource="{geonet:escapeURI(concat($oplang, translate($ormlang, $lowercase, $uppercase)))}"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:if>
@@ -722,7 +721,7 @@
             <xsl:choose>
               <xsl:when test="$MetadataStandardURI != ''">
                 <!-- Metadata standard, denoted by a URI -->
-                <dct:conformsTo rdf:resource="{$MetadataStandardURI}"/>
+                <dct:conformsTo rdf:resource="{geonet:escapeURI($MetadataStandardURI)}"/>
               </xsl:when>
               <xsl:when test="$MetadataStandardName != ''">
                 <dct:conformsTo rdf:parseType="Resource">
@@ -753,12 +752,14 @@
           <rdf:type rdf:resource="{$dcat}Dataset"/>
         </xsl:when>
         <xsl:when test="$ResourceType = 'service'">
-          <xsl:if test="$profile = $extended">
-            <rdf:type rdf:resource="{$dctype}DataService"/>
-          </xsl:if>
-          <xsl:if test="$ServiceType = 'discovery'">
-            <rdf:type rdf:resource="{$dcat}Catalog"/>
-          </xsl:if>
+          <xsl:choose>
+            <xsl:when test="$ServiceType = 'discovery'">
+              <rdf:type rdf:resource="{$dcat}Catalog"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <rdf:type rdf:resource="{$dcat}DataService"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:when>
       </xsl:choose>
       <dct:identifier>
@@ -811,7 +812,7 @@
                 </dct:language>
               </xsl:when>
               <xsl:otherwise>
-                <dct:language rdf:resource="{concat($oplang, translate($ormlang, $lowercase, $uppercase))}"/>
+                <dct:language rdf:resource="{geonet:escapeURI(concat($oplang, translate($ormlang, $lowercase, $uppercase)))}"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:when>
@@ -912,7 +913,7 @@
                         <xsl:copy-of select="$TitleAndDescription"/>
                         <!-- Access URL -->
                         <xsl:for-each select="$linkage/gmd:URL">
-                          <dcat:accessURL rdf:resource="{.}"/>
+                          <dcat:accessURL rdf:resource="{geonet:escapeURI(.)}"/>
                         </xsl:for-each>
                         <!-- Constraints related to access and use -->
                         <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
@@ -951,7 +952,7 @@
                       <xsl:copy-of select="$TitleAndDescription"/>
                       <!-- Access URL -->
                       <xsl:for-each select="$linkage/gmd:URL">
-                        <dcat:accessURL rdf:resource="{.}"/>
+                        <dcat:accessURL rdf:resource="{geonet:escapeURI(.)}"/>
                       </xsl:for-each>
                       <!-- Constraints related to access and use -->
                       <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
@@ -1004,7 +1005,7 @@
         </xsl:apply-templates>
       </xsl:for-each>
 
-      <dct:relation rdf:resource="{$MetadataViewUrl}"/>
+      <dct:relation rdf:resource="{geonet:escapeURI($MetadataViewUrl)}"/>
 
       <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
 
@@ -1131,7 +1132,6 @@
   -->
   <xsl:template name="ResponsibleOrganisation" match="gmd:CI_ResponsibleParty">
     <xsl:param name="MetadataLanguage"/>
-    <xsl:param name="ResourceType"/>
     <xsl:param name="role">
       <xsl:value-of select="gmd:role/gmd:CI_RoleCode/@codeListValue"/>
     </xsl:param>
@@ -1139,7 +1139,7 @@
       <xsl:value-of select="concat($ResponsiblePartyRoleCodelistUri,'/',$role)"/>
     </xsl:param>
     <xsl:param name="IndividualURI">
-      <xsl:value-of select="normalize-space(gmd:individualName/*/@xlink:href)"/>
+      <xsl:value-of select="geonet:escapeURI(gmd:individualName/*/@xlink:href)"/>
     </xsl:param>
     <xsl:param name="IndividualName">
       <xsl:value-of select="normalize-space(gmd:individualName/*)"/>
@@ -1165,7 +1165,7 @@
       </xsl:for-each>
     </xsl:param>
     <xsl:param name="OrganisationURI">
-      <xsl:value-of select="normalize-space(gmd:organisationName/*/@xlink:href)"/>
+      <xsl:value-of select="geonet:escapeURI(gmd:organisationName/*/@xlink:href)"/>
     </xsl:param>
     <xsl:param name="URI">
       <xsl:choose>
@@ -1212,22 +1212,22 @@
     </xsl:param>
     <xsl:param name="Email">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/*">
-        <foaf:mbox rdf:resource="mailto:{normalize-space(.)}"/>
+        <foaf:mbox rdf:resource="mailto:{geonet:escapeURI(.)}"/>
       </xsl:for-each>
     </xsl:param>
     <xsl:param name="Email-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/*">
-        <vcard:hasEmail rdf:resource="mailto:{normalize-space(.)}"/>
+        <vcard:hasEmail rdf:resource="mailto:{geonet:escapeURI(.)}"/>
       </xsl:for-each>
     </xsl:param>
     <xsl:param name="URL">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-        <foaf:workplaceHomepage rdf:resource="{normalize-space(.)}"/>
+        <foaf:workplaceHomepage rdf:resource="{geonet:escapeURI(.)}"/>
       </xsl:for-each>
     </xsl:param>
     <xsl:param name="URL-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-        <vcard:hasURL rdf:resource="{normalize-space(.)}"/>
+        <vcard:hasURL rdf:resource="{geonet:escapeURI(.)}"/>
       </xsl:for-each>
     </xsl:param>
     <xsl:param name="Telephone">
@@ -1451,7 +1451,7 @@
         <dct:title xml:lang="{$MetadataLanguage}">
           <xsl:value-of select="../gmd:description/gco:CharacterString"/>
         </dct:title>
-        <dcat:accessURL rdf:resource="{gmd:URL}"/>
+        <dcat:accessURL rdf:resource="{geonet:escapeURI(gmd:URL)}"/>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -1488,12 +1488,12 @@
     <xsl:choose>
       <!-- The use of @uriref is still under discussion by the INSPIRE MIG. -->
       <xsl:when test="$uriref != ''">
-        <dct:hasPart rdf:resource="{@uriref}"/>
+        <dct:hasPart rdf:resource="{geonet:escapeURI(@uriref)}"/>
       </xsl:when>
       <xsl:when test="$code != ''">
         <xsl:choose>
           <xsl:when test="starts-with($code, 'http://') or starts-with($code, 'https://')">
-            <dct:hasPart rdf:resource="{$code}"/>
+            <dct:hasPart rdf:resource="{geonet:escapeURI($code)}"/>
           </xsl:when>
           <xsl:otherwise>
             <dct:hasPart rdf:parseType="Resource">
@@ -1511,7 +1511,7 @@
               </xsl:choose>
               <xsl:if test="$href != '' and $href != '' and (starts-with($href, 'http://') or starts-with($href, 'https://'))">
                 <foaf:isPrimaryTopicOf>
-                  <dcat:CatalogRecord rdf:about="{$href}"/>
+                  <dcat:CatalogRecord rdf:about="{geonet:escapeURI($href)}"/>
                 </foaf:isPrimaryTopicOf>
               </xsl:if>
             </dct:hasPart>
@@ -1535,7 +1535,7 @@
     <xsl:if test="../../gmd:pass/gco:Boolean = 'true'">
       <xsl:choose>
         <xsl:when test="../@xlink:href and ../@xlink:href != ''">
-          <dct:conformsTo rdf:resource="{../@xlink:href}"/>
+          <dct:conformsTo rdf:resource="{geonet:escapeURI(../@xlink:href)}"/>
         </xsl:when>
         <xsl:otherwise>
           <dct:conformsTo rdf:parseType="Resource">
@@ -1578,12 +1578,12 @@
     </xsl:param>
     <xsl:param name="GeoURI">
       <xsl:if test="starts-with($GeoCode,'http://') or starts-with($GeoCode,'https://')">
-        <xsl:value-of select="$GeoCode"/>
+        <xsl:value-of select="geonet:escapeURI($GeoCode)"/>
       </xsl:if>
     </xsl:param>
     <xsl:param name="GeoURN">
       <xsl:if test="starts-with($GeoCode,'urn:')">
-        <xsl:value-of select="$GeoCode"/>
+        <xsl:value-of select="geonet:escapeURI($GeoCode)"/>
       </xsl:if>
     </xsl:param>
 
@@ -1792,7 +1792,7 @@
         </xsl:when>
         <!-- In case the rights/licence URL IS provided -->
         <xsl:when test="gmx:Anchor/@xlink:href">
-          <dct:license rdf:resource="{gmx:Anchor/@xlink:href}"/>
+          <dct:license rdf:resource="{geonet:escapeURI(gmx:Anchor/@xlink:href)}"/>
         </xsl:when>
       </xsl:choose>
     </xsl:for-each>
@@ -1841,7 +1841,7 @@
           </dct:accessRights>
         </xsl:when>
         <xsl:when test="gmx:Anchor/@xlink:href">
-          <dct:accessRights rdf:resource="{gmx:Anchor/@xlink:href}"/>
+          <dct:accessRights rdf:resource="{geonet:escapeURI(gmx:Anchor/@xlink:href)}"/>
         </xsl:when>
       </xsl:choose>
     </xsl:for-each>
@@ -1937,7 +1937,7 @@
                       <dcat:theme>
                         <skos:Concept>
                           <xsl:if test="normalize-space($keywordAbout) != ''">
-                            <xsl:attribute name="rdf:about" select="$keywordAbout"/>
+                            <xsl:attribute name="rdf:about" select="geonet:escapeURI($keywordAbout)"/>
                           </xsl:if>
                           <skos:prefLabel xml:lang="{$MetadataLanguage}">
                             <xsl:value-of select="normalize-space(gco:CharacterString)"/>
@@ -2000,7 +2000,7 @@
                   <dcat:theme>
                     <skos:Concept>
                       <xsl:if test="normalize-space(gmx:Anchor/@xlink:href) != ''">
-                        <xsl:attribute name="rdf:about" select="gmx:Anchor/@xlink:href"/>
+                        <xsl:attribute name="rdf:about" select="geonet:escapeURI(gmx:Anchor/@xlink:href)"/>
                       </xsl:if>
                       <skos:prefLabel xml:lang="{$MetadataLanguage}">
                         <xsl:value-of select="gmx:Anchor"/>
@@ -2021,7 +2021,7 @@
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:if test="$profile = $extended">
-                    <dct:subject rdf:resource="{gmx:Anchor/@xlink:href}"/>
+                    <dct:subject rdf:resource="{geonet:escapeURI(gmx:Anchor/@xlink:href)}"/>
                   </xsl:if>
                 </xsl:otherwise>
               </xsl:choose>
@@ -2175,7 +2175,7 @@
   <xsl:template name="Encoding" match="gmd:distributionFormat/gmd:MD_Format/gmd:name/*">
     <xsl:choose>
       <xsl:when test="@xlink:href and @xlink:href != ''">
-        <dct:format rdf:resource="{@xlink:href}"/>
+        <dct:format rdf:resource="{geonet:escapeURI(@xlink:href)}"/>
       </xsl:when>
       <xsl:otherwise>
         <dct:format rdf:parseType="Resource">
@@ -2240,7 +2240,7 @@
       </xsl:if>
     </xsl:param>
     <xsl:if test="$FrequencyCodeURI != ''">
-      <dct:accrualPeriodicity rdf:resource="{$FrequencyCodeURI}"/>
+      <dct:accrualPeriodicity rdf:resource="{geonet:escapeURI($FrequencyCodeURI)}"/>
     </xsl:if>
   </xsl:template>
 
@@ -2256,7 +2256,7 @@
         <dct:conformsTo>
           <rdf:Description>
             <xsl:if test="normalize-space($code) != ''">
-              <xsl:attribute name="rdf:about" select="$code"/>
+              <xsl:attribute name="rdf:about" select="geonet:escapeURI($code)"/>
             </xsl:if>
             <dct:type rdf:resource="{$INSPIREGlossaryUri}SpatialReferenceSystem"/>
           </rdf:Description>
@@ -2645,6 +2645,13 @@
         <xsl:value-of select="'dcat:Dataset'"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="geonet:escapeURI">
+    <xsl:param name="uri"/>
+    <xsl:if test="$uri">
+      <xsl:value-of select="replace(normalize-space($uri), ' ', '%20')"/>
+    </xsl:if>
   </xsl:function>
 
   <xsl:template name="withoutType">
