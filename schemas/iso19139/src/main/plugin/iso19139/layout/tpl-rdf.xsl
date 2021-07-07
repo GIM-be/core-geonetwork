@@ -77,7 +77,7 @@
                xmlns:xsl    = "http://www.w3.org/1999/XSL/Transform"
                xmlns:geonet = "http://www.fao.org/geonetwork"
                xmlns:xs     = "http://www.w3.org/2001/XMLSchema"
-               exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs"
+               exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype owl dc gml320 xs prov gsp org"
                version="2.0">
 
   <xsl:output method="xml"
@@ -262,7 +262,7 @@
 
     <!--  update by GIM: turn into GeoNetwork-style URI -->
     <xsl:param name="ResourceUri">
-      <xsl:variable name="rURI" select="concat($resourcePrefix,'/resources/',gmd:fileIdentifier/gco:CharacterString)"/>
+      <xsl:variable name="rURI" select="concat($resourcePrefix, '/', gmd:fileIdentifier/gco:CharacterString)"/>
       <!-- <xsl:variable name="rURI" select="concat($resourcePrefix,'/resources/',gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/*/gmd:code/gco:CharacterString)"/>  -->
       <xsl:if test="$rURI != '' and ( starts-with($rURI, 'http://') or starts-with($rURI, 'https://') )">
         <xsl:value-of select="$rURI"/>
@@ -841,12 +841,15 @@
         </xsl:when>
         <xsl:when test="$ResourceType = 'service'">
           <xsl:if test="$profile = $extended">
-            <rdf:type rdf:resource="{$dctype}Service"/>
+            <rdf:type rdf:resource="{$dctype}DataService"/>
           </xsl:if>
           <xsl:if test="$ServiceType = 'discovery'">
             <rdf:type rdf:resource="{$dcat}Catalog"/>
           </xsl:if>
         </xsl:when>
+        <xsl:otherwise>
+          <xsl:message select="$ResourceType"/>
+        </xsl:otherwise>
       </xsl:choose>
       <xsl:if test="$profile = $extended">
         <xsl:if test="$InspireResourceType != ''">
@@ -1112,44 +1115,45 @@
       <xsl:when test="$ResourceUri != ''">
         <xsl:choose>
           <xsl:when test="$MetadataUri != ''">
-            <rdf:Description>
+            <dcat:CatalogRecord>
               <xsl:if test="normalize-space($MetadataUri) != ''">
                 <xsl:attribute name="rdf:about" select="$MetadataUri"/>
               </xsl:if>
-              <rdf:type rdf:resource="{$dcat}CatalogRecord"/>
               <foaf:primaryTopic rdf:resource="{$ResourceUri}"/>
               <xsl:copy-of select="$MetadataDescription"/>
-            </rdf:Description>
+            </dcat:CatalogRecord>
           </xsl:when>
           <xsl:otherwise>
             <xsl:if test="normalize-space($MetadataDescription)">
-              <rdf:Description>
-                <rdf:type rdf:resource="{$dcat}CatalogRecord"/>
+              <dcat:CatalogRecord>
                 <foaf:primaryTopic rdf:resource="{$ResourceUri}"/>
                 <xsl:copy-of select="$MetadataDescription"/>
-              </rdf:Description>
+              </dcat:CatalogRecord>
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
-        <rdf:Description>
+        <xsl:element name="{geonet:getElementName($ResourceDescription)}">
           <xsl:if test="normalize-space($ResourceUri) != ''">
             <xsl:attribute name="rdf:about" select="$ResourceUri"/>
           </xsl:if>
-          <xsl:copy-of select="$ResourceDescription"/>
-        </rdf:Description>
+          <xsl:call-template name="withoutType">
+            <xsl:with-param name="description" select="$ResourceDescription"/>
+          </xsl:call-template>
+        </xsl:element>
       </xsl:when>
       <xsl:otherwise>
-        <rdf:Description>
+        <xsl:element name="{geonet:getElementName($ResourceDescription)}">
           <xsl:if test="normalize-space($MetadataDescription)">
             <foaf:isPrimaryTopicOf>
-              <rdf:Description>
-                <rdf:type rdf:resource="{$dcat}CatalogRecord"/>
+              <dcat:CatalogRecord>
                 <xsl:copy-of select="$MetadataDescription"/>
-              </rdf:Description>
+              </dcat:CatalogRecord>
             </foaf:isPrimaryTopicOf>
           </xsl:if>
-          <xsl:copy-of select="$ResourceDescription"/>
-        </rdf:Description>
+          <xsl:call-template name="withoutType">
+            <xsl:with-param name="description" select="$ResourceDescription"/>
+          </xsl:call-template>
+        </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
 
@@ -1435,38 +1439,8 @@
     </xsl:param>
     <xsl:param name="ROInfo">
       <xsl:variable name="info">
-        <xsl:choose>
-          <xsl:when test="$IndividualName != ''">
-            <rdf:type rdf:resource="{$foaf}Person"/>
-          </xsl:when>
-          <xsl:when test="$OrganisationName != ''">
-            <rdf:type rdf:resource="{$foaf}Organization"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <rdf:type rdf:resource="{$foaf}Agent"/>
-          </xsl:otherwise>
-        </xsl:choose>
         <xsl:if test="$IndividualName != ''">
           <xsl:copy-of select="$IndividualName-FOAF"/>
-          <xsl:if test="$OrganisationName != ''">
-            <org:memberOf>
-              <xsl:choose>
-                <xsl:when test="$OrganisationURI != ''">
-                  <foaf:Organization>
-                    <xsl:if test="normalize-space($OrganisationURI) != ''">
-                      <xsl:attribute name="rdf:about" select="$OrganisationURI"/>
-                    </xsl:if>
-                    <xsl:copy-of select="$OrganisationName-FOAF"/>
-                  </foaf:Organization>
-                </xsl:when>
-                <xsl:otherwise>
-                  <foaf:Organization>
-                    <xsl:copy-of select="$OrganisationName-FOAF"/>
-                  </foaf:Organization>
-                </xsl:otherwise>
-              </xsl:choose>
-            </org:memberOf>
-          </xsl:if>
         </xsl:if>
         <xsl:if test="$IndividualName = '' and $OrganisationName != ''">
           <xsl:copy-of select="$OrganisationName-FOAF"/>
@@ -1476,37 +1450,22 @@
         <xsl:copy-of select="$URL"/>
         <xsl:copy-of select="$Address"/>
       </xsl:variable>
-      <xsl:choose>
-        <xsl:when test="$IndividualURI != ''">
-          <rdf:Description rdf:resource="{$IndividualURI}">
-            <xsl:copy-of select="$info"/>
-          </rdf:Description>
-        </xsl:when>
-        <xsl:when test="$OrganisationURI != ''">
-          <rdf:Description rdf:resource="{$OrganisationURI}">
-            <xsl:copy-of select="$info"/>
-          </rdf:Description>
-        </xsl:when>
-        <xsl:otherwise>
-          <rdf:Description>
-            <xsl:copy-of select="$info"/>
-          </rdf:Description>
-        </xsl:otherwise>
-      </xsl:choose>
+
+      <foaf:Agent>
+        <xsl:choose>
+          <xsl:when test="$IndividualURI != ''">
+            <xsl:attribute name="rdf:resource" select="$IndividualURI"/>
+          </xsl:when>
+          <xsl:when test="$OrganisationURI != ''">
+            <xsl:attribute name="rdf:resource" select="$OrganisationURI"/>
+          </xsl:when>
+        </xsl:choose>
+        <xsl:copy-of select="$info"/>
+      </foaf:Agent>
+
     </xsl:param>
     <xsl:param name="ResponsibleParty">
       <xsl:variable name="info">
-        <xsl:choose>
-          <xsl:when test="$IndividualName != ''">
-            <rdf:type rdf:resource="{$vcard}Individual"/>
-          </xsl:when>
-          <xsl:when test="$OrganisationName != ''">
-            <rdf:type rdf:resource="{$vcard}Organization"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <rdf:type rdf:resource="{$vcard}Kind"/>
-          </xsl:otherwise>
-        </xsl:choose>
         <xsl:if test="$IndividualName != ''">
           <xsl:copy-of select="$IndividualName-vCard"/>
         </xsl:if>
@@ -1521,23 +1480,18 @@
         <xsl:copy-of select="$URL-vCard"/>
         <xsl:copy-of select="$Address-vCard"/>
       </xsl:variable>
-      <xsl:choose>
-        <xsl:when test="$IndividualURI != ''">
-          <rdf:Description rdf:resource="{$IndividualURI}">
-            <xsl:copy-of select="$info"/>
-          </rdf:Description>
-        </xsl:when>
-        <xsl:when test="$OrganisationURI != ''">
-          <rdf:Description rdf:resource="{$OrganisationURI}">
-            <xsl:copy-of select="$info"/>
-          </rdf:Description>
-        </xsl:when>
-        <xsl:otherwise>
-          <rdf:Description>
-            <xsl:copy-of select="$info"/>
-          </rdf:Description>
-        </xsl:otherwise>
-      </xsl:choose>
+
+      <vcard:Organization>
+        <xsl:choose>
+          <xsl:when test="$IndividualURI != ''">
+            <xsl:attribute name="rdf:resource" select="$IndividualURI"/>
+          </xsl:when>
+          <xsl:when test="$OrganisationURI != ''">
+            <xsl:attribute name="rdf:resource" select="$OrganisationURI"/>
+          </xsl:when>
+        </xsl:choose>
+        <xsl:copy-of select="$info"/>
+      </vcard:Organization>
     </xsl:param>
 
     <xsl:choose>
@@ -2762,5 +2716,30 @@
     <xsl:variable name="value" select="substring-after(lower-case($url), concat(lower-case($queryParam), '='))"/>
     <xsl:value-of select="normalize-space(if (contains($value, '&amp;')) then substring-before($value, '&amp;') else $value)"/>
   </xsl:function>
+
+  <xsl:function name="geonet:getElementName">
+    <xsl:param name="description" as="node()"/>
+    <xsl:variable name="type" select="string($description/rdf:type/@rdf:resource)"/>
+    <xsl:choose>
+      <xsl:when test="$type = concat($dcat, 'Dataset')">
+        <xsl:value-of select="'dcat:Dataset'"/>
+      </xsl:when>
+      <xsl:when test="$type = concat($dcat, 'DataService')">
+        <xsl:value-of select="'dcat:DataService'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message select="$description"/>
+        <xsl:message select="concat('WARNING: &quot;', $type, '&quot; does not have an element name')"/>
+        <xsl:value-of select="'dcat:Dataset'"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:template name="withoutType">
+    <xsl:param name="description" as="node()"/>
+    <xsl:for-each select="$description/*[name() != 'rdf:type']">
+      <xsl:copy-of select="."/>
+    </xsl:for-each>
+  </xsl:template>
 
 </xsl:stylesheet>

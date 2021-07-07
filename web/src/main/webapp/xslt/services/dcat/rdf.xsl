@@ -43,12 +43,10 @@
   <xsl:variable name="resourcePrefix" select="$env/metadata/resourceIdentifierPrefix"/>
 
   <xsl:template match="/">
-    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-             xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-             xmlns:foaf="http://xmlns.com/foaf/0.1/"
-             xmlns:void="http://www.w3.org/TR/void/" xmlns:dcat="http://www.w3.org/ns/dcat#"
-             xmlns:dct="http://purl.org/dc/terms/"
-             xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+    <rdf:RDF>
+
+      <xsl:call-template name="add-namespace"/>
+
       <!-- Metadata element -->
 
       <xsl:call-template name="catalogue"/>
@@ -58,6 +56,22 @@
       <!--  <xsl:apply-templates mode="references" select="/root/*|/root/search/response/*"/> -->
     </rdf:RDF>
 
+  </xsl:template>
+
+  <xsl:template name="add-namespace">
+    <xsl:namespace name="rdf" select="'http://www.w3.org/1999/02/22-rdf-syntax-ns#'"/>
+    <xsl:namespace name="skos" select="'http://www.w3.org/2004/02/skos/core#'"/>
+    <xsl:namespace name="spdx" select="'http://spdx.org/rdf/terms#'"/>
+    <xsl:namespace name="owl" select="'http://www.w3.org/2002/07/owl#'"/>
+    <xsl:namespace name="adms" select="'http://www.w3.org/ns/adms#'"/>
+    <xsl:namespace name="locn" select="'http://www.w3.org/ns/locn#'"/>
+    <xsl:namespace name="xsi" select="'http://www.w3.org/2001/XMLSchema-instance'"/>
+    <xsl:namespace name="foaf" select="'http://xmlns.com/foaf/0.1/'"/>
+    <xsl:namespace name="dct" select="'http://purl.org/dc/terms/'"/>
+    <xsl:namespace name="vcard" select="'http://www.w3.org/2006/vcard/ns#'"/>
+    <xsl:namespace name="dcat" select="'http://www.w3.org/ns/dcat#'"/>
+    <xsl:namespace name="schema" select="'http://schema.org/'"/>
+    <xsl:namespace name="dc" select="'http://purl.org/dc/elements/1.1/'"/>
   </xsl:template>
 
 
