@@ -244,21 +244,6 @@
       </xsl:for-each>
     </xsl:param>
 
-    <xsl:param name="Lineage">
-      <xsl:for-each select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement">
-        <dct:provenance>
-          <dct:ProvenanceStatement>
-            <rdfs:label xml:lang="{$MetadataLanguage}">
-              <xsl:value-of select="normalize-space(gco:CharacterString)"/>
-            </rdfs:label>
-            <xsl:call-template name="LocalisedString">
-              <xsl:with-param name="term">rdfs:label</xsl:with-param>
-            </xsl:call-template>
-          </dct:ProvenanceStatement>
-        </dct:provenance>
-      </xsl:for-each>
-    </xsl:param>
-
     <xsl:param name="MetadataDate">
       <xsl:choose>
         <xsl:when test="gmd:dateStamp/gco:Date">
@@ -487,7 +472,6 @@
             <xsl:with-param name="lang" select="."/>
           </xsl:call-template>
         </xsl:variable>
-
         <xsl:if test="normalize-space($resLang) != ''">
           <xsl:variable name="languageConcept">
             <xsl:call-template name="Map-language">
@@ -513,16 +497,46 @@
       <!-- Creation date, publication date, date of last revision -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"/>
 
-      <!-- Lineage -->
-      <xsl:if test="$ResourceType != 'service' and $Lineage != ''">
-        <xsl:copy-of select="$Lineage"/>
-      </xsl:if>
-
       <!-- Conformity -->
       <xsl:apply-templates select="gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:specification/gmd:CI_Citation">
         <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
       </xsl:apply-templates>
 
+      <!-- Responsible organisation -->
+      <xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'publisher'][1]|
+                            gmd:identificationInfo/*/gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'owner'][1]">
+        <xsl:apply-templates select="gmd:CI_ResponsibleParty">
+          <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+          <xsl:with-param name="ResourceType" select="$ResourceType"/>
+        </xsl:apply-templates>
+      </xsl:for-each>
+      <xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact[not(gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'owner'))]">
+        <xsl:apply-templates select="gmd:CI_ResponsibleParty">
+          <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+          <xsl:with-param name="ResourceType" select="$ResourceType"/>
+        </xsl:apply-templates>
+      </xsl:for-each>
+
+      <dct:relation rdf:resource="{geonet:escapeURI($MetadataViewUrl)}"/>
+
+      <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
+
+      <xsl:if test="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints/gmx:Anchor/@xlink:href =
+                      ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations',
+                       'https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')">
+        <dct:accessRights>
+          <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">
+            <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
+            <skos:prefLabel xml:lang="nl">publiek</skos:prefLabel>
+            <skos:prefLabel xml:lang="en">public</skos:prefLabel>
+            <skos:prefLabel xml:lang="fr">public</skos:prefLabel>
+            <skos:prefLabel xml:lang="de">public</skos:prefLabel>
+            <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right"/>
+          </skos:Concept>
+        </dct:accessRights>
+      </xsl:if>
+
+      <!-- Resource type specific -->
       <xsl:choose>
         <!-- Service specific -->
         <xsl:when test="$ResourceType = 'service'">
@@ -530,7 +544,6 @@
           <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
             <xsl:variable name="function" select="gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue"/>
             <xsl:variable name="linkage" select="gmd:linkage/gmd:URL"/>
-            <!-- Linkage -->
             <xsl:choose>
               <xsl:when test="$function = 'information'">
                 <dcat:endpointDescription rdf:resource="{$linkage}"/>
@@ -553,12 +566,25 @@
               </dct:conformsTo>
             </xsl:if>
           </xsl:for-each>
-
           <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
         </xsl:when>
 
         <!-- Dataset specific -->
         <xsl:when test="$ResourceType = 'dataset' or $ResourceType = 'series'">
+          <!-- Lineage -->
+          <xsl:for-each select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement">
+            <dct:provenance>
+              <dct:ProvenanceStatement>
+                <rdfs:label xml:lang="{$MetadataLanguage}">
+                  <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+                </rdfs:label>
+                <xsl:call-template name="LocalisedString">
+                  <xsl:with-param name="term">rdfs:label</xsl:with-param>
+                </xsl:call-template>
+              </dct:ProvenanceStatement>
+            </dct:provenance>
+          </xsl:for-each>
+
           <!-- Spatial representation type -->
           <xsl:variable name="SpatialRepresentationType">
             <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode"/>
@@ -693,40 +719,6 @@
           </xsl:for-each>
         </xsl:when>
       </xsl:choose>
-
-      <!-- Responsible organisation -->
-      <xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'publisher'][1]|
-                            gmd:identificationInfo/*/gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'owner'][1]">
-        <xsl:apply-templates select="gmd:CI_ResponsibleParty">
-          <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-          <xsl:with-param name="ResourceType" select="$ResourceType"/>
-        </xsl:apply-templates>
-      </xsl:for-each>
-      <xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact[not(gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'owner'))]">
-        <xsl:apply-templates select="gmd:CI_ResponsibleParty">
-          <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-          <xsl:with-param name="ResourceType" select="$ResourceType"/>
-        </xsl:apply-templates>
-      </xsl:for-each>
-
-      <dct:relation rdf:resource="{geonet:escapeURI($MetadataViewUrl)}"/>
-
-      <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
-
-      <xsl:if test="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints/gmx:Anchor/@xlink:href =
-                      ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations',
-                       'https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')">
-        <dct:accessRights>
-          <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">
-            <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
-            <skos:prefLabel xml:lang="nl">publiek</skos:prefLabel>
-            <skos:prefLabel xml:lang="en">public</skos:prefLabel>
-            <skos:prefLabel xml:lang="fr">public</skos:prefLabel>
-            <skos:prefLabel xml:lang="de">public</skos:prefLabel>
-            <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right"/>
-          </skos:Concept>
-        </dct:accessRights>
-      </xsl:if>
     </xsl:param>
 
     <!-- Output Catalog record and resource description -->
