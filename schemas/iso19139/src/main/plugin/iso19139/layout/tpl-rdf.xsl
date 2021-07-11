@@ -45,40 +45,42 @@
 
 -->
 
-<xsl:stylesheet xmlns:adms   = "http://www.w3.org/ns/adms#"
-                xmlns:cnt    = "http://www.w3.org/2011/content#"
-                xmlns:dc     = "http://purl.org/dc/elements/1.1/"
-                xmlns:dcat   = "http://www.w3.org/ns/dcat#"
-                xmlns:dct    = "http://purl.org/dc/terms/"
-                xmlns:dctype = "http://purl.org/dc/dcmitype/"
-                xmlns:earl   = "http://www.w3.org/ns/earl#"
-                xmlns:foaf   = "http://xmlns.com/foaf/0.1/"
-                xmlns:gco    = "http://www.isotc211.org/2005/gco"
-                xmlns:gmd    = "http://www.isotc211.org/2005/gmd"
-                xmlns:gml    = "http://www.opengis.net/gml/3.2"
-                xmlns:gml320 = "http://www.opengis.net/gml"
-                xmlns:gmx    = "http://www.isotc211.org/2005/gmx"
-                xmlns:gsp    = "http://www.opengis.net/ont/geosparql#"
-                xmlns:i      = "http://inspire.ec.europa.eu/schemas/common/1.0"
-                xmlns:i-gp   = "http://inspire.ec.europa.eu/schemas/geoportal/1.0"
-                xmlns:locn   = "http://www.w3.org/ns/locn#"
-                xmlns:owl    = "http://www.w3.org/2002/07/owl#"
-                xmlns:org    = "http://www.w3.org/ns/org#"
-                xmlns:prov   = "http://www.w3.org/ns/prov#"
-                xmlns:rdf    = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-                xmlns:rdfs   = "http://www.w3.org/2000/01/rdf-schema#"
-                xmlns:schema = "http://schema.org/"
-                xmlns:skos   = "http://www.w3.org/2004/02/skos/core#"
-                xmlns:srv    = "http://www.isotc211.org/2005/srv"
-                xmlns:vcard  = "http://www.w3.org/2006/vcard/ns#"
-                xmlns:wdrs   = "http://www.w3.org/2007/05/powder-s#"
-                xmlns:xlink  = "http://www.w3.org/1999/xlink"
-                xmlns:xsi    = "http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:xsl    = "http://www.w3.org/1999/XSL/Transform"
-                xmlns:geonet = "http://www.fao.org/geonetwork"
-                xmlns:xs     = "http://www.w3.org/2001/XMLSchema"
+<xsl:stylesheet xmlns:adms="http://www.w3.org/ns/adms#"
+                xmlns:cnt="http://www.w3.org/2011/content#"
+                xmlns:dc="http://purl.org/dc/elements/1.1/"
+                xmlns:dcat="http://www.w3.org/ns/dcat#"
+                xmlns:dct="http://purl.org/dc/terms/"
+                xmlns:dctype="http://purl.org/dc/dcmitype/"
+                xmlns:earl="http://www.w3.org/ns/earl#"
+                xmlns:foaf="http://xmlns.com/foaf/0.1/"
+                xmlns:gco="http://www.isotc211.org/2005/gco"
+                xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                xmlns:gml="http://www.opengis.net/gml/3.2"
+                xmlns:gml320="http://www.opengis.net/gml"
+                xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                xmlns:gsp="http://www.opengis.net/ont/geosparql#"
+                xmlns:i="http://inspire.ec.europa.eu/schemas/common/1.0"
+                xmlns:i-gp="http://inspire.ec.europa.eu/schemas/geoportal/1.0"
+                xmlns:locn="http://www.w3.org/ns/locn#"
+                xmlns:owl="http://www.w3.org/2002/07/owl#"
+                xmlns:org="http://www.w3.org/ns/org#"
+                xmlns:prov="http://www.w3.org/ns/prov#"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+                xmlns:schema="http://schema.org/"
+                xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+                xmlns:srv="http://www.isotc211.org/2005/srv"
+                xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+                xmlns:wdrs="http://www.w3.org/2007/05/powder-s#"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:geonet="http://www.fao.org/geonetwork"
+                xmlns:geodcat="http://data.europa.eu/930/"
+                xmlns:dqv="http://www.w3.org/ns/dqv#"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:uuid="java:java.util.UUID"
-                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype dc gml320 xs prov gsp org uuid"
+                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype dc gml320 xs prov gsp org uuid geodcat dqv"
                 version="2.0">
 
   <xsl:output method="xml"
@@ -360,6 +362,18 @@
       </xsl:choose>
     </xsl:param>
 
+    <!-- Metadata character encoding -->
+
+    <xsl:param name="MetadataCharacterEncoding">
+      <xsl:apply-templates select="gmd:characterSet/gmd:MD_CharacterSetCode"/>
+    </xsl:param>
+
+    <xsl:param name="ResourceCharacterEncoding">
+      <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification">
+        <xsl:apply-templates select="gmd:characterSet/gmd:MD_CharacterSetCode"/>
+      </xsl:for-each>
+    </xsl:param>
+
     <!-- Metadata description (metadata on metadata) -->
     <xsl:param name="MetadataDescription">
       <dct:identifier>
@@ -408,6 +422,10 @@
             </xsl:if>
           </dct:Standard>
         </dct:conformsTo>
+      </xsl:if>
+
+      <xsl:if test="$MetadataCharacterEncoding != ''">
+        <xsl:copy-of select="$MetadataCharacterEncoding"/>
       </xsl:if>
     </xsl:param>
 
@@ -536,6 +554,14 @@
         </dct:accessRights>
       </xsl:if>
 
+      <!-- Spatial extend -->
+      <xsl:apply-templates select="gmd:identificationInfo[1]/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement">
+        <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+      </xsl:apply-templates>
+
+      <!-- spatial resolution -->
+      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution"/>
+
       <!-- Resource type specific -->
       <xsl:choose>
         <!-- Service specific -->
@@ -590,11 +616,6 @@
             <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode"/>
           </xsl:variable>
 
-          <!-- Spatial extend -->
-          <xsl:apply-templates select="gmd:identificationInfo[1]/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement">
-            <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-          </xsl:apply-templates>
-
           <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
             <!-- Encoding -->
             <xsl:variable name="Encoding">
@@ -638,6 +659,7 @@
               <xsl:variable name="linkage" select="gmd:linkage"/>
 
               <xsl:variable name="Function" select="gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue"/>
+
               <xsl:choose>
                 <xsl:when test="$Function = ('download', 'offlineAccess', 'order')">
                   <xsl:choose>
@@ -660,6 +682,9 @@
                                 </dct:title>
                               </dct:Standard>
                             </dct:conformsTo>
+                            <xsl:if test="$ResourceCharacterEncoding != ''">
+                              <xsl:copy-of select="$ResourceCharacterEncoding"/>
+                            </xsl:if>
                           </dcat:Distribution>
                         </dcat:distribution>
                       </xsl:for-each>
@@ -698,6 +723,9 @@
                               </dct:title>
                             </dct:Standard>
                           </dct:conformsTo>
+                          <xsl:if test="$ResourceCharacterEncoding != ''">
+                            <xsl:copy-of select="$ResourceCharacterEncoding"/>
+                          </xsl:if>
                         </dcat:Distribution>
                       </dcat:distribution>
                     </xsl:otherwise>
@@ -1877,6 +1905,19 @@
   <!-- Spatial representation type (tentative) -->
   <xsl:template name="SpatialRepresentationType" match="gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode">
     <adms:representationTechnique rdf:resource="{$SpatialRepresentationTypeCodelistUri}/{@codeListValue}"/>
+  </xsl:template>
+
+  <!-- Spatial resolution -->
+  <xsl:template name="SpatialResolution" match="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution">
+    <xsl:choose>
+      <xsl:when test="gmd:distance/gco:Distance[@uom = 'm']">
+        <dcat:spatialResolutionInMeters>
+          <xsl:value-of select="string(gmd:distance/gco:Distance)"/>
+        </dcat:spatialResolutionInMeters>
+      </xsl:when>
+
+      <!--TODO: gmd:equivalentScale-->
+    </xsl:choose>
   </xsl:template>
 
   <!-- Multilingual text -->
