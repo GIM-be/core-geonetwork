@@ -891,6 +891,7 @@
   <!-- Responsible Organisation -->
   <xsl:template name="ResponsibleOrganisation" match="gmd:CI_ResponsibleParty">
     <xsl:param name="MetadataLanguage"/>
+    <xsl:param name="ResourceType"/>
 
     <xsl:param name="role">
       <xsl:value-of select="gmd:role/gmd:CI_RoleCode/@codeListValue"/>
@@ -1184,26 +1185,57 @@
     </xsl:param>
 
     <xsl:choose>
-      <xsl:when test="$role = 'owner'">
-        <dct:rightsHolder>
-          <xsl:copy-of select="$ROInfo"/>
-        </dct:rightsHolder>
+
+      <xsl:when test="$ResourceType = 'service'">
+        <xsl:choose>
+          <xsl:when test="$role = 'pointOfContact'">
+            <dcat:contactPoint>
+              <xsl:copy-of select="$ResponsibleParty"/>
+            </dcat:contactPoint>
+          </xsl:when>
+          <xsl:when test="$role = 'custodian'">
+            <dct:publisher>
+              <xsl:copy-of select="$ROInfo"/>
+            </dct:publisher>
+          </xsl:when>
+        </xsl:choose>
       </xsl:when>
-      <xsl:when test="$role = 'pointOfContact'">
-        <dcat:contactPoint>
-          <xsl:copy-of select="$ResponsibleParty"/>
-        </dcat:contactPoint>
-      </xsl:when>
-      <xsl:when test="($role = 'publisher') or ($role = 'owner' and count(../../gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = 'publisher']) = 0)">
-        <dct:publisher>
-          <xsl:copy-of select="$ROInfo"/>
-        </dct:publisher>
-      </xsl:when>
-      <xsl:when test="$role = 'author'">
-        <dct:creator>
-          <xsl:copy-of select="$ROInfo"/>
-        </dct:creator>
-      </xsl:when>
+
+      <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="$role = 'owner'">
+            <dct:rightsHolder>
+              <xsl:copy-of select="$ROInfo"/>
+            </dct:rightsHolder>
+          </xsl:when>
+          <xsl:when test="$role = 'distributor'">
+            <geodcat:distributor>
+              <xsl:copy-of select="$ROInfo"/>
+            </geodcat:distributor>
+          </xsl:when>
+          <xsl:when test="$role = 'pointOfContact'">
+            <dcat:contactPoint>
+              <xsl:copy-of select="$ResponsibleParty"/>
+            </dcat:contactPoint>
+          </xsl:when>
+          <xsl:when test="$role = 'publisher'">
+            <dct:publisher>
+              <xsl:copy-of select="$ROInfo"/>
+            </dct:publisher>
+          </xsl:when>
+          <xsl:when test="$role = 'author'">
+            <dct:creator>
+              <xsl:copy-of select="$ROInfo"/>
+            </dct:creator>
+          </xsl:when>
+        </xsl:choose>
+        <xsl:if test="$role = 'owner' and count(../../gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = 'publisher']) = 0">
+          <dct:publisher>
+            <xsl:copy-of select="$ROInfo"/>
+          </dct:publisher>
+        </xsl:if>
+      </xsl:otherwise>
+
     </xsl:choose>
   </xsl:template>
 
