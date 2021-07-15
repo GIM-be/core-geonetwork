@@ -96,17 +96,6 @@
   -->
 
   <!--
-    Parameter $CoupledResourceLookUp
-    This parameter specifies whether the coupled resource, referenced via @xlink:href, should be looked up to fetch the resource's  unique resource identifier (i.e., code and code space). More precisely:
-    - value "enabled": The coupled resource is looked up
-    - value "disabled": The coupled resource is not looked up
-
-    CAVEAT: Using this feature may cause the transformation to hang, in case the URL in @xlink:href is broken, the request hangs indefinitely, or does not return the expected resource (e.g., and HTML page, instead of an XML-encoded ISO 19139 record). It is strongly recommended that this issue is dealt with by using appropriate configuration parameters and error handling (e.g., by specifying a timeout on HTTP calls and by setting the HTTP Accept header to "application/xml").
-  -->
-
-  <xsl:param name="CoupledResourceLookUp" select="'disabled'"/>
-
-  <!--
     Global parameters
     =======================
   -->
@@ -525,11 +514,6 @@
       <xsl:copy-of select="$ResourceTitle"/>
       <xsl:copy-of select="$ResourceAbstract"/>
 
-      <!-- Maintenance information (tentative) -->
-      <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceMaintenance">
-        <xsl:apply-templates select="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode"/>
-      </xsl:for-each>
-
       <!-- Topic category -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:topicCategory">
         <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
@@ -541,14 +525,6 @@
         <xsl:with-param name="ResourceType" select="$ResourceType"/>
         <xsl:with-param name="ServiceType" select="$ServiceType"/>
       </xsl:apply-templates>
-
-      <!-- Coupled resources -->
-      <!--
-      <xsl:apply-templates select="gmd:identificationInfo[1]/*/srv:operatesOn">
-        <xsl:with-param name="ResourceType" select="$ResourceType"/>
-        <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-      </xsl:apply-templates>
-      -->
 
       <!-- Resource Language -->
       <xsl:for-each select="gmd:identificationInfo/*/gmd:language">
@@ -643,6 +619,12 @@
             </xsl:if>
           </xsl:for-each>
           <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
+
+          <!-- Coupled resources -->
+          <xsl:apply-templates select="gmd:identificationInfo[1]/*/srv:operatesOn">
+            <xsl:with-param name="ResourceType" select="$ResourceType"/>
+            <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+          </xsl:apply-templates>
         </xsl:when>
 
         <!-- Dataset specific -->
@@ -659,6 +641,11 @@
                 </xsl:call-template>
               </dct:ProvenanceStatement>
             </dct:provenance>
+          </xsl:for-each>
+
+          <!-- Maintenance information (tentative) -->
+          <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceMaintenance">
+            <xsl:apply-templates select="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode"/>
           </xsl:for-each>
 
           <!-- Spatial representation type -->
@@ -1255,9 +1242,12 @@
   <!-- Coupled resource -->
   <xsl:template name="CoupledResource" match="gmd:identificationInfo[1]/*/srv:operatesOn">
     <xsl:param name="href" select="@xlink:href"/>
+    <dcat:servesDataset rdf:resource="{$href}"/>
+    <!-- Resource lookup feature (=> slow) -->
+    <!--
     <xsl:param name="code">
       <xsl:choose>
-        <xsl:when test="$CoupledResourceLookUp = 'enabled' and $href != '' and (starts-with($href, 'http://') or starts-with($href, 'https://'))">
+        <xsl:when test="$href != '' and (starts-with($href, 'http://') or starts-with($href, 'https://'))">
           <xsl:value-of select="document($href)//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString"/>
         </xsl:when>
         <xsl:when test="*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString != ''">
@@ -1270,7 +1260,7 @@
     </xsl:param>
     <xsl:param name="codespace">
       <xsl:choose>
-        <xsl:when test="$CoupledResourceLookUp = 'enabled' and $href != '' and (starts-with($href, 'http://') or starts-with($href, 'https://'))">
+        <xsl:when test="$href != '' and (starts-with($href, 'http://') or starts-with($href, 'https://'))">
           <xsl:value-of select="document($href)//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace/gco:CharacterString"/>
         </xsl:when>
         <xsl:when test="*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace/gco:CharacterString != ''">
@@ -1278,43 +1268,7 @@
         </xsl:when>
       </xsl:choose>
     </xsl:param>
-    <xsl:param name="resID" select="concat($codespace, $code)"/>
-    <xsl:param name="uriref" select="@uriref"/>
-
-    <!-- The use of @uriref is still under discussion by the INSPIRE MIG. -->
-    <xsl:choose>
-      <xsl:when test="$uriref != ''">
-        <dct:hasPart rdf:resource="{geonet:escapeURI(@uriref)}"/>
-      </xsl:when>
-      <xsl:when test="$code != ''">
-        <xsl:choose>
-          <xsl:when test="starts-with($code, 'http://') or starts-with($code, 'https://')">
-            <dct:hasPart rdf:resource="{geonet:escapeURI($code)}"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <dct:hasPart>
-              <xsl:choose>
-                <xsl:when test="starts-with($resID, 'http://') or starts-with($resID, 'https://')">
-                  <dct:identifier>
-                    <xsl:value-of select="$resID"/>
-                  </dct:identifier>
-                </xsl:when>
-                <xsl:otherwise>
-                  <dct:identifier>
-                    <xsl:value-of select="$resID"/>
-                  </dct:identifier>
-                </xsl:otherwise>
-              </xsl:choose>
-              <xsl:if test="$href != '' and $href != '' and (starts-with($href, 'http://') or starts-with($href, 'https://'))">
-                <foaf:isPrimaryTopicOf>
-                  <dcat:CatalogRecord rdf:about="{geonet:escapeURI($href)}"/>
-                </foaf:isPrimaryTopicOf>
-              </xsl:if>
-            </dct:hasPart>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-    </xsl:choose>
+    -->
   </xsl:template>
 
   <!-- Conformity -->
