@@ -183,6 +183,30 @@
   <!-- GIM custom variables -->
   <xsl:variable name="catalogUrl" select="concat(substring-before($resourcePrefix, '/resource'), '/dut')"/>
 
+  <xsl:variable name="modelLicencieKeywords">
+    <license>
+      <url>https://data.vlaanderen.be/doc/licentie/modellicentie-gratis-hergebruik/v1.0</url>
+      <keyword>modellicentie-gratis-hergebruik</keyword>
+      <keyword>modellicentie_gratis_hergebruik</keyword>
+    </license>
+    <license>
+      <url>http://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0</url>
+      <keyword>onvoorwaardelijk-hergebruik</keyword>
+      <keyword>onvoorwaardelijk_hergebruik</keyword>
+    </license>
+    <license>
+      <url>https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0</url>
+      <keyword>modellicentie-hergebruik-tegen-vergoeding</keyword>
+      <keyword>modellicentie_hergebruik_tegen_vergoeding</keyword>
+    </license>
+    <license>
+      <url>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</url>
+      <keyword>creative-commons-zero-verklaring</keyword>
+      <keyword>creative_commons_zero_verklaring</keyword>
+      <keyword>cc0</keyword>
+    </license>
+  </xsl:variable>
+
   <!--
     Metadata template
     =================
@@ -306,30 +330,6 @@
       <xsl:variable name="licensesConstraintsCharacterString" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/gco:CharacterString|
                                                                       gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString"/>
 
-      <xsl:variable name="modelLicencieKeywords">
-        <license>
-          <url>https://data.vlaanderen.be/doc/licentie/modellicentie-gratis-hergebruik/v1.0</url>
-          <keyword>modellicentie-gratis-hergebruik</keyword>
-          <keyword>modellicentie_gratis_hergebruik</keyword>
-        </license>
-        <license>
-          <url>http://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0</url>
-          <keyword>onvoorwaardelijk-hergebruik</keyword>
-          <keyword>onvoorwaardelijk_hergebruik</keyword>
-        </license>
-        <license>
-          <url>https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0</url>
-          <keyword>modellicentie-hergebruik-tegen-vergoeding</keyword>
-          <keyword>modellicentie_hergebruik_tegen_vergoeding</keyword>
-        </license>
-        <license>
-          <url>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</url>
-          <keyword>creative-commons-zero-verklaring</keyword>
-          <keyword>creative_commons_zero_verklaring</keyword>
-          <keyword>cc0</keyword>
-        </license>
-      </xsl:variable>
-
       <xsl:variable name="modelLicencie">
         <xsl:for-each select="$licensesConstraintsAnchor">
           <xsl:variable name="currentUrl" select="translate(@xlink:href, $uppercase, $lowercase)"/>
@@ -360,6 +360,73 @@
           </xsl:element>
         </xsl:otherwise>
       </xsl:choose>
+
+      <!-- Mapping revised for compliance with the 2017 edition of the INSPIRE Metadata Technical Guidelines -->
+      <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:accessConstraints]">
+        <xsl:choose>
+          <xsl:when test="normalize-space(gco:CharacterString) != ''">
+            <dct:accessRights>
+              <dct:RightsStatement>
+                <rdfs:label xml:lang="{$MetadataLanguage}">
+                  <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+                </rdfs:label>
+                <xsl:call-template name="LocalisedString">
+                  <xsl:with-param name="term">rdfs:label</xsl:with-param>
+                </xsl:call-template>
+              </dct:RightsStatement>
+            </dct:accessRights>
+          </xsl:when>
+          <xsl:when test="gmd:MD_RestrictionCode">
+            <xsl:variable name="access-constraints-code" select="normalize-space(@codeListValue)"/>
+            <xsl:variable name="access-constraints-text">
+              <xsl:choose>
+                <xsl:when test="normalize-space(.) != ''">
+                  <xsl:value-of select="normalize-space(.)"/>
+                </xsl:when>
+                <xsl:when test="$access-constraints-code != ''">
+                  <xsl:value-of select="$access-constraints-code"/>
+                </xsl:when>
+              </xsl:choose>
+            </xsl:variable>
+            <dct:accessRights>
+              <dct:RightsStatement>
+                <xsl:if test="$access-constraints-code != ''">
+                  <dct:identifier>
+                    <xsl:value-of select="$access-constraints-code"/>
+                  </dct:identifier>
+                </xsl:if>
+                <rdfs:label xml:lang="{$MetadataLanguage}">
+                  <xsl:value-of select="$access-constraints-text"/>
+                </rdfs:label>
+                <xsl:call-template name="LocalisedString">
+                  <xsl:with-param name="term">rdfs:label</xsl:with-param>
+                </xsl:call-template>
+              </dct:RightsStatement>
+            </dct:accessRights>
+          </xsl:when>
+          <xsl:when test="gmx:Anchor/@xlink:href">
+            <xsl:choose>
+              <xsl:when test="gmx:Anchor/@xlink:href = (
+              'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations',
+              'https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')">
+                <dct:accessRights>
+                  <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">
+                    <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
+                    <skos:prefLabel xml:lang="nl">publiek</skos:prefLabel>
+                    <skos:prefLabel xml:lang="en">public</skos:prefLabel>
+                    <skos:prefLabel xml:lang="fr">public</skos:prefLabel>
+                    <skos:prefLabel xml:lang="de">public</skos:prefLabel>
+                    <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right"/>
+                  </skos:Concept>
+                </dct:accessRights>
+              </xsl:when>
+              <xsl:otherwise>
+                <dct:accessRights rdf:resource="{geonet:escapeURI(gmx:Anchor/@xlink:href)}"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:for-each>
     </xsl:param>
 
     <!-- Metadata character encoding -->
@@ -536,23 +603,6 @@
       </xsl:for-each>
 
       <dct:relation rdf:resource="{geonet:escapeURI($MetadataViewUrl)}"/>
-
-      <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
-
-      <xsl:if test="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints/gmx:Anchor/@xlink:href =
-                      ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations',
-                       'https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')">
-        <dct:accessRights>
-          <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">
-            <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
-            <skos:prefLabel xml:lang="nl">publiek</skos:prefLabel>
-            <skos:prefLabel xml:lang="en">public</skos:prefLabel>
-            <skos:prefLabel xml:lang="fr">public</skos:prefLabel>
-            <skos:prefLabel xml:lang="de">public</skos:prefLabel>
-            <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right"/>
-          </skos:Concept>
-        </dct:accessRights>
-      </xsl:if>
 
       <!-- Spatial extend -->
       <xsl:apply-templates select="gmd:identificationInfo[1]/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement">
@@ -1318,7 +1368,6 @@
                 <dct:title xml:lang="{$MetadataLanguage}">
                   <xsl:value-of select="gmd:title/gco:CharacterString"/>
                 </dct:title>
-                <!--<xsl:apply-templates select="gmd:date/gmd:CI_Date"/>-->
               </skos:ConceptScheme>
             </skos:inScheme>
           </xsl:for-each>
@@ -1443,111 +1492,6 @@
         </dct:created>
       </xsl:when>
     </xsl:choose>
-  </xsl:template>
-
-  <!-- Constraints related to access and use -->
-  <xsl:template name="ConstraintsRelatedToAccesAndUse" match="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*">
-    <xsl:param name="MetadataLanguage"/>
-
-    <!-- Mapping added for compliance with the 2017 edition of the INSPIRE Metadata Technical Guidelines -->
-    <xsl:for-each select="gmd:otherConstraints[../gmd:useConstraints]">
-      <xsl:choose>
-        <!-- In case the rights/licence URL IS NOT provided -->
-        <xsl:when test="normalize-space(gco:CharacterString) != ''">
-          <dct:license>
-            <dct:LicenseDocument>
-              <rdfs:label xml:lang="{$MetadataLanguage}">
-                <xsl:value-of select="normalize-space(gco:CharacterString)"/>
-              </rdfs:label>
-              <xsl:call-template name="LocalisedString">
-                <xsl:with-param name="term">rdfs:label</xsl:with-param>
-              </xsl:call-template>
-            </dct:LicenseDocument>
-          </dct:license>
-        </xsl:when>
-        <xsl:when test="gmd:MD_RestrictionCode">
-          <xsl:variable name="use-constraints-code" select="normalize-space(@codeListValue)"/>
-          <xsl:variable name="use-constraints-text">
-            <xsl:choose>
-              <xsl:when test="normalize-space(.) != ''">
-                <xsl:value-of select="normalize-space(.)"/>
-              </xsl:when>
-              <xsl:when test="$use-constraints-code != ''">
-                <xsl:value-of select="$use-constraints-code"/>
-              </xsl:when>
-            </xsl:choose>
-          </xsl:variable>
-          <dct:license>
-            <dct:LicenseDocument>
-              <xsl:if test="$use-constraints-code != ''">
-                <dct:identifier>
-                  <xsl:value-of select="$use-constraints-code"/>
-                </dct:identifier>
-              </xsl:if>
-              <rdfs:label xml:lang="{$MetadataLanguage}">
-                <xsl:value-of select="$use-constraints-text"/>
-              </rdfs:label>
-              <xsl:call-template name="LocalisedString">
-                <xsl:with-param name="term">rdfs:label</xsl:with-param>
-              </xsl:call-template>
-            </dct:LicenseDocument>
-          </dct:license>
-        </xsl:when>
-        <!-- In case the rights/licence URL IS provided -->
-        <xsl:when test="gmx:Anchor/@xlink:href">
-          <dct:license rdf:resource="{geonet:escapeURI(gmx:Anchor/@xlink:href)}"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:for-each>
-
-    <!-- Mapping revised for compliance with the 2017 edition of the INSPIRE Metadata Technical Guidelines -->
-    <xsl:for-each select="gmd:otherConstraints[../gmd:accessConstraints]">
-      <xsl:choose>
-        <xsl:when test="normalize-space(gco:CharacterString) != ''">
-          <dct:accessRights>
-            <dct:RightsStatement>
-              <rdfs:label xml:lang="{$MetadataLanguage}">
-                <xsl:value-of select="normalize-space(gco:CharacterString)"/>
-              </rdfs:label>
-              <xsl:call-template name="LocalisedString">
-                <xsl:with-param name="term">rdfs:label</xsl:with-param>
-              </xsl:call-template>
-            </dct:RightsStatement>
-          </dct:accessRights>
-        </xsl:when>
-        <xsl:when test="gmd:MD_RestrictionCode">
-          <xsl:variable name="access-constraints-code" select="normalize-space(@codeListValue)"/>
-          <xsl:variable name="access-constraints-text">
-            <xsl:choose>
-              <xsl:when test="normalize-space(.) != ''">
-                <xsl:value-of select="normalize-space(.)"/>
-              </xsl:when>
-              <xsl:when test="$access-constraints-code != ''">
-                <xsl:value-of select="$access-constraints-code"/>
-              </xsl:when>
-            </xsl:choose>
-          </xsl:variable>
-          <dct:accessRights>
-            <dct:RightsStatement>
-              <xsl:if test="$access-constraints-code != ''">
-                <dct:identifier>
-                  <xsl:value-of select="$access-constraints-code"/>
-                </dct:identifier>
-              </xsl:if>
-              <rdfs:label xml:lang="{$MetadataLanguage}">
-                <xsl:value-of select="$access-constraints-text"/>
-              </rdfs:label>
-              <xsl:call-template name="LocalisedString">
-                <xsl:with-param name="term">rdfs:label</xsl:with-param>
-              </xsl:call-template>
-            </dct:RightsStatement>
-          </dct:accessRights>
-        </xsl:when>
-        <xsl:when test="gmx:Anchor/@xlink:href">
-          <dct:accessRights rdf:resource="{geonet:escapeURI(gmx:Anchor/@xlink:href)}"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:for-each>
   </xsl:template>
 
   <!-- Keyword -->
