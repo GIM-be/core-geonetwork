@@ -523,7 +523,6 @@
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords">
         <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
         <xsl:with-param name="ResourceType" select="$ResourceType"/>
-        <xsl:with-param name="ServiceType" select="$ServiceType"/>
       </xsl:apply-templates>
 
       <!-- Resource Language -->
@@ -1484,7 +1483,6 @@
   <xsl:template name="Keyword" match="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords">
     <xsl:param name="MetadataLanguage"/>
     <xsl:param name="ResourceType"/>
-    <xsl:param name="ServiceType"/>
     <xsl:param name="OriginatingControlledVocabulary">
       <xsl:for-each select="gmd:thesaurusName/gmd:CI_Citation">
         <xsl:for-each select="gmd:title">
@@ -1495,11 +1493,10 @@
             <xsl:with-param name="term">dct:title</xsl:with-param>
           </xsl:call-template>
         </xsl:for-each>
-        <!--<xsl:apply-templates select="gmd:date/gmd:CI_Date"/>-->
       </xsl:for-each>
     </xsl:param>
-    <xsl:variable name="firstThesaurus" select="gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]"/>
-    <xsl:variable name="thesaurusIdentifier">
+    <xsl:param name="firstThesaurus" select="gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]"/>
+    <xsl:param name="thesaurusIdentifier">
       <xsl:choose>
         <xsl:when test="$firstThesaurus/gmx:Anchor">
           <xsl:value-of select="$firstThesaurus/gmx:Anchor/@xlink:href"/>
@@ -1508,143 +1505,87 @@
           <xsl:value-of select="normalize-space($firstThesaurus/gco:CharacterString)"/>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:variable>
-    <xsl:variable name="isThesaurusTitle" select="normalize-space($firstThesaurus/gco:CharacterString) != ''"/>
+    </xsl:param>
+    <xsl:param name="scheme">
+      <xsl:choose>
+        <xsl:when test="normalize-space($firstThesaurus/gco:CharacterString) != ''">
+          <xsl:call-template name="GetSchemeFromThesaurusTitle">
+            <xsl:with-param name="thesaurusTitle" select="$thesaurusIdentifier"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$thesaurusIdentifier"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:param>
 
     <xsl:for-each select="gmd:keyword">
-      <xsl:variable name="lckw" select="translate(gco:CharacterString,$uppercase,$lowercase)"/>
-      <xsl:choose>
+      <xsl:variable name="keywordAbout">
+        <xsl:choose>
+          <xsl:when test="gco:CharacterString">
+            <xsl:call-template name="GetAboutFromCharacterString">
+              <xsl:with-param name="keyword" select="normalize-space(gco:CharacterString)"/>
+              <xsl:with-param name="thesaurusIdentifier" select="$thesaurusIdentifier"/>
+              <xsl:with-param name="lang" select="$MetadataLanguage"/>
+            </xsl:call-template>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="geonet:escapeURI(gmx:Anchor/@xlink:href)"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
 
-        <xsl:when test="normalize-space($OriginatingControlledVocabulary) = '' and not( gmx:Anchor/@xlink:href and ( starts-with(gmx:Anchor/@xlink:href, 'http://') or starts-with(gmx:Anchor/@xlink:href, 'https://') ) )">
+      <xsl:choose>
+        <!-- Keywords not originating from any vocabulary -->
+        <xsl:when test="normalize-space($keywordAbout) = ''">
           <dcat:keyword xml:lang="{$MetadataLanguage}">
-            <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+            <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
           </dcat:keyword>
           <xsl:call-template name="LocalisedString">
             <xsl:with-param name="term">dcat:keyword</xsl:with-param>
           </xsl:call-template>
         </xsl:when>
 
+        <xsl:when test="$scheme = ('http://vocab.belgif.be/auth/datatheme', 'http://vocab.belgif.be/auth/datatheme/')">
+          <dcat:theme>
+            <skos:Concept>
+              <xsl:attribute name="rdf:about" select="geonet:escapeURI($keywordAbout)"/>
+              <skos:prefLabel xml:lang="{$MetadataLanguage}">
+                <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
+              </skos:prefLabel>
+              <xsl:call-template name="LocalisedString">
+                <xsl:with-param name="term">skos:prefLabel</xsl:with-param>
+              </xsl:call-template>
+              <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
+            </skos:Concept>
+          </dcat:theme>
+        </xsl:when>
+
+        <!-- Default to a dct:subject -->
         <xsl:otherwise>
-          <xsl:variable name="scheme">
-            <xsl:choose>
-              <xsl:when test="$isThesaurusTitle">
-                <xsl:call-template name="GetSchemeFromThesaurusTitle">
-                  <xsl:with-param name="thesaurusTitle" select="$thesaurusIdentifier"/>
-                </xsl:call-template>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="$thesaurusIdentifier"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-
-          <xsl:choose>
-            <!-- In case the concept's URI is NOT provided -->
-            <xsl:when test="gco:CharacterString">
-              <xsl:choose>
-                <xsl:when test="$ResourceType != 'service'">
-                  <xsl:variable name="keywordAbout">
-                    <xsl:call-template name="GetAboutFromCharacterString">
-                      <xsl:with-param name="keyword" select="normalize-space(gco:CharacterString)"/>
-                      <xsl:with-param name="thesaurusIdentifier" select="$thesaurusIdentifier"/>
-                      <xsl:with-param name="lang" select="$MetadataLanguage"/>
-                    </xsl:call-template>
-                  </xsl:variable>
-
-                  <xsl:choose>
-                    <xsl:when test="$keywordAbout">
-                      <dcat:theme>
-                        <skos:Concept>
-                          <xsl:if test="normalize-space($keywordAbout) != ''">
-                            <xsl:attribute name="rdf:about" select="geonet:escapeURI($keywordAbout)"/>
-                          </xsl:if>
-                          <skos:prefLabel xml:lang="{$MetadataLanguage}">
-                            <xsl:value-of select="normalize-space(gco:CharacterString)"/>
-                          </skos:prefLabel>
-                          <xsl:call-template name="LocalisedString">
-                            <xsl:with-param name="term">skos:prefLabel</xsl:with-param>
-                          </xsl:call-template>
-                          <skos:inScheme rdf:resource="{$scheme}"/>
-                        </skos:Concept>
-                      </dcat:theme>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <dcat:theme>
-                        <skos:prefLabel xml:lang="{$MetadataLanguage}">
-                          <xsl:value-of select="normalize-space(gco:CharacterString)"/>
-                        </skos:prefLabel>
-                        <xsl:call-template name="LocalisedString">
-                          <xsl:with-param name="term">skos:prefLabel</xsl:with-param>
-                        </xsl:call-template>
-                        <skos:inScheme>
-                          <skos:ConceptScheme>
-                            <xsl:copy-of select="$OriginatingControlledVocabulary"/>
-                          </skos:ConceptScheme>
-                        </skos:inScheme>
-                      </dcat:theme>
-                    </xsl:otherwise>
-                  </xsl:choose>
-
-                  <!-- Workaround: Always add a dcat:keyword alongs with the dcat:theme -->
-                  <dcat:keyword xml:lang="{$MetadataLanguage}">
-                    <xsl:value-of select="normalize-space(gco:CharacterString)"/>
-                  </dcat:keyword>
-                  <xsl:call-template name="LocalisedString">
-                    <xsl:with-param name="term">dcat:keyword</xsl:with-param>
-                  </xsl:call-template>
-                </xsl:when>
-
-                <xsl:otherwise>
-                  <dct:subject>
-                    <skos:Concept>
-                      <skos:prefLabel xml:lang="{$MetadataLanguage}">
-                        <xsl:value-of select="normalize-space(gco:CharacterString)"/>
-                      </skos:prefLabel>
-                      <xsl:call-template name="LocalisedString">
-                        <xsl:with-param name="term">skos:prefLabel</xsl:with-param>
-                      </xsl:call-template>
-                      <skos:inScheme>
-                        <skos:ConceptScheme>
-                          <xsl:copy-of select="$OriginatingControlledVocabulary"/>
-                        </skos:ConceptScheme>
-                      </skos:inScheme>
-                    </skos:Concept>
-                  </dct:subject>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:when>
-            <!-- In case the concept's URI is provided -->
-            <xsl:when test="gmx:Anchor/@xlink:href">
-              <xsl:choose>
-                <xsl:when test="$ResourceType != 'service'">
-                  <dcat:theme>
-                    <skos:Concept>
-                      <xsl:if test="normalize-space(gmx:Anchor/@xlink:href) != ''">
-                        <xsl:attribute name="rdf:about" select="geonet:escapeURI(gmx:Anchor/@xlink:href)"/>
-                      </xsl:if>
-                      <skos:prefLabel xml:lang="{$MetadataLanguage}">
-                        <xsl:value-of select="gmx:Anchor"/>
-                      </skos:prefLabel>
-                      <xsl:call-template name="LocalisedString">
-                        <xsl:with-param name="term">skos:prefLabel</xsl:with-param>
-                      </xsl:call-template>
-                      <skos:inScheme rdf:resource="{$scheme}"/>
-                    </skos:Concept>
-                  </dcat:theme>
-                  <!-- Workaround: Always add a dcat:keyword alongs with the dcat:theme -->
-                  <dcat:keyword xml:lang="{$MetadataLanguage}">
-                    <xsl:value-of select="normalize-space(gmx:Anchor)"/>
-                  </dcat:keyword>
-                  <xsl:call-template name="LocalisedString">
-                    <xsl:with-param name="term">dcat:keyword</xsl:with-param>
-                  </xsl:call-template>
-                </xsl:when>
-                <xsl:otherwise>
-                  <dct:subject rdf:resource="{geonet:escapeURI(gmx:Anchor/@xlink:href)}"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:when>
-          </xsl:choose>
+          <dct:subject>
+            <skos:Concept>
+              <xsl:attribute name="rdf:about" select="geonet:escapeURI($keywordAbout)"/>
+              <skos:prefLabel xml:lang="{$MetadataLanguage}">
+                <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
+              </skos:prefLabel>
+              <xsl:call-template name="LocalisedString">
+                <xsl:with-param name="term">skos:prefLabel</xsl:with-param>
+              </xsl:call-template>
+              <skos:inScheme>
+                <xsl:choose>
+                  <xsl:when test="normalize-space($scheme) != ''">
+                    <xsl:attribute name="rdf:resource" select="normalize-space($scheme)"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <skos:ConceptScheme>
+                      <xsl:copy-of select="$OriginatingControlledVocabulary"/>
+                    </skos:ConceptScheme>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </skos:inScheme>
+            </skos:Concept>
+          </dct:subject>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -1655,9 +1596,23 @@
     <xsl:param name="TopicCategory">
       <xsl:value-of select="normalize-space(gmd:MD_TopicCategoryCode)"/>
     </xsl:param>
-    <xsl:if test="$TopicCategory != ''">
-      <dct:subject rdf:resource="{$TopicCategoryCodelistUri}/{$TopicCategory}"/>
-    </xsl:if>
+    <xsl:param name="DataGovTheme">
+      <xsl:call-template name="MapTopicCatToDataGov">
+        <xsl:with-param name="TopicCategory" select="$TopicCategory"/>
+      </xsl:call-template>
+    </xsl:param>
+
+    <xsl:choose>
+      <xsl:when test="$DataGovTheme/dcat:theme">
+        <xsl:variable name="hasAlreadyDataGovTheme" select="count(../gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href[. = ('http://vocab.belgif.be/auth/datatheme', 'http://vocab.belgif.be/auth/datatheme/')]) > 0"/>
+        <xsl:if test="not($hasAlreadyDataGovTheme)">
+          <xsl:copy-of select="$DataGovTheme"/>
+        </xsl:if>
+      </xsl:when>
+      <xsl:when test="$TopicCategory != ''">
+        <dct:subject rdf:resource="{$TopicCategoryCodelistUri}/{$TopicCategory}"/>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
   <!-- Character encoding -->
