@@ -15,9 +15,13 @@
           <div class="clearfix">
             <div class="pull-left">
               <a href=""
-                data-ng-show="md.isTemplate != 's'"
-                data-ng-href="catalog.search#/{{(md.draft == 'y')?'metadraf':'metadata'}}/{{md.getUuid()}}"
-                title="{{md.abstract}}">{{md.title || md.defaultTitle}}</a>
+                 data-ng-show="md.isTemplate == 'n'"
+                 data-ng-href="catalog.search#/{{(md.draft == 'y')?'metadraf':'metadata'}}/{{md.getUuid()}}"
+                 title="{{md.abstract}}">{{md.title || md.defaultTitle}}</a>
+              <a href=""
+                 data-ng-show="md.isTemplate == 'y'"
+                 data-ng-href="catalog.search#/{{(md.draft == 'y')?'metadraf':'metadata'}}/{{md.getUuid()}}"
+                 title="{{md.abstract}}" ng-bind-html="md.title || md.defaultTitle"/>
               <span data-ng-show="md.isTemplate == 's'">{{md.title || md.defaultTitle}}</span>
               <div class="gn-record-details text-muted">
                 <small><span data-translate="">owner</span>:</small>
