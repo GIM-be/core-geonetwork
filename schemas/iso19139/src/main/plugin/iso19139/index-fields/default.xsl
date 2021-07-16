@@ -418,6 +418,10 @@
             <Field name="flanderskeyword" string="{$keyword}" store="true" index="true"/>
           </xsl:if>
 
+          <xsl:if test="$thesaurusName = 'Data.gov.be themes'">
+            <Field name="dataGovKeyword" string="{$keyword}" store="true" index="true"/>
+          </xsl:if>
+
         </xsl:for-each>
 
         <!-- Index thesaurus name to easily search for records

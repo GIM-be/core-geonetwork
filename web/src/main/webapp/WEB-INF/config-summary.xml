@@ -131,6 +131,7 @@
     <facet name="mdActions" indexKey="_mdActions" label="mdActions"/>
     <facet name="fileId" indexKey="fileId" label="fileId"/>
     <facet name="flanderskeyword" indexKey="flanderskeyword" label="flanderskeyword"/>
+    <facet name="dataGovKeyword" indexKey="dataGovKeyword" label="dataGovKeyword"/>
   </facets>
 
   <summaryTypes>
@@ -142,8 +143,7 @@
       <item facet="mdActions"/>
       <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
-      <item facet="sourceCatalog"
-            translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
+      <item facet="sourceCatalog" translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
       <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
       <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
       <item facet="keyword" max="15"/>
@@ -192,6 +192,40 @@
       <item facet="isHarvested" max="2" sortBy="value" translator="apploc:"/>
       <item facet="metadataType" max="3" sortBy="value" translator="apploc:recordType-"/>
 	    <item facet="isPublishedToAll" max="2" sortBy="value" translator="apploc:"/>
+    </summaryType>
+
+    <!-- API faceted search, all facets available -->
+    <summaryType name="all" format="DIMENSION">
+      <item facet="type" translator="codelist:gmd:MD_ScopeCode"/>
+      <item facet="standard" sortBy="value"/>
+      <item facet="standardName" sortBy="value"/>
+      <item facet="mdActions"/>
+      <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
+      <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
+      <item facet="dataGovKeyword" sortBy="value" sortOrder="desc"/>
+      <item facet="sourceCatalog" translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
+      <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
+      <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
+      <item facet="mdStatus" max="10" sortBy="value" translator="db:org.fao.geonet.repository.StatusValueRepository:findOne:int"/>
+      <item facet="isValid" max="3" sortBy="value" translator="apploc:validStatus-"/>
+      <item facet="groupOwner" max="199" sortBy="value" translator="db:org.fao.geonet.repository.GroupRepository:findOne:int"/>
+      <item facet="recordOwner" max="45" sortBy="value"/>
+      <item facet="publishedForGroup" max="199" sortBy="value" translator="db:org.fao.geonet.repository.GroupRepository:findOneByName"/>
+      <item facet="isHarvested" max="2" sortBy="value" translator="apploc:"/>
+      <item facet="metadataType" max="3" sortBy="value" translator="apploc:recordType-"/>
+      <item facet="isPublishedToAll" max="2" sortBy="value" translator="apploc:"/>
+      <item facet="keyword" max="15"/>
+      <item facet="orgName" max="25"/>
+      <item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
+      <item facet="format" max="15" sortBy="value" sortOrder="asc"/>
+      <item facet="spatialRepresentationType"
+            translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
+      <item facet="maintenanceAndUpdateFrequency"
+            translator="codelist:gmd:MD_MaintenanceFrequencyCode"/>
+      <item facet="denominator" sortBy="value" sortOrder="desc"/>
+      <item facet="resolution" sortBy="numValue" sortOrder="desc"/>
+      <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
+      <item facet="inspireThemeWithAc" sortBy="value" sortOrder="asc" max="35"/>
     </summaryType>
 
     <!-- (deprecated) old-style configuration supporting only
