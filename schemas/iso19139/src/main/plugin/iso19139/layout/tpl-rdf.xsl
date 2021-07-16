@@ -697,37 +697,36 @@
               <xsl:variable name="Function" select="gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue"/>
 
               <xsl:choose>
-                <xsl:when test="$Function = ('download', 'offlineAccess', 'order')">
-                  <xsl:choose>
-                    <xsl:when test="starts-with($Protocol, 'WWW:DOWNLOAD-1.0') or $Protocol = 'LINK download-store'">
-                      <xsl:for-each select="$Encoding/dct:format">
-                        <dcat:distribution>
-                          <dcat:Distribution>
-                            <xsl:copy-of select="$Title"/>
-                            <xsl:copy-of select="$Description"/>
-                            <xsl:for-each select="$linkage/gmd:URL">
-                              <dcat:accessURL rdf:resource="{geonet:escapeURI(.)}"/>
-                            </xsl:for-each>
-                            <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
-                            <xsl:copy-of select="$SpatialRepresentationType"/>
-                            <xsl:copy-of select="."/>
-                            <dct:conformsTo>
-                              <dct:Standard>
-                                <dct:title>
-                                  <xsl:value-of select="$Protocol"/>
-                                </dct:title>
-                              </dct:Standard>
-                            </dct:conformsTo>
-                            <xsl:if test="$ResourceCharacterEncoding != ''">
-                              <xsl:copy-of select="$ResourceCharacterEncoding"/>
-                            </xsl:if>
-                          </dcat:Distribution>
-                        </dcat:distribution>
-                      </xsl:for-each>
-                    </xsl:when>
-
-                    <xsl:otherwise>
-                      <xsl:variable name="format">
+                <xsl:when test="normalize-space($Function) = ('download', 'offlineAccess', 'order', '')">
+                  <xsl:if test="starts-with($Protocol, 'WWW:DOWNLOAD-1.0') or $Protocol = 'LINK download-store'">
+                    <xsl:for-each select="$Encoding/dct:format">
+                      <dcat:distribution>
+                        <dcat:Distribution>
+                          <xsl:copy-of select="$Title"/>
+                          <xsl:copy-of select="$Description"/>
+                          <xsl:for-each select="$linkage/gmd:URL">
+                            <dcat:accessURL rdf:resource="{geonet:escapeURI(.)}"/>
+                          </xsl:for-each>
+                          <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
+                          <xsl:copy-of select="$SpatialRepresentationType"/>
+                          <xsl:copy-of select="."/>
+                          <dct:conformsTo>
+                            <dct:Standard>
+                              <dct:title>
+                                <xsl:value-of select="$Protocol"/>
+                              </dct:title>
+                            </dct:Standard>
+                          </dct:conformsTo>
+                          <xsl:if test="$ResourceCharacterEncoding != ''">
+                            <xsl:copy-of select="$ResourceCharacterEncoding"/>
+                          </xsl:if>
+                        </dcat:Distribution>
+                      </dcat:distribution>
+                    </xsl:for-each>
+                  </xsl:if>
+                  <!-- Otherwise -->
+                  <!--
+                   <xsl:variable name="format">
                         <xsl:call-template name="Map-format">
                           <xsl:with-param name="protocol" select="$Protocol"/>
                           <xsl:with-param name="url" select="$linkage/gmd:URL[1]"/>
@@ -737,9 +736,6 @@
                         <dcat:Distribution>
                           <xsl:copy-of select="$Title"/>
                           <xsl:copy-of select="$Description"/>
-                          <xsl:for-each select="$linkage/gmd:URL">
-                            <dcat:accessURL rdf:resource="{geonet:escapeURI(.)}"/>
-                          </xsl:for-each>
                           <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
                           <xsl:copy-of select="$SpatialRepresentationType"/>
                           <xsl:if test="$format != ''">
@@ -764,8 +760,7 @@
                           </xsl:if>
                         </dcat:Distribution>
                       </dcat:distribution>
-                    </xsl:otherwise>
-                  </xsl:choose>
+                   -->
                 </xsl:when>
 
                 <xsl:when test="$Function = ('information', 'search')">
@@ -1222,19 +1217,6 @@
         </xsl:if>
       </xsl:otherwise>
 
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="ResourceLocator" match="gmd:transferOptions/*/gmd:onLine/*/gmd:linkage">
-    <xsl:param name="MetadataLanguage"/>
-    <xsl:param name="ResourceType"/>
-    <xsl:choose>
-      <xsl:when test="$ResourceType = 'dataset' or $ResourceType = 'series'">
-        <dct:title xml:lang="{$MetadataLanguage}">
-          <xsl:value-of select="../gmd:description/gco:CharacterString"/>
-        </dct:title>
-        <dcat:accessURL rdf:resource="{geonet:escapeURI(gmd:URL)}"/>
-      </xsl:when>
     </xsl:choose>
   </xsl:template>
 
