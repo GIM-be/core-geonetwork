@@ -132,6 +132,8 @@
     <facet name="fileId" indexKey="fileId" label="fileId"/>
     <facet name="flanderskeyword" indexKey="flanderskeyword" label="flanderskeyword"/>
     <facet name="dataGovKeyword" indexKey="dataGovKeyword" label="dataGovKeyword"/>
+    <facet name="license" indexKey="license" label="license"/>
+    <facet name="accessRights" indexKey="accessRights" label="accessRights"/>
   </facets>
 
   <summaryTypes>
@@ -201,8 +203,6 @@
       <item facet="standardName" sortBy="value"/>
       <item facet="mdActions"/>
       <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
-      <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
-      <item facet="dataGovKeyword" sortBy="value" sortOrder="desc"/>
       <item facet="sourceCatalog" translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
       <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
       <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
@@ -226,6 +226,10 @@
       <item facet="resolution" sortBy="numValue" sortOrder="desc"/>
       <item facet="inspireTheme" sortBy="value" sortOrder="asc" max="35"/>
       <item facet="inspireThemeWithAc" sortBy="value" sortOrder="asc" max="35"/>
+      <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
+      <item facet="dataGovKeyword" sortBy="value" sortOrder="desc"/>
+      <item facet="license" sortBy="value" sortOrder="desc"/>
+      <item facet="accessRights" sortBy="value" sortOrder="desc"/>
     </summaryType>
 
     <!-- (deprecated) old-style configuration supporting only
