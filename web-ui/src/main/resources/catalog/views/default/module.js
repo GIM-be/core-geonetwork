@@ -245,9 +245,9 @@
           //  $scope.browse = 'cat';
           }
           if ($scope.searchInfo.facet['types'] && $scope.searchInfo.facet['types'].length > 0) {
-            $scope.browseType = 'types';
+            $scope.browseType = 'type';
           } else if ($scope.searchInfo.facet['serviceTypes'] && $scope.searchInfo.facet['serviceTypes'].length > 0) {
-            $scope.browseType = 'serviceTypes';
+            $scope.browseType = 'serviceType';
           }
         }
       });

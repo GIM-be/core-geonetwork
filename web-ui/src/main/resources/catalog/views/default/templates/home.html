@@ -136,11 +136,11 @@
           <span
             data-ng-show="searchInfo.facet['types'].length > 0 && searchInfo.facet['serviceTypes'].length > 0">
             <label data-ng-show="searchInfo.facet['types'].length > 0">
-              <input type="radio" name="browseType" value="types" data-ng-model="browseType"/>
+              <input type="radio" name="browseType" value="type" data-ng-model="browseType"/>
               <span data-translate="">browseTypes</span>
             </label>
             <label data-ng-show="searchInfo.facet['serviceTypes'].length > 0">
-              <input type="radio" name="browseType" value="serviceTypes" data-ng-model="browseType"/>
+              <input type="radio" name="browseType" value="serviceType" data-ng-model="browseType"/>
               <span data-translate="">browseServiceTypes</span>
             </label>
           </span>
@@ -153,13 +153,13 @@
         </h4>
         <div class="row">
           <span data-ng-repeat="(key, facet) in (searchInfo.facet['types'] | orderBy:getStaticTypeOrder)"
-                data-ng-show="browseType === 'types' && facet['@label']"
+                data-ng-show="browseType === 'type' && facet['@label']"
                 class="col-xs-12 col-sm-6 col-md-12 chips-card">
             <div class="badge-result badge-result-type pull-left" data-ng-include="'../../catalog/views/default/templates/showFacet.html'">
             </div>
           </span>
           <span data-ng-repeat="(key, facet) in (searchInfo.facet['serviceTypes'] | orderBy:getStaticTypeOrder)"
-                data-ng-show="browseType === 'serviceTypes' && facet['@label']"
+                data-ng-show="browseType === 'serviceType' && facet['@label']"
                 class="col-xs-12 col-sm-6 col-md-12 chips-card">
             <div class="badge-result badge-result-type pull-left" data-ng-include="'../../catalog/views/default/templates/showFacet.html'">
             </div>
