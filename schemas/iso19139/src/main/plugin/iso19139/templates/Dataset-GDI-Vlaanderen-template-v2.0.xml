@@ -114,7 +114,7 @@
         <gmd:CI_Citation>
           <gmd:title>
             <gco:CharacterString>
-              &lt;strong&gt;Geografische gegevens:&lt;/strong&gt; Sjabloon voor Metadata van Geografische (open) datasets, conform GDI-Vlaanderen Best Practices v2.0
+              &lt;span id="template1">&lt;strong&gt;Geografische gegevens:&lt;/strong&gt; Sjabloon voor Metadata van Geografische (open) datasets, conform GDI-Vlaanderen Best Practices v2.0&lt;/span>
             </gco:CharacterString>
           </gmd:title>
           <gmd:alternateTitle>
