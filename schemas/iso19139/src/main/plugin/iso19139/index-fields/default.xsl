@@ -943,7 +943,7 @@
         <xsl:choose>
           <xsl:when test="$serviceType='Raadpleegdienst'">view</xsl:when>
           <xsl:when test="$serviceType='Downloaddienst'">download</xsl:when>
-          <xsl:otherwise><xsl:select value-of="$serviceType"/></xsl:otherwise>
+          <xsl:otherwise><xsl:value-of select="$serviceType"/></xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
       <Field name="serviceType" string="{$fieldValue}" store="true" index="true"/>

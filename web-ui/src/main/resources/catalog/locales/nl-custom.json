@@ -101,6 +101,7 @@
   "groupIsRequired": "Gelieve een groep te selecteren. Het metadatarecord komt in het beheer van de geselecteerde organisatie.",
   "standardName": "Profiel",
   "browseTypes": "brontypes",
+  "browseBy": "Blader door ",
   "browseServiceTypes": "servicetypes",
   "changelog": "Changelog"
 }
