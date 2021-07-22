@@ -938,8 +938,15 @@
     </xsl:choose>
 
     <xsl:for-each select="gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName">
-      <Field name="serviceType" string="{string(.)}" store="true" index="true"/>
-      <!--Field name="type" string="{string(.)}" store="true" index="true"/-->
+      <xsl:variable name="serviceType" select="normalize-space(string(.))"/>
+      <xsl:variable name="fieldValue">
+        <xsl:choose>
+          <xsl:when test="$serviceType='Raadpleegdienst'">view</xsl:when>
+          <xsl:when test="$serviceType='Downloaddienst'">download</xsl:when>
+          <xsl:otherwise><xsl:select value-of="$serviceType"/></xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <Field name="serviceType" string="{$fieldValue}" store="true" index="true"/>
     </xsl:for-each>
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
