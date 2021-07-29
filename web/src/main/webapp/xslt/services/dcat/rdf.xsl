@@ -133,7 +133,7 @@
         <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0">
           <dct:type>
             <skos:Concept rdf:about="http://purl.org/adms/licencetype/PublicDomain">
-              <skos:prefLabel xml:lang="nl">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="nl">Werk in het publiek domein</skos:prefLabel>
               <skos:prefLabel xml:lang="en">Public domain</skos:prefLabel>
               <skos:prefLabel xml:lang="fr">Public domain</skos:prefLabel>
               <skos:prefLabel xml:lang="de">Public domain</skos:prefLabel>
