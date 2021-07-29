@@ -395,9 +395,7 @@
           </xsl:when>
           <xsl:when test="gmx:Anchor/@xlink:href">
             <xsl:choose>
-              <xsl:when test="gmx:Anchor/@xlink:href = (
-              'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations',
-              'https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')">
+              <xsl:when test="gmx:Anchor/@xlink:href = ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations','https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')">
                 <dct:accessRights>
                   <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">
                     <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>

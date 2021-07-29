@@ -529,6 +529,15 @@
         </xsl:otherwise>
       </xsl:choose>
 
+      <xsl:choose>
+        <xsl:when test="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor [@xlink:href = ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations','https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')]">
+          <Field name="accessRights" string="publiek" store="true" index="true"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <Field name="accessRights" string="niet publiek" store="true" index="true"/>
+        </xsl:otherwise>
+      </xsl:choose>
+
 
       <!-- Add an extra value to the status codelist to indicate all
       non obsolete records -->
