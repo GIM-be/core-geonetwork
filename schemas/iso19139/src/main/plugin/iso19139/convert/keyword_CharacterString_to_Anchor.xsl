@@ -18,6 +18,7 @@
     <path><xsl:value-of select="'../thesauri-AIV/theme/inspire-theme.rdf'"/></path>
     <path><xsl:value-of select="'../thesauri-AIV/theme/PriorityDataset.rdf'"/></path>
     <path><xsl:value-of select="'../thesauri-AIV/theme/SpatialScope.rdf'"/></path>
+    <path><xsl:value-of select="'../thesauri-AIV/theme/datatheme.rdf'"/></path>
     <path><xsl:value-of select="'../thesauri-AIV/place/GDI-Vlaanderenregios.rdf'"/></path>
   </xsl:variable>
 
@@ -58,100 +59,82 @@
 
   <xsl:template name="MapTopicCatToDataGov">
     <xsl:param name="TopicCategory" as="xs:string"/>
-    <xsl:variable name="thes" select="'http://vocab.belgif.be/auth/datatheme/'"/>
-    <xsl:variable name="theme">
-      <dcat:theme>
-        <skos:Concept>
-          <xsl:choose>
-            <xsl:when test="$TopicCategory = 'farming'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'biota'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'boundaries'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'climatologyMeteorologyAtmosphere'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'economy'">
-              <xsl:attribute name="rdf:about" select="concat($thes, 'ECON')"/>
-              <skos:prefLabel xml:lang="nl">Economie en financiën</skos:prefLabel>
-              <skos:prefLabel xml:lang="en">Economy and finance</skos:prefLabel>
-              <skos:prefLabel xml:lang="de">Wirtschaft und Finanzen</skos:prefLabel>
-              <skos:prefLabel xml:lang="fr">Économie et finances</skos:prefLabel>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'elevation'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'environment'">
-              <xsl:attribute name="rdf:about" select="concat($thes, 'ENVI')"/>
-              <skos:prefLabel xml:lang="en">Environment</skos:prefLabel>
-              <skos:prefLabel xml:lang="fr">Environnement</skos:prefLabel>
-              <skos:prefLabel xml:lang="nl">Milieu</skos:prefLabel>
-              <skos:prefLabel xml:lang="de">Umwelt</skos:prefLabel>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'geoscientificInformation'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'health'">
-              <xsl:attribute name="rdf:about" select="concat($thes, 'HEAL')"/>
-              <skos:prefLabel xml:lang="de">Gesundheit</skos:prefLabel>
-              <skos:prefLabel xml:lang="nl">Gezondheid</skos:prefLabel>
-              <skos:prefLabel xml:lang="en">Health</skos:prefLabel>
-              <skos:prefLabel xml:lang="fr">Santé</skos:prefLabel>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'imageryBaseMapsEarthCover'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'intelligenceMilitary'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'inlandWaters'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'location'">
-              <xsl:attribute name="rdf:about" select="concat($thes, 'REGI')"/>
-              <skos:prefLabel xml:lang="fr">Gouvernement et secteur public</skos:prefLabel>
-              <skos:prefLabel xml:lang="en">Government and public sector</skos:prefLabel>
-              <skos:prefLabel xml:lang="nl">Overheid en publieke sector</skos:prefLabel>
-              <skos:prefLabel xml:lang="de">Regierung und öffentlicher Sektor</skos:prefLabel>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'oceans'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'planningCadastre'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'society'">
-              <xsl:attribute name="rdf:about" select="concat($thes, 'SOCI')"/>
-              <skos:prefLabel xml:lang="nl">Bevolking en samenleving</skos:prefLabel>
-              <skos:prefLabel xml:lang="de">Bevölkerung und Gesellschaft</skos:prefLabel>
-              <skos:prefLabel xml:lang="en">Population and society</skos:prefLabel>
-              <skos:prefLabel xml:lang="fr">Population et société</skos:prefLabel>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'structure'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'transportation'">
-              <xsl:attribute name="rdf:about" select="concat($thes, 'TRAN')"/>
-              <skos:prefLabel xml:lang="en">Transport</skos:prefLabel>
-              <skos:prefLabel xml:lang="fr">Transports</skos:prefLabel>
-              <skos:prefLabel xml:lang="de">Verkehr</skos:prefLabel>
-              <skos:prefLabel xml:lang="nl">Vervoer</skos:prefLabel>
-            </xsl:when>
-            <xsl:when test="$TopicCategory = 'utilitiesCommunication'">
-              <xsl:value-of select="''"/>
-            </xsl:when>
-          </xsl:choose>
-          <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
-        </skos:Concept>
-      </dcat:theme>
+    <xsl:variable name="the" select="'http://vocab.belgif.be/auth/datatheme'"/>
+    <xsl:variable name="govTheme">
+      <xsl:choose>
+        <xsl:when test="$TopicCategory = 'farming'">
+          <xsl:value-of select="'AGRI'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'biota'">
+          <xsl:value-of select="'ENVI'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'boundaries'">
+          <xsl:value-of select="''"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'climatologyMeteorologyAtmosphere'">
+          <xsl:value-of select="'ENVI'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'economy'">
+          <xsl:value-of select="'ECON'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'elevation'">
+          <xsl:value-of select="'ENVI'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'environment'">
+          <xsl:value-of select="'ENVI'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'geoscientificInformation'">
+          <xsl:value-of select="'TECH'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'health'">
+          <xsl:value-of select="'HEAL'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'imageryBaseMapsEarthCover'">
+          <xsl:value-of select="'ENVI'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'intelligenceMilitary'">
+          <xsl:value-of select="''"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'inlandWaters'">
+          <xsl:value-of select="'ENVI'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'location'">
+          <xsl:value-of select="'ENVI'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'oceans'">
+          <xsl:value-of select="'ENVI'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'planningCadastre'">
+          <xsl:value-of select="'ENVI'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'society'">
+          <xsl:value-of select="'SOCI'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'structure'">
+          <xsl:value-of select="''"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'transportation'">
+          <xsl:value-of select="'TRAN'"/>
+        </xsl:when>
+        <xsl:when test="$TopicCategory = 'utilitiesCommunication'">
+          <xsl:value-of select="''"/>
+        </xsl:when>
+      </xsl:choose>
     </xsl:variable>
 
-    <xsl:if test="$theme/dcat:theme/skos:Concept/@rdf:about">
-      <xsl:copy-of select="$theme"/>
+    <xsl:if test="$govTheme != ''">
+      <dcat:theme>
+        <skos:Concept>
+          <xsl:attribute name="rdf:about" select="concat($the, '/', $govTheme)"/>
+          <xsl:for-each select="$thesauri/thesausus[@about = $the]/skos:Concept[@rdf:about = concat($the, '/', $govTheme)]/skos:prefLabel">
+            <xsl:element name="skos:prefLabel">
+              <xsl:attribute name="xml:lang" select="@xml:lang"/>
+              <xsl:value-of select="string()"/>
+            </xsl:element>
+          </xsl:for-each>
+          <skos:inScheme rdf:resource="{$the}"/>
+        </skos:Concept>
+      </dcat:theme>
     </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
