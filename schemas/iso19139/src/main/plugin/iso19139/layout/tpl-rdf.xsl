@@ -89,6 +89,7 @@
               cdata-section-elements="locn:geometry" />
 
   <xsl:include href="../convert/keyword_CharacterString_to_Anchor.xsl"/>
+  <xsl:include href="../convert/TopicCatToDataGov.xsl"/>
 
   <!--
     The current specifications for the core and extended GeoDCAT-AP profiles are available on the Joinup collaboration platform:
@@ -1577,7 +1578,7 @@
       <xsl:value-of select="normalize-space(gmd:MD_TopicCategoryCode)"/>
     </xsl:param>
     <xsl:param name="DataGovTheme">
-      <xsl:call-template name="MapTopicCatToDataGov">
+      <xsl:call-template name="MapTopicCatToDataGovTheme">
         <xsl:with-param name="TopicCategory" select="$TopicCategory"/>
       </xsl:call-template>
     </xsl:param>

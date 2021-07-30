@@ -40,6 +40,7 @@
   <xsl:include href="../convert/functions.xsl"/>
   <xsl:include href="../../../xsl/utils-fn.xsl"/>
   <xsl:include href="inspire-util.xsl" />
+  <xsl:include href="../convert/TopicCatToDataGov.xsl"/>
 
   <!-- This file defines what parts of the metadata are indexed by Lucene
        Searches can be conducted on indexes defined here.
@@ -90,6 +91,26 @@
   <!-- The main metadata language -->
   <xsl:variable name="isoLangId">
     <xsl:call-template name="langId19139"/>
+  </xsl:variable>
+
+  <xsl:variable name="lang2Char">
+    <xsl:choose>
+      <xsl:when test="ends-with($isoLangId,'dut')">
+        <xsl:value-of select="'nl'"/>
+      </xsl:when>
+      <xsl:when test="ends-with($isoLangId,'fre')">
+        <xsl:value-of select="'fr'"/>
+      </xsl:when>
+      <xsl:when test="ends-with($isoLangId,'eng')">
+        <xsl:value-of select="'en'"/>
+      </xsl:when>
+      <xsl:when test="ends-with($isoLangId,'ger')">
+        <xsl:value-of select="'de'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="'nl'"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:variable>
 
   <xsl:variable name="lowercase">abcdefghijklmnopqrstuvwxyz</xsl:variable>
@@ -1163,6 +1184,19 @@
         <Field name="license" string="Modellicentie voor gratis hergebruik" store="true" index="true"/>
       </xsl:when>
     </xsl:choose>
+
+    <!-- Index datagov theme -->
+    <xsl:for-each select="gmd:identificationInfo/*/gmd:topicCategory">
+      <xsl:variable name="dataGovTheme">
+        <xsl:call-template name="MapTopicCatToDataGovThemeTitle">
+          <xsl:with-param name="TopicCategory" select="normalize-space(gmd:MD_TopicCategoryCode)"/>
+          <xsl:with-param name="lang" select="$lang2Char"/>
+        </xsl:call-template>
+      </xsl:variable>
+      <xsl:if test="normalize-space($dataGovTheme) != ''">
+        <Field name="dataGovKeyword" string="{$dataGovTheme}" store="true" index="true"/>
+      </xsl:if>
+    </xsl:for-each>
   </xsl:template>
 
 
