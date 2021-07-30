@@ -203,23 +203,29 @@
         </xsl:for-each>
 
         <xsl:variable name="revisionSortDate">
-          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision']/gmd:date[(gco:Date|gco:DateTime)!='' and not(contains(gco:Date|gco:DateTime,'1900') or contains(gco:Date|gco:DateTime,'1753'))]">
             <xsl:sort select="." order="descending"/>
-            <xsl:if test="position()=1"><xsl:value-of select="string(gco:Date|gco:DateTime)"/></xsl:if>
+            <xsl:if test="position()=1">
+              <xsl:value-of select="string(gco:Date|gco:DateTime)"/>
+            </xsl:if>
           </xsl:for-each>
         </xsl:variable>
 
         <xsl:variable name="creationSortDate">
-          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date[(gco:Date|gco:DateTime)!='' and not(contains(gco:Date|gco:DateTime,'1900') or contains(gco:Date|gco:DateTime,'1753'))]">
             <xsl:sort select="." order="descending"/>
-            <xsl:if test="position()=1"><xsl:value-of select="string(gco:Date|gco:DateTime)"/></xsl:if>
+            <xsl:if test="position()=1">
+              <xsl:value-of select="string(gco:Date|gco:DateTime)"/>
+            </xsl:if>
           </xsl:for-each>
         </xsl:variable>
 
         <xsl:variable name="publicationSortDate">
-          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date[(gco:Date|gco:DateTime)!='' and not(contains(gco:Date|gco:DateTime,'1900') or contains(gco:Date|gco:DateTime,'1753'))]">
             <xsl:sort select="." order="descending"/>
-            <xsl:if test="position()=1"><xsl:value-of select="string(gco:Date|gco:DateTime)"/></xsl:if>
+            <xsl:if test="position()=1">
+              <xsl:value-of select="string(gco:Date|gco:DateTime)"/>
+            </xsl:if>
           </xsl:for-each>
         </xsl:variable>
 
@@ -238,6 +244,11 @@
               <Field name="_sortDate" string="{$creationSortDate}" store="true" index="true"/>
             </xsl:if>
           </xsl:if>
+        </xsl:if>
+
+        <xsl:if test="(string-length(normalize-space($publicationSortDate)) + string-length(normalize-space($revisionSortDate)) + string-length(normalize-space($creationSortDate)))=0">
+          <Field name="sortDate" string="-1" store="true" index="true"/>
+          <Field name="_sortDate" string="-1" store="true" index="true"/>
         </xsl:if>
 
         <xsl:for-each
