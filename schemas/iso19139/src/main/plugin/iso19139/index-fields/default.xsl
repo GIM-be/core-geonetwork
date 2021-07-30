@@ -92,6 +92,9 @@
     <xsl:call-template name="langId19139"/>
   </xsl:variable>
 
+  <xsl:variable name="lowercase">abcdefghijklmnopqrstuvwxyz</xsl:variable>
+  <xsl:variable name="uppercase">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
+
   <!-- ========================================================================================= -->
   <xsl:template match="/">
     <Document locale="{$isoLangId}">
@@ -1110,6 +1113,56 @@
              string="{util:getCodelistTranslation(name(*), string(*/@codeListValue), string($isoLangId))}"
              store="true" index="true"/>
     </xsl:for-each>
+
+    <!-- Index licenses -->
+    <xsl:variable name="licensesConstraintsAnchor" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/gmx:Anchor|
+                                                             gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/gmx:Anchor"/>
+    <xsl:variable name="licensesConstraintsCharacterString" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/gco:CharacterString|
+                                                                      gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString"/>
+    <xsl:variable name="modelLicencieKeywords">
+      <license>
+        <title>Modellicentie voor gratis hergebruik</title>
+        <keyword>modellicentie-gratis-hergebruik</keyword>
+        <keyword>modellicentie_gratis_hergebruik</keyword>
+      </license>
+      <license>
+        <title>Onvoorwaardelijk hergebruik</title>
+        <keyword>onvoorwaardelijk-hergebruik</keyword>
+        <keyword>onvoorwaardelijk_hergebruik</keyword>
+      </license>
+      <license>
+        <title>Modellicentie voor hergebruik tegen vergoeding</title>
+        <keyword>modellicentie-hergebruik-tegen-vergoeding</keyword>
+        <keyword>modellicentie_hergebruik_tegen_vergoeding</keyword>
+      </license>
+      <license>
+        <title>Creative Commons Zero verklaring</title>
+        <keyword>creative-commons-zero-verklaring</keyword>
+        <keyword>creative_commons_zero_verklaring</keyword>
+        <keyword>cc0</keyword>
+      </license>
+    </xsl:variable>
+    <xsl:variable name="modelLicencie">
+      <xsl:for-each select="$licensesConstraintsAnchor">
+        <xsl:variable name="currentUrl" select="translate(@xlink:href, $uppercase, $lowercase)"/>
+        <xsl:for-each select="$modelLicencieKeywords/license/keyword">
+          <xsl:if test="contains($currentUrl, string())">
+            <license>
+              <xsl:value-of select="string(../title)"/>
+            </license>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:for-each>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="$modelLicencie and normalize-space($modelLicencie) != ''">
+        <Field name="license" string="{$modelLicencie/license[1]}" store="true" index="true"/>
+      </xsl:when>
+      <xsl:when test="$licensesConstraintsCharacterString[contains(., 'Gratis Open Data licentie')]">
+        <Field name="license" string="Modellicentie voor gratis hergebruik" store="true" index="true"/>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
 
