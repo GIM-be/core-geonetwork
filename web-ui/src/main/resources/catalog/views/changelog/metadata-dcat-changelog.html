@@ -17,11 +17,20 @@
     <span>See also <a href="main-changelog.html">Main changelog</a></span>
   </div>
 
-  <section id="wip">
+  <section id="02/08/2021">
     <ol>
       <li>Add revision date, create date, publication date and access rights values to the metadata index detail</li>
       <li>GeoDCAT conversion: Map topic category to dcat:theme data gov vocabulary</li>
       <li>Translate license types vocabulary</li>
+      <li>Index the following fields for ISO 19139 metadata
+        <ol>
+          <li>Access Rights (publiek/niet publiek)</li>
+          <li>License</li>
+          <li>Mapped ISO topic category to data.gov theme</li>
+        </ol>
+      </li>
+      <li>Fix harvester: dcat:accessService was lost during the harvesting</li>
+      <li>Fix sometimes duplicated dct:accessRights in ISO19139 to GeoDCAT RDF export</li>
     </ol>
   </section>
 

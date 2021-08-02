@@ -103,5 +103,6 @@
   "browseTypes": "brontypes",
   "browseBy": "Blader door ",
   "browseServiceTypes": "servicetypes",
-  "changelog": "Changelog"
+  "changelog": "Changelog",
+  "searchAlicence": "Selecteer een licentie..."
 }
