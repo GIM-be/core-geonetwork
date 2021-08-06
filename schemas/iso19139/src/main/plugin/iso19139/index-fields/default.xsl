@@ -451,6 +451,9 @@
           <!-- If the keyword come from "GDI-Vlaanderen Trefwoorden" thesaurus, index it under flanderskeyword -->
           <xsl:if test="$thesaurusName = 'GDI-Vlaanderen Trefwoorden'">
             <Field name="flanderskeyword" string="{$keyword}" store="true" index="true"/>
+            <xsl:if test="translate($keyword, $uppercase, $lowercase) = ('vlaamse open data', 'lijst m&amp;r inspire', 'toegevoegd gdi-vl')">
+              <Field name="vlStatus" string="{$keyword}" store="true" index="true"/>
+            </xsl:if>
           </xsl:if>
 
           <xsl:if test="$thesaurusName = 'Data.gov.be themes'">
