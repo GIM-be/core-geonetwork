@@ -134,6 +134,7 @@
     <facet name="dataGovKeyword" indexKey="dataGovKeyword" label="dataGovKeyword"/>
     <facet name="license" indexKey="license" label="license"/>
     <facet name="accessRights" indexKey="accessRights" label="accessRights"/>
+    <facet name="vlStatus" indexKey="vlStatus" label="vlStatus"/>
   </facets>
 
   <summaryTypes>
@@ -230,6 +231,7 @@
       <item facet="dataGovKeyword" sortBy="value" sortOrder="desc"/>
       <item facet="license" sortBy="value" sortOrder="desc"/>
       <item facet="accessRights" sortBy="value" sortOrder="desc"/>
+      <item facet="vlStatus" sortBy="value" sortOrder="desc"/>
     </summaryType>
 
     <!-- (deprecated) old-style configuration supporting only
