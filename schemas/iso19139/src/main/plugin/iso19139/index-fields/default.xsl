@@ -116,6 +116,9 @@
   <xsl:variable name="lowercase">abcdefghijklmnopqrstuvwxyz</xsl:variable>
   <xsl:variable name="uppercase">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
 
+  <xsl:variable name="isDataset" select="count(gmd:MD_Metadata/gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0
+                                           or count(gmd:MD_Metadata/gmd:hierarchyLevel) = 0"/>
+
   <!-- ========================================================================================= -->
   <xsl:template match="/">
     <Document locale="{$isoLangId}">
@@ -940,11 +943,6 @@
     <!-- Metadata type  -->
 
     <!-- Metadata on maps -->
-    <xsl:variable name="isDataset"
-                  select="
-                  count(gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0 or
-                  count(gmd:hierarchyLevel) = 0"/>
-
     <xsl:variable name="isMapDigital" select="count(gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/
                         gmd:presentationForm[gmd:CI_PresentationFormCode/@codeListValue = 'mapDigital']) > 0"/>
     <xsl:variable name="isStatic" select="count(gmd:distributionInfo/gmd:MD_Distribution/
@@ -1255,6 +1253,43 @@
       <Field name="{$fieldPrefix}Uuid" string="{string(.)}" store="true" index="true"/>
       <Field name="{$fieldPrefix}RoleAndUuid" string="{$role}|{string(.)}" store="true" index="true"/>
     </xsl:for-each>
+
+    <xsl:variable name="userValue" select="if (normalize-space($individualName) != '')
+                                             then normalize-space($individualName)
+                                             else normalize-space($orgName)"/>
+
+    <xsl:if test="name(..) != 'gmd:contact' and $userValue != ''">
+      <xsl:choose>
+        <xsl:when test="$isDataset">
+          <xsl:choose>
+            <xsl:when test="$role = 'owner'">
+              <Field name="dataOwner" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+            <xsl:when test="$role = 'distributor'">
+              <Field name="dataDistributor" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+            <xsl:when test="$role = 'pointOfContact'">
+              <Field name="dataContactPoint" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+            <xsl:when test="$role = 'publisher'">
+              <Field name="dataPublisher" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:when>
+
+        <xsl:otherwise>
+          <xsl:choose>
+            <xsl:when test="$role = 'pointOfContact'">
+              <Field name="dataContactPoint" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+            <xsl:when test="$role = 'custodian'">
+              <Field name="dataPublisher" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+
   </xsl:template>
 
   <!-- ========================================================================================= -->

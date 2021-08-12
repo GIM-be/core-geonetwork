@@ -135,6 +135,10 @@
     <facet name="license" indexKey="license" label="license"/>
     <facet name="accessRights" indexKey="accessRights" label="accessRights"/>
     <facet name="vlStatus" indexKey="vlStatus" label="vlStatus"/>
+    <facet name="dataOwner" indexKey="dataOwner" label="dataOwner"/>
+    <facet name="dataDistributor" indexKey="dataDistributor" label="dataDistributor"/>
+    <facet name="dataContactPoint" indexKey="dataContactPoint" label="dataContactPoint"/>
+    <facet name="dataPublisher" indexKey="dataPublisher" label="dataPublisher"/>
   </facets>
 
   <summaryTypes>
@@ -232,6 +236,10 @@
       <item facet="license" sortBy="value" sortOrder="desc"/>
       <item facet="accessRights" sortBy="value" sortOrder="desc"/>
       <item facet="vlStatus" sortBy="value" sortOrder="desc"/>
+      <item facet="dataOwner" sortBy="value" sortOrder="desc"/>
+      <item facet="dataDistributor" sortBy="value" sortOrder="desc"/>
+      <item facet="dataContactPoint" sortBy="value" sortOrder="desc"/>
+      <item facet="dataPublisher" sortBy="value" sortOrder="desc"/>
     </summaryType>
 
     <!-- (deprecated) old-style configuration supporting only
