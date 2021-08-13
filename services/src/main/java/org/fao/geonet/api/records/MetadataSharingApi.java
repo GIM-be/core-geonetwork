@@ -528,6 +528,11 @@ public class MetadataSharingApi {
 
         SharingResponse sharingResponse = new SharingResponse();
         sharingResponse.setOwner(userSession.getUserId());
+        Integer owner = metadata.getSourceInfo().getOwner();
+        if (owner != null) {
+            sharingResponse.setOwner(String.valueOf(owner));
+        }
+
         Integer groupOwner = metadata.getSourceInfo().getGroupOwner();
         if (groupOwner != null) {
             sharingResponse.setGroupOwner(String.valueOf(groupOwner));
