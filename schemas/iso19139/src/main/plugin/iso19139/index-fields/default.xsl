@@ -1290,6 +1290,10 @@
       </xsl:choose>
     </xsl:if>
 
+    <xsl:if test="normalize-space($orgName) != ''">
+      <Field name="dataOrgName" string="{normalize-space($orgName)}" store="true" index="true"/>
+    </xsl:if>
+
   </xsl:template>
 
   <!-- ========================================================================================= -->
