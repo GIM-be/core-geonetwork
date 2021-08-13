@@ -140,6 +140,8 @@
     <facet name="dataContactPoint" indexKey="dataContactPoint" label="dataContactPoint"/>
     <facet name="dataPublisher" indexKey="dataPublisher" label="dataPublisher"/>
     <facet name="dataOrgName" indexKey="dataOrgName" label="dataOrgName"/>
+    <facet name="lifeCycle" indexKey="lifeCycle" label="lifeCycle"/>
+    <facet name="developmentState" indexKey="developmentState" label="developmentState"/>
   </facets>
 
   <summaryTypes>
@@ -242,6 +244,8 @@
       <item facet="dataContactPoint" sortBy="value" sortOrder="desc"/>
       <item facet="dataPublisher" sortBy="value" sortOrder="desc"/>
       <item facet="dataOrgName" sortBy="value" sortOrder="desc"/>
+      <item facet="lifeCycle" sortBy="value" sortOrder="desc"/>
+      <item facet="developmentState" sortBy="value" sortOrder="desc"/>
     </summaryType>
 
     <!-- (deprecated) old-style configuration supporting only
