@@ -68,7 +68,7 @@ attached it to the metadata for data.
               <gco:Boolean>true</gco:Boolean>
             </gmd:includedWithDataset>
             <gmd:featureCatalogueCitation uuidref="{$uuidref}"
-                                          xlink:href="{$siteUrl}csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidref}"/>/>
+                                          xlink:href="{$siteUrl}csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidref}"/>
           </gmd:MD_FeatureCatalogueDescription>
         </gmd:contentInfo>
       </xsl:if>
@@ -94,7 +94,7 @@ attached it to the metadata for data.
 
   <xsl:template match="gmd:featureCatalogueCitation[@uuidref=$featureCatUuid]" priority="100">
     <gmd:featureCatalogueCitation uuidref="{$uuidref}"
-                                  xlink:href="{$siteUrl}csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidref}"/>/>
+                                  xlink:href="{$siteUrl}csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id={$uuidref}"/>
   </xsl:template>
 
   <xsl:template match="extra" priority="2"/>
