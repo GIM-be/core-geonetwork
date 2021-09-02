@@ -46,9 +46,7 @@ import org.fao.geonet.domain.LinkStatus;
 import org.fao.geonet.domain.Source;
 import org.fao.geonet.domain.UiSetting;
 import org.fao.geonet.domain.User;
-import org.fao.geonet.kernel.DataManager;
-import org.fao.geonet.kernel.SchemaManager;
-import org.fao.geonet.kernel.ThesaurusManager;
+import org.fao.geonet.kernel.*;
 import org.fao.geonet.kernel.search.CodeListTranslator;
 import org.fao.geonet.kernel.search.LuceneSearcher;
 import org.fao.geonet.kernel.search.Translator;
@@ -964,5 +962,53 @@ public final class XslUtil {
         }
 
         return languageLabel;
+    }
+
+    public static String getKeywordValueByUri(String uri, String thesaurusId, String langCode) {
+        if (StringUtils.isEmpty(thesaurusId)) {
+            return "";
+        }
+
+        try {
+            ApplicationContext applicationContext = ApplicationContextHolder.get();
+            ThesaurusManager thesaurusManager = applicationContext.getBean(ThesaurusManager.class);
+
+            thesaurusId = thesaurusId.replaceAll("geonetwork.thesaurus.", "");
+            Thesaurus thesaurus = thesaurusManager.getThesaurusByName(thesaurusId);
+
+            if (thesaurus != null) {
+                KeywordBean keywordBean = thesaurus.getKeyword(uri, langCode);
+                if (keywordBean != null) {
+                    return keywordBean.getPreferredLabel(langCode);
+                }
+            }
+            return "";
+        } catch (Exception ex) {
+        }
+        return "";
+    }
+
+    public static String getKeywordUri(String keyword, String thesaurusId, String langCode) {
+        if (StringUtils.isEmpty(thesaurusId)) {
+            return "";
+        }
+
+        try {
+            ApplicationContext applicationContext = ApplicationContextHolder.get();
+            ThesaurusManager thesaurusManager = applicationContext.getBean(ThesaurusManager.class);
+
+            thesaurusId = thesaurusId.replaceAll("geonetwork.thesaurus.", "");
+            Thesaurus thesaurus = thesaurusManager.getThesaurusByName(thesaurusId);
+
+            if (thesaurus != null) {
+                KeywordBean keywordBean = thesaurus.getKeywordWithLabel(keyword, langCode);
+                if (keywordBean != null) {
+                    return keywordBean.getUriCode();
+                }
+            }
+            return "";
+        } catch (Exception ex) {
+        }
+        return "";
     }
 }

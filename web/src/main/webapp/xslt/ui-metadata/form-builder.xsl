@@ -995,7 +995,7 @@
                           <xsl:variable name="xpath" select="substring-after(., 'xpath::')"/>
                           <xsl:attribute name="{name(.)}">
                             <saxon:call-template name="{concat('evaluate-', $schema)}">
-                              <xsl:with-param name="base" select="$metadata"/>
+                              <xsl:with-param name="base" select="$metadata//*[gn:element/@ref = $parentEditInfo/@ref]"/>
                               <xsl:with-param name="in"
                                               select="concat('/../', $xpath)"/>
                             </saxon:call-template>
@@ -1427,6 +1427,7 @@
   -->
   <xsl:template mode="render-for-field-for-attribute" match="@*">
     <xsl:param name="ref"/>
+    <xsl:param name="class" select="''"/>
 
     <xsl:variable name="attributeName" select="name()"/>
     <xsl:variable name="attributeValue" select="."/>
@@ -1442,12 +1443,12 @@
 
     <xsl:variable name="deletable" select="not($isDefaultView and $attributeName = ('xlink:href','codeSpace'))"/>
 
-    <div class="form-group gn-attr-{replace($attributeName, ':', '_')}" id="gn-attr-{$fieldName}">
+    <div class="form-group {$class} gn-attr-{replace($attributeName, ':', '_')}" id="gn-attr-{$fieldName}">
       <label class="col-sm-2">
         <xsl:if test="$attributeName = 'xlink:href'">
           <i class="fa fa-link fa-fw"/>
         </xsl:if>
-        <xsl:value-of select="gn-fn-metadata:getLabel($schema, $attributeName, $labels)/label"/>
+        <xsl:value-of select="gn-fn-metadata:getLabel($schema, $attributeName, $labels, name(..), '', gn-fn-metadata:getXPath(.))/label"/>
       </label>
       <div class="{if ($deletable) then 'col-sm-9' else 'col-sm-10'}">
         <xsl:if test="$directive">
