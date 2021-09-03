@@ -270,11 +270,17 @@
              scope.transformations.split(',') : [scope.transformations];
              scope.maxTagsLabel = scope.maxTags || '∞';
 
+             //examples;
+             //hnap:{"eng":"#eng","fre":"#fra"}
+             //iso19139:{"eng":"#EN","fre":"#FR","ger":"#DE","chi":"#ZH","ara":"#AR","spa":"#ES","rus":"#RU"}
+             scope.langConversion = JSON.parse(scope.lang); //dictionary, as above
+
+             // ["eng","fre"]   OR ["eng","fre","ger","chi","ara","spa", "rus"]
+             scope.baseLangs = _.keys(scope.langConversion);
+
              //Get langs of metadata
-             var langs = [];
-             for (var p in JSON.parse(scope.lang)) {
-               langs.push(p);
-             }
+             var langs = scope.baseLangs;  // ["eng","fre"]   OR ["eng","fre","ger","chi","ara","spa", "rus"]
+
              scope.mainLang = langs[0];
              scope.langs = langs.join(',');
 
@@ -493,11 +499,15 @@
              };
 
              var getSnippet = function() {
-               gnThesaurusService
-                .getXML(scope.thesaurusKey,
-               getKeywordIds(), scope.currentTransformation, scope.langs,
-                   scope.textgroupOnly, scope.wrapper).then(
-               function(data) {
+               gnThesaurusService.getXML(
+                 scope.thesaurusKey,
+                 getKeywordIds(),
+                 scope.currentTransformation,
+                 scope.langs,
+                 scope.textgroupOnly,
+                 scope.langConversion,
+                 scope.wrapper
+               ).then(function(data) {
                  scope.snippet = data;
                });
              };

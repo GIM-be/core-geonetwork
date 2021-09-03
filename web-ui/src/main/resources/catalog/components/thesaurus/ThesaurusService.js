@@ -250,19 +250,17 @@
                   params.wrapper = wrapper;
                 }
                 var url = gnUrlUtils.append(
-                '../api/registries/vocabularies/keyword',
-                    gnUrlUtils.toKeyValue(params)
-                    );
-                $http.get(url, { cache: true }).
-                    success(function(data, status) {
-                      // TODO: could be a global constant ?
-                      var xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>';
-                      defer.resolve(data.replace(xmlDeclaration, ''));
-                    }).
-                    error(function(data, status) {
-                      //                TODO handle error
-                      //                defer.reject(error);
-                    });
+                  '../api/registries/vocabularies/keyword',
+                  gnUrlUtils.toKeyValue(params)
+                );
+                $http.get(url, { cache: true }).success(function(data, status) {
+                  // TODO: could be a global constant ?
+                  var xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>';
+                  defer.resolve(data.replace(xmlDeclaration, ''));
+                }).error(function(data, status) {
+                  // TODO handle error
+                  // defer.reject(error);
+                });
                 return defer.promise;
               },
               /**

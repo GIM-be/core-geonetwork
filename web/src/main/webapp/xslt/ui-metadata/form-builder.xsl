@@ -1427,7 +1427,6 @@
   -->
   <xsl:template mode="render-for-field-for-attribute" match="@*">
     <xsl:param name="ref"/>
-    <xsl:param name="class" select="''"/>
 
     <xsl:variable name="attributeName" select="name()"/>
     <xsl:variable name="attributeValue" select="."/>
@@ -1443,7 +1442,7 @@
 
     <xsl:variable name="deletable" select="not($isDefaultView and $attributeName = ('xlink:href','codeSpace'))"/>
 
-    <div class="form-group {$class} gn-attr-{replace($attributeName, ':', '_')}" id="gn-attr-{$fieldName}">
+    <div class="form-group gn-attr-{replace($attributeName, ':', '_')}" id="gn-attr-{$fieldName}">
       <label class="col-sm-2">
         <xsl:if test="$attributeName = 'xlink:href'">
           <i class="fa fa-link fa-fw"/>
