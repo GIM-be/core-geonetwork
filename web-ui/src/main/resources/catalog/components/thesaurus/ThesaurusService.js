@@ -224,7 +224,9 @@
                * eg. to-iso19139-keyword for default form.
                */
               getXML: function(thesaurus,
-                  keywordUris, transformation, lang, textgroupOnly, originator) {
+                               keywordUris, transformation,
+                               lang, textgroupOnly, langConversion,
+                               wrapper) {
                 // http://localhost:8080/geonetwork/srv/eng/
                 // xml.keyword.get?thesaurus=external.place.regions&id=&
                 // multiple=false&transformation=to-iso19139-keyword&
@@ -233,30 +235,32 @@
                   thesaurus: thesaurus,
                   id: keywordUris instanceof Array ?
                       keywordUris.join(',') : keywordUris || '',
-                  transformation: transformation || 'to-iso19139-keyword',
-                  originator: originator || ''
+                  transformation: transformation || 'to-iso19139-keyword'
                 };
+                if (langConversion) {
+                  params.langMap = JSON.stringify(langConversion);
+                }
                 if (lang) {
                   params.lang = lang;
                 }
                 if (textgroupOnly) {
                   params.textgroupOnly = textgroupOnly;
                 }
+                if (wrapper) {
+                  params.wrapper = wrapper;
+                }
                 var url = gnUrlUtils.append(
-                '../api/registries/vocabularies/keyword',
-                    gnUrlUtils.toKeyValue(params)
-                    );
-                $http.get(url, { cache: true }).
-                    success(function(data, status) {
-                      // TODO: could be a global constant ?
-                      var xmlDeclaration =
-                          '<?xml version="1.0" encoding="UTF-8"?>';
-                      defer.resolve(data.replace(xmlDeclaration, ''));
-                    }).
-                    error(function(data, status) {
-                      //                TODO handle error
-                      //                defer.reject(error);
-                    });
+                  '../api/registries/vocabularies/keyword',
+                  gnUrlUtils.toKeyValue(params)
+                );
+                $http.get(url, { cache: true }).success(function(data, status) {
+                  // TODO: could be a global constant ?
+                  var xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>';
+                  defer.resolve(data.replace(xmlDeclaration, ''));
+                }).error(function(data, status) {
+                  // TODO handle error
+                  // defer.reject(error);
+                });
                 return defer.promise;
               },
               /**

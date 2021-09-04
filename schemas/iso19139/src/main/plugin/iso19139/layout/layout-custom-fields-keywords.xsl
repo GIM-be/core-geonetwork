@@ -59,7 +59,7 @@
     <!--Add all Thesaurus as first block of keywords-->
     <xsl:if test="name(preceding-sibling::*[1]) != name()">
       <xsl:call-template name="addAllThesaurus">
-        <xsl:with-param name="ref" select="../gn:element/@ref"/>
+        <xsl:with-param name="ref" select="concat('_X', ../gn:element/@ref, '_', replace(name(), ':', 'COLON'))"/>
       </xsl:call-template>
     </xsl:if>
 
@@ -171,10 +171,14 @@
 
     <xsl:choose>
       <xsl:when test="$thesaurusConfig">
-
+        <!-- If defined dc:title with xml:lang use it for thesaurus label in the editor -->
+        <xsl:variable name="uiLang2code" select="xslutil:twoCharLangCode($lang, 'en')" />
         <!-- The thesaurus key may be contained in the MD_Identifier field or
           get it from the list of thesaurus based on its title.
           -->
+        <xsl:variable name="thesaurusTitleTranslated" select="$listOfThesaurus/thesaurus[title=$thesaurusTitle]/multilingualTitles/multilingualTitle[lang=$uiLang2code]/title" />
+        <xsl:variable name="thesaurusTitleForEditor" select="if (string($thesaurusTitleTranslated)) then $thesaurusTitleTranslated else $thesaurusTitle" />
+
         <xsl:variable name="thesaurusInternalKey"
                       select="if ($thesaurusIdentifier)
           then $thesaurusIdentifier
@@ -254,7 +258,7 @@
         <div data-gn-keyword-selector="{$widgetMode}"
              data-metadata-id="{$metadataId}"
              data-element-ref="{concat('_X', ../gn:element/@ref, '_replace')}"
-             data-thesaurus-title="{if (($isFlatMode and not($thesaurusConfig/@fieldset)) or $thesaurusConfig/@fieldset = 'false') then $thesaurusTitle else ''}"
+             data-thesaurus-title="{if (($isFlatMode and not($thesaurusConfig/@fieldset)) or $thesaurusConfig/@fieldset = 'false') then $thesaurusTitleForEditor else ''}"
              data-thesaurus-key="{$thesaurusKey}"
              data-keywords="{$keywords}"
              data-transformations="{$transformations}"
@@ -289,8 +293,11 @@
 
   <xsl:template name="addAllThesaurus">
     <xsl:param name="ref"/>
-    <xsl:if test="java:getSettingValue('system/metadata/allThesaurus') = 'true'">
+    <xsl:param name="xpath" select="''" required="no"/>
+    <xsl:param name="keywordList" select="''" required="no"/>
+    <xsl:param name="transformation" select="'to-iso19139-keyword'" required="no"/>
 
+    <xsl:if test="java:getSettingValue('system/metadata/allThesaurus') = 'true'">
 
       <xsl:variable name="thesaurusConfig"
                     as="element()?"
@@ -303,18 +310,19 @@
                               else 'to-iso19139-keyword,to-iso19139-keyword-with-anchor,to-iso19139-keyword-as-xlink'"/>
 
       <br></br>
-      <div
-              data-gn-keyword-selector="tagsinput"
-              data-metadata-id=""
-              data-element-ref="_X{$ref}_gmdCOLONdescriptiveKeywords"
-              data-thesaurus-title="{{{{'selectKeyword' | translate}}}}"
-              data-thesaurus-key="external.none.allThesaurus"
-              data-keywords=""
-              data-transformations="{$transformations}"
-              data-current-transformation="to-iso19139-keyword"
-              data-max-tags="" data-lang="{$metadataOtherLanguagesAsJson}"
-              data-textgroup-only="false"
-              class="">
+      <div data-gn-keyword-selector="tagsinput"
+           data-metadata-id=""
+           data-element-ref="{$ref}"
+           data-element-xpath="{$xpath}"
+           data-thesaurus-title="{{{{'selectKeyword' | translate}}}}"
+           data-thesaurus-key="external.none.allThesaurus"
+           data-keywords="{$keywordList}"
+           data-transformations="{$transformations}"
+           data-current-transformation="{$transformation}"
+           data-max-tags=""
+           data-lang="{$metadataOtherLanguagesAsJson}"
+           data-textgroup-only="false"
+           class="">
       </div>
     </xsl:if>
   </xsl:template>
