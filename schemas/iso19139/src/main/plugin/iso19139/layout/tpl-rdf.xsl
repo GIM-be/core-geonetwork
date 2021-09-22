@@ -1585,8 +1585,31 @@
 
     <xsl:choose>
       <xsl:when test="$DataGovTheme/dcat:theme">
-        <xsl:variable name="hasAlreadyDataGovTheme" select="count(../gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href[. = ('http://vocab.belgif.be/auth/datatheme', 'http://vocab.belgif.be/auth/datatheme/')]) > 0"/>
-        <xsl:if test="not($hasAlreadyDataGovTheme)">
+
+        <xsl:variable name="alreadyAddedGovThemes">
+          <xsl:for-each select="../gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href = ('http://vocab.belgif.be/auth/datatheme', 'http://vocab.belgif.be/auth/datatheme/')]">
+            <xsl:for-each select="gmd:keyword/gmx:Anchor">
+              <theme>
+                <xsl:value-of select="string(@xlink:href)"/>
+              </theme>
+            </xsl:for-each>
+          </xsl:for-each>
+
+          <xsl:for-each select="preceding-sibling::gmd:topicCategory">
+            <xsl:variable name="mapped">
+              <xsl:call-template name="MapTopicCatToDataGovTheme">
+                <xsl:with-param name="TopicCategory" select="normalize-space(gmd:MD_TopicCategoryCode)"/>
+              </xsl:call-template>
+            </xsl:variable>
+            <xsl:if test="$mapped/dcat:theme">
+              <theme>
+                <xsl:value-of select="string($mapped/dcat:theme/skos:Concept/@rdf:about)"/>
+              </theme>
+            </xsl:if>
+          </xsl:for-each>
+        </xsl:variable>
+
+        <xsl:if test="count($alreadyAddedGovThemes/theme[. = $DataGovTheme/dcat:theme/skos:Concept/@rdf:about]) = 0">
           <xsl:copy-of select="$DataGovTheme"/>
         </xsl:if>
       </xsl:when>
