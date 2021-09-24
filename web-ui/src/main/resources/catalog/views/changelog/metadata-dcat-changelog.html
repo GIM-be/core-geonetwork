@@ -8,465 +8,482 @@
 </head>
 <body>
 <div class="container">
-  <h1>Summary</h1>
-  <ul id="summary"></ul>
 
-  <h1>Changelog</h1>
-
-  <div>
-    <span>See also <a href="main-changelog.html">Main changelog</a></span>
+  <div class="summary-container">
+    <h1>Summary</h1>
+    <ul id="summary"></ul>
   </div>
 
-  <section id="03/08/2021">
-    <ol>
-      <li>Add levensfase to the facet: <code>lifeCycle</code></li>
-      <li>Add ontwikkelingstoestand to the facet: <code>developmentState</code></li>
-      <li>Integrate community thesauri keywords pickers to replace current custom-made pickers in editor</li>
-      <li>Fix recommended Keyword validation issue</li>
-      <li>Fix issue where harvested metadata are sometimes not viewable on the harvester node side</li>
-    </ol>
-  </section>
+  <div class="changelog-container">
+    <h1>Changelog</h1>
 
-  <section id="13/08/2021">
-    <ol>
-      <li>Add contact in facet: <code>dataOwner</code>, <code>dataDistributor</code>, <code>dataContactPoint</code>,
-        <code>dataPublisher</code> (Note: the previously existing facets "recordOwner" and "owner" contain information
-        about the actual GeoNetwork editor of the metadata)
-      </li>
-      <li>Add organization in facet <code>dataOrgName</code> that contains the organization name no matter the role</li>
-      <li>Fix validation: Distribution was mandatory for metadata-dcat but should be optional</li>
-    </ol>
-  </section>
+    <div>
+      <span>See also <a href="main-changelog.html">Main changelog</a></span>
+    </div>
 
-  <section id="06/08/2021">
-    <ol>
-      <li>Add 'Statuut' to the facet under the name "vlStatus". Contains the following values:
-        <ul>
-          <li>Toegevoegd GDI-Vl</li>
-          <li>Lijst M&R INSPIRE</li>
-          <li>Metadata GDI-Vl-conform</li>
-        </ul>
-      </li>
-      <li>Fix timezone issue</li>
-    </ol>
-  </section>
+    <section id="wip">
+      <ol>
+        <li>Fix ISO19139 to GeoDCAT conversion
+          <ul>
+            <li>Only gmd:pointOfContact responsible party were used to generate GeoDCAT stakeholders. Now, all the gmd:CI_ResponsibleParty are used</li>
+            <li>Prevent duplicated dcat:theme when there is 2 or more TopicCategories leading to the same data.gov-theme</li>
+          </ul>
+        </li>
+        <li>Rename facet <code>vlStatus</code> to <code>statute</code></li>
+      </ol>
+    </section>
 
-  <section id="02/08/2021">
-    <ol>
-      <li>Add revision date, create date, publication date and access rights values to the metadata index detail</li>
-      <li>GeoDCAT conversion: Map topic category to dcat:theme data gov vocabulary</li>
-      <li>Translate license types vocabulary</li>
-      <li>Index the following fields for ISO 19139 metadata
-        <ul>
-          <li>Access Rights (publiek/niet publiek)</li>
-          <li>License</li>
-          <li>Mapped ISO topic category to data.gov theme</li>
-        </ul>
-      </li>
-      <li>Fix harvester: dcat:accessService was lost during the harvesting</li>
-      <li>Fix sometimes duplicated dct:accessRights in ISO19139 to GeoDCAT RDF export</li>
-    </ol>
-  </section>
+    <section id="03/08/2021">
+      <ol>
+        <li>Add levensfase to the facet: <code>lifeCycle</code></li>
+        <li>Add ontwikkelingstoestand to the facet: <code>developmentState</code></li>
+        <li>Integrate community thesauri keywords pickers to replace current custom-made pickers in editor</li>
+        <li>Fix recommended Keyword validation issue</li>
+        <li>Fix issue where harvested metadata are sometimes not viewable on the harvester node side</li>
+      </ol>
+    </section>
 
-  <section id="16/07/2021">
-    <ol>
-      <li>MVP: Imlement ISO19139 to GeoDCAT conversion</li>
-      <li>Add new facet resultType containing all possible facets values: "all" <br>
-        Exemple URL: <a target="_blank" href="https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all">https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all</a>
-      </li>
-      <li>Add facets for elements:
-        <table class="bullet-table">
-          <tr>
-            <td>dct:accessRights</td>
-            <td>accessRights</td>
-          </tr>
-          <tr>
-            <td>dct:license title</td>
-            <td>license</td>
-          </tr>
-          <tr>
-            <td>dcat:theme and iso data.gov keywords</td>
-            <td>dataGovKeyword</td>
-          </tr>
-        </table>
-      </li>
-    </ol>
-  </section>
+    <section id="13/08/2021">
+      <ol>
+        <li>Add contact in facet: <code>dataOwner</code>, <code>dataDistributor</code>, <code>dataContactPoint</code>,
+          <code>dataPublisher</code> (Note: the previously existing facets "recordOwner" and "owner" contain information
+          about the actual GeoNetwork editor of the metadata)
+        </li>
+        <li>Add organization in facet <code>dataOrgName</code> that contains the organization name no matter the role</li>
+        <li>Fix validation: Distribution was mandatory for metadata-dcat but should be optional</li>
+      </ol>
+    </section>
 
-  <section id="09/07/2021">
-    <ol>
-      <li>Fix accessURL cardinalities</li>
-      <li>Distribution elements are re-ordered upon saving the editor</li>
-      <li>WIP: Implement ISO19139 to GeoDCAT conversion</li>
-    </ol>
-  </section>
+    <section id="06/08/2021">
+      <ol>
+        <li>Add 'Statuut' to the facet under the name "vlStatus". Contains the following values:
+          <ul>
+            <li>Toegevoegd GDI-Vl</li>
+            <li>Lijst M&R INSPIRE</li>
+            <li>Metadata GDI-Vl-conform</li>
+          </ul>
+        </li>
+        <li>Fix timezone issue</li>
+      </ol>
+    </section>
 
-  <section id="02/07/2021">
-    <ol>
-      <li>Fix issue where the mdcat element where not correctly harvested along with the dct:subject</li>
-      <li>Fix record and resource UUID and rdf:about handling. Make it more robust when importing, duplicating and
-        editing a metadata
-      </li>
-      <li>The dct:identifier of a dct:LicenseDocument is now automatically set based on the license document URI and
-        does not appears as a field in the editor default vue
-      </li>
-      <li>Fix typo</li>
-    </ol>
-  </section>
+    <section id="02/08/2021">
+      <ol>
+        <li>Add revision date, create date, publication date and access rights values to the metadata index detail</li>
+        <li>GeoDCAT conversion: Map topic category to dcat:theme data gov vocabulary</li>
+        <li>Translate license types vocabulary</li>
+        <li>Index the following fields for ISO 19139 metadata
+          <ul>
+            <li>Access Rights (publiek/niet publiek)</li>
+            <li>License</li>
+            <li>Mapped ISO topic category to data.gov theme</li>
+          </ul>
+        </li>
+        <li>Fix harvester: dcat:accessService was lost during the harvesting</li>
+        <li>Fix sometimes duplicated dct:accessRights in ISO19139 to GeoDCAT RDF export</li>
+      </ol>
+    </section>
 
-  <section id="25/06/2021">
-    <ol>
-      <li>Implement the RDF export for DCAT native metadata (datasets and services)</li>
-      <li>Fix Issues with DCAT harvester</li>
-      <li>Fix dcat:endpointDescription validation issue</li>
-    </ol>
-  </section>
+    <section id="16/07/2021">
+      <ol>
+        <li>MVP: Imlement ISO19139 to GeoDCAT conversion</li>
+        <li>Add new facet resultType containing all possible facets values: "all" <br>
+          Exemple URL: <a target="_blank" href="https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all">https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all</a>
+        </li>
+        <li>Add facets for elements:
+          <table class="bullet-table">
+            <tr>
+              <td>dct:accessRights</td>
+              <td>accessRights</td>
+            </tr>
+            <tr>
+              <td>dct:license title</td>
+              <td>license</td>
+            </tr>
+            <tr>
+              <td>dcat:theme and iso data.gov keywords</td>
+              <td>dataGovKeyword</td>
+            </tr>
+          </table>
+        </li>
+      </ol>
+    </section>
 
-  <section id="21/06/2021">
-    <ol>
-      <li>When missing, the required "mailto:" prefix on vcard:hasEmail element is now automatically added to the XML
-        when saving, before any validation
-      </li>
-      <li>Fix bug where an XSD validation error would sometimes occurs when saving and quiting the editor causing a
-        metadata to be invalid and unpublished
-      </li>
-      <li>Add the services mdcat extension elements to the Open DCAT editor</li>
-      <li>Add dct:subject element to the XSD</li>
-      <li>Define the "GDI-Vlaanderen-trefwoorden" vocabulary for the dct:subject element (WIP: Multiple thesauri should
-        be accepted in dct:subject. It is only the case for "GDI-Vlaanderen-trefwoorden" currently)
-      </li>
-      <li>Automatically add the "Vlaamse Open data" keyword as a dct:subject when editing a dcat-ap-vl metadata</li>
-      <li>Improve dcat-ap-vl validation rules and update metadata-dcat validation with latest changes</li>
-      <li>When linking a dataset to a service, the services list to pick from is now filtered to only display
-        downloadable services
-      </li>
-    </ol>
-  </section>
+    <section id="09/07/2021">
+      <ol>
+        <li>Fix accessURL cardinalities</li>
+        <li>Distribution elements are re-ordered upon saving the editor</li>
+        <li>WIP: Implement ISO19139 to GeoDCAT conversion</li>
+      </ol>
+    </section>
 
-  <section id="11/06/2021">
-    <ol>
-      <li>Fix ContactPoint cardinality for dcat:Dataset</li>
-      <li>Add dct:rights to default editor view</li>
-      <li>Apply schematron validation rules based on the record profile</li>
-      <li>Hide profile specific extension fields from editor when template profile doesn't match</li>
-      <li>Add templates for DCAT-AP VL records</li>
-      <li>Add validation rules specific to DCAT-AP VL records</li>
-      <li>Enforce "Vlaamse Open Data" dcat:theme on DCAT-AP VL records. (WIP: There is still no way of selecting themes
-        from another vocabulary. data.gov.be theme are still the only one that can be manually selected)
-      </li>
-      <li>Update indexing to index the "Vlaamse Open Data" dcat:theme as a GDI-Vlaanderen trefwoord</li>
-    </ol>
-  </section>
+    <section id="02/07/2021">
+      <ol>
+        <li>Fix issue where the mdcat element where not correctly harvested along with the dct:subject</li>
+        <li>Fix record and resource UUID and rdf:about handling. Make it more robust when importing, duplicating and
+          editing a metadata
+        </li>
+        <li>The dct:identifier of a dct:LicenseDocument is now automatically set based on the license document URI and
+          does not appears as a field in the editor default vue
+        </li>
+        <li>Fix typo</li>
+      </ol>
+    </section>
 
-  <section id="31/05/2021">
-    <ol>
-      <li>Modify index: dcat:CatalogRecord/dct:conformTo is now indexed under standardName field</li>
-      <li>During import, generate a dcat:record if missing and correctly handle UUID if dcat:record present</li>
-      <li>DCAT harvester is now capable of harvesting feed that does not provide dcat:CatalogRecord element</li>
-    </ol>
-  </section>
+    <section id="25/06/2021">
+      <ol>
+        <li>Implement the RDF export for DCAT native metadata (datasets and services)</li>
+        <li>Fix Issues with DCAT harvester</li>
+        <li>Fix dcat:endpointDescription validation issue</li>
+      </ol>
+    </section>
 
-  <section id="26/04/2021">
-    <ol>
-      <li>Update metadata-dcat schema cardinalities</li>
-      <li>Add dcat:CatalogRecord element</li>
-      <li>Change metadata identifier to use the CatalogRecord identifier</li>
-      <li>Change the metadata modified date to use the CatalogRecord identifier</li>
-      <li>Update DCAT harvester to harvest DataServices</li>
-      <li>Update DCAT harvester to harvest CatalogRecord <strong>(Still TODO: Datasets and services without a
-        CatalogRecord in the harvested feed are currently ignored)</strong></li>
-    </ol>
-    <strong>Notes:</strong> All the previously created metadata were not migrated to use the CatalogRecord identifier
-    and the editor will not work properly when trying to edit them.
-  </section>
+    <section id="21/06/2021">
+      <ol>
+        <li>When missing, the required "mailto:" prefix on vcard:hasEmail element is now automatically added to the XML
+          when saving, before any validation
+        </li>
+        <li>Fix bug where an XSD validation error would sometimes occurs when saving and quiting the editor causing a
+          metadata to be invalid and unpublished
+        </li>
+        <li>Add the services mdcat extension elements to the Open DCAT editor</li>
+        <li>Add dct:subject element to the XSD</li>
+        <li>Define the "GDI-Vlaanderen-trefwoorden" vocabulary for the dct:subject element (WIP: Multiple thesauri should
+          be accepted in dct:subject. It is only the case for "GDI-Vlaanderen-trefwoorden" currently)
+        </li>
+        <li>Automatically add the "Vlaamse Open data" keyword as a dct:subject when editing a dcat-ap-vl metadata</li>
+        <li>Improve dcat-ap-vl validation rules and update metadata-dcat validation with latest changes</li>
+        <li>When linking a dataset to a service, the services list to pick from is now filtered to only display
+          downloadable services
+        </li>
+      </ol>
+    </section>
 
-  <section id="22/03/2021">
-    <ol>
-      <li>Implement link from dataset to service</li>
-      <li>Renamed the two templates to "Sjabloon voor metadata-dcat van Dataset" and "Sjabloon voor metadata-dcat van
-        Service"
-      </li>
-      <li>The "Vlaamse Open data" keyword is no longer automatically added for dataset metadata. If present, it will
-        still be reformatted to be strictly equal to "Vlaamse Open data"
-      </li>
-      <li>Remove the default title when creating a service from the template</li>
-      <li>Improved external linked dataset on services</li>
-      <li>Remove wettelijkeBeperkingen and doelpopulatie elements</li>
-      <li>Rename XML namespace from <code>mvs</code> to <code>mdcat</code></li>
-      <li>Rename elements:
-        <table class="bullet-table">
-          <tr>
-            <td>authenticatie</td>
-            <td>landingspaginaVoorAuthenticatie</td>
-          </tr>
-          <tr>
-            <td>dienstverleningsKwaliteit</td>
-            <td>landingspaginaVoorStatusinformatie</td>
-          </tr>
-          <tr>
-            <td>gebruiksbepaling</td>
-            <td>landingspaginaVoorGebruiksinformatie</td>
-          </tr>
-          <tr>
-            <td>statusVanGebruik</td>
-            <td>levensfase</td>
-          </tr>
-          <tr>
-            <td>statusVanOntwikkeling</td>
-            <td>ontwikkelingstoestand</td>
-          </tr>
-        </table>
-      </li>
-      <li>Update the DataService fields labels in the view and the editor according to the
-        <a href="https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/" target="_blank">metadata-dcat
-          applicatieprofiel</a></li>
-      <li>Move landingspaginaVoorAuthenticatie, landingspaginaVoorStatusinformatie, landingspaginaVoorGebruiksinformatie
-        from the service information section to the usage information section
-      </li>
-      <li>Renamed schematron validation rules set. We now have the three following schematrons:
-        <table class="bullet-table">
-          <tr>
-            <td>schematron-rules-dcat-ap</td>
-            <td>Mandatory rules for dcat-ap 2.0</td>
-          </tr>
-          <tr>
-            <td>schematron-rules-dcat-ap-recommendations</td>
-            <td>Recommended rules for dcat-ap 2.0</td>
-          </tr>
-          <tr>
-            <td>schematron-rules-metadata-dcat</td>
-            <td>Mandatory rules metadata-dcat</td>
-          </tr>
-        </table>
-        <br>
-        <strong>Notes:</strong> No changes to the validation rule implementations have yet been made
-      </li>
-      <li>Fix issue where, sometimes, the wrong label was used</li>
-      <li>dcat:DataService/dct:accessRight added to the default view of the editor and with default value "public" in
-        the template
-      </li>
-      <li>Thesauri for <code>mdcat:levensfase</code> and <code>mdcat:ontwikkelingstoestand</code> have been updated to
-        point to their correct new scheme:
-        <ul>
-          <li>
-            <a target="_blank" href="https://data.vlaanderen.be/id/conceptscheme/levensfase">https://data.vlaanderen.be/id/conceptscheme/levensfase</a>
-          </li>
-          <li>
-            <a target="_blank" href="https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand">https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand</a>
-          </li>
-        </ul>
-      </li>
-    </ol>
-  </section>
+    <section id="11/06/2021">
+      <ol>
+        <li>Fix ContactPoint cardinality for dcat:Dataset</li>
+        <li>Add dct:rights to default editor view</li>
+        <li>Apply schematron validation rules based on the record profile</li>
+        <li>Hide profile specific extension fields from editor when template profile doesn't match</li>
+        <li>Add templates for DCAT-AP VL records</li>
+        <li>Add validation rules specific to DCAT-AP VL records</li>
+        <li>Enforce "Vlaamse Open Data" dcat:theme on DCAT-AP VL records. (WIP: There is still no way of selecting themes
+          from another vocabulary. data.gov.be theme are still the only one that can be manually selected)
+        </li>
+        <li>Update indexing to index the "Vlaamse Open Data" dcat:theme as a GDI-Vlaanderen trefwoord</li>
+      </ol>
+    </section>
 
-  <section id="26/02/2021">
-    <ol>
-      <li>Display external linked dataset in the editor's and the view's sidebar</li>
-      <li>All the optional fields for dcat:Dataset, dcat:Distribution and dcat:DataService added to the metadata-dcat
-        schema in the release of <a href="#02/02/2021">02/02/2021</a> are now also editable in the full view of the
-        editor and viewable in the metadata view
-      </li>
-    </ol>
-  </section>
+    <section id="31/05/2021">
+      <ol>
+        <li>Modify index: dcat:CatalogRecord/dct:conformTo is now indexed under standardName field</li>
+        <li>During import, generate a dcat:record if missing and correctly handle UUID if dcat:record present</li>
+        <li>DCAT harvester is now capable of harvesting feed that does not provide dcat:CatalogRecord element</li>
+      </ol>
+    </section>
 
-  <section id="03/02/2021">
-    <ol>
-      <li>Added a plus button to add empty dcat:servesDataset</li>
-      <li>Added a shortcut button bellow the dcat:servesDataset field to link to a dataset</li>
-      <li>Fixed dcat:endpointDescription type from string literal to rdf:Resource</li>
-      <li>Added schematron rule 300, 301, 302, 303, 350, 351, 352 for dcat services metadata</li>
-      <li>Remove dct:license from dcat:Dataset XSD</li>
-    </ol>
-  </section>
+    <section id="26/04/2021">
+      <ol>
+        <li>Update metadata-dcat schema cardinalities</li>
+        <li>Add dcat:CatalogRecord element</li>
+        <li>Change metadata identifier to use the CatalogRecord identifier</li>
+        <li>Change the metadata modified date to use the CatalogRecord identifier</li>
+        <li>Update DCAT harvester to harvest DataServices</li>
+        <li>Update DCAT harvester to harvest CatalogRecord <strong>(Still TODO: Datasets and services without a
+          CatalogRecord in the harvested feed are currently ignored)</strong></li>
+      </ol>
+      <strong>Notes:</strong> All the previously created metadata were not migrated to use the CatalogRecord identifier
+      and the editor will not work properly when trying to edit them.
+    </section>
 
-  <section id="02/02/2021">
-    <ol>
-      <li>Fixed advanced view in editor for services metadata</li>
-      <li>"Vlaamse Open data" keyword is no longer automatically added for services metadata</li>
-      <li>Fixed cardinality for fields dct:title, dct:description, dcat:endpointUrl and dcat:endpointDescription</li>
-      <li>Change "Straat" label to "Straat en huisnummer"</li>
-      <li>Added support for dcat-ap 2.0 Resource abstract class fields and new distribution's fields. These fields are
-        not editable nor viewable but have been added for dcat-ap 2.0 compliance and can exist in the metadata XML:
-        <ul>
-          <li><strong>dcat:Catalog</strong>
-            <ul>
-              <li>dcat:contactPoint</li>
-              <li>dcat:keyword</li>
-              <li>dcat:landingPage</li>
-              <li>dcat:qualifiedRelation</li>
-              <li>dcat:theme</li>
-              <li>dct:accessRights</li>
-              <li>dct:conformsTo</li>
-              <li>dct:creator</li>
-              <li>dct:identifier</li>
-              <li>dct:isReferencedBy</li>
-              <li>dct:relation</li>
-              <li>dct:type</li>
-            </ul>
-          </li>
-          <li><strong>dcat:Dataset</strong>
-            <ul>
-              <li>dcat:qualifiedRelation</li>
-              <li>dct:creator</li>
-              <li>dct:isReferencedBy</li>
-              <li>dct:license</li>
-              <li>dct:rights</li>
-            </ul>
-          </li>
-          <li><strong>dcat:Distribution</strong>
-            <ul>
-              <li>dcat:compressFormat</li>
-              <li>dcat:packageFormat</li>
-              <li>dcat:spatialResolutionInMeters</li>
-              <li>dcat:temporalResolution</li>
-            </ul>
-          </li>
-          <li><strong>dcat:DataService</strong>
-            <ul>
-              <li>dcat:qualifiedRelation</li>
-              <li>dcat:theme</li>
-              <li>dct:accessRights</li>
-              <li>dct:conformsTo</li>
-              <li>dct:creator</li>
-              <li>dct:isReferencedBy</li>
-              <li>dct:issued</li>
-              <li>dct:license</li>
-              <li>dct:modified</li>
-              <li>dct:relation</li>
-              <li>dct:rights</li>
-              <li>dct:type</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ol>
-  </section>
+    <section id="22/03/2021">
+      <ol>
+        <li>Implement link from dataset to service</li>
+        <li>Renamed the two templates to "Sjabloon voor metadata-dcat van Dataset" and "Sjabloon voor metadata-dcat van
+          Service"
+        </li>
+        <li>The "Vlaamse Open data" keyword is no longer automatically added for dataset metadata. If present, it will
+          still be reformatted to be strictly equal to "Vlaamse Open data"
+        </li>
+        <li>Remove the default title when creating a service from the template</li>
+        <li>Improved external linked dataset on services</li>
+        <li>Remove wettelijkeBeperkingen and doelpopulatie elements</li>
+        <li>Rename XML namespace from <code>mvs</code> to <code>mdcat</code></li>
+        <li>Rename elements:
+          <table class="bullet-table">
+            <tr>
+              <td>authenticatie</td>
+              <td>landingspaginaVoorAuthenticatie</td>
+            </tr>
+            <tr>
+              <td>dienstverleningsKwaliteit</td>
+              <td>landingspaginaVoorStatusinformatie</td>
+            </tr>
+            <tr>
+              <td>gebruiksbepaling</td>
+              <td>landingspaginaVoorGebruiksinformatie</td>
+            </tr>
+            <tr>
+              <td>statusVanGebruik</td>
+              <td>levensfase</td>
+            </tr>
+            <tr>
+              <td>statusVanOntwikkeling</td>
+              <td>ontwikkelingstoestand</td>
+            </tr>
+          </table>
+        </li>
+        <li>Update the DataService fields labels in the view and the editor according to the
+          <a href="https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/" target="_blank">metadata-dcat
+            applicatieprofiel</a></li>
+        <li>Move landingspaginaVoorAuthenticatie, landingspaginaVoorStatusinformatie, landingspaginaVoorGebruiksinformatie
+          from the service information section to the usage information section
+        </li>
+        <li>Renamed schematron validation rules set. We now have the three following schematrons:
+          <table class="bullet-table">
+            <tr>
+              <td>schematron-rules-dcat-ap</td>
+              <td>Mandatory rules for dcat-ap 2.0</td>
+            </tr>
+            <tr>
+              <td>schematron-rules-dcat-ap-recommendations</td>
+              <td>Recommended rules for dcat-ap 2.0</td>
+            </tr>
+            <tr>
+              <td>schematron-rules-metadata-dcat</td>
+              <td>Mandatory rules metadata-dcat</td>
+            </tr>
+          </table>
+          <br>
+          <strong>Notes:</strong> No changes to the validation rule implementations have yet been made
+        </li>
+        <li>Fix issue where, sometimes, the wrong label was used</li>
+        <li>dcat:DataService/dct:accessRight added to the default view of the editor and with default value "public" in
+          the template
+        </li>
+        <li>Thesauri for <code>mdcat:levensfase</code> and <code>mdcat:ontwikkelingstoestand</code> have been updated to
+          point to their correct new scheme:
+          <ul>
+            <li>
+              <a target="_blank" href="https://data.vlaanderen.be/id/conceptscheme/levensfase">https://data.vlaanderen.be/id/conceptscheme/levensfase</a>
+            </li>
+            <li>
+              <a target="_blank" href="https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand">https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand</a>
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </section>
 
-  <section id="21/01/2021">
-    <ol>
-      <li>Renamed plugin from "dcat-ap-for-servives" to "metadata-dcat"</li>
-      <li>Updated with latest changes done on dcat-ap v1.2 plugin</li>
-      <li>Changed XML namespace from <code>http://data.vlaanderen.be/ns/metadata-dcat#</code> to <code>http://data.vlaanderen.be/ns/metadata-dcat#</code>
-      </li>
-      <li>Added two new thesauri for mvs:statusVanGebruik and mvs:statusVanOntwikkeling and update editor to use them
-      </li>
-      <li>Added dct:publisher in services metadata schema and make it editable and viewable</li>
-      <li>Updated service's fields with latest cardinalities</li>
-    </ol>
-  </section>
+    <section id="26/02/2021">
+      <ol>
+        <li>Display external linked dataset in the editor's and the view's sidebar</li>
+        <li>All the optional fields for dcat:Dataset, dcat:Distribution and dcat:DataService added to the metadata-dcat
+          schema in the release of <a href="#02/02/2021">02/02/2021</a> are now also editable in the full view of the
+          editor and viewable in the metadata view
+        </li>
+      </ol>
+    </section>
 
-  <section id="13/01/2021">
-    <ol>
-      <li>Slightly improved changelog's readability</li>
-      <li>Added the field dcat:accessService to dataset distribution</li>
-      <li>Modified view to display the content of dcat:accessService as a clickable link and added translations</li>
-      <li>Updated the dcat-ap plugin and the core with the latest changes of the dcat-ap 1.2 branch</li>
-      <li>When linking a dataset to a service, we now can also modify the linked dataset with the URL of the service in
-        the mean time:
-        <img src="img/modifyDatasetWhenLinkingToService.png" alt="Checkbox to modify the linked dataset">
-      </li>
-      <li>Fixed a file encoding issue</li>
-    </ol>
-  </section>
+    <section id="03/02/2021">
+      <ol>
+        <li>Added a plus button to add empty dcat:servesDataset</li>
+        <li>Added a shortcut button bellow the dcat:servesDataset field to link to a dataset</li>
+        <li>Fixed dcat:endpointDescription type from string literal to rdf:Resource</li>
+        <li>Added schematron rule 300, 301, 302, 303, 350, 351, 352 for dcat services metadata</li>
+        <li>Remove dct:license from dcat:Dataset XSD</li>
+      </ol>
+    </section>
 
-  <section id="07/12/2020">
-    <ol>
-      <li>Added changelog page</li>
-      <li>Added link to the changelog page in the top toolbar</li>
-      <li>Added the namespace <i>&lt;http://data.vlaanderen.be/ns/metadata-dcat#&gt;</i> to the dcat-ap plugin
-      </li>
-      <li>Added the new elements to the schema and makes them viewable and editable in the new section "Service
-        informatie"
-        <ul>
-          <li>mvs:authenticatie</li>
-          <li>mvs:dienstverleningsKwaliteit</li>
-          <li>mvs:doelpopulatie</li>
-          <li>mvs:gebruiksbepaling</li>
-          <li>mvs:statusVanGebruik</li>
-          <li>mvs:statusVanOntwikkeling</li>
-          <li>mvs:wettelijkeBeperkingen</li>
-        </ul>
-      </li>
-      <li>Added translations and tooltips for these new fields</li>
-    </ol>
-  </section>
+    <section id="02/02/2021">
+      <ol>
+        <li>Fixed advanced view in editor for services metadata</li>
+        <li>"Vlaamse Open data" keyword is no longer automatically added for services metadata</li>
+        <li>Fixed cardinality for fields dct:title, dct:description, dcat:endpointUrl and dcat:endpointDescription</li>
+        <li>Change "Straat" label to "Straat en huisnummer"</li>
+        <li>Added support for dcat-ap 2.0 Resource abstract class fields and new distribution's fields. These fields are
+          not editable nor viewable but have been added for dcat-ap 2.0 compliance and can exist in the metadata XML:
+          <ul>
+            <li><strong>dcat:Catalog</strong>
+              <ul>
+                <li>dcat:contactPoint</li>
+                <li>dcat:keyword</li>
+                <li>dcat:landingPage</li>
+                <li>dcat:qualifiedRelation</li>
+                <li>dcat:theme</li>
+                <li>dct:accessRights</li>
+                <li>dct:conformsTo</li>
+                <li>dct:creator</li>
+                <li>dct:identifier</li>
+                <li>dct:isReferencedBy</li>
+                <li>dct:relation</li>
+                <li>dct:type</li>
+              </ul>
+            </li>
+            <li><strong>dcat:Dataset</strong>
+              <ul>
+                <li>dcat:qualifiedRelation</li>
+                <li>dct:creator</li>
+                <li>dct:isReferencedBy</li>
+                <li>dct:license</li>
+                <li>dct:rights</li>
+              </ul>
+            </li>
+            <li><strong>dcat:Distribution</strong>
+              <ul>
+                <li>dcat:compressFormat</li>
+                <li>dcat:packageFormat</li>
+                <li>dcat:spatialResolutionInMeters</li>
+                <li>dcat:temporalResolution</li>
+              </ul>
+            </li>
+            <li><strong>dcat:DataService</strong>
+              <ul>
+                <li>dcat:qualifiedRelation</li>
+                <li>dcat:theme</li>
+                <li>dct:accessRights</li>
+                <li>dct:conformsTo</li>
+                <li>dct:creator</li>
+                <li>dct:isReferencedBy</li>
+                <li>dct:issued</li>
+                <li>dct:license</li>
+                <li>dct:modified</li>
+                <li>dct:relation</li>
+                <li>dct:rights</li>
+                <li>dct:type</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </section>
 
-  <section id="20/10/2020">
-    <ol>
-      <li>Fixed a bug where a dct:identifier was added when clicking on the + button to add a keyword</li>
-      <li>Fixing few translations: labels sometimes starting with lower case, sometime with upper-case => All changed to
-        upper-case
-      </li>
-      <li>Fixed a bug where the content of vcard:hasUrl was edited instead of the vcard:hasUrl/@rdf:resource attribute
-      </li>
-      <li>Better indexing for the services metadata for fields
-        <ul>
-          <li>dcat:servesDataset</li>
-          <li>dcat:endpointUrl</li>
-          <li>dcat:endpointDescription</li>
-          <li>dcat:landingPage</li>
-        </ul>
-      </li>
-      <li>Improve view:
-        <ul>
-          <li>dcat:endpointDescription is now displayed. If it contains links, they will be clickable</li>
-          <li>Added missing translations for the side bar</li>
-          <li>Fixed styles for nested tables</li>
-        </ul>
-      </li>
-      <li>Update schematron rules to prevent error when editing a services (error of type "dcat:dataset is a required
-        property…") allowing to have valid service records
-      </li>
-      <li>Added schematron validation rules for
-        <ul>
-          <li>dcat:endpointUrl</li>
-          <li>dcat:DataService/dcat:contactPoint</li>
-          <li>dcat:servesDataset</li>
-          <li>dcat:landingPage</li>
-        </ul>
-      </li>
-      <li>Added the @rdf:about attributes on dcat:DataService schema and handle it when creating a new service record
-      </li>
-    </ol>
-  </section>
+    <section id="21/01/2021">
+      <ol>
+        <li>Renamed plugin from "dcat-ap-for-servives" to "metadata-dcat"</li>
+        <li>Updated with latest changes done on dcat-ap v1.2 plugin</li>
+        <li>Changed XML namespace from <code>http://data.vlaanderen.be/ns/metadata-dcat#</code> to <code>http://data.vlaanderen.be/ns/metadata-dcat#</code>
+        </li>
+        <li>Added two new thesauri for mvs:statusVanGebruik and mvs:statusVanOntwikkeling and update editor to use them
+        </li>
+        <li>Added dct:publisher in services metadata schema and make it editable and viewable</li>
+        <li>Updated service's fields with latest cardinalities</li>
+      </ol>
+    </section>
 
-  <section id="14/10/2020">
-    <ol>
-      <li>New elements have been added to the XSD and the editor. Here is the list of all the editable fields for
-        dcat-ap services metadata:
-        <ul>
-          <li>dct:identifier</li>
-          <li>dct:title</li>
-          <li>dct:description</li>
-          <li>dcat:endpointUrl</li>
-          <li>dcat:endpointDescription</li>
-          <li>dcat:servesDataset</li>
-          <li>dcat:landingPage</li>
-          <li>dcat:contactPoint</li>
-          <li>dcat:keyword</li>
-          <li>dct:language</li>
-          <li>owl:versionInfo</li>
-        </ul>
-      </li>
-      <li>Translations have been fixed for existing fields and added for the new ones</li>
-      <li>We can now couple a dataset to a service via the search box. Doing so will add a new dcat:servesDataset
-        element pointing at the dataset. (Please notice that this must be done by clicking the first "Link naar een
-        dataset" button in the dropdown of the "Toevoegen" button. The two others button in this dropdown must be
-        evaluated and maybe removed).
-        <br>
-        <img src="img/linkToDataset.png" alt="Link to a dataset">
-      </li>
-      <li>The coupled dataset will be displayed in the editor and in the view as a related dataset (on the right side
-        bar)
-      </li>
-      <li>The title and the description of services are now displayed in the search and view pages (instead of a blank
-        lines). The rest of the view was not changed yet; which mean that some field might be missing from the view.
-      </li>
-      <li>Modified the template for services to add the new elements. However, this is not necessary to recreate
-        existing metadata from this template. The new elements can be added via the + button in the editor.
-      </li>
-    </ol>
-  </section>
+    <section id="13/01/2021">
+      <ol>
+        <li>Slightly improved changelog's readability</li>
+        <li>Added the field dcat:accessService to dataset distribution</li>
+        <li>Modified view to display the content of dcat:accessService as a clickable link and added translations</li>
+        <li>Updated the dcat-ap plugin and the core with the latest changes of the dcat-ap 1.2 branch</li>
+        <li>When linking a dataset to a service, we now can also modify the linked dataset with the URL of the service in
+          the mean time:
+          <img src="img/modifyDatasetWhenLinkingToService.png" alt="Checkbox to modify the linked dataset">
+        </li>
+        <li>Fixed a file encoding issue</li>
+      </ol>
+    </section>
+
+    <section id="07/12/2020">
+      <ol>
+        <li>Added changelog page</li>
+        <li>Added link to the changelog page in the top toolbar</li>
+        <li>Added the namespace <i>&lt;http://data.vlaanderen.be/ns/metadata-dcat#&gt;</i> to the dcat-ap plugin
+        </li>
+        <li>Added the new elements to the schema and makes them viewable and editable in the new section "Service
+          informatie"
+          <ul>
+            <li>mvs:authenticatie</li>
+            <li>mvs:dienstverleningsKwaliteit</li>
+            <li>mvs:doelpopulatie</li>
+            <li>mvs:gebruiksbepaling</li>
+            <li>mvs:statusVanGebruik</li>
+            <li>mvs:statusVanOntwikkeling</li>
+            <li>mvs:wettelijkeBeperkingen</li>
+          </ul>
+        </li>
+        <li>Added translations and tooltips for these new fields</li>
+      </ol>
+    </section>
+
+    <section id="20/10/2020">
+      <ol>
+        <li>Fixed a bug where a dct:identifier was added when clicking on the + button to add a keyword</li>
+        <li>Fixing few translations: labels sometimes starting with lower case, sometime with upper-case => All changed to
+          upper-case
+        </li>
+        <li>Fixed a bug where the content of vcard:hasUrl was edited instead of the vcard:hasUrl/@rdf:resource attribute
+        </li>
+        <li>Better indexing for the services metadata for fields
+          <ul>
+            <li>dcat:servesDataset</li>
+            <li>dcat:endpointUrl</li>
+            <li>dcat:endpointDescription</li>
+            <li>dcat:landingPage</li>
+          </ul>
+        </li>
+        <li>Improve view:
+          <ul>
+            <li>dcat:endpointDescription is now displayed. If it contains links, they will be clickable</li>
+            <li>Added missing translations for the side bar</li>
+            <li>Fixed styles for nested tables</li>
+          </ul>
+        </li>
+        <li>Update schematron rules to prevent error when editing a services (error of type "dcat:dataset is a required
+          property…") allowing to have valid service records
+        </li>
+        <li>Added schematron validation rules for
+          <ul>
+            <li>dcat:endpointUrl</li>
+            <li>dcat:DataService/dcat:contactPoint</li>
+            <li>dcat:servesDataset</li>
+            <li>dcat:landingPage</li>
+          </ul>
+        </li>
+        <li>Added the @rdf:about attributes on dcat:DataService schema and handle it when creating a new service record
+        </li>
+      </ol>
+    </section>
+
+    <section id="14/10/2020">
+      <ol>
+        <li>New elements have been added to the XSD and the editor. Here is the list of all the editable fields for
+          dcat-ap services metadata:
+          <ul>
+            <li>dct:identifier</li>
+            <li>dct:title</li>
+            <li>dct:description</li>
+            <li>dcat:endpointUrl</li>
+            <li>dcat:endpointDescription</li>
+            <li>dcat:servesDataset</li>
+            <li>dcat:landingPage</li>
+            <li>dcat:contactPoint</li>
+            <li>dcat:keyword</li>
+            <li>dct:language</li>
+            <li>owl:versionInfo</li>
+          </ul>
+        </li>
+        <li>Translations have been fixed for existing fields and added for the new ones</li>
+        <li>We can now couple a dataset to a service via the search box. Doing so will add a new dcat:servesDataset
+          element pointing at the dataset. (Please notice that this must be done by clicking the first "Link naar een
+          dataset" button in the dropdown of the "Toevoegen" button. The two others button in this dropdown must be
+          evaluated and maybe removed).
+          <br>
+          <img src="img/linkToDataset.png" alt="Link to a dataset">
+        </li>
+        <li>The coupled dataset will be displayed in the editor and in the view as a related dataset (on the right side
+          bar)
+        </li>
+        <li>The title and the description of services are now displayed in the search and view pages (instead of a blank
+          lines). The rest of the view was not changed yet; which mean that some field might be missing from the view.
+        </li>
+        <li>Modified the template for services to add the new elements. However, this is not necessary to recreate
+          existing metadata from this template. The new elements can be added via the + button in the editor.
+        </li>
+      </ol>
+    </section>
+  </div>
 </div>
 </body>
 </html>

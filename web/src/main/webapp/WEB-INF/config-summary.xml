@@ -134,7 +134,7 @@
     <facet name="dataGovKeyword" indexKey="dataGovKeyword" label="dataGovKeyword"/>
     <facet name="license" indexKey="license" label="license"/>
     <facet name="accessRights" indexKey="accessRights" label="accessRights"/>
-    <facet name="vlStatus" indexKey="vlStatus" label="vlStatus"/>
+    <facet name="statute" indexKey="statute" label="statute"/>
     <facet name="dataOwner" indexKey="dataOwner" label="dataOwner"/>
     <facet name="dataDistributor" indexKey="dataDistributor" label="dataDistributor"/>
     <facet name="dataContactPoint" indexKey="dataContactPoint" label="dataContactPoint"/>
@@ -238,7 +238,7 @@
       <item facet="dataGovKeyword" sortBy="value" sortOrder="desc"/>
       <item facet="license" sortBy="value" sortOrder="desc"/>
       <item facet="accessRights" sortBy="value" sortOrder="desc"/>
-      <item facet="vlStatus" sortBy="value" sortOrder="desc"/>
+      <item facet="statute" sortBy="value" sortOrder="desc"/>
       <item facet="dataOwner" sortBy="value" sortOrder="desc"/>
       <item facet="dataDistributor" sortBy="value" sortOrder="desc"/>
       <item facet="dataContactPoint" sortBy="value" sortOrder="desc"/>

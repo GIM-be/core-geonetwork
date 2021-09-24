@@ -562,15 +562,16 @@
       </xsl:apply-templates>
 
       <!-- Responsible organisation -->
-      <xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'publisher'][1]|
-                            gmd:identificationInfo/*/gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = 'owner'][1]">
-        <xsl:apply-templates select="gmd:CI_ResponsibleParty">
+      <xsl:for-each select="//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'publisher'][1]|
+                            //gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'owner'][1]">
+        <xsl:apply-templates select=".">
           <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
           <xsl:with-param name="ResourceType" select="$ResourceType"/>
         </xsl:apply-templates>
       </xsl:for-each>
-      <xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact[not(gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'owner'))]">
-        <xsl:apply-templates select="gmd:CI_ResponsibleParty">
+
+      <xsl:for-each select="//gmd:CI_ResponsibleParty[not(gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'owner'))]">
+        <xsl:apply-templates select=".">
           <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
           <xsl:with-param name="ResourceType" select="$ResourceType"/>
         </xsl:apply-templates>
@@ -1132,8 +1133,8 @@
         </xsl:choose>
         <xsl:copy-of select="$info"/>
       </foaf:Agent>
-
     </xsl:param>
+
     <xsl:param name="ResponsibleParty">
       <xsl:variable name="info">
         <xsl:if test="$IndividualName != ''">
@@ -1165,7 +1166,6 @@
     </xsl:param>
 
     <xsl:choose>
-
       <xsl:when test="$ResourceType = 'service'">
         <xsl:choose>
           <xsl:when test="$role = 'pointOfContact'">
@@ -1585,8 +1585,31 @@
 
     <xsl:choose>
       <xsl:when test="$DataGovTheme/dcat:theme">
-        <xsl:variable name="hasAlreadyDataGovTheme" select="count(../gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href[. = ('http://vocab.belgif.be/auth/datatheme', 'http://vocab.belgif.be/auth/datatheme/')]) > 0"/>
-        <xsl:if test="not($hasAlreadyDataGovTheme)">
+
+        <xsl:variable name="alreadyAddedGovThemes">
+          <xsl:for-each select="../gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href = ('http://vocab.belgif.be/auth/datatheme', 'http://vocab.belgif.be/auth/datatheme/')]">
+            <xsl:for-each select="gmd:keyword/gmx:Anchor">
+              <theme>
+                <xsl:value-of select="string(@xlink:href)"/>
+              </theme>
+            </xsl:for-each>
+          </xsl:for-each>
+
+          <xsl:for-each select="preceding-sibling::gmd:topicCategory">
+            <xsl:variable name="mapped">
+              <xsl:call-template name="MapTopicCatToDataGovTheme">
+                <xsl:with-param name="TopicCategory" select="normalize-space(gmd:MD_TopicCategoryCode)"/>
+              </xsl:call-template>
+            </xsl:variable>
+            <xsl:if test="$mapped/dcat:theme">
+              <theme>
+                <xsl:value-of select="string($mapped/dcat:theme/skos:Concept/@rdf:about)"/>
+              </theme>
+            </xsl:if>
+          </xsl:for-each>
+        </xsl:variable>
+
+        <xsl:if test="count($alreadyAddedGovThemes/theme[. = $DataGovTheme/dcat:theme/skos:Concept/@rdf:about]) = 0">
           <xsl:copy-of select="$DataGovTheme"/>
         </xsl:if>
       </xsl:when>
