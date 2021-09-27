@@ -790,6 +790,13 @@
                 <xsl:attribute name="rdf:about" select="$MetadataUri"/>
               </xsl:if>
               <foaf:primaryTopic rdf:resource="{$ResourceUri}"/>
+              <adms:identifier>
+                <adms:Identifier>
+                  <skos:notation>
+                    <xsl:value-of select="$MetadataUri"/>
+                  </skos:notation>
+                </adms:Identifier>
+              </adms:identifier>
               <xsl:copy-of select="$MetadataDescription"/>
             </dcat:CatalogRecord>
           </xsl:when>
@@ -808,6 +815,13 @@
           <xsl:if test="normalize-space($ResourceUri) != ''">
             <xsl:attribute name="rdf:about" select="$ResourceUri"/>
           </xsl:if>
+          <adms:identifier>
+            <adms:Identifier>
+              <skos:notation>
+                <xsl:value-of select="$ResourceUri"/>
+              </skos:notation>
+            </adms:Identifier>
+          </adms:identifier>
           <xsl:call-template name="withoutType">
             <xsl:with-param name="description" select="$ResourceDescription"/>
           </xsl:call-template>
