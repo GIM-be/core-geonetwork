@@ -175,25 +175,110 @@
 
   <xsl:variable name="modelLicencieKeywords">
     <license>
-      <url>https://data.vlaanderen.be/doc/licentie/modellicentie-gratis-hergebruik/v1.0</url>
-      <keyword>modellicentie-gratis-hergebruik</keyword>
-      <keyword>modellicentie_gratis_hergebruik</keyword>
+      <url>https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0</url>
+      <dct:license>
+        <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/licencetype/Attribution">
+              <skos:prefLabel xml:lang="nl">Verplichte bronvermelding</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Attribution</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Attribution</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Attribution</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
+            </skos:Concept>
+          </dct:type>
+          <dct:title xml:lang="nl">Modellicentie voor gratis hergebruik</dct:title>
+          <dct:description xml:lang="nl">Onder deze licentie doet de instantie geen afstand van haar intellectuele rechten, maar mag de data voor eender welk doel hergebruikt worden, gratis en onder minimale restricties.</dct:description>
+          <dct:identifier>https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0</dct:identifier>
+        </dct:LicenseDocument>
+      </dct:license>
+      <urlKeyword>modellicentie-gratis-hergebruik</urlKeyword>
+      <urlKeyword>modellicentie_gratis_hergebruik</urlKeyword>
     </license>
     <license>
-      <url>http://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0</url>
-      <keyword>onvoorwaardelijk-hergebruik</keyword>
-      <keyword>onvoorwaardelijk_hergebruik</keyword>
+      <url>https://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0</url>
+      <dct:license>
+        <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/licencetype/PublicDomain">
+              <skos:prefLabel xml:lang="nl">Werk in het publiek domein</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Public domain</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
+            </skos:Concept>
+          </dct:type>
+          <dct:title xml:lang="nl">Onvoorwaardelijk hergebruik</dct:title>
+          <dct:description xml:lang="nl">Onvoorwaardelijk hergebruik</dct:description>
+          <dct:identifier>https://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0</dct:identifier>
+        </dct:LicenseDocument>
+      </dct:license>
+      <urlKeyword>onvoorwaardelijk-hergebruik</urlKeyword>
+      <urlKeyword>onvoorwaardelijk_hergebruik</urlKeyword>
     </license>
     <license>
       <url>https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0</url>
-      <keyword>modellicentie-hergebruik-tegen-vergoeding</keyword>
-      <keyword>modellicentie_hergebruik_tegen_vergoeding</keyword>
+      <dct:license>
+        <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/licencetype/Attribution">
+              <skos:prefLabel xml:lang="nl">Verplichte bronvermelding</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Attribution</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Attribution</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Attribution</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
+            </skos:Concept>
+          </dct:type>
+          <dct:title xml:lang="nl">Modellicentie voor hergebruik tegen vergoeding</dct:title>
+          <dct:description xml:lang="nl">Onder deze licentie stelt de instantie nog steeds haar data ter beschikking voor eender welk hergebruik, maar wil zij hiervoor een vergoeding ontvangen. In regel is deze vergoeding beperkt tot de marginale kosten voor vermenigvuldiging, verstrekking en verspreiding.</dct:description>
+          <dct:identifier>https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0</dct:identifier>
+        </dct:LicenseDocument>
+      </dct:license>
+      <urlKeyword>modellicentie-hergebruik-tegen-vergoeding</urlKeyword>
+      <urlKeyword>modellicentie_hergebruik_tegen_vergoeding</urlKeyword>
     </license>
     <license>
       <url>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</url>
-      <keyword>creative-commons-zero-verklaring</keyword>
-      <keyword>creative_commons_zero_verklaring</keyword>
-      <keyword>cc0</keyword>
+      <dct:license>
+        <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/licencetype/PublicDomain">
+              <skos:prefLabel xml:lang="nl">Werk in het publiek domein</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Public domain</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0"/>
+            </skos:Concept>
+          </dct:type>
+          <dct:title xml:lang="nl">Creative Commons Zero verklaring</dct:title>
+          <dct:description xml:lang="nl">De instantie doet afstand van haar intellectuele eigendomsrechten voor zover dit wettelijk mogelijk is. Hierdoor kan de gebruiker de data hergebruiken voor eender welk doel, zonder een verplichting op naamsvermelding. Deze is de welbekende CC0 licentie.</dct:description>
+          <dct:identifier>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</dct:identifier>
+        </dct:LicenseDocument>
+      </dct:license>
+      <urlKeyword>creative-commons-zero-verklaring</urlKeyword>
+      <urlKeyword>creative_commons_zero_verklaring</urlKeyword>
+      <urlKeyword>cc0</urlKeyword>
+    </license>
+    <license>
+      <url>https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht</url>
+      <dct:license>
+        <dct:LicenseDocument rdf:about="https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht">
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/licencetype/JurisdictionWithinTheEU">
+              <skos:prefLabel xml:lang="nl">Jurisdiction within the EU</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Jurisdiction within the EU</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Jurisdiction within the EU</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Jurisdiction within the EU</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0"/>
+            </skos:Concept>
+          </dct:type>
+          <dct:title xml:lang="nl">Gebruiksrecht en privacyverklaring geografische webdiensten</dct:title>
+          <dct:description xml:lang="nl">Door het gebruik van de service verbindt elke gebruiker of raadpleger er zich toe om zich te houden aan de toegangs- en gebruiksbepalingen van de in de service aangeboden gegevens.</dct:description>
+          <dct:identifier>https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht</dct:identifier>
+        </dct:LicenseDocument>
+      </dct:license>
+      <urlKeyword>Webdiensten-Gebruiksrecht</urlKeyword>
+      <urlKeyword>webdiensten-gebruiksrecht</urlKeyword>
     </license>
   </xsl:variable>
 
@@ -323,11 +408,9 @@
       <xsl:variable name="modelLicencie">
         <xsl:for-each select="$licensesConstraintsAnchor">
           <xsl:variable name="currentUrl" select="translate(@xlink:href, $uppercase, $lowercase)"/>
-          <xsl:for-each select="$modelLicencieKeywords/license/keyword">
+          <xsl:for-each select="$modelLicencieKeywords/license/urlKeyword">
             <xsl:if test="contains($currentUrl, string())">
-              <license>
-                <xsl:value-of select="string(../url)"/>
-              </license>
+              <xsl:copy-of select="../dct:license"/>
             </xsl:if>
           </xsl:for-each>
         </xsl:for-each>
@@ -335,9 +418,7 @@
 
       <xsl:choose>
         <xsl:when test="$modelLicencie and normalize-space($modelLicencie) != ''">
-          <xsl:element name="dct:license">
-            <xsl:attribute name="rdf:resource" select="geonet:escapeURI($modelLicencie/license[1])"/>
-          </xsl:element>
+          <xsl:copy-of select="$modelLicencie/*[1]"/>
         </xsl:when>
         <xsl:when test="$licensesConstraintsCharacterString[contains(., 'Gratis Open Data licentie')]">
           <xsl:element name="dct:license">
