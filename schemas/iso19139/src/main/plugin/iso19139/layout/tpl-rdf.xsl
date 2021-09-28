@@ -524,6 +524,12 @@
         <xsl:with-param name="ResourceType" select="$ResourceType"/>
       </xsl:apply-templates>
 
+      <!-- Reference system information -->
+      <xsl:apply-templates select="gmd:referenceSystemInfo">
+        <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+        <xsl:with-param name="ResourceType" select="$ResourceType"/>
+      </xsl:apply-templates>
+
       <!-- Resource Language -->
       <xsl:for-each select="gmd:identificationInfo/*/gmd:language">
         <xsl:variable name="resLang">
@@ -1584,6 +1590,34 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
+  </xsl:template>
+
+  <!-- Reference system info -->
+  <xsl:template name="ReferenceSystemInfo" match="gmd:referenceSystemInfo">
+    <xsl:param name="MetadataLanguage"/>
+    <xsl:param name="ResourceType"/>
+    <xsl:variable name="code" select="gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code"/>
+    <xsl:variable name="crs" select="string($code/gmx:Anchor/@xlink:href|$code/gco:CharacterString)"/>
+
+    <xsl:choose>
+      <xsl:when test="starts-with($crs, 'http://') or starts-with($crs, 'https://')">
+        <dct:conformsTo>
+          <dct:Standard>
+            <xsl:attribute name="rdf:about" select="$crs"/>
+          </dct:Standard>
+        </dct:conformsTo>
+      </xsl:when>
+      <xsl:otherwise>
+        <dct:conformsTo>
+          <dct:Standard>
+            <dct:identifier>
+              <xsl:value-of select="$crs"/>
+            </dct:identifier>
+            <dct:type rdf:resource="http://inspire.ec.europa.eu/glossary/SpatialReferenceSystem"/>
+          </dct:Standard>
+        </dct:conformsTo>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- Topic category -->
