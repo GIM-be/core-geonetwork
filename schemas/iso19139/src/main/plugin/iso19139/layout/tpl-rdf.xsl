@@ -524,6 +524,12 @@
         <xsl:with-param name="ResourceType" select="$ResourceType"/>
       </xsl:apply-templates>
 
+      <!-- Alternate title -->
+      <xsl:apply-templates select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle">
+        <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+        <xsl:with-param name="ResourceType" select="$ResourceType"/>
+      </xsl:apply-templates>
+
       <!-- Reference system information -->
       <xsl:apply-templates select="gmd:referenceSystemInfo">
         <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
@@ -730,43 +736,6 @@
                       </dcat:distribution>
                     </xsl:for-each>
                   </xsl:if>
-                  <!-- Otherwise -->
-                  <!--
-                   <xsl:variable name="format">
-                        <xsl:call-template name="Map-format">
-                          <xsl:with-param name="protocol" select="$Protocol"/>
-                          <xsl:with-param name="url" select="$linkage/gmd:URL[1]"/>
-                        </xsl:call-template>
-                      </xsl:variable>
-                      <dcat:distribution>
-                        <dcat:Distribution>
-                          <xsl:copy-of select="$Title"/>
-                          <xsl:copy-of select="$Description"/>
-                          <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
-                          <xsl:copy-of select="$SpatialRepresentationType"/>
-                          <xsl:if test="$format != ''">
-                            <dct:format>
-                              <skos:Concept>
-                                <rdf:type rdf:resource="http://purl.org/dc/terms/MediaTypeOrExtent"/>
-                                <skos:prefLabel>
-                                  <xsl:value-of select="$format"/>
-                                </skos:prefLabel>
-                              </skos:Concept>
-                            </dct:format>
-                          </xsl:if>
-                          <dct:conformsTo>
-                            <dct:Standard>
-                              <dct:title>
-                                <xsl:value-of select="$Protocol"/>
-                              </dct:title>
-                            </dct:Standard>
-                          </dct:conformsTo>
-                          <xsl:if test="$ResourceCharacterEncoding != ''">
-                            <xsl:copy-of select="$ResourceCharacterEncoding"/>
-                          </xsl:if>
-                        </dcat:Distribution>
-                      </dcat:distribution>
-                   -->
                 </xsl:when>
 
                 <xsl:when test="$Function = ('information', 'search')">
@@ -1590,6 +1559,15 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
+  </xsl:template>
+
+  <!-- Alternate title -->
+  <xsl:template name="AlternateTitle" match="gmd:alternateTitle">
+    <xsl:param name="MetadataLanguage"/>
+    <xsl:param name="ResourceType"/>
+    <dcat:keyword xml:lang="{$MetadataLanguage}">
+      <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
+    </dcat:keyword>
   </xsl:template>
 
   <!-- Reference system info -->
