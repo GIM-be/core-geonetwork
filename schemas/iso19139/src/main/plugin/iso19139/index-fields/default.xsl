@@ -980,6 +980,7 @@
       <!-- Check if metadata is a service metadata record -->
       <xsl:when test="gmd:identificationInfo/srv:SV_ServiceIdentification">
         <Field name="type" string="service" store="false" index="true"/>
+        <Field name="lifeCycle" string="live" store="true" index="true"/>
       </xsl:when>
       <!-- <xsl:otherwise>
       ... gmd:*_DataIdentification / hierachicalLevel is used and return dataset, serie, ...

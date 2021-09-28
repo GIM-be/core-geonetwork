@@ -35,7 +35,8 @@ img {
 }
 
 code {
-  background-color: #d2d2d2;
+  background-color: #e8e8e8;
+  color: #8d1515;
 }
 
 .bullet-table tr td:first-child {

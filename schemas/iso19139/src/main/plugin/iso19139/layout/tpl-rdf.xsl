@@ -175,25 +175,110 @@
 
   <xsl:variable name="modelLicencieKeywords">
     <license>
-      <url>https://data.vlaanderen.be/doc/licentie/modellicentie-gratis-hergebruik/v1.0</url>
-      <keyword>modellicentie-gratis-hergebruik</keyword>
-      <keyword>modellicentie_gratis_hergebruik</keyword>
+      <url>https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0</url>
+      <dct:license>
+        <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/licencetype/Attribution">
+              <skos:prefLabel xml:lang="nl">Verplichte bronvermelding</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Attribution</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Attribution</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Attribution</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
+            </skos:Concept>
+          </dct:type>
+          <dct:title xml:lang="nl">Modellicentie voor gratis hergebruik</dct:title>
+          <dct:description xml:lang="nl">Onder deze licentie doet de instantie geen afstand van haar intellectuele rechten, maar mag de data voor eender welk doel hergebruikt worden, gratis en onder minimale restricties.</dct:description>
+          <dct:identifier>https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0</dct:identifier>
+        </dct:LicenseDocument>
+      </dct:license>
+      <urlKeyword>modellicentie-gratis-hergebruik</urlKeyword>
+      <urlKeyword>modellicentie_gratis_hergebruik</urlKeyword>
     </license>
     <license>
-      <url>http://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0</url>
-      <keyword>onvoorwaardelijk-hergebruik</keyword>
-      <keyword>onvoorwaardelijk_hergebruik</keyword>
+      <url>https://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0</url>
+      <dct:license>
+        <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/licencetype/PublicDomain">
+              <skos:prefLabel xml:lang="nl">Werk in het publiek domein</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Public domain</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
+            </skos:Concept>
+          </dct:type>
+          <dct:title xml:lang="nl">Onvoorwaardelijk hergebruik</dct:title>
+          <dct:description xml:lang="nl">Onvoorwaardelijk hergebruik</dct:description>
+          <dct:identifier>https://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0</dct:identifier>
+        </dct:LicenseDocument>
+      </dct:license>
+      <urlKeyword>onvoorwaardelijk-hergebruik</urlKeyword>
+      <urlKeyword>onvoorwaardelijk_hergebruik</urlKeyword>
     </license>
     <license>
       <url>https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0</url>
-      <keyword>modellicentie-hergebruik-tegen-vergoeding</keyword>
-      <keyword>modellicentie_hergebruik_tegen_vergoeding</keyword>
+      <dct:license>
+        <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/licencetype/Attribution">
+              <skos:prefLabel xml:lang="nl">Verplichte bronvermelding</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Attribution</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Attribution</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Attribution</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
+            </skos:Concept>
+          </dct:type>
+          <dct:title xml:lang="nl">Modellicentie voor hergebruik tegen vergoeding</dct:title>
+          <dct:description xml:lang="nl">Onder deze licentie stelt de instantie nog steeds haar data ter beschikking voor eender welk hergebruik, maar wil zij hiervoor een vergoeding ontvangen. In regel is deze vergoeding beperkt tot de marginale kosten voor vermenigvuldiging, verstrekking en verspreiding.</dct:description>
+          <dct:identifier>https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0</dct:identifier>
+        </dct:LicenseDocument>
+      </dct:license>
+      <urlKeyword>modellicentie-hergebruik-tegen-vergoeding</urlKeyword>
+      <urlKeyword>modellicentie_hergebruik_tegen_vergoeding</urlKeyword>
     </license>
     <license>
       <url>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</url>
-      <keyword>creative-commons-zero-verklaring</keyword>
-      <keyword>creative_commons_zero_verklaring</keyword>
-      <keyword>cc0</keyword>
+      <dct:license>
+        <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/licencetype/PublicDomain">
+              <skos:prefLabel xml:lang="nl">Werk in het publiek domein</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Public domain</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Public domain</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0"/>
+            </skos:Concept>
+          </dct:type>
+          <dct:title xml:lang="nl">Creative Commons Zero verklaring</dct:title>
+          <dct:description xml:lang="nl">De instantie doet afstand van haar intellectuele eigendomsrechten voor zover dit wettelijk mogelijk is. Hierdoor kan de gebruiker de data hergebruiken voor eender welk doel, zonder een verplichting op naamsvermelding. Deze is de welbekende CC0 licentie.</dct:description>
+          <dct:identifier>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</dct:identifier>
+        </dct:LicenseDocument>
+      </dct:license>
+      <urlKeyword>creative-commons-zero-verklaring</urlKeyword>
+      <urlKeyword>creative_commons_zero_verklaring</urlKeyword>
+      <urlKeyword>cc0</urlKeyword>
+    </license>
+    <license>
+      <url>https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht</url>
+      <dct:license>
+        <dct:LicenseDocument rdf:about="https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht">
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/licencetype/JurisdictionWithinTheEU">
+              <skos:prefLabel xml:lang="nl">Jurisdiction within the EU</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Jurisdiction within the EU</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Jurisdiction within the EU</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Jurisdiction within the EU</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0"/>
+            </skos:Concept>
+          </dct:type>
+          <dct:title xml:lang="nl">Gebruiksrecht en privacyverklaring geografische webdiensten</dct:title>
+          <dct:description xml:lang="nl">Door het gebruik van de service verbindt elke gebruiker of raadpleger er zich toe om zich te houden aan de toegangs- en gebruiksbepalingen van de in de service aangeboden gegevens.</dct:description>
+          <dct:identifier>https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht</dct:identifier>
+        </dct:LicenseDocument>
+      </dct:license>
+      <urlKeyword>Webdiensten-Gebruiksrecht</urlKeyword>
+      <urlKeyword>webdiensten-gebruiksrecht</urlKeyword>
     </license>
   </xsl:variable>
 
@@ -323,11 +408,9 @@
       <xsl:variable name="modelLicencie">
         <xsl:for-each select="$licensesConstraintsAnchor">
           <xsl:variable name="currentUrl" select="translate(@xlink:href, $uppercase, $lowercase)"/>
-          <xsl:for-each select="$modelLicencieKeywords/license/keyword">
+          <xsl:for-each select="$modelLicencieKeywords/license/urlKeyword">
             <xsl:if test="contains($currentUrl, string())">
-              <license>
-                <xsl:value-of select="string(../url)"/>
-              </license>
+              <xsl:copy-of select="../dct:license"/>
             </xsl:if>
           </xsl:for-each>
         </xsl:for-each>
@@ -335,9 +418,7 @@
 
       <xsl:choose>
         <xsl:when test="$modelLicencie and normalize-space($modelLicencie) != ''">
-          <xsl:element name="dct:license">
-            <xsl:attribute name="rdf:resource" select="geonet:escapeURI($modelLicencie/license[1])"/>
-          </xsl:element>
+          <xsl:copy-of select="$modelLicencie/*[1]"/>
         </xsl:when>
         <xsl:when test="$licensesConstraintsCharacterString[contains(., 'Gratis Open Data licentie')]">
           <xsl:element name="dct:license">
@@ -464,17 +545,8 @@
 
       <xsl:if test="$standardName != '' or $standardVersion != ''">
         <dct:conformsTo>
-          <dct:Standard rdf:about="https://inspire.ec.europa.eu/documents/geodcat-ap">
-            <xsl:if test="$standardName != ''">
-              <dct:title>
-                <xsl:value-of select="$standardName"/>
-              </dct:title>
-            </xsl:if>
-            <xsl:if test="$standardVersion != ''">
-              <owl:versionInfo>
-                <xsl:value-of select="$standardVersion"/>
-              </owl:versionInfo>
-            </xsl:if>
+          <dct:Standard>
+            <dct:title>GeoDCAT-AP-VL</dct:title>
           </dct:Standard>
         </dct:conformsTo>
       </xsl:if>
@@ -520,6 +592,18 @@
 
       <!-- Keyword -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords">
+        <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+        <xsl:with-param name="ResourceType" select="$ResourceType"/>
+      </xsl:apply-templates>
+
+      <!-- Alternate title -->
+      <xsl:apply-templates select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle">
+        <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+        <xsl:with-param name="ResourceType" select="$ResourceType"/>
+      </xsl:apply-templates>
+
+      <!-- Reference system information -->
+      <xsl:apply-templates select="gmd:referenceSystemInfo">
         <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
         <xsl:with-param name="ResourceType" select="$ResourceType"/>
       </xsl:apply-templates>
@@ -591,32 +675,29 @@
       <xsl:choose>
         <!-- Service specific -->
         <xsl:when test="$ResourceType = 'service'">
-          <!-- Online resources -->
-          <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
-            <xsl:variable name="function" select="gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue"/>
-            <xsl:variable name="linkage" select="gmd:linkage/gmd:URL"/>
-            <xsl:choose>
-              <xsl:when test="$function = 'information'">
-                <dcat:endpointDescription rdf:resource="{$linkage}"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <dcat:endpointUrl rdf:resource="{$linkage}"/>
-              </xsl:otherwise>
-            </xsl:choose>
+          <!-- Contains operations -->
+          <xsl:for-each select="gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
+            <dcat:endpointUrl rdf:resource="{.}"/>
+          </xsl:for-each>
 
+          <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
+            <dcat:endpointDescription rdf:resource="{.}"/>
+          </xsl:for-each>
+
+          <!-- Online resources -->
+          <xsl:for-each-group select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:protocol/*" group-by=".">
             <!-- Conform to standard -->
-            <xsl:variable name="Protocol" select="gmd:protocol/*/text()"/>
-            <xsl:if test="$Protocol != ''">
+            <xsl:if test="normalize-space(current-grouping-key()) != ''">
               <!-- TODO: map to INSPIRE-PV codelist values: https://inspire.ec.europa.eu/metadata-codelist/ProtocolValue -->
               <dct:conformsTo>
                 <dct:Standard>
                   <dct:title>
-                    <xsl:value-of select="$Protocol"/>
+                    <xsl:value-of select="current-grouping-key()"/>
                   </dct:title>
                 </dct:Standard>
               </dct:conformsTo>
             </xsl:if>
-          </xsl:for-each>
+          </xsl:for-each-group>
           <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
 
           <!-- Coupled resources -->
@@ -724,43 +805,6 @@
                       </dcat:distribution>
                     </xsl:for-each>
                   </xsl:if>
-                  <!-- Otherwise -->
-                  <!--
-                   <xsl:variable name="format">
-                        <xsl:call-template name="Map-format">
-                          <xsl:with-param name="protocol" select="$Protocol"/>
-                          <xsl:with-param name="url" select="$linkage/gmd:URL[1]"/>
-                        </xsl:call-template>
-                      </xsl:variable>
-                      <dcat:distribution>
-                        <dcat:Distribution>
-                          <xsl:copy-of select="$Title"/>
-                          <xsl:copy-of select="$Description"/>
-                          <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
-                          <xsl:copy-of select="$SpatialRepresentationType"/>
-                          <xsl:if test="$format != ''">
-                            <dct:format>
-                              <skos:Concept>
-                                <rdf:type rdf:resource="http://purl.org/dc/terms/MediaTypeOrExtent"/>
-                                <skos:prefLabel>
-                                  <xsl:value-of select="$format"/>
-                                </skos:prefLabel>
-                              </skos:Concept>
-                            </dct:format>
-                          </xsl:if>
-                          <dct:conformsTo>
-                            <dct:Standard>
-                              <dct:title>
-                                <xsl:value-of select="$Protocol"/>
-                              </dct:title>
-                            </dct:Standard>
-                          </dct:conformsTo>
-                          <xsl:if test="$ResourceCharacterEncoding != ''">
-                            <xsl:copy-of select="$ResourceCharacterEncoding"/>
-                          </xsl:if>
-                        </dcat:Distribution>
-                      </dcat:distribution>
-                   -->
                 </xsl:when>
 
                 <xsl:when test="$Function = ('information', 'search')">
@@ -790,6 +834,13 @@
                 <xsl:attribute name="rdf:about" select="$MetadataUri"/>
               </xsl:if>
               <foaf:primaryTopic rdf:resource="{$ResourceUri}"/>
+              <adms:identifier>
+                <adms:Identifier>
+                  <skos:notation>
+                    <xsl:value-of select="$MetadataUri"/>
+                  </skos:notation>
+                </adms:Identifier>
+              </adms:identifier>
               <xsl:copy-of select="$MetadataDescription"/>
             </dcat:CatalogRecord>
           </xsl:when>
@@ -808,6 +859,13 @@
           <xsl:if test="normalize-space($ResourceUri) != ''">
             <xsl:attribute name="rdf:about" select="$ResourceUri"/>
           </xsl:if>
+          <adms:identifier>
+            <adms:Identifier>
+              <skos:notation>
+                <xsl:value-of select="$ResourceUri"/>
+              </skos:notation>
+            </adms:Identifier>
+          </adms:identifier>
           <xsl:call-template name="withoutType">
             <xsl:with-param name="description" select="$ResourceDescription"/>
           </xsl:call-template>
@@ -1570,6 +1628,43 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
+  </xsl:template>
+
+  <!-- Alternate title -->
+  <xsl:template name="AlternateTitle" match="gmd:alternateTitle">
+    <xsl:param name="MetadataLanguage"/>
+    <xsl:param name="ResourceType"/>
+    <dcat:keyword xml:lang="{$MetadataLanguage}">
+      <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
+    </dcat:keyword>
+  </xsl:template>
+
+  <!-- Reference system info -->
+  <xsl:template name="ReferenceSystemInfo" match="gmd:referenceSystemInfo">
+    <xsl:param name="MetadataLanguage"/>
+    <xsl:param name="ResourceType"/>
+    <xsl:variable name="code" select="gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code"/>
+    <xsl:variable name="crs" select="string($code/gmx:Anchor/@xlink:href|$code/gco:CharacterString)"/>
+
+    <xsl:choose>
+      <xsl:when test="starts-with($crs, 'http://') or starts-with($crs, 'https://')">
+        <dct:conformsTo>
+          <dct:Standard>
+            <xsl:attribute name="rdf:resource" select="$crs"/>
+          </dct:Standard>
+        </dct:conformsTo>
+      </xsl:when>
+      <xsl:otherwise>
+        <dct:conformsTo>
+          <dct:Standard>
+            <dct:identifier>
+              <xsl:value-of select="$crs"/>
+            </dct:identifier>
+            <dct:type rdf:resource="http://inspire.ec.europa.eu/glossary/SpatialReferenceSystem"/>
+          </dct:Standard>
+        </dct:conformsTo>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- Topic category -->

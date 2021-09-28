@@ -21,12 +21,37 @@
       <span>See also <a href="main-changelog.html">Main changelog</a></span>
     </div>
 
+    <section id="wip">
+      <ol>
+        <li>The index value for <code>lifeCycle</code> field is set to "live" for all ISO 19139 services metadata</li>
+        <li>Update ISO19139 to GeoDCAT conversion:
+          <ul>
+            <li>Add <code>adms:identifier</code> element</li>
+            <li>Map <code>gmd:referenceSystemInfo</code> to <code>dct:conformsTo</code></li>
+            <li>Map <code>gmd:alternateTitle</code> to <code>dcat:keyword</code></li>
+            <li>Always set <code>dcat:CatalogRecord/dct:conformsTo</code> value to "GeoDCAT-AP-VL"</li>
+            <li>Map complete license description and details for known licenses instead of only mapping to license URI
+            </li>
+            <li>For services: Map <code>srv:containsOperations</code> to dcat:endpointUrl</li>
+            <li>For services: Map <code>gmd:transferOptions//gmd:linkage</code> to dcat:endpointDescription</li>
+            <li>Prevent duplicated <code>dcat:DataServices/dct:conformsTo</code> when multiple
+              <code>gmd:transferOptions</code> with the same protocol is present
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+
     <section id="24/09/2021">
       <ol>
         <li>Fix ISO19139 to GeoDCAT conversion
           <ul>
-            <li>Only gmd:pointOfContact responsible party were used to generate GeoDCAT stakeholders. Now, all the gmd:CI_ResponsibleParty are used</li>
-            <li>Prevent duplicated dcat:theme when there is 2 or more TopicCategories leading to the same data.gov-theme</li>
+            <li>Only gmd:pointOfContact responsible party were used to generate GeoDCAT stakeholders. Now, all the
+              gmd:CI_ResponsibleParty are used
+            </li>
+            <li>Prevent duplicated dcat:theme when there is 2 or more TopicCategories leading to the same
+              data.gov-theme
+            </li>
           </ul>
         </li>
         <li>Rename facet <code>vlStatus</code> to <code>statute</code></li>
@@ -49,7 +74,8 @@
           <code>dataPublisher</code> (Note: the previously existing facets "recordOwner" and "owner" contain information
           about the actual GeoNetwork editor of the metadata)
         </li>
-        <li>Add organization in facet <code>dataOrgName</code> that contains the organization name no matter the role</li>
+        <li>Add organization in facet <code>dataOrgName</code> that contains the organization name no matter the role
+        </li>
         <li>Fix validation: Distribution was mandatory for metadata-dcat but should be optional</li>
       </ol>
     </section>
@@ -88,7 +114,8 @@
       <ol>
         <li>MVP: Imlement ISO19139 to GeoDCAT conversion</li>
         <li>Add new facet resultType containing all possible facets values: "all" <br>
-          Exemple URL: <a target="_blank" href="https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all">https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all</a>
+          Exemple URL: <a target="_blank"
+                          href="https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all">https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all</a>
         </li>
         <li>Add facets for elements:
           <table class="bullet-table">
@@ -148,7 +175,8 @@
         </li>
         <li>Add the services mdcat extension elements to the Open DCAT editor</li>
         <li>Add dct:subject element to the XSD</li>
-        <li>Define the "GDI-Vlaanderen-trefwoorden" vocabulary for the dct:subject element (WIP: Multiple thesauri should
+        <li>Define the "GDI-Vlaanderen-trefwoorden" vocabulary for the dct:subject element (WIP: Multiple thesauri
+          should
           be accepted in dct:subject. It is only the case for "GDI-Vlaanderen-trefwoorden" currently)
         </li>
         <li>Automatically add the "Vlaamse Open data" keyword as a dct:subject when editing a dcat-ap-vl metadata</li>
@@ -167,7 +195,8 @@
         <li>Hide profile specific extension fields from editor when template profile doesn't match</li>
         <li>Add templates for DCAT-AP VL records</li>
         <li>Add validation rules specific to DCAT-AP VL records</li>
-        <li>Enforce "Vlaamse Open Data" dcat:theme on DCAT-AP VL records. (WIP: There is still no way of selecting themes
+        <li>Enforce "Vlaamse Open Data" dcat:theme on DCAT-AP VL records. (WIP: There is still no way of selecting
+          themes
           from another vocabulary. data.gov.be theme are still the only one that can be manually selected)
         </li>
         <li>Update indexing to index the "Vlaamse Open Data" dcat:theme as a GDI-Vlaanderen trefwoord</li>
@@ -236,7 +265,8 @@
         <li>Update the DataService fields labels in the view and the editor according to the
           <a href="https://data.vlaanderen.be/doc/applicatieprofiel/metadata-dcat/" target="_blank">metadata-dcat
             applicatieprofiel</a></li>
-        <li>Move landingspaginaVoorAuthenticatie, landingspaginaVoorStatusinformatie, landingspaginaVoorGebruiksinformatie
+        <li>Move landingspaginaVoorAuthenticatie, landingspaginaVoorStatusinformatie,
+          landingspaginaVoorGebruiksinformatie
           from the service information section to the usage information section
         </li>
         <li>Renamed schematron validation rules set. We now have the three following schematrons:
@@ -377,7 +407,8 @@
         <li>Added the field dcat:accessService to dataset distribution</li>
         <li>Modified view to display the content of dcat:accessService as a clickable link and added translations</li>
         <li>Updated the dcat-ap plugin and the core with the latest changes of the dcat-ap 1.2 branch</li>
-        <li>When linking a dataset to a service, we now can also modify the linked dataset with the URL of the service in
+        <li>When linking a dataset to a service, we now can also modify the linked dataset with the URL of the service
+          in
           the mean time:
           <img src="img/modifyDatasetWhenLinkingToService.png" alt="Checkbox to modify the linked dataset">
         </li>
@@ -410,7 +441,8 @@
     <section id="20/10/2020">
       <ol>
         <li>Fixed a bug where a dct:identifier was added when clicking on the + button to add a keyword</li>
-        <li>Fixing few translations: labels sometimes starting with lower case, sometime with upper-case => All changed to
+        <li>Fixing few translations: labels sometimes starting with lower case, sometime with upper-case => All changed
+          to
           upper-case
         </li>
         <li>Fixed a bug where the content of vcard:hasUrl was edited instead of the vcard:hasUrl/@rdf:resource attribute
