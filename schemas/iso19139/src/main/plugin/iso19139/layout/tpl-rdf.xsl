@@ -675,32 +675,29 @@
       <xsl:choose>
         <!-- Service specific -->
         <xsl:when test="$ResourceType = 'service'">
-          <!-- Online resources -->
-          <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
-            <xsl:variable name="function" select="gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue"/>
-            <xsl:variable name="linkage" select="gmd:linkage/gmd:URL"/>
-            <xsl:choose>
-              <xsl:when test="$function = 'information'">
-                <dcat:endpointDescription rdf:resource="{$linkage}"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <dcat:endpointUrl rdf:resource="{$linkage}"/>
-              </xsl:otherwise>
-            </xsl:choose>
+          <!-- Contains operations -->
+          <xsl:for-each select="gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
+            <dcat:endpointUrl rdf:resource="{.}"/>
+          </xsl:for-each>
 
+          <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
+            <dcat:endpointDescription rdf:resource="{.}"/>
+          </xsl:for-each>
+
+          <!-- Online resources -->
+          <xsl:for-each-group select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:protocol/*" group-by=".">
             <!-- Conform to standard -->
-            <xsl:variable name="Protocol" select="gmd:protocol/*/text()"/>
-            <xsl:if test="$Protocol != ''">
+            <xsl:if test="normalize-space(current-grouping-key()) != ''">
               <!-- TODO: map to INSPIRE-PV codelist values: https://inspire.ec.europa.eu/metadata-codelist/ProtocolValue -->
               <dct:conformsTo>
                 <dct:Standard>
                   <dct:title>
-                    <xsl:value-of select="$Protocol"/>
+                    <xsl:value-of select="current-grouping-key()"/>
                   </dct:title>
                 </dct:Standard>
               </dct:conformsTo>
             </xsl:if>
-          </xsl:for-each>
+          </xsl:for-each-group>
           <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
 
           <!-- Coupled resources -->
