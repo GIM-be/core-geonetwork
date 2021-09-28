@@ -545,7 +545,7 @@
 
       <xsl:if test="$standardName != '' or $standardVersion != ''">
         <dct:conformsTo>
-          <dct:Standard rdf:about="https://inspire.ec.europa.eu/documents/geodcat-ap">
+          <dct:Standard>
             <dct:title>GeoDCAT-AP-VL</dct:title>
           </dct:Standard>
         </dct:conformsTo>
@@ -1650,7 +1650,7 @@
       <xsl:when test="starts-with($crs, 'http://') or starts-with($crs, 'https://')">
         <dct:conformsTo>
           <dct:Standard>
-            <xsl:attribute name="rdf:about" select="$crs"/>
+            <xsl:attribute name="rdf:resource" select="$crs"/>
           </dct:Standard>
         </dct:conformsTo>
       </xsl:when>
