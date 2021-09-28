@@ -465,16 +465,7 @@
       <xsl:if test="$standardName != '' or $standardVersion != ''">
         <dct:conformsTo>
           <dct:Standard rdf:about="https://inspire.ec.europa.eu/documents/geodcat-ap">
-            <xsl:if test="$standardName != ''">
-              <dct:title>
-                <xsl:value-of select="$standardName"/>
-              </dct:title>
-            </xsl:if>
-            <xsl:if test="$standardVersion != ''">
-              <owl:versionInfo>
-                <xsl:value-of select="$standardVersion"/>
-              </owl:versionInfo>
-            </xsl:if>
+            <dct:title>GeoDCAT-AP-VL</dct:title>
           </dct:Standard>
         </dct:conformsTo>
       </xsl:if>
