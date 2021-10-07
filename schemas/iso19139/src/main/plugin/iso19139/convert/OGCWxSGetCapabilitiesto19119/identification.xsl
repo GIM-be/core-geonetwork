@@ -22,7 +22,7 @@
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
 <!--	xmlns:wcs="http://www.opengis.net/wcs" -->
-<xsl:stylesheet xmlns="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ows="http://www.opengis.net/ows" xmlns:ows11="http://www.opengis.net/ows/1.1" xmlns:ows2="http://www.opengis.net/ows/2.0" xmlns:wcs="http://www.opengis.net/wcs/2.0" xmlns:wms="http://www.opengis.net/wms" xmlns:wmts="http://www.opengis.net/wmts/1.0" xmlns:wps="http://www.opengeospatial.net/wps" xmlns:wps1="http://www.opengis.net/wps/1.0.0" xmlns:wps2="http://www.opengis.net/wps/2.0" xmlns:gml="http://www.opengis.net/gml" xmlns:math="http://exslt.org/math" xmlns:exslt="http://exslt.org/common" xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0" xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0" xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:theme="http://inspire.ec.europa.eu/theme_register" xmlns:grg="http://www.isotc211.org/2005/grg" version="2.0" extension-element-prefixes="math exslt wcs ows ows11 ows2 wps wps1 wps2 wfs gml inspire_common inspire_vs" exclude-result-prefixes="#all">
+<xsl:stylesheet xmlns="http://www.isotc211.org/2005/gmd" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:topic="http://inspire.ec.europa.eu/metadata-codelist_register/metadata-codelist/item" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ows="http://www.opengis.net/ows" xmlns:ows11="http://www.opengis.net/ows/1.1" xmlns:ows2="http://www.opengis.net/ows/2.0" xmlns:wcs="http://www.opengis.net/wcs/2.0" xmlns:wms="http://www.opengis.net/wms" xmlns:wmts="http://www.opengis.net/wmts/1.0" xmlns:wps="http://www.opengeospatial.net/wps" xmlns:wps1="http://www.opengis.net/wps/1.0.0" xmlns:wps2="http://www.opengis.net/wps/2.0" xmlns:gml="http://www.opengis.net/gml" xmlns:math="http://exslt.org/math" xmlns:exslt="http://exslt.org/common" xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0" xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0" xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:theme="http://inspire.ec.europa.eu/theme_register" xmlns:grg="http://www.isotc211.org/2005/grg" version="2.0" extension-element-prefixes="math exslt wcs ows ows11 ows2 wps wps1 wps2 wfs gml inspire_common inspire_vs" exclude-result-prefixes="#all">
 	<!--variabelen gebruikt in template Keywords-->
 	<xsl:variable name="gdi-vlaanderen-regios-thesaurus" select="'GDI-Vlaanderen regio''s'"/>
 	<xsl:variable name="gdi-vlaanderen-regios-thesaurus-anchor-href" select="'https://'"/>
@@ -155,7 +155,24 @@
 						</CI_Date>
 					</date>
 				</xsl:if>
-				<!-- DateOfPublication in case of no DateOfPublication yet -->
+				<!-- MetadataDate as DateOfRevision -->
+				<xsl:variable name="MetadataDateAsDateOfRevision">
+					<xsl:value-of select="//*:ExtendedCapabilities/inspire_common:MetadataDate"/>
+				</xsl:variable>
+				<date>
+						<CI_Date>
+							<date>
+								<gco:Date>
+									<xsl:value-of select="$MetadataDateAsDateOfRevision"/>
+								</gco:Date>
+							</date>
+							<dateType>
+								<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision"/>
+							</dateType>
+						</CI_Date>
+					</date>
+
+				<!--DateOfPublication in case of no DateOfPublication yet 
 				<xsl:if test="string-length($DateOfPublication)=0">
 					<date>
 						<CI_Date>
@@ -170,7 +187,7 @@
 							</dateType>
 						</CI_Date>
 					</date>
-				</xsl:if>
+				</xsl:if>-->
 			</CI_Citation>
 		</citation>
 		<!-- ============================================================================= -->
@@ -301,6 +318,70 @@
 				</descriptiveKeywords>
 			</xsl:when>
 		</xsl:choose>
+		<!-- ============================================================================= -->
+		<!-- === topicCategory MD DS gaat naar Keywords Service === -->
+		<!-- ============================================================================= -->
+		<descriptiveKeywords>
+			<MD_Keywords>
+				<!-- Stap 1: opvullen van in memory XML-input | soortgelijk aan 'array' -->
+				<xsl:variable name="topicCategories">
+					<!-- 'distinct' op metadataURLs in de capabilities van ALLE soorten services -->
+					<xsl:for-each select="//wms:MetadataURL/wms:OnlineResource/@xlink:href[not(.=preceding::wms:OnlineResource/@xlink:href)] |
+					 //wfs:FeatureTypeList/wfs:FeatureType/wfs:MetadataURL[not(.=preceding::wfs:MetadataURL)] |
+					 //wcs:Contents/wcs:CoverageSummary/ows2:Metadata/@xlink:href[not(.=preceding::ows2:Metadata/@xlink:href)] |
+					 //wmts:Contents/wmts:Layer/ows11:Metadata/@xlink:href[not(.=preceding::ows11:Metadata/@xlink:href)]">
+						<xsl:choose>
+							<xsl:when test="contains(.,'srv/dut/csw')">
+								<xsl:for-each select="document(.)//gmd:topicCategory">
+									<xsl:variable name="topicCategory" select="./gmd:MD_TopicCategoryCode"/>
+									<topicCategory>
+										<xsl:value-of select="$topicCategory"/>
+									</topicCategory>
+								</xsl:for-each>
+							</xsl:when>
+						</xsl:choose>
+					</xsl:for-each>
+				</xsl:variable>
+				
+				<!-- Stap 2: ophalen en verwerken van de in memory opgeslagen XML-input -->
+				<!-- 'distinct' op topicCategory uit node topicCategories -->
+				<xsl:for-each select="exslt:node-set($topicCategories)/*[name(.)='topicCategory'][not(.=preceding::*[name(.)='topicCategory'])]">
+					<xsl:variable name="topicCategory" select="."/>
+					<xsl:variable name="topicCategoryURL">
+						<xsl:value-of select="concat('https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/', $topicCategory)"/>
+					</xsl:variable>
+					<xsl:variable name="topicCategoryURLlabel">
+						<xsl:value-of select="concat($topicCategoryURL, '/',  $topicCategory, '.nl.xml')"/>
+					</xsl:variable>
+					<xsl:variable name="topicCategorylabel">
+						<xsl:value-of select="document($topicCategoryURLlabel)//topic:value/topic:label"/>
+					</xsl:variable>
+					<keyword>
+						<gmx:Anchor xlink:href="{$topicCategoryURL}">
+							<xsl:value-of select="$topicCategorylabel"/>
+						</gmx:Anchor>
+					</keyword>
+				</xsl:for-each>
+				
+				<thesaurusName>
+					<CI_Citation>
+						<title>
+							<gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/TopicCategory">Onderwerpcategorieën overeenkomstig EN ISO 19115</gmx:Anchor>
+						</title>
+						<date>
+							<CI_Date>
+								<date>
+									<gco:Date>2006-07-01</gco:Date>
+								</date>
+								<dateType>
+									<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+								</dateType>
+							</CI_Date>
+						</date>
+					</CI_Citation>
+				</thesaurusName>
+			</MD_Keywords>
+		</descriptiveKeywords>
 		<!-- ============================================================================= -->
 		<!-- === aanroepen template Keywords === -->
 		<!-- ============================================================================= -->
