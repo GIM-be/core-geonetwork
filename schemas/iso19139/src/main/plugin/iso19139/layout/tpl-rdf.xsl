@@ -1312,18 +1312,18 @@
   <!-- Conformity -->
   <xsl:template name="Conformity" match="gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:specification/gmd:CI_Citation">
     <xsl:param name="MetadataLanguage"/>
-    <xsl:variable name="specinfo">
-      <dct:title xml:lang="{$MetadataLanguage}">
-        <xsl:value-of select="geonet:getLabel(gmd:title)"/>
-      </dct:title>
-      <!--<xsl:apply-templates select="gmd:date/gmd:CI_Date"/>-->
-    </xsl:variable>
     <xsl:if test="../../gmd:pass/gco:Boolean = 'true'">
       <xsl:choose>
         <xsl:when test="../@xlink:href and ../@xlink:href != ''">
           <dct:conformsTo rdf:resource="{geonet:escapeURI(../@xlink:href)}"/>
         </xsl:when>
         <xsl:otherwise>
+          <xsl:variable name="specinfo">
+            <dct:title xml:lang="{$MetadataLanguage}">
+              <xsl:value-of select="geonet:getLabel(gmd:title)"/>
+            </dct:title>
+            <!--<xsl:apply-templates select="gmd:date/gmd:CI_Date"/>-->
+          </xsl:variable>
           <dct:conformsTo>
             <dct:Standard>
               <xsl:copy-of select="$specinfo"/>
@@ -1651,6 +1651,7 @@
         <dct:conformsTo>
           <dct:Standard>
             <xsl:attribute name="rdf:resource" select="$crs"/>
+            <dct:type rdf:resource="http://inspire.ec.europa.eu/glossary/SpatialReferenceSystem"/>
           </dct:Standard>
         </dct:conformsTo>
       </xsl:when>
