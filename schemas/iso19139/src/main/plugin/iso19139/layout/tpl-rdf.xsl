@@ -45,6 +45,11 @@
 
 -->
 
+<!--
+  Modified by GIM
+  Source XSL: https://github.com/SEMICeu/iso-19139-to-dcat-ap/blob/master/iso-19139-to-dcat-ap.xsl
+-->
+
 <xsl:stylesheet xmlns:adms="http://www.w3.org/ns/adms#"
                 xmlns:cnt="http://www.w3.org/2011/content#"
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -670,6 +675,9 @@
 
       <!-- spatial resolution -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution"/>
+
+      <!-- Version information -->
+      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/*/gmd:edition"/>
 
       <!-- Resource type specific -->
       <xsl:choose>
@@ -1903,6 +1911,16 @@
 
       <!--TODO: gmd:equivalentScale-->
     </xsl:choose>
+  </xsl:template>
+
+  <!-- Version info -->
+  <xsl:template name="VersionInfo" match="gmd:edition">
+    <xsl:variable name="label" select="normalize-space(geonet:getLabel(.))"/>
+    <xsl:if test="$label != ''">
+      <owl:versionInfo>
+        <xsl:value-of select="$label"/>
+      </owl:versionInfo>
+    </xsl:if>
   </xsl:template>
 
   <!-- Multilingual text -->
