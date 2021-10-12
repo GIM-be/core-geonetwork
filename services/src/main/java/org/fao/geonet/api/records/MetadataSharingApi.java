@@ -273,8 +273,8 @@ public class MetadataSharingApi {
         //--- and are not sent to the server. So we cannot remove them
         UserSession us = ApiUtils.getUserSession(session);
 
-        // For record other than dcat-ap, only administrators can change privileges
-        if (!metadata.getDataInfo().getSchemaId().equals("dcat-ap") && us.getProfile() != Profile.Administrator) {
+        // For record other than dcat2, only administrators can change privileges
+        if (!metadata.getDataInfo().getSchemaId().equals("dcat2") && us.getProfile() != Profile.Administrator) {
             throw new NotAllowedException(API_RESPONSE_NOT_ALLOWED_ONLY_ADMIN);
         }
 
