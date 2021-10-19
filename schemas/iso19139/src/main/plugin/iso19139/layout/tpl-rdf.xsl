@@ -1221,10 +1221,10 @@
         <xsl:if test="$IndividualName = '' and $OrganisationName != ''">
           <xsl:copy-of select="$OrganisationNameAsIndividualName-vCard"/>
         </xsl:if>
-        <xsl:copy-of select="$Telephone-vCard"/>
+        <xsl:copy-of select="$Address-vCard"/>
         <xsl:copy-of select="$Email-vCard"/>
         <xsl:copy-of select="$URL-vCard"/>
-        <xsl:copy-of select="$Address-vCard"/>
+        <xsl:copy-of select="$Telephone-vCard"/>
       </xsl:variable>
 
       <vcard:Organization>
@@ -1354,11 +1354,10 @@
   <!-- Geographic extent -->
   <xsl:template name="GeographicExtent" match="gmd:identificationInfo[1]/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement">
     <xsl:param name="MetadataLanguage"/>
-
-    <xsl:apply-templates select="gmd:EX_GeographicDescription/gmd:geographicIdentifier/*">
-      <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-    </xsl:apply-templates>
     <xsl:apply-templates select="gmd:EX_GeographicBoundingBox"/>
+    <!--<xsl:apply-templates select="gmd:EX_GeographicDescription/gmd:geographicIdentifier/*">-->
+    <!--  <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>-->
+    <!--</xsl:apply-templates>-->
   </xsl:template>
 
   <!-- Geographic identifier -->
@@ -1667,7 +1666,7 @@
       <xsl:when test="starts-with($crs, 'http://') or starts-with($crs, 'https://')">
         <dct:conformsTo>
           <dct:Standard>
-            <xsl:attribute name="rdf:resource" select="$crs"/>
+            <xsl:attribute name="rdf:about" select="$crs"/>
             <dct:type rdf:resource="http://inspire.ec.europa.eu/glossary/SpatialReferenceSystem"/>
           </dct:Standard>
         </dct:conformsTo>
