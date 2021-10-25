@@ -23,43 +23,24 @@
 
 package org.fao.geonet.kernel.search;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.StringTokenizer;
-
+import com.google.common.base.Splitter;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.facet.DrillDownQuery;
 import org.apache.lucene.facet.FacetsConfig;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.*;
 import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.FuzzyQuery;
-import org.apache.lucene.search.MatchAllDocsQuery;
-import org.apache.lucene.search.NumericRangeQuery;
-import org.apache.lucene.search.PhraseQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TermRangeQuery;
-import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.automaton.LevenshteinAutomata;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.setting.SettingInfo;
 import org.fao.geonet.utils.Log;
 
-import com.google.common.base.Splitter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * Class to create a Lucene query from a {@link LuceneQueryInput} representing a search request.
@@ -379,7 +360,28 @@ public class LuceneQueryBuilder {
     private void addFacetQuery(String facetQuery, DrillDownQuery result) {
         for (String drillDownParam : facetQuery.split(FACET_QUERY_AND_SEPARATOR)) {
             DrillDownPath drillDownPath = new DrillDownPath(drillDownParam);
-            result.add(drillDownPath.getDimension(), drillDownPath.getPath());
+            boolean isOrQuery = false;
+            BooleanQuery booleanQuery = new BooleanQuery(true);
+            String text = drillDownPath.getPath().length>0 ? drillDownPath.getPath()[0] : "";
+            if (StringUtils.isNotBlank(text) && text.contains(OR_SEPARATOR)) {
+                BooleanClause.Occur occur = LuceneUtils.convertRequiredAndProhibitedToOccur(false, false);
+                for (String token : Splitter.on(OR_SEPARATOR).trimResults().split(text)) {
+                    // TODO : here we should use similarity if set
+                    isOrQuery = true;
+                    DrillDownQuery subQuery = new DrillDownQuery(_taxonomyConfiguration);
+                    subQuery.add(drillDownPath.getDimension(), token);
+                    // The subquery may be null if the analyzed string is null
+                    if (subQuery != null) {
+                        BooleanClause clause = new BooleanClause(subQuery, occur);
+                        booleanQuery.add(clause);
+                    }
+                }
+            }
+            if (text.contains(OR_SEPARATOR)) {
+                result.add(drillDownPath.getDimension(), booleanQuery);
+            } else {
+                result.add(drillDownPath.getDimension(), drillDownPath.getPath());
+            }
         }
     }
 
