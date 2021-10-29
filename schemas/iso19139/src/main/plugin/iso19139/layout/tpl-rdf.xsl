@@ -282,7 +282,7 @@
           <dct:LicenseDocument rdf:about="https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht">
             <dct:type>
               <skos:Concept rdf:about="http://purl.org/adms/licencetype/JurisdictionWithinTheEU">
-                <skos:prefLabel xml:lang="nl">Jurisdiction within the EU</skos:prefLabel>
+                <skos:prefLabel xml:lang="nl">Rechtsbevoegheid binnen de EU</skos:prefLabel>
                 <skos:prefLabel xml:lang="en">Jurisdiction within the EU</skos:prefLabel>
                 <skos:prefLabel xml:lang="fr">Jurisdiction within the EU</skos:prefLabel>
                 <skos:prefLabel xml:lang="de">Jurisdiction within the EU</skos:prefLabel>
@@ -693,13 +693,13 @@
         <!-- Service specific -->
         <xsl:when test="$ResourceType = 'service'">
           <!-- Contains operations -->
-          <xsl:for-each select="gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-            <dcat:endpointUrl rdf:resource="{.}"/>
-          </xsl:for-each>
+          <xsl:for-each-group select="gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL" group-by=".">
+            <dcat:endpointUrl rdf:resource="{normalize-space(current-grouping-key())}"/>
+          </xsl:for-each-group>
 
-          <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-            <dcat:endpointDescription rdf:resource="{.}"/>
-          </xsl:for-each>
+          <xsl:for-each-group select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage/gmd:URL" group-by=".">
+            <dcat:endpointDescription rdf:resource="{normalize-space(current-grouping-key())}"/>
+          </xsl:for-each-group>
 
           <!-- Online resources -->
           <xsl:for-each-group select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:protocol/*" group-by=".">
@@ -961,17 +961,6 @@
       <xsl:value-of select="normalize-space(gmd:individualName/*)"/>
     </xsl:param>
 
-    <xsl:param name="IndividualName-FOAF">
-      <xsl:for-each select="gmd:individualName">
-        <foaf:name xml:lang="{$MetadataLanguage}">
-          <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
-        </foaf:name>
-        <xsl:call-template name="LocalisedString">
-          <xsl:with-param name="term">foaf:name</xsl:with-param>
-        </xsl:call-template>
-      </xsl:for-each>
-    </xsl:param>
-
     <xsl:param name="IndividualName-vCard">
       <xsl:for-each select="gmd:individualName">
         <vcard:fn xml:lang="{$MetadataLanguage}">
@@ -1185,10 +1174,7 @@
 
     <xsl:param name="ROInfo">
       <xsl:variable name="info">
-        <xsl:if test="$IndividualName != ''">
-          <xsl:copy-of select="$IndividualName-FOAF"/>
-        </xsl:if>
-        <xsl:if test="$IndividualName = '' and $OrganisationName != ''">
+        <xsl:if test="$OrganisationName != ''">
           <xsl:copy-of select="$OrganisationName-FOAF"/>
         </xsl:if>
         <xsl:copy-of select="$Telephone"/>
@@ -1215,10 +1201,10 @@
         <xsl:if test="$IndividualName != ''">
           <xsl:copy-of select="$IndividualName-vCard"/>
         </xsl:if>
-        <xsl:if test="$IndividualName != '' and $OrganisationName != ''">
+        <xsl:if test="$OrganisationName != ''">
           <xsl:copy-of select="$OrganisationName-vCard"/>
         </xsl:if>
-        <xsl:if test="$IndividualName = '' and $OrganisationName != ''">
+        <xsl:if test="$IndividualName = ''">
           <xsl:copy-of select="$OrganisationNameAsIndividualName-vCard"/>
         </xsl:if>
         <xsl:copy-of select="$Address-vCard"/>
