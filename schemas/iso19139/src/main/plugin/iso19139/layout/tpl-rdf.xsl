@@ -415,12 +415,11 @@
       </xsl:if>
     </xsl:param>
 
-    <xsl:param name="ConstraintsRelatedToAccessAndUse">
+    <xsl:param name="LicensesConstaints">
       <xsl:variable name="licensesConstraintsAnchor" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/gmx:Anchor|
                                                              gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/gmx:Anchor"/>
       <xsl:variable name="licensesConstraintsCharacterString" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/gco:CharacterString|
                                                                       gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString"/>
-
       <xsl:variable name="modelLicencie">
         <xsl:for-each select="$licensesConstraintsAnchor">
           <xsl:variable name="currentUrl" select="translate(@xlink:href, $uppercase, $lowercase)"/>
@@ -431,7 +430,6 @@
           </xsl:for-each>
         </xsl:for-each>
       </xsl:variable>
-
       <xsl:choose>
         <xsl:when test="$modelLicencie and normalize-space($modelLicencie) != ''">
           <xsl:copy-of select="$modelLicencie/*[1]"/>
@@ -445,7 +443,10 @@
           </xsl:element>
         </xsl:otherwise>
       </xsl:choose>
+    </xsl:param>
 
+
+    <xsl:param name="AccessRights">
       <!-- Mapping revised for compliance with the 2017 edition of the INSPIRE Metadata Technical Guidelines -->
       <xsl:variable name="firstConstraint" select="gmd:identificationInfo[count(*/gmd:resourceConstraints/*/gmd:accessConstraints) > 0]/*/gmd:resourceConstraints/*"/>
       <xsl:choose>
@@ -688,6 +689,9 @@
       <!-- Version information -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/*/gmd:edition"/>
 
+      <!-- Access Rights -->
+      <xsl:copy-of select="$AccessRights"/>
+
       <!-- Resource type specific -->
       <xsl:choose>
         <!-- Service specific -->
@@ -715,7 +719,7 @@
               </dct:conformsTo>
             </xsl:if>
           </xsl:for-each-group>
-          <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
+          <xsl:copy-of select="$LicensesConstaints"/>
 
           <!-- Coupled resources -->
           <xsl:apply-templates select="gmd:identificationInfo[1]/*/srv:operatesOn">
@@ -805,7 +809,7 @@
                           <xsl:for-each select="$linkage/gmd:URL">
                             <dcat:accessURL rdf:resource="{geonet:escapeURI(.)}"/>
                           </xsl:for-each>
-                          <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
+                          <xsl:copy-of select="$LicensesConstaints"/>
                           <xsl:copy-of select="$SpatialRepresentationType"/>
                           <xsl:copy-of select="."/>
                           <dct:conformsTo>
