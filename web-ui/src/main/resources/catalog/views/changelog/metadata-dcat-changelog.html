@@ -21,6 +21,23 @@
       <span>See also <a href="main-changelog.html">Main changelog</a></span>
     </div>
 
+    <section id="02/11/2021">
+      <ol>
+        <li>Add missing index field "fileId" for object catalogs metadata</li>
+        <li>Update ISO 19139 to GeoDCAT conversion
+          <ol>
+            <li>Add missing NL translation for JurisdictionWithinTheEU license</li>
+            <li>Prevent duplicated dct:endpointUrl and dct:endpointDescription</li>
+            <li>foaf:Agent/foaf:name is now only mapped from gmd:organisationName. Mapping with gmd:individualName is
+              removed
+            </li>
+            <li>Dataset dct:accessRights moved from dcat:Distribution level to dcat:Dataset</li>
+            <li>Map resources constraints other than model licences to dct:rights</li>
+          </ol>
+        </li>
+      </ol>
+    </section>
+
     <section id="25/10/2021">
       <ol>
         <li>Fix missing default language tag when adding dcat:keyword</li>

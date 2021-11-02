@@ -120,6 +120,7 @@
       <xsl:apply-templates select="/gfc:FC_FeatureCatalogue/@uuid|/gfc:FC_FeatureType/@uuid">
         <xsl:with-param name="name" select="'fileId'"/>
       </xsl:apply-templates>
+      <Field name="fileId" string="{string(/gfc:FC_FeatureCatalogue/@uuid|/gfc:FC_FeatureType/@uuid)}" store="false" index="true"/>
 
       <xsl:for-each select="/gfc:FC_FeatureCatalogue/gmx:scope/gco:CharacterString">
         <Field name="topicCat" string="{string(.)}" store="true" index="true"/>

@@ -277,12 +277,13 @@
       <url>https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht</url>
       <urlKeyword>Webdiensten-Gebruiksrecht</urlKeyword>
       <urlKeyword>webdiensten-gebruiksrecht</urlKeyword>
+      <scope>service</scope>
       <content>
         <dct:license>
           <dct:LicenseDocument rdf:about="https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht">
             <dct:type>
               <skos:Concept rdf:about="http://purl.org/adms/licencetype/JurisdictionWithinTheEU">
-                <skos:prefLabel xml:lang="nl">Jurisdiction within the EU</skos:prefLabel>
+                <skos:prefLabel xml:lang="nl">Rechtsbevoegheid binnen de EU</skos:prefLabel>
                 <skos:prefLabel xml:lang="en">Jurisdiction within the EU</skos:prefLabel>
                 <skos:prefLabel xml:lang="fr">Jurisdiction within the EU</skos:prefLabel>
                 <skos:prefLabel xml:lang="de">Jurisdiction within the EU</skos:prefLabel>
@@ -415,37 +416,45 @@
       </xsl:if>
     </xsl:param>
 
-    <xsl:param name="ConstraintsRelatedToAccessAndUse">
-      <xsl:variable name="licensesConstraintsAnchor" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/gmx:Anchor|
-                                                             gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/gmx:Anchor"/>
-      <xsl:variable name="licensesConstraintsCharacterString" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/gco:CharacterString|
-                                                                      gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString"/>
+    <xsl:param name="LicenseAndRightsConstraints">
+      <xsl:variable name="constraints" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/*|
+                                               gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation[not(../gmd:useConstraints or ../gmd:accessConstraints)]/*"/>
 
-      <xsl:variable name="modelLicencie">
-        <xsl:for-each select="$licensesConstraintsAnchor">
+      <!-- Pick the first model license and map it to dct:license -->
+      <xsl:variable name="modelLicences">
+        <xsl:for-each select="$constraints[name() = 'gmx:Anchor']">
           <xsl:variable name="currentUrl" select="translate(@xlink:href, $uppercase, $lowercase)"/>
-          <xsl:for-each select="$modelLicencieKeywords/license/urlKeyword">
-            <xsl:if test="contains($currentUrl, string())">
-              <xsl:copy-of select="../content/*"/>
-            </xsl:if>
-          </xsl:for-each>
+          <xsl:variable name="modelLicence" select="$modelLicencieKeywords/license[count(urlKeyword[contains($currentUrl, .)]) > 0 and (not(scope) or count(scope[$ResourceType = .]) > 0)]/content/*"/>
+          <xsl:if test="$modelLicence">
+            <xsl:copy-of select="$modelLicence"/>
+          </xsl:if>
         </xsl:for-each>
       </xsl:variable>
+      <xsl:if test="normalize-space($modelLicences) != ''">
+        <xsl:copy-of select="$modelLicences/*[1]"/>
+      </xsl:if>
 
-      <xsl:choose>
-        <xsl:when test="$modelLicencie and normalize-space($modelLicencie) != ''">
-          <xsl:copy-of select="$modelLicencie/*[1]"/>
-        </xsl:when>
-        <xsl:when test="$licensesConstraintsCharacterString[contains(., 'Gratis Open Data licentie')]">
-          <xsl:copy-of select="$modelLicencieKeywords/license[url = 'https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0']/dct:license"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:element name="dct:license">
-            <xsl:attribute name="rdf:resource" select="geonet:escapeURI($MetadataViewUrl)"/>
-          </xsl:element>
-        </xsl:otherwise>
-      </xsl:choose>
+      <!-- Map all the other constraints to dct:rights -->
+      <xsl:for-each select="$constraints">
+        <xsl:variable name="currentUrl" select="translate(@xlink:href, $uppercase, $lowercase)"/>
+        <xsl:variable name="modelLicence" select="$modelLicencieKeywords/license[count(urlKeyword[contains($currentUrl, .)]) > 0 and (not(scope) or count(scope[$ResourceType = .]) > 0)]/content/*"/>
+        <xsl:if test="not($modelLicence)">
+          <dct:rights>
+            <dct:RightsStatement>
+              <xsl:if test="name() = 'gmx:Anchor'">
+                <xsl:attribute name="rdf:about" select="@xlink:href"/>
+              </xsl:if>
+              <dct:title>
+                <xsl:value-of select="string()"/>
+              </dct:title>
+            </dct:RightsStatement>
+          </dct:rights>
+        </xsl:if>
+      </xsl:for-each>
+    </xsl:param>
 
+
+    <xsl:param name="AccessRights">
       <!-- Mapping revised for compliance with the 2017 edition of the INSPIRE Metadata Technical Guidelines -->
       <xsl:variable name="firstConstraint" select="gmd:identificationInfo[count(*/gmd:resourceConstraints/*/gmd:accessConstraints) > 0]/*/gmd:resourceConstraints/*"/>
       <xsl:choose>
@@ -688,18 +697,21 @@
       <!-- Version information -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/*/gmd:edition"/>
 
+      <!-- Access Rights -->
+      <xsl:copy-of select="$AccessRights"/>
+
       <!-- Resource type specific -->
       <xsl:choose>
         <!-- Service specific -->
         <xsl:when test="$ResourceType = 'service'">
           <!-- Contains operations -->
-          <xsl:for-each select="gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-            <dcat:endpointUrl rdf:resource="{.}"/>
-          </xsl:for-each>
+          <xsl:for-each-group select="gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL" group-by=".">
+            <dcat:endpointUrl rdf:resource="{normalize-space(current-grouping-key())}"/>
+          </xsl:for-each-group>
 
-          <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-            <dcat:endpointDescription rdf:resource="{.}"/>
-          </xsl:for-each>
+          <xsl:for-each-group select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage/gmd:URL" group-by=".">
+            <dcat:endpointDescription rdf:resource="{normalize-space(current-grouping-key())}"/>
+          </xsl:for-each-group>
 
           <!-- Online resources -->
           <xsl:for-each-group select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:protocol/*" group-by=".">
@@ -715,7 +727,7 @@
               </dct:conformsTo>
             </xsl:if>
           </xsl:for-each-group>
-          <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
+          <xsl:copy-of select="$LicenseAndRightsConstraints"/>
 
           <!-- Coupled resources -->
           <xsl:apply-templates select="gmd:identificationInfo[1]/*/srv:operatesOn">
@@ -805,7 +817,7 @@
                           <xsl:for-each select="$linkage/gmd:URL">
                             <dcat:accessURL rdf:resource="{geonet:escapeURI(.)}"/>
                           </xsl:for-each>
-                          <xsl:copy-of select="$ConstraintsRelatedToAccessAndUse"/>
+                          <xsl:copy-of select="$LicenseAndRightsConstraints"/>
                           <xsl:copy-of select="$SpatialRepresentationType"/>
                           <xsl:copy-of select="."/>
                           <dct:conformsTo>
@@ -959,17 +971,6 @@
 
     <xsl:param name="IndividualName">
       <xsl:value-of select="normalize-space(gmd:individualName/*)"/>
-    </xsl:param>
-
-    <xsl:param name="IndividualName-FOAF">
-      <xsl:for-each select="gmd:individualName">
-        <foaf:name xml:lang="{$MetadataLanguage}">
-          <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
-        </foaf:name>
-        <xsl:call-template name="LocalisedString">
-          <xsl:with-param name="term">foaf:name</xsl:with-param>
-        </xsl:call-template>
-      </xsl:for-each>
     </xsl:param>
 
     <xsl:param name="IndividualName-vCard">
@@ -1185,10 +1186,7 @@
 
     <xsl:param name="ROInfo">
       <xsl:variable name="info">
-        <xsl:if test="$IndividualName != ''">
-          <xsl:copy-of select="$IndividualName-FOAF"/>
-        </xsl:if>
-        <xsl:if test="$IndividualName = '' and $OrganisationName != ''">
+        <xsl:if test="$OrganisationName != ''">
           <xsl:copy-of select="$OrganisationName-FOAF"/>
         </xsl:if>
         <xsl:copy-of select="$Telephone"/>
@@ -1215,10 +1213,10 @@
         <xsl:if test="$IndividualName != ''">
           <xsl:copy-of select="$IndividualName-vCard"/>
         </xsl:if>
-        <xsl:if test="$IndividualName != '' and $OrganisationName != ''">
+        <xsl:if test="$OrganisationName != ''">
           <xsl:copy-of select="$OrganisationName-vCard"/>
         </xsl:if>
-        <xsl:if test="$IndividualName = '' and $OrganisationName != ''">
+        <xsl:if test="$IndividualName = ''">
           <xsl:copy-of select="$OrganisationNameAsIndividualName-vCard"/>
         </xsl:if>
         <xsl:copy-of select="$Address-vCard"/>
