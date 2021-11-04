@@ -84,8 +84,8 @@
                 xmlns:geodcat="http://data.europa.eu/930/"
                 xmlns:dqv="http://www.w3.org/ns/dqv#"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:uuid="java:java.util.UUID"
-                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype dc gml320 xs prov gsp org uuid geodcat dqv"
+                xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
+                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype dc gml320 xs prov gsp org geodcat dqv xslutil"
                 version="2.0">
 
   <xsl:output method="xml"
@@ -396,8 +396,7 @@
           <xsl:value-of select="$UniqueResourceIdentifier[matches(., $uuidRegex)][1]"/>
         </xsl:when>
         <xsl:otherwise>
-          <!-- This should not happen -->
-          <xsl:value-of select="uuid:toString(uuid:randomUUID())"/>
+          <xsl:value-of select="xslutil:uuidFromString($RecordUUID)"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:param>
@@ -730,10 +729,9 @@
           <xsl:copy-of select="$LicenseAndRightsConstraints"/>
 
           <!-- Coupled resources -->
-          <xsl:apply-templates select="gmd:identificationInfo[1]/*/srv:operatesOn">
-            <xsl:with-param name="ResourceType" select="$ResourceType"/>
-            <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-          </xsl:apply-templates>
+          <xsl:for-each select="gmd:identificationInfo[1]/*/srv:operatesOn">
+            <dcat:servesDataset rdf:resource="{@xlink:href}"/>
+          </xsl:for-each>
         </xsl:when>
 
         <!-- Dataset specific -->
@@ -761,6 +759,36 @@
           <xsl:variable name="SpatialRepresentationType">
             <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode"/>
           </xsl:variable>
+
+          <!-- Related services -->
+          <xsl:variable name="relatedUrl" select="concat($nodeUrl, 'api/records/', $RecordUUID, '/related?type=services')"/>
+          <xsl:for-each select="document($relatedUrl)/related/services/item">
+            <xsl:variable name="serviceUniqueIdentifiers">
+              <xsl:for-each select="document(concat($nodeUrl, 'api/records/', id, '/formatters/xml'))/gmd:MD_Metadata/gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
+                <xsl:choose>
+                  <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
+                    <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:for-each>
+            </xsl:variable>
+            <xsl:variable name="serviceUuid">
+              <xsl:choose>
+                <xsl:when test="$serviceUniqueIdentifiers[matches(., $uuidRegex)][1]">
+                  <xsl:value-of select="$serviceUniqueIdentifiers[matches(., $uuidRegex)][1]"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="xslutil:uuidFromString(id)"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="serviceUri" select="concat($resourcePrefix, '/service/', $serviceUuid)"/>
+            <dct:relation rdf:resource="{geonet:escapeURI($serviceUri)}"/>
+          </xsl:for-each>
+
 
           <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
             <!-- Encoding -->
@@ -1290,38 +1318,6 @@
       </xsl:otherwise>
 
     </xsl:choose>
-  </xsl:template>
-
-  <!-- Coupled resource -->
-  <xsl:template name="CoupledResource" match="gmd:identificationInfo[1]/*/srv:operatesOn">
-    <xsl:param name="href" select="@xlink:href"/>
-    <dcat:servesDataset rdf:resource="{$href}"/>
-    <!-- Resource lookup feature (=> slow) -->
-    <!--
-    <xsl:param name="code">
-      <xsl:choose>
-        <xsl:when test="$href != '' and (starts-with($href, 'http://') or starts-with($href, 'https://'))">
-          <xsl:value-of select="document($href)//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString"/>
-        </xsl:when>
-        <xsl:when test="*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString != ''">
-          <xsl:value-of select="*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString"/>
-        </xsl:when>
-        <xsl:when test="@uuidref != ''">
-          <xsl:value-of select="@uuidref"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:param>
-    <xsl:param name="codespace">
-      <xsl:choose>
-        <xsl:when test="$href != '' and (starts-with($href, 'http://') or starts-with($href, 'https://'))">
-          <xsl:value-of select="document($href)//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace/gco:CharacterString"/>
-        </xsl:when>
-        <xsl:when test="*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace/gco:CharacterString != ''">
-          <xsl:value-of select="*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace/gco:CharacterString"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:param>
-    -->
   </xsl:template>
 
   <!-- Conformity -->
