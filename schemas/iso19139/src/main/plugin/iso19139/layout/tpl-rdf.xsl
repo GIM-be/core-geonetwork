@@ -177,6 +177,7 @@
 
   <!-- GIM custom variables -->
   <xsl:variable name="catalogUrl" select="concat(substring-before($resourcePrefix, '/resource'), '/dut')"/>
+  <xsl:variable name="relationLookup" select="true()"/>
 
   <xsl:variable name="modelLicencieKeywords">
     <license>
@@ -676,12 +677,21 @@
         </xsl:apply-templates>
       </xsl:for-each>
 
-      <xsl:for-each select="//gmd:CI_ResponsibleParty[not(gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'owner'))]">
+      <xsl:for-each select="//gmd:CI_ResponsibleParty[not(gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'owner', 'distributor'))]">
         <xsl:apply-templates select=".">
           <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
           <xsl:with-param name="ResourceType" select="$ResourceType"/>
         </xsl:apply-templates>
       </xsl:for-each>
+
+      <xsl:variable name="Distributors">
+        <xsl:for-each select="//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'distributor']">
+          <xsl:apply-templates select=".">
+            <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+            <xsl:with-param name="ResourceType" select="$ResourceType"/>
+          </xsl:apply-templates>
+        </xsl:for-each>
+      </xsl:variable>
 
       <dct:relation rdf:resource="{geonet:escapeURI($MetadataViewUrl)}"/>
 
@@ -761,34 +771,35 @@
           </xsl:variable>
 
           <!-- Related services -->
-          <xsl:variable name="relatedUrl" select="concat($nodeUrl, 'api/records/', $RecordUUID, '/related?type=services')"/>
-          <xsl:for-each select="document($relatedUrl)/related/services/item">
-            <xsl:variable name="serviceUniqueIdentifiers">
-              <xsl:for-each select="document(concat($nodeUrl, 'api/records/', id, '/formatters/xml'))/gmd:MD_Metadata/gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
+          <xsl:if test="$relationLookup">
+            <xsl:variable name="relatedUrl" select="concat($nodeUrl, 'api/records/', $RecordUUID, '/related?type=services')"/>
+            <xsl:for-each select="document($relatedUrl)/related/services/item">
+              <xsl:variable name="serviceUniqueIdentifiers">
+                <xsl:for-each select="document(concat($nodeUrl, 'api/records/', id, '/formatters/xml'))/gmd:MD_Metadata/gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
+                  <xsl:choose>
+                    <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
+                      <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:for-each>
+              </xsl:variable>
+              <xsl:variable name="serviceUuid">
                 <xsl:choose>
-                  <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
-                    <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>
+                  <xsl:when test="$serviceUniqueIdentifiers[matches(., $uuidRegex)][1]">
+                    <xsl:value-of select="$serviceUniqueIdentifiers[matches(., $uuidRegex)][1]"/>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>
+                    <xsl:value-of select="xslutil:uuidFromString(id)"/>
                   </xsl:otherwise>
                 </xsl:choose>
-              </xsl:for-each>
-            </xsl:variable>
-            <xsl:variable name="serviceUuid">
-              <xsl:choose>
-                <xsl:when test="$serviceUniqueIdentifiers[matches(., $uuidRegex)][1]">
-                  <xsl:value-of select="$serviceUniqueIdentifiers[matches(., $uuidRegex)][1]"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="xslutil:uuidFromString(id)"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:variable>
-            <xsl:variable name="serviceUri" select="concat($resourcePrefix, '/service/', $serviceUuid)"/>
-            <dct:relation rdf:resource="{geonet:escapeURI($serviceUri)}"/>
-          </xsl:for-each>
-
+              </xsl:variable>
+              <xsl:variable name="serviceUri" select="concat($resourcePrefix, '/service/', $serviceUuid)"/>
+              <dct:relation rdf:resource="{geonet:escapeURI($serviceUri)}"/>
+            </xsl:for-each>
+          </xsl:if>
 
           <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
             <!-- Encoding -->
@@ -855,6 +866,7 @@
                               </dct:title>
                             </dct:Standard>
                           </dct:conformsTo>
+                          <xsl:copy-of select="$Distributors"/>
                           <xsl:if test="$ResourceCharacterEncoding != ''">
                             <xsl:copy-of select="$ResourceCharacterEncoding"/>
                           </xsl:if>
