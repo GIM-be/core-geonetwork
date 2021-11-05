@@ -83,9 +83,12 @@
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:geodcat="http://data.europa.eu/930/"
                 xmlns:dqv="http://www.w3.org/ns/dqv#"
+                xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
-                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype dc gml320 xs prov gsp org geodcat dqv xslutil"
+                xmlns:sr="http://www.w3.org/2005/sparql-results#"
+                xmlns:fn="http://www.w3.org/2005/xpath-functions"
+                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype dc gml320 xs prov gsp org geodcat mdcat dqv xslutil sr fn"
                 version="2.0">
 
   <xsl:output method="xml"
@@ -742,6 +745,19 @@
           <xsl:for-each select="gmd:identificationInfo[1]/*/srv:operatesOn">
             <dcat:servesDataset rdf:resource="{@xlink:href}"/>
           </xsl:for-each>
+
+          <!-- Set development status to production already -->
+          <mdcat:ontwikkelingstoestand>
+            <skos:Concept xmlns:sr="http://www.w3.org/2005/sparql-results#"
+                          xmlns:fn="http://www.w3.org/2005/xpath-functions"
+                          rdf:about="https://data.vlaanderen.be/id/concept/ontwikkelingstoestand/PROD">
+              <skos:prefLabel xml:lang="nl">productie</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">production</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">production</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">production</skos:prefLabel>
+              <skos:inScheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand"/>
+            </skos:Concept>
+          </mdcat:ontwikkelingstoestand>
         </xsl:when>
 
         <!-- Dataset specific -->
