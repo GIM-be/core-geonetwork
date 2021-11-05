@@ -84,11 +84,12 @@
                 xmlns:geodcat="http://data.europa.eu/930/"
                 xmlns:dqv="http://www.w3.org/ns/dqv#"
                 xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
+                xmlns:adres="https://data.vlaanderen.be/ns/adres#"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
                 xmlns:sr="http://www.w3.org/2005/sparql-results#"
                 xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype dc gml320 xs prov gsp org geodcat mdcat dqv xslutil sr fn"
+                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype dc gml320 xs prov gsp org geodcat mdcat adres dqv xslutil sr fn"
                 version="2.0">
 
   <xsl:output method="xml"
@@ -1128,7 +1129,7 @@
       </xsl:for-each>
     </xsl:param>
 
-    <xsl:param name="Address">
+    <xsl:param name="Address-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address">
         <xsl:variable name="deliveryPoint" select="normalize-space(gmd:deliveryPoint/*)"/>
         <xsl:variable name="city" select="normalize-space(gmd:city/*)"/>
@@ -1138,75 +1139,37 @@
         <xsl:if test="$deliveryPoint != '' or $city != '' or $administrativeArea != '' or $postalCode != '' or $country != ''">
           <locn:address>
             <locn:Address>
-              <xsl:if test="$deliveryPoint != ''">
-                <locn:thoroughfare>
-                  <xsl:value-of select="$deliveryPoint"/>
-                </locn:thoroughfare>
-              </xsl:if>
+              <!--
+              <locn:thoroughfare><xsl:value-of select="$deliveryPoint"/></locn:thoroughfare>
+              <locn:postName><xsl:value-of select="$city"/></locn:postName>
+              <locn:adminUnitL1><xsl:value-of select="$country"/></locn:adminUnitL1>
+              -->
               <xsl:if test="$city != ''">
-                <locn:postName>
+                <adres:gemeentenaam>
                   <xsl:value-of select="$city"/>
-                </locn:postName>
+                </adres:gemeentenaam>
               </xsl:if>
               <xsl:if test="$administrativeArea != ''">
                 <locn:adminUnitL2>
                   <xsl:value-of select="$administrativeArea"/>
                 </locn:adminUnitL2>
               </xsl:if>
+              <xsl:if test="$country != ''">
+                <adres:land>
+                  <xsl:value-of select="$country"/>
+                </adres:land>
+              </xsl:if>
               <xsl:if test="$postalCode != ''">
                 <locn:postCode>
                   <xsl:value-of select="$postalCode"/>
                 </locn:postCode>
               </xsl:if>
-              <xsl:if test="$country != ''">
-                <locn:adminUnitL1>
-                  <xsl:value-of select="$country"/>
-                </locn:adminUnitL1>
-              </xsl:if>
+              <locn:fullAddress>
+                <xsl:value-of select="concat($deliveryPoint, ' ', $postalCode, ' ', $city, ' ', $country)"/>
+              </locn:fullAddress>
             </locn:Address>
           </locn:address>
           <!-- update by GIM: use vcard:Address in addition to locn:Address -->
-          <vcard:hasAddress>
-            <vcard:Address>
-              <xsl:if test="$deliveryPoint != ''">
-                <vcard:street-address>
-                  <xsl:value-of select="$deliveryPoint"/>
-                </vcard:street-address>
-              </xsl:if>
-              <xsl:if test="$city != ''">
-                <vcard:locality>
-                  <xsl:value-of select="$city"/>
-                </vcard:locality>
-              </xsl:if>
-              <xsl:if test="$administrativeArea != ''">
-                <vcard:locality>
-                  <xsl:value-of select="$administrativeArea"/>
-                </vcard:locality>
-              </xsl:if>
-              <xsl:if test="$postalCode != ''">
-                <vcard:postal-code>
-                  <xsl:value-of select="$postalCode"/>
-                </vcard:postal-code>
-              </xsl:if>
-              <xsl:if test="$country != ''">
-                <vcard:country-name>
-                  <xsl:value-of select="$country"/>
-                </vcard:country-name>
-              </xsl:if>
-            </vcard:Address>
-          </vcard:hasAddress>
-        </xsl:if>
-      </xsl:for-each>
-    </xsl:param>
-
-    <xsl:param name="Address-vCard">
-      <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address">
-        <xsl:variable name="deliveryPoint" select="normalize-space(gmd:deliveryPoint/*)"/>
-        <xsl:variable name="city" select="normalize-space(gmd:city/*)"/>
-        <xsl:variable name="administrativeArea" select="normalize-space(gmd:administrativeArea/*)"/>
-        <xsl:variable name="postalCode" select="normalize-space(gmd:postalCode/*)"/>
-        <xsl:variable name="country" select="normalize-space(gmd:country/*)"/>
-        <xsl:if test="$deliveryPoint != '' or $city != '' or $administrativeArea != '' or $postalCode != '' or $country != ''">
           <vcard:hasAddress>
             <vcard:Address>
               <xsl:if test="$deliveryPoint != ''">
@@ -1248,7 +1211,7 @@
         <xsl:copy-of select="$Telephone"/>
         <xsl:copy-of select="$Email"/>
         <xsl:copy-of select="$URL"/>
-        <xsl:copy-of select="$Address"/>
+        <xsl:copy-of select="$Address-vCard"/>
       </xsl:variable>
 
       <foaf:Agent>
