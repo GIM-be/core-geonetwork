@@ -84,12 +84,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -1010,5 +1005,9 @@ public final class XslUtil {
         } catch (Exception ex) {
         }
         return "";
+    }
+
+    public static String uuidFromString(String str) {
+        return UUID.nameUUIDFromBytes(str.getBytes()).toString();
     }
 }

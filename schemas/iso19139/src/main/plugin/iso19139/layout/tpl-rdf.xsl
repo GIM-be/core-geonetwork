@@ -83,15 +83,19 @@
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:geodcat="http://data.europa.eu/930/"
                 xmlns:dqv="http://www.w3.org/ns/dqv#"
+                xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
+                xmlns:adres="https://data.vlaanderen.be/ns/adres#"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:uuid="java:java.util.UUID"
-                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype dc gml320 xs prov gsp org uuid geodcat dqv"
+                xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
+                xmlns:sr="http://www.w3.org/2005/sparql-results#"
+                xmlns:fn="http://www.w3.org/2005/xpath-functions"
+                exclude-result-prefixes="earl gco gmd gml gmx i i-gp srv xlink xsi xsl wdrs cnt dctype dc gml320 xs prov gsp org geodcat mdcat adres dqv xslutil sr fn"
                 version="2.0">
 
   <xsl:output method="xml"
               indent="yes"
               encoding="utf-8"
-              cdata-section-elements="locn:geometry" />
+              cdata-section-elements="" />
 
   <xsl:include href="../convert/keyword_CharacterString_to_Anchor.xsl"/>
   <xsl:include href="../convert/TopicCatToDataGov.xsl"/>
@@ -177,6 +181,7 @@
 
   <!-- GIM custom variables -->
   <xsl:variable name="catalogUrl" select="concat(substring-before($resourcePrefix, '/resource'), '/dut')"/>
+  <xsl:variable name="relationLookup" select="true()"/>
 
   <xsl:variable name="modelLicencieKeywords">
     <license>
@@ -396,8 +401,7 @@
           <xsl:value-of select="$UniqueResourceIdentifier[matches(., $uuidRegex)][1]"/>
         </xsl:when>
         <xsl:otherwise>
-          <!-- This should not happen -->
-          <xsl:value-of select="uuid:toString(uuid:randomUUID())"/>
+          <xsl:value-of select="xslutil:uuidFromString($RecordUUID)"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:param>
@@ -677,12 +681,21 @@
         </xsl:apply-templates>
       </xsl:for-each>
 
-      <xsl:for-each select="//gmd:CI_ResponsibleParty[not(gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'owner'))]">
+      <xsl:for-each select="//gmd:CI_ResponsibleParty[not(gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'owner', 'distributor'))]">
         <xsl:apply-templates select=".">
           <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
           <xsl:with-param name="ResourceType" select="$ResourceType"/>
         </xsl:apply-templates>
       </xsl:for-each>
+
+      <xsl:variable name="Distributors">
+        <xsl:for-each select="//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'distributor']">
+          <xsl:apply-templates select=".">
+            <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+            <xsl:with-param name="ResourceType" select="$ResourceType"/>
+          </xsl:apply-templates>
+        </xsl:for-each>
+      </xsl:variable>
 
       <dct:relation rdf:resource="{geonet:escapeURI($MetadataViewUrl)}"/>
 
@@ -730,10 +743,22 @@
           <xsl:copy-of select="$LicenseAndRightsConstraints"/>
 
           <!-- Coupled resources -->
-          <xsl:apply-templates select="gmd:identificationInfo[1]/*/srv:operatesOn">
-            <xsl:with-param name="ResourceType" select="$ResourceType"/>
-            <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-          </xsl:apply-templates>
+          <xsl:for-each select="gmd:identificationInfo[1]/*/srv:operatesOn">
+            <dcat:servesDataset rdf:resource="{@xlink:href}"/>
+          </xsl:for-each>
+
+          <!-- Set development status to production already -->
+          <mdcat:ontwikkelingstoestand>
+            <skos:Concept xmlns:sr="http://www.w3.org/2005/sparql-results#"
+                          xmlns:fn="http://www.w3.org/2005/xpath-functions"
+                          rdf:about="https://data.vlaanderen.be/id/concept/ontwikkelingstoestand/PROD">
+              <skos:prefLabel xml:lang="nl">productie</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">production</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">production</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">production</skos:prefLabel>
+              <skos:inScheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand"/>
+            </skos:Concept>
+          </mdcat:ontwikkelingstoestand>
         </xsl:when>
 
         <!-- Dataset specific -->
@@ -761,6 +786,37 @@
           <xsl:variable name="SpatialRepresentationType">
             <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode"/>
           </xsl:variable>
+
+          <!-- Related services -->
+          <xsl:if test="$relationLookup">
+            <xsl:variable name="relatedUrl" select="concat($nodeUrl, 'api/records/', $RecordUUID, '/related?type=services')"/>
+            <xsl:for-each select="document($relatedUrl)/related/services/item">
+              <xsl:variable name="serviceUniqueIdentifiers">
+                <xsl:for-each select="document(concat($nodeUrl, 'api/records/', id, '/formatters/xml'))/gmd:MD_Metadata/gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
+                  <xsl:choose>
+                    <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
+                      <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:for-each>
+              </xsl:variable>
+              <xsl:variable name="serviceUuid">
+                <xsl:choose>
+                  <xsl:when test="$serviceUniqueIdentifiers[matches(., $uuidRegex)][1]">
+                    <xsl:value-of select="$serviceUniqueIdentifiers[matches(., $uuidRegex)][1]"/>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="xslutil:uuidFromString(id)"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:variable>
+              <xsl:variable name="serviceUri" select="concat($resourcePrefix, '/service/', $serviceUuid)"/>
+              <dct:relation rdf:resource="{geonet:escapeURI($serviceUri)}"/>
+            </xsl:for-each>
+          </xsl:if>
 
           <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
             <!-- Encoding -->
@@ -827,6 +883,7 @@
                               </dct:title>
                             </dct:Standard>
                           </dct:conformsTo>
+                          <xsl:copy-of select="$Distributors"/>
                           <xsl:if test="$ResourceCharacterEncoding != ''">
                             <xsl:copy-of select="$ResourceCharacterEncoding"/>
                           </xsl:if>
@@ -1072,7 +1129,7 @@
       </xsl:for-each>
     </xsl:param>
 
-    <xsl:param name="Address">
+    <xsl:param name="Address-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address">
         <xsl:variable name="deliveryPoint" select="normalize-space(gmd:deliveryPoint/*)"/>
         <xsl:variable name="city" select="normalize-space(gmd:city/*)"/>
@@ -1082,75 +1139,37 @@
         <xsl:if test="$deliveryPoint != '' or $city != '' or $administrativeArea != '' or $postalCode != '' or $country != ''">
           <locn:address>
             <locn:Address>
-              <xsl:if test="$deliveryPoint != ''">
-                <locn:thoroughfare>
-                  <xsl:value-of select="$deliveryPoint"/>
-                </locn:thoroughfare>
-              </xsl:if>
+              <!--
+              <locn:thoroughfare><xsl:value-of select="$deliveryPoint"/></locn:thoroughfare>
+              <locn:postName><xsl:value-of select="$city"/></locn:postName>
+              <locn:adminUnitL1><xsl:value-of select="$country"/></locn:adminUnitL1>
+              -->
               <xsl:if test="$city != ''">
-                <locn:postName>
+                <adres:gemeentenaam>
                   <xsl:value-of select="$city"/>
-                </locn:postName>
+                </adres:gemeentenaam>
               </xsl:if>
               <xsl:if test="$administrativeArea != ''">
                 <locn:adminUnitL2>
                   <xsl:value-of select="$administrativeArea"/>
                 </locn:adminUnitL2>
               </xsl:if>
+              <xsl:if test="$country != ''">
+                <adres:land>
+                  <xsl:value-of select="$country"/>
+                </adres:land>
+              </xsl:if>
               <xsl:if test="$postalCode != ''">
                 <locn:postCode>
                   <xsl:value-of select="$postalCode"/>
                 </locn:postCode>
               </xsl:if>
-              <xsl:if test="$country != ''">
-                <locn:adminUnitL1>
-                  <xsl:value-of select="$country"/>
-                </locn:adminUnitL1>
-              </xsl:if>
+              <locn:fullAddress>
+                <xsl:value-of select="concat($deliveryPoint, ' ', $postalCode, ' ', $city, ' ', $country)"/>
+              </locn:fullAddress>
             </locn:Address>
           </locn:address>
           <!-- update by GIM: use vcard:Address in addition to locn:Address -->
-          <vcard:hasAddress>
-            <vcard:Address>
-              <xsl:if test="$deliveryPoint != ''">
-                <vcard:street-address>
-                  <xsl:value-of select="$deliveryPoint"/>
-                </vcard:street-address>
-              </xsl:if>
-              <xsl:if test="$city != ''">
-                <vcard:locality>
-                  <xsl:value-of select="$city"/>
-                </vcard:locality>
-              </xsl:if>
-              <xsl:if test="$administrativeArea != ''">
-                <vcard:locality>
-                  <xsl:value-of select="$administrativeArea"/>
-                </vcard:locality>
-              </xsl:if>
-              <xsl:if test="$postalCode != ''">
-                <vcard:postal-code>
-                  <xsl:value-of select="$postalCode"/>
-                </vcard:postal-code>
-              </xsl:if>
-              <xsl:if test="$country != ''">
-                <vcard:country-name>
-                  <xsl:value-of select="$country"/>
-                </vcard:country-name>
-              </xsl:if>
-            </vcard:Address>
-          </vcard:hasAddress>
-        </xsl:if>
-      </xsl:for-each>
-    </xsl:param>
-
-    <xsl:param name="Address-vCard">
-      <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address">
-        <xsl:variable name="deliveryPoint" select="normalize-space(gmd:deliveryPoint/*)"/>
-        <xsl:variable name="city" select="normalize-space(gmd:city/*)"/>
-        <xsl:variable name="administrativeArea" select="normalize-space(gmd:administrativeArea/*)"/>
-        <xsl:variable name="postalCode" select="normalize-space(gmd:postalCode/*)"/>
-        <xsl:variable name="country" select="normalize-space(gmd:country/*)"/>
-        <xsl:if test="$deliveryPoint != '' or $city != '' or $administrativeArea != '' or $postalCode != '' or $country != ''">
           <vcard:hasAddress>
             <vcard:Address>
               <xsl:if test="$deliveryPoint != ''">
@@ -1192,7 +1211,7 @@
         <xsl:copy-of select="$Telephone"/>
         <xsl:copy-of select="$Email"/>
         <xsl:copy-of select="$URL"/>
-        <xsl:copy-of select="$Address"/>
+        <xsl:copy-of select="$Address-vCard"/>
       </xsl:variable>
 
       <foaf:Agent>
@@ -1290,38 +1309,6 @@
       </xsl:otherwise>
 
     </xsl:choose>
-  </xsl:template>
-
-  <!-- Coupled resource -->
-  <xsl:template name="CoupledResource" match="gmd:identificationInfo[1]/*/srv:operatesOn">
-    <xsl:param name="href" select="@xlink:href"/>
-    <dcat:servesDataset rdf:resource="{$href}"/>
-    <!-- Resource lookup feature (=> slow) -->
-    <!--
-    <xsl:param name="code">
-      <xsl:choose>
-        <xsl:when test="$href != '' and (starts-with($href, 'http://') or starts-with($href, 'https://'))">
-          <xsl:value-of select="document($href)//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString"/>
-        </xsl:when>
-        <xsl:when test="*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString != ''">
-          <xsl:value-of select="*/gmd:citation/*/gmd:identifier/*/gmd:code/gco:CharacterString"/>
-        </xsl:when>
-        <xsl:when test="@uuidref != ''">
-          <xsl:value-of select="@uuidref"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:param>
-    <xsl:param name="codespace">
-      <xsl:choose>
-        <xsl:when test="$href != '' and (starts-with($href, 'http://') or starts-with($href, 'https://'))">
-          <xsl:value-of select="document($href)//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace/gco:CharacterString"/>
-        </xsl:when>
-        <xsl:when test="*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace/gco:CharacterString != ''">
-          <xsl:value-of select="*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace/gco:CharacterString"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:param>
-    -->
   </xsl:template>
 
   <!-- Conformity -->
