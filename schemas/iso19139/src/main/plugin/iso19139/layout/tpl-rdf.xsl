@@ -95,7 +95,7 @@
   <xsl:output method="xml"
               indent="yes"
               encoding="utf-8"
-              cdata-section-elements="locn:geometry" />
+              cdata-section-elements="" />
 
   <xsl:include href="../convert/keyword_CharacterString_to_Anchor.xsl"/>
   <xsl:include href="../convert/TopicCatToDataGov.xsl"/>
