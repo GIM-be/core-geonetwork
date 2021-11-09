@@ -145,9 +145,6 @@
         $http.get(url, {
           headers: {
             Accept: 'text/html'
-          },
-          params: {
-            approved : gnSearchLocation.isApprovedView()
           }
         }).then(
           function(response,status) {
