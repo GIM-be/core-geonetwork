@@ -94,15 +94,25 @@
       };
       this.getFormatterPath = function(schema) {
         var tokens = $location.path().split('/');
+        var url;
         if (tokens.length > 2 && tokens[3] === 'formatters') {
-          return '../api/records/' + $location.url().split(/^(\/metadraf|\/metadata)\//)[2];
+          url = '../api/records/' + $location.url().split(/^(\/metadraf|\/metadata)\//)[2];
         } else {
           var defaultFormatters = gnGlobalSettings.gnCfg.mods.search.formatter.defaultFormatters;
           if (defaultFormatters[schema]) {
-            return '../api/records/' + $location.url().split(/^(\/metadraf|\/metadata)\//)[2] + defaultFormatters[schema].url;
-          } else {
-            return undefined;
+            url = '../api/records/' + $location.url().split(/^(\/metadraf|\/metadata)\//)[2] + defaultFormatters[schema].url;
           }
+        }
+        if (url) {
+          var approvedView = "approved=" +  this.isApprovedView();
+          if (url.includes('?')) {
+            url += (url.endsWith('?') ? '' : '&') + approvedView;
+          } else {
+            url += '?' + approvedView;
+          }
+          return url;
+        } else {
+          return undefined;
         }
       };
       this.setUuid = function(uuid, formatter) {
@@ -120,8 +130,8 @@
       };
 
       this.isApprovedView = function() {
-        return /\/metadata\//.test($location.url())
-      }
+        return /\/metadata\//.test($location.url());
+      };
 
       this.isCurrentFormatter = function(formatterUrl) {
         var tokens = $location.path().split('/');
