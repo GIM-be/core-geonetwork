@@ -747,11 +747,19 @@
             <dcat:servesDataset rdf:resource="{@xlink:href}"/>
           </xsl:for-each>
 
-          <!-- Set development status to production already -->
+
+          <!-- Always set development status to "production" and life phase to "live" -->
+          <mdcat:levensfase>
+            <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/levensfase/live">
+              <skos:prefLabel xml:lang="nl">live</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">live</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">live</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">live</skos:prefLabel>
+              <skos:inScheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/levensfase"/>
+            </skos:Concept>
+          </mdcat:levensfase>
           <mdcat:ontwikkelingstoestand>
-            <skos:Concept xmlns:sr="http://www.w3.org/2005/sparql-results#"
-                          xmlns:fn="http://www.w3.org/2005/xpath-functions"
-                          rdf:about="https://data.vlaanderen.be/id/concept/ontwikkelingstoestand/PROD">
+            <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/ontwikkelingstoestand/PROD">
               <skos:prefLabel xml:lang="nl">productie</skos:prefLabel>
               <skos:prefLabel xml:lang="en">production</skos:prefLabel>
               <skos:prefLabel xml:lang="de">production</skos:prefLabel>
