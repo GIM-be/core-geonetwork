@@ -29,8 +29,8 @@
           <span data-translate="">transferOwnership</span>
         </a>
       </li>
-      <!--li role="menuitem"
-          data-ng-if="user.canEditRecord(md) && (user.isAdmin() || user.isReviewerForGroup(md.groupOwner))"
+      <li role="menuitem"
+          data-ng-if="!isMdWorkflowEnable && md.getSchema() == 'dcat2' && user.canEditRecord(md) && (user.isAdmin() || user.isReviewerForGroup(md.groupOwner))"
           data-ng-class="(
             md.isPublished() ||
             (allowPublishInvalidMd() === true) ||
@@ -60,7 +60,7 @@
              data-ng-if="!md.isPublished() && !md.hasValidation()"></i>
         </a>
 
-      </li-->
+      </li>
       <!-- TODO: Some installation only allows status update
       based on current status. -->
 

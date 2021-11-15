@@ -21,16 +21,19 @@
       <span>See also <a href="main-changelog.html">Main changelog</a></span>
     </div>
 
-    <section id="wip">
+    <section id="15/11/2021">
       <ol>
-        <li>Enable status workflow and draft copy for DCAT records</li>
+        <li>Enable status workflow and draft copy for DCAT records (same as what is done for ISO 19139 metadata)</li>
         <li>Improve DCAT records view header to display the description, resource type (with an icon before the title),
-          owner and workflow status
+          owner and workflow status. Notes: the owner and the status are only shown for logged-in users.
         </li>
         <li>Update ISO-19139 to GeoDCAT conversion
           <ul>
             <li>Always set mdcat:levensfase value to "live" for services</li>
           </ul>
+        </li>
+        <li>Fix issue where harvester would sometime duplicate the skos:prefLabel of concepts resulting in an index
+          error
         </li>
       </ol>
     </section>
