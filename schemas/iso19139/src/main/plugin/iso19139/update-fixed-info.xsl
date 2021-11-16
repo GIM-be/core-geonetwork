@@ -637,11 +637,9 @@
           </xsl:choose-->
           <xsl:copy-of select="@xlink:href"/>
         </xsl:when>
-
-        <xsl:otherwise>
-          <xsl:apply-templates select="node()" />
-        </xsl:otherwise>
+        <xsl:otherwise />
       </xsl:choose>
+      <xsl:apply-templates select="node()" />
     </xsl:copy>
   </xsl:template>
 

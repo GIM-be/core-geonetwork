@@ -4116,7 +4116,9 @@
                   </key>
                 </values>
                 <snippet>
-                  <gmd:featureCatalogueCitation uuidref="{{featureCatalogueCitationUuidref}}" />
+                  <gmd:featureCatalogueCitation uuidref="{{featureCatalogueCitationUuidref}}">
+                    <gn:copy select="gmd:CI_Citation"/>
+                  </gmd:featureCatalogueCitation>
                 </snippet>
               </template>
             </field>
