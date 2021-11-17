@@ -140,7 +140,7 @@
   <!-- =============================================  -->
   <!-- Render Sections for each tab                   -->
   <!-- =============================================  -->
-  <xsl:template mode="render-content" match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation|gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation">
+  <xsl:template mode="render-content" match="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation|gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation|gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation">
     <xsl:apply-templates mode="render-content" select="gmd:title"/>
     <xsl:apply-templates mode="render-content" select="gmd:alternateTitle"/>
     <xsl:apply-templates mode="render-content" select="gmd:date" />
@@ -532,6 +532,7 @@
           <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:featureCatalogueCitation', name())"/>
           <xsl:with-param name="block">
             <xsl:apply-templates mode="render-content" select="gmd:featureCatalogueCitation/@uuidref"/>
+            <xsl:apply-templates mode="render-content" select="gmd:featureCatalogueCitation/gmd:CI_Citation"/>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:with-param>
