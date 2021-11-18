@@ -100,237 +100,36 @@
   <xsl:include href="../convert/keyword_CharacterString_to_Anchor.xsl"/>
   <xsl:include href="../convert/TopicCatToDataGov.xsl"/>
 
-  <!--
-    The current specifications for the core and extended GeoDCAT-AP profiles are available on the Joinup collaboration platform:
-    https://joinup.ec.europa.eu/node/139283/
-  -->
-
-  <!--
-    Global parameters
-    =======================
-  -->
-
-  <!-- Variables to be used to convert strings into lower/uppercase by using the translate() function. -->
-  <xsl:variable name="lowercase">abcdefghijklmnopqrstuvwxyz</xsl:variable>
-  <xsl:variable name="uppercase">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-
-  <!-- URIs, URNs and names for spatial reference system registers. -->
-  <xsl:param name="EpsgSrsBaseUri">http://www.opengis.net/def/crs/EPSG/0</xsl:param>
-  <xsl:param name="EpsgSrsBaseUrn">urn:ogc:def:crs:EPSG</xsl:param>
-  <xsl:param name="EpsgSrsName">EPSG Coordinate Reference Systems</xsl:param>
-  <xsl:param name="OgcSrsBaseUri">http://www.opengis.net/def/crs/OGC</xsl:param>
-  <xsl:param name="OgcSrsBaseUrn">urn:ogc:def:crs:OGC</xsl:param>
-  <xsl:param name="OgcSrsName">OGC Coordinate Reference Systems</xsl:param>
-
-  <!-- URI and URN for CRS84. -->
-  <xsl:param name="Crs84Uri" select="concat($OgcSrsBaseUri,'/1.3/CRS84')"/>
-  <xsl:param name="Crs84Urn" select="concat($OgcSrsBaseUrn,':1.3:CRS84')"/>
-
-  <!-- URI and URN for ETRS89. -->
-  <xsl:param name="Etrs89Uri" select="concat($EpsgSrsBaseUri,'/4258')"/>
-  <xsl:param name="Etrs89Urn" select="concat($EpsgSrsBaseUrn,'::4258')"/>
-
-  <!-- URI and URN of the spatial reference system (SRS) used in the bounding box.
-       The default SRS is CRS84. If a different SRS is used, also parameter
-       $SrsAxisOrder must be specified. -->
-
-  <!-- The SRS URI is used in the WKT and GML encodings of the bounding box. -->
-  <xsl:param name="SrsUri" select="$Crs84Uri"/>
-  <!-- The SRS URN is used in the GeoJSON encoding of the bounding box. -->
-  <xsl:param name="SrsUrn" select="$Crs84Urn"/>
-
-  <!-- Axis order for the reference SRS:
-       - "LonLat": longitude / latitude
-       - "LatLon": latitude / longitude.
-       The axis order must be specified only if the reference SRS is different from CRS84.
-       If the reference SRS is CRS84, this parameter is ignored. -->
-  <xsl:param name="SrsAxisOrder">LonLat</xsl:param>
-
-  <!-- Namespaces -->
-  <xsl:param name="xsd">http://www.w3.org/2001/XMLSchema#</xsl:param>
-  <xsl:param name="dct">http://purl.org/dc/terms/</xsl:param>
-  <xsl:param name="dctype">http://purl.org/dc/dcmitype/</xsl:param>
-  <xsl:param name="dcat">http://www.w3.org/ns/dcat#</xsl:param>
-  <xsl:param name="gsp">http://www.opengis.net/ont/geosparql#</xsl:param>
-  <xsl:param name="foaf">http://xmlns.com/foaf/0.1/</xsl:param>
-  <xsl:param name="vcard">http://www.w3.org/2006/vcard/ns#</xsl:param>
-  <xsl:param name="op">http://publications.europa.eu/resource/authority/</xsl:param>
-  <xsl:param name="opcountry" select="concat($op,'country/')"/>
-  <xsl:param name="oplang" select="concat($op,'language/')"/>
-  <xsl:param name="opcb" select="concat($op,'corporate-body/')"/>
-  <xsl:param name="opfq" select="concat($op,'frequency/')"/>
-  <xsl:param name="cldFrequency">http://purl.org/cld/freq/</xsl:param>
-  <!-- This is used as the datatype for the GeoJSON-based encoding of the bounding box. -->
-  <xsl:param name="geojsonMediaTypeUri">https://www.iana.org/assignments/media-types/application/vnd.geo+json</xsl:param>
-
-  <!-- INSPIRE code list URIs -->
-  <xsl:param name="INSPIRECodelistUri">http://inspire.ec.europa.eu/metadata-codelist/</xsl:param>
-  <xsl:param name="SpatialDataServiceCategoryCodelistUri" select="concat($INSPIRECodelistUri,'SpatialDataServiceCategory')"/>
-  <xsl:param name="DegreeOfConformityCodelistUri" select="concat($INSPIRECodelistUri,'DegreeOfConformity')"/>
-  <xsl:param name="ResourceTypeCodelistUri" select="concat($INSPIRECodelistUri,'ResourceType')"/>
-  <xsl:param name="ResponsiblePartyRoleCodelistUri" select="concat($INSPIRECodelistUri,'ResponsiblePartyRole')"/>
-  <xsl:param name="SpatialDataServiceTypeCodelistUri" select="concat($INSPIRECodelistUri,'SpatialDataServiceType')"/>
-  <xsl:param name="TopicCategoryCodelistUri" select="concat($INSPIRECodelistUri,'TopicCategory')"/>
-
-  <!-- INSPIRE code list URIs (not yet supported; the URI pattern is tentative) -->
-  <xsl:param name="SpatialRepresentationTypeCodelistUri" select="concat($INSPIRECodelistUri,'SpatialRepresentationTypeCode')"/>
-  <xsl:param name="MaintenanceFrequencyCodelistUri" select="concat($INSPIRECodelistUri,'MaintenanceFrequencyCode')"/>
-
-  <!-- INSPIRE glossary URI -->
-  <xsl:param name="INSPIREGlossaryUri">http://inspire.ec.europa.eu/glossary/</xsl:param>
-
-  <!-- GIM custom variables -->
-  <xsl:variable name="catalogUrl" select="concat(substring-before($resourcePrefix, '/resource'), '/dut')"/>
-  <xsl:variable name="relationLookup" select="true()"/>
-
-  <xsl:variable name="modelLicencieKeywords">
-    <license>
-      <url>https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0</url>
-      <urlKeyword>modellicentie-gratis-hergebruik</urlKeyword>
-      <urlKeyword>modellicentie_gratis_hergebruik</urlKeyword>
-      <content>
-        <dct:license>
-          <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
-            <dct:type>
-              <skos:Concept rdf:about="http://purl.org/adms/licencetype/Attribution">
-                <skos:prefLabel xml:lang="nl">Verplichte bronvermelding</skos:prefLabel>
-                <skos:prefLabel xml:lang="en">Attribution</skos:prefLabel>
-                <skos:prefLabel xml:lang="fr">Attribution</skos:prefLabel>
-                <skos:prefLabel xml:lang="de">Attribution</skos:prefLabel>
-                <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
-              </skos:Concept>
-            </dct:type>
-            <dct:title xml:lang="nl">Modellicentie voor gratis hergebruik</dct:title>
-            <dct:description xml:lang="nl">Onder deze licentie doet de instantie geen afstand van haar intellectuele rechten, maar mag de data voor eender welk doel hergebruikt worden, gratis en onder minimale restricties.</dct:description>
-            <dct:identifier>https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0</dct:identifier>
-          </dct:LicenseDocument>
-        </dct:license>
-      </content>
-    </license>
-    <license>
-      <url>https://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0</url>
-      <urlKeyword>onvoorwaardelijk-hergebruik</urlKeyword>
-      <urlKeyword>onvoorwaardelijk_hergebruik</urlKeyword>
-      <content>
-        <dct:license>
-          <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
-            <dct:type>
-              <skos:Concept rdf:about="http://purl.org/adms/licencetype/PublicDomain">
-                <skos:prefLabel xml:lang="nl">Werk in het publiek domein</skos:prefLabel>
-                <skos:prefLabel xml:lang="en">Public domain</skos:prefLabel>
-                <skos:prefLabel xml:lang="fr">Public domain</skos:prefLabel>
-                <skos:prefLabel xml:lang="de">Public domain</skos:prefLabel>
-                <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
-              </skos:Concept>
-            </dct:type>
-            <dct:title xml:lang="nl">Onvoorwaardelijk hergebruik</dct:title>
-            <dct:description xml:lang="nl">Onvoorwaardelijk hergebruik</dct:description>
-            <dct:identifier>https://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0</dct:identifier>
-          </dct:LicenseDocument>
-        </dct:license>
-      </content>
-    </license>
-    <license>
-      <url>https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0</url>
-      <urlKeyword>modellicentie-hergebruik-tegen-vergoeding</urlKeyword>
-      <urlKeyword>modellicentie_hergebruik_tegen_vergoeding</urlKeyword>
-      <content>
-        <dct:license>
-          <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
-            <dct:type>
-              <skos:Concept rdf:about="http://purl.org/adms/licencetype/Attribution">
-                <skos:prefLabel xml:lang="nl">Verplichte bronvermelding</skos:prefLabel>
-                <skos:prefLabel xml:lang="en">Attribution</skos:prefLabel>
-                <skos:prefLabel xml:lang="fr">Attribution</skos:prefLabel>
-                <skos:prefLabel xml:lang="de">Attribution</skos:prefLabel>
-                <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0" />
-              </skos:Concept>
-            </dct:type>
-            <dct:title xml:lang="nl">Modellicentie voor hergebruik tegen vergoeding</dct:title>
-            <dct:description xml:lang="nl">Onder deze licentie stelt de instantie nog steeds haar data ter beschikking voor eender welk hergebruik, maar wil zij hiervoor een vergoeding ontvangen. In regel is deze vergoeding beperkt tot de marginale kosten voor vermenigvuldiging, verstrekking en verspreiding.</dct:description>
-            <dct:identifier>https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0</dct:identifier>
-          </dct:LicenseDocument>
-        </dct:license>
-      </content>
-    </license>
-    <license>
-      <url>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</url>
-      <urlKeyword>creative-commons-zero-verklaring</urlKeyword>
-      <urlKeyword>creative_commons_zero_verklaring</urlKeyword>
-      <urlKeyword>publicdomain/zero</urlKeyword>
-      <urlKeyword>cc0</urlKeyword>
-      <content>
-        <dct:license>
-          <dct:LicenseDocument rdf:about="https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0" xmlns:dct="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
-            <dct:type>
-              <skos:Concept rdf:about="http://purl.org/adms/licencetype/PublicDomain">
-                <skos:prefLabel xml:lang="nl">Werk in het publiek domein</skos:prefLabel>
-                <skos:prefLabel xml:lang="en">Public domain</skos:prefLabel>
-                <skos:prefLabel xml:lang="fr">Public domain</skos:prefLabel>
-                <skos:prefLabel xml:lang="de">Public domain</skos:prefLabel>
-                <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0"/>
-              </skos:Concept>
-            </dct:type>
-            <dct:title xml:lang="nl">Creative Commons Zero verklaring</dct:title>
-            <dct:description xml:lang="nl">De instantie doet afstand van haar intellectuele eigendomsrechten voor zover dit wettelijk mogelijk is. Hierdoor kan de gebruiker de data hergebruiken voor eender welk doel, zonder een verplichting op naamsvermelding. Deze is de welbekende CC0 licentie.</dct:description>
-            <dct:identifier>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</dct:identifier>
-          </dct:LicenseDocument>
-        </dct:license>
-      </content>
-    </license>
-    <license>
-      <url>https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht</url>
-      <urlKeyword>Webdiensten-Gebruiksrecht</urlKeyword>
-      <urlKeyword>webdiensten-gebruiksrecht</urlKeyword>
-      <scope>service</scope>
-      <content>
-        <dct:license>
-          <dct:LicenseDocument rdf:about="https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht">
-            <dct:type>
-              <skos:Concept rdf:about="http://purl.org/adms/licencetype/JurisdictionWithinTheEU">
-                <skos:prefLabel xml:lang="nl">Rechtsbevoegheid binnen de EU</skos:prefLabel>
-                <skos:prefLabel xml:lang="en">Jurisdiction within the EU</skos:prefLabel>
-                <skos:prefLabel xml:lang="fr">Jurisdiction within the EU</skos:prefLabel>
-                <skos:prefLabel xml:lang="de">Jurisdiction within the EU</skos:prefLabel>
-                <skos:inScheme rdf:resource="http://purl.org/adms/licencetype/1.0"/>
-              </skos:Concept>
-            </dct:type>
-            <dct:title xml:lang="nl">Gebruiksrecht en privacyverklaring geografische webdiensten</dct:title>
-            <dct:description xml:lang="nl">Door het gebruik van de service verbindt elke gebruiker of raadpleger er zich toe om zich te houden aan de toegangs- en gebruiksbepalingen van de in de service aangeboden gegevens.</dct:description>
-            <dct:identifier>https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht</dct:identifier>
-          </dct:LicenseDocument>
-        </dct:license>
-      </content>
-    </license>
-  </xsl:variable>
+  <xsl:include href="tpl-rdf-utils.xsl"/>
+  <xsl:include href="tpl-rdf-variables.xsl"/>
 
   <!--
     Metadata template
     =================
    -->
   <xsl:template match="gmd:MD_Metadata|//gmd:MD_Metadata" mode="to-dcat">
-    <xsl:param name="MetadataViewUrl">
+    <xsl:variable name="MetadataViewUrl">
       <xsl:value-of select="concat($catalogUrl, '/catalog.search#/metadata/', gmd:fileIdentifier/gco:CharacterString)"/>
-    </xsl:param>
+    </xsl:variable>
 
     <!-- Metadata language: corresponding Alpha-2 codes -->
-    <xsl:param name="recordLang">
+    <xsl:variable name="RecordLang">
       <xsl:call-template name="ExtractLang">
         <xsl:with-param name="lang" select="gmd:language"/>
       </xsl:call-template>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="MetadataLanguage">
+    <xsl:variable name="MetadataLanguage">
       <xsl:call-template name="Alpha3-to-Alpha2">
-        <xsl:with-param name="lang" select="$recordLang"/>
+        <xsl:with-param name="lang" select="$RecordLang"/>
       </xsl:call-template>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="IsoScopeCode">
+    <xsl:variable name="IsoScopeCode">
       <xsl:value-of select="normalize-space(gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue)"/>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="ResourceType">
+    <xsl:variable name="ResourceType">
       <xsl:choose>
         <xsl:when test="$IsoScopeCode = 'dataset' or $IsoScopeCode = 'nonGeographicDataset'">
           <xsl:text>dataset</xsl:text>
@@ -339,13 +138,13 @@
           <xsl:value-of select="$IsoScopeCode"/>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="ServiceType">
+    <xsl:variable name="ServiceType">
       <xsl:value-of select="gmd:identificationInfo/*/srv:serviceType/gco:LocalName"/>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="ResourceTitle">
+    <xsl:variable name="ResourceTitle">
       <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:title">
         <dct:title xml:lang="{$MetadataLanguage}">
           <xsl:value-of select="normalize-space(gco:CharacterString)"/>
@@ -354,9 +153,9 @@
           <xsl:with-param name="term">dct:title</xsl:with-param>
         </xsl:call-template>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="ResourceAbstract">
+    <xsl:variable name="ResourceAbstract">
       <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:abstract">
         <dct:description xml:lang="{$MetadataLanguage}">
           <xsl:value-of select="normalize-space(gco:CharacterString)"/>
@@ -365,9 +164,9 @@
           <xsl:with-param name="term">dct:description</xsl:with-param>
         </xsl:call-template>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="MetadataDate">
+    <xsl:variable name="MetadataDate">
       <xsl:choose>
         <xsl:when test="gmd:dateStamp/gco:Date">
           <xsl:value-of select="gmd:dateStamp/gco:Date"/>
@@ -376,11 +175,9 @@
           <xsl:value-of select="substring(gmd:dateStamp/gco:DateTime/text(),1,10)"/>
         </xsl:when>
       </xsl:choose>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="uuidRegex" select="'([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}'"/>
-
-    <xsl:param name="UniqueResourceIdentifier">
+    <xsl:variable name="UniqueResourceIdentifier">
       <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
         <xsl:choose>
           <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
@@ -391,11 +188,11 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="RecordUUID" select="string(gmd:fileIdentifier/gco:CharacterString)"/>
+    <xsl:variable name="RecordUUID" select="string(gmd:fileIdentifier/gco:CharacterString)"/>
 
-    <xsl:param name="ResourceUUID">
+    <xsl:variable name="ResourceUUID">
       <xsl:choose>
         <xsl:when test="$UniqueResourceIdentifier[matches(., $uuidRegex)][1]">
           <xsl:value-of select="$UniqueResourceIdentifier[matches(., $uuidRegex)][1]"/>
@@ -404,23 +201,23 @@
           <xsl:value-of select="xslutil:uuidFromString($RecordUUID)"/>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="MetadataUri">
+    <xsl:variable name="MetadataUri">
       <xsl:variable name="mURI" select="concat($resourcePrefix,'/records/', $RecordUUID)"/>
       <xsl:if test="$mURI != '' and (starts-with($mURI, 'http://') or starts-with($mURI, 'https://'))">
         <xsl:value-of select="geonet:escapeURI($mURI)"/>
       </xsl:if>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="ResourceUri">
+    <xsl:variable name="ResourceUri">
       <xsl:variable name="rURI" select="concat($resourcePrefix, '/', $ResourceType, '/', $ResourceUUID)"/>
       <xsl:if test="$rURI != '' and (starts-with($rURI, 'http://') or starts-with($rURI, 'https://'))">
         <xsl:value-of select="geonet:escapeURI($rURI)"/>
       </xsl:if>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="LicenseAndRightsConstraints">
+    <xsl:variable name="LicenseAndRightsConstraints">
       <xsl:variable name="constraints" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/*|
                                                gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation[not(../gmd:useConstraints or ../gmd:accessConstraints)]/*"/>
 
@@ -455,10 +252,9 @@
           </dct:rights>
         </xsl:if>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-
-    <xsl:param name="AccessRights">
+    <xsl:variable name="AccessRights">
       <!-- Mapping revised for compliance with the 2017 edition of the INSPIRE Metadata Technical Guidelines -->
       <xsl:variable name="firstConstraint" select="gmd:identificationInfo[count(*/gmd:resourceConstraints/*/gmd:accessConstraints) > 0]/*/gmd:resourceConstraints/*"/>
       <xsl:choose>
@@ -523,30 +319,29 @@
           </dct:accessRights>
         </xsl:when>
       </xsl:choose>
-    </xsl:param>
+    </xsl:variable>
 
     <!-- Metadata character encoding -->
-
-    <xsl:param name="MetadataCharacterEncoding">
+    <xsl:variable name="MetadataCharacterEncoding">
       <xsl:apply-templates select="gmd:characterSet/gmd:MD_CharacterSetCode"/>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="ResourceCharacterEncoding">
+    <xsl:variable name="ResourceCharacterEncoding">
       <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification">
         <xsl:apply-templates select="gmd:characterSet/gmd:MD_CharacterSetCode"/>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
     <!-- Metadata description (metadata on metadata) -->
-    <xsl:param name="MetadataDescription">
+    <xsl:variable name="MetadataDescription">
       <dct:identifier>
         <xsl:value-of select="$RecordUUID"/>
       </dct:identifier>
 
-      <xsl:if test="$recordLang != ''">
+      <xsl:if test="$RecordLang != ''">
         <xsl:variable name="languageConcept">
           <xsl:call-template name="Map-language">
-            <xsl:with-param name="lang" select="translate($recordLang, $lowercase, $uppercase)"/>
+            <xsl:with-param name="lang" select="translate($RecordLang, $lowercase, $uppercase)"/>
           </xsl:call-template>
         </xsl:variable>
         <xsl:choose>
@@ -556,7 +351,7 @@
             </dct:language>
           </xsl:when>
           <xsl:otherwise>
-            <dct:language rdf:resource="{geonet:escapeURI(concat($oplang, translate($recordLang, $lowercase, $uppercase)))}"/>
+            <dct:language rdf:resource="{geonet:escapeURI(concat($oplang, translate($RecordLang, $lowercase, $uppercase)))}"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:if>
@@ -567,24 +362,19 @@
         </dct:modified>
       </xsl:if>
 
-      <xsl:variable name="standardName" select="geonet:getLabel(gmd:metadataStandardName)"/>
-      <xsl:variable name="standardVersion" select="geonet:getLabel(gmd:metadataStandardVersion)"/>
-
-      <xsl:if test="$standardName != '' or $standardVersion != ''">
-        <dct:conformsTo>
-          <dct:Standard>
-            <dct:title>GeoDCAT-AP-VL</dct:title>
-          </dct:Standard>
-        </dct:conformsTo>
-      </xsl:if>
+      <dct:conformsTo>
+        <dct:Standard>
+          <dct:title>GeoDCAT-AP-VL</dct:title>
+        </dct:Standard>
+      </dct:conformsTo>
 
       <xsl:if test="$MetadataCharacterEncoding != ''">
         <xsl:copy-of select="$MetadataCharacterEncoding"/>
       </xsl:if>
-    </xsl:param>
+    </xsl:variable>
 
     <!-- Resource description (resource metadata) -->
-    <xsl:param name="ResourceDescription">
+    <xsl:variable name="ResourceDescription">
       <xsl:choose>
         <xsl:when test="$ResourceType = 'dataset'">
           <rdf:type rdf:resource="{$dcat}Dataset"/>
@@ -655,7 +445,7 @@
               </dct:language>
             </xsl:when>
             <xsl:otherwise>
-              <dct:language rdf:resource="{geonet:escapeURI(concat($oplang, translate($recordLang, $lowercase, $uppercase)))}"/>
+              <dct:language rdf:resource="{geonet:escapeURI(concat($oplang, translate($RecordLang, $lowercase, $uppercase)))}"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:if>
@@ -916,7 +706,7 @@
           </xsl:for-each>
         </xsl:when>
       </xsl:choose>
-    </xsl:param>
+    </xsl:variable>
 
     <!-- Output Catalog record and resource description -->
     <xsl:choose>
@@ -960,9 +750,9 @@
               </skos:notation>
             </adms:Identifier>
           </adms:identifier>
-          <xsl:call-template name="withoutType">
-            <xsl:with-param name="description" select="$ResourceDescription"/>
-          </xsl:call-template>
+          <xsl:for-each select="$ResourceDescription/*[name() != 'rdf:type']">
+            <xsl:copy-of select="."/>
+          </xsl:for-each>
         </xsl:element>
       </xsl:when>
 
@@ -975,9 +765,9 @@
               </dcat:CatalogRecord>
             </foaf:isPrimaryTopicOf>
           </xsl:if>
-          <xsl:call-template name="withoutType">
-            <xsl:with-param name="description" select="$ResourceDescription"/>
-          </xsl:call-template>
+          <xsl:for-each select="$ResourceDescription/*[name() != 'rdf:type']">
+            <xsl:copy-of select="."/>
+          </xsl:for-each>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
@@ -1909,8 +1699,6 @@
           <xsl:value-of select="string(gmd:distance/gco:Distance)"/>
         </dcat:spatialResolutionInMeters>
       </xsl:when>
-
-      <!--TODO: gmd:equivalentScale-->
     </xsl:choose>
   </xsl:template>
 
@@ -1944,234 +1732,4 @@
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
-
-  <xsl:template name="ExtractLang" match="gmd:language">
-    <xsl:param name="lang"/>
-    <xsl:choose>
-      <xsl:when test="$lang/gmd:LanguageCode/@codeListValue != ''">
-        <xsl:value-of select="translate($lang/gmd:LanguageCode/@codeListValue, $uppercase, $lowercase)"/>
-      </xsl:when>
-      <xsl:when test="$lang/gmd:LanguageCode != ''">
-        <xsl:value-of select="translate($lang/gmd:LanguageCode, $uppercase, $lowercase)"/>
-      </xsl:when>
-      <xsl:when test="$lang/gco:CharacterString != ''">
-        <xsl:value-of select="translate($lang/gco:CharacterString, $uppercase, $lowercase)"/>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="Alpha3-to-Alpha2">
-    <xsl:param name="lang"/>
-    <xsl:choose>
-      <xsl:when test="$lang = 'bul'">
-        <xsl:text>bg</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'cze'">
-        <xsl:text>cs</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'dan'">
-        <xsl:text>da</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'ger'">
-        <xsl:text>de</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'gre'">
-        <xsl:text>el</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'eng'">
-        <xsl:text>en</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'spa'">
-        <xsl:text>es</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'est'">
-        <xsl:text>et</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'fin'">
-        <xsl:text>fi</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'fre'">
-        <xsl:text>fr</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'gle'">
-        <xsl:text>ga</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'hrv'">
-        <xsl:text>hr</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'ita'">
-        <xsl:text>it</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'lav'">
-        <xsl:text>lv</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'lit'">
-        <xsl:text>lt</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'hun'">
-        <xsl:text>hu</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'mlt'">
-        <xsl:text>mt</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'dut'">
-        <xsl:text>nl</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'pol'">
-        <xsl:text>pl</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'por'">
-        <xsl:text>pt</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'rum'">
-        <xsl:text>ru</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'slo'">
-        <xsl:text>sk</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'slv'">
-        <xsl:text>sl</xsl:text>
-      </xsl:when>
-      <xsl:when test="$lang = 'swe'">
-        <xsl:text>sv</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$lang"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="Map-language">
-    <xsl:param name="lang"/>
-    <xsl:choose>
-      <xsl:when test="$lang = 'DUT'">
-        <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NLD">
-          <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
-          <skos:prefLabel xml:lang="de">Niederländisch</skos:prefLabel>
-          <skos:prefLabel xml:lang="en">Dutch</skos:prefLabel>
-          <skos:prefLabel xml:lang="fr">néerlandais</skos:prefLabel>
-          <skos:prefLabel xml:lang="nl">Nederlands</skos:prefLabel>
-          <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language"/>
-        </skos:Concept>
-      </xsl:when>
-      <xsl:when test="$lang = 'ENG'">
-        <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/ENG">
-          <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
-          <skos:prefLabel xml:lang="de">Englisch</skos:prefLabel>
-          <skos:prefLabel xml:lang="en">English</skos:prefLabel>
-          <skos:prefLabel xml:lang="fr">anglais</skos:prefLabel>
-          <skos:prefLabel xml:lang="nl">Engels</skos:prefLabel>
-          <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language"/>
-        </skos:Concept>
-      </xsl:when>
-      <xsl:when test="$lang = ('FRE', 'FRA')">
-        <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/FRA">
-          <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
-          <skos:prefLabel xml:lang="de">Französisch</skos:prefLabel>
-          <skos:prefLabel xml:lang="en">French</skos:prefLabel>
-          <skos:prefLabel xml:lang="fr">français</skos:prefLabel>
-          <skos:prefLabel xml:lang="nl">Frans</skos:prefLabel>
-          <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language"/>
-        </skos:Concept>
-      </xsl:when>
-      <xsl:when test="$lang = 'GER'">
-        <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/DEU">
-          <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
-          <skos:prefLabel xml:lang="de">Deutsch</skos:prefLabel>
-          <skos:prefLabel xml:lang="en">German</skos:prefLabel>
-          <skos:prefLabel xml:lang="fr">allemand</skos:prefLabel>
-          <skos:prefLabel xml:lang="nl">Duits</skos:prefLabel>
-          <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language"/>
-        </skos:Concept>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="Map-format">
-    <xsl:param name="protocol"/>
-    <xsl:param name="url"/>
-
-    <xsl:choose>
-
-      <xsl:when test="ends-with($protocol, 'get-capabilities')">
-        <xsl:value-of select="'application/xml'"/>
-      </xsl:when>
-
-      <xsl:when test="ends-with($protocol, 'get-map')">
-        <xsl:value-of select="geonet:getQueryParamValue($url, 'format')"/>
-      </xsl:when>
-
-      <xsl:when test="ends-with($protocol, 'get-tile')">
-        <xsl:value-of select="geonet:getQueryParamValue($url, 'format')"/>
-      </xsl:when>
-
-      <xsl:when test="ends-with($protocol, 'get-coverage')">
-        <xsl:value-of select="geonet:getQueryParamValue($url, 'format')"/>
-      </xsl:when>
-
-      <xsl:when test="ends-with($protocol, 'get-feature')">
-        <xsl:variable name="format" select="geonet:getQueryParamValue($url, 'outputFormat')"/>
-        <xsl:choose>
-          <xsl:when test="$format">
-            <xsl:value-of select="$format"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="'GML'"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="withoutType">
-    <xsl:param name="description" as="node()"/>
-    <xsl:for-each select="$description/*[name() != 'rdf:type']">
-      <xsl:copy-of select="."/>
-    </xsl:for-each>
-  </xsl:template>
-
-  <xsl:function name="geonet:getQueryParamValue">
-    <xsl:param name="url" as="xs:string"/>
-    <xsl:param name="queryParam" as="xs:string"/>
-    <xsl:variable name="value" select="substring-after(lower-case($url), concat(lower-case($queryParam), '='))"/>
-    <xsl:value-of select="normalize-space(if (contains($value, '&amp;')) then substring-before($value, '&amp;') else $value)"/>
-  </xsl:function>
-
-  <xsl:function name="geonet:getElementName">
-    <xsl:param name="description" as="node()"/>
-    <xsl:variable name="type" select="string($description/rdf:type/@rdf:resource)"/>
-    <xsl:choose>
-      <xsl:when test="$type = concat($dcat, 'Dataset')">
-        <xsl:value-of select="'dcat:Dataset'"/>
-      </xsl:when>
-      <xsl:when test="$type = concat($dcat, 'DataService')">
-        <xsl:value-of select="'dcat:DataService'"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:message select="concat('WARNING: &quot;', $type, '&quot; does not have an element name')"/>
-        <xsl:value-of select="'dcat:Dataset'"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:function>
-
-  <xsl:function name="geonet:escapeURI">
-    <xsl:param name="uri"/>
-    <xsl:if test="$uri">
-      <xsl:value-of select="replace(normalize-space($uri), ' ', '%20')"/>
-    </xsl:if>
-  </xsl:function>
-
-  <xsl:function name="geonet:getLabel">
-    <xsl:param name="el"/>
-    <xsl:choose>
-      <xsl:when test="$el/gmx:Anchor">
-        <xsl:value-of select="normalize-space($el/gmx:Anchor)"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="normalize-space($el/gco:CharacterString)"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:function>
-
 </xsl:stylesheet>
