@@ -177,41 +177,21 @@
       </xsl:choose>
     </xsl:variable>
 
-    <xsl:variable name="UniqueResourceIdentifier">
-      <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
-        <xsl:choose>
-          <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
-            <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:for-each>
-    </xsl:variable>
-
     <xsl:variable name="RecordUUID" select="string(gmd:fileIdentifier/gco:CharacterString)"/>
 
-    <xsl:variable name="ResourceUUID">
-      <xsl:choose>
-        <xsl:when test="$UniqueResourceIdentifier[matches(., $uuidRegex)][1]">
-          <xsl:value-of select="$UniqueResourceIdentifier[matches(., $uuidRegex)][1]"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="xslutil:uuidFromString($RecordUUID)"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:variable name="ResourceUUID" select="geonet:getResourceUuid(.)"/>
 
-    <xsl:variable name="MetadataUri">
-      <xsl:variable name="mURI" select="concat($resourcePrefix,'/records/', $RecordUUID)"/>
+    <xsl:variable name="uriPattern" select="xslutil:getUriPattern($RecordUUID)"/>
+
+    <xsl:variable name="RecordURI">
+      <xsl:variable name="mURI" select="replace(replace($uriPattern, '\{resourceType\}', 'records'), '\{resourceUuid\}', $RecordUUID)"/>
       <xsl:if test="$mURI != '' and (starts-with($mURI, 'http://') or starts-with($mURI, 'https://'))">
         <xsl:value-of select="geonet:escapeURI($mURI)"/>
       </xsl:if>
     </xsl:variable>
 
     <xsl:variable name="ResourceUri">
-      <xsl:variable name="rURI" select="concat($resourcePrefix, '/', $ResourceType, '/', $ResourceUUID)"/>
+      <xsl:variable name="rURI" select="replace(replace($uriPattern, '\{resourceType\}', concat($ResourceType, 's')), '\{resourceUuid\}', $ResourceUUID)"/>
       <xsl:if test="$rURI != '' and (starts-with($rURI, 'http://') or starts-with($rURI, 'https://'))">
         <xsl:value-of select="geonet:escapeURI($rURI)"/>
       </xsl:if>
@@ -487,8 +467,6 @@
         </xsl:for-each>
       </xsl:variable>
 
-      <dct:relation rdf:resource="{geonet:escapeURI($MetadataViewUrl)}"/>
-
       <!-- Spatial extend -->
       <xsl:apply-templates select="gmd:identificationInfo[1]/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement">
         <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
@@ -533,9 +511,14 @@
           <xsl:copy-of select="$LicenseAndRightsConstraints"/>
 
           <!-- Coupled resources -->
-          <xsl:for-each select="gmd:identificationInfo[1]/*/srv:operatesOn">
-            <dcat:servesDataset rdf:resource="{@xlink:href}"/>
-          </xsl:for-each>
+          <xsl:if test="$relationLookup">
+            <xsl:for-each select="xslutil:getRelatedDatasets($RecordUUID)/datasets/gmd:MD_Metadata">
+              <xsl:variable name="datasetUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
+              <xsl:variable name="datasetUuid" select="geonet:getResourceUuid(.)"/>
+              <xsl:variable name="datasetUri" select="replace(replace($datasetUriPattern, '\{resourceType\}', 'datasets'), '\{resourceUuid\}', $datasetUuid)"/>
+              <dcat:servesDataset rdf:resource="{geonet:escapeURI($datasetUri)}"/>
+            </xsl:for-each>
+          </xsl:if>
 
 
           <!-- Always set development status to "production" and life phase to "live" -->
@@ -587,31 +570,10 @@
 
           <!-- Related services -->
           <xsl:if test="$relationLookup">
-            <xsl:variable name="relatedUrl" select="concat($nodeUrl, 'api/records/', $RecordUUID, '/related?type=services')"/>
-            <xsl:for-each select="document($relatedUrl)/related/services/item">
-              <xsl:variable name="serviceUniqueIdentifiers">
-                <xsl:for-each select="document(concat($nodeUrl, 'api/records/', id, '/formatters/xml'))/gmd:MD_Metadata/gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
-                  <xsl:choose>
-                    <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
-                      <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:for-each>
-              </xsl:variable>
-              <xsl:variable name="serviceUuid">
-                <xsl:choose>
-                  <xsl:when test="$serviceUniqueIdentifiers[matches(., $uuidRegex)][1]">
-                    <xsl:value-of select="$serviceUniqueIdentifiers[matches(., $uuidRegex)][1]"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <xsl:value-of select="xslutil:uuidFromString(id)"/>
-                  </xsl:otherwise>
-                </xsl:choose>
-              </xsl:variable>
-              <xsl:variable name="serviceUri" select="concat($resourcePrefix, '/service/', $serviceUuid)"/>
+            <xsl:for-each select="xslutil:getRelatedServices($RecordUUID)/services/gmd:MD_Metadata">
+              <xsl:variable name="serviceUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
+              <xsl:variable name="serviceUuid" select="geonet:getResourceUuid(.)"/>
+              <xsl:variable name="serviceUri" select="replace(replace($serviceUriPattern, '\{resourceType\}', 'services'), '\{resourceUuid\}', $serviceUuid)"/>
               <dct:relation rdf:resource="{geonet:escapeURI($serviceUri)}"/>
             </xsl:for-each>
           </xsl:if>
@@ -712,16 +674,16 @@
     <xsl:choose>
       <xsl:when test="$ResourceUri != ''">
         <xsl:choose>
-          <xsl:when test="$MetadataUri != ''">
+          <xsl:when test="$RecordURI != ''">
             <dcat:CatalogRecord>
-              <xsl:if test="normalize-space($MetadataUri) != ''">
-                <xsl:attribute name="rdf:about" select="$MetadataUri"/>
+              <xsl:if test="normalize-space($RecordURI) != ''">
+                <xsl:attribute name="rdf:about" select="$RecordURI"/>
               </xsl:if>
               <foaf:primaryTopic rdf:resource="{$ResourceUri}"/>
               <adms:identifier>
                 <adms:Identifier>
                   <skos:notation>
-                    <xsl:value-of select="$MetadataUri"/>
+                    <xsl:value-of select="$RecordURI"/>
                   </skos:notation>
                 </adms:Identifier>
               </adms:identifier>

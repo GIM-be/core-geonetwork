@@ -21,6 +21,20 @@
       <span>See also <a href="main-changelog.html">Main changelog</a></span>
     </div>
 
+    <section id="wip">
+      <ol>
+        <li>Add an option on CSW and GeoNetwork harvesters to define a URI build pattern. This pattern is used
+          during the RDF export to generate the metadata dcat:CatalogRecord, dcat:Dataset and dcat:DataService
+          @rdf:about URI of metadata coming from harvested sources.
+        </li>
+        <li>Update ISO-19139 to GeoDCAT conversion
+          <ol>
+            <li>The link from DataService to Dataset (dcat:servesDataset) now correctly use the dataset's URI</li>
+          </ol>
+        </li>
+      </ol>
+    </section>
+
     <section id="15/11/2021">
       <ol>
         <li>Enable status workflow and draft copy for DCAT records (same as what is done for ISO 19139 metadata)</li>

@@ -22,6 +22,9 @@
     <xslfilter>
       <xsl:value-of select="xslfilter"/>
     </xslfilter>
+    <resourceUriPattern>
+      <xsl:value-of select="resourceUriPattern/value"/>
+    </resourceUriPattern>
   </xsl:template>
 
   <xsl:template match="*" mode="searches">

@@ -52,6 +52,8 @@ public class GeonetParams extends AbstractParams {
      */
     public String xslfilter;
 
+    public String resourceUriPattern;
+
     private String node;
 
     private Boolean useChangeDateForUpdate;
@@ -79,6 +81,7 @@ public class GeonetParams extends AbstractParams {
         createRemoteCategory = Util.getParam(site, "createRemoteCategory", false);
         mefFormatFull = Util.getParam(site, "mefFormatFull", false);
         xslfilter = Util.getParam(site, "xslfilter", "");
+        resourceUriPattern = Util.getParam(site, "resourceUriPattern", "");
 
         //checkPort(port);
         addSearches(searches);
@@ -98,6 +101,7 @@ public class GeonetParams extends AbstractParams {
         createRemoteCategory = Util.getParam(site, "createRemoteCategory", createRemoteCategory);
         mefFormatFull = Util.getParam(site, "mefFormatFull", mefFormatFull);
         xslfilter = Util.getParam(site, "xslfilter", "");
+        resourceUriPattern = Util.getParam(site, "resourceUriPattern", "");
 
         //checkPort(port);
 
@@ -145,6 +149,7 @@ public class GeonetParams extends AbstractParams {
         copy.createRemoteCategory = createRemoteCategory;
         copy.mefFormatFull = mefFormatFull;
         copy.xslfilter = xslfilter;
+        copy.resourceUriPattern = resourceUriPattern;
 
         for (Search s : alSearches)
             copy.alSearches.add(s.copy());

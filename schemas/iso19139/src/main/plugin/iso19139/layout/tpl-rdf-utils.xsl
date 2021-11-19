@@ -6,6 +6,7 @@
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:geonet="http://www.fao.org/geonetwork"
+                xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 version="2.0">
 
@@ -231,4 +232,29 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
+
+  <xsl:function name="geonet:getResourceUuid">
+    <xsl:param name="md" as="node()"/>
+    <xsl:variable name="resourceIdentifiers">
+      <xsl:for-each select="$md//gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
+        <xsl:choose>
+          <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
+            <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$resourceIdentifiers[matches(., $uuidRegex)][1]">
+        <xsl:value-of select="$resourceIdentifiers[matches(., $uuidRegex)][1]"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="xslutil:uuidFromString($md//gmd:fileIdentifier/gco:CharacterString)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
 </xsl:stylesheet>

@@ -104,5 +104,7 @@
   "browseBy": "Blader door ",
   "browseServiceTypes": "servicetypes",
   "changelog": "Changelog",
-  "searchAlicence": "Selecteer een licentie..."
+  "searchAlicence": "Selecteer een licentie...",
+  "resourceUriPattern": "Resource URI pattern",
+  "resourceUriPatternHelp": "Pattern gebruikt om URI van de bronnen te genereren tijdens de RDF export. Bv: https://metadata.vlaanderen.be/srv/resources/{resourceType}/{resourceUuid}"
 }
