@@ -30,6 +30,7 @@ import com.google.common.cache.CacheBuilder;
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import jeeves.component.ProfileManager;
+import jeeves.constants.Jeeves;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
 import net.objecthunter.exp4j.Expression;
@@ -40,25 +41,21 @@ import org.apache.commons.lang.StringUtils;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.NodeInfo;
 import org.fao.geonet.SystemInfo;
+import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
-import org.fao.geonet.domain.IsoLanguage;
-import org.fao.geonet.domain.LinkStatus;
-import org.fao.geonet.domain.Source;
-import org.fao.geonet.domain.UiSetting;
-import org.fao.geonet.domain.User;
+import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.*;
-import org.fao.geonet.kernel.search.CodeListTranslator;
-import org.fao.geonet.kernel.search.LuceneSearcher;
-import org.fao.geonet.kernel.search.Translator;
+import org.fao.geonet.kernel.datamanager.IMetadataUtils;
+import org.fao.geonet.kernel.schema.AssociatedResourcesSchemaPlugin;
+import org.fao.geonet.kernel.schema.SchemaPlugin;
+import org.fao.geonet.kernel.search.*;
 import org.fao.geonet.kernel.setting.SettingInfo;
 import org.fao.geonet.kernel.setting.SettingManager;
+import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.kernel.url.UrlChecker;
 import org.fao.geonet.languages.IsoLanguagesMapper;
 import org.fao.geonet.lib.Lib;
-import org.fao.geonet.repository.IsoLanguageRepository;
-import org.fao.geonet.repository.SourceRepository;
-import org.fao.geonet.repository.UiSettingsRepository;
-import org.fao.geonet.repository.UserRepository;
+import org.fao.geonet.repository.*;
 import org.fao.geonet.schema.iso19139.ISO19139Namespaces;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -1007,7 +1004,104 @@ public final class XslUtil {
         return "";
     }
 
+    /**
+     * Generate a UUID based off a string for consistent results
+     * @param str
+     * @return UUID string
+     */
     public static String uuidFromString(String str) {
         return UUID.nameUUIDFromBytes(str.getBytes()).toString();
+    }
+
+    /**
+     * Get the metadata URI build pattern based on the source catalog
+     * @param uuid
+     */
+    public static String getUriPattern(String uuid) {
+        ApplicationContext context = ApplicationContextHolder.get();
+        IMetadataUtils metadataUtils = context.getBean(IMetadataUtils.class);
+
+        AbstractMetadata metadata = metadataUtils.findOneByUuid(uuid);
+
+        if (metadata != null && metadata.getHarvestInfo().isHarvested()) {
+            HarvesterSettingRepository harvesterSetting = context.getBean(HarvesterSettingRepository.class);
+            HarvesterSetting uuidSetting = harvesterSetting.findOneByNameAndValue("uuid", metadata.getHarvestInfo().getUuid());
+            if (uuidSetting != null && uuidSetting.getParent() != null) {
+                List<HarvesterSetting> resourceUriPatternSetting = harvesterSetting.findChildrenByName(uuidSetting.getParent().getId(), "resourceUriPattern");
+                if (resourceUriPatternSetting.size() > 0 && StringUtils.isNotEmpty(resourceUriPatternSetting.get(0).getValue())) {
+                    return resourceUriPatternSetting.get(0).getValue();
+                }
+            }
+        }
+
+        SettingManager sm = context.getBean(SettingManager.class);
+        return sm.getValue(Settings.SYSTEM_RESOURCE_PREFIX) + "/{resourceType}/{resourceUuid}";
+    }
+
+    /**
+     * Return the related services
+     * @param relatedTo UUID of the current metadata
+     */
+    public static Node getRelatedServices(String relatedTo) {
+        final ApplicationContext appContext = ApplicationContextHolder.get();
+        final ServiceContext serviceContext = ServiceContext.get();
+        SearchManager searchMan = appContext.getBean(SearchManager.class);
+        IMetadataUtils metadataUtils = appContext.getBean(IMetadataUtils.class);
+
+        try (MetaSearcher searcher = searchMan.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE)) {
+            Element parameters = new Element(Jeeves.Elem.REQUEST);
+            parameters.addContent(new Element("operatesOn").setText(relatedTo));
+            parameters.addContent(new Element("fast").addContent("index"));
+            parameters.addContent(new Element("sortBy").addContent("title"));
+            parameters.addContent(new Element("sortOrder").addContent("reverse"));
+            parameters.addContent(new Element("buildSummary").addContent("false"));
+            parameters.addContent(new Element("from").addContent("1"));
+            parameters.addContent(new Element("to").addContent("101"));
+
+            ServiceConfig config = new ServiceConfig();
+            searcher.search(serviceContext, parameters, config);
+            Element response = searcher.present(serviceContext, parameters, config);
+            Element related = new Element("services");
+            for (Element indexedMd: (List<Element>)(response.getChildren())) {
+                String uuid = indexedMd.getChild("info", Edit.NAMESPACE).getChild("uuid").getText();
+                AbstractMetadata md = metadataUtils.findOneByUuid(uuid);
+                if (md != null) {
+                    related.addContent(md.getXmlData(false));
+                }
+            }
+            DOMOutputter outputter = new DOMOutputter();
+            return outputter.output(new Document(related));
+        } catch (Exception ignored) {}
+        return null;
+    }
+
+    /**
+     * Return the related dataset
+     * @param relatedTo UUID of the current metadata
+     */
+    public static Node getRelatedDatasets(String relatedTo) {
+        final ApplicationContext context = ApplicationContextHolder.get();
+        IMetadataUtils metadataUtils = context.getBean(IMetadataUtils.class);
+        AbstractMetadata metadata = metadataUtils.findOneByUuid(relatedTo);
+        SchemaPlugin instance = SchemaManager.getSchemaPlugin(metadata.getDataInfo().getSchemaId());
+        if (instance instanceof AssociatedResourcesSchemaPlugin) {
+            AssociatedResourcesSchemaPlugin schemaPlugin = (AssociatedResourcesSchemaPlugin) instance;
+            try {
+                Element mdXml = metadata.getXmlData(false);
+                Set<String> listOfUUIDs = schemaPlugin.getAssociatedDatasetUUIDs(mdXml);
+                if (listOfUUIDs != null && listOfUUIDs.size() > 0) {
+                    Element related = new Element("datasets");
+                    for (String uuid: listOfUUIDs) {
+                        AbstractMetadata md = metadataUtils.findOneByUuid(uuid);
+                        if (md != null) {
+                            related.addContent(md.getXmlData(false));
+                        }
+                    }
+                    DOMOutputter outputter = new DOMOutputter();
+                    return outputter.output(new Document(related));
+                }
+            } catch (Exception ignored) {}
+        }
+        return null;
     }
 }

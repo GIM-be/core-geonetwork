@@ -104,6 +104,7 @@ public class GeonetHarvester extends AbstractHarvester<HarvestResult> {
         harvesterSettingsManager.add("id:" + siteId, "createRemoteCategory", params.createRemoteCategory);
         harvesterSettingsManager.add("id:" + siteId, "mefFormatFull", params.mefFormatFull);
         harvesterSettingsManager.add("id:" + siteId, "xslfilter", params.xslfilter);
+        harvesterSettingsManager.add("id:" + siteId, "resourceUriPattern", params.resourceUriPattern);
 
         //--- store search nodes
 

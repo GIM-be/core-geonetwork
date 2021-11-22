@@ -126,6 +126,7 @@ public class CswHarvester extends AbstractHarvester<HarvestResult> {
         harvesterSettingsManager.add("id:" + siteId, "xpathFilter", params.xpathFilter);
         harvesterSettingsManager.add("id:" + siteId, "xslfilter", params.xslfilter);
         harvesterSettingsManager.add("id:" + siteId, "outputSchema", params.outputSchema);
+        harvesterSettingsManager.add("id:" + siteId, "resourceUriPattern", params.resourceUriPattern);
 
         //--- store dynamic search nodes
         String searchID = harvesterSettingsManager.add(path, "search", "");

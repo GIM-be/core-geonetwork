@@ -89,19 +89,6 @@
         <xsl:value-of select="$env/system/site/name"/>
       </dct:title>
 
-      <!-- The language of the catalog  -->
-      <dct:language>
-        <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/NLD">
-          <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
-          <skos:prefLabel xml:lang="nl">Nederlands</skos:prefLabel>
-          <skos:prefLabel xml:lang="en">Dutch</skos:prefLabel>
-          <skos:prefLabel xml:lang="fr">néerlandais</skos:prefLabel>
-          <skos:prefLabel xml:lang="de">Niederländisch</skos:prefLabel>
-          <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language"/>
-        </skos:Concept>
-      </dct:language>
-
-
       <!-- free-text account of the catalog. -->
       <dct:description xml:lang="{$iso2letterLanguageCode}">
         <xsl:value-of select="$env/system/site/name"/> (<xsl:value-of
@@ -171,9 +158,7 @@
 		        <dct:title xml:lang="{$iso2letterLanguageCode}">
 		          <xsl:value-of select="title"/>
 		        </dct:title>
-		        <foaf:isPrimaryTopicOf><xsl:value-of select="$serviceUrl"/>thesaurus.download?ref=<xsl:value-of
-		          select="key"/>
-		        </foaf:isPrimaryTopicOf>
+            <foaf:isPrimaryTopicOf rdf:resource="{url}"/>
 		      </skos:ConceptScheme>
         </dcat:themeTaxonomy>
       </xsl:for-each>
