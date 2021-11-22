@@ -63,6 +63,7 @@ public class Unset extends NotInReadOnlyModeService {
 
     public Element serviceSpecificExec(Element params, ServiceContext context) throws Exception {
         String id = Util.getParam(params, Params.ID);
+        String thumbnailUrl = Util.getParam(params, Params.THUMBNAIL_URL);
         String type = Util.getParam(params, Params.TYPE);
         String version = Util.getParam(params, Params.VERSION);
 
@@ -80,22 +81,17 @@ public class Unset extends NotInReadOnlyModeService {
         if (version != null && !dataMan.getVersion(id).equals(version))
             throw new ConcurrentUpdateEx(id);
 
-        Element result = dataMan.getThumbnails(context, id);
-
-        if (result == null)
-            throw new OperationAbortedEx("Metadata not found", id);
-
-        result = result.getChild(type);
+        Element result = dataMan.getThumbnailsByUrl(context, id, thumbnailUrl);
 
         if (result == null)
             throw new OperationAbortedEx("Metadata has no thumbnail", id);
 
-        String file = Lib.resource.getDir(context, Params.Access.PUBLIC, id) + getFileName(result.getText());
+        String file = Lib.resource.getDir(context, Params.Access.PUBLIC, id) + getFileName(thumbnailUrl);
 
         //-----------------------------------------------------------------------
         //--- remove thumbnail
 
-        dataMan.unsetThumbnail(context, id, type.equals("small"), true);
+        dataMan.unsetThumbnail(context, id, type.equals("small"), true, thumbnailUrl);
 
 
         File thumbnail = new File(file);

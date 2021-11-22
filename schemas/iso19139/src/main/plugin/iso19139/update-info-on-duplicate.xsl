@@ -18,6 +18,7 @@
   <xsl:include href="layout/utility-fn.xsl"/>
 
   <xsl:variable name="serviceUrl" select="/root/env/siteURL"/>
+  <xsl:variable name="nodeUrl" select="/root/env/nodeURL"/>
   <xsl:variable name="node" select="/root/env/node"/>
 
   <!-- We use the category check to find out if this is an SDS metadata. Please replace with anything better -->
@@ -81,9 +82,9 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString">
+  <xsl:template match="gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString[starts-with(.,$nodeUrl)]">
     <xsl:copy copy-namespaces="no">
-      <xsl:value-of select="replace(.,/root/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString,/root/env/uuid)"/>
+        <xsl:value-of select="replace(.,/root/gmd:MD_Metadata/gmd:fileIdentifier/gco:CharacterString,/root/env/uuid)"/>
     </xsl:copy>
   </xsl:template>
 

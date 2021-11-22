@@ -106,7 +106,7 @@ public final class Params {
     public static final String SMALL_SCALING_DIR = "smallScalingDir";
     public static final String SMALL_SCALING_FACTOR = "smallScalingFactor";
 
-    public static final String THUMBNAIL = "thumbnail";
+    public static final String THUMBNAIL_URL = "thumbnail_url";
     public static final String RESOURCES = "resources";
     public static final String METADATA = "metadata";
     public static final String FAIL_ON_ERROR = "failOnError";

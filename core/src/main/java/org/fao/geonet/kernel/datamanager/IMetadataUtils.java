@@ -299,6 +299,17 @@ public interface IMetadataUtils {
     Element getThumbnails(ServiceContext context, String metadataId) throws Exception;
 
     /**
+     * Returns the thumbnails associated to the record with id metadataId
+     *
+     * @param context
+     * @param metadataId
+     * @param thumbnailUrl
+     * @return
+     * @throws Exception
+     */
+    Element getThumbnailsByUrl(ServiceContext context, String metadataId, String thumbnailUrl) throws Exception;
+
+    /**
      * Add thumbnail to the record defined with the id
      *
      * @param context
@@ -319,6 +330,18 @@ public interface IMetadataUtils {
      * @throws Exception
      */
     void unsetThumbnail(ServiceContext context, String id, boolean small, boolean indexAfterChange) throws Exception;
+
+    /**
+     * Remove thumbnail from the record defined with the id
+     *
+     * @param context
+     * @param id
+     * @param small
+     * @param indexAfterChange
+     * @param thumbnailUrl
+     * @throws Exception
+     */
+    void unsetThumbnail(ServiceContext context, String id, boolean small, boolean indexAfterChange, String thumbnailUrl) throws Exception;
 
     /**
      * Add data commons to the record defined with the id
@@ -403,7 +426,7 @@ public interface IMetadataUtils {
      * Find the record with the UUID uuid
      *
      * @param firstMetadataId
-     * 
+     *
      * @param uuid
      * @return
      */
@@ -412,7 +435,7 @@ public interface IMetadataUtils {
 
     /**
      * Find all records with the UUID uuid
-     * 
+     *
      * @param uuid
      * @return
      */
@@ -454,7 +477,7 @@ public interface IMetadataUtils {
 
     /**
      * Find all the metadata with the identifiers
-     * 
+     *
      * @see org.springframework.data.repository.CrudRepository#findAll(java.lang.Iterable)
      * @param spec
      * @param order
