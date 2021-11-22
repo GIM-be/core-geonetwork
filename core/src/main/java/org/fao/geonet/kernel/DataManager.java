@@ -461,6 +461,11 @@ public class DataManager {
     }
 
     @Deprecated
+    public Element getThumbnailsByUrl(ServiceContext context, String metadataId, String thumbnailUrl) throws Exception {
+        return metadataUtils.getThumbnailsByUrl(context, metadataId, thumbnailUrl);
+    }
+
+    @Deprecated
     public void setThumbnail(ServiceContext context, String id, boolean small, String file, boolean indexAfterChange) throws Exception {
         metadataUtils.setThumbnail(context, id, small, file, indexAfterChange);
     }
@@ -468,6 +473,11 @@ public class DataManager {
     @Deprecated
     public void unsetThumbnail(ServiceContext context, String id, boolean small, boolean indexAfterChange) throws Exception {
         metadataUtils.unsetThumbnail(context, id, small, indexAfterChange);
+    }
+
+    @Deprecated
+    public void unsetThumbnail(ServiceContext context, String id, boolean small, boolean indexAfterChange, String thumbnailUrl) throws Exception {
+        metadataUtils.unsetThumbnail(context, id, small, indexAfterChange, thumbnailUrl);
     }
 
     @Deprecated

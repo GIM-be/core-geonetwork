@@ -578,7 +578,8 @@
           // It is an uploaded tumbnail
           else {
             return runService('removeThumbnail', {
-              type: (thumb.title === 'thumbnail' ? 'small' : 'large'),
+              type: (thumb.title!=null && (thumb.title.dut === 'thumbnail' || thumb.title.dut === 'Voorbeeldweergave') ? 'small' : 'large'),
+              thumbnail_url: thumb.id,
               id: gnCurrentEdit.id,
               version: gnCurrentEdit.version
             }, this);

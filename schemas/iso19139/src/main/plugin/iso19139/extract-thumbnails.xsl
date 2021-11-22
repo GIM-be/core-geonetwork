@@ -33,13 +33,13 @@
         ">
         <xsl:choose>
           <xsl:when
-            test="gmd:fileDescription/gco:CharacterString = 'large_thumbnail' and gmd:fileName/gco:CharacterString != ''">
+            test="gmd:fileDescription/gco:CharacterString = ('large_thumbnail','thumbnail_large','Voorbeeldweergave (groot)') and gmd:fileName/gco:CharacterString != ''">
             <large>
               <xsl:value-of select="gmd:fileName/gco:CharacterString"/>
             </large>
           </xsl:when>
           <xsl:when
-            test="gmd:fileDescription/gco:CharacterString = 'thumbnail' and gmd:fileName/gco:CharacterString != ''">
+            test="gmd:fileDescription/gco:CharacterString = ('thumbnail','Voorbeeldweergave') and gmd:fileName/gco:CharacterString != ''">
             <small>
               <xsl:value-of select="gmd:fileName/gco:CharacterString"/>
             </small>

@@ -37,7 +37,7 @@
   <!-- ================================================================= -->
 
   <xsl:template
-    match="gmd:graphicOverview[gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString = /root/env/type]"/>
+    match="gmd:graphicOverview[gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString = normalize-space(/root/env/thumbnail_url)]"/>
 
   <!-- ================================================================= -->
 
