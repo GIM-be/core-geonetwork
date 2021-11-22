@@ -27,9 +27,13 @@
           during the RDF export to generate the metadata dcat:CatalogRecord, dcat:Dataset and dcat:DataService
           @rdf:about URI of metadata coming from harvested sources.
         </li>
+        <li>Execute migration script on DEV to fix keywords with missing language tags and dcat:Dataset with missing
+          @rdf:about
+        </li>
         <li>Update ISO-19139 to GeoDCAT conversion
           <ol>
             <li>The link from DataService to Dataset (dcat:servesDataset) now correctly use the dataset's URI</li>
+            <li>Remove dct:language from the dcat:Catalog level</li>
           </ol>
         </li>
       </ol>
