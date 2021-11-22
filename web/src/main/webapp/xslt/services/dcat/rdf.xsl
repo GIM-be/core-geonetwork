@@ -158,9 +158,7 @@
 		        <dct:title xml:lang="{$iso2letterLanguageCode}">
 		          <xsl:value-of select="title"/>
 		        </dct:title>
-		        <foaf:isPrimaryTopicOf><xsl:value-of select="$serviceUrl"/>thesaurus.download?ref=<xsl:value-of
-		          select="key"/>
-		        </foaf:isPrimaryTopicOf>
+            <foaf:isPrimaryTopicOf rdf:resource="{url}"/>
 		      </skos:ConceptScheme>
         </dcat:themeTaxonomy>
       </xsl:for-each>
