@@ -8,6 +8,7 @@
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                exclude-result-prefixes="#all"
                 version="2.0">
 
   <xsl:template name="ExtractLang" match="gmd:language">
