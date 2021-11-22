@@ -130,7 +130,7 @@ public class Set {
             Path smallFile = getFileName(file.getOriginalFilename(), true);
             Path outFile = metadataPublicDatadir.resolve(smallFile);
 
-            removeOldThumbnail(context, id, "small", false);
+            //removeOldThumbnail(context, id, "small", false);
             createThumbnail(file, outFile, smallScalingFactor, smallScalingDir);
             dataMan.setThumbnail(context, id, true, smallFile.toString(), false);
         }
@@ -138,7 +138,7 @@ public class Set {
         //-----------------------------------------------------------------------
         //--- create the requested thumbnail, removing the old one
 
-        removeOldThumbnail(context, id, type, false);
+        //removeOldThumbnail(context, id, type, false);
 
         if (scaling) {
             Path newFile = getFileName(file.getOriginalFilename(), type.equals("small"));
@@ -206,7 +206,7 @@ public class Set {
 
         //-----------------------------------------------------------------------
         //--- create the requested thumbnail, removing the old one
-        removeOldThumbnail(context, id, type, false);
+        //removeOldThumbnail(context, id, type, false);
         saveThumbnail(scaling, file, type, dataDir, scalingDir, scalingFactor, dataMan, id, context);
 
         //-----------------------------------------------------------------------

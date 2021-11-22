@@ -26,11 +26,7 @@ package org.fao.geonet.kernel.datamanager.base;
 import static org.fao.geonet.repository.specification.MetadataSpecs.hasMetadataUuid;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -663,6 +659,32 @@ public class BaseMetadataUtils implements IMetadataUtils {
     }
 
     /**
+     * @param metadataId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Element getThumbnailsByUrl(ServiceContext context, String metadataId, String thumbnailUrl) throws Exception {
+        Element md = getXmlSerializer().select(context, metadataId);
+
+        if (md == null)
+            return null;
+
+        md.detach();
+
+        String schema = metadataSchemaUtils.getMetadataSchema(metadataId);
+
+        // --- do an XSL transformation
+        Path styleSheet = metadataSchemaUtils.getSchemaDir(schema).resolve(Geonet.File.EXTRACT_THUMBNAILS_BY_URL);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("thumbnail_url", thumbnailUrl);
+        Element result = Xml.transform(md, styleSheet, params);
+        result.addContent(new Element("id").setText(metadataId));
+
+        return result;
+    }
+
+    /**
      * @param context
      * @param id
      * @param small
@@ -698,6 +720,7 @@ public class BaseMetadataUtils implements IMetadataUtils {
      * @param context
      * @param id
      * @param small
+     * @param indexAfterChange
      * @throws Exception
      */
     @Override
@@ -705,6 +728,22 @@ public class BaseMetadataUtils implements IMetadataUtils {
         throws Exception {
         Element env = new Element("env");
 
+        manageThumbnail(context, id, small, env, Geonet.File.UNSET_THUMBNAIL, indexAfterChange);
+    }
+
+    /**
+     * @param context
+     * @param id
+     * @param small
+     * @param indexAfterChange
+     * @param thumbnailUrl
+     * @throws Exception
+     */
+    @Override
+    public void unsetThumbnail(ServiceContext context, String id, boolean small, boolean indexAfterChange, String thumbnailUrl)
+        throws Exception {
+        Element env = new Element("env");
+        env.addContent(new Element("thumbnail_url").setText(thumbnailUrl));
         manageThumbnail(context, id, small, env, Geonet.File.UNSET_THUMBNAIL, indexAfterChange);
     }
 

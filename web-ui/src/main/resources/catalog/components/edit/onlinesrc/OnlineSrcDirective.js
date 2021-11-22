@@ -150,6 +150,11 @@
                     // and update list.
                     loadRelations();
                   })
+                }).catch(function(error) {
+                  gnOnlinesrc.removeThumbnail(thumbnail).then(function() {
+                    // and update list.
+                    loadRelations();
+                  })
                 });
               }
 
