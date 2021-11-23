@@ -384,6 +384,9 @@
         <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
       </xsl:apply-templates>
 
+      <!-- Content information -->
+      <xsl:apply-templates select="gmd:contentInfo/*"/>
+
       <!-- Reference system information -->
       <xsl:apply-templates select="gmd:referenceSystemInfo"/>
 
@@ -1346,6 +1349,42 @@
       </dcat:keyword>
     </xsl:if>
   </xsl:template>
+
+  <!-- Conforms to - Feature catalog description -->
+  <xsl:template name="FeatureCatalogueDescription" match="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
+    <dct:conformsTo>
+      <dct:Standard rdf:about="{gmd:featureCatalogueCitation/@xlink:href}">
+        <dct:identifier>
+          <xsl:value-of select="gmd:featureCatalogueCitation/@uuidref"/>
+        </dct:identifier>
+        <xsl:if test="normalize-space(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:title/gco:CharacterString) != ''">
+          <dct:title>
+            <xsl:value-of select="normalize-space(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:title/gco:CharacterString)"/>
+          </dct:title>
+        </xsl:if>
+        <xsl:if test="normalize-space(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:edition/gco:CharacterString) != ''">
+          <owl:versionInfo>
+            <xsl:value-of select="normalize-space(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:edition/gco:CharacterString)"/>
+          </owl:versionInfo>
+        </xsl:if>
+        <dct:type rdf:resource="https://data.vlaanderen.be/standaarden/erkende-standaard/proces-en-methode-voor-de-ontwikkeling-en-erkenning-van-data-standaarden.html"/>
+      </dct:Standard>
+    </dct:conformsTo>
+  </xsl:template>
+
+  <!--
+  <xsl:template name="ContentInfo" match="gmd:contentInfo">
+    <xsl:choose>
+      <xsl:when test="name(*) = 'gmd:MD_CoverageDescription'"></xsl:when>
+      <xsl:when test="name(*) = 'gmd:MD_ImageDescription'"></xsl:when>
+      <xsl:when test="name(*) = 'gmd:AbstractMD_ContentInformation'"></xsl:when>
+      <xsl:when test="name(*) = 'gmd:MD_RangeDimension'"></xsl:when>
+      <xsl:when test="name(*) = 'gmd:MD_Band'"></xsl:when>
+      <xsl:when test="name(*) = 'gmd:MD_CoverageContentTypeCode'"></xsl:when>
+      <xsl:when test="name(*) = 'gmd:MD_ImagingConditionCode'"></xsl:when>
+    </xsl:choose>
+  </xsl:template>
+  -->
 
   <!-- Reference system info -->
   <xsl:template name="ReferenceSystemInfo" match="gmd:referenceSystemInfo">
