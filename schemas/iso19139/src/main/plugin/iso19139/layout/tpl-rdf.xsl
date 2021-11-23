@@ -332,8 +332,8 @@
       </xsl:if>
 
       <dct:conformsTo>
-        <dct:Standard>
-          <dct:title>GeoDCAT-AP-VL</dct:title>
+        <dct:Standard rdf:about="https://data.vlaanderen.be/doc/applicatieprofiel/GEODCAT-AP-VL/">
+          <dct:title>GEODCAT-AP-VL</dct:title>
         </dct:Standard>
       </dct:conformsTo>
 
