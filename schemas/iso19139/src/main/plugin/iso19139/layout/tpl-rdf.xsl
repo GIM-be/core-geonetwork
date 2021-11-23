@@ -372,27 +372,20 @@
       <xsl:copy-of select="$ResourceAbstract"/>
 
       <!-- Topic category -->
-      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:topicCategory">
-        <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-      </xsl:apply-templates>
+      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:topicCategory"/>
 
       <!-- Keyword -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords">
         <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-        <xsl:with-param name="ResourceType" select="$ResourceType"/>
       </xsl:apply-templates>
 
       <!-- Alternate title -->
       <xsl:apply-templates select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle">
         <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-        <xsl:with-param name="ResourceType" select="$ResourceType"/>
       </xsl:apply-templates>
 
       <!-- Reference system information -->
-      <xsl:apply-templates select="gmd:referenceSystemInfo">
-        <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-        <xsl:with-param name="ResourceType" select="$ResourceType"/>
-      </xsl:apply-templates>
+      <xsl:apply-templates select="gmd:referenceSystemInfo"/>
 
       <!-- Resource Language -->
       <xsl:for-each select="gmd:identificationInfo/*/gmd:language">
@@ -424,7 +417,7 @@
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:extent/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent"/>
 
       <!-- Creation date, publication date, date of last revision -->
-      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation"/>
+      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date"/>
 
       <!-- Conformity -->
       <xsl:apply-templates select="gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:specification/gmd:CI_Citation">
@@ -457,9 +450,7 @@
       </xsl:variable>
 
       <!-- Spatial extend -->
-      <xsl:apply-templates select="gmd:identificationInfo[1]/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement">
-        <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-      </xsl:apply-templates>
+      <xsl:apply-templates select="gmd:identificationInfo[1]/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
 
       <!-- spatial resolution -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution"/>
@@ -548,9 +539,7 @@
           </xsl:for-each>
 
           <!-- Maintenance information (tentative) -->
-          <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceMaintenance">
-            <xsl:apply-templates select="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode"/>
-          </xsl:for-each>
+          <xsl:apply-templates select="gmd:identificationInfo/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode"/>
 
           <!-- Spatial representation type -->
           <xsl:variable name="SpatialRepresentationType">
@@ -731,15 +720,11 @@
 
   <!-- Unique Resource Identifier -->
   <xsl:template name="UniqueResourceIdentifier" match="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*">
-    <xsl:param name="ns">
-      <xsl:value-of select="gmd:codeSpace/gco:CharacterString"/>
-    </xsl:param>
+    <xsl:variable name="ns" select="gmd:codeSpace/gco:CharacterString"/>
 
-    <xsl:param name="code">
-      <xsl:value-of select="gmd:code/gco:CharacterString"/>
-    </xsl:param>
+    <xsl:variable name="code" select="gmd:code/gco:CharacterString"/>
 
-    <xsl:param name="id">
+    <xsl:variable name="id">
       <xsl:choose>
         <xsl:when test="$ns != ''">
           <xsl:choose>
@@ -755,7 +740,7 @@
           <xsl:value-of select="$code"/>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:param>
+    </xsl:variable>
 
     <dct:identifier>
       <xsl:value-of select="$id"/>
@@ -767,19 +752,13 @@
     <xsl:param name="MetadataLanguage"/>
     <xsl:param name="ResourceType"/>
 
-    <xsl:param name="role">
-      <xsl:value-of select="gmd:role/gmd:CI_RoleCode/@codeListValue"/>
-    </xsl:param>
+    <xsl:variable name="role" select="gmd:role/gmd:CI_RoleCode/@codeListValue"/>
 
-    <xsl:param name="IndividualURI">
-      <xsl:value-of select="geonet:escapeURI(gmd:individualName/*/@xlink:href)"/>
-    </xsl:param>
+    <xsl:variable name="IndividualURI" select="geonet:escapeURI(gmd:individualName/*/@xlink:href)"/>
 
-    <xsl:param name="IndividualName">
-      <xsl:value-of select="normalize-space(gmd:individualName/*)"/>
-    </xsl:param>
+    <xsl:variable name="IndividualName" select="normalize-space(gmd:individualName/*)"/>
 
-    <xsl:param name="IndividualName-vCard">
+    <xsl:variable name="IndividualName-vCard">
       <xsl:for-each select="gmd:individualName">
         <vcard:fn xml:lang="{$MetadataLanguage}">
           <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
@@ -788,13 +767,11 @@
           <xsl:with-param name="term">vcard:fn</xsl:with-param>
         </xsl:call-template>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="OrganisationURI">
-      <xsl:value-of select="geonet:escapeURI(gmd:organisationName/*/@xlink:href)"/>
-    </xsl:param>
+    <xsl:variable name="OrganisationURI" select="geonet:escapeURI(gmd:organisationName/*/@xlink:href)"/>
 
-    <xsl:param name="URI">
+    <xsl:variable name="URI">
       <xsl:choose>
         <xsl:when test="$IndividualURI != ''">
           <xsl:value-of select="$IndividualURI"/>
@@ -803,13 +780,11 @@
           <xsl:value-of select="$OrganisationURI"/>
         </xsl:when>
       </xsl:choose>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="OrganisationName">
-      <xsl:value-of select="normalize-space(gmd:organisationName/*)"/>
-    </xsl:param>
+    <xsl:variable name="OrganisationName" select="normalize-space(gmd:organisationName/*)"/>
 
-    <xsl:param name="OrganisationName-FOAF">
+    <xsl:variable name="OrganisationName-FOAF">
       <xsl:for-each select="gmd:organisationName">
         <foaf:name xml:lang="{$MetadataLanguage}">
           <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
@@ -818,9 +793,9 @@
           <xsl:with-param name="term">foaf:name</xsl:with-param>
         </xsl:call-template>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="OrganisationName-vCard">
+    <xsl:variable name="OrganisationName-vCard">
       <xsl:for-each select="gmd:organisationName">
         <vcard:organization-name xml:lang="{$MetadataLanguage}">
           <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
@@ -829,9 +804,9 @@
           <xsl:with-param name="term">vcard:organization-name</xsl:with-param>
         </xsl:call-template>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="OrganisationNameAsIndividualName-vCard">
+    <xsl:variable name="OrganisationNameAsIndividualName-vCard">
       <xsl:for-each select="gmd:organisationName">
         <vcard:fn xml:lang="{$MetadataLanguage}">
           <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
@@ -840,45 +815,45 @@
           <xsl:with-param name="term">vcard:fn</xsl:with-param>
         </xsl:call-template>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="Email">
+    <xsl:variable name="Email">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/*">
         <foaf:mbox rdf:resource="mailto:{geonet:escapeURI(.)}"/>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="Email-vCard">
+    <xsl:variable name="Email-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/*">
         <vcard:hasEmail rdf:resource="mailto:{geonet:escapeURI(.)}"/>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="URL">
+    <xsl:variable name="URL">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
         <foaf:workplaceHomepage rdf:resource="{geonet:escapeURI(.)}"/>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="URL-vCard">
+    <xsl:variable name="URL-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
         <vcard:hasURL rdf:resource="{geonet:escapeURI(.)}"/>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="Telephone">
+    <xsl:variable name="Telephone">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/*">
         <foaf:phone rdf:resource="tel:+{translate(translate(translate(translate(translate(normalize-space(.),' ',''),'(',''),')',''),'+',''),'.','')}"/>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="Telephone-vCard">
+    <xsl:variable name="Telephone-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/*">
         <vcard:hasTelephone rdf:resource="tel:+{translate(translate(translate(translate(translate(normalize-space(.),' ',''),'(',''),')',''),'+',''),'.','')}"/>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="Address-vCard">
+    <xsl:variable name="Address-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address">
         <xsl:variable name="deliveryPoint" select="normalize-space(gmd:deliveryPoint/*)"/>
         <xsl:variable name="city" select="normalize-space(gmd:city/*)"/>
@@ -950,9 +925,9 @@
           </vcard:hasAddress>
         </xsl:if>
       </xsl:for-each>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="ROInfo">
+    <xsl:variable name="ROInfo">
       <xsl:variable name="info">
         <xsl:if test="$OrganisationName != ''">
           <xsl:copy-of select="$OrganisationName-FOAF"/>
@@ -974,9 +949,9 @@
         </xsl:choose>
         <xsl:copy-of select="$info"/>
       </foaf:Agent>
-    </xsl:param>
+    </xsl:variable>
 
-    <xsl:param name="ResponsibleParty">
+    <xsl:variable name="ResponsibleParty">
       <xsl:variable name="info">
         <xsl:if test="$IndividualName != ''">
           <xsl:copy-of select="$IndividualName-vCard"/>
@@ -1004,7 +979,7 @@
         </xsl:choose>
         <xsl:copy-of select="$info"/>
       </vcard:Organization>
-    </xsl:param>
+    </xsl:variable>
 
     <xsl:choose>
       <xsl:when test="$ResourceType = 'service'">
@@ -1073,7 +1048,6 @@
             <dct:title xml:lang="{$MetadataLanguage}">
               <xsl:value-of select="geonet:getLabel(gmd:title)"/>
             </dct:title>
-            <!--<xsl:apply-templates select="gmd:date/gmd:CI_Date"/>-->
           </xsl:variable>
           <dct:conformsTo>
             <dct:Standard>
@@ -1085,19 +1059,10 @@
     </xsl:if>
   </xsl:template>
 
-  <!-- Geographic extent -->
-  <xsl:template name="GeographicExtent" match="gmd:identificationInfo[1]/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement">
-    <xsl:param name="MetadataLanguage"/>
-    <xsl:apply-templates select="gmd:EX_GeographicBoundingBox"/>
-    <!--<xsl:apply-templates select="gmd:EX_GeographicDescription/gmd:geographicIdentifier/*">-->
-    <!--  <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>-->
-    <!--</xsl:apply-templates>-->
-  </xsl:template>
-
   <!-- Geographic identifier -->
   <xsl:template name="GeographicIdentifier" match="gmd:EX_GeographicDescription/gmd:geographicIdentifier/*">
     <xsl:param name="MetadataLanguage"/>
-    <xsl:param name="GeoCode">
+    <xsl:variable name="GeoCode">
       <xsl:choose>
         <xsl:when test="gmd:code/gco:CharacterString">
           <xsl:value-of select="gmd:code/gco:CharacterString"/>
@@ -1106,17 +1071,17 @@
           <xsl:value-of select="gmd:code/gmx:Anchor/@xlink:href"/>
         </xsl:when>
       </xsl:choose>
-    </xsl:param>
-    <xsl:param name="GeoURI">
+    </xsl:variable>
+    <xsl:variable name="GeoURI">
       <xsl:if test="starts-with($GeoCode,'http://') or starts-with($GeoCode,'https://')">
         <xsl:value-of select="geonet:escapeURI($GeoCode)"/>
       </xsl:if>
-    </xsl:param>
-    <xsl:param name="GeoURN">
+    </xsl:variable>
+    <xsl:variable name="GeoURN">
       <xsl:if test="starts-with($GeoCode,'urn:')">
         <xsl:value-of select="geonet:escapeURI($GeoCode)"/>
       </xsl:if>
-    </xsl:param>
+    </xsl:variable>
 
     <xsl:choose>
       <xsl:when test="$GeoURI != ''">
@@ -1152,34 +1117,34 @@
 
   <!-- Geographic bounding box -->
   <xsl:template name="GeographicBoundingBox" match="gmd:EX_GeographicBoundingBox">
-    <xsl:param name="north" select="gmd:northBoundLatitude/gco:Decimal"/>
-    <xsl:param name="east" select="gmd:eastBoundLongitude/gco:Decimal"/>
-    <xsl:param name="south" select="gmd:southBoundLatitude/gco:Decimal"/>
-    <xsl:param name="west" select="gmd:westBoundLongitude/gco:Decimal"/>
+    <xsl:variable name="north" select="gmd:northBoundLatitude/gco:Decimal"/>
+    <xsl:variable name="east" select="gmd:eastBoundLongitude/gco:Decimal"/>
+    <xsl:variable name="south" select="gmd:southBoundLatitude/gco:Decimal"/>
+    <xsl:variable name="west" select="gmd:westBoundLongitude/gco:Decimal"/>
 
     <!-- Bbox as GML (GeoSPARQL) -->
     <!--  Update by GIM: use polygon encoding for bbox -->
-    <xsl:param name="GMLLiteral-Polygon">
+    <xsl:variable name="GMLLiteral-Polygon">
       <xsl:choose>
         <xsl:when test="$SrsUri = 'http://www.opengis.net/def/crs/OGC/1.3/CRS84'">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;<xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:when>
         <xsl:when test="$SrsAxisOrder = 'LonLat'">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;<xsl:value-of select="$east"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$north"/>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:when>
         <xsl:when test="$SrsAxisOrder = 'LatLon'">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;<xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:when>
       </xsl:choose>
-    </xsl:param>
+    </xsl:variable>
 
     <!-- Bbox as WKT (GeoSPARQL) -->
 
-    <xsl:param name="WKTLiteral">
+    <xsl:variable name="WKTLiteral">
       <xsl:choose>
         <xsl:when test="$SrsUri = 'http://www.opengis.net/def/crs/OGC/1.3/CRS84'">POLYGON((<xsl:value-of select="$west"/><xsl:text> </xsl:text><xsl:value-of select="$north"/>,<xsl:value-of select="$east"/><xsl:text> </xsl:text><xsl:value-of select="$north"/>,<xsl:value-of select="$east"/><xsl:text> </xsl:text><xsl:value-of select="$south"/>,<xsl:value-of select="$west"/><xsl:text> </xsl:text><xsl:value-of select="$south"/>,<xsl:value-of select="$west"/><xsl:text> </xsl:text><xsl:value-of select="$north"/>))</xsl:when>
         <xsl:when test="$SrsAxisOrder = 'LonLat'">&lt;<xsl:value-of select="$SrsUri"/>&gt; POLYGON((<xsl:value-of select="$west"/><xsl:text> </xsl:text><xsl:value-of select="$north"/>,<xsl:value-of select="$east"/><xsl:text> </xsl:text><xsl:value-of select="$north"/>,<xsl:value-of select="$east"/><xsl:text> </xsl:text><xsl:value-of select="$south"/>,<xsl:value-of select="$west"/><xsl:text> </xsl:text><xsl:value-of select="$south"/>,<xsl:value-of select="$west"/><xsl:text> </xsl:text><xsl:value-of select="$north"/>))</xsl:when>
         <xsl:when test="$SrsAxisOrder = 'LatLon'">&lt;<xsl:value-of select="$SrsUri"/>&gt; POLYGON((<xsl:value-of select="$north"/><xsl:text> </xsl:text><xsl:value-of select="$west"/>,<xsl:value-of select="$north"/><xsl:text> </xsl:text><xsl:value-of select="$east"/>,<xsl:value-of select="$south"/><xsl:text> </xsl:text><xsl:value-of select="$east"/>,<xsl:value-of select="$south"/><xsl:text> </xsl:text><xsl:value-of select="$west"/>,<xsl:value-of select="$north"/><xsl:text> </xsl:text><xsl:value-of select="$west"/>))</xsl:when>
       </xsl:choose>
-    </xsl:param>
+    </xsl:variable>
 
     <!-- Bbox as GeoJSON -->
 
-    <xsl:param name="GeoJSONLiteral">{"type":"Polygon","crs":{"type":"name","properties":{"name":"<xsl:value-of select="$SrsUrn"/>"}},"coordinates":[[[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>],[<xsl:value-of select="$east"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>],[<xsl:value-of select="$east"/><xsl:text>,</xsl:text><xsl:value-of select="$south"/>],[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$south"/>],[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>]]]}</xsl:param>
+    <xsl:variable name="GeoJSONLiteral">{"type":"Polygon","crs":{"type":"name","properties":{"name":"<xsl:value-of select="$SrsUrn"/>"}},"coordinates":[[[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>],[<xsl:value-of select="$east"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>],[<xsl:value-of select="$east"/><xsl:text>,</xsl:text><xsl:value-of select="$south"/>],[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$south"/>],[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>]]]}</xsl:variable>
     <dct:spatial>
       <!-- Update GIM: put GeoJSON encoding first -->
       <!-- Additional geometry encodings -->
@@ -1236,19 +1201,10 @@
     </xsl:for-each>
   </xsl:template>
 
-  <!-- Dates of publication, last revision, creation -->
-  <xsl:template name="ResourceDates" match="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation">
-    <xsl:apply-templates select="gmd:date/gmd:CI_Date"/>
-  </xsl:template>
-
   <!-- Generic date template -->
   <xsl:template name="Dates" match="gmd:date/gmd:CI_Date">
-    <xsl:param name="date">
-      <xsl:value-of select="gmd:date/gco:Date"/>
-    </xsl:param>
-    <xsl:param name="type">
-      <xsl:value-of select="gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
-    </xsl:param>
+    <xsl:variable name="date" select="gmd:date/gco:Date"/>
+    <xsl:variable name="type" select="gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
     <xsl:choose>
       <xsl:when test="$type = 'publication'">
         <dct:issued>
@@ -1271,8 +1227,7 @@
   <!-- Keyword -->
   <xsl:template name="Keyword" match="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords">
     <xsl:param name="MetadataLanguage"/>
-    <xsl:param name="ResourceType"/>
-    <xsl:param name="OriginatingControlledVocabulary">
+    <xsl:variable name="OriginatingControlledVocabulary">
       <xsl:for-each select="gmd:thesaurusName/gmd:CI_Citation">
         <xsl:for-each select="gmd:title">
           <dct:title xml:lang="{$MetadataLanguage}">
@@ -1283,9 +1238,9 @@
           </xsl:call-template>
         </xsl:for-each>
       </xsl:for-each>
-    </xsl:param>
-    <xsl:param name="firstThesaurus" select="gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]"/>
-    <xsl:param name="thesaurusIdentifier">
+    </xsl:variable>
+    <xsl:variable name="firstThesaurus" select="gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]"/>
+    <xsl:variable name="thesaurusIdentifier">
       <xsl:choose>
         <xsl:when test="$firstThesaurus/gmx:Anchor">
           <xsl:value-of select="$firstThesaurus/gmx:Anchor/@xlink:href"/>
@@ -1294,8 +1249,8 @@
           <xsl:value-of select="normalize-space($firstThesaurus/gco:CharacterString)"/>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:param>
-    <xsl:param name="scheme">
+    </xsl:variable>
+    <xsl:variable name="scheme">
       <xsl:choose>
         <xsl:when test="normalize-space($firstThesaurus/gco:CharacterString) != ''">
           <xsl:call-template name="GetSchemeFromThesaurusTitle">
@@ -1306,7 +1261,7 @@
           <xsl:value-of select="$thesaurusIdentifier"/>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:param>
+    </xsl:variable>
 
     <xsl:for-each select="gmd:keyword">
       <xsl:variable name="keywordAbout">
@@ -1327,9 +1282,11 @@
       <xsl:choose>
         <!-- Keywords not originating from any vocabulary -->
         <xsl:when test="normalize-space($keywordAbout) = ''">
-          <dcat:keyword xml:lang="{$MetadataLanguage}">
-            <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
-          </dcat:keyword>
+          <xsl:if test="normalize-space(gco:CharacterString|gmx:Anchor) != ''">
+            <dcat:keyword xml:lang="{$MetadataLanguage}">
+              <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
+            </dcat:keyword>
+          </xsl:if>
           <xsl:call-template name="LocalisedString">
             <xsl:with-param name="term">dcat:keyword</xsl:with-param>
           </xsl:call-template>
@@ -1383,16 +1340,15 @@
   <!-- Alternate title -->
   <xsl:template name="AlternateTitle" match="gmd:alternateTitle">
     <xsl:param name="MetadataLanguage"/>
-    <xsl:param name="ResourceType"/>
-    <dcat:keyword xml:lang="{$MetadataLanguage}">
-      <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
-    </dcat:keyword>
+    <xsl:if test="normalize-space(gco:CharacterString|gmx:Anchor) != ''">
+      <dcat:keyword xml:lang="{if ($MetadataLanguage != '') then $MetadataLanguage else 'nl'}">
+        <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
+      </dcat:keyword>
+    </xsl:if>
   </xsl:template>
 
   <!-- Reference system info -->
   <xsl:template name="ReferenceSystemInfo" match="gmd:referenceSystemInfo">
-    <xsl:param name="MetadataLanguage"/>
-    <xsl:param name="ResourceType"/>
     <xsl:variable name="code" select="gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code"/>
     <xsl:variable name="crs" select="string($code/gmx:Anchor/@xlink:href|$code/gco:CharacterString)"/>
 
@@ -1420,14 +1376,12 @@
 
   <!-- Topic category -->
   <xsl:template name="TopicCategory" match="gmd:identificationInfo/*/gmd:topicCategory">
-    <xsl:param name="TopicCategory">
-      <xsl:value-of select="normalize-space(gmd:MD_TopicCategoryCode)"/>
-    </xsl:param>
-    <xsl:param name="DataGovTheme">
+    <xsl:variable name="TopicCategory" select="normalize-space(gmd:MD_TopicCategoryCode)"/>
+    <xsl:variable name="DataGovTheme">
       <xsl:call-template name="MapTopicCatToDataGovTheme">
         <xsl:with-param name="TopicCategory" select="$TopicCategory"/>
       </xsl:call-template>
-    </xsl:param>
+    </xsl:variable>
 
     <xsl:choose>
       <xsl:when test="$DataGovTheme/dcat:theme">
@@ -1587,7 +1541,7 @@
   <!-- Maintenance information -->
   <xsl:template name="MaintenanceInformation" match="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode">
     <!-- The following parameter maps frequency codes used in ISO 19139 metadata to the corresponding ones of the Dublin Core Collection Description Frequency Vocabulary (when available). -->
-    <xsl:param name="FrequencyCodeURI">
+    <xsl:variable name="FrequencyCodeURI">
       <xsl:if test="@codeListValue != ''">
         <xsl:choose>
           <xsl:when test="@codeListValue = 'continual'">
@@ -1631,7 +1585,7 @@
           </xsl:when>
         </xsl:choose>
       </xsl:if>
-    </xsl:param>
+    </xsl:variable>
     <xsl:if test="$FrequencyCodeURI != ''">
       <dct:accrualPeriodicity rdf:resource="{geonet:escapeURI($FrequencyCodeURI)}"/>
     </xsl:if>
