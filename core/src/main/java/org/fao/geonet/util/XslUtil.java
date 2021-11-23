@@ -1025,7 +1025,7 @@ public final class XslUtil {
 
         if (metadata != null && metadata.getHarvestInfo().isHarvested()) {
             HarvesterSettingRepository harvesterSetting = context.getBean(HarvesterSettingRepository.class);
-            HarvesterSetting uuidSetting = harvesterSetting.findOneByNameAndValue("uuid", metadata.getHarvestInfo().getUuid());
+            HarvesterSetting uuidSetting = harvesterSetting.findOneByNameAndValueLike("uuid", metadata.getHarvestInfo().getUuid());
             if (uuidSetting != null && uuidSetting.getParent() != null) {
                 List<HarvesterSetting> resourceUriPatternSetting = harvesterSetting.findChildrenByName(uuidSetting.getParent().getId(), "resourceUriPattern");
                 if (resourceUriPatternSetting.size() > 0 && StringUtils.isNotEmpty(resourceUriPatternSetting.get(0).getValue())) {
