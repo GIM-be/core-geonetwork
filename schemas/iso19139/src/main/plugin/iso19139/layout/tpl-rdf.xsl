@@ -1140,7 +1140,7 @@
 
     <!-- Bbox as GML (GeoSPARQL) -->
     <!--  Update by GIM: use polygon encoding for bbox -->
-    <xsl:variable name="GMLLiteral-Polygon">
+    <xsl:variable name="GMLLiteral">
       <xsl:choose>
         <xsl:when test="$SrsUri = 'http://www.opengis.net/def/crs/OGC/1.3/CRS84'">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;<xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:when>
         <xsl:when test="$SrsAxisOrder = 'LonLat'">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;<xsl:value-of select="$east"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$north"/>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:when>
@@ -1167,13 +1167,16 @@
       <!-- Recommended geometry encodings -->
       <dct:Location>
         <locn:geometry>
+          <xsl:attribute name="rdf:datatype" select="'https://www.iana.org/assignments/media-types/application/vnd.geo+json'"/>
           <xsl:value-of select="$GeoJSONLiteral"/>
         </locn:geometry>
         <locn:geometry>
+          <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/ont/geosparql#wktLiteral'"/>
           <xsl:value-of select="$WKTLiteral"/>
         </locn:geometry>
         <locn:geometry>
-          <xsl:value-of select="$GMLLiteral-Polygon"/>
+          <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/ont/geosparql#gmlLiteral'"/>
+          <xsl:value-of select="$GMLLiteral"/>
         </locn:geometry>
       </dct:Location>
     </dct:spatial>
