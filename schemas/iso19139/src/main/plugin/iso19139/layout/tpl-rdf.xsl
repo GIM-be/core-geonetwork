@@ -484,9 +484,9 @@
               <!-- TODO: map to INSPIRE-PV codelist values: https://inspire.ec.europa.eu/metadata-codelist/ProtocolValue -->
               <dct:conformsTo>
                 <dct:Standard>
-                  <dct:title>
+                  <dct:identifier>
                     <xsl:value-of select="current-grouping-key()"/>
-                  </dct:title>
+                  </dct:identifier>
                 </dct:Standard>
               </dct:conformsTo>
             </xsl:if>
@@ -523,6 +523,8 @@
               <skos:inScheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand"/>
             </skos:Concept>
           </mdcat:ontwikkelingstoestand>
+
+          <!-- Service type and protocol -->
         </xsl:when>
 
         <!-- Dataset specific -->
@@ -619,9 +621,9 @@
                           <xsl:copy-of select="."/>
                           <dct:conformsTo>
                             <dct:Standard>
-                              <dct:title>
+                              <dct:identifier>
                                 <xsl:value-of select="$Protocol"/>
-                              </dct:title>
+                              </dct:identifier>
                             </dct:Standard>
                           </dct:conformsTo>
                           <xsl:copy-of select="$Distributors"/>
@@ -1047,14 +1049,11 @@
           <dct:conformsTo rdf:resource="{geonet:escapeURI(../@xlink:href)}"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:variable name="specinfo">
-            <dct:title xml:lang="{$MetadataLanguage}">
-              <xsl:value-of select="geonet:getLabel(gmd:title)"/>
-            </dct:title>
-          </xsl:variable>
           <dct:conformsTo>
             <dct:Standard>
-              <xsl:copy-of select="$specinfo"/>
+              <dct:title xml:lang="{$MetadataLanguage}">
+                <xsl:value-of select="geonet:getLabel(gmd:title)"/>
+              </dct:title>
             </dct:Standard>
           </dct:conformsTo>
         </xsl:otherwise>
@@ -1357,16 +1356,14 @@
         <dct:identifier>
           <xsl:value-of select="gmd:featureCatalogueCitation/@uuidref"/>
         </dct:identifier>
-        <xsl:if test="normalize-space(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:title/gco:CharacterString) != ''">
+
+        <xsl:variable name="title" select="geonet:getLabel(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:title)"/>
+        <xsl:if test="$title != ''">
           <dct:title>
-            <xsl:value-of select="normalize-space(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:title/gco:CharacterString)"/>
+            <xsl:value-of select="$title"/>
           </dct:title>
         </xsl:if>
-        <xsl:if test="normalize-space(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:edition/gco:CharacterString) != ''">
-          <owl:versionInfo>
-            <xsl:value-of select="normalize-space(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:edition/gco:CharacterString)"/>
-          </owl:versionInfo>
-        </xsl:if>
+        <xsl:apply-templates select="gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:edition"/>
         <dct:type rdf:resource="https://data.vlaanderen.be/standaarden/erkende-standaard/proces-en-methode-voor-de-ontwikkeling-en-erkenning-van-data-standaarden.html"/>
       </dct:Standard>
     </dct:conformsTo>

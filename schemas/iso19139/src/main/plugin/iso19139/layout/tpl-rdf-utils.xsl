@@ -188,6 +188,11 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="Map-ServiceType">
+    <xsl:param name="type" as="xs:string"/>
+    <xsl:param name="codeSpace" as="xs:string"/>
+  </xsl:template>
+
 
   <xsl:function name="geonet:getQueryParamValue">
     <xsl:param name="url" as="xs:string"/>
