@@ -495,11 +495,18 @@
 
           <!-- Coupled resources -->
           <xsl:if test="$relationLookup">
-            <xsl:for-each select="xslutil:getRelatedDatasets($RecordUUID)/datasets/gmd:MD_Metadata">
-              <xsl:variable name="datasetUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
-              <xsl:variable name="datasetUuid" select="geonet:getResourceUuid(.)"/>
-              <xsl:variable name="datasetUri" select="replace(replace($datasetUriPattern, '\{resourceType\}', 'datasets'), '\{resourceUuid\}', $datasetUuid)"/>
-              <dcat:servesDataset rdf:resource="{geonet:escapeURI($datasetUri)}"/>
+            <xsl:for-each select="xslutil:getRelatedDatasets($RecordUUID)/datasets/*">
+              <xsl:choose>
+                <xsl:when test="name() = 'gmd:MD_Metadata'">
+                  <xsl:variable name="datasetUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
+                  <xsl:variable name="datasetUuid" select="geonet:getResourceUuid(.)"/>
+                  <xsl:variable name="datasetUri" select="replace(replace($datasetUriPattern, '\{resourceType\}', 'datasets'), '\{resourceUuid\}', $datasetUuid)"/>
+                  <dcat:servesDataset rdf:resource="{geonet:escapeURI($datasetUri)}"/>
+                </xsl:when>
+                <xsl:when test="name() = 'rdf:RDF'">
+                  <dct:relation rdf:resource="{geonet:escapeURI(.//dcat:Dataset[1]/@rdf:about)}"/>
+                </xsl:when>
+              </xsl:choose>
             </xsl:for-each>
           </xsl:if>
 
@@ -553,11 +560,18 @@
 
           <!-- Related services -->
           <xsl:if test="$relationLookup">
-            <xsl:for-each select="xslutil:getRelatedServices($RecordUUID)/services/gmd:MD_Metadata">
-              <xsl:variable name="serviceUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
-              <xsl:variable name="serviceUuid" select="geonet:getResourceUuid(.)"/>
-              <xsl:variable name="serviceUri" select="replace(replace($serviceUriPattern, '\{resourceType\}', 'services'), '\{resourceUuid\}', $serviceUuid)"/>
-              <dct:relation rdf:resource="{geonet:escapeURI($serviceUri)}"/>
+            <xsl:for-each select="xslutil:getRelatedServices($RecordUUID)/services/*">
+              <xsl:choose>
+                <xsl:when test="name() = 'gmd:MD_Metadata'">
+                  <xsl:variable name="serviceUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
+                  <xsl:variable name="serviceUuid" select="geonet:getResourceUuid(.)"/>
+                  <xsl:variable name="serviceUri" select="replace(replace($serviceUriPattern, '\{resourceType\}', 'services'), '\{resourceUuid\}', $serviceUuid)"/>
+                  <dct:relation rdf:resource="{geonet:escapeURI($serviceUri)}"/>
+                </xsl:when>
+                <xsl:when test="name() = 'rdf:RDF'">
+                  <dct:relation rdf:resource="{geonet:escapeURI(.//dcat:DataService[1]/@rdf:about)}"/>
+                </xsl:when>
+              </xsl:choose>
             </xsl:for-each>
           </xsl:if>
 
