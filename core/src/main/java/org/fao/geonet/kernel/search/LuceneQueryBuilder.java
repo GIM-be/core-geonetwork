@@ -149,6 +149,10 @@ public class LuceneQueryBuilder {
         if (query == null) {
             query = new TermQuery(new Term(luceneIndexField, analyzedString));
         }
+        Float boost = luceneConfig.getFieldBoost(luceneIndexField);
+        if (boost != null) {
+            query.setBoost(boost);
+        }
         return query;
     }
 
@@ -426,6 +430,10 @@ public class LuceneQueryBuilder {
                         if (!_tokenizedFieldSet.contains(fieldName)) {
                             // TODO : use similarity when needed
                             TermQuery termQuery = new TermQuery(new Term(fieldName, fieldValue.trim()));
+                            Float boost = luceneConfig.getFieldBoost(fieldName);
+                            if (boost != null) {
+                                termQuery.setBoost(boost);
+                            }
                             BooleanClause clause = new BooleanClause(termQuery, tokenOccur);
                             booleanQuery.add(clause);
                         } else {
