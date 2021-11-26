@@ -27,6 +27,7 @@ import jeeves.constants.Jeeves;
 import jeeves.server.UserSession;
 import jeeves.server.context.ServiceContext;
 import org.fao.geonet.constants.Geonet;
+import org.fao.geonet.kernel.search.LuceneIndexField;
 import org.jdom.Element;
 
 import java.util.List;
@@ -86,7 +87,9 @@ public class SearchDefaults {
             @SuppressWarnings("unchecked")
             List<Element> otherEl = request.getChildren();
             for (Element e : otherEl) {
-                if (!e.getName().equalsIgnoreCase("_content_type")) {
+                if (e.getName().equalsIgnoreCase(LuceneIndexField.ANY)) {
+                    elData.addContent(new Element("title_OR_abstract_OR_any").setText(e.getText()));
+                } else if (!e.getName().equalsIgnoreCase("_content_type")) {
                     elData.addContent(new Element(e.getName()).setText(e.getText()));
                 }
             }
