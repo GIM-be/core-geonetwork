@@ -444,8 +444,8 @@
         -->
         <xsl:for-each select="gmd:resourceConstraints/gmd:MD_LegalConstraints">
             <xsl:variable name="accessConstraints" select="gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue"/>
-            <xsl:variable name="otherConstraints" select="normalize-space(gmd:otherConstraints/gco:CharacterString)"/>
-            <xsl:variable name="translated-otherConstraints" select="normalize-space(gmd:otherConstraints/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',upper-case($guiLang))])"/>
+            <xsl:variable name="otherConstraints" select="normalize-space(string-join(gmd:otherConstraints/gco:CharacterString,'.'))"/>
+            <xsl:variable name="translated-otherConstraints" select="normalize-space(string-join(gmd:otherConstraints/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',upper-case($guiLang))],'.'))"/>
             <xsl:variable name="resultValue">
                 <xsl:choose>
                     <xsl:when test="$accessConstraints='otherRestrictions' and $otherConstraints!=''">
