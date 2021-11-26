@@ -46,7 +46,7 @@ public interface AssociatedResourcesSchemaPlugin {
 
     public abstract Set<String> getAssociatedDatasetUUIDs(Element metadata);
 
-    public default Set<String> getAssociatedExternalDatasetLinks(Element metadata, String nodeUrl) {
+    public default Set<String> getAssociatedExternalDatasetLinks(Element metadata) {
         return Collections.emptySet();
     }
 
@@ -56,5 +56,9 @@ public interface AssociatedResourcesSchemaPlugin {
 
     public default Set<String> getAssociatedServices(Element metadata) {
         return null;
+    }
+
+    public default Set<String> getAssociatedExternalServiceLinks(Element metadata) {
+        return Collections.emptySet();
     }
 }
