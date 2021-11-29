@@ -291,9 +291,11 @@
   </fieldBoosting>
 
   It could be relevant to also remove some field from scoring using this:
-   * If not, user privileges will be take into account to compute the score.
+  * If not, user privileges will be take into account to compute the score.
   -->
   <fieldBoosting>
+    <Field name="title" boost="3.0F"/>
+    <Field name="abstract" boost="2.0F"/>
     <Field name="_op0" boost="0.0F"/>
     <Field name="_op1" boost="0.0F"/>
     <Field name="_op2" boost="0.0F"/>
