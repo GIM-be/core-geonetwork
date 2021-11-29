@@ -263,4 +263,19 @@
     </xsl:choose>
   </xsl:function>
 
+  <xsl:function name="geonet:getResourceURI">
+    <xsl:param name="md" as="node()"/>
+    <xsl:param name="resourceType" as="xs:string"/>
+    <xsl:param name="uriPattern" as="xs:string"/>
+    <xsl:variable name="resourceUUID" select="geonet:getResourceUuid($md)"/>
+    <xsl:choose>
+      <xsl:when test="starts-with($resourceUUID, 'http://') or starts-with($resourceUUID, 'https://')">
+        <xsl:value-of select="geonet:escapeURI($resourceUUID)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="geonet:escapeURI(replace(replace($uriPattern, '\{resourceType\}', concat($resourceType, 's')), '\{resourceUuid\}', $resourceUUID))"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
 </xsl:stylesheet>

@@ -179,12 +179,7 @@
       </xsl:if>
     </xsl:variable>
 
-    <xsl:variable name="ResourceUri">
-      <xsl:variable name="rURI" select="replace(replace($uriPattern, '\{resourceType\}', concat($ResourceType, 's')), '\{resourceUuid\}', $ResourceUUID)"/>
-      <xsl:if test="$rURI != '' and (starts-with($rURI, 'http://') or starts-with($rURI, 'https://'))">
-        <xsl:value-of select="geonet:escapeURI($rURI)"/>
-      </xsl:if>
-    </xsl:variable>
+    <xsl:variable name="ResourceUri" select="geonet:getResourceURI(., $ResourceType, $uriPattern)"/>
 
     <xsl:variable name="LicenseAndRightsConstraints">
       <xsl:variable name="constraints" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/*|
@@ -500,9 +495,7 @@
               <xsl:choose>
                 <xsl:when test="name() = 'gmd:MD_Metadata'">
                   <xsl:variable name="datasetUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
-                  <xsl:variable name="datasetUuid" select="geonet:getResourceUuid(.)"/>
-                  <xsl:variable name="datasetUri" select="replace(replace($datasetUriPattern, '\{resourceType\}', 'datasets'), '\{resourceUuid\}', $datasetUuid)"/>
-                  <dcat:servesDataset rdf:resource="{geonet:escapeURI($datasetUri)}"/>
+                  <dcat:servesDataset rdf:resource="{geonet:getResourceURI(., 'dataset', $datasetUriPattern)}"/>
                 </xsl:when>
                 <xsl:when test="name() = 'rdf:RDF'">
                   <dct:relation rdf:resource="{geonet:escapeURI(.//dcat:Dataset[1]/@rdf:about)}"/>
@@ -565,9 +558,7 @@
               <xsl:choose>
                 <xsl:when test="name() = 'gmd:MD_Metadata'">
                   <xsl:variable name="serviceUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
-                  <xsl:variable name="serviceUuid" select="geonet:getResourceUuid(.)"/>
-                  <xsl:variable name="serviceUri" select="replace(replace($serviceUriPattern, '\{resourceType\}', 'services'), '\{resourceUuid\}', $serviceUuid)"/>
-                  <dct:relation rdf:resource="{geonet:escapeURI($serviceUri)}"/>
+                  <dct:relation rdf:resource="{geonet:getResourceURI(., 'service', $serviceUriPattern)}"/>
                 </xsl:when>
                 <xsl:when test="name() = 'rdf:RDF'">
                   <dct:relation rdf:resource="{geonet:escapeURI(.//dcat:DataService[1]/@rdf:about)}"/>
