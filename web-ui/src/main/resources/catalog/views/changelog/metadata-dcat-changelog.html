@@ -21,6 +21,26 @@
       <span>See also <a href="main-changelog.html">Main changelog</a></span>
     </div>
 
+    <section id="29/11/2021">
+      <ol>
+        <li>Fix broken RDF export on SQL server instances</li>
+        <li>GeoDCAT conversion:
+          <ol>
+            <li>Conformity: Use versioned URI for DCAT profile conformity</li>
+            <li>Conformity for dataset: map feature catalog (content info)</li>
+            <li>Fix relation between ISO and DCAT records not mapped</li>
+            <li>Add the rdf:datatype attribute on the various locn:geometry format</li>
+            <li>Fix duplicated stakeholders elements (publisher, contact point, distributor, ...) in the RDF output with
+              API
+            </li>
+            <li>Fix issue when resource identifier in ISO is already a URI</li>
+          </ol>
+        </li>
+        <li>Fix missing information about link from Dataset to Service from the metadata view</li>
+        <li>Enforce harvested metadata default keywords language to "nl"</li>
+      </ol>
+    </section>
+
     <section id="22/11/2021">
       <ol>
         <li>Add an option on CSW and GeoNetwork harvesters to define a URI build pattern. This pattern is used

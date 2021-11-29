@@ -188,6 +188,11 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="Map-ServiceType">
+    <xsl:param name="type" as="xs:string"/>
+    <xsl:param name="codeSpace" as="xs:string"/>
+  </xsl:template>
+
 
   <xsl:function name="geonet:getQueryParamValue">
     <xsl:param name="url" as="xs:string"/>
@@ -254,6 +259,21 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="xslutil:uuidFromString($md//gmd:fileIdentifier/gco:CharacterString)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="geonet:getResourceURI">
+    <xsl:param name="md" as="node()"/>
+    <xsl:param name="resourceType" as="xs:string"/>
+    <xsl:param name="uriPattern" as="xs:string"/>
+    <xsl:variable name="resourceUUID" select="geonet:getResourceUuid($md)"/>
+    <xsl:choose>
+      <xsl:when test="starts-with($resourceUUID, 'http://') or starts-with($resourceUUID, 'https://')">
+        <xsl:value-of select="geonet:escapeURI($resourceUUID)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="geonet:escapeURI(replace(replace($uriPattern, '\{resourceType\}', concat($resourceType, 's')), '\{resourceUuid\}', $resourceUUID))"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>

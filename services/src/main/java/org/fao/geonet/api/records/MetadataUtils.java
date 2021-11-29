@@ -154,8 +154,7 @@ public class MetadataUtils {
         }
 
         // Search for services
-        if (listOfTypes.size() == 0 ||
-            listOfTypes.contains(RelatedItemType.services)) {
+        if (listOfTypes.size() == 0 || listOfTypes.contains(RelatedItemType.services)) {
             Set<String> listOfUUIDs = schemaPlugin != null ? schemaPlugin.getAssociatedServices(md) : null;
             if (listOfUUIDs == null) {
                 relatedRecords.addContent(search(uuid, "services", context, from, to, fast));
@@ -163,6 +162,13 @@ public class MetadataUtils {
                 String joinedUUIDs = Joiner.on(" or ").join(listOfUUIDs);
                 relatedRecords.addContent(search(joinedUUIDs, "services", context, from, to, fast, true));
             }
+
+            Set<String> externalLinks = schemaPlugin.getAssociatedExternalServiceLinks(md);
+            Element externalDatasets = new Element("externalServices");
+            for (String externalLink: externalLinks) {
+                externalDatasets.addContent(new Element("url").addContent(externalLink));
+            }
+            relatedRecords.addContent(externalDatasets);
         }
 
         // Related record from uuiref attributes in metadata record
@@ -173,16 +179,13 @@ public class MetadataUtils {
                 listOfTypes.contains(RelatedItemType.sources)
         )) {
             // Get datasets related to service search
-            if (listOfTypes.size() == 0 ||
-                listOfTypes.contains(RelatedItemType.datasets)) {
+            if (listOfTypes.size() == 0 || listOfTypes.contains(RelatedItemType.datasets)) {
                 Set<String> listOfUUIDs = schemaPlugin.getAssociatedDatasetUUIDs(md);
                 if (listOfUUIDs != null && listOfUUIDs.size() > 0) {
                     String joinedUUIDs = Joiner.on(" or ").join(listOfUUIDs);
                     relatedRecords.addContent(search(joinedUUIDs, "datasets", context, from, to, fast));
                 }
-
-                String nodeUrl = context.getBean(SettingManager.class).getNodeURL();
-                Set<String> externalLinks = schemaPlugin.getAssociatedExternalDatasetLinks(md, nodeUrl);
+                Set<String> externalLinks = schemaPlugin.getAssociatedExternalDatasetLinks(md);
                 Element externalDatasets = new Element("externalDatasets");
                 for (String externalLink: externalLinks) {
                     externalDatasets.addContent(new Element("url").addContent(externalLink));
@@ -271,7 +274,7 @@ public class MetadataUtils {
             // Creating parameters for search, fast only to retrieve uuid
             Element parameters = new Element(Jeeves.Elem.REQUEST);
             if (matchUuid) {
-              parameters.addContent(new Element("identifier").setText(uuid));
+              parameters.addContent(new Element("uuid").setText(uuid));
             } else if ("children".equals(type))
                 parameters.addContent(new Element("parentUuid").setText(uuid));
             else if ("services".equals(type))

@@ -43,7 +43,17 @@
     <related>
       <!-- online and thumbnail are extracted from schema extract-relations.xsl -->
       <!--<xsl:message><xsl:copy-of select="."/></xsl:message> -->
-      <xsl:apply-templates mode="relation" select="/root/relations/*"/>
+      <xsl:apply-templates mode="relation" select="/root/relations/*[not(name() = ('externalDatasets', 'externalServices'))]"/>
+      <xsl:if test="not(/root/relations/datasets) and /root/relations/externalDatasets">
+        <datasets>
+          <xsl:apply-templates mode="relation" select="/root/relations/externalDatasets"/>
+        </datasets>
+      </xsl:if>
+      <xsl:if test="not(/root/relations/services) and /root/relations/externalServices">
+        <services>
+          <xsl:apply-templates mode="relation" select="/root/relations/externalServices"/>
+        </services>
+      </xsl:if>
     </related>
   </xsl:template>
 
@@ -221,25 +231,23 @@
             </xsl:if>
           </item>
         </xsl:for-each>
-        <xsl:if test="$type = 'datasets'">
+        <xsl:if test="$type = ('datasets')">
           <xsl:apply-templates mode="relation" select="../externalDatasets"/>
         </xsl:if>
-      </xsl:element>
-    </xsl:if>
-
-    <xsl:if test="$type = 'datasets' and not(response/metadata|response/sibling) and ../externalDatasets/url">
-      <xsl:element name="{$type}">
-        <xsl:apply-templates mode="relation" select="../externalDatasets"/>
+        <xsl:if test="$type = ('services')">
+          <xsl:apply-templates mode="relation" select="../externalServices"/>
+        </xsl:if>
       </xsl:element>
     </xsl:if>
   </xsl:template>
 
-  <xsl:template mode="relation" match="externalDatasets">
+  <xsl:template mode="relation" match="externalDatasets|externalServices">
+    <xsl:variable name="title" select="if (name() = 'externalDatasets') then 'Dataset' else 'Service'"/>
     <xsl:for-each select="url">
       <item>
         <title>
           <value lang="{$lang}">
-            <xsl:value-of select="'Dataset'"/>
+            <xsl:value-of select="$title"/>
           </value>
         </title>
         <description>
