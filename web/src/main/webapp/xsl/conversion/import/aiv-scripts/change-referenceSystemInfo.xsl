@@ -36,12 +36,13 @@
 	<xsl:template name="getCodeAsAnchor">
 		<xsl:param name="code"/>
 		<xsl:choose>
-			<xsl:when test="$code=('31370','EPSG:31370')"><gmd:code><gmx:Anchor xlink:href="https://www.opengis.net/def/crs/EPSG/0/31370">Belge 1972 / Belgian Lambert 72</gmx:Anchor></gmd:code></xsl:when>
+			<xsl:when test="$code=('31370','EPSG:31370','http://www.opengis.net/def/crs/EPSG/0/31370','Belge 1972 / Belgian Lambert 72 (EPSG:31370)')"><gmd:code><gmx:Anchor xlink:href="https://www.opengis.net/def/crs/EPSG/0/31370">Belge 1972 / Belgian Lambert 72</gmx:Anchor></gmd:code></xsl:when>
 			<xsl:when test="$code=('http://www.opengis.net/def/crs/EPSG/O/4258','http://www.opengis.net/def/crs/EPSG/0/4258')"><gmd:code><gmx:Anchor xlink:href="https://www.opengis.net/def/crs/EPSG/0/4258">ETRS89</gmx:Anchor></gmd:code></xsl:when>
 			<xsl:when test="$code='25831'"><gmd:code><gmx:Anchor xlink:href="https://www.opengis.net/def/crs/EPSG/0/25831">ETRS89 / UTM zone 31N</gmx:Anchor></gmd:code></xsl:when>
 			<xsl:when test="$code='32631'"><gmd:code><gmx:Anchor xlink:href="https://www.opengis.net/def/crs/EPSG/0/32631">WGS 84 / UTM zone 31N</gmx:Anchor></gmd:code></xsl:when>
 			<xsl:when test="$code='4258'"><gmd:code><gmx:Anchor xlink:href="https://www.opengis.net/def/crs/EPSG/0/4258">ETRS89</gmx:Anchor></gmd:code></xsl:when>
 			<xsl:when test="$code='http://www.opengis.net/def/crs/EPSG/0/3035'"><gmd:code><gmx:Anchor xlink:href="https://www.opengis.net/def/crs/EPSG/0/3035">ETRS89-extended / LAEA Europe</gmx:Anchor></gmd:code></xsl:when>
+			<xsl:when test="$code='http://www.opengis.net/def/crs/EPSG/0/3043'"><gmd:code><gmx:Anchor xlink:href="https://www.opengis.net/def/crs/EPSG/0/3043">ETRS89 / UTM zone 31N (N-E)</gmx:Anchor></gmd:code></xsl:when>
 			<xsl:when test="$code='3857'"><gmd:code><gmx:Anchor xlink:href="https://www.opengis.net/def/crs/EPSG/0/3857">WGS 84 / Pseudo-Mercator</gmx:Anchor></gmd:code></xsl:when>
 			<xsl:when test="$code='WGS 84 / Pseudo-Mercator (EPSG:3857)'"><gmd:code><gmx:Anchor xlink:href="https://www.opengis.net/def/crs/EPSG/0/3857">WGS 84 / Pseudo-Mercator</gmx:Anchor></gmd:code></xsl:when>
 			<xsl:when test="$code='4326'"><gmd:code><gmx:Anchor xlink:href="https://www.opengis.net/def/crs/EPSG/0/4326">WGS 84</gmx:Anchor></gmd:code></xsl:when>

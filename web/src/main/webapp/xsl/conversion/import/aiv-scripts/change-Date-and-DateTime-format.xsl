@@ -33,7 +33,7 @@
 					<gco:Date><xsl:value-of  select="replace(.,'(\d{1,2})\D(\d{1,2})\D(\d{4})','$3-$2-$1')"/></gco:Date>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:message><xsl:value-of select="concat($logPrefix,'Date/Time Format ',*,' not recognised by system')"/></xsl:message>
+					<xsl:message><xsl:value-of select="concat($logPrefix,'Date/Time Format ',*,' not recognised by system or already in the right format')"/></xsl:message>
 					<xsl:apply-templates select="@*|node()"/>
 				</xsl:otherwise>
 			</xsl:choose>
