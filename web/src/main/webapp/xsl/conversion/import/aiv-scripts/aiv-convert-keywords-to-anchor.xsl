@@ -53,6 +53,7 @@
           <xsl:copy copy-namespaces="no">
             <xsl:copy-of select="@*"/>
             <xsl:copy-of select="skos:prefLabel[@xml:lang = ($iso2charLang,'en','de','nl','fr')]"/>
+            <xsl:copy-of select="skos:altLabel"/>
           </xsl:copy>
         </xsl:for-each>
         <xsl:for-each select="$currentDoc/rdf:RDF//rdf:Description">
@@ -76,46 +77,133 @@
   <xsl:variable name="inspireThemesStartStringToBeMapped">GEMET - INSPIRE them</xsl:variable>
   <xsl:variable name="inspirePriorityDatasetStartStringToBeMapped">INSPIRE priority data</xsl:variable>
   <xsl:variable name="taxonomyStartStringToBeMapped">D.4 van de verordening (EG) NR. 1205/2008</xsl:variable>
+  <xsl:variable name="taxonomyThesaurusXlinkHref">http://data.europa.eu/eli/reg/2008/1205</xsl:variable>
+  <xsl:variable name="taxonomyThesaurusTitle">Verordening (EG) nr. 1205/2008 van de Commissie van 3 december 2008 ter uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende metagegevens</xsl:variable>
 
-  <xsl:template match="gmd:descriptiveKeywords[$hierarchyLevel!='service']" priority="1000">
-    <xsl:variable name="previousDescriptiveKeywordsSiblingsCount"
-                  select="count(preceding-sibling::*[name(.) = 'gmd:descriptiveKeywords'])"/>
-    <xsl:if test="$previousDescriptiveKeywordsSiblingsCount=0">
-      <gmd:descriptiveKeywords>
-        <gmd:MD_Keywords>
-          <gmd:keyword>
-            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional">Regionaal</gmx:Anchor>
-          </gmd:keyword>
-          <gmd:type>
-            <gmd:MD_KeywordTypeCode
-              codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
-              codeListValue="theme"/>
-          </gmd:type>
-          <gmd:thesaurusName>
-            <gmd:CI_Citation>
-              <gmd:title>
-                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope">INSPIRE - Spatial scope</gmx:Anchor>
-              </gmd:title>
-              <gmd:date>
-                <gmd:CI_Date>
-                  <gmd:date>
-                    <gco:Date>2019-05-22</gco:Date>
-                  </gmd:date>
-                  <gmd:dateType>
-                    <gmd:CI_DateTypeCode
-                      codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                      codeListValue="publication"/>
-                  </gmd:dateType>
-                </gmd:CI_Date>
-              </gmd:date>
-            </gmd:CI_Citation>
-          </gmd:thesaurusName>
-        </gmd:MD_Keywords>
-      </gmd:descriptiveKeywords>
-    </xsl:if>
+  <xsl:template match="gmd:descriptiveKeywords" priority="1000">
+	<xsl:call-template name="addDefaultKeywords"/>
     <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:identifier" priority="1000"/>
+
+  <xsl:template match="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName and (gmd:MD_Keywords/gmd:keyword/*/normalize-space(.)='Regionaal' or gmd:MD_Keywords/gmd:keyword/*/normalize-space(.)='infoMapAccessService' or gmd:MD_Keywords/gmd:keyword/*/normalize-space(.)='infoFeatureAccessService' or gmd:MD_Keywords/gmd:keyword/*/normalize-space(.)='infoCatalogueService' or gmd:MD_Keywords/gmd:keyword/*/normalize-space(.)='infoCoverageAccessService')]" priority="2000">
+	<xsl:call-template name="addDefaultKeywords"/>
+  </xsl:template>
+  
+  <xsl:template name="addDefaultKeywords">
+    <xsl:variable name="previousDescriptiveKeywordsSiblingsCount"
+                  select="count(preceding-sibling::*[name(.) = 'gmd:descriptiveKeywords'])"/>
+    <xsl:if test="$previousDescriptiveKeywordsSiblingsCount=0">
+		<xsl:if test="lower-case($hierarchyLevel)!='service'">
+		  <gmd:descriptiveKeywords>
+			<gmd:MD_Keywords>
+			  <gmd:keyword>
+				<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional">Regionaal</gmx:Anchor>
+			  </gmd:keyword>
+			  <gmd:type>
+				<gmd:MD_KeywordTypeCode
+				  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+				  codeListValue="theme"/>
+			  </gmd:type>
+			  <gmd:thesaurusName>
+				<gmd:CI_Citation>
+				  <gmd:title>
+					<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope">INSPIRE - Spatial scope</gmx:Anchor>
+				  </gmd:title>
+				  <gmd:date>
+					<gmd:CI_Date>
+					  <gmd:date>
+						<gco:Date>2019-05-22</gco:Date>
+					  </gmd:date>
+					  <gmd:dateType>
+						<gmd:CI_DateTypeCode
+						  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+						  codeListValue="publication"/>
+					  </gmd:dateType>
+					</gmd:CI_Date>
+				  </gmd:date>
+				</gmd:CI_Citation>
+			  </gmd:thesaurusName>
+			</gmd:MD_Keywords>
+		  </gmd:descriptiveKeywords>
+		  <xsl:if test="count(../gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[contains(../gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text(),'INSPIRE them')])=0">
+			<xsl:variable name="altLabel" select="substring-before((//gmd:name/gco:CharacterString[contains(.,':') and contains(../../gmd:protocol/gco:CharacterString, 'WMS')])[1],':')"/>
+			<xsl:if test="$altLabel!='ni'">
+				<gmd:descriptiveKeywords>
+					<gmd:MD_Keywords>
+						<gmd:keyword>
+							<gmx:Anchor xlink:href="{concat('http://inspire.ec.europa.eu/theme/',$altLabel)}"><xsl:value-of select="$thesauri/thesausus[@title = 'GEMET - INSPIRE themes, version 1.0']/skos:Concept[skos:altLabel=$altLabel]/skos:prefLabel[@xml:lang = 'nl']"/></gmx:Anchor>
+						</gmd:keyword>
+						<gmd:type>
+							<gmd:MD_KeywordTypeCode codeListValue="theme" codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"/>
+						</gmd:type>
+						<gmd:thesaurusName>
+							<gmd:CI_Citation>
+								<gmd:title>
+									<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/theme">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
+								</gmd:title>
+								<gmd:date>
+									<gmd:CI_Date>
+										<gmd:date>
+											<gco:Date>2008-06-01</gco:Date>
+										</gmd:date>
+										<gmd:dateType>
+											<gmd:CI_DateTypeCode codeListValue="publication" codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
+										</gmd:dateType>
+									</gmd:CI_Date>
+								</gmd:date>
+							</gmd:CI_Citation>
+						</gmd:thesaurusName>
+					</gmd:MD_Keywords>
+				</gmd:descriptiveKeywords>
+			</xsl:if>
+		  </xsl:if>
+		</xsl:if>
+		<xsl:if test="lower-case($hierarchyLevel)='service'">
+			<gmd:descriptiveKeywords>
+				<gmd:MD_Keywords>
+					<gmd:keyword>
+						<xsl:choose>
+							<xsl:when test="count(../gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*[contains(.,'infoMapAccessService')])>0">
+								<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoMapAccessService">Dienst kaarttoegang</gmx:Anchor>
+							</xsl:when>
+							<xsl:when test="count(../gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*[contains(.,'infoFeatureAccessService')])>0">
+								<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureAccessService">Dienst objecttoegang</gmx:Anchor>
+							</xsl:when>
+							<xsl:when test="count(../gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*[contains(.,'infoCatalogueService')])>0">
+								<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService">Catalogusdienst</gmx:Anchor>
+							</xsl:when>
+							<xsl:when test="count(../gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*[contains(.,'infoCoverageAccessService')])>0">
+								<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCoverageAccessService">Dienst rastergegevenstoegang</gmx:Anchor>
+							</xsl:when>
+						</xsl:choose>
+					</gmd:keyword>
+					<gmd:thesaurusName>
+						<gmd:CI_Citation>
+							<gmd:title>
+								<gmx:Anchor xlink:href="{$taxonomyThesaurusXlinkHref}">
+									<xsl:value-of select="$taxonomyThesaurusTitle"/>
+								</gmx:Anchor>
+							</gmd:title>
+							<gmd:date>
+								<gmd:CI_Date>
+									<gmd:date>
+										<gco:Date>2008-12-03</gco:Date>
+									</gmd:date>
+									<gmd:dateType>
+										<gmd:CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+									</gmd:dateType>
+								</gmd:CI_Date>
+							</gmd:date>
+						</gmd:CI_Citation>
+					</gmd:thesaurusName>
+				</gmd:MD_Keywords>
+			</gmd:descriptiveKeywords>
+		</xsl:if>
+	</xsl:if>
   </xsl:template>
 
   <xsl:template match="gmd:MD_Keywords[gmd:thesaurusName and (gmd:keyword/gco:CharacterString or gmd:keyword/gmx:Anchor)]" priority="1000">
@@ -297,7 +385,7 @@
     <xsl:choose>
       <xsl:when test="contains($thesaurusTitle,$inspireThemesStartStringToBeMapped)">GEMET - INSPIRE themes, version 1.0</xsl:when>
       <xsl:when test="contains($thesaurusTitle,$inspirePriorityDatasetStartStringToBeMapped)">INSPIRE priority data set</xsl:when>
-      <xsl:when test="starts-with($thesaurusTitle, $taxonomyStartStringToBeMapped)">Verordening (EG) nr. 1205/2008 van de Commissie van 3 december 2008 ter uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende metagegevens</xsl:when>
+      <xsl:when test="starts-with($thesaurusTitle, $taxonomyStartStringToBeMapped)"><xsl:value-of select="$taxonomyThesaurusTitle"/></xsl:when>
       <xsl:otherwise><xsl:value-of select="$thesaurusTitle"/></xsl:otherwise>
     </xsl:choose>
   </xsl:template>
