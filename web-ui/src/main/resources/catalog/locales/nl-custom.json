@@ -103,6 +103,7 @@
   "browseTypes": "brontypes",
   "browseBy": "Blader door ",
   "browseServiceTypes": "servicetypes",
+  "csvFile": "CSV file (pipe separator)",
   "changelog": "Changelog",
   "searchAlicence": "Selecteer een licentie...",
   "resourceUriPattern": "Resource URI pattern",

@@ -56,7 +56,7 @@ public class Log implements Service {
                     + logfile);
         }
 
-        if (!logfile.endsWith(".log")) {
+        if (!logfile.endsWith(".log") && !logfile.endsWith(".csv")) {
             throw new BadURLException(
                 "Strange suffix for this log file. Stopping possible hacking attempt to uri: "
                     + logfile);
