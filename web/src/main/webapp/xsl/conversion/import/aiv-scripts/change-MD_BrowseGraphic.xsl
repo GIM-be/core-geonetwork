@@ -11,13 +11,13 @@
 		<xsl:copy copy-namespaces="no"><xsl:value-of select="concat('https://metadata.vlaanderen.be/metadata_thumbs',substring-after(.,'metadata_thumbs'))"/></xsl:copy>
 	</xsl:template>
 
-  <xsl:template match="gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString[text() = ('thumbnail', 'thumbnail_large')]" priority="1000">
+  <xsl:template match="gmd:MD_BrowseGraphic/gmd:fileDescription/gco:CharacterString[text() = ('thumbnail', 'thumbnail_large', 'large_thumbnail')]" priority="1000">
     <xsl:copy copy-namespaces="no">
       <xsl:choose>
         <xsl:when test="text() = 'thumbnail'">
           <xsl:value-of select="'Voorbeeldweergave'"/>
         </xsl:when>
-        <xsl:when test="text() = 'thumbnail_large'">
+        <xsl:when test="text() = ('large_thumbnail','thumbnail_large')">
           <xsl:value-of select="'Voorbeeldweergave (groot)'"/>
         </xsl:when>
         <xsl:otherwise>
@@ -29,7 +29,7 @@
 
   <xsl:template match="gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString[contains(.,'resources.get')]" priority="1000">
     <xsl:copy copy-namespaces="no">
-      <xsl:value-of select="concat('https://',if ($environment!='prod') then concat($environment,'.') else '','metadata.vlaanderen.be')"/><xsl:if test="$nodeType='Metadatacenter'">/metadatacenter</xsl:if><xsl:value-of select="concat('/srv/dut/resources.get', substring-after(.,'resources.get'))"/>
+      <xsl:value-of select="concat($applicationBaseUrl,'/srv/dut/resources.get', substring-after(.,'resources.get'))"/>
     </xsl:copy>
   </xsl:template>
 

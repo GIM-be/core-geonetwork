@@ -16,6 +16,7 @@
         <xsl:choose>
           <xsl:when test="$codeListValue='dut'">Nederlands</xsl:when>
           <xsl:when test="$codeListValue='eng'">English</xsl:when>
+          <xsl:when test="$codeListValue='fre'">Français</xsl:when>
           <xsl:otherwise><xsl:value-of select="gmd:LanguageCode"/></xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
