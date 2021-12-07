@@ -72,5 +72,6 @@
   "changelog": "Changelog",
   "searchAlicence": "Sélectionner une licence ...",
   "resourceUriPattern": "Patterne de l'URI des resources",
-  "resourceUriPatternHelp": "Patterne utilisé pour générer les URI des resources lors de l'export RDF. Exemple de valeur: https://metadata.vlaanderen.be/srv/resources/{resourceType}/{resourceUuid}"
+  "resourceUriPatternHelp": "Patterne utilisé pour générer les URI des resources lors de l'export RDF. Exemple de valeur: https://metadata.vlaanderen.be/srv/resources/{resourceType}/{resourceUuid}",
+  "isOpenData": "Open data"
 }

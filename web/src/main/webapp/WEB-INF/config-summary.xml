@@ -142,6 +142,7 @@
     <facet name="dataOrgName" indexKey="dataOrgName" label="dataOrgName"/>
     <facet name="lifeCycle" indexKey="lifeCycle" label="lifeCycle"/>
     <facet name="developmentState" indexKey="developmentState" label="developmentState"/>
+    <facet name="isOpenData" indexKey="isOpenData" label="isOpenData"/>
   </facets>
 
   <summaryTypes>
@@ -153,6 +154,7 @@
       <item facet="mdActions"/>
       <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
+      <item facet="isOpenData" sortBy="value" sortOrder="asc" max="2"/>
       <item facet="sourceCatalog" translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
       <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
       <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
@@ -187,6 +189,7 @@
       <item facet="mdActions"/>
       <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
+      <item facet="isOpenData" sortBy="value" sortOrder="asc" max="2"/>
       <item facet="sourceCatalog"
             translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
       <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
@@ -246,6 +249,7 @@
       <item facet="dataOrgName" sortBy="value" sortOrder="desc"/>
       <item facet="lifeCycle" sortBy="value" sortOrder="desc"/>
       <item facet="developmentState" sortBy="value" sortOrder="desc"/>
+      <item facet="isOpenData" sortBy="value" sortOrder="asc" max="2"/>
     </summaryType>
 
     <!-- (deprecated) old-style configuration supporting only
@@ -317,6 +321,7 @@
       <item facet="createDateYear" sortOrder="asc"/>
       <item facet="fileId"/>
       <item facet="flanderskeyword"/>
+      <item facet="isOpenData"/>
     </summaryType>
   </summaryTypes>
 

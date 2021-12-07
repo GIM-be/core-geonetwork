@@ -514,6 +514,13 @@
         </xsl:for-each>
       </xsl:for-each>
 
+      <xsl:variable name="gdiKeywords" select="gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[1] = 'GDI-Vlaanderen Trefwoorden']/gmd:keyword"/>
+      <xsl:variable name="openKeywords" select="$gdiKeywords/*[
+        (name() = 'gmx:Anchor' and @xlink:href = ('https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA', 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA')) or
+        (name() = 'gco:CharacterString' and string(.) = ('Vlaamse Open data', 'Vlaamse Open data Service'))
+      ]"/>
+      <Field name="isOpenData" string="{if (count($openKeywords) > 0) then 'y' else 'n'}" store="true" index="true"/>
+
       <xsl:variable name="listOfKeywords">{
         <xsl:variable name="keywordWithNoThesaurus"
                       select="//gmd:MD_Keywords[
