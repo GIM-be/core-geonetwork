@@ -577,12 +577,13 @@
         </xsl:otherwise>
       </xsl:choose>
 
+      <!-- TODO: Change with future new logic -->
       <xsl:choose>
         <xsl:when test="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor [@xlink:href = ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations','https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')]">
-          <Field name="accessRights" string="publiek" store="true" index="true"/>
+          <Field name="accessRights" string="PUBLIC" store="true" index="true"/>
         </xsl:when>
         <xsl:otherwise>
-          <Field name="accessRights" string="niet publiek" store="true" index="true"/>
+          <Field name="accessRights" string="NON_PUBLIC" store="true" index="true"/>
         </xsl:otherwise>
       </xsl:choose>
 
