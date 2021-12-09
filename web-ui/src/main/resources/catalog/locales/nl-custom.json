@@ -108,5 +108,6 @@
   "searchAlicence": "Selecteer een licentie...",
   "resourceUriPattern": "Resource URI pattern",
   "resourceUriPatternHelp": "Pattern gebruikt om URI van de bronnen te genereren tijdens de RDF export. Bv: https://metadata.vlaanderen.be/srv/resources/{resourceType}/{resourceUuid}",
-  "isOpenData": "Open data"
+  "isOpenData": "Open data",
+  "accessRights": "Toegangsrechten"
 }
