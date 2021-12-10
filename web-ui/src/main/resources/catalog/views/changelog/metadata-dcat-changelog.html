@@ -27,6 +27,29 @@
           "Vlaamse Open data" or "Vlaamse Open data service" else contains "n"
         </li>
         <li>Add "accessRights" facet to the search page.</li>
+        <li>Fix metadata publishing process:
+          <ul>
+            <li>When the workflow is disabled for the metadata group owner:
+              <ul>
+                <li>If the metadata doesn't have the workflow activated: the publish / unpublish buttons are shown</li>
+                <li>If the metadata have the workflow activated (by a previous action), it remains as is</li>
+              </ul>
+            </li>
+            <li>When the workflow is enabled for the metadata group owner:
+              <ul>
+                <li>When creating a metadata, the workflow is activated automatically</li>
+                <li>If the metadata exists, the publish button is not shown. Instead, a button to
+                  activate the workflow is shown. Activating to workflow on a non-public metadata will set the status to
+                  "Draft". Activating the workflow on a public metadata will set the status to "Intern goedgekeurd en
+                  gepubliceerd"
+                </li>
+                <li>If the metadata have to workflow activated, it remains as is</li>
+              </ul>
+            </li>
+          </ul>
+          <strong>Notes:</strong> With this flow, the workflow can never be de-activated. However, if the metadata
+          doesn't have its workflow enabled, it won't be stuck in an unpublished state anymore.
+        </li>
       </ol>
     </section>
 

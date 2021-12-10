@@ -26,17 +26,17 @@ package org.fao.geonet.kernel.datamanager.base;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang.StringUtils;
+import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.datamanager.IMetadataIndexer;
 import org.fao.geonet.kernel.datamanager.IMetadataStatus;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
+import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.setting.SettingManager;
-import org.fao.geonet.repository.GroupRepository;
-import org.fao.geonet.repository.MetadataStatusRepository;
-import org.fao.geonet.repository.SortUtils;
-import org.fao.geonet.repository.StatusValueRepository;
+import org.fao.geonet.repository.*;
 import org.fao.geonet.repository.specification.MetadataStatusSpecs;
 import org.fao.geonet.util.WorkflowUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +57,8 @@ public class BaseMetadataStatus implements IMetadataStatus {
     private IMetadataUtils metadataUtils;
     @Autowired
     private GroupRepository groupRepository;
+    @Autowired
+    private OperationAllowedRepository operationAllowedRepository;
     @Autowired
     @Lazy
     private SettingManager settingManager;
@@ -236,6 +238,34 @@ public class BaseMetadataStatus implements IMetadataStatus {
             groupOwner,
             "Workflow automatically enabled for record in group %s. Record status is set to %s.")
         ;
+    }
+
+    public boolean activateWorkflowOnExistingMd(ServiceContext context, Integer mid) throws Exception {
+        AbstractMetadata metadata = metadataUtils.findOne(mid);
+        if (metadata != null && metadata.getDataInfo().getType() != MetadataType.SUB_TEMPLATE) {
+            boolean isPublishedToAll = operationAllowedRepository.findAllById_MetadataId(mid)
+                .stream()
+                .anyMatch(operationAllowed -> {
+                    OperationAllowedId operationAllowedId = operationAllowed.getId();
+                    int operationId = operationAllowedId.getOperationId();
+                    if (operationId == ReservedOperation.view.getId()) {
+                        Group g = groupRepository.findOne(operationAllowedId.getGroupId());
+                        return g != null && g.getId() == ReservedGroup.all.getId();
+                    }
+                    return false;
+                });
+
+            String status = isPublishedToAll ? StatusValue.Status.APPROVED : StatusValue.Status.DRAFT;
+            setStatus(
+                context,
+                mid,
+                Integer.parseInt(status),
+                new ISODate(),
+                String.format("Workflow manually enabled for record. Record status is set to %s", status)
+            );
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -55,6 +55,8 @@ public interface IMetadataStatus {
      */
     boolean activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner) throws Exception;
 
+    boolean activateWorkflowOnExistingMd(ServiceContext context, Integer mid) throws Exception;
+
     boolean activateWorkflowIfConfigured(ServiceContext context, String newId, String groupOwner, String message) throws Exception;
 
     /**
