@@ -60,7 +60,7 @@ public class LuceneQueryBuilder {
     private static final String OR_SEPARATOR = " or ";
     private static final String FIELD_OR_SEPARATOR = "_OR_";
     private static final String FACET_QUERY_AND_SEPARATOR = "&";
-    private static final String STRING_TOKENIZER_DELIMITER = " \n\r\t";
+    private static final String STRING_TOKENIZER_DELIMITER = ",:;{}[]() \n\r\t";
     // Lat long bounding box constants
     private static final Double minBoundingLatitudeValue = -90.0;
     private static final Double maxBoundingLatitudeValue = 90.0;
@@ -135,6 +135,12 @@ public class LuceneQueryBuilder {
 
     private static Query createFuzzyOrTermQuery(LuceneConfig luceneConfig, String luceneIndexField, String similarity, String analyzedString) {
         Query query = null;
+        if (similarity==null) {
+            Float fieldSimilarity = luceneConfig.getFieldSimilarity(luceneIndexField);
+            if (fieldSimilarity!=null) {
+                similarity = String.valueOf(fieldSimilarity);
+            }
+        }
         if (similarity != null && luceneConfig.applySimilarity(luceneIndexField)) {
             Float minimumSimilarity = Float.parseFloat(similarity);
 
@@ -409,8 +415,14 @@ public class LuceneQueryBuilder {
         BooleanClause.Occur occur = LuceneUtils.convertRequiredAndProhibitedToOccur(true, false);
         BooleanClause.Occur tokenOccur = LuceneUtils.convertRequiredAndProhibitedToOccur(false, false);
         BooleanQuery booleanQuery = new BooleanQuery();
+        String defaultSimilarity = similarity;
         for (String fieldName : fields) {
-
+            Float fieldSimilarity = luceneConfig.getFieldSimilarity(fieldName);
+            if (fieldSimilarity!=null) {
+                similarity = String.valueOf(fieldSimilarity);
+            } else {
+                similarity = defaultSimilarity;
+            }
             Set<String> fieldValues = searchCriteria.get(fieldName);
             for (String fieldValue : fieldValues) {
                 if (fieldValue.contains(OR_SEPARATOR)) {
@@ -502,6 +514,10 @@ public class LuceneQueryBuilder {
 
     private void addANDCriteria(String fieldName, Set<String> fieldValues, String similarity, BooleanQuery query,
                                 Map<String, Set<String>> searchCriteria, Set<String> processedRangeFields) {
+        Float fieldSimilarity = luceneConfig.getFieldSimilarity(fieldName);
+        if (fieldSimilarity!=null) {
+            similarity = String.valueOf(fieldSimilarity);
+        }
         BooleanQuery bq = new BooleanQuery();
         BooleanClause.Occur qOccur = LuceneUtils.convertRequiredAndProhibitedToOccur(true, false);
 
