@@ -57,6 +57,7 @@ public class LuceneIndexField {
 
     public static final String ABSTRACT = "abstract";
     public static final String ANY = "any";
+    public static final String ANYLIGHT = "anylight";
     public static final String CAT = "_cat";
     public static final String CHANGE_DATE = "changeDate";
     public static final String CREATE_DATE = "createDate";
