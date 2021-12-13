@@ -368,12 +368,12 @@
 
        If enabled is false or not present then similarity will be applied to all fields (except some special case instances)
   -->
-  <fuzzyMatching enabled="true">
-    <Field name="any"/>
-    <Field name="anylight"/>
-    <Field name="title"/>
-    <Field name="altTitle"/>
-    <Field name="abstract"/>
-    <Field name="specificationTitle"/>
+  <fuzzyMatching enabled="true" >
+    <Field name="any" similarity="0.9"/>
+    <Field name="anylight" similarity="0.9"/>
+    <Field name="title" similarity="0.9"/>
+    <Field name="altTitle" similarity="0.9"/>
+    <Field name="abstract" similarity="0.9"/>
+    <Field name="specificationTitle" similarity="0.9"/>
   </fuzzyMatching>
 </config>

@@ -87,8 +87,10 @@ public class SearchDefaults {
             @SuppressWarnings("unchecked")
             List<Element> otherEl = request.getChildren();
             for (Element e : otherEl) {
-                if (e.getName().equalsIgnoreCase(LuceneIndexField.ANY)) {
-                    elData.addContent(new Element("title_OR_abstract_OR_any").setText(e.getText()));
+                if (e.getName().equalsIgnoreCase(LuceneIndexField.ANYLIGHT)) {
+                    elData.addContent(new Element("title_OR_abstract_OR_anylight").setText(e.getText()));
+                } else if (e.getName().equalsIgnoreCase(LuceneIndexField.ANY)) {
+                        elData.addContent(new Element("title_OR_abstract_OR_any").setText(e.getText()));
                 } else if (!e.getName().equalsIgnoreCase("_content_type")) {
                     elData.addContent(new Element(e.getName()).setText(e.getText()));
                 }

@@ -77,6 +77,7 @@ public class LuceneConfig {
     private Map<String, String> fieldSpecificSearchAnalyzers = new HashMap<String, String>();
     private Map<String, String> fieldSpecificAnalyzers = new HashMap<String, String>();
     private Map<String, Float> fieldBoost = new HashMap<String, Float>();
+    private Map<String, Float> fieldSimilarity = new HashMap<String, Float>();
     private Map<String, Object[]> analyzerParameters = new HashMap<String, Object[]>();
     private Map<String, Class<?>[]> analyzerParametersClass = new HashMap<String, Class<?>[]>();
     private String boostQueryClass;
@@ -241,6 +242,7 @@ public class LuceneConfig {
             elem = luceneConfig.getChild("fuzzyMatching");
             if (elem != null && "true".equalsIgnoreCase(elem.getAttributeValue("enabled"))) {
                 fuzzyMatching = new LinkedHashSet<String>();
+                fieldSimilarity = new HashMap<String, Float>();
                 for (Object o : elem.getChildren()) {
                     if (o instanceof Element) {
                         String name = ((Element) o).getAttributeValue("name");
@@ -250,6 +252,10 @@ public class LuceneConfig {
                                 "fuzzyMatching element must have a name attribute, check Lucene configuration file.");
                         } else {
                             fuzzyMatching.add(name);
+                            String similarity = ((Element) o).getAttributeValue("similarity");
+                            if (similarity != null) {
+                                fieldSimilarity.put(name, Float.parseFloat(similarity));
+                            }
                         }
                     }
                 }
@@ -667,6 +673,9 @@ public class LuceneConfig {
         return this.fieldBoost.get(field);
     }
 
+    public Float getFieldSimilarity(String field) {
+        return this.fieldSimilarity.get(field);
+    }
 
     /**
      * @return The merge factor.
