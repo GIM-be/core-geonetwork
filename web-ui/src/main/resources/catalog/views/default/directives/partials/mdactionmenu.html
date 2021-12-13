@@ -30,7 +30,11 @@
         </a>
       </li>
       <li role="menuitem"
-          data-ng-if="!isMdWorkflowEnable && md.getSchema() == 'dcat2' && user.canEditRecord(md) && (user.isAdmin() || user.isReviewerForGroup(md.groupOwner))"
+          data-ng-if="
+            !md.isWorkflowEnabled() &&
+            (!isMdWorkflowEnable || !mdService.isWorkflowConfiguredForMd(md, loadedGroupOptions)) &&
+            user.canEditRecord(md) &&
+            (user.isAdmin() || user.isReviewerForGroup(md.groupOwner))"
           data-ng-class="(
             md.isPublished() ||
             (allowPublishInvalidMd() === true) ||
@@ -41,7 +45,6 @@
               (!md.hasValidation() || (md.hasValidation() && md.isValid()))
             )
             ) ? '' : 'disabled'"
-
           title="{{(!md.isPublished() ? (md.isValid() ? 'mdvalid' :
             (!md.hasValidation() ? 'mdnovalidation':
             (allowPublishInvalidMd() === false && md.isTemplate !== 'y'? 'mdinvalidcantpublish' : 'mdinvalid'))) : '') | translate }}">
@@ -78,16 +81,22 @@
           2. Reject metadata (id = 5)
           3. Retire metadata (id = 3)
       -->
-      <li role="menuitem" class="divider" data-ng-show="isMdWorkflowEnable" data-ng-if="user.canEditRecord(md) && user.isUserAdminOrMore() && mdService.getAllowedStatusList(md, user).length !== 0"></li>
+      <li role="menuitem" class="divider" data-ng-if="
+        isMdWorkflowEnable &&
+        user.canEditRecord(md) &&
+        user.isUserAdminOrMore() &&
+        mdService.getAllowedStatusList(md, user).length !== 0 &&
+        (md.isWorkflowEnabled() || mdService.isWorkflowConfiguredForMd(md, loadedGroupOptions))">
+      </li>
       <li role="menuitem"
           class="dropdown-header"
-          data-ng-show="isMdWorkflowEnable && mdService.getAllowedStatusList(md, user).length !== 0">
+          data-ng-if="isMdWorkflowEnable && mdService.getAllowedStatusList(md, user).length !== 0 && (md.isWorkflowEnabled() || mdService.isWorkflowConfiguredForMd(md, loadedGroupOptions))">
         <span data-translate="">workflow</span>
       </li>
 
       <li role="menuitem"
           data-ng-repeat="allowedStatus in mdService.getAllowedStatusList(md, user)"
-          data-ng-if="user.canEditRecord(md, true) && isMdWorkflowEnable && md.isWorkflowEnabled() && allowedStatus != md.mdStatus && $root.currentNode && md.getSchema() != 'dcat-ap'">
+          data-ng-if="user.canEditRecord(md, true) && isMdWorkflowEnable && md.isWorkflowEnabled() && allowedStatus != md.mdStatus && $root.currentNode">
         <a data-ng-href=""
            data-ng-click="mdService.openUpdateStatusPanel(getScope(), 'workflow', null, allowedStatus, allowedStatus + 50)">
           <!--<i class="fa fa-fw fa-file-o"></i>&nbsp;-->
@@ -164,7 +173,7 @@
         </a>
       </li>-->
 
-      <li data-ng-if="isMdWorkflowEnable && user.canEditRecord(md) && !md.isWorkflowEnabled() && md.getSchema() != 'dcat-ap'">
+      <li data-ng-if="isMdWorkflowEnable && user.canEditRecord(md) && !md.isWorkflowEnabled() && mdService.isWorkflowConfiguredForMd(md, loadedGroupOptions)">
         <a role="menuitem"
            data-ng-href=""
            data-ng-click="mdService.startWorkflow(md, getCatScope())">

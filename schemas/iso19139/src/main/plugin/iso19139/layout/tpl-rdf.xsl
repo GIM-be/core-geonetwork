@@ -222,6 +222,33 @@
       <!-- Mapping revised for compliance with the 2017 edition of the INSPIRE Metadata Technical Guidelines -->
       <xsl:variable name="firstConstraint" select="gmd:identificationInfo[count(*/gmd:resourceConstraints/*/gmd:accessConstraints) > 0]/*/gmd:resourceConstraints/*"/>
       <xsl:choose>
+        <xsl:when test="count($firstConstraint/gmd:otherConstraints/gmx:Anchor/@xlink:href[. = ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations','https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')]) > 0">
+          <dct:accessRights>
+            <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">
+              <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
+              <skos:prefLabel xml:lang="nl">publiek</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">public</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">public</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">public</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right"/>
+            </skos:Concept>
+          </dct:accessRights>
+        </xsl:when>
+        <xsl:otherwise>
+          <dct:accessRights>
+            <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC">
+              <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
+              <skos:prefLabel xml:lang="nl">niet publiek</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">not public</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">not public</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">not public</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right"/>
+            </skos:Concept>
+          </dct:accessRights>
+        </xsl:otherwise>
+      </xsl:choose>
+      <!--
+      <xsl:choose>
         <xsl:when test="$firstConstraint/gmd:otherConstraints/gmx:Anchor/@xlink:href">
           <xsl:variable name="asNoLimitation" select="count($firstConstraint/gmd:otherConstraints/gmx:Anchor/@xlink:href[. = ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations','https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')]) > 0"/>
           <xsl:choose>
@@ -283,6 +310,7 @@
           </dct:accessRights>
         </xsl:when>
       </xsl:choose>
+      -->
     </xsl:variable>
 
     <!-- Metadata character encoding -->

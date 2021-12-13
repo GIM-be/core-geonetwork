@@ -270,20 +270,21 @@ public class MetadataWorkflowApi {
                     "Only the owner of the metadata can set the status of this record. User is not the owner of the metadata."));
         }
         */
+
+        // -- only allow valid metadata to have a changes of status
+        // GIM: commented: Validation is done in the onStatusChange depending on the status to be set
+        /*
         boolean isAllowedSubmitApproveInvalidMd = settingManager
                 .getValueAsBool(Settings.METADATA_WORKFLOW_ALLOW_SUBMIT_APPROVE_INVALID_MD);
         if (((status.getStatus() == Integer.parseInt(StatusValue.Status.SUBMITTED))
                 || (status.getStatus() == Integer.parseInt(StatusValue.Status.APPROVED)))
                 && !isAllowedSubmitApproveInvalidMd) {
-            // Validatioin is done in the onStatusChange depending on the status to be set
-            /*
             boolean isInvalid = MetadataUtils.retrieveMetadataValidationStatus(metadata, context);
-
             if (isInvalid) {
                 throw new Exception("Metadata is invalid: can't be submitted or approved");
             }
-            */
         }
+        */
 
         // --- use StatusActionsFactory and StatusActions class to
         // --- change status and carry out behaviours for status changes

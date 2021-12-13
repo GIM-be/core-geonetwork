@@ -514,6 +514,13 @@
         </xsl:for-each>
       </xsl:for-each>
 
+      <xsl:variable name="gdiKeywords" select="gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[1] = 'GDI-Vlaanderen Trefwoorden']/gmd:keyword"/>
+      <xsl:variable name="openKeywords" select="$gdiKeywords/*[
+        (name() = 'gmx:Anchor' and @xlink:href = ('https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA', 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA')) or
+        (name() = 'gco:CharacterString' and string(.) = ('Vlaamse Open data', 'Vlaamse Open data Service'))
+      ]"/>
+      <Field name="isOpenData" string="{if (count($openKeywords) > 0) then 'y' else 'n'}" store="true" index="true"/>
+
       <xsl:variable name="listOfKeywords">{
         <xsl:variable name="keywordWithNoThesaurus"
                       select="//gmd:MD_Keywords[
@@ -570,12 +577,13 @@
         </xsl:otherwise>
       </xsl:choose>
 
+      <!-- TODO: Change with future new logic -->
       <xsl:choose>
         <xsl:when test="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor [@xlink:href = ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations','https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')]">
-          <Field name="accessRights" string="publiek" store="true" index="true"/>
+          <Field name="accessRights" string="PUBLIC" store="true" index="true"/>
         </xsl:when>
         <xsl:otherwise>
-          <Field name="accessRights" string="niet publiek" store="true" index="true"/>
+          <Field name="accessRights" string="NON_PUBLIC" store="true" index="true"/>
         </xsl:otherwise>
       </xsl:choose>
 

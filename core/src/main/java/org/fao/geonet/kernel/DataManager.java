@@ -585,6 +585,11 @@ public class DataManager {
     }
 
     @Deprecated
+    public boolean activateWorkflowOnExistingMd(ServiceContext context, Integer mid) throws Exception {
+        return metadataStatus.activateWorkflowOnExistingMd(context, mid);
+    }
+
+    @Deprecated
     public void setCategory(ServiceContext context, String mdId, String categId) throws Exception {
         metadataCategory.setCategory(context, mdId, categId);
     }

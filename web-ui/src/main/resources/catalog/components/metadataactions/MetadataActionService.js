@@ -332,7 +332,7 @@
 
         //Warn about possible workflow changes on batch changes
         // or when record is not approved
-        if((!md || md.mdStatus != 2) && flag === 'on' && scope.isMdWorkflowEnable) {
+        if((!md || md.mdStatus != 2) && flag === 'on' && scope.isMdWorkflowEnable && md.isWorkflowEnabled()) {
           if(!confirm($translate.instant('warnPublishDraft'))){
             return;
           }
@@ -488,11 +488,27 @@
             break;
         }
         return allowedStatusList;
-      }
+      };
 
       this.isDateTime = function(date) {
         return date.match(/T\d{2}:\d{2}:\d{2}$/);
-      }
+      };
+
+      this.isWorkflowConfiguredForMd = function (md, groupOptions) {
+        if (!groupOptions || groupOptions.length < 1) {
+          return false;
+        }
+        var metadataGroup = groupOptions.find(function (group) {
+          return '' + group.id === '' + md.groupOwner;
+        });
+        var configuredSchema = gnConfig['metadata.workflow.draftWhenInSchema'] ? new RegExp(gnConfig['metadata.workflow.draftWhenInSchema']) : undefined;
+        var configuredGroups = gnConfig['metadata.workflow.draftWhenInGroup'] ? new RegExp(gnConfig['metadata.workflow.draftWhenInGroup']) : undefined;
+        if (!metadataGroup || !metadataGroup.label.eng || !configuredSchema || !configuredGroups) {
+          return false;
+        }
+        var metadataGroupName = metadataGroup.label.eng;
+        return configuredSchema.test(md['geonet:info'].schema) && configuredGroups.test(metadataGroupName);
+      };
     }]);
 
 
