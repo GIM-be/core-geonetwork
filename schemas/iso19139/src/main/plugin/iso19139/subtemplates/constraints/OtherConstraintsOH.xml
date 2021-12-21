@@ -1,0 +1,7 @@
+<gmd:otherConstraints xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                      xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                      xmlns:xlink="http://www.w3.org/1999/xlink">
+  <subtemplate-title>Onvoorwaardelijk hergebruik</subtemplate-title>
+  <gmx:Anchor
+    xlink:href="https://data.vlaanderen.be/id/licentie/onvoorwaardelijk-hergebruik/v1.0">Er geldt een regeling voor onvoorwaardlijk hergebruik (cfr hoofdstuk 4 van het Bestuursdecreet). Elk commercieel of niet-commercieel hergebruik voor onbepaalde duur is toegestaan, zonder dat daar voorwaarden (bvb kosten, bronvermelding,...) aan verbonden zijn. Er is geen overdracht van intellectuele rechten.</gmx:Anchor>
+</gmd:otherConstraints>
