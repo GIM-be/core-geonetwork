@@ -610,7 +610,7 @@
 
       <xsl:variable name="modelLicencieKeywords">
         <license>
-          <url>https://data.vlaanderen.be/doc/licentie/modellicentie-gratis-hergebruik/v1.0</url>
+          <url>https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0</url>
           <keyword>modellicentie-gratis-hergebruik</keyword>
           <keyword>modellicentie_gratis_hergebruik</keyword>
         </license>
