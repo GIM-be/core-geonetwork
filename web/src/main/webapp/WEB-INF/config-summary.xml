@@ -154,9 +154,8 @@
       <item facet="mdActions"/>
       <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
-      <item facet="accessRights" sortBy="value" sortOrder="asc"/>
-      <!--<item facet="isOpenData" sortBy="value" sortOrder="asc" max="2"/>-->
-      <item facet="sourceCatalog" translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
+      <item facet="sourceCatalog"
+            translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid" max="99"/>
       <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
       <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
       <item facet="keyword" max="15"/>
@@ -192,7 +191,7 @@
       <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
       <item facet="accessRights" sortBy="value" sortOrder="asc"/>
       <item facet="sourceCatalog"
-            translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid"/>
+            translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid" max="99"/>
       <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
       <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
       <item facet="mdStatus" max="10" sortBy="value"

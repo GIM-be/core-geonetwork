@@ -3,9 +3,5 @@
                       xmlns:xlink="http://www.w3.org/1999/xlink">
   <subtemplate-title>Vlaamse Modellicentie voor hergebruik tegen vergoeding</subtemplate-title>
   <gmx:Anchor
-    xlink:href="https://overheid.vlaanderen.be/sites/default/files/documenten/ict-egov/licenties/modellicentie_hergebruik_tegen_vergoeding_v1_0.html">
-    In uitvoering van het Vlaamse decreet voor hergebruik van overheidsinformatie, is het hergebruik is geregeld d.m.v.
-    de Modellicentie hergebruik tegen vergoeding. Dit betekent dat elk commercieel of niet-commercieel hergebruik is
-    toegelaten, mits het betalen van een vergoeding en het het in acht nemen van een bronvermeldingsplicht.
-  </gmx:Anchor>
+    xlink:href="https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0">Hergebruik geregeld d.m.v. de 'Modellicentie hergebruik tegen vergoeding' (cfr Titel II, hoofdstuk 4  van het Bestuursdecreet). Elk commercieel of niet-commercieel hergebruik is toegelaten, mits het betalen van een vergoeding en het het in acht nemen van een bronvermeldingsplicht.</gmx:Anchor>
 </gmd:otherConstraints>
