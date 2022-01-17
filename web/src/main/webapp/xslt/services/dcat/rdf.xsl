@@ -158,7 +158,7 @@
 		        <dct:title xml:lang="{$iso2letterLanguageCode}">
 		          <xsl:value-of select="title"/>
 		        </dct:title>
-            <foaf:isPrimaryTopicOf rdf:resource="{url}"/>
+            <foaf:isPrimaryTopicOf rdf:resource="{defaultNamespace}"/>
 		      </skos:ConceptScheme>
         </dcat:themeTaxonomy>
       </xsl:for-each>

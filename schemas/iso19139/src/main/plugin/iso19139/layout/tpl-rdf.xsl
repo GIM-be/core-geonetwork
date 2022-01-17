@@ -452,7 +452,6 @@
 
       <!-- Responsible organisation -->
       <xsl:for-each select="(.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'publisher'])[1]|
-                            (.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'owner'])[1]|
                             (.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'custodian'])[1]">
         <xsl:apply-templates select=".">
           <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
@@ -460,7 +459,7 @@
         </xsl:apply-templates>
       </xsl:for-each>
 
-      <xsl:for-each select=".//gmd:CI_ResponsibleParty[not(gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'owner', 'distributor'))]">
+      <xsl:for-each select=".//gmd:CI_ResponsibleParty[not(gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'distributor', 'custodian'))]">
         <xsl:apply-templates select=".">
           <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
           <xsl:with-param name="ResourceType" select="$ResourceType"/>
