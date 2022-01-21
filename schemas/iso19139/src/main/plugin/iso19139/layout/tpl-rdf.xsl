@@ -467,12 +467,10 @@
       </xsl:for-each>
 
       <xsl:variable name="Distributors">
-        <xsl:for-each select=".//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'distributor']">
-          <xsl:apply-templates select=".">
-            <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-            <xsl:with-param name="ResourceType" select="$ResourceType"/>
-          </xsl:apply-templates>
-        </xsl:for-each>
+        <xsl:apply-templates select="(.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'distributor'])[1]">
+          <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+          <xsl:with-param name="ResourceType" select="$ResourceType"/>
+        </xsl:apply-templates>
       </xsl:variable>
 
       <!-- Spatial extend -->
