@@ -467,12 +467,10 @@
       </xsl:for-each>
 
       <xsl:variable name="Distributors">
-        <xsl:for-each select=".//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'distributor']">
-          <xsl:apply-templates select=".">
-            <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-            <xsl:with-param name="ResourceType" select="$ResourceType"/>
-          </xsl:apply-templates>
-        </xsl:for-each>
+        <xsl:apply-templates select="(.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'distributor'])[1]">
+          <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+          <xsl:with-param name="ResourceType" select="$ResourceType"/>
+        </xsl:apply-templates>
       </xsl:variable>
 
       <!-- Spatial extend -->
@@ -594,6 +592,10 @@
             </xsl:for-each>
           </xsl:if>
 
+          <xsl:if test="normalize-space($SpatialRepresentationType) != ''">
+            <xsl:copy-of select="$SpatialRepresentationType"/>
+          </xsl:if>
+
           <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
             <!-- Encoding -->
             <xsl:variable name="Encoding">
@@ -650,7 +652,6 @@
                             <dcat:accessURL rdf:resource="{geonet:escapeURI(.)}"/>
                           </xsl:for-each>
                           <xsl:copy-of select="$LicenseAndRightsConstraints"/>
-                          <xsl:copy-of select="$SpatialRepresentationType"/>
                           <xsl:copy-of select="."/>
                           <dct:conformsTo>
                             <dct:Standard>
