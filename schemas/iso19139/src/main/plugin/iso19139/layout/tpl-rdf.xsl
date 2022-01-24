@@ -592,6 +592,10 @@
             </xsl:for-each>
           </xsl:if>
 
+          <xsl:if test="normalize-space($SpatialRepresentationType) != ''">
+            <xsl:copy-of select="$SpatialRepresentationType"/>
+          </xsl:if>
+
           <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
             <!-- Encoding -->
             <xsl:variable name="Encoding">
@@ -648,7 +652,6 @@
                             <dcat:accessURL rdf:resource="{geonet:escapeURI(.)}"/>
                           </xsl:for-each>
                           <xsl:copy-of select="$LicenseAndRightsConstraints"/>
-                          <xsl:copy-of select="$SpatialRepresentationType"/>
                           <xsl:copy-of select="."/>
                           <dct:conformsTo>
                             <dct:Standard>
