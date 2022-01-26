@@ -572,11 +572,6 @@
           <!-- Maintenance information (tentative) -->
           <xsl:apply-templates select="gmd:identificationInfo/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode"/>
 
-          <!-- Spatial representation type -->
-          <xsl:variable name="SpatialRepresentationType">
-            <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode"/>
-          </xsl:variable>
-
           <!-- Related services -->
           <xsl:if test="$relationLookup">
             <xsl:for-each select="xslutil:getRelatedServices($RecordUUID)/services/*">
@@ -592,9 +587,8 @@
             </xsl:for-each>
           </xsl:if>
 
-          <xsl:if test="normalize-space($SpatialRepresentationType) != ''">
-            <xsl:copy-of select="$SpatialRepresentationType"/>
-          </xsl:if>
+          <!-- Spatial representation type -->
+          <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode"/>
 
           <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
             <!-- Encoding -->
