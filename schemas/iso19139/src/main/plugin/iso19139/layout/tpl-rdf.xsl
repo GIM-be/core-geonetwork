@@ -219,6 +219,7 @@
     </xsl:variable>
 
     <xsl:variable name="AccessRights">
+      msg
       <!-- Mapping revised for compliance with the 2017 edition of the INSPIRE Metadata Technical Guidelines -->
       <xsl:variable name="firstConstraint" select="gmd:identificationInfo[count(*/gmd:resourceConstraints/*/gmd:accessConstraints) > 0]/*/gmd:resourceConstraints/*"/>
       <xsl:choose>
@@ -226,10 +227,20 @@
           <dct:accessRights>
             <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">
               <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
-              <skos:prefLabel xml:lang="nl">publiek</skos:prefLabel>
-              <skos:prefLabel xml:lang="en">public</skos:prefLabel>
-              <skos:prefLabel xml:lang="fr">public</skos:prefLabel>
-              <skos:prefLabel xml:lang="de">public</skos:prefLabel>
+              <xsl:choose>
+                <xsl:when test="$ResourceType = 'service'">
+                  <skos:prefLabel xml:lang="nl">zonder voorwaarden</skos:prefLabel>
+                  <skos:prefLabel xml:lang="en">without conditions</skos:prefLabel>
+                  <skos:prefLabel xml:lang="fr">without conditions</skos:prefLabel>
+                  <skos:prefLabel xml:lang="de">without conditions</skos:prefLabel>
+                </xsl:when>
+                <xsl:otherwise>
+                  <skos:prefLabel xml:lang="nl">publiek</skos:prefLabel>
+                  <skos:prefLabel xml:lang="en">public</skos:prefLabel>
+                  <skos:prefLabel xml:lang="fr">public</skos:prefLabel>
+                  <skos:prefLabel xml:lang="de">public</skos:prefLabel>
+                </xsl:otherwise>
+              </xsl:choose>
               <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right"/>
             </skos:Concept>
           </dct:accessRights>
@@ -238,10 +249,20 @@
           <dct:accessRights>
             <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/NON_PUBLIC">
               <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
-              <skos:prefLabel xml:lang="nl">niet publiek</skos:prefLabel>
-              <skos:prefLabel xml:lang="en">not public</skos:prefLabel>
-              <skos:prefLabel xml:lang="fr">not public</skos:prefLabel>
-              <skos:prefLabel xml:lang="de">not public</skos:prefLabel>
+              <xsl:choose>
+                <xsl:when test="$ResourceType = 'service'">
+                  <skos:prefLabel xml:lang="nl">met voorwaarden</skos:prefLabel>
+                  <skos:prefLabel xml:lang="en">with conditions</skos:prefLabel>
+                  <skos:prefLabel xml:lang="fr">with conditions</skos:prefLabel>
+                  <skos:prefLabel xml:lang="de">with conditions</skos:prefLabel>
+                </xsl:when>
+                <xsl:otherwise>
+                  <skos:prefLabel xml:lang="nl">niet publiek</skos:prefLabel>
+                  <skos:prefLabel xml:lang="en">not public</skos:prefLabel>
+                  <skos:prefLabel xml:lang="fr">not public</skos:prefLabel>
+                  <skos:prefLabel xml:lang="de">not public</skos:prefLabel>
+                </xsl:otherwise>
+              </xsl:choose>
               <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right"/>
             </skos:Concept>
           </dct:accessRights>
