@@ -415,9 +415,6 @@
       <xsl:copy-of select="$ResourceTitle"/>
       <xsl:copy-of select="$ResourceAbstract"/>
 
-      <!-- Topic category -->
-      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:topicCategory"/>
-
       <!-- Keyword -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords">
         <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
@@ -510,6 +507,9 @@
       <xsl:choose>
         <!-- Service specific -->
         <xsl:when test="$ResourceType = 'service'">
+          <!-- Topic category -->
+          <xsl:apply-templates select="gmd:identificationInfo/*/gmd:topicCategory"/>
+
           <!-- Contains operations -->
           <xsl:for-each-group select="gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL" group-by=".">
             <dcat:endpointUrl rdf:resource="{normalize-space(current-grouping-key())}"/>
