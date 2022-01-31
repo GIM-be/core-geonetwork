@@ -377,7 +377,7 @@
 
       <dct:conformsTo>
         <dct:Standard rdf:about="https://data.vlaanderen.be/doc/applicatieprofiel/GEODCAT-AP-VL/">
-          <dct:title>GEODCAT-AP-VL</dct:title>
+          <dct:title>Geodcat-ap-vl</dct:title>
         </dct:Standard>
       </dct:conformsTo>
 
@@ -1243,12 +1243,12 @@
         </xsl:variable>
         <dct:temporal>
           <dct:PeriodOfTime>
-            <schema:startDate>
+            <dcat:startDate>
               <xsl:value-of select="$dateStart"/>
-            </schema:startDate>
-            <schema:endDate>
+            </dcat:startDate>
+            <dcat:endDate>
               <xsl:value-of select="$dateEnd"/>
-            </schema:endDate>
+            </dcat:endDate>
           </dct:PeriodOfTime>
         </dct:temporal>
       </xsl:if>
