@@ -147,13 +147,13 @@
       <void:uriLookupEndpoint><xsl:value-of select="/root/gui/nodeUrl"/>eng/rdf.search?any=</void:uriLookupEndpoint>
 	  -->
 
-      <!-- The knowledge organization system (KOS) used to classify catalog's datasets.
+      <!--
+      The knowledge organization system (KOS) used to classify catalog's datasets.
+      ConceptScheme describes all thesaurus available in the catalogue
+	    * Resource identifier is a local identifier for local thesaurus or public URI if external
       -->
-      <xsl:for-each select="/root/gui/thesaurus/thesauri/thesaurus">
+      <!--<xsl:for-each select="/root/gui/thesaurus/thesauri/thesaurus">
         <dcat:themeTaxonomy>
-	    <!-- ConceptScheme describes all thesaurus available in the catalogue
-	      * Resource identifier is a local identifier for local thesaurus or public URI if external
-	    -->
 		      <skos:ConceptScheme rdf:about="{$resourcePrefix}/registries/vocabularies/{key}">
 		        <dct:title xml:lang="{$iso2letterLanguageCode}">
 		          <xsl:value-of select="title"/>
@@ -161,7 +161,7 @@
             <foaf:isPrimaryTopicOf rdf:resource="{defaultNamespace}"/>
 		      </skos:ConceptScheme>
         </dcat:themeTaxonomy>
-      </xsl:for-each>
+      </xsl:for-each>-->
 
 
       <!-- The language of the catalog. This refers to the language used
