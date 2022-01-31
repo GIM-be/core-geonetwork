@@ -1346,7 +1346,12 @@
           </xsl:call-template>
         </xsl:when>
 
-        <xsl:when test="$scheme = ('http://vocab.belgif.be/auth/datatheme', 'http://vocab.belgif.be/auth/datatheme/')">
+        <xsl:when test="$scheme = (
+          'http://vocab.belgif.be/auth/datatheme',
+          'http://vocab.belgif.be/auth/datatheme/',
+          'https://vocab.belgif.be/auth/datatheme',
+          'https://vocab.belgif.be/auth/datatheme/'
+        )">
           <dcat:theme>
             <skos:Concept>
               <xsl:attribute name="rdf:about" select="geonet:escapeURI($keywordAbout)"/>
@@ -1359,6 +1364,58 @@
               <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
             </skos:Concept>
           </dcat:theme>
+        </xsl:when>
+
+        <xsl:when test="$scheme = (
+          'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory',
+          'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/',
+          'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory',
+          'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/'
+        ) and gmx:Anchor/@xlink:href">
+
+          <xsl:variable name="alreadyAddedGovThemes">
+            <xsl:for-each select="../../../gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href = (
+            'http://vocab.belgif.be/auth/datatheme',
+            'http://vocab.belgif.be/auth/datatheme/',
+            'https://vocab.belgif.be/auth/datatheme',
+            'https://vocab.belgif.be/auth/datatheme/'
+          )]">
+              <xsl:for-each select="gmd:keyword/gmx:Anchor">
+                <theme>
+                  <xsl:value-of select="string(@xlink:href)"/>
+                </theme>
+              </xsl:for-each>
+            </xsl:for-each>
+
+            <xsl:for-each select="preceding-sibling::gmd:keyword">
+              <xsl:for-each select="gmx:Anchor">
+                <xsl:variable name="precTopic" select="if (starts-with(@xlink:href, 'https'))
+                                             then substring-after(@xlink:href, 'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')
+                                             else substring-after(@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
+                <xsl:variable name="precTheme">
+                  <xsl:call-template name="MapTopicCatToDataGovTheme">
+                    <xsl:with-param name="TopicCategory" select="$precTopic"/>
+                  </xsl:call-template>
+                </xsl:variable>
+                <theme>
+                  <xsl:value-of select="string($precTheme//skos:Concept/@rdf:about)"/>
+                </theme>
+              </xsl:for-each>
+            </xsl:for-each>
+          </xsl:variable>
+
+          <xsl:variable name="topic" select="if (starts-with(gmx:Anchor/@xlink:href, 'https'))
+                                           then substring-after(gmx:Anchor/@xlink:href, 'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')
+                                           else substring-after(gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
+          <xsl:variable name="theme">
+            <xsl:call-template name="MapTopicCatToDataGovTheme">
+              <xsl:with-param name="TopicCategory" select="$topic"/>
+            </xsl:call-template>
+          </xsl:variable>
+
+          <xsl:if test="count($alreadyAddedGovThemes/theme[. = $theme/dcat:theme/skos:Concept/@rdf:about]) = 0">
+            <xsl:copy-of select="$theme"/>
+          </xsl:if>
         </xsl:when>
 
         <!-- Default to a dct:subject -->
@@ -1475,10 +1532,36 @@
       <xsl:when test="$DataGovTheme/dcat:theme">
 
         <xsl:variable name="alreadyAddedGovThemes">
-          <xsl:for-each select="../gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href = ('http://vocab.belgif.be/auth/datatheme', 'http://vocab.belgif.be/auth/datatheme/')]">
+          <xsl:for-each select="../gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href = (
+            'http://vocab.belgif.be/auth/datatheme',
+            'http://vocab.belgif.be/auth/datatheme/',
+            'https://vocab.belgif.be/auth/datatheme',
+            'https://vocab.belgif.be/auth/datatheme/'
+          )]">
             <xsl:for-each select="gmd:keyword/gmx:Anchor">
               <theme>
                 <xsl:value-of select="string(@xlink:href)"/>
+              </theme>
+            </xsl:for-each>
+          </xsl:for-each>
+
+          <xsl:for-each select="../gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href = (
+            'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory',
+            'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/',
+            'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory',
+            'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/'
+          )]">
+            <xsl:for-each select="gmd:keyword/gmx:Anchor">
+              <xsl:variable name="topic" select="if (starts-with(@xlink:href, 'https'))
+                                             then substring-after(@xlink:href, 'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')
+                                             else substring-after(@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
+              <xsl:variable name="theme">
+                <xsl:call-template name="MapTopicCatToDataGovTheme">
+                  <xsl:with-param name="TopicCategory" select="$topic"/>
+                </xsl:call-template>
+              </xsl:variable>
+              <theme>
+                <xsl:value-of select="string($theme//skos:Concept/@rdf:about)"/>
               </theme>
             </xsl:for-each>
           </xsl:for-each>
