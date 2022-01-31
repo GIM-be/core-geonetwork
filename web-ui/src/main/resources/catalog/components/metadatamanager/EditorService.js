@@ -213,6 +213,27 @@
                      formParams[params[i].name] + '&&&' + params[i].value :
                      params[i].value;
                }
+               var partKeys = Object.keys(formParams).filter(function (key) {
+                 return key.match(/^.*_PART_\d(_xml)?/);
+               });
+               partKeys.forEach(function(partKey) {
+                 if (partKey.endsWith('_xml')) {
+                   var key = partKey.split('_PART_')[0] + '_xml';
+                   if (formParams[key]) {
+                     formParams[key] =
+                       '<gn_replace_all>' +
+                         formParams[key].replace('<gn_replace_all>', '').replace('</gn_replace_all>', '').replace('<gn_replace_all/>', '') +
+                         formParams[partKey].replace('<gn_replace_all>', '').replace('</gn_replace_all>', '').replace('<gn_replace_all/>', '') +
+                       '</gn_replace_all>';
+                   } else {
+                     formParams[key] = formParams[partKey];
+                   }
+                 } else {
+                   formParams[partKey.split('_PART_')[0]] = formParams[partKey];
+                 }
+                 delete formParams[partKey];
+               });
+
                var serializedParams = '';
                for (var key in formParams) {
                  if (formParams.hasOwnProperty(key)) {
@@ -225,17 +246,15 @@
              };
 
              gnCurrentEdit.working = true;
-             $http.post(
-             '../api/records/' + gnCurrentEdit.id + '/editor?' +
-             (gnCurrentEdit.showValidationErrors ? '&withValidationErrors=true' : '') +
-             (refreshForm ? '' : '&commit=true') +
-             (terminate ? '&terminate=true' : '') +
-             (submit ? '&status=4' : '') +
-             (approve ? '&status=2' : ''),
-             getFormParameters(),
-             {
-               headers: {'Content-Type':
-                 'application/x-www-form-urlencoded'}
+             var saveUrl = '../api/records/' + gnCurrentEdit.id + '/editor?' +
+                 (gnCurrentEdit.showValidationErrors ? '&withValidationErrors=true' : '') +
+                 (refreshForm ? '' : '&commit=true') +
+                 (terminate ? '&terminate=true' : '') +
+                 (submit ? '&status=4' : '') +
+                 (approve ? '&status=2' : '');
+
+             $http.post(saveUrl, getFormParameters(), {
+               headers: {'Content-Type': 'application/x-www-form-urlencoded'}
              }).success(function(data) {
 
                 var snippet = $(cleanData(data));
