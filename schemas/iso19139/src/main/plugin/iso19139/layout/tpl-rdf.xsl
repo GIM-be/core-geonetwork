@@ -97,9 +97,9 @@
     =================
    -->
   <xsl:template match="gmd:MD_Metadata|//gmd:MD_Metadata" mode="to-dcat">
-    <xsl:variable name="MetadataViewUrl">
-      <xsl:value-of select="concat($catalogUrl, '/catalog.search#/metadata/', gmd:fileIdentifier/gco:CharacterString)"/>
-    </xsl:variable>
+    <xsl:variable name="MetadataViewUrl" select="concat($catalogUrl, '/catalog.search#/metadata/', gmd:fileIdentifier/gco:CharacterString)"/>
+
+    <xsl:variable name="MetadataXmlUrl" select="concat(substring-before($resourcePrefix, '/resource'), '/api/records/', gmd:fileIdentifier/gco:CharacterString, '/formatters/xml')"/>
 
     <!-- Metadata language: corresponding Alpha-2 codes -->
     <xsl:variable name="RecordLang">
@@ -381,6 +381,9 @@
         </dct:Standard>
       </dct:conformsTo>
 
+      <dct:source rdf:resource="{$MetadataXmlUrl}"/>
+      <dcat:landingPage rdf:resource="{$MetadataViewUrl}"/>
+
       <xsl:if test="$MetadataCharacterEncoding != ''">
         <xsl:copy-of select="$MetadataCharacterEncoding"/>
       </xsl:if>
@@ -502,6 +505,9 @@
 
       <!-- Access Rights -->
       <xsl:copy-of select="$AccessRights"/>
+
+      <!-- Metadata view page -->
+      <dcat:landingPage rdf:resource="{$MetadataViewUrl}"/>
 
       <!-- Resource type specific -->
       <xsl:choose>
