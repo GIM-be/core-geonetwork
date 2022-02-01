@@ -21,6 +21,23 @@
       <span>See also <a href="main-changelog.html">Main changelog</a></span>
     </div>
 
+    <section id="wip">
+      <ol>
+        <li data-ticket="136776">Remove useless thesauri for DCAT2 records from editor</li>
+        <li data-ticket="148777">Update GeoDCAT mapping after review of Overviewdcat3.xlsx
+          <ul>
+            <li>Remove <code>dcat:themeTaxonomy</code> on dcat:Catalog level from the RDF output</li>
+            <li>Remove <code>dct:issued</code> and <code>dct:modified</code> on dcat:Catalog level from the RDF output
+              due to them being fixed values with no real meaning
+            </li>
+            <li>Add timezones to dates values</li>
+            <li>Add dct:identifier and rdf:about on dcat:Distribution element</li>
+            <li>Remove CRS mapping for services records</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+
     <section id="31/01/2022">
       <ol>
         <li data-ticket="148663">Fix <code>adms:representationTechnique</code> not being mapped correctly.</li>

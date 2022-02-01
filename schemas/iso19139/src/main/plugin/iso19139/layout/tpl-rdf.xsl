@@ -155,16 +155,7 @@
       </xsl:for-each>
     </xsl:variable>
 
-    <xsl:variable name="MetadataDate">
-      <xsl:choose>
-        <xsl:when test="gmd:dateStamp/gco:Date">
-          <xsl:value-of select="gmd:dateStamp/gco:Date"/>
-        </xsl:when>
-        <xsl:when test="gmd:dateStamp/gco:DateTime">
-          <xsl:value-of select="substring(gmd:dateStamp/gco:DateTime/text(),1,10)"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:variable name="MetadataDate" select="geonet:formatRdfDate(gmd:dateStamp/*)"/>
 
     <xsl:variable name="RecordUUID" select="string(gmd:fileIdentifier/gco:CharacterString)"/>
 
@@ -431,9 +422,6 @@
       <!-- Content information -->
       <xsl:apply-templates select="gmd:contentInfo/*"/>
 
-      <!-- Reference system information -->
-      <xsl:apply-templates select="gmd:referenceSystemInfo"/>
-
       <!-- Resource Language -->
       <xsl:for-each select="gmd:identificationInfo/*/gmd:language">
         <xsl:variable name="resLang">
@@ -556,7 +544,6 @@
             </xsl:for-each>
           </xsl:if>
 
-
           <!-- Always set development status to "production" and life phase to "live" -->
           <mdcat:levensfase>
             <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/levensfase/live">
@@ -576,12 +563,13 @@
               <skos:inScheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/ontwikkelingstoestand"/>
             </skos:Concept>
           </mdcat:ontwikkelingstoestand>
-
-          <!-- Service type and protocol -->
         </xsl:when>
 
         <!-- Dataset specific -->
         <xsl:when test="$ResourceType = 'dataset' or $ResourceType = 'series'">
+          <!-- Reference system information -->
+          <xsl:apply-templates select="gmd:referenceSystemInfo"/>
+
           <!-- Lineage -->
           <xsl:for-each select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement">
             <dct:provenance>
@@ -667,6 +655,22 @@
                     <xsl:for-each select="$Encoding/dct:format">
                       <dcat:distribution>
                         <dcat:Distribution>
+                          <xsl:variable name="distroUUID" select="xslutil:uuidFromString(concat(
+                            $Title,
+                            $Description,
+                            string($linkage),
+                            string($LicenseAndRightsConstraints),
+                            string(.),
+                            string($Protocol),
+                            string($Distributors)
+                          ))"/>
+                          <xsl:variable name="dURI" select="replace(replace($uriPattern, '\{resourceType\}', 'distributions'), '\{resourceUuid\}', $distroUUID)"/>
+                          <xsl:if test="$dURI != '' and (starts-with($dURI, 'http://') or starts-with($dURI, 'https://'))">
+                            <xsl:attribute name="rdf:about" select="geonet:escapeURI($dURI)"/>
+                          </xsl:if>
+                          <dct:identifier>
+                            <xsl:value-of select="$distroUUID"/>
+                          </dct:identifier>
                           <xsl:copy-of select="$Title"/>
                           <xsl:copy-of select="$Description"/>
                           <xsl:for-each select="$linkage/gmd:URL">
@@ -1250,10 +1254,10 @@
         <dct:temporal>
           <dct:PeriodOfTime>
             <dcat:startDate>
-              <xsl:value-of select="$dateStart"/>
+              <xsl:value-of select="geonet:formatRdfDate($dateStart)"/>
             </dcat:startDate>
             <dcat:endDate>
-              <xsl:value-of select="$dateEnd"/>
+              <xsl:value-of select="geonet:formatRdfDate($dateEnd)"/>
             </dcat:endDate>
           </dct:PeriodOfTime>
         </dct:temporal>
@@ -1263,7 +1267,7 @@
 
   <!-- Generic date template -->
   <xsl:template name="Dates" match="gmd:date/gmd:CI_Date">
-    <xsl:variable name="date" select="gmd:date/gco:Date"/>
+    <xsl:variable name="date" select="geonet:formatRdfDate(gmd:date/*)"/>
     <xsl:variable name="type" select="gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
     <xsl:choose>
       <xsl:when test="$type = 'publication'">
@@ -1814,4 +1818,33 @@
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
+
+  <xsl:function name="geonet:formatRdfDate">
+    <xsl:param name="date"/>
+
+    <xsl:variable name="dateType" select="if (matches($date, '^\d{4}-\d{2}-\d{2}Z|(-|\+)\d{2}:\d{2}|T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|(-|\+)\d{2}:\d{2})?$'))
+                                          then 'dateTime'
+                                          else 'date'"/>
+    <xsl:variable name="timeZone">
+      <xsl:choose>
+        <xsl:when test="$dateType = 'date' and normalize-space(format-date($date, '[Z]')) != ''">
+          <xsl:value-of select="normalize-space(format-date($date, '[Z]')) != ''"/>
+        </xsl:when>
+        <xsl:when test="$dateType = 'dateTime' and normalize-space(format-dateTime($date, '[Z]')) != ''">
+          <xsl:value-of select="normalize-space(format-dateTime($date, '[Z]')) != ''"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="'+01:00'"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$dateType = 'date'">
+        <xsl:value-of select="concat(normalize-space($date), $timeZone)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat(format-dateTime($date, '[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]'), $timeZone)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 </xsl:stylesheet>

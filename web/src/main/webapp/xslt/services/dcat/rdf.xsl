@@ -133,14 +133,14 @@
         </dct:LicenseDocument>
       </dct:license>
 
-      <dct:issued>
+      <!--<dct:issued>
         <xsl:attribute name="rdf:datatype" select="'http://www.w3.org/2001/XMLSchema#date'"/>
         <xsl:value-of select="'2019-09-01'"/>
       </dct:issued>
       <dct:modified>
         <xsl:attribute name="rdf:datatype" select="'http://www.w3.org/2001/XMLSchema#date'"/>
         <xsl:value-of select="'2019-09-01'"/>
-      </dct:modified>
+      </dct:modified>-->
 
       <!--
       <void:openSearchDescription><xsl:value-of select="/root/gui/nodeUrl"/>eng/portal.opensearch</void:openSearchDescription>
