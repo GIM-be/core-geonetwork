@@ -321,6 +321,7 @@
       <item facet="createDateYear" sortOrder="asc"/>
       <item facet="fileId"/>
       <item facet="flanderskeyword"/>
+      <item facet="dataOrgName" max="100"/>
     </summaryType>
   </summaryTypes>
 
