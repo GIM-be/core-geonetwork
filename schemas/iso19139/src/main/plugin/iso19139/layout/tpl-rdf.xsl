@@ -1774,7 +1774,14 @@
 
   <!-- Spatial representation type (tentative) -->
   <xsl:template name="SpatialRepresentationType" match="gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode">
-    <adms:representationTechnique rdf:resource="{$SpatialRepresentationTypeCodelistUri}/{@codeListValue}"/>
+    <adms:representationTechnique>
+      <skos:Concept rdf:about="{$SpatialRepresentationTypeCodelistUri}/{@codeListValue}">
+        <skos:notation>
+          <xsl:value-of select="'het primaire ruimtelijke voorstellingstype waarin de data in de dataset wordt beheercfl'"/>
+        </skos:notation>
+        <skos:inScheme rdf:resource="{$SpatialRepresentationTypeCodelistUri}"/>
+      </skos:Concept>
+    </adms:representationTechnique>
   </xsl:template>
 
   <!-- Spatial resolution -->
