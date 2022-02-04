@@ -1847,7 +1847,7 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$dateType = 'date'">
-        <xsl:value-of select="concat(normalize-space($date), $timeZone)"/>
+        <xsl:value-of select="concat(format-date($date, '[Y0001]-[M01]-[D01]'), $timeZone)"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="concat(format-dateTime($date, '[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]'), $timeZone)"/>
