@@ -54,7 +54,7 @@
 
   <bean name="statusActionFactory"
         class="org.fao.geonet.kernel.metadata.StatusActionsFactory">
-    <constructor-arg name="className" value="org.fao.geonet.kernel.metadata.MetadatacenterStatusActions"/>
+    <constructor-arg name="className" value="org.fao.geonet.kernel.metadata.GeopuntStatusActions"/>
   </bean>
 
 
