@@ -28,6 +28,7 @@
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns:joda="java:org.fao.geonet.domain.ISODate"
                 xmlns:gn-fn-index="http://geonetwork-opensource.org/xsl/functions/index"
                 exclude-result-prefixes="#all"
                 version="2.0">
@@ -185,6 +186,23 @@
                   '&#09;', '\\t'),
                   '&#10;', '\\n'),
                   '&#13;', '\\r')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="gn-fn-index:formatDateTime" as="xs:string">
+    <xsl:param name="value" as="xs:string?"/>
+    <xsl:variable name="df">[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]</xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="$value='' or lower-case($value)='unknown'">
+        <xsl:value-of select="''"/>
+      </xsl:when>
+      <xsl:when test="lower-case($value)='current' or lower-case($value)='now'">
+        <xsl:value-of select="format-dateTime(current-dateTime(),$df)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="joda:parseISODateTime($value)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
