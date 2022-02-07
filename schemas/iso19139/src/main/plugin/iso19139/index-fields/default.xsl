@@ -32,7 +32,6 @@
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
-                xmlns:joda="java:org.fao.geonet.domain.ISODate"
                 xmlns:gn-fn-index="http://geonetwork-opensource.org/xsl/functions/index"
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -208,7 +207,6 @@
         <xsl:variable name="sortDate">
           <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue=('publication','revision','creation')]/gmd:date[(gco:Date|gco:DateTime)!='' and not(contains(gco:Date|gco:DateTime,'1900') or contains(gco:Date|gco:DateTime,'1753'))]">
             <xsl:sort select="gn-fn-index:formatDateTime(string(gco:Date|gco:DateTime))" order="descending"/>
-            <xsl:message select="concat('Date and type = ', string(gco:Date|gco:DateTime), ' (',../gmd:dateType/gmd:CI_DateTypeCode/@codeListValue,')' )"/>
             <xsl:if test="position()=1">
               <xsl:value-of select="gn-fn-index:formatDateTime(string(gco:Date|gco:DateTime))"/>
             </xsl:if>
@@ -216,13 +214,11 @@
         </xsl:variable>
 
         <xsl:if test="string-length(normalize-space($sortDate))>0">
-          <xsl:message select="concat('New sortdate = ', $sortDate)"/>
           <Field name="sortDate" string="{$sortDate}" store="true" index="true"/>
           <Field name="_sortDate" string="{$sortDate}" store="true" index="true"/>
         </xsl:if>
 
         <xsl:if test="string-length(normalize-space($sortDate))=0">
-          <xsl:message select="'No sortdate found, put it on -1'"/>
           <Field name="sortDate" string="-1" store="true" index="true"/>
           <Field name="_sortDate" string="-1" store="true" index="true"/>
         </xsl:if>
