@@ -163,6 +163,7 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="extra" type="xs:anyType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 

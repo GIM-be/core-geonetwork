@@ -21,6 +21,31 @@
       <span>See also <a href="main-changelog.html">Main changelog</a></span>
     </div>
 
+    <section id="07/02/2022">
+      <ol>
+        <li data-ticket="136776">Remove useless thesauri for DCAT2 records from editor</li>
+        <li data-ticket="148777">Update GeoDCAT mapping after review of Overviewdcat3.xlsx
+          <ul>
+            <li>Remove <code>dcat:themeTaxonomy</code> on dcat:Catalog level from the RDF output</li>
+            <li>Remove <code>dct:issued</code> and <code>dct:modified</code> on dcat:Catalog level from the RDF output
+              due to them being fixed values with no real meaning
+            </li>
+            <li>Add timezones to dates values</li>
+            <li>Add dct:identifier and rdf:about on dcat:Distribution element</li>
+            <li>Remove CRS mapping for services records</li>
+            <li>Migrate existing distribution to add an identifier</li>
+          </ul>
+        </li>
+        <li data-ticket="149309">Add dataOrgName facet to the suggest API</li>
+        <li data-ticket="148663">Add notation to the Spatial Representation type</li>
+        <li data-ticket="140787">Update schematron</li>
+        <li data-ticket="149270">Change the workflow configuration to use the Metadata Vlaanderen workflow process</li>
+        <li data-ticket="149474">Ensure the <code>dcat:CatalogRecord</code> standard name has the correct format</li>
+        <li data-ticket="143805">Update distribution mapping</li>
+        <li data-ticket="143805">Add linkage information in relation API</li>
+      </ol>
+    </section>
+
     <section id="31/01/2022">
       <ol>
         <li data-ticket="148663">Fix <code>adms:representationTechnique</code> not being mapped correctly.</li>
