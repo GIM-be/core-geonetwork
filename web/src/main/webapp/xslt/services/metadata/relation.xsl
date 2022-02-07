@@ -218,6 +218,25 @@
                 </identifier>
               </xsl:for-each>
             </xsl:if>
+            <xsl:if test="$type = ('services', 'datasets')">
+              <extra>
+                <xsl:variable name="linkages">
+                  <xsl:for-each select="$metadata/link">
+                    <xsl:variable name="linkage" select="normalize-space(tokenize(., '\|')[3])"/>
+                    <xsl:if test="$linkage != ''">
+                      <linkage>
+                        <xsl:value-of select="$linkage"/>
+                      </linkage>
+                    </xsl:if>
+                  </xsl:for-each>
+                </xsl:variable>
+                <xsl:for-each-group select="$linkages/linkage" group-by=".">
+                  <linkage>
+                    <xsl:value-of select="current-grouping-key()"/>
+                  </linkage>
+                </xsl:for-each-group>
+              </extra>
+            </xsl:if>
             <xsl:if test="$type = 'siblings'">
               <associationType>
                 <xsl:value-of select="../@association"/>

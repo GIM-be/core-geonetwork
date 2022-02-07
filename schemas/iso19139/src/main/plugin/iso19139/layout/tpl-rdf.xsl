@@ -504,14 +504,15 @@
           <!-- Topic category -->
           <xsl:apply-templates select="gmd:identificationInfo/*/gmd:topicCategory"/>
 
-          <!-- Contains operations -->
-          <xsl:for-each-group select="gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL" group-by=".">
-            <dcat:endpointUrl rdf:resource="{normalize-space(current-grouping-key())}"/>
-          </xsl:for-each-group>
-
-          <xsl:for-each-group select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage/gmd:URL" group-by=".">
-            <dcat:endpointDescription rdf:resource="{normalize-space(current-grouping-key())}"/>
-          </xsl:for-each-group>
+          <!-- Transfer option -->
+          <xsl:variable name="distribution" select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[
+                                                      gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString = ('OGC:WMS', 'OGC:WFS', 'OGC:WCS', 'OGC:WMTS') and
+                                                      gmd:CI_OnlineResource/gmd:linkage/gmd:URL
+                                                    ][1]/gmd:CI_OnlineResource/gmd:linkage[1]/gmd:URL[1]"/>
+          <xsl:if test="$distribution">
+            <dcat:endpointDescription rdf:resource="{normalize-space($distribution)}"/>
+            <dcat:endpointUrl rdf:resource="{normalize-space(tokenize($distribution, '\?')[1])}"/>
+          </xsl:if>
 
           <!-- Online resources -->
           <xsl:for-each-group select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:protocol/*" group-by=".">
@@ -588,19 +589,23 @@
           <xsl:apply-templates select="gmd:identificationInfo/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode"/>
 
           <!-- Related services -->
-          <xsl:if test="$relationLookup">
-            <xsl:for-each select="xslutil:getRelatedServices($RecordUUID)/services/*">
-              <xsl:choose>
-                <xsl:when test="name() = 'gmd:MD_Metadata'">
-                  <xsl:variable name="serviceUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
-                  <dct:relation rdf:resource="{geonet:getResourceURI(., 'service', $serviceUriPattern)}"/>
-                </xsl:when>
-                <xsl:when test="name() = 'rdf:RDF'">
-                  <dct:relation rdf:resource="{geonet:escapeURI(.//dcat:DataService[1]/@rdf:about)}"/>
-                </xsl:when>
-              </xsl:choose>
-            </xsl:for-each>
-          </xsl:if>
+          <xsl:variable name="relatedServices">
+            <xsl:if test="$relationLookup">
+              <xsl:copy-of select="xslutil:getRelatedServices($RecordUUID)/services/*"/>
+            </xsl:if>
+          </xsl:variable>
+
+          <xsl:for-each select="$relatedServices/*">
+            <xsl:choose>
+              <xsl:when test="name() = 'gmd:MD_Metadata'">
+                <xsl:variable name="serviceUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
+                <dct:relation rdf:resource="{geonet:getResourceURI(., 'service', $serviceUriPattern)}"/>
+              </xsl:when>
+              <xsl:when test="name() = 'rdf:RDF'">
+                <dct:relation rdf:resource="{geonet:escapeURI(.//dcat:DataService[1]/@rdf:about)}"/>
+              </xsl:when>
+            </xsl:choose>
+          </xsl:for-each>
 
           <!-- Spatial representation type -->
           <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode"/>
@@ -632,10 +637,12 @@
                 </xsl:for-each>
               </xsl:variable>
 
+              <xsl:variable name="LayerName" select="normalize-space(gmd:name[1]/gco:CharacterString)"/>
+
               <xsl:variable name="Description">
                 <xsl:for-each select="gmd:description">
                   <dct:description xml:lang="{$MetadataLanguage}">
-                    <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+                    <xsl:value-of select="concat(normalize-space(gco:CharacterString), ' (De accessURL verwijst naar een gelimiteerde set van data, volgens de INSPIRE afspraken)')"/>
                   </dct:description>
                   <xsl:call-template name="LocalisedString">
                     <xsl:with-param name="term">dct:description</xsl:with-param>
@@ -645,13 +652,18 @@
 
               <xsl:variable name="Protocol" select="gmd:protocol/*/text()"/>
 
-              <xsl:variable name="linkage" select="gmd:linkage"/>
+              <xsl:variable name="linkage" select="geonet:escapeURI(gmd:linkage[1]/gmd:URL[1])"/>
 
               <xsl:variable name="Function" select="gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue"/>
 
               <xsl:choose>
                 <xsl:when test="normalize-space($Function) = ('download', 'offlineAccess', 'order', '')">
-                  <xsl:if test="starts-with($Protocol, 'WWW:DOWNLOAD-1.0') or $Protocol = 'LINK download-store'">
+                  <xsl:if test="starts-with($Protocol, 'WWW:DOWNLOAD-1.0') or
+                                $Protocol = 'LINK download-store' or
+                                ends-with($Protocol, 'get-map') or
+                                ends-with($Protocol, 'get-tile') or
+                                ends-with($Protocol, 'get-feature') or
+                                ends-with($Protocol, 'get-coverage')">
                     <xsl:for-each select="$Encoding/dct:format">
                       <dcat:distribution>
                         <dcat:Distribution>
@@ -673,9 +685,7 @@
                           </dct:identifier>
                           <xsl:copy-of select="$Title"/>
                           <xsl:copy-of select="$Description"/>
-                          <xsl:for-each select="$linkage/gmd:URL">
-                            <dcat:accessURL rdf:resource="{geonet:escapeURI(.)}"/>
-                          </xsl:for-each>
+                          <dcat:accessURL rdf:resource="{$linkage}"/>
                           <xsl:copy-of select="$LicenseAndRightsConstraints"/>
                           <xsl:copy-of select="."/>
                           <dct:conformsTo>
@@ -685,6 +695,40 @@
                               </dct:identifier>
                             </dct:Standard>
                           </dct:conformsTo>
+                          <xsl:if test="ends-with($Protocol, 'get-map') or
+                                        ends-with($Protocol, 'get-tile') or
+                                        ends-with($Protocol, 'get-feature') or
+                                        ends-with($Protocol, 'get-coverage')">
+                            <adms:identifier>
+                              <adms:Identifier>
+                                <skos:notation>
+                                  <xsl:choose>
+                                    <xsl:when test="contains($Protocol, 'WMS')"><xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wms#Layer'"/></xsl:when>
+                                    <xsl:when test="contains($Protocol, 'WMTS')"><xsl:attribute name="rdf:datatype" select="'http://schemas.opengis.net/wmts#Layer'"/></xsl:when>
+                                    <xsl:when test="contains($Protocol, 'WFS')"><xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wfs#FeatureType'"/></xsl:when>
+                                    <xsl:when test="contains($Protocol, 'WCS')"><xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wcs#CoverageDescription'"/></xsl:when>
+                                  </xsl:choose>
+                                  <xsl:value-of select="$LayerName"/>
+                                </skos:notation>
+                              </adms:Identifier>
+                            </adms:identifier>
+                          </xsl:if>
+
+                          <xsl:variable name="servedService">
+                            <xsl:for-each select="$relatedServices/*">
+                              <xsl:if test=".//gmd:onLine//gmd:linkage/gmd:URL[starts-with($linkage, tokenize(., '\?')[1])]">
+                                <resourceURI>
+                                  <xsl:variable name="serviceUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
+                                  <xsl:value-of select="geonet:getResourceURI(., 'service', $serviceUriPattern)"/>
+                                </resourceURI>
+                              </xsl:if>
+                            </xsl:for-each>
+                          </xsl:variable>
+
+                          <xsl:if test="$servedService/resourceURI">
+                            <dcat:accessService rdf:resource="{$servedService/resourceURI[1]}"/>
+                          </xsl:if>
+
                           <xsl:copy-of select="$Distributors"/>
                           <xsl:if test="$ResourceCharacterEncoding != ''">
                             <xsl:copy-of select="$ResourceCharacterEncoding"/>
@@ -700,9 +744,7 @@
                 </xsl:when>
 
                 <xsl:otherwise>
-                  <xsl:for-each select="$linkage/gmd:URL">
-                    <dcat:landingPage rdf:resource="{geonet:escapeURI(.)}"/>
-                  </xsl:for-each>
+                  <dcat:landingPage rdf:resource="{$linkage}"/>
                 </xsl:otherwise>
               </xsl:choose>
 
