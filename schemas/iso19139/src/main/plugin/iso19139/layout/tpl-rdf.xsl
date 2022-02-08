@@ -914,48 +914,69 @@
 
     <xsl:variable name="OrganisationNameAsIndividualName-vCard">
       <xsl:for-each select="gmd:organisationName">
-        <vcard:fn xml:lang="{$MetadataLanguage}">
-          <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
-        </vcard:fn>
-        <xsl:call-template name="LocalisedString">
-          <xsl:with-param name="term">vcard:fn</xsl:with-param>
-        </xsl:call-template>
+        <xsl:variable name="orgName" select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
+        <xsl:if test="$orgName != ''">
+          <vcard:fn xml:lang="{$MetadataLanguage}">
+            <xsl:value-of select="$orgName"/>
+          </vcard:fn>
+          <xsl:call-template name="LocalisedString">
+            <xsl:with-param name="term">vcard:fn</xsl:with-param>
+          </xsl:call-template>
+        </xsl:if>
       </xsl:for-each>
     </xsl:variable>
 
     <xsl:variable name="Email">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/*">
-        <foaf:mbox rdf:resource="mailto:{geonet:escapeURI(.)}"/>
+        <xsl:variable name="address" select="geonet:escapeURI(.)"/>
+        <xsl:if test="$address != ''">
+          <foaf:mbox rdf:resource="mailto:{$address}"/>
+        </xsl:if>
       </xsl:for-each>
     </xsl:variable>
 
     <xsl:variable name="Email-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/*">
-        <vcard:hasEmail rdf:resource="mailto:{geonet:escapeURI(.)}"/>
+        <xsl:variable name="address" select="geonet:escapeURI(.)"/>
+        <xsl:if test="$address != ''">
+          <vcard:hasEmail rdf:resource="mailto:{$address}"/>
+        </xsl:if>
       </xsl:for-each>
     </xsl:variable>
 
     <xsl:variable name="URL">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-        <foaf:workplaceHomepage rdf:resource="{geonet:escapeURI(.)}"/>
+        <xsl:variable name="homepage" select="geonet:escapeURI(.)"/>
+        <xsl:if test="$homepage != ''">
+          <foaf:workplaceHomepage rdf:resource="{$homepage}"/>
+        </xsl:if>
       </xsl:for-each>
     </xsl:variable>
 
     <xsl:variable name="URL-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL">
-        <vcard:hasURL rdf:resource="{geonet:escapeURI(.)}"/>
+        <xsl:variable name="url" select="geonet:escapeURI(.)"/>
+        <xsl:if test="$url != ''">
+          <vcard:hasURL rdf:resource="{$url}"/>
+        </xsl:if>
       </xsl:for-each>
     </xsl:variable>
 
     <xsl:variable name="Telephone">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/*">
-        <foaf:phone rdf:resource="tel:+{translate(translate(translate(translate(translate(normalize-space(.),' ',''),'(',''),')',''),'+',''),'.','')}"/>
+        <xsl:variable name="tel" select="translate(translate(translate(translate(translate(normalize-space(.),' ',''),'(',''),')',''),'+',''),'.','')"/>
+        <xsl:if test="$tel != ''">
+          <foaf:phone rdf:resource="tel:+{$tel}"/>
+        </xsl:if>
       </xsl:for-each>
     </xsl:variable>
 
     <xsl:variable name="Telephone-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice/*">
-        <vcard:hasTelephone rdf:resource="tel:+{translate(translate(translate(translate(translate(normalize-space(.),' ',''),'(',''),')',''),'+',''),'.','')}"/>
+        <xsl:variable name="tel" select="translate(translate(translate(translate(translate(normalize-space(.),' ',''),'(',''),')',''),'+',''),'.','')"/>
+        <xsl:if test="$tel != ''">
+          <vcard:hasTelephone rdf:resource="tel:+{$tel}"/>
+        </xsl:if>
       </xsl:for-each>
     </xsl:variable>
 
@@ -1293,16 +1314,22 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <dct:temporal>
-          <dct:PeriodOfTime>
-            <dcat:startDate>
-              <xsl:value-of select="geonet:formatRdfDate($dateStart)"/>
-            </dcat:startDate>
-            <dcat:endDate>
-              <xsl:value-of select="geonet:formatRdfDate($dateEnd)"/>
-            </dcat:endDate>
-          </dct:PeriodOfTime>
-        </dct:temporal>
+        <xsl:if test="normalize-space($dateStart) != '' or normalize-space($dateEnd) != ''">
+          <dct:temporal>
+            <dct:PeriodOfTime>
+              <xsl:if test="normalize-space($dateStart) != ''">
+                <dcat:startDate>
+                  <xsl:value-of select="geonet:formatRdfDate($dateStart)"/>
+                </dcat:startDate>
+              </xsl:if>
+              <xsl:if test="normalize-space($dateEnd) != ''">
+                <dcat:endDate>
+                  <xsl:value-of select="geonet:formatRdfDate($dateEnd)"/>
+                </dcat:endDate>
+              </xsl:if>
+            </dct:PeriodOfTime>
+          </dct:temporal>
+        </xsl:if>
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
@@ -1876,6 +1903,9 @@
                                           else 'date'"/>
     <xsl:variable name="timeZone">
       <xsl:choose>
+        <xsl:when test="normalize-space($date) = ''">
+          <xsl:value-of select="''"/>
+        </xsl:when>
         <xsl:when test="$dateType = 'date' and normalize-space(format-date($date, '[Z]')) != ''">
           <xsl:value-of select="normalize-space(format-date($date, '[Z]')) != ''"/>
         </xsl:when>
@@ -1888,6 +1918,9 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
+      <xsl:when test="normalize-space($date) = ''">
+        <xsl:value-of select="''"/>
+      </xsl:when>
       <xsl:when test="$dateType = 'date'">
         <xsl:value-of select="concat(format-date($date, '[Y0001]-[M01]-[D01]'), $timeZone)"/>
       </xsl:when>
