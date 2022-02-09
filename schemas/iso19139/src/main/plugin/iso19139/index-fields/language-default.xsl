@@ -48,8 +48,8 @@
       work accross different metadata resources -->
   <!-- ========================================================================================= -->
 
-  <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
   <xsl:import href="common/index-utils.xsl"/>
+  <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
   <xsl:include href="../convert/functions.xsl"/>
   <xsl:include href="../../../xsl/utils-fn.xsl"/>
   <xsl:include href="inspire-util.xsl" />
