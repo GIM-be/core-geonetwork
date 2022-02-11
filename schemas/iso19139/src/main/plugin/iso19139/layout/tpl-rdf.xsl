@@ -1458,11 +1458,21 @@
   <xsl:template name="FeatureCatalogueDescription" match="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
     <dct:conformsTo>
       <dct:Standard>
-        <xsl:if test="normalize-space(gmd:featureCatalogueCitation/@xlink:href) != ''">
-          <xsl:attribute name="rdf:about" select="gmd:featureCatalogueCitation/@xlink:href"/>
-        </xsl:if>
+        <xsl:variable name="uuidref" select="gmd:featureCatalogueCitation/@uuidref"/>
+        <xsl:choose>
+          <xsl:when test="normalize-space(gmd:featureCatalogueCitation/@xlink:href) != ''">
+            <xsl:attribute name="rdf:about" select="gmd:featureCatalogueCitation/@xlink:href"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:attribute name="rdf:about" select="concat(
+              $catalogUrl,
+              '/csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id=',
+              $uuidref
+            )"/>
+          </xsl:otherwise>
+        </xsl:choose>
         <dct:identifier>
-          <xsl:value-of select="gmd:featureCatalogueCitation/@uuidref"/>
+          <xsl:value-of select="$uuidref"/>
         </dct:identifier>
 
         <xsl:variable name="title" select="geonet:getLabel(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:title)"/>
@@ -1472,7 +1482,7 @@
           </dct:title>
         </xsl:if>
         <xsl:apply-templates select="gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:edition"/>
-        <dct:type rdf:resource="https://data.vlaanderen.be/standaarden/erkende-standaard/proces-en-methode-voor-de-ontwikkeling-en-erkenning-van-data-standaarden.html"/>
+        <dct:type rdf:resource="https://www.iso.org/standard/39965.html"/>
       </dct:Standard>
     </dct:conformsTo>
   </xsl:template>
