@@ -22,16 +22,21 @@
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:geonet="http://www.fao.org/geonetwork"
-                xmlns:saxon="http://saxon.sf.net/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:geonet="http://www.fao.org/geonetwork"
+                xmlns:saxon="http://saxon.sf.net/"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
                 xmlns:foaf="http://xmlns.com/foaf/0.1/"
                 xmlns:void="http://www.w3.org/TR/void/"
-                xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:dct="http://purl.org/dc/terms/"
+                xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+                xmlns:dcat="http://www.w3.org/ns/dcat#"
+                xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:java="java:org.fao.geonet.util.XslUtil"
                 version="2.0"
-                extension-element-prefixes="saxon" exclude-result-prefixes="#all">
+                extension-element-prefixes="saxon"
+                exclude-result-prefixes="#all">
 
   <xsl:output indent="yes"/>
 
@@ -92,16 +97,20 @@
 
       <!-- free-text account of the catalog. -->
       <dct:description xml:lang="{$iso2letterLanguageCode}">
-        <xsl:value-of select="$env/system/site/name"/> (<xsl:value-of
-        select="$env/system/site/organization"/>)
+        <xsl:value-of select="concat($env/system/site/name, ' (', $env/system/site/organization, ')')"/>
       </dct:description>
+
+      <!-- Unique identifier of the catalog -->
+      <dct:identifier>
+        <xsl:value-of select="$env/system/site/siteId"/>
+      </dct:identifier>
 
       <!-- The entity responsible for making the catalog online. -->
       <dct:publisher>
     	<!-- Organization in charge of the catalogue defined in the administration > system configuration -->
 	    <foaf:Agent rdf:about="{$resourcePrefix}/organizations/{encode-for-uri($env/system/site/organization)}">
 	      <foaf:name xml:lang="{$iso2letterLanguageCode}">
-	        <xsl:value-of select="$env/system/site/organization"></xsl:value-of>
+	        <xsl:value-of select="$env/system/site/organization"/>
 	      </foaf:name>
 	    </foaf:Agent>
       </dct:publisher>
@@ -133,82 +142,16 @@
           <dct:identifier>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</dct:identifier>
         </dct:LicenseDocument>
       </dct:license>
-
-      <!--<dct:issued>
-        <xsl:attribute name="rdf:datatype" select="'http://www.w3.org/2001/XMLSchema#date'"/>
-        <xsl:value-of select="'2019-09-01'"/>
-      </dct:issued>
-      <dct:modified>
-        <xsl:attribute name="rdf:datatype" select="'http://www.w3.org/2001/XMLSchema#date'"/>
-        <xsl:value-of select="'2019-09-01'"/>
-      </dct:modified>-->
-
-      <!--
-      <void:openSearchDescription><xsl:value-of select="/root/gui/nodeUrl"/>eng/portal.opensearch</void:openSearchDescription>
-      <void:uriLookupEndpoint><xsl:value-of select="/root/gui/nodeUrl"/>eng/rdf.search?any=</void:uriLookupEndpoint>
-	  -->
-
-      <!--
-      The knowledge organization system (KOS) used to classify catalog's datasets.
-      ConceptScheme describes all thesaurus available in the catalogue
-	    * Resource identifier is a local identifier for local thesaurus or public URI if external
-      -->
-      <!--<xsl:for-each select="/root/gui/thesaurus/thesauri/thesaurus">
-        <dcat:themeTaxonomy>
-		      <skos:ConceptScheme rdf:about="{$resourcePrefix}/registries/vocabularies/{key}">
-		        <dct:title xml:lang="{$iso2letterLanguageCode}">
-		          <xsl:value-of select="title"/>
-		        </dct:title>
-            <foaf:isPrimaryTopicOf rdf:resource="{defaultNamespace}"/>
-		      </skos:ConceptScheme>
-        </dcat:themeTaxonomy>
-      </xsl:for-each>-->
-
-
-      <!-- The language of the catalog. This refers to the language used
-        in the textual metadata describing titles, descriptions, etc.
-        of the datasets in the catalog.
-
-        http://www.ietf.org/rfc/rfc3066.txt
-
-        Multiple values can be used. The publisher might also choose to describe
-        the language on the dataset level (see dataset language).
-
-      <dct:language>
-			<skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/{/root/gui/language}">
-				<rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
-				<skos:prefLabel xml:lang="{$iso2letterLanguageCode}"><xsl:value-of select="/root/gui/language"/></skos:prefLabel>
-				<skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language"/>
-			</skos:Concept>
-      </dct:language>
-      -->
-
-
-      <!-- This describes the license under which the catalog can be used/reused and not the datasets.
-        Even if the license of the catalog applies to all of its datasets it should be
-        replicated on each dataset.-->
-
-      <!-- TODO using VoIDx
-      <dct:license>
-      </dct:license>
-      -->
-
-
-      <!-- The geographical area covered by the catalog.
-      <dct:location>
-       </dct:location> -->
-
-      <!-- List all catalogue records
-        <dcat:dataset rdf:resource="http://localhost:8080/geonetwork/dataset/1"/>
-        <dcat:record rdf:resource="http://localhost:8080/geonetwork/metadata/1"/>
-
-      <xsl:apply-templates mode="record-reference" select="/root/*|/root/search/response/*"/>
-      -->
-
+      <dcat:contactPoint>
+        <vcard:Organization>
+          <vcard:organization-name>
+            <xsl:value-of select="$env/system/site/organization"/>
+          </vcard:organization-name>
+          <vcard:hasEmail rdf:resource="mailto:informatie.vlaanderen@vlaanderen.be" />
+          <vcard:hasURL rdf:resource="https://overheid.vlaanderen.be/informatie-vlaanderen" />
+        </vcard:Organization>
+      </dcat:contactPoint>
     </dcat:Catalog>
-
-
-
   </xsl:template>
 
 
