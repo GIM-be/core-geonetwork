@@ -259,70 +259,6 @@
           </dct:accessRights>
         </xsl:otherwise>
       </xsl:choose>
-      <!--
-      <xsl:choose>
-        <xsl:when test="$firstConstraint/gmd:otherConstraints/gmx:Anchor/@xlink:href">
-          <xsl:variable name="asNoLimitation" select="count($firstConstraint/gmd:otherConstraints/gmx:Anchor/@xlink:href[. = ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations','https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')]) > 0"/>
-          <xsl:choose>
-            <xsl:when test="$asNoLimitation">
-              <dct:accessRights>
-                <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">
-                  <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
-                  <skos:prefLabel xml:lang="nl">publiek</skos:prefLabel>
-                  <skos:prefLabel xml:lang="en">public</skos:prefLabel>
-                  <skos:prefLabel xml:lang="fr">public</skos:prefLabel>
-                  <skos:prefLabel xml:lang="de">public</skos:prefLabel>
-                  <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/access-right"/>
-                </skos:Concept>
-              </dct:accessRights>
-            </xsl:when>
-            <xsl:otherwise>
-              <dct:accessRights rdf:resource="{geonet:escapeURI(($firstConstraint/gmd:otherConstraints/gmx:Anchor/@xlink:href)[1])}"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:when>
-        <xsl:when test="$firstConstraint/gmd:accessConstraints/gmd:MD_RestrictionCode">
-          <xsl:variable name="accessConstraintsCode" select="normalize-space(($firstConstraint/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue)[1])"/>
-          <xsl:variable name="accessConstraintsText">
-            <xsl:choose>
-              <xsl:when test="normalize-space(.) != ''">
-                <xsl:value-of select="normalize-space(.)"/>
-              </xsl:when>
-              <xsl:when test="$accessConstraintsCode != ''">
-                <xsl:value-of select="$accessConstraintsCode"/>
-              </xsl:when>
-            </xsl:choose>
-          </xsl:variable>
-          <dct:accessRights>
-            <dct:RightsStatement>
-              <xsl:if test="$accessConstraintsCode != ''">
-                <dct:identifier>
-                  <xsl:value-of select="$accessConstraintsCode"/>
-                </dct:identifier>
-              </xsl:if>
-              <rdfs:label xml:lang="{$MetadataLanguage}">
-                <xsl:value-of select="$accessConstraintsText"/>
-              </rdfs:label>
-              <xsl:call-template name="LocalisedString">
-                <xsl:with-param name="term">rdfs:label</xsl:with-param>
-              </xsl:call-template>
-            </dct:RightsStatement>
-          </dct:accessRights>
-        </xsl:when>
-        <xsl:when test="$firstConstraint/gmd:otherConstraints/gco:CharacterString">
-          <dct:accessRights>
-            <dct:RightsStatement>
-              <rdfs:label xml:lang="{$MetadataLanguage}">
-                <xsl:value-of select="normalize-space(($firstConstraint/gmd:otherConstraints/gco:CharacterString)[1])"/>
-              </rdfs:label>
-              <xsl:call-template name="LocalisedString">
-                <xsl:with-param name="term">rdfs:label</xsl:with-param>
-              </xsl:call-template>
-            </dct:RightsStatement>
-          </dct:accessRights>
-        </xsl:when>
-      </xsl:choose>
-      -->
     </xsl:variable>
 
     <!-- Metadata character encoding -->
@@ -405,7 +341,6 @@
       <dct:identifier>
         <xsl:value-of select="$ResourceUUID"/>
       </dct:identifier>
-      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*[concat(gmd:codeSpace/gco:CharacterString, gmd:code/gco:CharacterString) != $ResourceUUID]"/>
       <xsl:copy-of select="$ResourceTitle"/>
       <xsl:copy-of select="$ResourceAbstract"/>
 
@@ -823,36 +758,6 @@
     Templates for specific metadata elements
     ========================================
   -->
-
-  <!-- Unique Resource Identifier -->
-  <xsl:template name="UniqueResourceIdentifier" match="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*">
-    <xsl:variable name="ns" select="gmd:codeSpace/gco:CharacterString"/>
-
-    <xsl:variable name="code" select="gmd:code/gco:CharacterString"/>
-
-    <xsl:variable name="id">
-      <xsl:choose>
-        <xsl:when test="$ns != ''">
-          <xsl:choose>
-            <xsl:when test="substring($ns,string-length($ns),1) = '/'">
-              <xsl:value-of select="concat($ns,$code)"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="concat($ns,'/',$code)"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$code"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-
-    <dct:identifier>
-      <xsl:value-of select="$id"/>
-    </dct:identifier>
-  </xsl:template>
-
   <!-- Responsible Organisation -->
   <xsl:template name="ResponsibleOrganisation" match="gmd:CI_ResponsibleParty">
     <xsl:param name="MetadataLanguage"/>
