@@ -56,6 +56,7 @@ import org.fao.geonet.kernel.url.UrlChecker;
 import org.fao.geonet.languages.IsoLanguagesMapper;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.*;
+import org.fao.geonet.repository.specification.MetadataSpecs;
 import org.fao.geonet.schema.iso19139.ISO19139Namespaces;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
@@ -87,6 +88,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static org.fao.geonet.kernel.search.spatial.SpatialIndexWriter.parseGml;
 import static org.fao.geonet.kernel.setting.Settings.SYSTEM_SITE_ORGANIZATION;
@@ -1062,12 +1064,12 @@ public final class XslUtil {
             searcher.search(serviceContext, parameters, config);
             Element response = searcher.present(serviceContext, parameters, config);
             Element related = new Element("services");
-            for (Element indexedMd: (List<Element>)(response.getChildren())) {
-                String uuid = indexedMd.getChild("info", Edit.NAMESPACE).getChild("uuid").getText();
-                AbstractMetadata md = metadataUtils.findOneByUuid(uuid);
-                if (md != null) {
-                    related.addContent(md.getXmlData(false));
-                }
+            List<String> uuids = ((List<Element>)(response.getChildren())).stream()
+                .map(indexedMd -> indexedMd.getChild("info", Edit.NAMESPACE).getChild("uuid").getText())
+                .collect(Collectors.toList());
+            List<AbstractMetadata> mds = (List<AbstractMetadata>) metadataUtils.findAll(MetadataSpecs.hasMetadataUuidIn(uuids));
+            for (AbstractMetadata md: mds) {
+                related.addContent(md.getXmlData(false));
             }
             DOMOutputter outputter = new DOMOutputter();
             return outputter.output(new Document(related));
@@ -1088,14 +1090,12 @@ public final class XslUtil {
             AssociatedResourcesSchemaPlugin schemaPlugin = (AssociatedResourcesSchemaPlugin) instance;
             try {
                 Element mdXml = metadata.getXmlData(false);
-                Set<String> listOfUUIDs = schemaPlugin.getAssociatedDatasetUUIDs(mdXml);
-                if (listOfUUIDs != null && listOfUUIDs.size() > 0) {
+                Set<String> uuids = schemaPlugin.getAssociatedDatasetUUIDs(mdXml);
+                if (uuids != null && uuids.size() > 0) {
                     Element related = new Element("datasets");
-                    for (String uuid: listOfUUIDs) {
-                        AbstractMetadata md = metadataUtils.findOneByUuid(uuid);
-                        if (md != null) {
-                            related.addContent(md.getXmlData(false));
-                        }
+                    List<AbstractMetadata> mds = (List<AbstractMetadata>) metadataUtils.findAll(MetadataSpecs.hasMetadataUuidIn(uuids));
+                    for (AbstractMetadata md: mds) {
+                        related.addContent(md.getXmlData(false));
                     }
                     DOMOutputter outputter = new DOMOutputter();
                     return outputter.output(new Document(related));
