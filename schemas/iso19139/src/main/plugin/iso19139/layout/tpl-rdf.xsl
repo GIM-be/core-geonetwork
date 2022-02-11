@@ -626,6 +626,9 @@
                           <xsl:copy-of select="."/>
                           <dct:conformsTo>
                             <dct:Standard>
+                              <xsl:call-template name="Map-protocol">
+                                <xsl:with-param name="protocol" select="$Protocol"/>
+                              </xsl:call-template>
                               <dct:identifier>
                                 <xsl:value-of select="$Protocol"/>
                               </dct:identifier>
@@ -1454,7 +1457,10 @@
   <!-- Conforms to - Feature catalog description -->
   <xsl:template name="FeatureCatalogueDescription" match="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
     <dct:conformsTo>
-      <dct:Standard rdf:about="{gmd:featureCatalogueCitation/@xlink:href}">
+      <dct:Standard>
+        <xsl:if test="normalize-space(gmd:featureCatalogueCitation/@xlink:href) != ''">
+          <xsl:attribute name="rdf:about" select="gmd:featureCatalogueCitation/@xlink:href"/>
+        </xsl:if>
         <dct:identifier>
           <xsl:value-of select="gmd:featureCatalogueCitation/@uuidref"/>
         </dct:identifier>
@@ -1815,30 +1821,24 @@
     <xsl:variable name="dateType" select="if (matches($date, '^\d{4}-\d{2}-\d{2}Z|(-|\+)\d{2}:\d{2}|T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|(-|\+)\d{2}:\d{2})?$'))
                                           then 'dateTime'
                                           else 'date'"/>
-    <xsl:variable name="timeZone">
-      <xsl:choose>
-        <xsl:when test="normalize-space($date) = ''">
-          <xsl:value-of select="''"/>
-        </xsl:when>
-        <xsl:when test="$dateType = 'date' and normalize-space(format-date($date, '[Z]')) != ''">
-          <xsl:value-of select="normalize-space(format-date($date, '[Z]')) != ''"/>
-        </xsl:when>
-        <xsl:when test="$dateType = 'dateTime' and normalize-space(format-dateTime($date, '[Z]')) != ''">
-          <xsl:value-of select="normalize-space(format-dateTime($date, '[Z]')) != ''"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="'+01:00'"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
     <xsl:choose>
       <xsl:when test="normalize-space($date) = ''">
         <xsl:value-of select="''"/>
       </xsl:when>
       <xsl:when test="$dateType = 'date'">
-        <xsl:value-of select="concat(format-date($date, '[Y0001]-[M01]-[D01]'), $timeZone)"/>
+        <xsl:value-of select="format-date($date, '[Y0001]-[M01]-[D01]')"/>
       </xsl:when>
       <xsl:otherwise>
+        <xsl:variable name="timeZone">
+          <xsl:choose>
+            <xsl:when test="$dateType = 'dateTime' and normalize-space(format-dateTime($date, '[Z]')) != ''">
+              <xsl:value-of select="normalize-space(format-dateTime($date, '[Z]')) != ''"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="'+01:00'"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
         <xsl:value-of select="concat(format-dateTime($date, '[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]'), $timeZone)"/>
       </xsl:otherwise>
     </xsl:choose>
