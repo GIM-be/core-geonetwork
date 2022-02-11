@@ -77,6 +77,7 @@
                 xmlns:geodcat="http://data.europa.eu/930/"
                 xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
                 xmlns:adres="https://data.vlaanderen.be/ns/adres#"
+                xmlns:vlgen="https://data.vlaanderen.be/ns/generiek"
                 xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
                 exclude-result-prefixes="#all"
                 version="2.0">
@@ -704,6 +705,13 @@
                   <skos:notation>
                     <xsl:value-of select="$RecordURI"/>
                   </skos:notation>
+                  <vlgen:lokaleIdentificator>
+                    <xsl:value-of select="$RecordUUID"/>
+                  </vlgen:lokaleIdentificator>
+                  <vlgen:naamruimte>
+                    <xsl:value-of select="replace($RecordURI, concat('/', $RecordUUID), '')"/>
+                  </vlgen:naamruimte>
+                  <dct:creator rdf:resoure="https://metadata.vlaanderen.be"/>
                 </adms:Identifier>
               </adms:identifier>
               <xsl:copy-of select="$MetadataDescription"/>
@@ -729,6 +737,7 @@
               <skos:notation>
                 <xsl:value-of select="$ResourceUri"/>
               </skos:notation>
+              <dct:creator rdf:resoure="https://metadata.vlaanderen.be"/>
             </adms:Identifier>
           </adms:identifier>
           <xsl:for-each select="$ResourceDescription/*[name() != 'rdf:type']">

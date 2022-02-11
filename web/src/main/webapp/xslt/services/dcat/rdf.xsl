@@ -72,6 +72,7 @@
     <xsl:namespace name="dcat" select="'http://www.w3.org/ns/dcat#'"/>
     <xsl:namespace name="schema" select="'http://schema.org/'"/>
     <xsl:namespace name="dc" select="'http://purl.org/dc/elements/1.1/'"/>
+    <xsl:namespace name="vlgen" select="'https://data.vlaanderen.be/ns/generiek'"/>
   </xsl:template>
 
 
