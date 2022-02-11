@@ -511,11 +511,12 @@
           <xsl:for-each select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement">
             <dct:provenance>
               <dct:ProvenanceStatement>
-                <rdfs:label xml:lang="{$MetadataLanguage}">
+                <xsl:attribute name="rdf:about" select="concat($MetadataViewUrl, '/formatter/lineage')"/>
+                <dct:title xml:lang="{$MetadataLanguage}">
                   <xsl:value-of select="normalize-space(gco:CharacterString)"/>
-                </rdfs:label>
+                </dct:title>
                 <xsl:call-template name="LocalisedString">
-                  <xsl:with-param name="term">rdfs:label</xsl:with-param>
+                  <xsl:with-param name="term">dct:title</xsl:with-param>
                 </xsl:call-template>
               </dct:ProvenanceStatement>
             </dct:provenance>

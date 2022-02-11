@@ -18,6 +18,12 @@ body {
   padding: 10px;
 }
 
+#summary {
+  columns: 4;
+  -webkit-columns: 4;
+  -moz-columns: 4;
+}
+
 li {
   padding: 5px 0;
 }
