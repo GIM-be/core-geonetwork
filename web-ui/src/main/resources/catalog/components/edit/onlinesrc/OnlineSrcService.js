@@ -507,9 +507,8 @@
             });
           };
 
-          if (addOnlineSrcToDataset) {
-            var processName = params.schema === 'dcat2' ? 'service-add' : 'onlinesrc-add';
-            var qParams = setParams(processName, params);
+          if (addOnlineSrcToDataset && params.schema !== 'dcat2') {
+            var qParams = setParams('onlinesrc-add', params);
             return gnBatchProcessing.runProcessMd({
               name: qParams.name,
               desc: qParams.desc,
@@ -620,10 +619,11 @@
          *
          * @param {Object} onlinesrc the online resource to remove
          */
-        removeService: function(onlinesrc) {
+        removeService: function (onlinesrc) {
           var params = {
             uuid: onlinesrc.id,
-            uuidref: gnCurrentEdit.metadata.identifier
+            uuidref: gnCurrentEdit.metadata.identifier,
+            currentEdit: gnCurrentEdit.metadata['geonet:info'].uuid
           }, service = this;
 
           gnBatchProcessing.runProcessMd(

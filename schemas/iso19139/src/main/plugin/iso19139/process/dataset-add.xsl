@@ -279,5 +279,4 @@ attached it to the metadata for data.
 
   <!-- Always remove geonet:* elements. -->
   <xsl:template match="geonet:*" priority="2"/>
-
 </xsl:stylesheet>

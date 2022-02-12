@@ -51,4 +51,6 @@ detach a dataset metadata
   <!-- Remove geonet:* elements. -->
   <xsl:template match="geonet:*" priority="2"/>
 
+  <xsl:template match="extra" priority="2"/>
+
 </xsl:stylesheet>
