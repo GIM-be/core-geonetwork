@@ -18,12 +18,6 @@ body {
   padding: 10px;
 }
 
-#summary {
-  columns: 4;
-  -webkit-columns: 4;
-  -moz-columns: 4;
-}
-
 li {
   padding: 5px 0;
 }
@@ -47,6 +41,28 @@ code {
 
 .bullet-table tr td:first-child {
   padding-right: 5px;
+}
+
+#summary {
+  columns: 2;
+}
+
+@media screen and (min-width: 600px)  {
+  #summary {
+    columns: 3;
+  }
+}
+
+@media screen and (min-width: 1000px)  {
+  #summary {
+    columns: 4;
+  }
+}
+
+@media screen and (min-width: 1500px)  {
+  #summary {
+    columns: 5;
+  }
 }
 
 @keyframes blink {
