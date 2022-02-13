@@ -34,6 +34,7 @@
                 xmlns:srv="http://www.isotc211.org/2005/srv"
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:util="java:org.fao.geonet.util.XslUtil"
+                xmlns:gn-fn-index="http://geonetwork-opensource.org/xsl/functions/index"
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 exclude-result-prefixes="#all">
@@ -47,6 +48,7 @@
       work accross different metadata resources -->
   <!-- ========================================================================================= -->
 
+  <xsl:import href="common/index-utils.xsl"/>
   <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
   <xsl:include href="../convert/functions.xsl"/>
   <xsl:include href="../../../xsl/utils-fn.xsl"/>
@@ -220,42 +222,23 @@
           <Field name="altTitle" string="{string(.)}" store="true" index="true"/>
         </xsl:for-each>
 
-        <xsl:variable name="revisionSortDate">
-          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='revision' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation' or gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
-            <xsl:sort select="." order="descending"/>
-            <xsl:if test="position()=1"><xsl:value-of select="string(gco:Date|gco:DateTime)"/></xsl:if>
-          </xsl:for-each>
-        </xsl:variable>
-
-        <xsl:variable name="creationSortDate">
-          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']/gmd:date">
-            <xsl:sort select="." order="descending"/>
-            <xsl:if test="position()=1"><xsl:value-of select="string(gco:Date|gco:DateTime)"/></xsl:if>
-          </xsl:for-each>
-        </xsl:variable>
-
-        <xsl:variable name="publicationSortDate">
-          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date">
-            <xsl:sort select="." order="descending"/>
-            <xsl:if test="position()=1"><xsl:value-of select="string(gco:Date|gco:DateTime)"/></xsl:if>
-          </xsl:for-each>
-        </xsl:variable>
-
-        <xsl:if test="string-length(normalize-space($publicationSortDate))>0">
-          <Field name="sortDate" string="{$publicationSortDate}" store="true" index="true"/>
-          <Field name="_sortDate" string="{$publicationSortDate}" store="true" index="true"/>
-        </xsl:if>
-        <xsl:if test="string-length(normalize-space($publicationSortDate))=0">
-          <xsl:if test="string-length(normalize-space($revisionSortDate))>0">
-            <Field name="sortDate" string="{$revisionSortDate}" store="true" index="true"/>
-            <Field name="_sortDate" string="{$revisionSortDate}" store="true" index="true"/>
-          </xsl:if>
-          <xsl:if test="string-length(normalize-space($revisionSortDate))=0">
-            <xsl:if test="string-length(normalize-space($creationSortDate))>0">
-              <Field name="sortDate" string="{$creationSortDate}" store="true" index="true"/>
-              <Field name="_sortDate" string="{$creationSortDate}" store="true" index="true"/>
+        <xsl:variable name="sortDate">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue=('publication','revision','creation')]/gmd:date[(gco:Date|gco:DateTime)!='' and not(contains(gco:Date|gco:DateTime,'1900') or contains(gco:Date|gco:DateTime,'1753'))]">
+            <xsl:sort select="gn-fn-index:formatDateTime(string(gco:Date|gco:DateTime))" order="descending"/>
+            <xsl:if test="position()=1">
+              <xsl:value-of select="gn-fn-index:formatDateTime(string(gco:Date|gco:DateTime))"/>
             </xsl:if>
-          </xsl:if>
+          </xsl:for-each>
+        </xsl:variable>
+
+        <xsl:if test="string-length(normalize-space($sortDate))>0">
+          <Field name="sortDate" string="{$sortDate}" store="true" index="true"/>
+          <Field name="_sortDate" string="{$sortDate}" store="true" index="true"/>
+        </xsl:if>
+
+        <xsl:if test="string-length(normalize-space($sortDate))=0">
+          <Field name="sortDate" string="-1" store="true" index="true"/>
+          <Field name="_sortDate" string="-1" store="true" index="true"/>
         </xsl:if>
 
         <xsl:for-each
