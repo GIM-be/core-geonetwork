@@ -210,7 +210,8 @@
              // Max number of tags allowed. Use 1 to restrict to only
              // on keyword.
              maxTags: '@',
-             thesaurusTitle: '@'
+             thesaurusTitle: '@',
+             altSave: '@'
            },
            templateUrl: '../../catalog/components/thesaurus/' +
            'partials/keywordselector.html',
