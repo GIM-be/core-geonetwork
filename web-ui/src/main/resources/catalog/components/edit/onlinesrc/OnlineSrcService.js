@@ -145,8 +145,8 @@
        * response and reload the updated online resources list.
        * The first save is done in 'runProcessMd'
        */
-      var runProcess = function(scope, params, skipCommit) {
-        return gnBatchProcessing.runProcessMd(params, false, skipCommit).then(function(data) {
+      var runProcess = function(scope, params) {
+        return gnBatchProcessing.runProcessMd(params).then(function(data) {
           refreshForm(scope, $(data.data));
         }, function(error) {
           $rootScope.$broadcast('StatusUpdated', {
@@ -427,22 +427,18 @@
           var scope = this;
 
           // Add link of the service in the dataset (optional)
-          var isMdDcat = params.schema === 'dcat2';
-
           var addDatasetToServiceFn = function(r) {
             var qParams = setParams('dataset-add', params);
             if (addOnlineSrcInDataset) {
               return runProcess(scope, {
                 scopedName: qParams.name || '',
                 uuidref: qParams.identifier,
-                uuid: isMdDcat ? qParams.uuidSrv : qParams.uuidDS,
+                uuid: qParams.uuidDS,
                 url: qParams.url,
                 source: qParams.identifier || '',
-                uuidDS: qParams.uuidDS,
-                uuidSrv: qParams.uuidSrv,
                 protocol: qParams.protocol,
                 process: qParams.process
-              }, isMdDcat).then(function () {
+              }).then(function () {
                 closePopup(popupid);
               });
             } else {
@@ -457,10 +453,9 @@
           return gnBatchProcessing.runProcessMd({
             scopedName: qParams.name || '',
             uuidref: qParams.identifier,
-            uuid: isMdDcat ? qParams.uuidDS : qParams.uuidSrv,
+            uuid: qParams.uuidSrv,
             source: qParams.identifier || '',
             uuidDS: qParams.uuidDS,
-            uuidSrv: qParams.uuidSrv,
             process: qParams.process
           }, true).then(addDatasetToServiceFn, function(error) {
             // Current user may not be able to edit
@@ -512,9 +507,8 @@
             });
           };
 
-          if (addOnlineSrcToDataset) {
-            var processName = params.schema === 'dcat2' ? 'service-add' : 'onlinesrc-add';
-            var qParams = setParams(processName, params);
+          if (addOnlineSrcToDataset && params.schema !== 'dcat2') {
+            var qParams = setParams('onlinesrc-add', params);
             return gnBatchProcessing.runProcessMd({
               name: qParams.name,
               desc: qParams.desc,
@@ -625,11 +619,11 @@
          *
          * @param {Object} onlinesrc the online resource to remove
          */
-        removeService: function(onlinesrc) {
-          var isMdDcat = gnCurrentEdit.schema === 'dcat2';
+        removeService: function (onlinesrc) {
           var params = {
-            uuid: isMdDcat ? gnCurrentEdit.uuid : onlinesrc.id,
-            uuidref: isMdDcat ? onlinesrc.id : gnCurrentEdit.metadata.identifier
+            uuid: onlinesrc.id,
+            uuidref: gnCurrentEdit.metadata.identifier,
+            currentEdit: gnCurrentEdit.metadata['geonet:info'].uuid
           }, service = this;
 
           gnBatchProcessing.runProcessMd(

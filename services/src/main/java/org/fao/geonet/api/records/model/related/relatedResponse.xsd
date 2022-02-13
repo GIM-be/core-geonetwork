@@ -163,7 +163,7 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="extra" type="xs:anyType" minOccurs="0"/>
+      <xs:element name="extra" type="relatedExtra" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -222,6 +222,14 @@
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="relatedExtra">
+    <xs:sequence>
+      <xs:element name="linkage" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="format" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="accessRights" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
   </xs:complexType>
 
   <!--<xs:simpleType name="relatedItemType">-->

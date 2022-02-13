@@ -11,6 +11,8 @@
                 exclude-result-prefixes="#all"
                 version="2.0">
 
+  <xsl:variable name="ProtocolCodelist" select="document('../thesauri-AIV/theme/protocol.rdf')"/>
+
   <xsl:template name="ExtractLang" match="gmd:language">
     <xsl:param name="lang"/>
     <xsl:choose>
@@ -188,9 +190,13 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="Map-ServiceType">
-    <xsl:param name="type" as="xs:string"/>
-    <xsl:param name="codeSpace" as="xs:string"/>
+
+  <xsl:template name="Map-protocol">
+    <xsl:param name="protocol"/>
+    <xsl:variable name="concept" select="normalize-space($ProtocolCodelist//skos:Concept[skos:notation = $protocol][1]/@rdf:about)"/>
+    <xsl:if test="$concept != ''">
+      <xsl:attribute name="rdf:about" select="$concept"/>
+    </xsl:if>
   </xsl:template>
 
 

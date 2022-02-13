@@ -83,7 +83,7 @@
 
   <!-- GIM custom variables -->
   <xsl:variable name="catalogUrl" select="concat(substring-before($resourcePrefix, '/resource'), '/dut')"/>
-  <xsl:variable name="uuidRegex" select="'([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}'"/>
+  <xsl:variable name="uuidRegex" select="'^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}$'"/>
   <xsl:variable name="relationLookup" select="true()"/>
 
   <xsl:variable name="modelLicencieKeywords">

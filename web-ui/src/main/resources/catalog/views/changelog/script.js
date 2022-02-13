@@ -1,56 +1,63 @@
-let target = undefined;
-let timeout = undefined;
+/*jshint esversion: 6 */
 
-function createSummary() {
-  let sections = document.querySelectorAll('.container section');
-  let summary = document.getElementById('summary');
-  sections.forEach(function(section) {
-    let title = document.createElement('h3');
-    title.textContent = (section.title ? section.id + ": " + section.title : section.id);
-    section.prepend(title);
+(function () {
+  "use strict";
 
-    let bullet = document.createElement('li');
-    bullet.innerHTML = `<a href="#${section.id}">${section.id}</a>`;
-    summary.append(bullet);
-  });
-}
+  let target;
+  let timeout;
 
-function updateSelected() {
-  if (target) {
-    target.classList.remove('selected');
-    clearTimeout(timeout);
+  function createSummary() {
+    let sections = document.querySelectorAll('.container section');
+    let summary = document.getElementById('summary');
+    sections.forEach(function (section) {
+      let title = document.createElement('h3');
+      title.textContent = (section.title ? section.id + ": " + section.title : section.id);
+      section.prepend(title);
+
+      let bullet = document.createElement('li');
+      bullet.innerHTML = `<a href="#${section.id}">${section.id}</a>`;
+      summary.append(bullet);
+    });
   }
-  let hash = window.location.hash;
-  let newTarget = null;
-  if (hash !== '') {
-    hash = hash.substring(1);
-    newTarget = document.getElementById(hash);
-    if (newTarget) {
-      newTarget.classList.add('selected');
-    }
-  }
-  target = newTarget;
-  timeout = setTimeout(function () {
+
+  function updateSelected() {
     if (target) {
       target.classList.remove('selected');
+      clearTimeout(timeout);
     }
-  }, 5000);
-}
+    let hash = window.location.hash;
+    let newTarget = null;
+    if (hash !== '') {
+      hash = hash.substring(1);
+      newTarget = document.getElementById(hash);
+      if (newTarget) {
+        newTarget.classList.add('selected');
+      }
+    }
+    target = newTarget;
+    timeout = setTimeout(function () {
+      if (target) {
+        target.classList.remove('selected');
+      }
+    }, 5000);
+  }
 
-function formatBulletTables() {
-  document.querySelectorAll('.bullet-table tr').forEach(row => {
-    const bullet = document.createElement('td');
-    bullet.textContent = '•';
-    const arrow = document.createElement('td');
-    arrow.textContent = ' ➔ ';
-    row.insertBefore(bullet, row.children[0]);
-    row.insertBefore(arrow, row.children[2]);
-  });
-}
+  function formatBulletTables() {
+    document.querySelectorAll('.bullet-table tr').forEach(row => {
+      const bullet = document.createElement('td');
+      bullet.textContent = '•';
+      const arrow = document.createElement('td');
+      arrow.textContent = ' ➔ ';
+      row.insertBefore(bullet, row.children[0]);
+      row.insertBefore(arrow, row.children[2]);
+    });
+  }
 
-window.onhashchange = updateSelected;
-window.onload = function () {
-  createSummary();
-  updateSelected();
-  formatBulletTables();
-};
+  window.onhashchange = updateSelected;
+  window.onload = function () {
+    createSummary();
+    updateSelected();
+    formatBulletTables();
+  };
+})();
+

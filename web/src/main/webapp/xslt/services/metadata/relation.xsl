@@ -219,23 +219,9 @@
               </xsl:for-each>
             </xsl:if>
             <xsl:if test="$type = ('services', 'datasets')">
-              <extra>
-                <xsl:variable name="linkages">
-                  <xsl:for-each select="$metadata/link">
-                    <xsl:variable name="linkage" select="normalize-space(tokenize(., '\|')[3])"/>
-                    <xsl:if test="$linkage != ''">
-                      <linkage>
-                        <xsl:value-of select="$linkage"/>
-                      </linkage>
-                    </xsl:if>
-                  </xsl:for-each>
-                </xsl:variable>
-                <xsl:for-each-group select="$linkages/linkage" group-by=".">
-                  <linkage>
-                    <xsl:value-of select="current-grouping-key()"/>
-                  </linkage>
-                </xsl:for-each-group>
-              </extra>
+              <xsl:call-template name="add-extra">
+                <xsl:with-param name="md" select="$metadata"/>
+              </xsl:call-template>
             </xsl:if>
             <xsl:if test="$type = 'siblings'">
               <associationType>
@@ -293,5 +279,43 @@
         <xsl:value-of select="defaultTitle"/>
       </title>
     </xsl:if>
+  </xsl:template>
+
+  <!-- Extra information templates -->
+  <xsl:template name="add-extra">
+    <xsl:param name="md"/>
+    <extra>
+      <!-- Linkage -->
+      <xsl:variable name="linkages">
+        <xsl:for-each select="$md/link">
+          <xsl:variable name="linkage" select="normalize-space(tokenize(., '\|')[3])"/>
+          <xsl:if test="$linkage != ''">
+            <linkage>
+              <xsl:value-of select="$linkage"/>
+            </linkage>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:variable>
+      <xsl:for-each-group select="$linkages/linkage" group-by=".">
+        <linkage>
+          <xsl:value-of select="current-grouping-key()"/>
+        </linkage>
+      </xsl:for-each-group>
+
+      <xsl:for-each-group select="$md/format" group-by=".">
+        <xsl:if test="normalize-space(.) != ''">
+          <format>
+            <xsl:value-of select="normalize-space(.)"/>
+          </format>
+        </xsl:if>
+      </xsl:for-each-group>
+
+      <xsl:variable name="accessRights" select="normalize-space($md/accessRights)"/>
+      <xsl:if test="$accessRights != ''">
+        <accessRights>
+          <xsl:value-of select="$accessRights"/>
+        </accessRights>
+      </xsl:if>
+    </extra>
   </xsl:template>
 </xsl:stylesheet>

@@ -1154,10 +1154,6 @@
                       searchParams['without-type'] = 'service';
                     }
 
-                    if (gnCurrentEdit.metadata.getSchema() === 'dcat2') {
-                      searchParams['without-serviceType'] = ['view', 'discovery', 'Raadpleegdienst'];
-                    }
-
                     scope.$broadcast('resetSearch', searchParams);
                     scope.layers = [];
 
@@ -1193,6 +1189,7 @@
                         scope.addOnlineSrcInDataset = false;
                       }
                     }
+                    scope.currentMdSchema = gnCurrentEdit.metadata['geonet:info'].schema;
                   });
 
                   // This object is used to share value between this
@@ -1200,6 +1197,7 @@
                   // is contained by the directive
                   scope.stateObj = {};
                   scope.currentMdTitle = null;
+                  scope.currentMdSchema = null;
 
                   /**
                    * loadCurrentLink
@@ -1305,6 +1303,9 @@
                    */
                   scope.linkTo = function(addOnlineSrcInDataset) {
                     //addOnlineSrcInDataset = false; // Only add operatesOn and coupledResource
+                    if (gnCurrentEdit.metadata['geonet:info'].schema === 'dcat2') {
+                      addOnlineSrcInDataset = false;
+                    }
                     if (scope.mode === 'service') {
                       return gnOnlinesrc.
                           linkToService(scope.srcParams, scope.popupid, addOnlineSrcInDataset);

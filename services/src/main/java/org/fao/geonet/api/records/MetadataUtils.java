@@ -155,20 +155,25 @@ public class MetadataUtils {
 
         // Search for services
         if (listOfTypes.size() == 0 || listOfTypes.contains(RelatedItemType.services)) {
-            Set<String> listOfUUIDs = schemaPlugin != null ? schemaPlugin.getAssociatedServices(md) : null;
-            if (listOfUUIDs == null) {
-                relatedRecords.addContent(search(uuid, "services", context, from, to, fast));
-            } else if (listOfUUIDs.size() > 0) {
-                String joinedUUIDs = Joiner.on(" or ").join(listOfUUIDs);
-                relatedRecords.addContent(search(joinedUUIDs, "services", context, from, to, fast, true));
-            }
+            Element relatedServices = search(uuid, "services", context, from, to, fast);
+            // Set<String> directlyLinkedServiceUUIds = schemaPlugin != null ? schemaPlugin.getAssociatedServices(md) : null;
+            // if (directlyLinkedServiceUUIds != null && directlyLinkedServiceUUIds.size() > 0) {
+            //     String joinedUUIDs = Joiner.on(" or ").join(directlyLinkedServiceUUIds);
+            //     Element additionalRelatedServices = search(joinedUUIDs, "services", context, from, to, fast, true);
+            //     for (Object additionalMd: additionalRelatedServices.getChild("response").getChildren("metadata")) {
+            //         relatedServices.getChild("response").addContent((Element)((Element) additionalMd).clone());
+            //     }
+            // }
+            relatedRecords.addContent(relatedServices);
 
-            Set<String> externalLinks = schemaPlugin.getAssociatedExternalServiceLinks(md);
-            Element externalDatasets = new Element("externalServices");
-            for (String externalLink: externalLinks) {
-                externalDatasets.addContent(new Element("url").addContent(externalLink));
+            Set<String> externalLinks = schemaPlugin != null ? schemaPlugin.getAssociatedExternalServiceLinks(md) : null;
+            Element exteralServices = new Element("externalServices");
+            if (schemaPlugin != null) {
+                for (String externalLink: externalLinks) {
+                    exteralServices.addContent(new Element("url").addContent(externalLink));
+                }
             }
-            relatedRecords.addContent(externalDatasets);
+            relatedRecords.addContent(exteralServices);
         }
 
         // Related record from uuiref attributes in metadata record

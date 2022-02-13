@@ -21,10 +21,36 @@
       <span>See also <a href="main-changelog.html">Main changelog</a></span>
     </div>
 
+    <section id="14/02/2022 - R3">
+      <ol>
+        <li title="139007">Fix validation on keyword unique language</li>
+        <li title="131613">GeoDCAT conversion: prevent some fields from being created with empty values</li>
+        <li title="149732">Rename schematron with smaller filename (no functional impacts)</li>
+        <li title="131613">Prevent multiple dataset dct:identifier when gmd:identifier not UUID conform</li>
+        <li title="131613">Add <code>dct:creator/@rdf:resource="https://metadata.vlaanderen.be"</code> on
+          adms:identifier
+        </li>
+        <li title="148777">Remove timezone from Date type fields. The timezone is only added for DateTime</li>
+        <li title="148777">Map distribution protocol to codelist</li>
+        <li title="139016">Fix wrong type and missing <code>rdf:about</code> attribute on feature catalog
+          <code>dct:conformsTo</code> mapped element
+        </li>
+        <li title="139020">Add lineage metadata view and implement <code>dct:provenance</code> GeoDCAT mapping</li>
+        <li title="139010">Add <code>dct:identifier</code> and <code>dcat:contactPoint</code> on the catalog level</li>
+        <li title="146468">Improve RDF export performance</li>
+        <li title="149604">Make validation on dcat:theme recommended instead of required for Dcat-ap-vl profile</li>
+        <li title="138712">Add format and accessRights to the relation API output</li>
+        <li title="138712">Hide dcat:accessService field from default editor view</li>
+        <li title="138712">Improve linking between dataset and service: dcat:accessService is not needed anymore to
+          define a link from dataset to service
+        </li>
+      </ol>
+    </section>
+
     <section id="07/02/2022">
       <ol>
-        <li data-ticket="136776">Remove useless thesauri for DCAT2 records from editor</li>
-        <li data-ticket="148777">Update GeoDCAT mapping after review of Overviewdcat3.xlsx
+        <li title="136776">Remove useless thesauri for DCAT2 records from editor</li>
+        <li title="148777">Update GeoDCAT mapping after review of Overviewdcat3.xlsx
           <ul>
             <li>Remove <code>dcat:themeTaxonomy</code> on dcat:Catalog level from the RDF output</li>
             <li>Remove <code>dct:issued</code> and <code>dct:modified</code> on dcat:Catalog level from the RDF output
@@ -36,33 +62,33 @@
             <li>Migrate existing distribution to add an identifier</li>
           </ul>
         </li>
-        <li data-ticket="149309">Add dataOrgName facet to the suggest API</li>
-        <li data-ticket="148663">Add notation to the Spatial Representation type</li>
-        <li data-ticket="140787">Update schematron</li>
-        <li data-ticket="149270">Change the workflow configuration to use the Metadata Vlaanderen workflow process</li>
-        <li data-ticket="149474">Ensure the <code>dcat:CatalogRecord</code> standard name has the correct format</li>
-        <li data-ticket="143805">Update distribution mapping</li>
-        <li data-ticket="143805">Add linkage information in relation API</li>
+        <li title="149309">Add dataOrgName facet to the suggest API</li>
+        <li title="148663">Add notation to the Spatial Representation type</li>
+        <li title="140787">Update schematron</li>
+        <li title="149270">Change the workflow configuration to use the Metadata Vlaanderen workflow process</li>
+        <li title="149474">Ensure the <code>dcat:CatalogRecord</code> standard name has the correct format</li>
+        <li title="143805">Update distribution mapping</li>
+        <li title="143805">Add linkage information in relation API</li>
       </ol>
     </section>
 
     <section id="31/01/2022">
       <ol>
-        <li data-ticket="148663">Fix <code>adms:representationTechnique</code> not being mapped correctly.</li>
-        <li data-ticket="147784">Fix dcat view: Show the URI of a publisher even when no other info are provided.</li>
-        <li data-ticket="147814">Fix indexing and GeoDCAT mapping of the access rights for ISO-193139 records with the
+        <li title="148663">Fix <code>adms:representationTechnique</code> not being mapped correctly.</li>
+        <li title="147784">Fix dcat view: Show the URI of a publisher even when no other info are provided.</li>
+        <li title="147814">Fix indexing and GeoDCAT mapping of the access rights for ISO-193139 records with the
           new label
         </li>
-        <li data-ticket="136776">Implement various dct:subject thesauri in metadata editor</li>
-        <li data-ticket="143195">Change startDate & endDate namespace</li>
-        <li data-ticket="139016">Change the profile title to always be in lower case letters:
+        <li title="136776">Implement various dct:subject thesauri in metadata editor</li>
+        <li title="143195">Change startDate & endDate namespace</li>
+        <li title="139016">Change the profile title to always be in lower case letters:
           <ul>
             <li>Geodcat-ap-vl</li>
             <li>Metadata-dcat</li>
             <li>Dcat-ap-vl</li>
           </ul>
         </li>
-        <li data-ticket="144697">GeoDCAT mapping: Add <code>dct:source</code> on the dcat:CatalogRecord level linking to
+        <li title="144697">GeoDCAT mapping: Add <code>dct:source</code> on the dcat:CatalogRecord level linking to
           the original ISO-19139 metadata XML as well as <code>dcat:landingPage</code> on the dcat:CatalogRecord and
           dcat:Resource levels linking to the original metadata view
         </li>
@@ -72,25 +98,25 @@
     <section id="24/01/2022">
       <ol>
         <li>Fix duplicated <code>geodcat:distributor</code> in some RDF exported ISO19139 metadata</li>
-        <li data-ticket="148663">GeoDCAt: Move adms:representationTechnique to dcat:Dataset level</li>
-        <li data-ticket="140787">Replace schematron DCAT validation with shematron automatically generated from
+        <li title="148663">GeoDCAt: Move adms:representationTechnique to dcat:Dataset level</li>
+        <li title="140787">Replace schematron DCAT validation with shematron automatically generated from
           the SHACL spec
         </li>
-        <li data-ticket="148687">Fix dcat:distribution impossible to delete</li>
-        <li data-ticket="144351">Update access rights thesauri labels and change indexing to index label value for
+        <li title="148687">Fix dcat:distribution impossible to delete</li>
+        <li title="144351">Update access rights thesauri labels and change indexing to index label value for
           public / non
           public access right instead of technical name
         </li>
-        <li data-ticket="144351">Create separated access rights thesaurus with different labels for services</li>
+        <li title="144351">Create separated access rights thesaurus with different labels for services</li>
       </ol>
     </section>
 
     <section id="17/01/2022">
       <ol>
-        <li data-ticket="146464">Fix foaf:isPrimaryTopicOf resource link for dcat:themeTaxonomy</li>
-        <li data-ticket="145104">Hide RDF export button from UI for Feature catalog and Dataset series records
+        <li title="146464">Fix foaf:isPrimaryTopicOf resource link for dcat:themeTaxonomy</li>
+        <li title="145104">Hide RDF export button from UI for Feature catalog and Dataset series records
         </li>
-        <li data-ticket="143820">Add dct:rightsHolder to schema and change cardinality in GeoDCAT conversion
+        <li title="143820">Add dct:rightsHolder to schema and change cardinality in GeoDCAT conversion
         </li>
       </ol>
     </section>
