@@ -60,7 +60,7 @@ public abstract class RelatedItem {
     protected String id;
     protected MultilingualValue url;
     protected String type;
-    protected Object extra;
+    protected RelatedExtra extra;
 
     @XmlElement(required = true)
     protected MultilingualValue title;
@@ -138,11 +138,11 @@ public abstract class RelatedItem {
     }
 
 
-    public Object getExtra() {
+    public RelatedExtra getExtra() {
         return extra;
     }
 
-    public void setExtra(Object extra) {
+    public void setExtra(RelatedExtra extra) {
         this.extra = extra;
     }
 
