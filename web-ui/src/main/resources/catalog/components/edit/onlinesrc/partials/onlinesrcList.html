@@ -216,13 +216,19 @@
             <div class="col-md-11"
                  title="{{resource.description | gnLocalized: lang}}">
               <a target="_blank"
+                 ng-if="resource.id"
                  data-ng-href="{{'catalog.search#/metadata/' + resource.id}}">
                 {{resource.title | gnLocalized: lang}}
+              </a>
+              <a target="_blank"
+                 ng-if="!resource.id"
+                 data-ng-href="{{resource.url[lang]}}">
+                {{resource.title | gnLocalized: lang}}: {{resource.description[lang]}}
               </a>
             </div>
             <div class="col-md-1 text-right">
               <a href="" class="onlinesrc-remove"
-                 data-ng-if="readonly !== true"
+                 data-ng-if="readonly !== true && resource.id"
                  title="{{'remove' | translate}} {{resource.title | gnLocalized: lang}}"
                  aria-label="{{'remove' | translate}} {{resource.title | gnLocalized: lang}}"
                  data-ng-click="onlinesrcService.removeDataset(resource)">

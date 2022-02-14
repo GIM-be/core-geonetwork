@@ -21,7 +21,8 @@ var gnHarvestergeonetwork = {
         "useChangeDateForUpdate": false,
         "createRemoteCategory": false,
         "mefFormatFull": false,
-        "xslfilter": []
+        "xslfilter": [],
+        "resourceUriPattern": ""
       },
       "content":   {
         "validate": "NOVALIDATION",
@@ -84,6 +85,7 @@ var gnHarvestergeonetwork = {
       + '      <username>' + h.site.account.username + '</username>'
       + '      <password>' + h.site.account.password + '</password>'
       + '    </account>'
+      + '    <resourceUriPattern>' + h.site.resourceUriPattern + '</resourceUriPattern>'
       + '  </site>'
       + '  <searches>'
       + '    <search>'

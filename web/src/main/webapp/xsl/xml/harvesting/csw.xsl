@@ -28,6 +28,9 @@
     <outputSchema>
       <xsl:value-of select="outputSchema/value"/>
     </outputSchema>
+    <resourceUriPattern>
+      <xsl:value-of select="resourceUriPattern/value"/>
+    </resourceUriPattern>
   </xsl:template>
 
 

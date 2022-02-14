@@ -72,5 +72,12 @@
   "geoDescCode": "Identificator geografische begrenzing",
   "groupIsRequired": "Gelieve een groep te selecteren. Het metadatarecord komt in het beheer van de geselecteerde organisatie.",
   "standardName": "Profil",
-  "changelog": "Changelog"
+  "changelog": "Changelog",
+  "searchAlicence": "Select a license ...",
+  "resourceUriPattern": "Resource URI pattern",
+  "resourceUriPatternHelp": "Pattern used to generate URI of the resources during the RDF export. Example of value: https://metadata.vlaanderen.be/srv/resources/{resourceType}/{resourceUuid}",
+  "isOpenData": "Open data",
+  "accessRights": "Access rights",
+  "NON_PUBLIC": "Not public",
+  "PUBLIC": "Public"
 }

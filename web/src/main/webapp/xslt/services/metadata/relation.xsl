@@ -43,7 +43,17 @@
     <related>
       <!-- online and thumbnail are extracted from schema extract-relations.xsl -->
       <!--<xsl:message><xsl:copy-of select="."/></xsl:message> -->
-      <xsl:apply-templates mode="relation" select="/root/relations/*"/>
+      <xsl:apply-templates mode="relation" select="/root/relations/*[not(name() = ('externalDatasets', 'externalServices'))]"/>
+      <xsl:if test="not(/root/relations/datasets) and /root/relations/externalDatasets">
+        <datasets>
+          <xsl:apply-templates mode="relation" select="/root/relations/externalDatasets"/>
+        </datasets>
+      </xsl:if>
+      <xsl:if test="not(/root/relations/services) and /root/relations/externalServices">
+        <services>
+          <xsl:apply-templates mode="relation" select="/root/relations/externalServices"/>
+        </services>
+      </xsl:if>
     </related>
   </xsl:template>
 
@@ -183,8 +193,9 @@
               </value>
             </title>
             <url>
-              <xsl:value-of
-                select="concat(util:getSettingValue('nodeUrl'), 'api/records/', $uuid)"/>
+              <value lang="{$lang}">
+                <xsl:value-of select="concat(util:getSettingValue('nodeUrl'), 'api/records/', $uuid)"/>
+              </value>
             </url>
             <logo>
               <xsl:value-of select="$metadata/logo"/>
@@ -207,6 +218,11 @@
                 </identifier>
               </xsl:for-each>
             </xsl:if>
+            <xsl:if test="$type = ('services', 'datasets')">
+              <xsl:call-template name="add-extra">
+                <xsl:with-param name="md" select="$metadata"/>
+              </xsl:call-template>
+            </xsl:if>
             <xsl:if test="$type = 'siblings'">
               <associationType>
                 <xsl:value-of select="../@association"/>
@@ -220,8 +236,37 @@
             </xsl:if>
           </item>
         </xsl:for-each>
+        <xsl:if test="$type = ('datasets')">
+          <xsl:apply-templates mode="relation" select="../externalDatasets"/>
+        </xsl:if>
+        <xsl:if test="$type = ('services')">
+          <xsl:apply-templates mode="relation" select="../externalServices"/>
+        </xsl:if>
       </xsl:element>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template mode="relation" match="externalDatasets|externalServices">
+    <xsl:variable name="title" select="if (name() = 'externalDatasets') then 'Dataset' else 'Service'"/>
+    <xsl:for-each select="url">
+      <item>
+        <title>
+          <value lang="{$lang}">
+            <xsl:value-of select="$title"/>
+          </value>
+        </title>
+        <description>
+          <value lang="{$lang}">
+            <xsl:value-of select="."/>
+          </value>
+        </description>
+        <url>
+          <value lang="{$lang}">
+            <xsl:value-of select="."/>
+          </value>
+        </url>
+      </item>
+    </xsl:for-each>
   </xsl:template>
 
   <!-- Add the default title as title. This may happen when title is retrieve
@@ -234,5 +279,43 @@
         <xsl:value-of select="defaultTitle"/>
       </title>
     </xsl:if>
+  </xsl:template>
+
+  <!-- Extra information templates -->
+  <xsl:template name="add-extra">
+    <xsl:param name="md"/>
+    <extra>
+      <!-- Linkage -->
+      <xsl:variable name="linkages">
+        <xsl:for-each select="$md/link">
+          <xsl:variable name="linkage" select="normalize-space(tokenize(., '\|')[3])"/>
+          <xsl:if test="$linkage != ''">
+            <linkage>
+              <xsl:value-of select="$linkage"/>
+            </linkage>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:variable>
+      <xsl:for-each-group select="$linkages/linkage" group-by=".">
+        <linkage>
+          <xsl:value-of select="current-grouping-key()"/>
+        </linkage>
+      </xsl:for-each-group>
+
+      <xsl:for-each-group select="$md/format" group-by=".">
+        <xsl:if test="normalize-space(.) != ''">
+          <format>
+            <xsl:value-of select="normalize-space(.)"/>
+          </format>
+        </xsl:if>
+      </xsl:for-each-group>
+
+      <xsl:variable name="accessRights" select="normalize-space($md/accessRights)"/>
+      <xsl:if test="$accessRights != ''">
+        <accessRights>
+          <xsl:value-of select="$accessRights"/>
+        </accessRights>
+      </xsl:if>
+    </extra>
   </xsl:template>
 </xsl:stylesheet>

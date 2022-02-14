@@ -99,8 +99,12 @@
     This class could be used to customize style of first or following
     element of same kind. eg. do not display label. -->
     <xsl:param name="isFirst" required="no" as="xs:boolean" select="true()"/>
+    <xsl:param name="isForceLabel" required="no" as="xs:boolean" select="false()"/>
 
     <xsl:param name="isReadOnly" required="no" as="xs:boolean" select="false()"/>
+
+    <!-- Mandatory field inside optional fieldset. Black '*' instead of red -->
+    <xsl:param name="subRequired" required="no" as="xs:boolean" select="false()"/>
 
     <xsl:variable name="isMultilingual" select="count($value/values) > 0"/>
 
@@ -332,6 +336,7 @@
         <xsl:with-param name="childEditInfo" select="$parentEditInfo"/>
         <xsl:with-param name="parentEditInfo" select="../gn:element"/>
         <xsl:with-param name="isFirst" select="false()"/>
+        <xsl:with-param name="isForceLabel" select="$isForceLabel"/>
         <xsl:with-param name="isHidden" select="true()"/>
         <xsl:with-param name="name" select="name()"/>
       </xsl:call-template>
@@ -370,6 +375,9 @@
       <null/>
     </xsl:param>
     <xsl:param name="isDisabled" select="ancestor::node()[@xlink:href]"/>
+    <!-- Collapsed fieldsets reopens when saving, this param can be
+    used to collapse again the fieldset after loading -->
+    <xsl:param name="isSlideToggle" select="false()" required="no"/>
 
 
     <xsl:variable name="hasXlink" select="@xlink:href"/>
@@ -381,7 +389,7 @@
       </xsl:if>
 
       <legend class="{$cls}"
-              data-gn-slide-toggle=""
+              data-gn-slide-toggle="{$isSlideToggle}"
               data-gn-field-tooltip="{$schema}|{name()}|{name(..)}|">
         <!--
          The toggle title is in conflict with the element title
@@ -527,7 +535,7 @@
 
               <label
                 class="col-sm-2 control-label">
-                <xsl:if test="$schema!='dcat-ap' and $hasAddAction and not($addDirective != '')"><xsl:value-of select="$name"/></xsl:if>&#160;
+                <xsl:if test="$schema!='dcat2' and $hasAddAction and not($addDirective != '')"><xsl:value-of select="$name"/></xsl:if>&#160;
               </label>
               <div class="col-sm-9 btn-group nopadding-in-table" data-gn-template-field-add-button="{$id}">
                 <xsl:if test="$hasMultipleChoice">
@@ -589,7 +597,11 @@
               <label
                 for="{$id}_{@label}"
                 class="col-sm-2 control-label {if ($keyRequired) then 'gn-required' else ''}">
-                <xsl:variable name="labelConfig"><xsl:if test="$schema!='dcat-ap' and not (@xpath = ('','.'))"><xsl:value-of select="gn-fn-metadata:getLabel($schema, replace(@xpath,'@',''), $labels, $qname,'','')/label"/></xsl:if></xsl:variable>
+                <xsl:variable name="labelConfig">
+                  <xsl:if test="$schema!='dcat2' and not (@xpath = ('','.'))">
+                    <xsl:value-of select="gn-fn-metadata:getLabel($schema, replace(@xpath,'@',''), $labels, $qname,'','')/label"/>
+                  </xsl:if>
+                </xsl:variable>
                 <xsl:value-of select="if ($labelConfig!='') then $labelConfig else $strings/*[name() = $valueLabelKey]"/>
               </label>
               <div class="col-sm-9 gn-value nopadding-in-table">
@@ -822,6 +834,7 @@
     <!-- Hide add element if child of an XLink section. -->
     <xsl:param name="isDisabled" select="ancestor::node()[@xlink:href]"/>
     <xsl:param name="isFirst" required="no" as="xs:boolean" select="true()"/>
+    <xsl:param name="isForceLabel" required="no" as="xs:boolean" select="false()"/>
     <xsl:param name="isHidden" required="no" as="xs:boolean" select="false()"/>
     <xsl:param name="name" required="no" as="xs:string" select="''"/>
     <xsl:param name="class" required="no" as="xs:string?" select="''"/>
@@ -848,7 +861,7 @@
         </xsl:if>
         <label class="col-sm-2 control-label"
                data-gn-field-tooltip="{$schema}|{$qualifiedName}|{$parentName}|">
-          <xsl:if test="normalize-space($label) != ''">
+          <xsl:if test="normalize-space($label) != '' and normalize-space($btnLabel)=''">
             <xsl:value-of select="$label"/>
           </xsl:if>
           &#160;
@@ -982,7 +995,7 @@
                           <xsl:variable name="xpath" select="substring-after(., 'xpath::')"/>
                           <xsl:attribute name="{name(.)}">
                             <saxon:call-template name="{concat('evaluate-', $schema)}">
-                              <xsl:with-param name="base" select="$metadata"/>
+                              <xsl:with-param name="base" select="$metadata//*[gn:element/@ref = $parentEditInfo/@ref]"/>
                               <xsl:with-param name="in"
                                               select="concat('/../', $xpath)"/>
                             </saxon:call-template>
@@ -1434,7 +1447,7 @@
         <xsl:if test="$attributeName = 'xlink:href'">
           <i class="fa fa-link fa-fw"/>
         </xsl:if>
-        <xsl:value-of select="gn-fn-metadata:getLabel($schema, $attributeName, $labels)/label"/>
+        <xsl:value-of select="gn-fn-metadata:getLabel($schema, $attributeName, $labels, name(..), '', gn-fn-metadata:getXPath(.))/label"/>
       </label>
       <div class="{if ($deletable) then 'col-sm-9' else 'col-sm-10'}">
         <xsl:if test="$directive">

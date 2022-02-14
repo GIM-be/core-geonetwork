@@ -237,6 +237,7 @@
         }]
       };
 
+      $scope.loadedGroupOptions = undefined;
       $scope.groupOwnerOptions = {
         mode: 'prefetch',
         doRefresh: false,
@@ -244,6 +245,7 @@
           var defer = $q.defer();
           $http.get('../api/groups', {cache: true})
             .success(function (data) {
+              $scope.loadedGroupOptions = data;
               var res = [];
               for (var i = 0; i < data.length; i++) {
                 res.push({

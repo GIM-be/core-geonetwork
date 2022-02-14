@@ -1051,7 +1051,7 @@
                     ['url', 'name'].forEach(function(pName) {
                       setParameterValue(pName, o[pName]);
                     });
-                    scope.params.protocol = 'WWW:DOWNLOAD-1.0-http--download';
+                    scope.params.protocol = scope.params.protocol || 'WWW:DOWNLOAD-1.0-http--download';
                   }
                 };
 
@@ -1153,6 +1153,7 @@
                       // ie. dataset, series, ...
                       searchParams['without-type'] = 'service';
                     }
+
                     scope.$broadcast('resetSearch', searchParams);
                     scope.layers = [];
 
@@ -1188,6 +1189,7 @@
                         scope.addOnlineSrcInDataset = false;
                       }
                     }
+                    scope.currentMdSchema = gnCurrentEdit.metadata['geonet:info'].schema;
                   });
 
                   // This object is used to share value between this
@@ -1195,6 +1197,7 @@
                   // is contained by the directive
                   scope.stateObj = {};
                   scope.currentMdTitle = null;
+                  scope.currentMdSchema = null;
 
                   /**
                    * loadCurrentLink
@@ -1262,7 +1265,7 @@
                         scope.srcParams.uuidDS = gnCurrentEdit.uuid;
                         //the uuid of the source catalog (harvester)
                         scope.srcParams.source = gnCurrentEdit.metadata.source;
-
+                        scope.srcParams.schema = md.getSchema();
 
                         if (links.length > 0) {
                           scope.onlineSrcLink = links[0].url;
@@ -1287,6 +1290,7 @@
                         scope.srcParams.url = scope.onlineSrcLink;
                         scope.srcParams.identifier = (md.identifier && md.identifier[0]) ? md.identifier[0] : '';
                         scope.srcParams.source = md.source;
+                        scope.srcParams.schema = md.getSchema();
                       }
                     }
                   });
@@ -1299,6 +1303,9 @@
                    */
                   scope.linkTo = function(addOnlineSrcInDataset) {
                     //addOnlineSrcInDataset = false; // Only add operatesOn and coupledResource
+                    if (gnCurrentEdit.metadata['geonet:info'].schema === 'dcat2') {
+                      addOnlineSrcInDataset = false;
+                    }
                     if (scope.mode === 'service') {
                       return gnOnlinesrc.
                           linkToService(scope.srcParams, scope.popupid, addOnlineSrcInDataset);
@@ -1652,6 +1659,20 @@
           var featureCatUuid = element.parent().find('.gn-featureCatalogueCitationUuidref input.form-control')[0].value;
           scope.openPopup = function() {
             gnOnlinesrc.onOpenPopup('fcats', {featureCatUuid: featureCatUuid});
+          }
+        }
+      }
+    }])
+
+    .directive('gimAddDataset', ['gnOnlinesrc', function(gnOnlinesrc) {
+      return {
+        restrict: 'A',
+        replace: true,
+        templateUrl: '../../catalog/components/edit/onlinesrc/' +
+          'partials/addDataset.html',
+        link: function(scope, element, attrs) {
+          scope.openPopup = function() {
+            gnOnlinesrc.onOpenPopup('dataset');
           }
         }
       }

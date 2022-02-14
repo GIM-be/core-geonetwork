@@ -186,6 +186,7 @@
       <field name="versionIdentifier" tagName="versionIdentifier"/>
       <field name="_draft" tagName="draft"/>
       <field name="_sortDate" tagName="sortDate"/>
+      <field name="accessRights" tagName="accessRights"/>
     </dumpFields>
   </search>
 

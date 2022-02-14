@@ -131,7 +131,7 @@
           })
 
         // show the first tab
-        $('.nav-tabs-advanced a:first').tab('show');
+        $('.nav-tabs-advanced a:visible:first').tab('show');
       };
 
       $scope.loadFormatter = function(url) {

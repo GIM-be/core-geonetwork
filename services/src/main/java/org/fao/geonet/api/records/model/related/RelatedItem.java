@@ -47,7 +47,8 @@ import javax.xml.bind.annotation.XmlType;
     "id",
     "url",
     "title",
-    "type"
+    "type",
+    "extra"
 })
 @XmlSeeAlso({
     RelatedThumbnailItem.class,
@@ -59,6 +60,7 @@ public abstract class RelatedItem {
     protected String id;
     protected MultilingualValue url;
     protected String type;
+    protected RelatedExtra extra;
 
     @XmlElement(required = true)
     protected MultilingualValue title;
@@ -133,6 +135,15 @@ public abstract class RelatedItem {
      */
     public void setTitle(MultilingualValue value) {
         this.title = value;
+    }
+
+
+    public RelatedExtra getExtra() {
+        return extra;
+    }
+
+    public void setExtra(RelatedExtra extra) {
+        this.extra = extra;
     }
 
 

@@ -245,22 +245,33 @@ public abstract class AIVStatusActions implements StatusActions {
             Set<Integer> listOfId = new HashSet<Integer>(1);
             listOfId.add(status.getId().getMetadataId());
             for (Integer mid : listOfId) {
-                String currentStatusId = metadataStatusManager.getCurrentStatus(mid);
                 if (context.isDebugEnabled()) {
                     context.debug("Starting statusChange to " + status.getId().getStatusId() + " for #"
                         + listOfId.size() + " metadata");
                 }
 
+                MetadataStatus currentStatus = metadataStatusManager.getStatus(mid);
+                String currentStatusId = currentStatus != null ?
+                    String.valueOf(currentStatus.getId().getStatusId()) :
+                    null;
+
                 // --- For the workflow, if the status is already set to value
                 // of status then do nothing. This does not apply to task and event.
-                if (status.getStatusValue().getType().equals(StatusValueType.workflow) &&
-                    (statusId).equals(currentStatusId)) {
-                    if (context.isDebugEnabled()) {
-                        context.debug(String.format("Metadata %s already has status %s ",
-                            status.getId().getMetadataId(), status.getId().getStatusId()));
+                if (status.getStatusValue().getType().equals(StatusValueType.workflow)) {
+                    if (currentStatusId == null) {
+                        boolean changed = dm.activateWorkflowOnExistingMd(context, mid);
+                        if (!changed) {
+                            unchanged.add(status.getId().getMetadataId());
+                        }
+                        continue;
+                    } else if (statusId.equals(currentStatusId)) {
+                        if (context.isDebugEnabled()) {
+                            context.debug(String.format("Metadata %s already has status %s ",
+                                status.getId().getMetadataId(), status.getId().getStatusId()));
+                        }
+                        unchanged.add(status.getId().getMetadataId());
+                        continue;
                     }
-                    unchanged.add(status.getId().getMetadataId());
-                    continue;
                 }
 
                 // --- Apply changes based on status change

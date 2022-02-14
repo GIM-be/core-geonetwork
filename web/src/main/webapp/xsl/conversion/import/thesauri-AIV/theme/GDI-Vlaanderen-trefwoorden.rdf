@@ -26,6 +26,10 @@
     <skos:prefLabel xml:lang="nl">Vlaamse Open data</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Vlaamse Open data</skos:prefLabel>
   </skos:Concept>
+  <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA">
+    <skos:prefLabel xml:lang="nl">Vlaamse Open data Service</skos:prefLabel>
+    <skos:prefLabel xml:lang="en">Vlaamse Open data Service</skos:prefLabel>
+  </skos:Concept>
   <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/KOSTELOOS">
     <skos:prefLabel xml:lang="nl">Kosteloos</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Kosteloos</skos:prefLabel>

@@ -197,6 +197,8 @@
            transclude: true,
            scope: {
              elementRef: '@',
+             elementXpath: '@',
+             wrapper: '@',
              thesaurusKey: '@',
              keywords: '@',
              transformations: '@',
@@ -208,7 +210,8 @@
              // Max number of tags allowed. Use 1 to restrict to only
              // on keyword.
              maxTags: '@',
-             thesaurusTitle: '@'
+             thesaurusTitle: '@',
+             altSave: '@'
            },
            templateUrl: '../../catalog/components/thesaurus/' +
            'partials/keywordselector.html',
@@ -229,6 +232,17 @@
              scope.results = null;
              scope.snippet = null;
              scope.isInitialized = false;
+
+
+             var id = '#tagsinput_' + scope.elementRef;
+
+             // If XPath mode, then 2 parameters are sent
+             // _Pref_elementName for the path
+             // _Pref_elementName_xml for the snippet
+             if (scope.elementXpath != '') {
+               scope.elementRefXpath = scope.elementRef;
+             }
+
              scope.elementRefBackup = scope.elementRef;
              scope.invalidKeywordMatch = false;
              scope.selected = [];
@@ -257,11 +271,17 @@
              scope.transformations.split(',') : [scope.transformations];
              scope.maxTagsLabel = scope.maxTags || '∞';
 
+             //examples;
+             //hnap:{"eng":"#eng","fre":"#fra"}
+             //iso19139:{"eng":"#EN","fre":"#FR","ger":"#DE","chi":"#ZH","ara":"#AR","spa":"#ES","rus":"#RU"}
+             scope.langConversion = JSON.parse(scope.lang); //dictionary, as above
+
+             // ["eng","fre"]   OR ["eng","fre","ger","chi","ara","spa", "rus"]
+             scope.baseLangs = _.keys(scope.langConversion);
+
              //Get langs of metadata
-             var langs = [];
-             for (var p in JSON.parse(scope.lang)) {
-               langs.push(p);
-             }
+             var langs = scope.baseLangs;  // ["eng","fre"]   OR ["eng","fre","ger","chi","ara","spa", "rus"]
+
              scope.mainLang = langs[0];
              scope.langs = langs.join(',');
 
@@ -359,7 +379,6 @@
 
              // Init typeahead and tag input
              var initTagsInput = function() {
-               var id = '#tagsinput_' + scope.elementRef;
                $timeout(function() {
                  try {
                    $(id).tagsinput({
@@ -481,11 +500,15 @@
              };
 
              var getSnippet = function() {
-               gnThesaurusService
-                .getXML(scope.thesaurusKey,
-               getKeywordIds(), scope.currentTransformation, scope.langs,
-                   scope.textgroupOnly).then(
-               function(data) {
+               gnThesaurusService.getXML(
+                 scope.thesaurusKey,
+                 getKeywordIds(),
+                 scope.currentTransformation,
+                 scope.langs,
+                 scope.textgroupOnly,
+                 scope.langConversion,
+                 scope.wrapper
+               ).then(function(data) {
                  scope.snippet = data;
                });
              };

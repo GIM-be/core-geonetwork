@@ -1095,5 +1095,4 @@ public class RelatedResponse {
         }
 
     }
-
 }

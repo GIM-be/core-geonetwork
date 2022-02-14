@@ -1,0 +1,48 @@
+<form data-ng-keypress="updatingHarvester()">
+              <input type="hidden" name="_csrf" value="{{csrf}}"/>
+
+  <div class="row">
+    <div class="col-lg-6" data-gn-harvester-identification="harvesterSelected"/>
+
+    <div class="col-lg-6" data-gn-harvester-schedule="harvesterSelected"/>
+  </div>
+
+  <fieldset>
+    <legend><span data-translate="">harvesterMainConfigurationFor</span> {{('harvester-' +
+      harvesterSelected['@type']) | translate}}
+    </legend>
+    <div data-ng-class="harvesterSelected.site.host == '' ? 'has-error' : ''">
+      <label class="control-label" data-translate="">dcatap-host</label>
+      <input type="text" class="form-control" data-ng-model="harvesterSelected.site.baseUrl"/>
+      <p class="help-block" data-translate="">dcatap-hostHelp</p>
+    </div>
+
+
+  </fieldset>
+
+
+  <fieldset>
+    <legend><span data-translate="">harvesterAdvancedConfigurationFor</span>
+      {{harvesterSelected['@type'] | translate}}
+    </legend>
+
+    <div data-gn-harvester-account="harvesterSelected"/>
+
+    <div>
+      <label class="control-label">
+        <span data-translate="">harvesterValidate</span>
+      </label>
+      <div data-gn-harvester-validation="harvesterSelected.content.validate"/>
+      <p class="help-block" data-translate="">harvesterValidateHelp</p>
+    </div>
+    <div>
+      <label class="control-label" data-translate="">applyXSLToRecord</label>
+      <div data-gn-import-xsl="harvesterSelected.content.importxslt"/>
+
+      <p class="help-block" data-translate="">applyXSLToRecordHelp</p>
+    </div>
+
+  </fieldset>
+  <div data-gn-harvester-privileges="harvesterSelected" data-lang="{{lang}}"/>
+
+</form>

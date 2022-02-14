@@ -42,6 +42,7 @@
   <xsl:include href="../convert/functions.xsl"/>
   <xsl:include href="../../../xsl/utils-fn.xsl"/>
   <xsl:include href="inspire-util.xsl" />
+  <xsl:include href="../convert/TopicCatToDataGov.xsl"/>
 
   <!-- This file defines what parts of the metadata are indexed by Lucene
        Searches can be conducted on indexes defined here.
@@ -93,6 +94,32 @@
   <xsl:variable name="isoLangId">
     <xsl:call-template name="langId19139"/>
   </xsl:variable>
+
+  <xsl:variable name="lang2Char">
+    <xsl:choose>
+      <xsl:when test="ends-with($isoLangId,'dut')">
+        <xsl:value-of select="'nl'"/>
+      </xsl:when>
+      <xsl:when test="ends-with($isoLangId,'fre')">
+        <xsl:value-of select="'fr'"/>
+      </xsl:when>
+      <xsl:when test="ends-with($isoLangId,'eng')">
+        <xsl:value-of select="'en'"/>
+      </xsl:when>
+      <xsl:when test="ends-with($isoLangId,'ger')">
+        <xsl:value-of select="'de'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="'nl'"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+  <xsl:variable name="lowercase">abcdefghijklmnopqrstuvwxyz</xsl:variable>
+  <xsl:variable name="uppercase">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
+
+  <xsl:variable name="isDataset" select="count(gmd:MD_Metadata/gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0
+                                           or count(gmd:MD_Metadata/gmd:hierarchyLevel) = 0"/>
 
   <!-- ========================================================================================= -->
   <xsl:template match="/">
@@ -399,6 +426,13 @@
           <!-- If the keyword come from "GDI-Vlaanderen Trefwoorden" thesaurus, index it under flanderskeyword -->
           <xsl:if test="$thesaurusName = 'GDI-Vlaanderen Trefwoorden'">
             <Field name="flanderskeyword" string="{$keyword}" store="true" index="true"/>
+            <xsl:if test="translate($keyword, $uppercase, $lowercase) = ('vlaamse open data', 'lijst m&amp;r inspire', 'toegevoegd gdi-vl')">
+              <Field name="statute" string="{$keyword}" store="true" index="true"/>
+            </xsl:if>
+          </xsl:if>
+
+          <xsl:if test="$thesaurusName = 'Data.gov.be themes'">
+            <Field name="dataGovKeyword" string="{$keyword}" store="true" index="true"/>
           </xsl:if>
 
         </xsl:for-each>
@@ -451,6 +485,13 @@
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
+
+      <xsl:variable name="gdiKeywords" select="gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[1] = 'GDI-Vlaanderen Trefwoorden']/gmd:keyword"/>
+      <xsl:variable name="openKeywords" select="$gdiKeywords/*[
+        (name() = 'gmx:Anchor' and @xlink:href = ('https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA', 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA')) or
+        (name() = 'gco:CharacterString' and string(.) = ('Vlaamse Open data', 'Vlaamse Open data Service'))
+      ]"/>
+      <Field name="isOpenData" string="{if (count($openKeywords) > 0) then 'y' else 'n'}" store="true" index="true"/>
 
       <xsl:variable name="listOfKeywords">{
         <xsl:variable name="keywordWithNoThesaurus"
@@ -505,6 +546,15 @@
         </xsl:when>
         <xsl:otherwise>
           <Field name="secConstr" string="false" store="true" index="true"/>
+        </xsl:otherwise>
+      </xsl:choose>
+
+      <xsl:choose>
+        <xsl:when test="gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor [@xlink:href = ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations','https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')]">
+          <Field name="accessRights" string="{if (name() = 'srv:SV_ServiceIdentification') then 'zonder voorwaarden' else 'publiek'}" store="true" index="true"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <Field name="accessRights" string="{if (name() = 'srv:SV_ServiceIdentification') then 'met voorwaarden' else 'niet publiek'}" store="true" index="true"/>
         </xsl:otherwise>
       </xsl:choose>
 
@@ -872,11 +922,6 @@
     <!-- Metadata type  -->
 
     <!-- Metadata on maps -->
-    <xsl:variable name="isDataset"
-                  select="
-                  count(gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0 or
-                  count(gmd:hierarchyLevel) = 0"/>
-
     <xsl:variable name="isMapDigital" select="count(gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/
                         gmd:presentationForm[gmd:CI_PresentationFormCode/@codeListValue = 'mapDigital']) > 0"/>
     <xsl:variable name="isStatic" select="count(gmd:distributionInfo/gmd:MD_Distribution/
@@ -914,6 +959,7 @@
       <!-- Check if metadata is a service metadata record -->
       <xsl:when test="gmd:identificationInfo/srv:SV_ServiceIdentification">
         <Field name="type" string="service" store="false" index="true"/>
+        <Field name="lifeCycle" string="live" store="true" index="true"/>
       </xsl:when>
       <!-- <xsl:otherwise>
       ... gmd:*_DataIdentification / hierachicalLevel is used and return dataset, serie, ...
@@ -1069,6 +1115,69 @@
              string="{util:getCodelistTranslation(name(*), string(*/@codeListValue), string($isoLangId))}"
              store="true" index="true"/>
     </xsl:for-each>
+
+    <!-- Index licenses -->
+    <xsl:variable name="licensesConstraintsAnchor" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/gmx:Anchor|
+                                                             gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/gmx:Anchor"/>
+    <xsl:variable name="licensesConstraintsCharacterString" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/gco:CharacterString|
+                                                                      gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation/gco:CharacterString"/>
+    <xsl:variable name="modelLicencieKeywords">
+      <license>
+        <title>Modellicentie voor gratis hergebruik</title>
+        <keyword>modellicentie-gratis-hergebruik</keyword>
+        <keyword>modellicentie_gratis_hergebruik</keyword>
+      </license>
+      <license>
+        <title>Onvoorwaardelijk hergebruik</title>
+        <keyword>onvoorwaardelijk-hergebruik</keyword>
+        <keyword>onvoorwaardelijk_hergebruik</keyword>
+      </license>
+      <license>
+        <title>Modellicentie voor hergebruik tegen vergoeding</title>
+        <keyword>modellicentie-hergebruik-tegen-vergoeding</keyword>
+        <keyword>modellicentie_hergebruik_tegen_vergoeding</keyword>
+      </license>
+      <license>
+        <title>Creative Commons Zero verklaring</title>
+        <keyword>creative-commons-zero-verklaring</keyword>
+        <keyword>creative_commons_zero_verklaring</keyword>
+        <keyword>cc0</keyword>
+      </license>
+    </xsl:variable>
+    <xsl:variable name="modelLicencie">
+      <xsl:for-each select="$licensesConstraintsAnchor">
+        <xsl:variable name="currentUrl" select="translate(@xlink:href, $uppercase, $lowercase)"/>
+        <xsl:for-each select="$modelLicencieKeywords/license/keyword">
+          <xsl:if test="contains($currentUrl, string())">
+            <license>
+              <xsl:value-of select="string(../title)"/>
+            </license>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:for-each>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="$modelLicencie and normalize-space($modelLicencie) != ''">
+        <Field name="license" string="{$modelLicencie/license[1]}" store="true" index="true"/>
+      </xsl:when>
+      <xsl:when test="$licensesConstraintsCharacterString[contains(., 'Gratis Open Data licentie')]">
+        <Field name="license" string="Modellicentie voor gratis hergebruik" store="true" index="true"/>
+      </xsl:when>
+    </xsl:choose>
+
+    <!-- Index datagov theme -->
+    <xsl:for-each select="gmd:identificationInfo/*/gmd:topicCategory">
+      <xsl:variable name="dataGovTheme">
+        <xsl:call-template name="MapTopicCatToDataGovThemeTitle">
+          <xsl:with-param name="TopicCategory" select="normalize-space(gmd:MD_TopicCategoryCode)"/>
+          <xsl:with-param name="lang" select="$lang2Char"/>
+        </xsl:call-template>
+      </xsl:variable>
+      <xsl:if test="normalize-space($dataGovTheme) != ''">
+        <Field name="dataGovKeyword" string="{$dataGovTheme}" store="true" index="true"/>
+      </xsl:if>
+    </xsl:for-each>
   </xsl:template>
 
 
@@ -1124,6 +1233,47 @@
       <Field name="{$fieldPrefix}Uuid" string="{string(.)}" store="true" index="true"/>
       <Field name="{$fieldPrefix}RoleAndUuid" string="{$role}|{string(.)}" store="true" index="true"/>
     </xsl:for-each>
+
+    <xsl:variable name="userValue" select="if (normalize-space($individualName) != '')
+                                             then normalize-space($individualName)
+                                             else normalize-space($orgName)"/>
+
+    <xsl:if test="name(..) != 'gmd:contact' and $userValue != ''">
+      <xsl:choose>
+        <xsl:when test="$isDataset">
+          <xsl:choose>
+            <xsl:when test="$role = 'owner'">
+              <Field name="dataOwner" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+            <xsl:when test="$role = 'distributor'">
+              <Field name="dataDistributor" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+            <xsl:when test="$role = 'pointOfContact'">
+              <Field name="dataContactPoint" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+            <xsl:when test="$role = 'publisher'">
+              <Field name="dataPublisher" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:when>
+
+        <xsl:otherwise>
+          <xsl:choose>
+            <xsl:when test="$role = 'pointOfContact'">
+              <Field name="dataContactPoint" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+            <xsl:when test="$role = 'custodian'">
+              <Field name="dataPublisher" string="{$userValue}" store="true" index="true"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+
+    <xsl:if test="normalize-space($orgName) != ''">
+      <Field name="dataOrgName" string="{normalize-space($orgName)}" store="true" index="true"/>
+    </xsl:if>
+
   </xsl:template>
 
   <!-- ========================================================================================= -->

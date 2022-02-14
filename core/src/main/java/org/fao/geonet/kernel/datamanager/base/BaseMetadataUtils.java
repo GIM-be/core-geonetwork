@@ -342,11 +342,15 @@ public class BaseMetadataUtils implements IMetadataUtils {
      */
     @Override
     public Element setUUID(String schema, String uuid, Element md) throws Exception {
+        ServiceContext context = ServiceContext.get();
         // --- setup environment
 
         Element env = new Element("env");
         env.addContent(new Element("uuid").setText(uuid));
-
+        if (context != null) {
+            env.addContent(new Element("nodeURL").setText(getSettingManager().getNodeURL()));
+            env.addContent(new Element("baseURL").setText(getSettingManager().getBaseURL()));
+        }
         // --- setup root element
 
         Element root = new Element("root");

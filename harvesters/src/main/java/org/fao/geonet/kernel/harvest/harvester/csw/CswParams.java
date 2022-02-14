@@ -51,6 +51,8 @@ public class CswParams extends AbstractParams {
 
     public Integer hopCount;
 
+    public String resourceUriPattern;
+
     /**
      * The filter is a process (see schema/process folder) which depends on the schema. It could be
      * composed of parameter which will be sent to XSL transformation using the following syntax :
@@ -82,6 +84,7 @@ public class CswParams extends AbstractParams {
         xpathFilter = Util.getParam(site, "xpathFilter", "");
         outputSchema = Util.getParam(site, "outputSchema", outputSchema);
         icon = Util.getParam(site, "icon", "default.gif");
+        resourceUriPattern = Util.getParam(site, "resourceUriPattern", "");
 
         if (searches != null) {
             if (searches.getChild("search") != null) {
@@ -112,6 +115,7 @@ public class CswParams extends AbstractParams {
         xpathFilter = Util.getParam(site, "xpathFilter", "");
         xslfilter = Util.getParam(site, "xslfilter", "");
         outputSchema = Util.getParam(site, "outputSchema", outputSchema);
+        resourceUriPattern = Util.getParam(site, "resourceUriPattern", "");
 
         icon = Util.getParam(site, "icon", icon);
 
@@ -144,6 +148,7 @@ public class CswParams extends AbstractParams {
         copy.xpathFilter = xpathFilter;
         copy.xslfilter = xslfilter;
         copy.outputSchema = outputSchema;
+        copy.resourceUriPattern = resourceUriPattern;
 
         copy.eltSearches = eltSearches;
 

@@ -23,7 +23,8 @@ var gnHarvestercsw = {
         "xslfilter": [],
         "outputSchema": "http://www.isotc211.org/2005/gmd",
         "queryScope": "local",
-        "hopCount": 2
+        "hopCount": 2,
+        "resourceUriPattern": ""
       },
       "content" : {
         "validate" : "NOVALIDATION",
@@ -90,6 +91,7 @@ var gnHarvestercsw = {
       + '    <outputSchema>' + h.site.outputSchema + '</outputSchema>'
       + '    <queryScope>' + h.site.queryScope + '</queryScope>'
       + '    <hopCount>' + h.site.hopCount + '</hopCount>'
+      + '    <resourceUriPattern>' + h.site.resourceUriPattern + '</resourceUriPattern>'
       + '  </site>'
       + gnHarvestercsw.buildResponseCSWSearch($scope)
       + '  <options>'

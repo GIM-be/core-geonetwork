@@ -23,21 +23,10 @@
 
 package org.fao.geonet.api.records;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.google.common.base.Joiner;
+import jeeves.constants.Jeeves;
+import jeeves.server.ServiceConfig;
+import jeeves.server.context.ServiceContext;
 import org.fao.geonet.ApplicationContextHolder;
 import org.fao.geonet.Constants;
 import org.fao.geonet.GeonetContext;
@@ -57,6 +46,7 @@ import org.fao.geonet.kernel.schema.SchemaPlugin;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.SearcherType;
+import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.lib.Lib;
 import org.fao.geonet.repository.MetadataValidationRepository;
 import org.fao.geonet.repository.specification.MetadataValidationSpecs;
@@ -69,14 +59,16 @@ import org.jdom.Content;
 import org.jdom.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
-import com.google.common.base.Joiner;
-
-import jeeves.constants.Jeeves;
-import jeeves.server.ServiceConfig;
-import jeeves.server.context.ServiceContext;
+import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 
 /**
  *
@@ -162,9 +154,26 @@ public class MetadataUtils {
         }
 
         // Search for services
-        if (listOfTypes.size() == 0 ||
-            listOfTypes.contains(RelatedItemType.services)) {
-            relatedRecords.addContent(search(uuid, "services", context, from, to, fast));
+        if (listOfTypes.size() == 0 || listOfTypes.contains(RelatedItemType.services)) {
+            Element relatedServices = search(uuid, "services", context, from, to, fast);
+            // Set<String> directlyLinkedServiceUUIds = schemaPlugin != null ? schemaPlugin.getAssociatedServices(md) : null;
+            // if (directlyLinkedServiceUUIds != null && directlyLinkedServiceUUIds.size() > 0) {
+            //     String joinedUUIDs = Joiner.on(" or ").join(directlyLinkedServiceUUIds);
+            //     Element additionalRelatedServices = search(joinedUUIDs, "services", context, from, to, fast, true);
+            //     for (Object additionalMd: additionalRelatedServices.getChild("response").getChildren("metadata")) {
+            //         relatedServices.getChild("response").addContent((Element)((Element) additionalMd).clone());
+            //     }
+            // }
+            relatedRecords.addContent(relatedServices);
+
+            Set<String> externalLinks = schemaPlugin != null ? schemaPlugin.getAssociatedExternalServiceLinks(md) : null;
+            Element exteralServices = new Element("externalServices");
+            if (schemaPlugin != null) {
+                for (String externalLink: externalLinks) {
+                    exteralServices.addContent(new Element("url").addContent(externalLink));
+                }
+            }
+            relatedRecords.addContent(exteralServices);
         }
 
         // Related record from uuiref attributes in metadata record
@@ -175,13 +184,18 @@ public class MetadataUtils {
                 listOfTypes.contains(RelatedItemType.sources)
         )) {
             // Get datasets related to service search
-            if (listOfTypes.size() == 0 ||
-                listOfTypes.contains(RelatedItemType.datasets)) {
+            if (listOfTypes.size() == 0 || listOfTypes.contains(RelatedItemType.datasets)) {
                 Set<String> listOfUUIDs = schemaPlugin.getAssociatedDatasetUUIDs(md);
                 if (listOfUUIDs != null && listOfUUIDs.size() > 0) {
                     String joinedUUIDs = Joiner.on(" or ").join(listOfUUIDs);
                     relatedRecords.addContent(search(joinedUUIDs, "datasets", context, from, to, fast));
                 }
+                Set<String> externalLinks = schemaPlugin.getAssociatedExternalDatasetLinks(md);
+                Element externalDatasets = new Element("externalDatasets");
+                for (String externalLink: externalLinks) {
+                    externalDatasets.addContent(new Element("url").addContent(externalLink));
+                }
+                relatedRecords.addContent(externalDatasets);
             }
             // if source, return source datasets defined in the current record
             if (listOfTypes.size() == 0 ||
@@ -249,8 +263,11 @@ public class MetadataUtils {
         return relatedRecords;
     }
 
-
     private static Element search(String uuid, String type, ServiceContext context, String from, String to, String fast) throws Exception {
+        return MetadataUtils.search(uuid, type, context, from, to, fast, false);
+    }
+
+    private static Element search(String uuid, String type, ServiceContext context, String from, String to, String fast, boolean matchUuid) throws Exception {
         GeonetContext gc = (GeonetContext) context.getHandlerContext(Geonet.CONTEXT_NAME);
         SearchManager searchMan = gc.getBean(SearchManager.class);
 
@@ -261,7 +278,9 @@ public class MetadataUtils {
         try (MetaSearcher searcher = searchMan.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE)) {
             // Creating parameters for search, fast only to retrieve uuid
             Element parameters = new Element(Jeeves.Elem.REQUEST);
-            if ("children".equals(type))
+            if (matchUuid) {
+              parameters.addContent(new Element("uuid").setText(uuid));
+            } else if ("children".equals(type))
                 parameters.addContent(new Element("parentUuid").setText(uuid));
             else if ("services".equals(type))
                 parameters.addContent(new Element("operatesOn").setText(uuid));
