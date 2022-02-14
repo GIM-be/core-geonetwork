@@ -495,7 +495,7 @@
       };
 
       this.isWorkflowConfiguredForMd = function (md, groupOptions) {
-        if (!groupOptions || groupOptions.length < 1) {
+        if (!groupOptions || groupOptions.length < 1 || !md) {
           return false;
         }
         var metadataGroup = groupOptions.find(function (group) {
