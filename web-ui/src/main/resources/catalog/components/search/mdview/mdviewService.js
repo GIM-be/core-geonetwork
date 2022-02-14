@@ -81,7 +81,7 @@
 
         // Set the route only if not same as before
         formatter = gnSearchLocation.getFormatter();
-        var defaultFormatters = gnGlobalSettings.gnCfg.mods.search.formatter.defaultFormatters
+        var defaultFormatters = gnGlobalSettings.gnCfg.mods.search.formatter.defaultFormatters;
         gnMdViewObj.usingFormatter = formatter !== undefined || (defaultFormatters[md['geonet:info'].schema] && defaultFormatters[md['geonet:info'].schema].url !== '');
         this.setLocationUuid(md.getUuid(), formatter);
 

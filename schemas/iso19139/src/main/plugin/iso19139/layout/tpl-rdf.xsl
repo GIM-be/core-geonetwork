@@ -511,7 +511,7 @@
           <xsl:for-each select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement">
             <dct:provenance>
               <dct:ProvenanceStatement>
-                <xsl:attribute name="rdf:about" select="concat($MetadataViewUrl, '/formatter/lineage')"/>
+                <xsl:attribute name="rdf:about" select="concat($MetadataViewUrl, '/formatters/lineage')"/>
                 <dct:title xml:lang="{$MetadataLanguage}">
                   <xsl:value-of select="normalize-space(gco:CharacterString)"/>
                 </dct:title>
