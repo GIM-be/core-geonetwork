@@ -534,11 +534,6 @@
       <artifactId>schema-iso19115-3.2018</artifactId>
       <version>${gn.schemas.version}</version>
     </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>schema-dcat2</artifactId>
-      <version>${gn.schemas.version}</version>
-    </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -771,10 +766,6 @@
                   <directory>${project.basedir}/../schemas/iso19115-3.2018/src/main/plugin</directory>
                   <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins
                   </targetPath>
-                </resource>
-                <resource>
-                  <directory>${project.basedir}/../schemas/dcat2/src/main/plugin</directory>
-                  <targetPath>${basedir}/src/main/webapp/WEB-INF/data/config/schema_plugins</targetPath>
                 </resource>
                 <!-- Copy the documentation in the webapp. -->
                 <resource>

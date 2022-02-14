@@ -535,7 +535,7 @@
 
               <label
                 class="col-sm-2 control-label">
-                <xsl:if test="$schema!='dcat2' and $hasAddAction and not($addDirective != '')"><xsl:value-of select="$name"/></xsl:if>&#160;
+                <xsl:if test="$hasAddAction and not($addDirective != '')"><xsl:value-of select="$name"/></xsl:if>&#160;
               </label>
               <div class="col-sm-9 btn-group nopadding-in-table" data-gn-template-field-add-button="{$id}">
                 <xsl:if test="$hasMultipleChoice">
@@ -598,7 +598,7 @@
                 for="{$id}_{@label}"
                 class="col-sm-2 control-label {if ($keyRequired) then 'gn-required' else ''}">
                 <xsl:variable name="labelConfig">
-                  <xsl:if test="$schema!='dcat2' and not (@xpath = ('','.'))">
+                  <xsl:if test="not (@xpath = ('','.'))">
                     <xsl:value-of select="gn-fn-metadata:getLabel($schema, replace(@xpath,'@',''), $labels, $qname,'','')/label"/>
                   </xsl:if>
                 </xsl:variable>
@@ -995,7 +995,7 @@
                           <xsl:variable name="xpath" select="substring-after(., 'xpath::')"/>
                           <xsl:attribute name="{name(.)}">
                             <saxon:call-template name="{concat('evaluate-', $schema)}">
-                              <xsl:with-param name="base" select="$metadata//*[gn:element/@ref = $parentEditInfo/@ref]"/>
+                              <xsl:with-param name="base" select="$metadata"/>
                               <xsl:with-param name="in"
                                               select="concat('/../', $xpath)"/>
                             </saxon:call-template>
@@ -1447,7 +1447,7 @@
         <xsl:if test="$attributeName = 'xlink:href'">
           <i class="fa fa-link fa-fw"/>
         </xsl:if>
-        <xsl:value-of select="gn-fn-metadata:getLabel($schema, $attributeName, $labels, name(..), '', gn-fn-metadata:getXPath(.))/label"/>
+        <xsl:value-of select="gn-fn-metadata:getLabel($schema, $attributeName, $labels)/label"/>
       </label>
       <div class="{if ($deletable) then 'col-sm-9' else 'col-sm-10'}">
         <xsl:if test="$directive">

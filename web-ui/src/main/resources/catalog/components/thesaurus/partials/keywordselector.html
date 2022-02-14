@@ -51,9 +51,7 @@
 
     <!-- The thesaurus snippet to insert once received -->
     <div>
-      <input data-ng-if="!altSave" name="{{elementRef}}" type="hidden" value="{{snippet}}"/>
-      <input data-ng-if="altSave" name="{{elementRef}}{{elementXpath != '' ? '_xml' : ''}}" type="hidden" value="{{snippet}}"/>
-      <input data-ng-if="altSave" name="{{elementRefXpath}}" type="hidden" value="{{elementXpath}}"/>
+      <input name="{{elementRef}}" type="hidden" value="{{snippet}}"/>
     </div>
   </span>
 </div>

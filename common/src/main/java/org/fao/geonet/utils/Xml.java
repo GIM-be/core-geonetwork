@@ -1065,17 +1065,15 @@ public final class Xml {
         Pattern pattern;
         Matcher matcher;
 
-        // Regular expression to see if it starts and ends with the same element or
-        // it's a self-closing element.
-        final String XML_PATTERN_STR = "<(\\S+?)(.*?)>(.*?)</\\1>|<(\\S+?)(.*?)/>";
+        // Regular expression to see if it starts and ends with the same element
+        final String XML_PATTERN_STR = "<(\\S+?)(.*?)>(.*?)</\\1>";
 
         if (inXMLStr != null && inXMLStr.trim().length() > 0) {
-            String trimedString = inXMLStr.trim();
-            if (trimedString.startsWith("<")) {
+            if (inXMLStr.trim().startsWith("<")) {
                 pattern = Pattern.compile(XML_PATTERN_STR,
                     Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 
-                matcher = pattern.matcher(trimedString);
+                matcher = pattern.matcher(inXMLStr);
                 retBool = matcher.matches();
             }
         }

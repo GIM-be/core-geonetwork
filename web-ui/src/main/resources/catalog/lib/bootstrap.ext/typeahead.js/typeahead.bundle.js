@@ -359,10 +359,7 @@
         _.mixin(Transport.prototype, {
             _fingerprint: function fingerprint(o) {
                 o = o || {};
-              // Avoid Uncaught TypeError: String.prototype.indexOf called on null or undefined
-              // When using POST with JSON Body.
-              return o.url + o.type
-                + (o.data && o.data.indexOf('{') ===0 ? o.data : $.param(o.data || {}));
+                return o.url + o.type + $.param(o.data || {});
             },
             _get: function(o, cb) {
                 var that = this, fingerprint, jqXhr;

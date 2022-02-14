@@ -80,7 +80,7 @@
                 thesaurus: thesaurus,
                 rows: max,
                 q: filter || '',
-                uri: filter || '',
+                uri: ('*' + filter + '*') || '',
                 lang: lang || 'eng'
               };
               if (outputLang) {
@@ -224,9 +224,7 @@
                * eg. to-iso19139-keyword for default form.
                */
               getXML: function(thesaurus,
-                               keywordUris, transformation,
-                               lang, textgroupOnly, langConversion,
-                               wrapper) {
+                  keywordUris, transformation, lang, textgroupOnly) {
                 // http://localhost:8080/geonetwork/srv/eng/
                 // xml.keyword.get?thesaurus=external.place.regions&id=&
                 // multiple=false&transformation=to-iso19139-keyword&
@@ -237,30 +235,27 @@
                       keywordUris.join(',') : keywordUris || '',
                   transformation: transformation || 'to-iso19139-keyword'
                 };
-                if (langConversion) {
-                  params.langMap = JSON.stringify(langConversion);
-                }
                 if (lang) {
                   params.lang = lang;
                 }
                 if (textgroupOnly) {
                   params.textgroupOnly = textgroupOnly;
                 }
-                if (wrapper) {
-                  params.wrapper = wrapper;
-                }
                 var url = gnUrlUtils.append(
-                  '../api/registries/vocabularies/keyword',
-                  gnUrlUtils.toKeyValue(params)
-                );
-                $http.get(url, { cache: true }).success(function(data, status) {
-                  // TODO: could be a global constant ?
-                  var xmlDeclaration = '<?xml version="1.0" encoding="UTF-8"?>';
-                  defer.resolve(data.replace(xmlDeclaration, ''));
-                }).error(function(data, status) {
-                  // TODO handle error
-                  // defer.reject(error);
-                });
+                '../api/registries/vocabularies/keyword',
+                    gnUrlUtils.toKeyValue(params)
+                    );
+                $http.get(url, { cache: true }).
+                    success(function(data, status) {
+                      // TODO: could be a global constant ?
+                      var xmlDeclaration =
+                          '<?xml version="1.0" encoding="UTF-8"?>';
+                      defer.resolve(data.replace(xmlDeclaration, ''));
+                    }).
+                    error(function(data, status) {
+                      //                TODO handle error
+                      //                defer.reject(error);
+                    });
                 return defer.promise;
               },
               /**
@@ -293,13 +288,16 @@
               parseKeywordsResponse: parseKeywordsResponse,
               getKeywords: function(filter, thesaurus, lang, max, typeSearch) {
                 var defer = $q.defer();
-                var url = getKeywordsSearchUrl(filter, thesaurus, lang, max, typeSearch);
-                $http.get(url, { cache: true }).success(function(data, status) {
-                  defer.resolve(parseKeywordsResponse(data));
-                }).error(function(data, status) {
-                  // TODO handle error
-                  // defer.reject(error);
-                });
+                var url = getKeywordsSearchUrl(filter,
+                    thesaurus, lang, max, typeSearch);
+                $http.get(url, { cache: true }).
+                    success(function(data, status) {
+                      defer.resolve(parseKeywordsResponse(data));
+                    }).
+                    error(function(data, status) {
+                      //                TODO handle error
+                      //                defer.reject(error);
+                    });
                 return defer.promise;
               },
 

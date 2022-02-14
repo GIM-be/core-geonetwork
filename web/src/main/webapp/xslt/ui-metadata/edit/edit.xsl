@@ -21,13 +21,10 @@
   ~ Contact: Jeroen Ticheler - FAO - Viale delle Terme di Caracalla 2,
   ~ Rome - Italy. email: geonetwork@osgeo.org
   -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:saxon="http://saxon.sf.net/"
-                xmlns:gn="http://www.fao.org/geonetwork"
-                xmlns:java-xsl-util="java:org.fao.geonet.util.XslUtil"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:saxon="http://saxon.sf.net/"
+                xmlns:gn="http://www.fao.org/geonetwork" xmlns:java-xsl-util="java:org.fao.geonet.util.XslUtil"
                 version="2.0"
                 extension-element-prefixes="saxon" exclude-result-prefixes="#all">
-
 
   <!-- The editor form.
 
@@ -75,17 +72,18 @@
     <xsl:variable name="hasSidePanel"
                   select="exists($viewConfig/sidePanel) and $isTemplate != 's' and $isTemplate != 't'"/>
     <div id="gn-editor-container-{$metadataId}">
-      <form id="gn-editor-{$metadataId}"
-            name="gnEditor" accept-charset="UTF-8" method="POST"
-            novalidate="" class="form-horizontal gn-editor gn-tab-{$tab} {if ($hasViewClass) then concat('gn-editor-config-css ', $viewConfig/@class) else ''}" role="form"
-            data-spy="scroll" data-target="#gn-editor-{$metadataId}-spy"
-            autocomplete="off">
 
-        <div class="col-md-{if ($hasSidePanel) then '8' else '12'}">
+      <div class="col-md-{if ($hasSidePanel) then '8' else '12'}">
 
-          <!--
-                The main editor form.
-          -->
+        <!--
+              The main editor form.
+        -->
+        <form id="gn-editor-{$metadataId}"
+              name="gnEditor" accept-charset="UTF-8" method="POST"
+              novalidate="" class="form-horizontal gn-editor gn-tab-{$tab} {if ($hasViewClass) then concat('gn-editor-config-css ', $viewConfig/@class) else ''}" role="form"
+              data-spy="scroll" data-target="#gn-editor-{$metadataId}-spy"
+              autocomplete="off">
+
           <input type="hidden" id="schema" value="{$schema}"/>
           <input type="hidden" id="template" name="template" value="{$isTemplate}"/>
           <input type="hidden" id="isService" name="type" value="{$isService}"/>
@@ -111,12 +109,7 @@
           <xsl:variable name="metadataExtents">
             <saxon:call-template name="{concat('get-', $schema, '-extents-as-json')}"/>
           </xsl:variable>
-          <input type="hidden" id="extent" value="{normalize-space($metadataExtents)}"/>
-
-          <xsl:variable name="metadataFormats">
-            <xsl:apply-templates mode="get-formats-as-json" select="$metadata"/>
-          </xsl:variable>
-          <input type="hidden" id="dataformats" value="{normalize-space($metadataFormats)}"/>
+          <input type="hidden" id="extent" value="{$metadataExtents}"/>
 
           <xsl:call-template name="get-online-source-config">
             <xsl:with-param name="pattern" select="$geopublishMatchingPattern"/>
@@ -155,23 +148,19 @@
               </saxon:call-template>
             </xsl:otherwise>
           </xsl:choose>
+        </form>
+      </div>
+      <div class="col-md-{if ($hasSidePanel) then '4' else '0'} gn-editor-sidebar">
+        <xsl:attribute name="ng-style" select="'{''max-height'': sideBarMaxHeight, ''margin-top'': sideBarMarginTop}'"/>
+        <div class="gn-editor-tools-container">
+          <xsl:apply-templates mode="form-builder"
+                               select="$viewConfig/sidePanel/*"/>
         </div>
-        <xsl:if test="$hasSidePanel">
-          <div class="col-md-4 gn-editor-sidebar">
-            <div class="gn-editor-tools-container">
-              <xsl:apply-templates mode="form-builder"
-                                   select="$viewConfig/sidePanel/*">
-                <xsl:with-param name="base" select="$metadata"/>
-              </xsl:apply-templates>
-            </div>
-          </div>
-        </xsl:if>
-      </form>
+      </div>
     </div>
+
   </xsl:template>
 
-
-  <xsl:template mode="get-formats-as-json" match="*"/>
 
   <!-- Check if current record has resources which could be
   published in OGC services (eg. onLine resources in ISO19139)

@@ -103,13 +103,5 @@
   "browseTypes": "brontypes",
   "browseBy": "Blader door ",
   "browseServiceTypes": "servicetypes",
-  "csvFile": "CSV file (pipe separator)",
-  "changelog": "Changelog",
-  "searchAlicence": "Selecteer een licentie...",
-  "resourceUriPattern": "Resource URI pattern",
-  "resourceUriPatternHelp": "Pattern gebruikt om URI van de bronnen te genereren tijdens de RDF export. Bv: https://metadata.vlaanderen.be/srv/resources/{resourceType}/{resourceUuid}",
-  "isOpenData": "Open data",
-  "accessRights": "Toegangsrechten",
-  "NON_PUBLIC": "Niet publiek",
-  "PUBLIC": "Publiek"
+  "changelog": "Changelog"
 }

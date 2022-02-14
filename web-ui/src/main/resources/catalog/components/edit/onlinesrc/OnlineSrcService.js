@@ -507,7 +507,7 @@
             });
           };
 
-          if (addOnlineSrcToDataset && params.schema !== 'dcat2') {
+          if (addOnlineSrcToDataset) {
             var qParams = setParams('onlinesrc-add', params);
             return gnBatchProcessing.runProcessMd({
               name: qParams.name,
@@ -517,8 +517,7 @@
               uuid: qParams.uuidDS,
               source: qParams.source,
               protocol: qParams.protocol,
-              process: qParams.process,
-              uuidSrv: gnCurrentEdit.uuid
+              process: qParams.process
             }, true).then(addDatasetToServiceFn, function(error) {
               // Current user may not be able to edit
               // the targeted dataset. Notify user in this case
@@ -619,11 +618,10 @@
          *
          * @param {Object} onlinesrc the online resource to remove
          */
-        removeService: function (onlinesrc) {
+        removeService: function(onlinesrc) {
           var params = {
             uuid: onlinesrc.id,
-            uuidref: gnCurrentEdit.metadata.identifier,
-            currentEdit: gnCurrentEdit.metadata['geonet:info'].uuid
+            uuidref: gnCurrentEdit.metadata.identifier
           }, service = this;
 
           gnBatchProcessing.runProcessMd(
@@ -657,8 +655,7 @@
         removeDataset: function(onlinesrc) {
           var params = {
             uuid: gnCurrentEdit.uuid,
-            uuidref: onlinesrc.identifier,
-            idRef: onlinesrc.id
+            uuidref: onlinesrc.identifier
           };
           runProcess(this,
               setParams('datasets-remove', params));
