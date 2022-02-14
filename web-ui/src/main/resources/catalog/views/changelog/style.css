@@ -36,11 +36,34 @@ img {
 }
 
 code {
-  background-color: #d2d2d2;
+  background-color: #e8e8e8;
+  color: #8d1515;
 }
 
 .bullet-table tr td:first-child {
   padding-right: 5px;
+}
+
+#summary {
+  columns: 2;
+}
+
+@media screen and (min-width: 600px)  {
+  #summary {
+    columns: 3;
+  }
+}
+
+@media screen and (min-width: 1000px)  {
+  #summary {
+    columns: 4;
+  }
+}
+
+@media screen and (min-width: 1500px)  {
+  #summary {
+    columns: 5;
+  }
 }
 
 @keyframes blink {

@@ -36,6 +36,7 @@ import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.Xml;
+import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.Namespace;
 import org.springframework.context.ApplicationContext;
@@ -260,28 +261,57 @@ public class RdfOutputManager {
     private void writeFileResults(BufferedWriter output, Element rdf, int page) throws Exception {
         List<Element> mdDcatList = rdf.getChildren();
 
-        boolean recordsSectionStarted = false;
         for (Element mdDcat : mdDcatList) {
             String elementName = mdDcat.getName();
             // Ignore the catalog section
             if (elementName.equalsIgnoreCase("Catalog")) continue;
 
-            if (elementName.equalsIgnoreCase("CatalogRecord")) recordsSectionStarted = true;
+            String result = Xml.getString(mdDcat);
+            String wrapper = this.getWrapper(mdDcat);
 
-            if (page == 1) {
-                // For first results page, write also the Organisation section that is between Catalog
-                // and CatalogRecords sections (same in all pages)
-                output.write("<dcat:dataset>");
+            if (wrapper != null) {
+                output.write("<" + wrapper + ">");
                 output.write("\n");
-                String result = Xml.getString(mdDcat);
                 output.write(removeNamespaces(result));
-                output.write("</dcat:dataset>");
-                output.write("\n");
-            } else if (recordsSectionStarted) {
-                String result = Xml.getString(mdDcat);
+                output.write("</" + wrapper + ">");
+            } else {
                 output.write(removeNamespaces(result));
-                output.write("\n");
             }
+            output.write("\n");
+        }
+    }
+    private String getWrapper(Element mdDcat) {
+        String elementName = mdDcat.getName();
+
+        if (elementName.equals("Description")) {
+            Namespace rdf = Namespace.getNamespace("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+            Element type = mdDcat.getChild("type", rdf);
+            if (type != null) {
+                Attribute resource = type.getAttribute("resource", rdf);
+                if (resource != null) {
+                    switch (resource.getValue()) {
+                        case "http://www.w3.org/ns/dcat#CatalogRecord":
+                            elementName = "CatalogRecord";
+                            break;
+                        case "http://www.w3.org/ns/dcat#Dataset":
+                            elementName = "Dataset";
+                            break;
+                        case "http://www.w3.org/ns/dcat#DataService":
+                            elementName = "DataService";
+                            break;
+                    }
+                }
+            }
+        }
+        switch (elementName) {
+            case "CatalogRecord":
+                return "dcat:record";
+            case "Dataset":
+                return "dcat:dataset";
+            case "DataService":
+                return "dcat:service";
+            default:
+                return null;
         }
     }
 

@@ -25,7 +25,7 @@
              data-ng-class="config.getClassIcon(mainType)"/>&nbsp;
         </strong>
       </div>
-      <div data-ng-class="mainType === 'MDFCATS' ? 'col-xs-11' : 'col-xs-8 col-sm-8'">
+      <div data-ng-class="mainType === 'MDFCATS' ? 'col-xs-11' : 'col-xs-10 col-sm-10'">
         <!-- Always display title if available -->
         <h3 data-ng-if="::(r.title | gnLocalized: lang).length">{{::(r.title | gnLocalized: lang)}}</h3>
         <!-- Display description if available -->
@@ -34,6 +34,7 @@
                        mainType === 'WCS' ||
                        mainType.indexOf('LINK') === 0 ||
                        mainType.indexOf('DEFAULT') === 0 ||
+                       !r.id ||
                        r.protocol === 'OGC:WFS') &&
                        r.locDescription.length > 0">
           {{::r.locDescription | striptags | characters:150}}

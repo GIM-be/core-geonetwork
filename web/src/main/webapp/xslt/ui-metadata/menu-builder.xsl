@@ -85,6 +85,19 @@
                                         @displayIfRecord,
                                         @displayIfServiceInfo)"/>
 
+                <xsl:variable name="defaultTab">
+                  <xsl:for-each select="tab[@default]">
+                    <xsl:variable name="isTabDisplayed"
+                                  as="xs:boolean"
+                                  select="gn-fn-metadata:check-viewtab-visibility(
+                                        $schema, $metadata, $serviceInfo,
+                                        @displayIfRecord,
+                                        @displayIfServiceInfo)"/>
+                    <xsl:if test="$isTabDisplayed">
+                      <xsl:copy-of select="."/>
+                    </xsl:if>
+                  </xsl:for-each>
+                </xsl:variable>
 
                 <xsl:if test="$isViewDisplayed">
                   <li role="menuitem">
@@ -93,7 +106,7 @@
                     </xsl:if>
                     <!-- When a view contains multiple tab, the one with
                   the default attribute is the one to open -->
-                    <a data-ng-click="switchToTab('{tab[@default]/@id}', '{tab[@default]/@mode}')"
+                    <a data-ng-click="switchToTab('{$defaultTab/tab/@id}', '{$defaultTab/tab/@mode}')"
                        href="">
                       <xsl:variable name="viewName" select="@name"/>
                       <xsl:value-of select="$strings/*[name() = $viewName]"/>
@@ -177,17 +190,18 @@
     <xsl:if test="$isTabDisplayed">
     </xsl:if>
     -->
-    <li role="menuitem"
-      class="{if ($tab = @id) then 'active' else ''} {if ($isTabDisplayed) then '' else 'disabled'}">
-      <a href="">
-        <xsl:if test="$tab != @id and $isTabDisplayed">
-          <xsl:attribute name="data-ng-click"
-                         select="concat('switchToTab(''', @id, ''', ''', @mode, ''')')"/>
-        </xsl:if>
-        <xsl:variable name="tabId" select="@id"/>
-        <xsl:value-of select="$strings/*[name() = $tabId]"/>
-      </a>
-    </li>
-
+    <xsl:if test="$isTabDisplayed or @hideIfNotDisplayed != 'true'">
+      <li role="menuitem"
+          class="{if ($tab = @id) then 'active' else ''} {if ($isTabDisplayed) then '' else 'disabled'}">
+        <a href="">
+          <xsl:if test="$tab != @id and $isTabDisplayed">
+            <xsl:attribute name="data-ng-click"
+                           select="concat('switchToTab(''', @id, ''', ''', @mode, ''')')"/>
+          </xsl:if>
+          <xsl:variable name="tabId" select="@id"/>
+          <xsl:value-of select="$strings/*[name() = $tabId]"/>
+        </a>
+      </li>
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>

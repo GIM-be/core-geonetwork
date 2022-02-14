@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xsl:transform xmlns:dc     = "http://purl.org/dc/elements/1.1/"
-               xmlns:xs="http://www.w3.org/2001/XMLSchema"
-               xmlns:rdf    = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-               xmlns:skos   = "http://www.w3.org/2004/02/skos/core#"
-               xmlns:xsl    = "http://www.w3.org/1999/XSL/Transform"
-               exclude-result-prefixes="#all"
-               version="2.0">
+<xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+                xmlns:dcat="http://www.w3.org/ns/dcat#"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="#all"
+                version="2.0">
 
   <xsl:variable name="thesaurusList">
     <path><xsl:value-of select="'../thesauri-AIV/theme/featureconcept.rdf'"/></path>
@@ -54,4 +55,4 @@
     <xsl:param name="thesaurusTitle" as="xs:string"/>
     <xsl:value-of select="string($thesauri/thesausus[@title = $thesaurusTitle]/@about)"/>
   </xsl:template>
-</xsl:transform>
+</xsl:stylesheet>

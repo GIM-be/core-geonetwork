@@ -25,6 +25,7 @@ package org.fao.geonet.kernel.schema;
 
 import org.jdom.Element;
 
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -45,7 +46,19 @@ public interface AssociatedResourcesSchemaPlugin {
 
     public abstract Set<String> getAssociatedDatasetUUIDs(Element metadata);
 
+    public default Set<String> getAssociatedExternalDatasetLinks(Element metadata) {
+        return Collections.emptySet();
+    }
+
     public abstract Set<String> getAssociatedFeatureCatalogueUUIDs(Element metadata);
 
     public abstract Set<String> getAssociatedSourceUUIDs(Element metadata);
+
+    public default Set<String> getAssociatedServices(Element metadata) {
+        return null;
+    }
+
+    public default Set<String> getAssociatedExternalServiceLinks(Element metadata) {
+        return Collections.emptySet();
+    }
 }

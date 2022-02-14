@@ -35,7 +35,7 @@
       </class>
       <output sheet="../xslt/services/dcat/rdf.xsl"
               contentType="application/rdf+xml; charset=UTF-8">
-        <call name="relation" class=".guiservices.metadata.GetRelated"/>
+        <!--<call name="relation" class=".guiservices.metadata.GetRelated"/>-->
         <call name="isoLang" class=".guiservices.isolanguages.Get"/>
         <call name="thesaurus" class=".services.thesaurus.GetList"/>
         <call name="clear" class=".services.metadata.ClearCachedShowMetadata"/>
