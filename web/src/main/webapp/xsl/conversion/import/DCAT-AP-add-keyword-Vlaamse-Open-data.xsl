@@ -29,8 +29,21 @@
       <xsl:apply-templates select="dct:publisher"/>
       <xsl:apply-templates select="dct:rightsHolder"/>
       <xsl:apply-templates select="dcat:keyword"/>
-      <!-- Add the missing keyword -->
-      <xsl:call-template name="add-subject"/>
+
+      <!-- Add the missing subject -->
+      <dct:subject>
+        <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA">
+          <skos:prefLabel xml:lang="nl">Vlaamse Open data</skos:prefLabel>
+          <skos:prefLabel xml:lang="en">Vlaamse Open data</skos:prefLabel>
+          <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
+        </skos:Concept>
+      </dct:subject>
+
+      <xsl:apply-templates select="dct:subject[
+        skos:Concept/@rdf:about != 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA' and
+        skos:Concept/@rdf:about != 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA'
+      ]"/>
+
       <xsl:apply-templates select="dcat:theme"/>
       <xsl:apply-templates select="dct:accessRights"/>
       <xsl:apply-templates select="dct:conformsTo"/>
@@ -52,6 +65,10 @@
       <xsl:apply-templates select="dcat:extension"/>
       <xsl:apply-templates select="dcat:distribution"/>
       <xsl:apply-templates select="adms:sample"/>
+      <xsl:apply-templates select="dcat:qualifiedRelation"/>
+      <xsl:apply-templates select="dct:creator"/>
+      <xsl:apply-templates select="dct:isReferencedBy"/>
+      <xsl:apply-templates select="dct:rights"/>
     </xsl:copy>
   </xsl:template>
 
@@ -69,16 +86,30 @@
       <xsl:apply-templates select="dcat:landingPage"/>
       <xsl:apply-templates select="dcat:contactPoint"/>
       <xsl:apply-templates select="dcat:keyword"/>
-      <xsl:call-template name="add-subject"/>
       <xsl:apply-templates select="dct:language"/>
-      <xsl:apply-templates select="owl:versionInfo"/>
       <xsl:apply-templates select="adms:identifier"/>
+      <xsl:apply-templates select="owl:versionInfo"/>
+      <xsl:apply-templates select="adms:versionNotes"/>
       <xsl:apply-templates select="mdcat:landingspaginaVoorAuthenticatie"/>
       <xsl:apply-templates select="mdcat:landingspaginaVoorStatusinformatie"/>
       <xsl:apply-templates select="mdcat:landingspaginaVoorGebruiksinformatie"/>
       <xsl:apply-templates select="mdcat:levensfase"/>
       <xsl:apply-templates select="mdcat:ontwikkelingstoestand"/>
       <xsl:apply-templates select="dcat:qualifiedRelation"/>
+
+      <!-- Add the missing subject -->
+      <dct:subject>
+        <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA">
+          <skos:prefLabel xml:lang="nl">Vlaamse Open data Service</skos:prefLabel>
+          <skos:prefLabel xml:lang="en">Vlaamse Open data Service</skos:prefLabel>
+          <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
+        </skos:Concept>
+      </dct:subject>
+      <xsl:apply-templates select="dct:subject[
+        skos:Concept/@rdf:about != 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA' and
+        skos:Concept/@rdf:about != 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA'
+      ]"/>
+
       <xsl:apply-templates select="dcat:theme"/>
       <xsl:apply-templates select="dct:accessRights"/>
       <xsl:apply-templates select="dct:conformsTo"/>
@@ -91,16 +122,5 @@
       <xsl:apply-templates select="dct:rights"/>
       <xsl:apply-templates select="dct:type"/>
     </dcat:copy>
-  </xsl:template>
-
-  <xsl:template name="add-subject">
-    <dct:subject>
-      <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA">
-        <skos:prefLabel xml:lang="nl">Vlaamse Open data</skos:prefLabel>
-        <skos:prefLabel xml:lang="en">Vlaamse Open data</skos:prefLabel>
-        <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
-      </skos:Concept>
-    </dct:subject>
-    <xsl:apply-templates select="dct:subject[skos:Concept/@rdf:about != 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA']"/>
   </xsl:template>
 </xsl:stylesheet>
