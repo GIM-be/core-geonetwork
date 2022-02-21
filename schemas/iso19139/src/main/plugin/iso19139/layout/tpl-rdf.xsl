@@ -1070,7 +1070,7 @@
             </dct:creator>
           </xsl:when>
         </xsl:choose>
-        <xsl:if test="$role = 'owner' and count(../../gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = 'publisher']) = 0">
+        <xsl:if test="$role = 'owner' and count(../../gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = 'publisher']) = 0 and name(../../..) = 'gmd:identificationInfo'">
           <dct:publisher>
             <xsl:copy-of select="$ROInfo"/>
           </dct:publisher>
