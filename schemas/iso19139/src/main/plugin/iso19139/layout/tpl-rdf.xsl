@@ -221,7 +221,7 @@
               <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
               <xsl:choose>
                 <xsl:when test="$ResourceType = 'service'">
-                  <skos:prefLabel xml:lang="nl">zonder voorwaarden</skos:prefLabel>
+                  <skos:prefLabel xml:lang="nl">Toegang zonder voorwaarden</skos:prefLabel>
                   <skos:prefLabel xml:lang="en">without conditions</skos:prefLabel>
                   <skos:prefLabel xml:lang="fr">without conditions</skos:prefLabel>
                   <skos:prefLabel xml:lang="de">without conditions</skos:prefLabel>
@@ -243,7 +243,7 @@
               <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
               <xsl:choose>
                 <xsl:when test="$ResourceType = 'service'">
-                  <skos:prefLabel xml:lang="nl">met voorwaarden</skos:prefLabel>
+                  <skos:prefLabel xml:lang="nl">Toegang met voorwaarden</skos:prefLabel>
                   <skos:prefLabel xml:lang="en">with conditions</skos:prefLabel>
                   <skos:prefLabel xml:lang="fr">with conditions</skos:prefLabel>
                   <skos:prefLabel xml:lang="de">with conditions</skos:prefLabel>
