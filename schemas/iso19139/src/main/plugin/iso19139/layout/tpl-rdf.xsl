@@ -1457,12 +1457,13 @@
 
   <!-- Conforms to - Feature catalog description -->
   <xsl:template name="FeatureCatalogueDescription" match="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
+    <xsl:for-each select="gmd:featureCatalogueCitation">
     <dct:conformsTo>
       <dct:Standard>
-        <xsl:variable name="uuidref" select="gmd:featureCatalogueCitation/@uuidref"/>
+          <xsl:variable name="uuidref" select="@uuidref"/>
         <xsl:choose>
-          <xsl:when test="normalize-space(gmd:featureCatalogueCitation/@xlink:href) != ''">
-            <xsl:attribute name="rdf:about" select="gmd:featureCatalogueCitation/@xlink:href"/>
+            <xsl:when test="normalize-space(@xlink:href) != ''">
+              <xsl:attribute name="rdf:about" select="@xlink:href"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:attribute name="rdf:about" select="concat(
@@ -1472,35 +1473,22 @@
             )"/>
           </xsl:otherwise>
         </xsl:choose>
-        <dct:identifier>
+          <dct:title>
           <xsl:value-of select="$uuidref"/>
-        </dct:identifier>
+          </dct:title>
 
-        <xsl:variable name="title" select="geonet:getLabel(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:title)"/>
+          <xsl:variable name="title" select="geonet:getLabel(gmd:CI_Citation/gmd:title)"/>
         <xsl:if test="$title != ''">
           <dct:title>
             <xsl:value-of select="$title"/>
           </dct:title>
         </xsl:if>
-        <xsl:apply-templates select="gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:edition"/>
+          <xsl:apply-templates select="gmd:CI_Citation/gmd:edition"/>
         <dct:type rdf:resource="https://www.iso.org/standard/39965.html"/>
       </dct:Standard>
     </dct:conformsTo>
+    </xsl:for-each>
   </xsl:template>
-
-  <!--
-  <xsl:template name="ContentInfo" match="gmd:contentInfo">
-    <xsl:choose>
-      <xsl:when test="name(*) = 'gmd:MD_CoverageDescription'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:MD_ImageDescription'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:AbstractMD_ContentInformation'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:MD_RangeDimension'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:MD_Band'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:MD_CoverageContentTypeCode'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:MD_ImagingConditionCode'"></xsl:when>
-    </xsl:choose>
-  </xsl:template>
-  -->
 
   <!-- Reference system info -->
   <xsl:template name="ReferenceSystemInfo" match="gmd:referenceSystemInfo">
