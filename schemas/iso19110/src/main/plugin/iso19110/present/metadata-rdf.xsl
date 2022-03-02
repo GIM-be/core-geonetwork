@@ -62,6 +62,9 @@
       <!-- Metadata change date.
       "The date is encoded as a literal in "YYYY-MM-DD" form (ISO 8601 Date and Time Formats)." -->
       <xsl:variable name="date" select="substring-before(gfc:versionDate/gco:DateTime, 'T')"/>
+      <dct:created>
+        <xsl:value-of select="$date"/>
+      </dct:created>
       <dct:issued>
         <xsl:value-of select="$date"/>
       </dct:issued>
