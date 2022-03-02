@@ -24,6 +24,7 @@
       <xsl:apply-templates select="dct:title"/>
       <xsl:apply-templates select="dct:description"/>
       <xsl:apply-templates select="dcat:contactPoint"/>
+      <xsl:apply-templates select="dct:created"/>
       <xsl:apply-templates select="dct:issued"/>
       <xsl:apply-templates select="dct:modified"/>
       <xsl:apply-templates select="dct:publisher"/>
@@ -116,6 +117,7 @@
       <xsl:apply-templates select="dct:creator"/>
       <xsl:apply-templates select="dct:isReferencedBy"/>
       <xsl:apply-templates select="dct:license"/>
+      <xsl:apply-templates select="dct:created"/>
       <xsl:apply-templates select="dct:issued"/>
       <xsl:apply-templates select="dct:modified"/>
       <xsl:apply-templates select="dct:relation"/>
