@@ -384,6 +384,12 @@
 
     <xsl:for-each
       select="gmd:citation/*/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='creation']">
+      <dct:created>
+        <xsl:value-of select="gmd:date/gco:Date|gmd:date/gco:DateTime"/>
+      </dct:created>
+    </xsl:for-each>
+    <xsl:for-each
+      select="gmd:citation/*/gmd:date/gmd:CI_Date[gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']">
       <dct:issued>
         <xsl:value-of select="gmd:date/gco:Date|gmd:date/gco:DateTime"/>
       </dct:issued>

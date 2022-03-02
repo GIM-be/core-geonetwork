@@ -76,6 +76,9 @@
           <xsl:value-of select="$dateValue" />
         </xsl:if>
       </xsl:variable>
+      <dct:created>
+        <xsl:value-of select="$date"/>
+      </dct:created>
       <dct:issued>
         <xsl:value-of select="$date"/>
       </dct:issued>
