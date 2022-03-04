@@ -699,39 +699,35 @@
       <xsl:when test="$ResourceUri != ''">
         <xsl:choose>
           <xsl:when test="$RecordURI != ''">
-            <dcat:record>
-              <dcat:CatalogRecord>
-                <xsl:if test="normalize-space($RecordURI) != ''">
-                  <xsl:attribute name="rdf:about" select="$RecordURI"/>
-                </xsl:if>
-                <foaf:primaryTopic rdf:resource="{$ResourceUri}"/>
-                <adms:identifier>
-                  <adms:Identifier>
-                    <skos:notation>
-                      <xsl:value-of select="$RecordURI"/>
-                    </skos:notation>
-                    <vlgen:lokaleIdentificator>
-                      <xsl:value-of select="$RecordUUID"/>
-                    </vlgen:lokaleIdentificator>
-                    <vlgen:naamruimte>
-                      <xsl:value-of select="replace($RecordURI, concat('/', $RecordUUID), '')"/>
-                    </vlgen:naamruimte>
-                    <dct:creator rdf:resoure="https://metadata.vlaanderen.be"/>
-                  </adms:Identifier>
-                </adms:identifier>
-                <xsl:copy-of select="$MetadataDescription"/>
-              </dcat:CatalogRecord>
-            </dcat:record>
+            <dcat:CatalogRecord>
+              <xsl:if test="normalize-space($RecordURI) != ''">
+                <xsl:attribute name="rdf:about" select="$RecordURI"/>
+              </xsl:if>
+              <foaf:primaryTopic rdf:resource="{$ResourceUri}"/>
+              <adms:identifier>
+                <adms:Identifier>
+                  <skos:notation>
+                    <xsl:value-of select="$RecordURI"/>
+                  </skos:notation>
+                  <vlgen:lokaleIdentificator>
+                    <xsl:value-of select="$RecordUUID"/>
+                  </vlgen:lokaleIdentificator>
+                  <vlgen:naamruimte>
+                    <xsl:value-of select="replace($RecordURI, concat('/', $RecordUUID), '')"/>
+                  </vlgen:naamruimte>
+                  <dct:creator rdf:resoure="https://metadata.vlaanderen.be"/>
+                </adms:Identifier>
+              </adms:identifier>
+              <xsl:copy-of select="$MetadataDescription"/>
+            </dcat:CatalogRecord>
           </xsl:when>
 
           <xsl:otherwise>
             <xsl:if test="normalize-space($MetadataDescription)">
-              <dcat:record>
-                <dcat:CatalogRecord>
-                  <foaf:primaryTopic rdf:resource="{$ResourceUri}"/>
-                  <xsl:copy-of select="$MetadataDescription"/>
-                </dcat:CatalogRecord>
-              </dcat:record>
+              <dcat:CatalogRecord>
+                <foaf:primaryTopic rdf:resource="{$ResourceUri}"/>
+                <xsl:copy-of select="$MetadataDescription"/>
+              </dcat:CatalogRecord>
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
@@ -758,11 +754,9 @@
         <xsl:element name="{geonet:getElementName($ResourceDescription)}">
           <xsl:if test="normalize-space($MetadataDescription)">
             <foaf:isPrimaryTopicOf>
-              <dcat:record>
-                <dcat:CatalogRecord>
-                  <xsl:copy-of select="$MetadataDescription"/>
-                </dcat:CatalogRecord>
-              </dcat:record>
+              <dcat:CatalogRecord>
+                <xsl:copy-of select="$MetadataDescription"/>
+              </dcat:CatalogRecord>
             </foaf:isPrimaryTopicOf>
           </xsl:if>
           <xsl:for-each select="$ResourceDescription/*[name() != 'rdf:type']">
