@@ -814,6 +814,32 @@
         $rootScope.currentNode = response.data;
       });
 
+      $scope.getChangelogHref = function() {
+        var prefix = '../../catalog/views/changelog/';
+        switch (gnConfig['metadata.resourceIdentifierPrefix']) {
+          case 'https://dev.metadata.vlaanderen.be/metadatacenter/srv/resources':
+            return prefix + 'dev-main-changelog.html';
+
+          case 'https://dev.metadata.vlaanderen.be/srv/resources':
+          case 'http://geonetwork-oslo-demo.gim.be/geonetwork/srv/resources':
+            return prefix + 'dev-metadata-dcat-changelog.html';
+
+          case 'https://beta.metadata.vlaanderen.be/metadatacenter/srv/resources':
+            return prefix + 'beta-main-changelog.html';
+
+          case 'https://beta.metadata.vlaanderen.be/srv/resources':
+            return prefix + 'beta-metadata-dcat-changelog.html';
+
+          case 'https://metadata.vlaanderen.be/metadatacenter/srv/resources':
+            return prefix + 'prod-main-changelog.html';
+
+          case 'https://metadata.vlaanderen.be/srv/resources':
+            return prefix + 'prod-metadata-dcat-changelog.html';
+
+          default:
+            return prefix + 'index.html';
+        }
+      };
     }]);
 
 })();

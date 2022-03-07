@@ -44,25 +44,10 @@ code {
 }
 
 #summary {
-  columns: 2;
-}
-
-@media screen and (min-width: 600px)  {
-  #summary {
-    columns: 3;
-  }
-}
-
-@media screen and (min-width: 1000px)  {
-  #summary {
-    columns: 4;
-  }
-}
-
-@media screen and (min-width: 1500px)  {
-  #summary {
-    columns: 5;
-  }
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 20em;
 }
 
 @keyframes blink {

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Metadata-dcat changelog</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" rel="script"></script>
+</head>
+<body>
+<div class="container">
+  <div class="summary-container">
+    <h1>Summary</h1>
+    <ul id="summary"></ul>
+  </div>
+
+  <div class="changelog-container">
+    <h1>Changelog</h1>
+
+    <div>
+      <span>See also <a href="prod-main-changelog.html">Main changelog</a></span>
+    </div>
+
+    <section id="15/03/2022 - R3">
+      <strong>Metadata Vlaanderen integreert API’s en voorziet een uitgebreid ecosysteem aan
+        metadata-standaarden</strong>
+      <ul>
+        <li><strong>Metadata-standaard:</strong> Vanaf nu kunnen alle soorten API’s beschreven worden. Het ecosysteem
+          van metadata-standaarden in de ISO/INSPIRE- en DCAT-taal is hiervoor helemaal in GeoNetwork en de DCAT-AP
+          plug-in voorzien. Hierdoor zijn telkens 3 sjablonen beschikbaar om gegevens (data en/of API’s) te beschrijven
+          in Metadata Vlaanderen:
+          <ul>
+            <li>
+              <strong>Open community:</strong> Sjabloon voor ‘DCAT-AP VL 1.2’ werd geüpgraded naar ‘DCAT-AP VL 2.0’
+              <ul>
+                <li>Nu kunnen Open data vulgens DCAT 2.0 beschreven worden, maar ook Open API’s vanaf nu beschreven
+                  worden
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Geo community:</strong> Het sjabloon blijft de GDI-Vlaanderen Best Practices voor metadata vulgen.
+              Deze data en API’s blijven dus in de ISO/INSPIRE-taal beschreven te worden. Maar er is vanaf nu ook een
+              download-output voorzien in RDF, die deze beschrijvingen in de (Geo)DCAT-taal voorstelt
+              <ul>
+                <li>Hiervoor werd de mapping-metadatastandaard ‘GeoDCAT-AP VL 2.0’ geïmplementeerd</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Niet-open én niet-geo (closed) community:</strong> Vanaf R3 is er ook een sjabloon beschikbaar
+              vulgens het basis-profiel ‘Metadata DCAT 2.0’
+              <ul>
+                <li>Vanaf nu kunnen ook de niet-open én niet-geo data en API’s worden beschreven</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Metadata-inhoud</strong>
+          <ul>
+            <li>Alle native aangemaakte metadatarecords zijn ten gevulge van de upgrade naar DCAT2.0 zoveel als mogelijk
+              gemigreerd
+            </li>
+            <li>Voor DCAT-feeds werd zoveel als mogelijk backward-compatibility behouden om de DCAT-AP VL 1.2 feeds nog
+              steeds te kunnen oogsten
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Metadata-beheersysteem</strong>
+          <ul>
+            <li>
+              GeoNetwork 3.8:
+              <ul>
+                <li>Bugfixing en optimaliseren van kleine features</li>
+                <li>Alle aanpassingen, hierboven vermeld in het blokje over de metadata-standaard</li>
+              </ul>
+            </li>
+            <li>
+              DCAT-AP plug-in:
+              <ul>
+                <li>De DCAT-AP plug-in 1.2 is uitgefaseerd en vervangen door de DCAT-AP plug-in 2.0</li>
+              </ul>
+            </li>
+            <li>
+              Zoek-facets en indexing-mechanismen:
+              <ul>
+                <li>De zoek-facets en indexing-mechanismen werden aangepast zodat ze zowel op ISO/INSPIRE- als op
+                  DCAT-metadata-talen correct indexeren, zoeken en vinden
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>
+</body>
+</html>

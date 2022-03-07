@@ -29,7 +29,7 @@
     let newTarget = null;
     if (hash !== '') {
       hash = hash.substring(1);
-      newTarget = document.getElementById(hash);
+      newTarget = document.getElementById(decodeURI(hash));
       if (newTarget) {
         newTarget.classList.add('selected');
       }
