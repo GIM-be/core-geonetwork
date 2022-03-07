@@ -174,8 +174,8 @@
     </xsl:variable>
 
     <xsl:variable name="LicenseAndRightsConstraints">
-      <xsl:variable name="constraints" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/*|
-                                               gmd:identificationInfo[1]/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation[not(../gmd:useConstraints or ../gmd:accessConstraints)]/*"/>
+      <xsl:variable name="constraints" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*[name() = ('gmd:MD_LegalConstraints', 'gmd:MD_SecurityConstraints')]/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/*|
+                                               gmd:identificationInfo[1]/*/gmd:resourceConstraints/*[name() = ('gmd:MD_LegalConstraints', 'gmd:MD_SecurityConstraints')]/gmd:useLimitation[not(../gmd:useConstraints or ../gmd:accessConstraints)]/*"/>
 
       <!-- Pick the first model license and map it to dct:license -->
       <xsl:variable name="modelLicences">
