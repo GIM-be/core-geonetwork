@@ -1170,11 +1170,18 @@
     <xsl:variable name="west" select="gmd:westBoundLongitude/gco:Decimal"/>
 
     <xsl:variable name="GMLLiteral">
-      <xsl:choose>
-        <xsl:when test="$SrsUri = 'http://www.opengis.net/def/crs/OGC/1.3/CRS84'">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;<xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:when>
-        <xsl:when test="$SrsAxisOrder = 'LonLat'">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;<xsl:value-of select="$east"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$north"/>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:when>
-        <xsl:when test="$SrsAxisOrder = 'LatLon'">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;<xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:when>
-      </xsl:choose>
+      <xsl:variable name="GMLValue">
+        <xsl:choose>
+          <xsl:when test="$SrsUri = 'http://www.opengis.net/def/crs/OGC/1.3/CRS84'"><xsl:value-of select="concat($north, ' ', $east, ' ', $south, ' ', $east, ' ', $south, ' ', $west, ' ', $north, ' ', $west, ' ', $north, ' ', $east)"/></xsl:when>
+          <xsl:when test="$SrsAxisOrder = 'LonLat'"><xsl:value-of select="concat($east, ' ', $north, ' ', $east, ' ', $south, ' ', $west, ' ', $south, ' ', $west, ' ', $north, ' ', $east, ' ', $north)"/></xsl:when>
+          <xsl:when test="$SrsAxisOrder = 'LatLon'"><xsl:value-of select="concat($north, ' ', $east, ' ', $south, ' ', $east, ' ', $south, ' ', $west, ' ', $north, ' ', $west, ' ', $north, ' ', $east)"/></xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:if test="$GMLValue">
+        <xsl:text>&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;</xsl:text>
+        <xsl:value-of select="$GMLValue"/>
+        <xsl:text>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:text>
+      </xsl:if>
     </xsl:variable>
     <xsl:variable name="WKTLiteral">
       <xsl:choose>
@@ -1183,7 +1190,8 @@
         <xsl:when test="$SrsAxisOrder = 'LatLon'">&lt;<xsl:value-of select="$SrsUri"/>&gt; POLYGON((<xsl:value-of select="$north"/><xsl:text> </xsl:text><xsl:value-of select="$west"/>,<xsl:value-of select="$north"/><xsl:text> </xsl:text><xsl:value-of select="$east"/>,<xsl:value-of select="$south"/><xsl:text> </xsl:text><xsl:value-of select="$east"/>,<xsl:value-of select="$south"/><xsl:text> </xsl:text><xsl:value-of select="$west"/>,<xsl:value-of select="$north"/><xsl:text> </xsl:text><xsl:value-of select="$west"/>))</xsl:when>
       </xsl:choose>
     </xsl:variable>
-    <xsl:variable name="GeoJSONLiteral">{"type":"Polygon","crs":{"type":"name","properties":{"name":"<xsl:value-of select="$SrsUrn"/>"}},"coordinates":[[[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>],[<xsl:value-of select="$east"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>],[<xsl:value-of select="$east"/><xsl:text>,</xsl:text><xsl:value-of select="$south"/>],[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$south"/>],[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>]]]}</xsl:variable><dct:spatial>
+    <xsl:variable name="GeoJSONLiteral">{"type":"Polygon","crs":{"type":"name","properties":{"name":"<xsl:value-of select="$SrsUrn"/>"}},"coordinates":[[[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>],[<xsl:value-of select="$east"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>],[<xsl:value-of select="$east"/><xsl:text>,</xsl:text><xsl:value-of select="$south"/>],[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$south"/>],[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>]]]}</xsl:variable>
+    <dct:spatial>
       <dct:Location>
         <locn:geometry>
           <xsl:attribute name="rdf:datatype" select="'https://www.iana.org/assignments/media-types/application/vnd.geo+json'"/>
