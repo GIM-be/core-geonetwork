@@ -310,7 +310,7 @@
       </dct:conformsTo>
 
       <dct:source rdf:resource="{$MetadataXmlUrl}"/>
-      <dcat:landingPage rdf:resource="{$MetadataViewUrl}"/>
+      <mdcat:landingpageVoorBronMetadata rdf:resource="{$MetadataViewUrl}"/>
 
       <xsl:if test="$MetadataCharacterEncoding != ''">
         <xsl:copy-of select="$MetadataCharacterEncoding"/>
