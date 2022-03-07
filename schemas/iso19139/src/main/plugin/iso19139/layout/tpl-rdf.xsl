@@ -1205,7 +1205,7 @@
     <xsl:variable name="east" select="gmd:eastBoundLongitude/gco:Decimal"/>
     <xsl:variable name="south" select="gmd:southBoundLatitude/gco:Decimal"/>
     <xsl:variable name="west" select="gmd:westBoundLongitude/gco:Decimal"/>
-    <xsl:variable name="geoId" select="normalize-space(../../gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString)"/>
+    <xsl:variable name="geoId" select="normalize-space((../../gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString)[1])"/>
     <dct:spatial>
       <xsl:if test="$geoId != ''">
         <xsl:choose>
