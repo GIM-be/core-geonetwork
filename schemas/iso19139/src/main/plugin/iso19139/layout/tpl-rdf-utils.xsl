@@ -204,8 +204,7 @@
     <xsl:param name="url" as="xs:string"/>
     <xsl:param name="queryParam" as="xs:string"/>
     <xsl:variable name="value" select="substring-after(lower-case($url), concat(lower-case($queryParam), '='))"/>
-    <xsl:value-of
-      select="normalize-space(if (contains($value, '&amp;')) then substring-before($value, '&amp;') else $value)"/>
+    <xsl:value-of select="normalize-space(if (contains($value, '&amp;')) then substring-before($value, '&amp;') else $value)"/>
   </xsl:function>
 
 
@@ -245,7 +244,7 @@
     </xsl:choose>
   </xsl:function>
 
-  <xsl:function name="geonet:getResourceUuid">
+  <xsl:function name="geonet:getResourceBaseURIOrUUID">
     <xsl:param name="md" as="node()"/>
     <xsl:variable name="resourceIdentifiers">
       <xsl:for-each select="$md//gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
@@ -269,11 +268,34 @@
     </xsl:choose>
   </xsl:function>
 
+  <xsl:function name="geonet:getResourceUUID">
+    <xsl:param name="md" as="node()"/>
+    <xsl:variable name="uuid" select="geonet:getResourceBaseURIOrUUID($md)"/>
+    <xsl:choose>
+      <xsl:when test="matches($uuid, concat('^', $uuidRegex, '$'))">
+        <xsl:value-of select="$uuid"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="normalizedUUID">
+          <xsl:analyze-string select="$uuid" regex="{$uuidRegex}">
+            <xsl:matching-substring>
+              <xsl:value-of select="."/>
+            </xsl:matching-substring>
+          </xsl:analyze-string>
+        </xsl:variable>
+        <!-- Else statement should never occur -->
+        <xsl:value-of select="if (matches($normalizedUUID, concat('^', $uuidRegex, '$')))
+                              then normalize-space($normalizedUUID)
+                              else xslutil:uuidFromString($md//gmd:fileIdentifier/gco:CharacterString)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
   <xsl:function name="geonet:getResourceURI">
     <xsl:param name="md" as="node()"/>
     <xsl:param name="resourceType" as="xs:string"/>
     <xsl:param name="uriPattern" as="xs:string"/>
-    <xsl:variable name="resourceUUID" select="geonet:getResourceUuid($md)"/>
+    <xsl:variable name="resourceUUID" select="geonet:getResourceBaseURIOrUUID($md)"/>
     <xsl:choose>
       <xsl:when test="starts-with($resourceUUID, 'http://') or starts-with($resourceUUID, 'https://')">
         <xsl:value-of select="geonet:escapeURI($resourceUUID)"/>
@@ -282,6 +304,12 @@
         <xsl:value-of select="geonet:escapeURI(replace(replace($uriPattern, '\{resourceType\}', concat($resourceType, 's')), '\{resourceUuid\}', $resourceUUID))"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+  
+  <xsl:function name="geonet:isResourceUUIDGenerated">
+    <xsl:param name="md" as="node()"/>
+    <xsl:param name="resourceURI" as="xs:string"/>
+    <xsl:value-of select="$resourceURI != geonet:getResourceBaseURIOrUUID($md)"/>
   </xsl:function>
 
 </xsl:stylesheet>

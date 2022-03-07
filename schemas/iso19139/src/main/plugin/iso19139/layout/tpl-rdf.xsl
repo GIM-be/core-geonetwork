@@ -130,6 +130,23 @@
       </xsl:choose>
     </xsl:variable>
 
+    <xsl:variable name="MetadataDate" select="geonet:formatRdfDate(gmd:dateStamp/*)"/>
+
+    <xsl:variable name="RecordUUID" select="string(gmd:fileIdentifier/gco:CharacterString)"/>
+
+    <xsl:variable name="ResourceUUID" select="geonet:getResourceUUID(.)"/>
+
+    <xsl:variable name="uriPattern" select="xslutil:getUriPattern($RecordUUID)"/>
+
+    <xsl:variable name="RecordURI">
+      <xsl:variable name="mURI" select="replace(replace($uriPattern, '\{resourceType\}', 'records'), '\{resourceUuid\}', $RecordUUID)"/>
+      <xsl:if test="$mURI != '' and (starts-with($mURI, 'http://') or starts-with($mURI, 'https://'))">
+        <xsl:value-of select="geonet:escapeURI($mURI)"/>
+      </xsl:if>
+    </xsl:variable>
+
+    <xsl:variable name="ResourceUri" select="geonet:getResourceURI(., $ResourceType, $uriPattern)"/>
+
     <xsl:variable name="ServiceType">
       <xsl:value-of select="gmd:identificationInfo/*/srv:serviceType/gco:LocalName"/>
     </xsl:variable>
@@ -155,23 +172,6 @@
         </xsl:call-template>
       </xsl:for-each>
     </xsl:variable>
-
-    <xsl:variable name="MetadataDate" select="geonet:formatRdfDate(gmd:dateStamp/*)"/>
-
-    <xsl:variable name="RecordUUID" select="string(gmd:fileIdentifier/gco:CharacterString)"/>
-
-    <xsl:variable name="ResourceUUID" select="geonet:getResourceUuid(.)"/>
-
-    <xsl:variable name="uriPattern" select="xslutil:getUriPattern($RecordUUID)"/>
-
-    <xsl:variable name="RecordURI">
-      <xsl:variable name="mURI" select="replace(replace($uriPattern, '\{resourceType\}', 'records'), '\{resourceUuid\}', $RecordUUID)"/>
-      <xsl:if test="$mURI != '' and (starts-with($mURI, 'http://') or starts-with($mURI, 'https://'))">
-        <xsl:value-of select="geonet:escapeURI($mURI)"/>
-      </xsl:if>
-    </xsl:variable>
-
-    <xsl:variable name="ResourceUri" select="geonet:getResourceURI(., $ResourceType, $uriPattern)"/>
 
     <xsl:variable name="LicenseAndRightsConstraints">
       <xsl:variable name="constraints" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/*|
@@ -739,14 +739,16 @@
           <xsl:if test="normalize-space($ResourceUri) != ''">
             <xsl:attribute name="rdf:about" select="$ResourceUri"/>
           </xsl:if>
-          <adms:identifier>
-            <adms:Identifier>
-              <skos:notation>
-                <xsl:value-of select="$ResourceUri"/>
-              </skos:notation>
-              <dct:creator rdf:resoure="https://metadata.vlaanderen.be"/>
-            </adms:Identifier>
-          </adms:identifier>
+          <xsl:if test="geonet:isResourceUUIDGenerated(., $ResourceUri) = 'true'">
+            <adms:identifier>
+              <adms:Identifier>
+                <skos:notation>
+                  <xsl:value-of select="$ResourceUri"/>
+                </skos:notation>
+                <dct:creator rdf:resoure="https://metadata.vlaanderen.be"/>
+              </adms:Identifier>
+            </adms:identifier>
+          </xsl:if>
           <xsl:for-each select="$ResourceDescription/*[name() != 'rdf:type']">
             <xsl:copy-of select="."/>
           </xsl:for-each>
