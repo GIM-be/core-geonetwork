@@ -130,6 +130,23 @@
       </xsl:choose>
     </xsl:variable>
 
+    <xsl:variable name="MetadataDate" select="geonet:formatRdfDate(gmd:dateStamp/*)"/>
+
+    <xsl:variable name="RecordUUID" select="string(gmd:fileIdentifier/gco:CharacterString)"/>
+
+    <xsl:variable name="ResourceUUID" select="geonet:getResourceUUID(.)"/>
+
+    <xsl:variable name="uriPattern" select="xslutil:getUriPattern($RecordUUID)"/>
+
+    <xsl:variable name="RecordURI">
+      <xsl:variable name="mURI" select="replace(replace($uriPattern, '\{resourceType\}', 'records'), '\{resourceUuid\}', $RecordUUID)"/>
+      <xsl:if test="$mURI != '' and (starts-with($mURI, 'http://') or starts-with($mURI, 'https://'))">
+        <xsl:value-of select="geonet:escapeURI($mURI)"/>
+      </xsl:if>
+    </xsl:variable>
+
+    <xsl:variable name="ResourceUri" select="geonet:getResourceURI(., $ResourceType, $uriPattern)"/>
+
     <xsl:variable name="ServiceType">
       <xsl:value-of select="gmd:identificationInfo/*/srv:serviceType/gco:LocalName"/>
     </xsl:variable>
@@ -156,26 +173,9 @@
       </xsl:for-each>
     </xsl:variable>
 
-    <xsl:variable name="MetadataDate" select="geonet:formatRdfDate(gmd:dateStamp/*)"/>
-
-    <xsl:variable name="RecordUUID" select="string(gmd:fileIdentifier/gco:CharacterString)"/>
-
-    <xsl:variable name="ResourceUUID" select="geonet:getResourceUuid(.)"/>
-
-    <xsl:variable name="uriPattern" select="xslutil:getUriPattern($RecordUUID)"/>
-
-    <xsl:variable name="RecordURI">
-      <xsl:variable name="mURI" select="replace(replace($uriPattern, '\{resourceType\}', 'records'), '\{resourceUuid\}', $RecordUUID)"/>
-      <xsl:if test="$mURI != '' and (starts-with($mURI, 'http://') or starts-with($mURI, 'https://'))">
-        <xsl:value-of select="geonet:escapeURI($mURI)"/>
-      </xsl:if>
-    </xsl:variable>
-
-    <xsl:variable name="ResourceUri" select="geonet:getResourceURI(., $ResourceType, $uriPattern)"/>
-
     <xsl:variable name="LicenseAndRightsConstraints">
-      <xsl:variable name="constraints" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/*|
-                                               gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:useLimitation[not(../gmd:useConstraints or ../gmd:accessConstraints)]/*"/>
+      <xsl:variable name="constraints" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/*|
+                                               gmd:identificationInfo[1]/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation[not(../gmd:useConstraints or ../gmd:accessConstraints)]/*"/>
 
       <!-- Pick the first model license and map it to dct:license -->
       <xsl:variable name="modelLicences">
@@ -221,7 +221,7 @@
               <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
               <xsl:choose>
                 <xsl:when test="$ResourceType = 'service'">
-                  <skos:prefLabel xml:lang="nl">zonder voorwaarden</skos:prefLabel>
+                  <skos:prefLabel xml:lang="nl">Toegang zonder voorwaarden</skos:prefLabel>
                   <skos:prefLabel xml:lang="en">without conditions</skos:prefLabel>
                   <skos:prefLabel xml:lang="fr">without conditions</skos:prefLabel>
                   <skos:prefLabel xml:lang="de">without conditions</skos:prefLabel>
@@ -243,7 +243,7 @@
               <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
               <xsl:choose>
                 <xsl:when test="$ResourceType = 'service'">
-                  <skos:prefLabel xml:lang="nl">met voorwaarden</skos:prefLabel>
+                  <skos:prefLabel xml:lang="nl">Toegang met voorwaarden</skos:prefLabel>
                   <skos:prefLabel xml:lang="en">with conditions</skos:prefLabel>
                   <skos:prefLabel xml:lang="fr">with conditions</skos:prefLabel>
                   <skos:prefLabel xml:lang="de">with conditions</skos:prefLabel>
@@ -310,7 +310,7 @@
       </dct:conformsTo>
 
       <dct:source rdf:resource="{$MetadataXmlUrl}"/>
-      <dcat:landingPage rdf:resource="{$MetadataViewUrl}"/>
+      <mdcat:landingpageVoorBronMetadata rdf:resource="{$MetadataViewUrl}"/>
 
       <xsl:if test="$MetadataCharacterEncoding != ''">
         <xsl:copy-of select="$MetadataCharacterEncoding"/>
@@ -419,7 +419,7 @@
       </xsl:variable>
 
       <!-- Spatial extend -->
-      <xsl:apply-templates select="gmd:identificationInfo[1]/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
+      <xsl:apply-templates select="gmd:identificationInfo/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
 
       <!-- spatial resolution -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution"/>
@@ -504,6 +504,9 @@
 
         <!-- Dataset specific -->
         <xsl:when test="$ResourceType = 'dataset' or $ResourceType = 'series'">
+          <!-- Bbox -->
+          <xsl:apply-templates mode="bbox" select="gmd:identificationInfo/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
+
           <!-- Reference system information -->
           <xsl:apply-templates select="gmd:referenceSystemInfo"/>
 
@@ -736,14 +739,16 @@
           <xsl:if test="normalize-space($ResourceUri) != ''">
             <xsl:attribute name="rdf:about" select="$ResourceUri"/>
           </xsl:if>
-          <adms:identifier>
-            <adms:Identifier>
-              <skos:notation>
-                <xsl:value-of select="$ResourceUri"/>
-              </skos:notation>
-              <dct:creator rdf:resoure="https://metadata.vlaanderen.be"/>
-            </adms:Identifier>
-          </adms:identifier>
+          <xsl:if test="geonet:isResourceUUIDGenerated(., $ResourceUri) = 'true'">
+            <adms:identifier>
+              <adms:Identifier>
+                <skos:notation>
+                  <xsl:value-of select="$ResourceUri"/>
+                </skos:notation>
+                <dct:creator rdf:resoure="https://metadata.vlaanderen.be"/>
+              </adms:Identifier>
+            </adms:identifier>
+          </xsl:if>
           <xsl:for-each select="$ResourceDescription/*[name() != 'rdf:type']">
             <xsl:copy-of select="."/>
           </xsl:for-each>
@@ -1070,7 +1075,7 @@
             </dct:creator>
           </xsl:when>
         </xsl:choose>
-        <xsl:if test="$role = 'owner' and count(../../gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = 'publisher']) = 0">
+        <xsl:if test="$role = 'owner' and count(../../gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = 'publisher']) = 0 and name(../../..) = 'gmd:identificationInfo'">
           <dct:publisher>
             <xsl:copy-of select="$ROInfo"/>
           </dct:publisher>
@@ -1164,18 +1169,20 @@
     <xsl:variable name="south" select="gmd:southBoundLatitude/gco:Decimal"/>
     <xsl:variable name="west" select="gmd:westBoundLongitude/gco:Decimal"/>
 
-    <!-- Bbox as GML (GeoSPARQL) -->
-    <!--  Update by GIM: use polygon encoding for bbox -->
     <xsl:variable name="GMLLiteral">
-      <xsl:choose>
-        <xsl:when test="$SrsUri = 'http://www.opengis.net/def/crs/OGC/1.3/CRS84'">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;<xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:when>
-        <xsl:when test="$SrsAxisOrder = 'LonLat'">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;<xsl:value-of select="$east"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$north"/>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:when>
-        <xsl:when test="$SrsAxisOrder = 'LatLon'">&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;<xsl:value-of select="$north"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$east"/> <xsl:value-of select="$south"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$west"/> <xsl:value-of select="$north"/> <xsl:value-of select="$east"/>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:when>
-      </xsl:choose>
+      <xsl:variable name="GMLValue">
+        <xsl:choose>
+          <xsl:when test="$SrsUri = 'http://www.opengis.net/def/crs/OGC/1.3/CRS84'"><xsl:value-of select="concat($north, ' ', $east, ' ', $south, ' ', $east, ' ', $south, ' ', $west, ' ', $north, ' ', $west, ' ', $north, ' ', $east)"/></xsl:when>
+          <xsl:when test="$SrsAxisOrder = 'LonLat'"><xsl:value-of select="concat($east, ' ', $north, ' ', $east, ' ', $south, ' ', $west, ' ', $south, ' ', $west, ' ', $north, ' ', $east, ' ', $north)"/></xsl:when>
+          <xsl:when test="$SrsAxisOrder = 'LatLon'"><xsl:value-of select="concat($north, ' ', $east, ' ', $south, ' ', $east, ' ', $south, ' ', $west, ' ', $north, ' ', $west, ' ', $north, ' ', $east)"/></xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:if test="$GMLValue">
+        <xsl:text>&lt;gml:Polygon&gt;&lt;gml:exterior&gt;&lt;gml:LinearRing&gt;&lt;gml:posList&gt;</xsl:text>
+        <xsl:value-of select="$GMLValue"/>
+        <xsl:text>&lt;/gml:posList&gt;&lt;/gml:LinearRing&gt;&lt;/gml:exterior&gt;&lt;/gml:Polygon&gt;</xsl:text>
+      </xsl:if>
     </xsl:variable>
-
-    <!-- Bbox as WKT (GeoSPARQL) -->
-
     <xsl:variable name="WKTLiteral">
       <xsl:choose>
         <xsl:when test="$SrsUri = 'http://www.opengis.net/def/crs/OGC/1.3/CRS84'">POLYGON((<xsl:value-of select="$west"/><xsl:text> </xsl:text><xsl:value-of select="$north"/>,<xsl:value-of select="$east"/><xsl:text> </xsl:text><xsl:value-of select="$north"/>,<xsl:value-of select="$east"/><xsl:text> </xsl:text><xsl:value-of select="$south"/>,<xsl:value-of select="$west"/><xsl:text> </xsl:text><xsl:value-of select="$south"/>,<xsl:value-of select="$west"/><xsl:text> </xsl:text><xsl:value-of select="$north"/>))</xsl:when>
@@ -1183,14 +1190,8 @@
         <xsl:when test="$SrsAxisOrder = 'LatLon'">&lt;<xsl:value-of select="$SrsUri"/>&gt; POLYGON((<xsl:value-of select="$north"/><xsl:text> </xsl:text><xsl:value-of select="$west"/>,<xsl:value-of select="$north"/><xsl:text> </xsl:text><xsl:value-of select="$east"/>,<xsl:value-of select="$south"/><xsl:text> </xsl:text><xsl:value-of select="$east"/>,<xsl:value-of select="$south"/><xsl:text> </xsl:text><xsl:value-of select="$west"/>,<xsl:value-of select="$north"/><xsl:text> </xsl:text><xsl:value-of select="$west"/>))</xsl:when>
       </xsl:choose>
     </xsl:variable>
-
-    <!-- Bbox as GeoJSON -->
-
     <xsl:variable name="GeoJSONLiteral">{"type":"Polygon","crs":{"type":"name","properties":{"name":"<xsl:value-of select="$SrsUrn"/>"}},"coordinates":[[[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>],[<xsl:value-of select="$east"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>],[<xsl:value-of select="$east"/><xsl:text>,</xsl:text><xsl:value-of select="$south"/>],[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$south"/>],[<xsl:value-of select="$west"/><xsl:text>,</xsl:text><xsl:value-of select="$north"/>]]]}</xsl:variable>
     <dct:spatial>
-      <!-- Update GIM: put GeoJSON encoding first -->
-      <!-- Additional geometry encodings -->
-      <!-- Recommended geometry encodings -->
       <dct:Location>
         <locn:geometry>
           <xsl:attribute name="rdf:datatype" select="'https://www.iana.org/assignments/media-types/application/vnd.geo+json'"/>
@@ -1205,6 +1206,39 @@
           <xsl:value-of select="$GMLLiteral"/>
         </locn:geometry>
       </dct:Location>
+    </dct:spatial>
+  </xsl:template>
+
+  <!-- Geographic extent -->
+  <xsl:template name="GeographicExtent" mode="bbox" match="gmd:EX_GeographicBoundingBox">
+    <xsl:variable name="north" select="gmd:northBoundLatitude/gco:Decimal"/>
+    <xsl:variable name="east" select="gmd:eastBoundLongitude/gco:Decimal"/>
+    <xsl:variable name="south" select="gmd:southBoundLatitude/gco:Decimal"/>
+    <xsl:variable name="west" select="gmd:westBoundLongitude/gco:Decimal"/>
+    <xsl:variable name="geoId" select="normalize-space((../../gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString)[1])"/>
+    <dct:spatial>
+      <xsl:if test="$geoId != ''">
+        <xsl:choose>
+          <xsl:when test="starts-with($geoId, 'http://') or starts-with($geoId, 'https://')">
+            <xsl:attribute name="rdf:about" select="$geoId"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <locn:geographicName xml:lang="nl">
+              <xsl:value-of select="$geoId"/>
+            </locn:geographicName>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
+      <dcat:bbox>
+        <gml:Envelope srsName="{$SrsUri}">
+          <gml:lowerCorner>
+            <xsl:value-of select="concat($west, ' ', $south)"/>
+          </gml:lowerCorner>
+          <gml:upperCorner>
+            <xsl:value-of select="concat($east, ' ', $north)"/>
+          </gml:upperCorner>
+        </gml:Envelope>
+      </dcat:bbox>
     </dct:spatial>
   </xsl:template>
 
@@ -1457,50 +1491,38 @@
 
   <!-- Conforms to - Feature catalog description -->
   <xsl:template name="FeatureCatalogueDescription" match="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
-    <dct:conformsTo>
-      <dct:Standard>
-        <xsl:variable name="uuidref" select="gmd:featureCatalogueCitation/@uuidref"/>
-        <xsl:choose>
-          <xsl:when test="normalize-space(gmd:featureCatalogueCitation/@xlink:href) != ''">
-            <xsl:attribute name="rdf:about" select="gmd:featureCatalogueCitation/@xlink:href"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:attribute name="rdf:about" select="concat(
-              $catalogUrl,
-              '/csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id=',
-              $uuidref
-            )"/>
-          </xsl:otherwise>
-        </xsl:choose>
-        <dct:identifier>
-          <xsl:value-of select="$uuidref"/>
-        </dct:identifier>
-
-        <xsl:variable name="title" select="geonet:getLabel(gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:title)"/>
-        <xsl:if test="$title != ''">
+    <xsl:for-each select="gmd:featureCatalogueCitation">
+      <dct:conformsTo>
+        <dct:Standard>
+          <xsl:variable name="uuidref" select="@uuidref"/>
+          <xsl:choose>
+            <xsl:when test="normalize-space(@xlink:href) != ''">
+              <xsl:attribute name="rdf:about" select="@xlink:href"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:attribute name="rdf:about" select="concat(
+                $catalogUrl,
+                '/csw?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;elementSetName=full&amp;id=',
+                $uuidref
+              )"/>
+            </xsl:otherwise>
+          </xsl:choose>
           <dct:title>
-            <xsl:value-of select="$title"/>
+            <xsl:value-of select="$uuidref"/>
           </dct:title>
-        </xsl:if>
-        <xsl:apply-templates select="gmd:featureCatalogueCitation/gmd:CI_Citation/gmd:edition"/>
-        <dct:type rdf:resource="https://www.iso.org/standard/39965.html"/>
-      </dct:Standard>
-    </dct:conformsTo>
-  </xsl:template>
 
-  <!--
-  <xsl:template name="ContentInfo" match="gmd:contentInfo">
-    <xsl:choose>
-      <xsl:when test="name(*) = 'gmd:MD_CoverageDescription'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:MD_ImageDescription'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:AbstractMD_ContentInformation'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:MD_RangeDimension'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:MD_Band'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:MD_CoverageContentTypeCode'"></xsl:when>
-      <xsl:when test="name(*) = 'gmd:MD_ImagingConditionCode'"></xsl:when>
-    </xsl:choose>
+          <xsl:variable name="title" select="geonet:getLabel(gmd:CI_Citation/gmd:title)"/>
+          <xsl:if test="$title != ''">
+            <dct:title>
+              <xsl:value-of select="$title"/>
+            </dct:title>
+          </xsl:if>
+          <xsl:apply-templates select="gmd:CI_Citation/gmd:edition"/>
+          <dct:type rdf:resource="https://www.iso.org/standard/39965.html"/>
+        </dct:Standard>
+      </dct:conformsTo>
+    </xsl:for-each>
   </xsl:template>
-  -->
 
   <!-- Reference system info -->
   <xsl:template name="ReferenceSystemInfo" match="gmd:referenceSystemInfo">

@@ -147,8 +147,8 @@
           <vcard:organization-name>
             <xsl:value-of select="$env/system/site/organization"/>
           </vcard:organization-name>
-          <vcard:hasEmail rdf:resource="mailto:informatie.vlaanderen@vlaanderen.be" />
-          <vcard:hasURL rdf:resource="https://overheid.vlaanderen.be/informatie-vlaanderen" />
+          <vcard:hasEmail rdf:resource="mailto:digitaal.vlaanderen@vlaanderen.be" />
+          <vcard:hasURL rdf:resource="https://www.vlaanderen.be/digitaal-vlaanderen" />
         </vcard:Organization>
       </dcat:contactPoint>
     </dcat:Catalog>

@@ -60,13 +60,13 @@
   <xsl:variable name="oplang" select="concat($op,'language/')"/>
   <xsl:variable name="opcb" select="concat($op,'corporate-body/')"/>
   <xsl:variable name="opfq" select="concat($op,'frequency/')"/>
-  <xsl:variable name="cldFrequency">http://purl.org/cld/freq/</xsl:variable>
+  <xsl:variable name="cldFrequency">https://purl.org/cld/freq/</xsl:variable>
   <!-- This is used as the datatype for the GeoJSON-based encoding of the bounding box. -->
   <xsl:variable name="geojsonMediaTypeUri">https://www.iana.org/assignments/media-types/application/vnd.geo+json
   </xsl:variable>
 
   <!-- INSPIRE code list URIs -->
-  <xsl:variable name="INSPIRECodelistUri">http://inspire.ec.europa.eu/metadata-codelist/</xsl:variable>
+  <xsl:variable name="INSPIRECodelistUri">https://inspire.ec.europa.eu/metadata-codelist/</xsl:variable>
   <xsl:variable name="SpatialDataServiceCategoryCodelistUri" select="concat($INSPIRECodelistUri,'SpatialDataServiceCategory')"/>
   <xsl:variable name="DegreeOfConformityCodelistUri" select="concat($INSPIRECodelistUri,'DegreeOfConformity')"/>
   <xsl:variable name="ResourceTypeCodelistUri" select="concat($INSPIRECodelistUri,'ResourceType')"/>
@@ -75,15 +75,15 @@
   <xsl:variable name="TopicCategoryCodelistUri" select="concat($INSPIRECodelistUri,'TopicCategory')"/>
 
   <!-- INSPIRE code list URIs (not yet supported; the URI pattern is tentative) -->
-  <xsl:variable name="SpatialRepresentationTypeCodelistUri" select="concat($INSPIRECodelistUri,'SpatialRepresentationTypeCode')"/>
+  <xsl:variable name="SpatialRepresentationTypeCodelistUri" select="concat($INSPIRECodelistUri,'SpatialRepresentationType')"/>
   <xsl:variable name="MaintenanceFrequencyCodelistUri" select="concat($INSPIRECodelistUri,'MaintenanceFrequencyCode')"/>
 
   <!-- INSPIRE glossary URI -->
-  <xsl:variable name="INSPIREGlossaryUri">http://inspire.ec.europa.eu/glossary/</xsl:variable>
+  <xsl:variable name="INSPIREGlossaryUri">https://inspire.ec.europa.eu/glossary/</xsl:variable>
 
   <!-- GIM custom variables -->
   <xsl:variable name="catalogUrl" select="concat(substring-before($resourcePrefix, '/resource'), '/dut')"/>
-  <xsl:variable name="uuidRegex" select="'^([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}$'"/>
+  <xsl:variable name="uuidRegex" select="'([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}'"/>
   <xsl:variable name="relationLookup" select="true()"/>
 
   <xsl:variable name="modelLicencieKeywords">
