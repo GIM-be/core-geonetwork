@@ -284,7 +284,7 @@
 
   <xsl:template mode="getMetadataThumbnail" match="gmd:MD_Metadata">
     <xsl:value-of
-      select="gmd:identificationInfo/*/gmd:graphicOverview[1]/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString"/>
+      select="gmd:identificationInfo/*/gmd:graphicOverview[1]/gmd:MD_BrowseGraphic/gmd:fileName/*"/>
   </xsl:template>
 
 
@@ -300,11 +300,19 @@
         </span>
       </h4>
       <xsl:for-each select="gmd:identificationInfo/*/gmd:graphicOverview/*">
-        <xsl:if test="normalize-space(gmd:fileName/*) != ''">
+        <xsl:variable name="url" select="normalize-space(gmd:fileName/*)"/>
+        <xsl:if test="$url != ''">
           <img data-gn-img-modal="md"
                class="gn-img-thumbnail center-block"
-               alt="{$schemaStrings/overview}"
-               src="{gmd:fileName/*}"/>
+               alt="{$schemaStrings/overview}">
+            <xsl:choose>
+              <xsl:when test="$output != 'pdf' and $output != 'html' and contains($url, concat($nodeUrl,'api/records/')) and contains($url,'/attachments/')">
+                <xsl:message select="concat($nodeUrl,'api/records/')" />
+                <xsl:attribute name="data-ng-src"><xsl:value-of select="$url"/><xsl:if test="contains($url,'?')">&amp;</xsl:if><xsl:if test="not(contains($url,'?'))">?</xsl:if>approved={{mdView.current.record.draft != 'y'}}</xsl:attribute>
+              </xsl:when>
+              <xsl:otherwise><xsl:attribute name="src" select="$url"/></xsl:otherwise>
+            </xsl:choose>
+          </img>
           <xsl:for-each select="gmd:fileDescription">
             <div class="gn-img-thumbnail-caption">
               <xsl:call-template name="localised">
