@@ -264,15 +264,15 @@
               img.url[mdLanguage] ||
               img.url[Object.keys(img.url)[0]];
 
-              // //Is it a draft?
-              // if(img.lUrl.indexOf("/api/records/") >= 0
-              //     &&  img.lUrl.indexOf("/api/records/")< img.lUrl.indexOf("/attachments/")) {
-              //   if(img.lUrl.indexOf("?") > 0) {
-              //     img.lUrl  += "&approved=false";
-              //   } else {
-              //     img.lUrl  += "?approved=false";
-              //   }
-              // }
+            var iPos1 = img.lUrl.indexOf("/api/records/");
+            var iPos2 = img.lUrl.indexOf("/attachments/");
+            if ( iPos1 > -1 && iPos1 < iPos2) {
+              if(img.lUrl.indexOf("?") > 0) {
+                img.lUrl  += "&approved=false";
+              } else {
+                img.lUrl  += "?approved=false";
+              }
+            }
           });
           if (data.siblings) {
             for (var i = 0; i < data.siblings.length; i++) {
