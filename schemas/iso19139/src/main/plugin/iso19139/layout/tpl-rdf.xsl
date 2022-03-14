@@ -1230,14 +1230,17 @@
         </xsl:choose>
       </xsl:if>
       <dcat:bbox>
-        <gml:Envelope srsName="{$SrsUri}">
-          <gml:lowerCorner>
-            <xsl:value-of select="concat($west, ' ', $south)"/>
-          </gml:lowerCorner>
-          <gml:upperCorner>
-            <xsl:value-of select="concat($east, ' ', $north)"/>
-          </gml:upperCorner>
-        </gml:Envelope>
+        <xsl:variable name="bbox">
+          <gml:Envelope srsName="{$SrsUri}">
+            <gml:lowerCorner>
+              <xsl:value-of select="concat($west, ' ', $south)"/>
+            </gml:lowerCorner>
+            <gml:upperCorner>
+              <xsl:value-of select="concat($east, ' ', $north)"/>
+            </gml:upperCorner>
+          </gml:Envelope>
+        </xsl:variable>
+        <xsl:apply-templates select="$bbox" mode="serialize"/>
       </dcat:bbox>
     </dct:spatial>
   </xsl:template>
@@ -1529,11 +1532,17 @@
     <xsl:variable name="code" select="gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code"/>
     <xsl:variable name="crs" select="string($code/gmx:Anchor/@xlink:href|$code/gco:CharacterString)"/>
 
+    <xsl:variable name="crsTitle" select="normalize-space($code/gmx:Anchor|$code/gco:CharacterString)"/>
     <xsl:choose>
       <xsl:when test="starts-with($crs, 'http://') or starts-with($crs, 'https://')">
         <dct:conformsTo>
           <dct:Standard>
             <xsl:attribute name="rdf:about" select="$crs"/>
+            <xsl:if test="$crsTitle != ''">
+              <dct:title>
+                <xsl:value-of select="$crsTitle"/>
+              </dct:title>
+            </xsl:if>
             <dct:type rdf:resource="http://inspire.ec.europa.eu/glossary/SpatialReferenceSystem"/>
           </dct:Standard>
         </dct:conformsTo>
@@ -1544,6 +1553,11 @@
             <dct:identifier>
               <xsl:value-of select="$crs"/>
             </dct:identifier>
+            <xsl:if test="$crsTitle != ''">
+              <dct:title>
+                <xsl:value-of select="$crsTitle"/>
+              </dct:title>
+            </xsl:if>
             <dct:type rdf:resource="http://inspire.ec.europa.eu/glossary/SpatialReferenceSystem"/>
           </dct:Standard>
         </dct:conformsTo>
