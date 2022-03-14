@@ -312,4 +312,16 @@
     <xsl:value-of select="$resourceURI != geonet:getResourceBaseURIOrUUID($md)"/>
   </xsl:function>
 
+
+  <xsl:template match="*" mode="serialize">
+    <xsl:text>&lt;</xsl:text><xsl:value-of select="name(.)"/>
+    <xsl:for-each select="@*">
+      <xsl:value-of select="concat(' ', name(.), '=', '&quot;', string(.), '&quot;')"/>
+    </xsl:for-each>
+    <xsl:text>&gt;</xsl:text>
+    <xsl:apply-templates mode="serialize"/>
+    <xsl:text>&lt;/</xsl:text><xsl:value-of select="name(.)"/>
+    <xsl:text>&gt;</xsl:text>
+  </xsl:template>
+
 </xsl:stylesheet>
