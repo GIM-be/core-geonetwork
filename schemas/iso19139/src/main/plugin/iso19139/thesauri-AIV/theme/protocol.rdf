@@ -652,4 +652,34 @@
     <rdfs:seeAlso rdf:resource="https://www.ogc.org/standards/ods"/>
   </skos:Concept>
 
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/dataserviceprotocol/OGC:OGC-API-Features-landingpage">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/Standard"/>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
+    <skos:prefLabel xml:lang="nl">OGC API Features landingpage</skos:prefLabel>
+    <skos:definition xml:lang="nl">De OGC API Features landingspagina is die pagina waarop alle informatie die nodig is om de bezoeker tot actie aan te zetten, staat.</skos:definition>
+    <dc:title xml:lang="nl">OGC API Features landingpage</dc:title>
+    <dc:description xml:lang="nl">De OGC API Features landingspagina is die pagina waarop alle informatie die nodig is om de bezoeker tot actie aan te zetten, staat.</dc:description>
+    <owl:versionInfo>1.0.0</owl:versionInfo>
+    <skos:notation>OGC:OGC-API-Features-landingpage</skos:notation>
+    <skos:exactMatch rdf:resource="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download"/>
+    <rdfs:seeAlso rdf:resource="http://www.opengis.net/def/interface/ogcapi-features"/>
+    <rdfs:seeAlso rdf:resource="https://www.ogc.org/standards/ogcapi-features"/>
+  </skos:Concept>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/dataserviceprotocol/OGC:OGC-API-Features-items">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/Standard"/>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
+    <skos:prefLabel xml:lang="nl">OGC API Features items</skos:prefLabel>
+    <skos:definition xml:lang="nl">OGC API Features items retourneert (een selectie aan) objecten uit de data die voldoen aan de parameters die zijn opgegeven in het verzoek.</skos:definition>
+    <dc:title xml:lang="nl">OGC API Features items</dc:title>
+    <dc:description xml:lang="nl">OGC API Features items retourneert (een selectie aan) objecten uit de data die voldoen aan de parameters die zijn opgegeven in het verzoek.</dc:description>
+    <owl:versionInfo>1.0.0</owl:versionInfo>
+    <skos:notation>OGC:OGC-API-Features-items</skos:notation>
+    <skos:exactMatch rdf:resource="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download"/>
+    <rdfs:seeAlso rdf:resource="http://www.opengis.net/def/interface/ogcapi-features"/>
+    <rdfs:seeAlso rdf:resource="https://www.ogc.org/standards/ogcapi-features"/>
+  </skos:Concept>
+  
 </rdf:RDF>
