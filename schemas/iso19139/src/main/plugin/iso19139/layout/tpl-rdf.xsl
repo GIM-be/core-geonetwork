@@ -603,7 +603,8 @@
                                 ends-with($Protocol, 'get-map') or
                                 ends-with($Protocol, 'get-tile') or
                                 ends-with($Protocol, 'get-feature') or
-                                ends-with($Protocol, 'get-coverage')">
+                                ends-with($Protocol, 'get-coverage') or
+                                starts-with($Protocol, 'OGC:OGC-API-Features')">
                     <xsl:for-each select="$Encoding/dct:format">
                       <dcat:distribution>
                         <dcat:Distribution>
