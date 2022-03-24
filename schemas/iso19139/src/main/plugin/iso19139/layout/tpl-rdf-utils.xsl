@@ -4,6 +4,7 @@
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
@@ -193,9 +194,16 @@
 
   <xsl:template name="Map-protocol">
     <xsl:param name="protocol"/>
-    <xsl:variable name="concept" select="normalize-space($ProtocolCodelist//skos:Concept[skos:notation = $protocol][1]/@rdf:about)"/>
+    <xsl:variable name="concept" select="$ProtocolCodelist//skos:Concept[skos:notation = $protocol][1]"/>
     <xsl:if test="$concept != ''">
-      <xsl:attribute name="rdf:about" select="$concept"/>
+      <dct:conformsTo>
+        <dct:Standard>
+          <xsl:attribute name="rdf:about" select="$concept/@rdf:about"/>
+          <dct:identifier>
+            <xsl:value-of select="$protocol"/>
+          </dct:identifier>
+        </dct:Standard>
+      </dct:conformsTo>
     </xsl:if>
   </xsl:template>
 
