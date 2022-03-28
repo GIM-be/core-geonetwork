@@ -53,7 +53,6 @@
       <xsl:call-template name="add-namespace"/>
 
       <!-- Metadata element -->
-
       <xsl:call-template name="catalogue"/>
 
       <xsl:apply-templates mode="to-dcat" select="/root/*|/root/search/response/*"/>
@@ -151,6 +150,10 @@
           <vcard:hasURL rdf:resource="https://www.vlaanderen.be/digitaal-vlaanderen" />
         </vcard:Organization>
       </dcat:contactPoint>
+
+      <xsl:if test="normalize-space(/root/request/uuid[1]) != ''">
+        <xsl:apply-templates mode="record-reference" select="/root/*"/>
+      </xsl:if>
     </dcat:Catalog>
   </xsl:template>
 
@@ -161,11 +164,5 @@
   <xsl:template mode="to-dcat" match="gui|request|metadata|translations|search|summary"/>
 
   <xsl:template mode="references" match="gui|request|metadata|translations|search|summary"/>
-
-  <xsl:template mode="record-reference" match="metadata" priority="2">
-    <dcat:dataset rdf:resource="{$resourcePrefix}/datasets/{geonet:info/uuid}"/>
-    <!--   <dcat:record rdf:resource="{$resourcePrefix}/records/{geonet:info/uuid}"/> -->
-  </xsl:template>
-
 
 </xsl:stylesheet>
