@@ -146,8 +146,12 @@
           <vcard:organization-name>
             <xsl:value-of select="$env/system/site/organization"/>
           </vcard:organization-name>
-          <vcard:hasEmail rdf:resource="mailto:digitaal.vlaanderen@vlaanderen.be" />
-          <vcard:hasURL rdf:resource="https://www.vlaanderen.be/digitaal-vlaanderen" />
+          <xsl:if test="normalize-space($env/system/site/organizationMail) != ''">
+            <vcard:hasEmail rdf:resource="mailto:{normalize-space($env/system/site/organizationMail)}" />
+          </xsl:if>
+          <xsl:if test="normalize-space($env/system/site/organizationUrl) != ''">
+            <vcard:hasURL rdf:resource="{normalize-space($env/system/site/organizationUrl)}" />
+          </xsl:if>
         </vcard:Organization>
       </dcat:contactPoint>
 
