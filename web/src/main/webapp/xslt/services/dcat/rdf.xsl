@@ -53,7 +53,6 @@
       <xsl:call-template name="add-namespace"/>
 
       <!-- Metadata element -->
-
       <xsl:call-template name="catalogue"/>
 
       <xsl:apply-templates mode="to-dcat" select="/root/*|/root/search/response/*"/>
@@ -147,10 +146,18 @@
           <vcard:organization-name>
             <xsl:value-of select="$env/system/site/organization"/>
           </vcard:organization-name>
-          <vcard:hasEmail rdf:resource="mailto:digitaal.vlaanderen@vlaanderen.be" />
-          <vcard:hasURL rdf:resource="https://www.vlaanderen.be/digitaal-vlaanderen" />
+          <xsl:if test="normalize-space($env/system/site/organizationMail) != ''">
+            <vcard:hasEmail rdf:resource="mailto:{normalize-space($env/system/site/organizationMail)}" />
+          </xsl:if>
+          <xsl:if test="normalize-space($env/system/site/organizationUrl) != ''">
+            <vcard:hasURL rdf:resource="{normalize-space($env/system/site/organizationUrl)}" />
+          </xsl:if>
         </vcard:Organization>
       </dcat:contactPoint>
+
+      <xsl:if test="normalize-space(/root/request/uuid[1]) != ''">
+        <xsl:apply-templates mode="record-reference" select="/root/*"/>
+      </xsl:if>
     </dcat:Catalog>
   </xsl:template>
 
@@ -161,11 +168,5 @@
   <xsl:template mode="to-dcat" match="gui|request|metadata|translations|search|summary"/>
 
   <xsl:template mode="references" match="gui|request|metadata|translations|search|summary"/>
-
-  <xsl:template mode="record-reference" match="metadata" priority="2">
-    <dcat:dataset rdf:resource="{$resourcePrefix}/datasets/{geonet:info/uuid}"/>
-    <!--   <dcat:record rdf:resource="{$resourcePrefix}/records/{geonet:info/uuid}"/> -->
-  </xsl:template>
-
 
 </xsl:stylesheet>

@@ -360,6 +360,8 @@ public class RdfOutputManager {
         siteEl.addContent(new Element("siteId").setText(sm.getValue(Settings.SYSTEM_SITE_SITE_ID_PATH)));
         siteEl.addContent(new Element("name").setText(sm.getValue(Settings.SYSTEM_SITE_NAME_PATH)));
         siteEl.addContent(new Element("organization").setText(sm.getValue(Settings.SYSTEM_SITE_ORGANIZATION)));
+        siteEl.addContent(new Element("organizationMail").setText(sm.getValue(Settings.SYSTEM_SITE_ORGANIZATION_EMAIL)));
+        siteEl.addContent(new Element("organizationUrl").setText(sm.getValue(Settings.SYSTEM_SITE_ORGANIZATION_URL)));
 
         Element metadataEl = new Element("metadata");
         metadataEl.addContent(new Element("resourceIdentifierPrefix").setText(sm.getValue(Settings.SYSTEM_RESOURCE_PREFIX)));
