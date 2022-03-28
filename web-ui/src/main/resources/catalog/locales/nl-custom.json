@@ -103,5 +103,8 @@
   "browseTypes": "brontypes",
   "browseBy": "Blader door ",
   "browseServiceTypes": "servicetypes",
-  "changelog": "Changelog"
+  "changelog": "Changelog",
+  "csvFile": "CSV file (pipe separator)",
+  "system/site/organizationMail" :  "e-mail van de organisatie",
+  "system/site/organizationUrl" : "URL van de organisatie"
 }

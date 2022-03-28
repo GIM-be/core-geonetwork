@@ -97,6 +97,41 @@
     Metadata template
     =================
    -->
+  <xsl:template mode="record-reference" match="gmd:MD_Metadata">
+    <xsl:variable name="IsoScopeCode">
+      <xsl:value-of select="normalize-space(gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue)"/>
+    </xsl:variable>
+    <xsl:variable name="ResourceType">
+      <xsl:choose>
+        <xsl:when test="$IsoScopeCode = 'dataset' or $IsoScopeCode = 'nonGeographicDataset'">
+          <xsl:text>dataset</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$IsoScopeCode"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="RecordUUID" select="string(gmd:fileIdentifier/gco:CharacterString)"/>
+    <xsl:variable name="uriPattern" select="xslutil:getUriPattern($RecordUUID)"/>
+    <xsl:variable name="RecordURI">
+      <xsl:variable name="mURI" select="replace(replace($uriPattern, '\{resourceType\}', 'records'), '\{resourceUuid\}', $RecordUUID)"/>
+      <xsl:if test="$mURI != '' and (starts-with($mURI, 'http://') or starts-with($mURI, 'https://'))">
+        <xsl:value-of select="geonet:escapeURI($mURI)"/>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:variable name="ResourceUri" select="geonet:getResourceURI(., $ResourceType, $uriPattern)"/>
+
+    <xsl:if test="$RecordURI">
+      <dcat:record rdf:resource="{$RecordURI}"/>
+    </xsl:if>
+    <xsl:if test="$ResourceType = 'dataset' and $ResourceUri">
+      <dcat:dataset rdf:resource="{$ResourceUri}"/>
+    </xsl:if>
+    <xsl:if test="$ResourceType = 'service' and $ResourceUri">
+      <dcat:service rdf:resource="{$ResourceUri}"/>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template match="gmd:MD_Metadata|//gmd:MD_Metadata" mode="to-dcat">
     <xsl:variable name="MetadataViewUrl" select="concat($catalogUrl, '/catalog.search#/metadata/', gmd:fileIdentifier/gco:CharacterString)"/>
 
@@ -642,15 +677,23 @@
                           <xsl:call-template name="Map-protocol">
                             <xsl:with-param name="protocol" select="$Protocol"/>
                           </xsl:call-template>
-                          <xsl:if test="not($isDownload)">
+                          <xsl:if test="not($isDownload) and $LayerName != ''">
                             <adms:identifier>
                               <adms:Identifier>
                                 <skos:notation>
                                   <xsl:choose>
-                                    <xsl:when test="contains($Protocol, 'WMS')"><xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wms#Layer'"/></xsl:when>
-                                    <xsl:when test="contains($Protocol, 'WMTS')"><xsl:attribute name="rdf:datatype" select="'http://schemas.opengis.net/wmts#Layer'"/></xsl:when>
-                                    <xsl:when test="contains($Protocol, 'WFS')"><xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wfs#FeatureType'"/></xsl:when>
-                                    <xsl:when test="contains($Protocol, 'WCS')"><xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wcs#CoverageDescription'"/></xsl:when>
+                                    <xsl:when test="contains($Protocol, 'WMS')">
+                                      <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wms#Layer'"/>
+                                    </xsl:when>
+                                    <xsl:when test="contains($Protocol, 'WMTS')">
+                                      <xsl:attribute name="rdf:datatype" select="'http://schemas.opengis.net/wmts#Layer'"/>
+                                    </xsl:when>
+                                    <xsl:when test="contains($Protocol, 'WFS') or starts-with($Protocol, 'OGC:OGC-API-Features')">
+                                      <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wfs#FeatureType'"/>
+                                    </xsl:when>
+                                    <xsl:when test="contains($Protocol, 'WCS')">
+                                      <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wcs#CoverageDescription'"/>
+                                    </xsl:when>
                                   </xsl:choose>
                                   <xsl:value-of select="$LayerName"/>
                                 </skos:notation>
