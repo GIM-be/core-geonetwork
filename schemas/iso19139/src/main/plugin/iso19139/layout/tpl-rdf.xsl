@@ -642,15 +642,23 @@
                           <xsl:call-template name="Map-protocol">
                             <xsl:with-param name="protocol" select="$Protocol"/>
                           </xsl:call-template>
-                          <xsl:if test="not($isDownload)">
+                          <xsl:if test="not($isDownload) and $LayerName != ''">
                             <adms:identifier>
                               <adms:Identifier>
                                 <skos:notation>
                                   <xsl:choose>
-                                    <xsl:when test="contains($Protocol, 'WMS')"><xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wms#Layer'"/></xsl:when>
-                                    <xsl:when test="contains($Protocol, 'WMTS')"><xsl:attribute name="rdf:datatype" select="'http://schemas.opengis.net/wmts#Layer'"/></xsl:when>
-                                    <xsl:when test="contains($Protocol, 'WFS')"><xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wfs#FeatureType'"/></xsl:when>
-                                    <xsl:when test="contains($Protocol, 'WCS')"><xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wcs#CoverageDescription'"/></xsl:when>
+                                    <xsl:when test="contains($Protocol, 'WMS')">
+                                      <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wms#Layer'"/>
+                                    </xsl:when>
+                                    <xsl:when test="contains($Protocol, 'WMTS')">
+                                      <xsl:attribute name="rdf:datatype" select="'http://schemas.opengis.net/wmts#Layer'"/>
+                                    </xsl:when>
+                                    <xsl:when test="contains($Protocol, 'WFS') or starts-with($Protocol, 'OGC:OGC-API-Features')">
+                                      <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wfs#FeatureType'"/>
+                                    </xsl:when>
+                                    <xsl:when test="contains($Protocol, 'WCS')">
+                                      <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wcs#CoverageDescription'"/>
+                                    </xsl:when>
                                   </xsl:choose>
                                   <xsl:value-of select="$LayerName"/>
                                 </skos:notation>
