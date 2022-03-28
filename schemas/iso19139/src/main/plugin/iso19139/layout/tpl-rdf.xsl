@@ -454,14 +454,9 @@
           <xsl:for-each-group select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:protocol/*" group-by=".">
             <!-- Conform to standard -->
             <xsl:if test="normalize-space(current-grouping-key()) != ''">
-              <!-- TODO: map to INSPIRE-PV codelist values: https://inspire.ec.europa.eu/metadata-codelist/ProtocolValue -->
-              <dct:conformsTo>
-                <dct:Standard>
-                  <dct:identifier>
-                    <xsl:value-of select="current-grouping-key()"/>
-                  </dct:identifier>
-                </dct:Standard>
-              </dct:conformsTo>
+              <xsl:call-template name="Map-protocol">
+                <xsl:with-param name="protocol" select="current-grouping-key()"/>
+              </xsl:call-template>
             </xsl:if>
           </xsl:for-each-group>
           <xsl:copy-of select="$LicenseAndRightsConstraints"/>
@@ -552,7 +547,7 @@
 
           <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
             <!-- Encoding -->
-            <xsl:variable name="Encoding">
+            <xsl:variable name="BaseEncoding">
               <xsl:apply-templates select="gmd:distributionFormat/gmd:MD_Format/gmd:name/*"/>
             </xsl:variable>
 
@@ -603,8 +598,22 @@
                                 ends-with($Protocol, 'get-map') or
                                 ends-with($Protocol, 'get-tile') or
                                 ends-with($Protocol, 'get-feature') or
-                                ends-with($Protocol, 'get-coverage')">
-                    <xsl:for-each select="$Encoding/dct:format">
+                                ends-with($Protocol, 'get-coverage') or
+                                starts-with($Protocol, 'OGC:OGC-API-Features')">
+
+                    <xsl:variable name="isDownload" select="starts-with($Protocol, 'WWW:DOWNLOAD-1.0') or $Protocol = 'LINK download-store'"/>
+                    <xsl:variable name="encoding">
+                      <xsl:choose>
+                        <xsl:when test="$isDownload">
+                          <xsl:copy-of select="$BaseEncoding"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <dct:format/>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:variable>
+
+                    <xsl:for-each select="$encoding/dct:format">
                       <dcat:distribution>
                         <dcat:Distribution>
                           <xsl:variable name="distroUUID" select="xslutil:uuidFromString(concat(
@@ -627,21 +636,13 @@
                           <xsl:copy-of select="$Description"/>
                           <dcat:accessURL rdf:resource="{$linkage}"/>
                           <xsl:copy-of select="$LicenseAndRightsConstraints"/>
-                          <xsl:copy-of select="."/>
-                          <dct:conformsTo>
-                            <dct:Standard>
-                              <xsl:call-template name="Map-protocol">
-                                <xsl:with-param name="protocol" select="$Protocol"/>
-                              </xsl:call-template>
-                              <dct:identifier>
-                                <xsl:value-of select="$Protocol"/>
-                              </dct:identifier>
-                            </dct:Standard>
-                          </dct:conformsTo>
-                          <xsl:if test="ends-with($Protocol, 'get-map') or
-                                        ends-with($Protocol, 'get-tile') or
-                                        ends-with($Protocol, 'get-feature') or
-                                        ends-with($Protocol, 'get-coverage')">
+                          <xsl:if test="$isDownload">
+                            <xsl:copy-of select="."/>
+                          </xsl:if>
+                          <xsl:call-template name="Map-protocol">
+                            <xsl:with-param name="protocol" select="$Protocol"/>
+                          </xsl:call-template>
+                          <xsl:if test="not($isDownload)">
                             <adms:identifier>
                               <adms:Identifier>
                                 <skos:notation>
