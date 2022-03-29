@@ -67,6 +67,7 @@ import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.geotools.xml.Parser;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.output.DOMOutputter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
@@ -1044,7 +1045,7 @@ public final class XslUtil {
      * Return the related services
      * @param relatedTo UUID of the current metadata
      */
-    public static Node getRelatedServices(String relatedTo) {
+    public static Node getRelatedServices(String relatedTo) throws JDOMException {
         final ApplicationContext appContext = ApplicationContextHolder.get();
         final ServiceContext serviceContext = ServiceContext.get();
         SearchManager searchMan = appContext.getBean(SearchManager.class);
@@ -1067,21 +1068,22 @@ public final class XslUtil {
             List<String> uuids = ((List<Element>)(response.getChildren())).stream()
                 .map(indexedMd -> indexedMd.getChild("info", Edit.NAMESPACE).getChild("uuid").getText())
                 .collect(Collectors.toList());
-            List<AbstractMetadata> mds = (List<AbstractMetadata>) metadataUtils.findAll(MetadataSpecs.hasMetadataUuidIn(uuids));
-            for (AbstractMetadata md: mds) {
-                related.addContent(md.getXmlData(false));
+            if  (uuids != null && uuids.size() > 0) {
+                List<AbstractMetadata> mds = (List<AbstractMetadata>) metadataUtils.findAll(MetadataSpecs.hasMetadataUuidIn(uuids));
+                for (AbstractMetadata md: mds) {
+                    related.addContent(md.getXmlData(false));
+                }
             }
-            DOMOutputter outputter = new DOMOutputter();
-            return outputter.output(new Document(related));
+            return new DOMOutputter().output(new Document(related));
         } catch (Exception ignored) {}
-        return null;
+        return new DOMOutputter().output(new Document(new Element("services")));
     }
 
     /**
      * Return the related dataset
      * @param relatedTo UUID of the current metadata
      */
-    public static Node getRelatedDatasets(String relatedTo) {
+    public static Node getRelatedDatasets(String relatedTo) throws JDOMException {
         final ApplicationContext context = ApplicationContextHolder.get();
         IMetadataUtils metadataUtils = context.getBean(IMetadataUtils.class);
         AbstractMetadata metadata = metadataUtils.findOneByUuid(relatedTo);
@@ -1091,17 +1093,16 @@ public final class XslUtil {
             try {
                 Element mdXml = metadata.getXmlData(false);
                 Set<String> uuids = schemaPlugin.getAssociatedDatasetUUIDs(mdXml);
+                Element related = new Element("datasets");
                 if (uuids != null && uuids.size() > 0) {
-                    Element related = new Element("datasets");
                     List<AbstractMetadata> mds = (List<AbstractMetadata>) metadataUtils.findAll(MetadataSpecs.hasMetadataUuidIn(uuids));
                     for (AbstractMetadata md: mds) {
                         related.addContent(md.getXmlData(false));
                     }
-                    DOMOutputter outputter = new DOMOutputter();
-                    return outputter.output(new Document(related));
                 }
+                return new DOMOutputter().output(new Document(related));
             } catch (Exception ignored) {}
         }
-        return null;
+        return new DOMOutputter().output(new Document(new Element("datasets")));
     }
 }
