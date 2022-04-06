@@ -123,7 +123,7 @@ public class CatalogApi {
         HttpServletRequest request
     ) throws Exception {
         //Retrieve the host URL from the GeoNetwork settings
-        String hostURL = getHostURL();
+        String baseURL = ApplicationContextHolder.get().getBean(SettingManager.class).getBaseURL();
 
         //Retrieve the paging parameter values (if present)
         int hitsPerPage = (allRequestParams.get("hitsPerPage") != null ? Integer.parseInt(allRequestParams.get("hitsPerPage")) : 0);
@@ -143,7 +143,7 @@ public class CatalogApi {
             }
             ;
             response.setStatus(303);
-            response.setHeader("Location", hostURL + request.getRequestURI() + "?" + paramsAsString(allRequestParams) + "&from=1&to=" + Integer.toString(hitsPerPage));
+            response.setHeader("Location", baseURL + request.getRequestURI().substring(1) + "?" + paramsAsString(allRequestParams) + "&from=1&to=" + Integer.toString(hitsPerPage));
             return;
         }
 
@@ -189,9 +189,9 @@ public class CatalogApi {
         int prevTo = to - hitsPerPage > 0 ? to - hitsPerPage : numberMatched;
         int lastPageFrom = 0 < (numberMatched % hitsPerPage) ? numberMatched - (numberMatched % hitsPerPage) + 1 : (numberMatched - hitsPerPage + 1 > 0 ? numberMatched - hitsPerPage + 1 : numberMatched);
         long versionTokenETag = rdfSearcher.getVersionToken();
-        String canonicalURL = hostURL + request.getRequestURI();
-        String currentPage = canonicalURL + "?" + paramsAsString(allRequestParams) + "&from=" + from + "&to=" + to;
-        String lastPage = canonicalURL + "?" + paramsAsString(allRequestParams) + "&from=" + lastPageFrom + "&to=" + numberMatched;
+        String canonicalURL = baseURL + request.getRequestURI().substring(1);
+        String currentPage = canonicalURL + "?" + paramsAsString(allRequestParams) + "&from=" + Integer.toString(from) + "&to=" + Integer.toString(to);
+        String lastPage = canonicalURL + "?" + paramsAsString(allRequestParams) + "&from=" + Integer.toString(lastPageFrom) + "&to=" + Integer.toString(numberMatched);
         String firstPage = canonicalURL + "?" + paramsAsString(allRequestParams) + "&from=" + firstPageFrom + "&to=" + firstPageTo;
         String previousPage = canonicalURL + "?" + paramsAsString(allRequestParams) + "&from=" + prevFrom + "&to=" + prevTo;
         String nextPage = canonicalURL + "?" + paramsAsString(allRequestParams) + "&from=" + nextFrom + "&to=" + nextTo;
