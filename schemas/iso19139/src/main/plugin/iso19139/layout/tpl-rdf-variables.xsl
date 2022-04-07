@@ -107,9 +107,7 @@
               </skos:Concept>
             </dct:type>
             <dct:title xml:lang="nl">Modellicentie voor gratis hergebruik</dct:title>
-            <dct:description xml:lang="nl">Onder deze licentie doet de instantie geen afstand van haar intellectuele
-              rechten, maar mag de data voor eender welk doel hergebruikt worden, gratis en onder minimale restricties.
-            </dct:description>
+            <dct:description xml:lang="nl">Onder deze licentie doet de instantie geen afstand van haar intellectuele rechten, maar mag de data voor eender welk doel hergebruikt worden, gratis en onder minimale restricties.</dct:description>
             <dct:identifier>https://data.vlaanderen.be/id/licentie/modellicentie-gratis-hergebruik/v1.0</dct:identifier>
           </dct:LicenseDocument>
         </dct:license>
@@ -161,10 +159,7 @@
               </skos:Concept>
             </dct:type>
             <dct:title xml:lang="nl">Modellicentie voor hergebruik tegen vergoeding</dct:title>
-            <dct:description xml:lang="nl">Onder deze licentie stelt de instantie nog steeds haar data ter beschikking
-              voor eender welk hergebruik, maar wil zij hiervoor een vergoeding ontvangen. In regel is deze vergoeding
-              beperkt tot de marginale kosten voor vermenigvuldiging, verstrekking en verspreiding.
-            </dct:description>
+            <dct:description xml:lang="nl">Onder deze licentie stelt de instantie nog steeds haar data ter beschikking voor eender welk hergebruik, maar wil zij hiervoor een vergoeding ontvangen. In regel is deze vergoeding beperkt tot de marginale kosten voor vermenigvuldiging, verstrekking en verspreiding.</dct:description>
             <dct:identifier>https://data.vlaanderen.be/id/licentie/modellicentie-hergebruik-tegen-vergoeding/v1.0
             </dct:identifier>
           </dct:LicenseDocument>
@@ -193,10 +188,7 @@
               </skos:Concept>
             </dct:type>
             <dct:title xml:lang="nl">Creative Commons Zero verklaring</dct:title>
-            <dct:description xml:lang="nl">De instantie doet afstand van haar intellectuele eigendomsrechten voor zover
-              dit wettelijk mogelijk is. Hierdoor kan de gebruiker de data hergebruiken voor eender welk doel, zonder
-              een verplichting op naamsvermelding. Deze is de welbekende CC0 licentie.
-            </dct:description>
+            <dct:description xml:lang="nl">De instantie doet afstand van haar intellectuele eigendomsrechten voor zover dit wettelijk mogelijk is. Hierdoor kan de gebruiker de data hergebruiken voor eender welk doel, zonder een verplichting op naamsvermelding. Deze is de welbekende CC0 licentie.</dct:description>
             <dct:identifier>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0
             </dct:identifier>
           </dct:LicenseDocument>
@@ -213,7 +205,7 @@
           <dct:LicenseDocument rdf:about="https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht">
             <dct:type>
               <skos:Concept rdf:about="http://purl.org/adms/licencetype/JurisdictionWithinTheEU">
-                <skos:prefLabel xml:lang="nl">Rechtsbevoegheid binnen de EU</skos:prefLabel>
+                <skos:prefLabel xml:lang="nl">Rechtsbevoegdheid binnen de EU</skos:prefLabel>
                 <skos:prefLabel xml:lang="en">Jurisdiction within the EU</skos:prefLabel>
                 <skos:prefLabel xml:lang="fr">Jurisdiction within the EU</skos:prefLabel>
                 <skos:prefLabel xml:lang="de">Jurisdiction within the EU</skos:prefLabel>
@@ -221,9 +213,7 @@
               </skos:Concept>
             </dct:type>
             <dct:title xml:lang="nl">Gebruiksrecht en privacyverklaring geografische webdiensten</dct:title>
-            <dct:description xml:lang="nl">Door het gebruik van de service verbindt elke gebruiker of raadpleger er zich
-              toe om zich te houden aan de toegangs- en gebruiksbepalingen van de in de service aangeboden gegevens.
-            </dct:description>
+            <dct:description xml:lang="nl">Door het gebruik van de service verbindt elke gebruiker of raadpleger er zich toe om zich te houden aan de toegangs- en gebruiksbepalingen van de in de service aangeboden gegevens.</dct:description>
             <dct:identifier>https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht</dct:identifier>
           </dct:LicenseDocument>
         </dct:license>
