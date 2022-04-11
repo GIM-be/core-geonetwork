@@ -409,7 +409,6 @@ public class SettingManager {
     public
     @Nonnull
     String getServerURL() {
-        String baseURL = pathFinder.getBaseUrl();
         String protocol = getValue(Settings.SYSTEM_SERVER_PROTOCOL);
         String host = getValue(Settings.SYSTEM_SERVER_HOST);
         String port = getValue(Settings.SYSTEM_SERVER_PORT);
