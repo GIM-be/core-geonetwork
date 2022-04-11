@@ -48,6 +48,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -123,7 +125,7 @@ public class CatalogApi {
         HttpServletRequest request
     ) throws Exception {
         //Retrieve the host URL from the GeoNetwork settings
-        String hostURL = getHostURL();
+        String baseURL = ApplicationContextHolder.get().getBean(SettingManager.class).getServerURL();
 
         //Retrieve the paging parameter values (if present)
         int hitsPerPage = (allRequestParams.get("hitsPerPage") != null ? Integer.parseInt(allRequestParams.get("hitsPerPage")) : 0);
@@ -143,7 +145,7 @@ public class CatalogApi {
             }
             ;
             response.setStatus(303);
-            response.setHeader("Location", hostURL + request.getRequestURI() + "?" + paramsAsString(allRequestParams) + "&from=1&to=" + Integer.toString(hitsPerPage));
+            response.setHeader("Location", baseURL + request.getRequestURI() + "?" + paramsAsString(allRequestParams) + "&from=1&to=" + Integer.toString(hitsPerPage));
             return;
         }
 
@@ -189,7 +191,7 @@ public class CatalogApi {
         int prevTo = to - hitsPerPage > 0 ? to - hitsPerPage : numberMatched;
         int lastPageFrom = 0 < (numberMatched % hitsPerPage) ? numberMatched - (numberMatched % hitsPerPage) + 1 : (numberMatched - hitsPerPage + 1 > 0 ? numberMatched - hitsPerPage + 1 : numberMatched);
         long versionTokenETag = rdfSearcher.getVersionToken();
-        String canonicalURL = hostURL + request.getRequestURI();
+        String canonicalURL = baseURL + request.getRequestURI();
         String currentPage = canonicalURL + "?" + paramsAsString(allRequestParams) + "&from=" + from + "&to=" + to;
         String lastPage = canonicalURL + "?" + paramsAsString(allRequestParams) + "&from=" + lastPageFrom + "&to=" + numberMatched;
         String firstPage = canonicalURL + "?" + paramsAsString(allRequestParams) + "&from=" + firstPageFrom + "&to=" + firstPageTo;
@@ -245,11 +247,15 @@ public class CatalogApi {
     /*
      * <p>Retrieve all parameters (except paging parameters) as a string.</p>
      */
-    private static String paramsAsString(Map<String, String> requestParams) {
+    private static String paramsAsString(Map<String, String> requestParams) throws UnsupportedEncodingException {
         StringBuilder paramNonPaging = new StringBuilder();
         for (Entry<String, String> pair : requestParams.entrySet()) {
             if (!pair.getKey().equals("from") && !pair.getKey().equals("to")) {
-                paramNonPaging.append(paramNonPaging.toString().equals("") ? "" : "&").append(pair.getKey()).append("=").append(pair.getValue());
+                paramNonPaging
+                    .append(paramNonPaging.toString().equals("") ? "" : "&")
+                    .append(pair.getKey())
+                    .append("=")
+                    .append(URLEncoder.encode(pair.getValue(), "UTF-8"));
             }
         }
         return paramNonPaging.toString();

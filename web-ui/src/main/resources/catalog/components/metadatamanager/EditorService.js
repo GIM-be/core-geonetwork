@@ -552,10 +552,13 @@
                checkAddControls(target.get(0), true);
                checkMoveControls(target.get(0));
 
-               target.slideUp(duration, function() { $(this).remove();});
+               target.slideUp(duration, function() {
+                 $(this).remove();
+                 defer.resolve(data);
+               });
 
                // TODO: Take care of moving the + sign
-               defer.resolve(data);
+
              }).error(function(data) {
                defer.reject(data);
              });

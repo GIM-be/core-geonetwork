@@ -466,7 +466,7 @@
       <xsl:copy-of select="$AccessRights"/>
 
       <!-- Metadata view page -->
-      <dcat:landingPage rdf:resource="{$MetadataViewUrl}"/>
+      <mdcat:landingpageVoorBronMetadata rdf:resource="{$MetadataViewUrl}"/>
 
       <!-- Resource type specific -->
       <xsl:choose>
@@ -792,7 +792,21 @@
                   <vlgen:naamruimte>
                     <xsl:value-of select="replace($RecordURI, concat('/', $RecordUUID), '')"/>
                   </vlgen:naamruimte>
-                  <dct:creator rdf:resoure="https://metadata.vlaanderen.be"/>
+                  <dct:creator>
+                    <xsl:variable name="creatorUri">
+                      <xsl:if test="contains($env/metadata/resourceIdentifierPrefix, '/srv/')">
+                        <xsl:value-of select="normalize-space(substring-before($env/metadata/resourceIdentifierPrefix, '/srv/'))"/>
+                      </xsl:if>
+                    </xsl:variable>
+                    <xsl:choose>
+                      <xsl:when test="$creatorUri != ''">
+                        <xsl:attribute name="rdf:resource" select="$creatorUri"/>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <xsl:attribute name="rdf:resource" select="'https://metadata.vlaanderen.be'"/>
+                      </xsl:otherwise>
+                    </xsl:choose>
+                  </dct:creator>
                 </adms:Identifier>
               </adms:identifier>
               <xsl:copy-of select="$MetadataDescription"/>

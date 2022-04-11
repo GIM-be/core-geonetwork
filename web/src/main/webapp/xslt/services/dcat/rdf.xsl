@@ -42,10 +42,14 @@
 
   <xsl:include href="../../common/base-variables.xsl"/>
   <xsl:include href="../../common/profiles-loader-tpl-rdf.xsl"/>
-
-  <xsl:variable name="serviceUrl" select="/root/env/siteURL"/>
+  
   <xsl:variable name="iso2letterLanguageCode" select="lower-case(java:twoCharLangCode(/root/gui/language))"/>
   <xsl:variable name="resourcePrefix" select="$env/metadata/resourceIdentifierPrefix"/>
+  <xsl:variable name="serviceUrl">
+    <xsl:if test="contains($env/metadata/resourceIdentifierPrefix, '/srv/')">
+      <xsl:value-of select="substring-before($env/metadata/resourceIdentifierPrefix, '/srv/')"/>
+    </xsl:if>
+  </xsl:variable>
 
   <xsl:template match="/">
     <rdf:RDF>
@@ -77,6 +81,9 @@
     <xsl:namespace name="schema" select="'http://schema.org/'"/>
     <xsl:namespace name="dc" select="'http://purl.org/dc/elements/1.1/'"/>
     <xsl:namespace name="vlgen" select="'https://data.vlaanderen.be/ns/generiek'"/>
+    <xsl:namespace name="mdcat" select="'http://data.vlaanderen.be/ns/metadata-dcat#'"/>
+    <xsl:namespace name="adres" select="'https://data.vlaanderen.be/ns/adres#'"/>
+    <xsl:namespace name="geodcat" select="'http://data.europa.eu/930/'"/>
   </xsl:template>
 
 

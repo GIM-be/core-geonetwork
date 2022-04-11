@@ -329,7 +329,17 @@ public class RdfOutputManager {
             "xmlns:dctype=\"http://purl.org/dc/dcmitype/\" " +
             "xmlns:dc=\"http://purl.org/dc/elements/1.1/\" " +
             "xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\" " +
-            "xmlns:locn=\"http://www.w3.org/ns/locn#\" xmlns:time=\"http://www.w3.org/2006/time#\" " +
+            "xmlns:locn=\"http://www.w3.org/ns/locn#\" " +
+            "xmlns:time=\"http://www.w3.org/2006/time#\" " +
+            "xmlns:spdx=\"http://spdx.org/rdf/terms#\" " +
+            "xmlns:owl=\"http://www.w3.org/2002/07/owl#\" " +
+            "xmlns:adms=\"http://www.w3.org/ns/adms#\" " +
+            "xmlns:vcard=\"http://www.w3.org/2006/vcard/ns#\" " +
+            "xmlns:vlgen=\"https://data.vlaanderen.be/ns/generiek\" " +
+            "xmlns:mdcat=\"http://data.vlaanderen.be/ns/metadata-dcat#\" " +
+            "xmlns:adres=\"https://data.vlaanderen.be/ns/adres#\" " +
+            "xmlns:cnt=\"http://www.w3.org/2011/content#\" " +
+            "xmlns:geodcat=\"http://data.europa.eu/930/\" " +
             "xmlns:dct=\"http://purl.org/dc/terms/\">");
         output.write("\n");
     }
@@ -392,15 +402,26 @@ public class RdfOutputManager {
      * the header.
      */
     private String removeNamespaces(String xml) {
-        return xml.replace(" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"", "").
-            replace(" xmlns:dct=\"http://purl.org/dc/terms/\"", "").
-            replace(" xmlns:dcat=\"http://www.w3.org/ns/dcat#\"", "").
-            replace(" xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"", "").
-            replace(" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"", "").
-            replace(" xmlns:void=\"http://www.w3.org/TR/void/\"", "").
-            replace(" xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"", "").
-            replace(" xmlns:locn=\"http://www.w3.org/ns/locn#\"", "").
-            replace(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", "").
-            replace(" xmlns:geonet=\"http://www.fao.org/geonetwork\"", "");
+        return xml.replace(" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"", "")
+            .replace(" xmlns:dct=\"http://purl.org/dc/terms/\"", "")
+            .replace(" xmlns:dcat=\"http://www.w3.org/ns/dcat#\"", "")
+            .replace(" xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"", "")
+            .replace(" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"", "")
+            .replace(" xmlns:void=\"http://www.w3.org/TR/void/\"", "")
+            .replace(" xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"", "")
+            .replace(" xmlns:locn=\"http://www.w3.org/ns/locn#\"", "")
+            .replace(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", "")
+            .replace(" xmlns:geonet=\"http://www.fao.org/geonetwork\"", "")
+            .replace(" xmlns:locn=\"http://www.w3.org/ns/locn#\"", "")
+            .replace(" xmlns:time=\"http://www.w3.org/2006/time#\"", "")
+            .replace(" xmlns:spdx=\"http://spdx.org/rdf/terms#\"", "")
+            .replace(" xmlns:owl=\"http://www.w3.org/2002/07/owl#\"", "")
+            .replace(" xmlns:adms=\"http://www.w3.org/ns/adms#\"", "")
+            .replace(" xmlns:vcard=\"http://www.w3.org/2006/vcard/ns#\"", "")
+            .replace(" xmlns:vlgen=\"https://data.vlaanderen.be/ns/generiek\"", "")
+            .replace(" xmlns:mdcat=\"http://data.vlaanderen.be/ns/metadata-dcat#\"", "")
+            .replace(" xmlns:adres=\"https://data.vlaanderen.be/ns/adres#\"", "")
+            .replace(" xmlns:cnt=\"http://www.w3.org/2011/content#\"", "")
+            .replace(" xmlns:geodcat=\"http://data.europa.eu/930/\"", "");
     }
 }
