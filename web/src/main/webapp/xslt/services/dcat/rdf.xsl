@@ -61,8 +61,6 @@
       <xsl:call-template name="catalogue"/>
 
       <xsl:apply-templates mode="to-dcat" select="/root/*|/root/search/response/*"/>
-
-      <!--  <xsl:apply-templates mode="references" select="/root/*|/root/search/response/*"/> -->
     </rdf:RDF>
 
   </xsl:template>

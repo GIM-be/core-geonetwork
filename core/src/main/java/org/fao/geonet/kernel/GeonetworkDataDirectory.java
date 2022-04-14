@@ -80,6 +80,7 @@ public class GeonetworkDataDirectory {
     private Path uploadDir;
     private Path formatterDir;
     private Path nodeLessFiles;
+    private Path rdfCacheDir;
     private String nodeId;
 
     private boolean isDefaultNode;
@@ -323,6 +324,9 @@ public class GeonetworkDataDirectory {
         );
         nodeLessFiles = setDir(jeevesServlet, webappName, handlerConfig, nodeLessFiles,
             ".node_less_files" + KEY_SUFFIX, Geonet.Config.NODE_LESS_DIR, "data", "node_less_files"
+        );
+        rdfCacheDir = setDir(jeevesServlet, webappName, handlerConfig, rdfCacheDir,
+            ".rdfcache" + KEY_SUFFIX, Geonet.Config.HTMLCACHE_DIR, handlerConfig.getValue(Geonet.Config.RESOURCES_DIR), "rdfcache"
         );
 
         handlerConfig.setValue(Geonet.Config.SYSTEM_DATA_DIR, this.systemDataDir.toString());
@@ -687,6 +691,22 @@ public class GeonetworkDataDirectory {
 
     public void setNodeLessFiles(Path nodeLessFiles) {
         this.nodeLessFiles = nodeLessFiles;
+    }
+
+    /**
+     * Get directory for caching rdf data.
+     *
+     * @return directory for caching rdf data.
+     */
+    public Path getRdfCacheDir() {
+        return rdfCacheDir;
+    }
+
+    /**
+     * Set directory for caching rdf data.
+     */
+    public void setRdfCacheDir(Path rdfCacheDir) {
+        this.rdfCacheDir = rdfCacheDir;
     }
 
     public Path resolveWebResource(String resourcePath) {

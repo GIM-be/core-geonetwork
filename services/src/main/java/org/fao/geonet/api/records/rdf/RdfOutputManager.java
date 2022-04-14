@@ -32,6 +32,7 @@ import org.fao.geonet.GeonetContext;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.kernel.DataManager;
+import org.fao.geonet.kernel.metadata.RdfCache;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
 import org.fao.geonet.utils.Log;
@@ -45,6 +46,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -99,6 +101,7 @@ public class RdfOutputManager {
     public File createRdfFile(ServiceContext context, List<Element> results, int page, String pagingInformation) throws Exception {
         ApplicationContext applicationContext = ApplicationContextHolder.get();
         DataManager dm = applicationContext.getBean(DataManager.class);
+        RdfCache rdfCache = applicationContext.getBean(RdfCache.class);
         //SettingManager sm = applicationContext.getBean(SettingManager.class);
 
         try {
@@ -125,6 +128,9 @@ public class RdfOutputManager {
                 Path xslPath = context.getAppPath().resolve(Geonet.Path.XSLT_FOLDER).
                     resolve("services").resolve("dcat").resolve("rdf.xsl");
 
+                Path mergeXslPath = context.getAppPath().resolve(Geonet.Path.XSLT_FOLDER).
+                    resolve("services").resolve("dcat").resolve("rdf-merge.xsl");
+
                 int size = results.size();
 
                 Log.info(Geonet.GEONETWORK, "DCAT - Processing " + size + " results");
@@ -140,17 +146,28 @@ public class RdfOutputManager {
 
                         Element info = mdInfo.getChild("info", Edit.NAMESPACE);
                         String id = info.getChildText("id");
+                        String uuid = info.getChildText("uuid");
 
-                        boolean forEditing = false, withValidationErrors = false, keepXlinkAttributes = false;
-                        Element md = dm.getMetadata(context, id, forEditing, withValidationErrors, keepXlinkAttributes);
-                        records.addContent(md.detach());
+                        Optional<Element> cachedRdf = rdfCache.get(uuid);
+                        Element rdfRecord;
+                        if (!cachedRdf.isPresent()) {
+                            boolean forEditing = false, withValidationErrors = false, keepXlinkAttributes = false;
+                            Element md = dm.getMetadata(context, id, forEditing, withValidationErrors, keepXlinkAttributes);
+                            Element model = createXsltModel(context);
+                            model.addContent(md.detach());
+                            rdfRecord = Xml.transform(model, xslPath);
+                            rdfCache.add(uuid, rdfRecord);
+                        } else {
+                            rdfRecord = cachedRdf.get();
+                        }
+                        records.addContent(rdfRecord.detach());
 
                         // write results to file when processing the last record of the page or last record of the results
                         if (hasToWriteResults(i, size)) {
                             Log.info(Geonet.GEONETWORK, "DCAT - Processing results from page " + page);
 
                             // Process the resultset
-                            Element recordsRdf = Xml.transform(records, xslPath);
+                            Element recordsRdf = Xml.transform(records, mergeXslPath);
 
                             writeCatalogResults(outputCatalogFile, recordsRdf, page, pagingInformation);
 
