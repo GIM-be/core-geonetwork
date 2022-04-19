@@ -5,6 +5,7 @@
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:dct="http://purl.org/dc/terms/"
+                xmlns:dcat="http://www.w3.org/ns/dcat#"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
@@ -13,6 +14,7 @@
                 version="2.0">
 
   <xsl:variable name="ProtocolCodelist" select="document('../thesauri-AIV/theme/protocol.rdf')"/>
+  <xsl:variable name="MediaTypeCodelist" select="document('../thesauri-AIV/theme/media-types.rdf')"/>
 
   <xsl:template name="ExtractLang" match="gmd:language">
     <xsl:param name="lang"/>
@@ -207,6 +209,25 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template name="Map-media-type">
+    <xsl:param name="mediaType"/>
+    <xsl:variable name="searchMediaType">
+      <xsl:choose>
+        <xsl:when test="$mediaType=('jpeg','jpg')">jp2</xsl:when>
+        <xsl:otherwise><xsl:value-of select="lower-case($mediaType)"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="concept" select="$MediaTypeCodelist//skos:Concept[ends-with(@rdf:about, concat('/', $searchMediaType))][1]"/>
+    <xsl:if test="$concept != ''">
+      <dcat:mediaType>
+        <skos:Concept rdf:about="{$concept/@rdf:about}">
+          <rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
+          <xsl:copy-of select="$concept/skos:prefLabel[@xml:lang=('nl','en','fr','de')]"/>
+          <xsl:copy-of select="$concept/skos:inScheme" />
+        </skos:Concept>
+      </dcat:mediaType>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:function name="geonet:getQueryParamValue">
     <xsl:param name="url" as="xs:string"/>
@@ -313,7 +334,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-  
+
   <xsl:function name="geonet:isResourceUUIDGenerated">
     <xsl:param name="md" as="node()"/>
     <xsl:param name="resourceURI" as="xs:string"/>
