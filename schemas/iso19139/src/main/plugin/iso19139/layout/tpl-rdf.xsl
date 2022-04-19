@@ -855,7 +855,7 @@
                 <skos:notation>
                   <xsl:value-of select="$ResourceUri"/>
                 </skos:notation>
-                <dct:creator rdf:resoure="https://metadata.vlaanderen.be"/>
+                <dct:creator rdf:resource="https://metadata.vlaanderen.be"/>
               </adms:Identifier>
             </adms:identifier>
           </xsl:if>
