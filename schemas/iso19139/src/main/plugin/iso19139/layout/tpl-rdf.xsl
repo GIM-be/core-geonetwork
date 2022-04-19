@@ -768,6 +768,27 @@
 
             </xsl:for-each>
           </xsl:for-each>
+          <!-- gmd:graphical-->
+          <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic">
+            <xsl:variable name="fileName" select="normalize-space(gmd:fileName/*/text())"/>
+            <xsl:variable name="fileType" select="normalize-space(gmd:fileType/*/text())"/>
+            <xsl:variable name="fileDescription" select="normalize-space(gmd:fileDescription/*/text())"/>
+            <xsl:if test="$fileName">
+              <adms:sample>
+                <dcat:Distribution>
+                  <dcat:downloadURL rdf:resource="{$fileName}"/>
+                  <xsl:if test="$fileType">
+                    <xsl:call-template name="Map-media-type">
+                      <xsl:with-param name="mediaType" select="$fileType"/>
+                    </xsl:call-template>
+                  </xsl:if>
+                  <xsl:if test="$fileDescription">
+                    <dct:title xml:lang="{$MetadataLanguage}"><xsl:value-of select="$fileDescription"/></dct:title>
+                  </xsl:if>
+                </dcat:Distribution>
+              </adms:sample>
+            </xsl:if>
+          </xsl:for-each>
         </xsl:when>
       </xsl:choose>
     </xsl:variable>

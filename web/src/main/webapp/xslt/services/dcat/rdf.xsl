@@ -38,11 +38,12 @@
                 extension-element-prefixes="saxon"
                 exclude-result-prefixes="#all">
 
+
   <xsl:output indent="yes"/>
 
   <xsl:include href="../../common/base-variables.xsl"/>
   <xsl:include href="../../common/profiles-loader-tpl-rdf.xsl"/>
-  
+
   <xsl:variable name="iso2letterLanguageCode" select="lower-case(java:twoCharLangCode(/root/gui/language))"/>
   <xsl:variable name="resourcePrefix" select="$env/metadata/resourceIdentifierPrefix"/>
   <xsl:variable name="serviceUrl">
@@ -114,11 +115,20 @@
       <!-- The entity responsible for making the catalog online. -->
       <dct:publisher>
     	<!-- Organization in charge of the catalogue defined in the administration > system configuration -->
-	    <foaf:Agent rdf:about="{$resourcePrefix}/organizations/{encode-for-uri($env/system/site/organization)}">
-	      <foaf:name xml:lang="{$iso2letterLanguageCode}">
-	        <xsl:value-of select="$env/system/site/organization"/>
-	      </foaf:name>
-	    </foaf:Agent>
+        <foaf:Agent rdf:about="{$resourcePrefix}/organizations/{encode-for-uri($env/system/site/organization)}">
+          <foaf:name xml:lang="{$iso2letterLanguageCode}">
+            <xsl:value-of select="$env/system/site/organization"/>
+          </foaf:name>
+          <dct:type>
+            <skos:Concept rdf:about="http://purl.org/adms/publishertype/LocalAuthority">
+              <skos:prefLabel xml:lang="nl">Local Authority</skos:prefLabel>
+              <skos:prefLabel xml:lang="en">Local Authority</skos:prefLabel>
+              <skos:prefLabel xml:lang="fr">Local Authority</skos:prefLabel>
+              <skos:prefLabel xml:lang="de">Local Authority</skos:prefLabel>
+              <skos:inScheme rdf:resource="http://purl.org/adms/publishertype/1.0"/>
+            </skos:Concept>
+          </dct:type>
+        </foaf:Agent>
       </dct:publisher>
 
       <!-- The homepage of the catalog -->
@@ -148,6 +158,21 @@
           <dct:identifier>https://data.vlaanderen.be/id/licentie/creative-commons-zero-verklaring/v1.0</dct:identifier>
         </dct:LicenseDocument>
       </dct:license>
+      <xsl:variable name="langAuth">
+        <xsl:call-template name="langId2toAuth">
+          <xsl:with-param name="langId-2char" select="$iso2letterLanguageCode" />
+        </xsl:call-template>
+      </xsl:variable>
+      <dct:language>
+        <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/language/{upper-case($langAuth)}">
+          <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
+          <skos:prefLabel xml:lang="nl">Nederlands</skos:prefLabel>
+          <skos:prefLabel xml:lang="en">Dutch</skos:prefLabel>
+          <skos:prefLabel xml:lang="fr">néerlandais</skos:prefLabel>
+          <skos:prefLabel xml:lang="de">Niederländisch</skos:prefLabel>
+          <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/language"/>
+        </skos:Concept>
+      </dct:language>
       <dcat:contactPoint>
         <vcard:Organization>
           <vcard:organization-name>
@@ -168,6 +193,16 @@
     </dcat:Catalog>
   </xsl:template>
 
+  <xsl:template name="langId2toAuth">
+    <xsl:param name="langId-2char"/>
+    <xsl:choose>
+      <xsl:when test="ends-with($langId-2char,'nl')">nld</xsl:when>
+      <xsl:when test="ends-with($langId-2char,'fr')">fre</xsl:when>
+      <xsl:when test="ends-with($langId-2char,'en')">eng</xsl:when>
+      <xsl:when test="ends-with($langId-2char,'de')">deu</xsl:when>
+      <xsl:otherwise><xsl:message select="concat('No mapping found in langId2toAuth for langId-2char with value ', $langId-2char)"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
   <!-- Avoid request and gui tag in template modes related to metadata conversion -->
   <xsl:template mode="record-reference" match="gui|request|metadata|translations|search|summary"/>

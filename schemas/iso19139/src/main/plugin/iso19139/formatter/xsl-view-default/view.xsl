@@ -649,7 +649,7 @@
   <xsl:template mode="render-content" match="*[gco:CharacterString]">
     <xsl:variable name="context">
       <xsl:choose>
-        <xsl:when test="name()='gmd:title'">
+        <xsl:when test="name()=('gmd:title','gmd:edition')">
           <xsl:value-of select="name(../..)"/></xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="name(..)"/></xsl:otherwise>
