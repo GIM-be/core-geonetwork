@@ -386,7 +386,8 @@
       </xsl:apply-templates>
 
       <!-- Alternate title -->
-      <xsl:apply-templates select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:alternateTitle">
+      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle|
+          gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:alternateTitle">
         <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
       </xsl:apply-templates>
 
