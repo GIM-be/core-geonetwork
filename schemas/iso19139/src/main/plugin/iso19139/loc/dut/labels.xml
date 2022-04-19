@@ -821,6 +821,10 @@
     <label>Versie dataset(serie)</label>
     <description>Versie of editie.</description>
   </element>
+  <element name="gmd:edition" context="gmd:featureCatalogueCitation">
+    <label>Versie</label>
+    <description>Versie of editie.</description>
+  </element>
   <element name="gmd:editionDate">
     <label>Versie of editie datum</label>
     <description>Datum van de versie of editie (YYYY-MM-DD).</description>
