@@ -237,12 +237,34 @@
       <mdcat:servicetype>
         <skos:Concept rdf:about="{$concept/@rdf:about}">
           <xsl:for-each select="$concept/skos:prefLabel">
-            <skos:prefLabel xml:lang="{@xml:lang}">
+            <skos:prefLabel>
+              <xsl:if test="@xml:lang">
+                <xsl:attribute name="xml:lang" select="@xml:lang"/>
+              </xsl:if>
               <xsl:value-of select="string()"/>
             </skos:prefLabel>
           </xsl:for-each>
         </skos:Concept>
       </mdcat:servicetype>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="Map-serviceCategory">
+    <xsl:param name="serviceCategoryUri"/>
+    <xsl:variable name="concept" select="$ServiceCategoryCodelist//skos:Concept[@rdf:about = $serviceCategoryUri][1]"/>
+    <xsl:if test="$concept">
+      <mdcat:servicecategorie>
+        <skos:Concept rdf:about="{$concept/@rdf:about}">
+          <xsl:for-each select="$concept/skos:prefLabel">
+            <skos:prefLabel>
+              <xsl:if test="@xml:lang">
+                <xsl:attribute name="xml:lang" select="@xml:lang"/>
+              </xsl:if>
+              <xsl:value-of select="string()"/>
+            </skos:prefLabel>
+          </xsl:for-each>
+        </skos:Concept>
+      </mdcat:servicecategorie>
     </xsl:if>
   </xsl:template>
 

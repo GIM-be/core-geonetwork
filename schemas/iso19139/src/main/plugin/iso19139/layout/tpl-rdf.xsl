@@ -542,7 +542,18 @@
             </xsl:for-each>
           </xsl:if>
 
-          <xsl:apply-templates select="gmd:identificationInfo/*/srv:serviceType"/>
+          <!-- Service type and category -->
+          <xsl:variable name="serviceTypeUri" select="concat(gmd:identificationInfo/*/srv:serviceType/gco:LocalName/@codeSpace, '/', gmd:identificationInfo/*/srv:serviceType/gco:LocalName)"/>
+          <xsl:call-template name="Map-serviceType">
+            <xsl:with-param name="serviceTypeUri" select="$serviceTypeUri"/>
+          </xsl:call-template>
+          <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gmx:Anchor[
+                                  starts-with(@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/') or
+                                  starts-with(@xlink:href, 'https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/')]">
+            <xsl:call-template name="Map-serviceCategory">
+              <xsl:with-param name="serviceCategoryUri" select="@xlink:href"/>
+            </xsl:call-template>
+          </xsl:for-each>
 
           <!-- Always set development status to "production" and life phase to "live" -->
           <mdcat:levensfase>
@@ -1492,6 +1503,7 @@
           </xsl:call-template>
         </xsl:when>
 
+        <!-- Data.gov themes -->
         <xsl:when test="$scheme = (
           'http://vocab.belgif.be/auth/datatheme',
           'http://vocab.belgif.be/auth/datatheme/',
@@ -1512,6 +1524,7 @@
           </dcat:theme>
         </xsl:when>
 
+        <!-- Topic categories -->
         <xsl:when test="$scheme = (
           'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory',
           'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/',
@@ -1748,13 +1761,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <!-- Service Type -->
-  <xsl:template name="ServiceType" match="gmd:identificationInfo/*/srv:serviceType">
-    <xsl:variable name="serviceTypeUri" select="concat(gco:LocalName/@codeSpace, '/', gco:LocalName)"/>
-    <xsl:call-template name="Map-serviceType">
-      <xsl:with-param name="serviceTypeUri" select="$serviceTypeUri"/>
-    </xsl:call-template>
-  </xsl:template>
+
 
   <!-- Character encoding -->
   <xsl:template name="CharacterEncoding" match="gmd:characterSet/gmd:MD_CharacterSetCode">
