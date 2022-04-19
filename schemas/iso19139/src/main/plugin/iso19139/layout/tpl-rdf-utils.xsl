@@ -6,6 +6,7 @@
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:dcat="http://www.w3.org/ns/dcat#"
+                xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
@@ -15,6 +16,7 @@
 
   <xsl:variable name="ProtocolCodelist" select="document('../thesauri-AIV/theme/protocol.rdf')"/>
   <xsl:variable name="MediaTypeCodelist" select="document('../thesauri-AIV/theme/media-types.rdf')"/>
+  <xsl:variable name="ServiceTypeCodelist" select="document('../thesauri-AIV/theme/inspire-service-type.rdf')"/>
 
   <xsl:template name="ExtractLang" match="gmd:language">
     <xsl:param name="lang"/>
@@ -193,7 +195,6 @@
     </xsl:choose>
   </xsl:template>
 
-
   <xsl:template name="Map-protocol">
     <xsl:param name="protocol"/>
     <xsl:variable name="concept" select="$ProtocolCodelist//skos:Concept[skos:notation = $protocol][1]"/>
@@ -226,6 +227,22 @@
           <xsl:copy-of select="$concept/skos:inScheme" />
         </skos:Concept>
       </dcat:mediaType>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="Map-serviceType">
+    <xsl:param name="serviceTypeUri"/>
+    <xsl:variable name="concept" select="$ServiceTypeCodelist//skos:Concept[@rdf:about = $serviceTypeUri][1]"/>
+    <xsl:if test="$concept">
+      <mdcat:servicetype>
+        <skos:Concept rdf:about="{$concept/@rdf:about}">
+          <xsl:for-each select="$concept/skos:prefLabel">
+            <skos:prefLabel xml:lang="{@xml:lang}">
+              <xsl:value-of select="string()"/>
+            </skos:prefLabel>
+          </xsl:for-each>
+        </skos:Concept>
+      </mdcat:servicetype>
     </xsl:if>
   </xsl:template>
 

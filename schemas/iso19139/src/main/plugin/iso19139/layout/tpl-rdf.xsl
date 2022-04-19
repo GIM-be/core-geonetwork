@@ -542,6 +542,8 @@
             </xsl:for-each>
           </xsl:if>
 
+          <xsl:apply-templates select="gmd:identificationInfo/*/srv:serviceType"/>
+
           <!-- Always set development status to "production" and life phase to "live" -->
           <mdcat:levensfase>
             <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/levensfase/live">
@@ -1746,6 +1748,14 @@
     </xsl:choose>
   </xsl:template>
 
+  <!-- Service Type -->
+  <xsl:template name="ServiceType" match="gmd:identificationInfo/*/srv:serviceType">
+    <xsl:variable name="serviceTypeUri" select="concat(gco:LocalName/@codeSpace, '/', gco:LocalName)"/>
+    <xsl:call-template name="Map-serviceType">
+      <xsl:with-param name="serviceTypeUri" select="$serviceTypeUri"/>
+    </xsl:call-template>
+  </xsl:template>
+
   <!-- Character encoding -->
   <xsl:template name="CharacterEncoding" match="gmd:characterSet/gmd:MD_CharacterSetCode">
     <xsl:variable name="CharSetCode">
@@ -1933,9 +1943,9 @@
   <!-- Spatial resolution -->
   <xsl:template name="SpatialResolution" match="gmd:identificationInfo/*/gmd:spatialResolution">
     <xsl:if test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = 'm']">
-        <dcat:spatialResolutionInMeters>
+      <dcat:spatialResolutionInMeters>
         <xsl:value-of select="string(gmd:MD_Resolution/gmd:distance/gco:Distance)"/>
-        </dcat:spatialResolutionInMeters>
+      </dcat:spatialResolutionInMeters>
     </xsl:if>
   </xsl:template>
 
