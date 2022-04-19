@@ -458,7 +458,7 @@
       <xsl:apply-templates select="gmd:identificationInfo/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
 
       <!-- spatial resolution -->
-      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution"/>
+      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialResolution"/>
 
       <!-- Version information -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/*/gmd:edition"/>
@@ -1931,14 +1931,12 @@
   </xsl:template>
 
   <!-- Spatial resolution -->
-  <xsl:template name="SpatialResolution" match="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution">
-    <xsl:choose>
-      <xsl:when test="gmd:distance/gco:Distance[@uom = 'm']">
+  <xsl:template name="SpatialResolution" match="gmd:identificationInfo/*/gmd:spatialResolution">
+    <xsl:if test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = 'm']">
         <dcat:spatialResolutionInMeters>
-          <xsl:value-of select="string(gmd:distance/gco:Distance)"/>
+        <xsl:value-of select="string(gmd:MD_Resolution/gmd:distance/gco:Distance)"/>
         </dcat:spatialResolutionInMeters>
-      </xsl:when>
-    </xsl:choose>
+    </xsl:if>
   </xsl:template>
 
   <!-- Version info -->
