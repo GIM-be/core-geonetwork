@@ -1454,7 +1454,7 @@
     <xsl:variable name="thesaurusIdentifier">
       <xsl:choose>
         <xsl:when test="$firstThesaurus/gmx:Anchor">
-          <xsl:value-of select="$firstThesaurus/gmx:Anchor/@xlink:href"/>
+          <xsl:value-of select="string($firstThesaurus/gmx:Anchor/@xlink:href)"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="normalize-space($firstThesaurus/gco:CharacterString)"/>
@@ -1504,12 +1504,7 @@
         </xsl:when>
 
         <!-- Data.gov themes -->
-        <xsl:when test="$scheme = (
-          'http://vocab.belgif.be/auth/datatheme',
-          'http://vocab.belgif.be/auth/datatheme/',
-          'https://vocab.belgif.be/auth/datatheme',
-          'https://vocab.belgif.be/auth/datatheme/'
-        )">
+        <xsl:when test="geonet:urlEquals($scheme, 'vocab.belgif.be/auth/datatheme')">
           <dcat:theme>
             <skos:Concept>
               <xsl:attribute name="rdf:about" select="geonet:escapeURI($keywordAbout)"/>
@@ -1525,20 +1520,9 @@
         </xsl:when>
 
         <!-- Topic categories -->
-        <xsl:when test="$scheme = (
-          'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory',
-          'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/',
-          'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory',
-          'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/'
-        ) and gmx:Anchor/@xlink:href">
-
+        <xsl:when test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory') and gmx:Anchor/@xlink:href">
           <xsl:variable name="alreadyAddedGovThemes">
-            <xsl:for-each select="../../../gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href = (
-            'http://vocab.belgif.be/auth/datatheme',
-            'http://vocab.belgif.be/auth/datatheme/',
-            'https://vocab.belgif.be/auth/datatheme',
-            'https://vocab.belgif.be/auth/datatheme/'
-          )]">
+            <xsl:for-each select="../../../gmd:descriptiveKeywords/gmd:MD_Keywords[geonet:urlEquals(string(gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href), 'vocab.belgif.be/auth/datatheme')]">
               <xsl:for-each select="gmd:keyword/gmx:Anchor">
                 <theme>
                   <xsl:value-of select="string(@xlink:href)"/>
@@ -1548,9 +1532,7 @@
 
             <xsl:for-each select="preceding-sibling::gmd:keyword">
               <xsl:for-each select="gmx:Anchor">
-                <xsl:variable name="precTopic" select="if (starts-with(@xlink:href, 'https'))
-                                             then substring-after(@xlink:href, 'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')
-                                             else substring-after(@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
+                <xsl:variable name="precTopic" select="substring-after(@xlink:href, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
                 <xsl:variable name="precTheme">
                   <xsl:call-template name="MapTopicCatToDataGovTheme">
                     <xsl:with-param name="TopicCategory" select="$precTopic"/>
@@ -1563,9 +1545,7 @@
             </xsl:for-each>
           </xsl:variable>
 
-          <xsl:variable name="topic" select="if (starts-with(gmx:Anchor/@xlink:href, 'https'))
-                                           then substring-after(gmx:Anchor/@xlink:href, 'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')
-                                           else substring-after(gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
+          <xsl:variable name="topic" select="substring-after(gmx:Anchor/@xlink:href, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
           <xsl:variable name="theme">
             <xsl:call-template name="MapTopicCatToDataGovTheme">
               <xsl:with-param name="TopicCategory" select="$topic"/>

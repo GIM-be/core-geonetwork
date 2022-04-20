@@ -380,6 +380,14 @@
     <xsl:value-of select="$resourceURI != geonet:getResourceBaseURIOrUUID($md)"/>
   </xsl:function>
 
+  <xsl:function name="geonet:urlEquals">
+    <xsl:param name="url" as="xs:string"/>
+    <xsl:param name="expected" as="xs:string"/>
+    <xsl:if test="$url = (concat('http://', $expected), concat('http://', $expected, '/'), concat('https://', $expected), concat('https://', $expected, '/'))">
+      <xsl:value-of select="true()"/>
+    </xsl:if>
+  </xsl:function>
+
 
   <xsl:template match="*" mode="serialize">
     <xsl:text>&lt;</xsl:text><xsl:value-of select="name(.)"/>
