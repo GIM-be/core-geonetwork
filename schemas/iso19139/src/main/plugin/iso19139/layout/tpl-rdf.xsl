@@ -458,7 +458,7 @@
       <xsl:apply-templates select="gmd:identificationInfo/*/*[self::gmd:extent|self::srv:extent]/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox"/>
 
       <!-- spatial resolution -->
-      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution"/>
+      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialResolution"/>
 
       <!-- Version information -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/*/gmd:edition"/>
@@ -542,6 +542,19 @@
             </xsl:for-each>
           </xsl:if>
 
+          <!-- Service type and category -->
+          <xsl:variable name="serviceTypeUri" select="concat(gmd:identificationInfo/*/srv:serviceType/gco:LocalName/@codeSpace, '/', gmd:identificationInfo/*/srv:serviceType/gco:LocalName)"/>
+          <xsl:call-template name="Map-serviceType">
+            <xsl:with-param name="serviceTypeUri" select="$serviceTypeUri"/>
+          </xsl:call-template>
+          <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gmx:Anchor[
+                                  starts-with(@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/') or
+                                  starts-with(@xlink:href, 'https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/')]">
+            <xsl:call-template name="Map-serviceCategory">
+              <xsl:with-param name="serviceCategoryUri" select="@xlink:href"/>
+            </xsl:call-template>
+          </xsl:for-each>
+
           <!-- Always set development status to "production" and life phase to "live" -->
           <mdcat:levensfase>
             <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/levensfase/live">
@@ -595,7 +608,6 @@
               <xsl:copy-of select="xslutil:getRelatedServices($RecordUUID)/services/*"/>
             </xsl:if>
           </xsl:variable>
-
           <xsl:for-each select="$relatedServices/*">
             <xsl:choose>
               <xsl:when test="name() = 'gmd:MD_Metadata'">
@@ -611,6 +623,10 @@
           <!-- Spatial representation type -->
           <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode"/>
 
+          <!-- Progress code -->
+          <xsl:apply-templates select="gmd:identificationInfo/*/gmd:status/gmd:MD_ProgressCode"/>
+
+          <!-- Distributions -->
           <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
             <!-- Encoding -->
             <xsl:variable name="BaseEncoding">
@@ -768,6 +784,7 @@
 
             </xsl:for-each>
           </xsl:for-each>
+
           <!-- gmd:graphical-->
           <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic">
             <xsl:variable name="fileName" select="normalize-space(gmd:fileName/*/text())"/>
@@ -855,7 +872,7 @@
                 <skos:notation>
                   <xsl:value-of select="$ResourceUri"/>
                 </skos:notation>
-                <dct:creator rdf:resoure="https://metadata.vlaanderen.be"/>
+                <dct:creator rdf:resource="https://metadata.vlaanderen.be"/>
               </adms:Identifier>
             </adms:identifier>
           </xsl:if>
@@ -1441,7 +1458,7 @@
     <xsl:variable name="thesaurusIdentifier">
       <xsl:choose>
         <xsl:when test="$firstThesaurus/gmx:Anchor">
-          <xsl:value-of select="$firstThesaurus/gmx:Anchor/@xlink:href"/>
+          <xsl:value-of select="string($firstThesaurus/gmx:Anchor/@xlink:href)"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="normalize-space($firstThesaurus/gco:CharacterString)"/>
@@ -1490,81 +1507,9 @@
           </xsl:call-template>
         </xsl:when>
 
-        <xsl:when test="$scheme = (
-          'http://vocab.belgif.be/auth/datatheme',
-          'http://vocab.belgif.be/auth/datatheme/',
-          'https://vocab.belgif.be/auth/datatheme',
-          'https://vocab.belgif.be/auth/datatheme/'
-        )">
-          <dcat:theme>
-            <skos:Concept>
-              <xsl:attribute name="rdf:about" select="geonet:escapeURI($keywordAbout)"/>
-              <skos:prefLabel xml:lang="{$MetadataLanguage}">
-                <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
-              </skos:prefLabel>
-              <xsl:call-template name="LocalisedString">
-                <xsl:with-param name="term">skos:prefLabel</xsl:with-param>
-              </xsl:call-template>
-              <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
-            </skos:Concept>
-          </dcat:theme>
-        </xsl:when>
-
-        <xsl:when test="$scheme = (
-          'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory',
-          'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/',
-          'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory',
-          'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/'
-        ) and gmx:Anchor/@xlink:href">
-
-          <xsl:variable name="alreadyAddedGovThemes">
-            <xsl:for-each select="../../../gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href = (
-            'http://vocab.belgif.be/auth/datatheme',
-            'http://vocab.belgif.be/auth/datatheme/',
-            'https://vocab.belgif.be/auth/datatheme',
-            'https://vocab.belgif.be/auth/datatheme/'
-          )]">
-              <xsl:for-each select="gmd:keyword/gmx:Anchor">
-                <theme>
-                  <xsl:value-of select="string(@xlink:href)"/>
-                </theme>
-              </xsl:for-each>
-            </xsl:for-each>
-
-            <xsl:for-each select="preceding-sibling::gmd:keyword">
-              <xsl:for-each select="gmx:Anchor">
-                <xsl:variable name="precTopic" select="if (starts-with(@xlink:href, 'https'))
-                                             then substring-after(@xlink:href, 'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')
-                                             else substring-after(@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
-                <xsl:variable name="precTheme">
-                  <xsl:call-template name="MapTopicCatToDataGovTheme">
-                    <xsl:with-param name="TopicCategory" select="$precTopic"/>
-                  </xsl:call-template>
-                </xsl:variable>
-                <theme>
-                  <xsl:value-of select="string($precTheme//skos:Concept/@rdf:about)"/>
-                </theme>
-              </xsl:for-each>
-            </xsl:for-each>
-          </xsl:variable>
-
-          <xsl:variable name="topic" select="if (starts-with(gmx:Anchor/@xlink:href, 'https'))
-                                           then substring-after(gmx:Anchor/@xlink:href, 'https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')
-                                           else substring-after(gmx:Anchor/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
-          <xsl:variable name="theme">
-            <xsl:call-template name="MapTopicCatToDataGovTheme">
-              <xsl:with-param name="TopicCategory" select="$topic"/>
-            </xsl:call-template>
-          </xsl:variable>
-
-          <xsl:if test="count($alreadyAddedGovThemes/theme[. = $theme/dcat:theme/skos:Concept/@rdf:about]) = 0">
-            <xsl:copy-of select="$theme"/>
-          </xsl:if>
-        </xsl:when>
-
-        <!-- Default to a dct:subject -->
+        <!--Keyword originating from a controlled vocabulary -->
         <xsl:otherwise>
-          <dct:subject>
+          <xsl:variable name="concept">
             <skos:Concept>
               <xsl:attribute name="rdf:about" select="geonet:escapeURI($keywordAbout)"/>
               <skos:prefLabel xml:lang="{$MetadataLanguage}">
@@ -1586,9 +1531,74 @@
                 </xsl:choose>
               </skos:inScheme>
             </skos:Concept>
-          </dct:subject>
+          </xsl:variable>
+          <xsl:variable name="property">
+            <xsl:choose>
+              <xsl:when test="geonet:urlEquals($scheme, 'vocab.belgif.be/auth/datatheme')">
+                <xsl:value-of select="'dcat:theme'"/>
+              </xsl:when>
+              <xsl:when test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory')">
+                <xsl:value-of select="'mdcat:ISO-categorie'"/>
+              </xsl:when>
+              <xsl:when test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/theme')">
+                <xsl:value-of select="'mdcat:INSPIRE-thema'"/>
+              </xsl:when>
+              <xsl:when test="geonet:urlEquals($scheme, 'www.eionet.europa.eu/gemet')">
+                <xsl:value-of select="'mdcat:GEMET-concept'"/>
+              </xsl:when>
+              <xsl:when test="geonet:urlEquals($scheme, 'data.vlaanderen.be/id/conceptscheme/MAGDA-categorie')">
+                <xsl:value-of select="'mdcat:MAGDA-categorie'"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="'dct:subject'"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+
+          <xsl:element name="{$property}">
+            <xsl:copy-of select="$concept"/>
+          </xsl:element>
         </xsl:otherwise>
       </xsl:choose>
+
+      <!-- Map topic categories to themes -->
+      <xsl:if test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory') and gmx:Anchor/@xlink:href">
+        <xsl:variable name="alreadyAddedGovThemes">
+          <xsl:for-each select="../../../gmd:descriptiveKeywords/gmd:MD_Keywords[geonet:urlEquals(string(gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href), 'vocab.belgif.be/auth/datatheme')]">
+            <xsl:for-each select="gmd:keyword/gmx:Anchor">
+              <theme>
+                <xsl:value-of select="string(@xlink:href)"/>
+              </theme>
+            </xsl:for-each>
+          </xsl:for-each>
+
+          <xsl:for-each select="preceding-sibling::gmd:keyword">
+            <xsl:for-each select="gmx:Anchor">
+              <xsl:variable name="precTopic" select="substring-after(@xlink:href, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
+              <xsl:variable name="precTheme">
+                <xsl:call-template name="MapTopicCatToDataGovTheme">
+                  <xsl:with-param name="TopicCategory" select="$precTopic"/>
+                </xsl:call-template>
+              </xsl:variable>
+              <theme>
+                <xsl:value-of select="string($precTheme//skos:Concept/@rdf:about)"/>
+              </theme>
+            </xsl:for-each>
+          </xsl:for-each>
+        </xsl:variable>
+
+        <xsl:variable name="topic" select="substring-after(gmx:Anchor/@xlink:href, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
+        <xsl:variable name="theme">
+          <xsl:call-template name="MapTopicCatToDataGovTheme">
+            <xsl:with-param name="TopicCategory" select="$topic"/>
+          </xsl:call-template>
+        </xsl:variable>
+
+        <xsl:if test="count($alreadyAddedGovThemes/theme[. = $theme/dcat:theme/skos:Concept/@rdf:about]) = 0">
+          <xsl:copy-of select="$theme"/>
+        </xsl:if>
+      </xsl:if>
+
     </xsl:for-each>
   </xsl:template>
 
@@ -1931,14 +1941,12 @@
   </xsl:template>
 
   <!-- Spatial resolution -->
-  <xsl:template name="SpatialResolution" match="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution">
-    <xsl:choose>
-      <xsl:when test="gmd:distance/gco:Distance[@uom = 'm']">
-        <dcat:spatialResolutionInMeters>
-          <xsl:value-of select="string(gmd:distance/gco:Distance)"/>
-        </dcat:spatialResolutionInMeters>
-      </xsl:when>
-    </xsl:choose>
+  <xsl:template name="SpatialResolution" match="gmd:identificationInfo/*/gmd:spatialResolution">
+    <xsl:if test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = 'm']">
+      <dcat:spatialResolutionInMeters>
+        <xsl:value-of select="string(gmd:MD_Resolution/gmd:distance/gco:Distance)"/>
+      </dcat:spatialResolutionInMeters>
+    </xsl:if>
   </xsl:template>
 
   <!-- Version info -->
@@ -1948,6 +1956,23 @@
       <owl:versionInfo>
         <xsl:value-of select="$label"/>
       </owl:versionInfo>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- Progress code -->
+  <xsl:template name="ProgressCode" match="gmd:status/gmd:MD_ProgressCode[@codeList = 'https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode']">
+    <xsl:variable name="value" select="normalize-space(@codeListValue)"/>
+    <xsl:variable name="scheme" select="'https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode'"/>
+    <xsl:if test="$value != ''">
+      <mdcat:status>
+        <skos:Concept rdf:about="{$scheme}_{$value}">
+          <skos:prefLabel xml:lang="nl"><xsl:value-of select="$value"/></skos:prefLabel>
+          <skos:prefLabel xml:lang="en"><xsl:value-of select="$value"/></skos:prefLabel>
+          <skos:prefLabel xml:lang="fr"><xsl:value-of select="$value"/></skos:prefLabel>
+          <skos:prefLabel xml:lang="de"><xsl:value-of select="$value"/></skos:prefLabel>
+          <skos:inScheme rdf:resource="{$scheme}" />
+        </skos:Concept>
+      </mdcat:status>
     </xsl:if>
   </xsl:template>
 
