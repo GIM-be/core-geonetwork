@@ -1503,63 +1503,9 @@
           </xsl:call-template>
         </xsl:when>
 
-        <!-- Data.gov themes -->
-        <xsl:when test="geonet:urlEquals($scheme, 'vocab.belgif.be/auth/datatheme')">
-          <dcat:theme>
-            <skos:Concept>
-              <xsl:attribute name="rdf:about" select="geonet:escapeURI($keywordAbout)"/>
-              <skos:prefLabel xml:lang="{$MetadataLanguage}">
-                <xsl:value-of select="normalize-space(gco:CharacterString|gmx:Anchor)"/>
-              </skos:prefLabel>
-              <xsl:call-template name="LocalisedString">
-                <xsl:with-param name="term">skos:prefLabel</xsl:with-param>
-              </xsl:call-template>
-              <skos:inScheme rdf:resource="http://vocab.belgif.be/auth/datatheme"/>
-            </skos:Concept>
-          </dcat:theme>
-        </xsl:when>
-
-        <!-- Topic categories -->
-        <xsl:when test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory') and gmx:Anchor/@xlink:href">
-          <xsl:variable name="alreadyAddedGovThemes">
-            <xsl:for-each select="../../../gmd:descriptiveKeywords/gmd:MD_Keywords[geonet:urlEquals(string(gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href), 'vocab.belgif.be/auth/datatheme')]">
-              <xsl:for-each select="gmd:keyword/gmx:Anchor">
-                <theme>
-                  <xsl:value-of select="string(@xlink:href)"/>
-                </theme>
-              </xsl:for-each>
-            </xsl:for-each>
-
-            <xsl:for-each select="preceding-sibling::gmd:keyword">
-              <xsl:for-each select="gmx:Anchor">
-                <xsl:variable name="precTopic" select="substring-after(@xlink:href, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
-                <xsl:variable name="precTheme">
-                  <xsl:call-template name="MapTopicCatToDataGovTheme">
-                    <xsl:with-param name="TopicCategory" select="$precTopic"/>
-                  </xsl:call-template>
-                </xsl:variable>
-                <theme>
-                  <xsl:value-of select="string($precTheme//skos:Concept/@rdf:about)"/>
-                </theme>
-              </xsl:for-each>
-            </xsl:for-each>
-          </xsl:variable>
-
-          <xsl:variable name="topic" select="substring-after(gmx:Anchor/@xlink:href, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
-          <xsl:variable name="theme">
-            <xsl:call-template name="MapTopicCatToDataGovTheme">
-              <xsl:with-param name="TopicCategory" select="$topic"/>
-            </xsl:call-template>
-          </xsl:variable>
-
-          <xsl:if test="count($alreadyAddedGovThemes/theme[. = $theme/dcat:theme/skos:Concept/@rdf:about]) = 0">
-            <xsl:copy-of select="$theme"/>
-          </xsl:if>
-        </xsl:when>
-
-        <!-- Default to a dct:subject -->
+        <!--Keyword originating from a controlled vocabulary -->
         <xsl:otherwise>
-          <dct:subject>
+          <xsl:variable name="concept">
             <skos:Concept>
               <xsl:attribute name="rdf:about" select="geonet:escapeURI($keywordAbout)"/>
               <skos:prefLabel xml:lang="{$MetadataLanguage}">
@@ -1581,9 +1527,74 @@
                 </xsl:choose>
               </skos:inScheme>
             </skos:Concept>
-          </dct:subject>
+          </xsl:variable>
+          <xsl:variable name="property">
+            <xsl:choose>
+              <xsl:when test="geonet:urlEquals($scheme, 'vocab.belgif.be/auth/datatheme')">
+                <xsl:value-of select="'dcat:theme'"/>
+              </xsl:when>
+              <xsl:when test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory')">
+                <xsl:value-of select="'mdcat:ISO-categorie'"/>
+              </xsl:when>
+              <xsl:when test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/theme')">
+                <xsl:value-of select="'mdcat:INSPIRE-thema'"/>
+              </xsl:when>
+              <xsl:when test="geonet:urlEquals($scheme, 'www.eionet.europa.eu/gemet')">
+                <xsl:value-of select="'mdcat:GEMET-concept'"/>
+              </xsl:when>
+              <xsl:when test="geonet:urlEquals($scheme, 'data.vlaanderen.be/id/conceptscheme/MAGDA-categorie')">
+                <xsl:value-of select="'mdcat:MAGDA-categorie'"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="'dct:subject'"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+
+          <xsl:element name="{$property}">
+            <xsl:copy-of select="$concept"/>
+          </xsl:element>
         </xsl:otherwise>
       </xsl:choose>
+
+      <!-- Map topic categories to themes -->
+      <xsl:if test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory') and gmx:Anchor/@xlink:href">
+        <xsl:variable name="alreadyAddedGovThemes">
+          <xsl:for-each select="../../../gmd:descriptiveKeywords/gmd:MD_Keywords[geonet:urlEquals(string(gmd:thesaurusName/gmd:CI_Citation/gmd:title[1]/gmx:Anchor/@xlink:href), 'vocab.belgif.be/auth/datatheme')]">
+            <xsl:for-each select="gmd:keyword/gmx:Anchor">
+              <theme>
+                <xsl:value-of select="string(@xlink:href)"/>
+              </theme>
+            </xsl:for-each>
+          </xsl:for-each>
+
+          <xsl:for-each select="preceding-sibling::gmd:keyword">
+            <xsl:for-each select="gmx:Anchor">
+              <xsl:variable name="precTopic" select="substring-after(@xlink:href, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
+              <xsl:variable name="precTheme">
+                <xsl:call-template name="MapTopicCatToDataGovTheme">
+                  <xsl:with-param name="TopicCategory" select="$precTopic"/>
+                </xsl:call-template>
+              </xsl:variable>
+              <theme>
+                <xsl:value-of select="string($precTheme//skos:Concept/@rdf:about)"/>
+              </theme>
+            </xsl:for-each>
+          </xsl:for-each>
+        </xsl:variable>
+
+        <xsl:variable name="topic" select="substring-after(gmx:Anchor/@xlink:href, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory/')"/>
+        <xsl:variable name="theme">
+          <xsl:call-template name="MapTopicCatToDataGovTheme">
+            <xsl:with-param name="TopicCategory" select="$topic"/>
+          </xsl:call-template>
+        </xsl:variable>
+
+        <xsl:if test="count($alreadyAddedGovThemes/theme[. = $theme/dcat:theme/skos:Concept/@rdf:about]) = 0">
+          <xsl:copy-of select="$theme"/>
+        </xsl:if>
+      </xsl:if>
+
     </xsl:for-each>
   </xsl:template>
 
