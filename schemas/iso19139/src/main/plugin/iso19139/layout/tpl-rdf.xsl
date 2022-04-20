@@ -608,7 +608,6 @@
               <xsl:copy-of select="xslutil:getRelatedServices($RecordUUID)/services/*"/>
             </xsl:if>
           </xsl:variable>
-
           <xsl:for-each select="$relatedServices/*">
             <xsl:choose>
               <xsl:when test="name() = 'gmd:MD_Metadata'">
@@ -624,6 +623,10 @@
           <!-- Spatial representation type -->
           <xsl:apply-templates select="gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode"/>
 
+          <!-- Progress code -->
+          <xsl:apply-templates select="gmd:identificationInfo/*/gmd:status/gmd:MD_ProgressCode"/>
+
+          <!-- Distributions -->
           <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
             <!-- Encoding -->
             <xsl:variable name="BaseEncoding">
@@ -781,6 +784,7 @@
 
             </xsl:for-each>
           </xsl:for-each>
+
           <!-- gmd:graphical-->
           <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic">
             <xsl:variable name="fileName" select="normalize-space(gmd:fileName/*/text())"/>
@@ -1752,8 +1756,6 @@
     </xsl:choose>
   </xsl:template>
 
-
-
   <!-- Character encoding -->
   <xsl:template name="CharacterEncoding" match="gmd:characterSet/gmd:MD_CharacterSetCode">
     <xsl:variable name="CharSetCode">
@@ -1954,6 +1956,23 @@
       <owl:versionInfo>
         <xsl:value-of select="$label"/>
       </owl:versionInfo>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- Progress code -->
+  <xsl:template name="ProgressCode" match="gmd:status/gmd:MD_ProgressCode[@codeList = 'https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode']">
+    <xsl:variable name="value" select="normalize-space(@codeListValue)"/>
+    <xsl:variable name="scheme" select="'https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode'"/>
+    <xsl:if test="$value != ''">
+      <mdcat:status>
+        <skos:Concept rdf:about="{$scheme}_{$value}">
+          <skos:prefLabel xml:lang="nl"><xsl:value-of select="$value"/></skos:prefLabel>
+          <skos:prefLabel xml:lang="en"><xsl:value-of select="$value"/></skos:prefLabel>
+          <skos:prefLabel xml:lang="fr"><xsl:value-of select="$value"/></skos:prefLabel>
+          <skos:prefLabel xml:lang="de"><xsl:value-of select="$value"/></skos:prefLabel>
+          <skos:inScheme rdf:resource="{$scheme}" />
+        </skos:Concept>
+      </mdcat:status>
     </xsl:if>
   </xsl:template>
 
