@@ -6,6 +6,7 @@
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:dcat="http://www.w3.org/ns/dcat#"
+                xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
@@ -15,6 +16,8 @@
 
   <xsl:variable name="ProtocolCodelist" select="document('../thesauri-AIV/theme/protocol.rdf')"/>
   <xsl:variable name="MediaTypeCodelist" select="document('../thesauri-AIV/theme/media-types.rdf')"/>
+  <xsl:variable name="ServiceTypeCodelist" select="document('../thesauri-AIV/theme/inspire-service-type.rdf')"/>
+  <xsl:variable name="ServiceCategoryCodelist" select="document('../thesauri-AIV/theme/inspire-service-taxonomy.rdf')"/>
 
   <xsl:template name="ExtractLang" match="gmd:language">
     <xsl:param name="lang"/>
@@ -193,7 +196,6 @@
     </xsl:choose>
   </xsl:template>
 
-
   <xsl:template name="Map-protocol">
     <xsl:param name="protocol"/>
     <xsl:variable name="concept" select="$ProtocolCodelist//skos:Concept[skos:notation = $protocol][1]"/>
@@ -226,6 +228,44 @@
           <xsl:copy-of select="$concept/skos:inScheme" />
         </skos:Concept>
       </dcat:mediaType>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="Map-serviceType">
+    <xsl:param name="serviceTypeUri"/>
+    <xsl:variable name="concept" select="$ServiceTypeCodelist//skos:Concept[@rdf:about = $serviceTypeUri][1]"/>
+    <xsl:if test="$concept">
+      <mdcat:servicetype>
+        <skos:Concept rdf:about="{$concept/@rdf:about}">
+          <xsl:for-each select="$concept/skos:prefLabel">
+            <skos:prefLabel>
+              <xsl:if test="@xml:lang">
+                <xsl:attribute name="xml:lang" select="@xml:lang"/>
+              </xsl:if>
+              <xsl:value-of select="string()"/>
+            </skos:prefLabel>
+          </xsl:for-each>
+        </skos:Concept>
+      </mdcat:servicetype>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="Map-serviceCategory">
+    <xsl:param name="serviceCategoryUri"/>
+    <xsl:variable name="concept" select="$ServiceCategoryCodelist//skos:Concept[@rdf:about = $serviceCategoryUri][1]"/>
+    <xsl:if test="$concept">
+      <mdcat:servicecategorie>
+        <skos:Concept rdf:about="{$concept/@rdf:about}">
+          <xsl:for-each select="$concept/skos:prefLabel">
+            <skos:prefLabel>
+              <xsl:if test="@xml:lang">
+                <xsl:attribute name="xml:lang" select="@xml:lang"/>
+              </xsl:if>
+              <xsl:value-of select="string()"/>
+            </skos:prefLabel>
+          </xsl:for-each>
+        </skos:Concept>
+      </mdcat:servicecategorie>
     </xsl:if>
   </xsl:template>
 
@@ -339,6 +379,14 @@
     <xsl:param name="md" as="node()"/>
     <xsl:param name="resourceURI" as="xs:string"/>
     <xsl:value-of select="$resourceURI != geonet:getResourceBaseURIOrUUID($md)"/>
+  </xsl:function>
+
+  <xsl:function name="geonet:urlEquals">
+    <xsl:param name="url" as="xs:string"/>
+    <xsl:param name="expected" as="xs:string"/>
+    <xsl:if test="$url = (concat('http://', $expected), concat('http://', $expected, '/'), concat('https://', $expected), concat('https://', $expected, '/'))">
+      <xsl:value-of select="true()"/>
+    </xsl:if>
   </xsl:function>
 
 
