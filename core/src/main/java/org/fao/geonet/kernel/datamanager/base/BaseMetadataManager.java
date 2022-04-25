@@ -87,6 +87,7 @@ import org.fao.geonet.kernel.datamanager.IMetadataOperations;
 import org.fao.geonet.kernel.datamanager.IMetadataSchemaUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.datamanager.IMetadataValidator;
+import org.fao.geonet.kernel.metadata.RdfCache;
 import org.fao.geonet.kernel.schema.MetadataSchema;
 import org.fao.geonet.kernel.schema.SchemaPlugin;
 import org.fao.geonet.kernel.search.LuceneSearcher;
@@ -200,6 +201,9 @@ public class BaseMetadataManager implements IMetadataManager {
     protected AccessManager accessManager;
     @Autowired
     private UserSavedSelectionRepository userSavedSelectionRepository;
+
+    @Autowired
+    protected RdfCache rdfCache;
 
     private static final int METADATA_BATCH_PAGE_SIZE = 50000;
     private String baseURL;
@@ -405,6 +409,8 @@ public class BaseMetadataManager implements IMetadataManager {
             if (isMetadata) {
                 context.getBean(MetadataNotifierManager.class).deleteMetadata(metadataId, findOne.getUuid(), context);
             }
+
+            rdfCache.delete(findOne.getUuid(), true);
         }
 
         // --- update search criteria
@@ -702,6 +708,9 @@ public class BaseMetadataManager implements IMetadataManager {
             // Notifies the metadata change to metatada notifier service
             metadataUtils.notifyMetadataChange(metadataXml, stringId);
         }
+
+        rdfCache.delete(savedMetadata.getUuid(), true);
+
         return savedMetadata;
     }
 
@@ -886,6 +895,8 @@ public class BaseMetadataManager implements IMetadataManager {
                 list.add(id);
             }
         }
+
+        rdfCache.delete(metadata.getUuid(), true);
 
         Log.trace(Geonet.DATA_MANAGER, "Finishing update of record with id " + metadataId);
         // Return an up to date metadata record

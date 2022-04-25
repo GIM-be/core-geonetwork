@@ -91,6 +91,8 @@ public class DraftMetadataManager extends BaseMetadataManager implements IMetada
             if (isMetadata) {
                 context.getBean(MetadataNotifierManager.class).deleteMetadata(metadataId, findOne.getUuid(), context);
             }
+
+            rdfCache.delete(findOne.getUuid(), true);
         }
 
         // --- update search criteria

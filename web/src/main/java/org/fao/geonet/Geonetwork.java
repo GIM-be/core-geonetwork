@@ -44,6 +44,7 @@ import org.fao.geonet.inspireatom.harvester.InspireAtomHarvesterScheduler;
 import org.fao.geonet.kernel.*;
 import org.fao.geonet.kernel.csw.CswHarvesterResponseExecutionService;
 import org.fao.geonet.kernel.harvest.HarvestManager;
+import org.fao.geonet.kernel.metadata.RdfCache;
 import org.fao.geonet.kernel.oaipmh.OaiPmhDispatcher;
 import org.fao.geonet.kernel.search.LuceneConfig;
 import org.fao.geonet.kernel.search.SearchManager;
@@ -338,6 +339,7 @@ public class Geonetwork implements ApplicationHandler {
 
         _applicationContext.getBean(DataManager.class).init(context, false);
         _applicationContext.getBean(HarvestManager.class).init(context, gnContext.isReadOnly());
+        _applicationContext.getBean(RdfCache.class).init(context);
 
         _applicationContext.getBean(ThumbnailMaker.class).init(context);
 
