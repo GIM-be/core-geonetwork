@@ -72,5 +72,9 @@
   "geoDescCode": "Identificator geografische begrenzing",
   "groupIsRequired": "Gelieve een groep te selecteren. Het metadatarecord komt in het beheer van de geselecteerde organisatie.",
   "standardName": "Profil",
-  "changelog": "Changelog"
+  "changelog": "Changelog",
+  "rdfClearCache":  "Clear RDF Cache",
+  "rdfClearCacheHelp": "Records converted to RDF are cached in order to improve to performance. The RDF cache is automatically cleared for a metadata as well as for its related records when the metadata is inserted, updated or deleted.",
+  "rdfCacheCleared":  "RDF Cache cleared",
+  "rdfCacheClearFailure": "An error occurred while attempting to clear the RDF cache"
 }
