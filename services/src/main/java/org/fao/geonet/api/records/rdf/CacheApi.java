@@ -26,9 +26,8 @@ public class CacheApi {
 
     @ApiOperation(
         value = "Clear RDF cache",
-        notes = "RDF are used to render records in various format (HTML, PDF, ...). " +
-            "When a record is rendered a cache is populated for better performance. " +
-            "By default the cache is an H2 database with files on the filesystems.",
+        notes = "When a record is converted to RDF a cache is populated for better performance. " +
+            "By default, the RDF are stored as files in the filesystem.",
         authorizations = {
             @Authorization(value = "basicAuth")
         },

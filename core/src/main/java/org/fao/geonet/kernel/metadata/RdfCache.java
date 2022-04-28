@@ -3,7 +3,7 @@ package org.fao.geonet.kernel.metadata;
 import jeeves.constants.Jeeves;
 import jeeves.server.ServiceConfig;
 import jeeves.server.context.ServiceContext;
-import org.fao.geonet.ApplicationContextHolder;
+import org.fao.geonet.SystemInfo;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.AbstractMetadata;
@@ -20,7 +20,6 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
-import org.springframework.context.ApplicationContext;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -33,20 +32,24 @@ public class RdfCache {
 
     private ServiceContext context;
     private GeonetworkDataDirectory gnDataDir;
-
     private IMetadataUtils metadataUtils;
-
     private SearchManager searchMan;
+    private SystemInfo systemInfo;
+
 
     public void init(ServiceContext context) throws IOException {
         this.context = context;
         this.gnDataDir = context.getBean(GeonetworkDataDirectory.class);
         this.metadataUtils = context.getBean(IMetadataUtils.class);
         this.searchMan = context.getBean(SearchManager.class);
+        this.systemInfo = context.getBean(SystemInfo.class);
         Files.createDirectories(this.gnDataDir.getRdfCacheDir());
     }
 
     public synchronized void add(String uuid, Element rdf) {
+        if (isCacheDisabled()) {
+            return;
+        }
         File file = this.gnDataDir.getRdfCacheDir().resolve(uuid + ".rdf").toFile();
         this.delete(uuid, false);
         try {
@@ -63,6 +66,9 @@ public class RdfCache {
     }
 
     public synchronized Optional<Element> get(String uuid) {
+        if (isCacheDisabled()) {
+            return  Optional.empty();
+        }
         File file = this.gnDataDir.getRdfCacheDir().resolve(uuid + ".rdf").toFile();
         if (file.exists()) {
             try {
@@ -79,12 +85,15 @@ public class RdfCache {
     }
 
     public synchronized void delete(String uuid, boolean lookup) {
+        if (isCacheDisabled()) {
+            return;
+        }
         File file = this.gnDataDir.getRdfCacheDir().resolve(uuid + ".rdf").toFile();
         if (file.exists()) {
             file.delete();
         }
         if (lookup) {
-            for (String related: getRelated(uuid)) {
+            for (String related : getRelated(uuid)) {
                 delete(related, false);
             }
         }
@@ -129,7 +138,7 @@ public class RdfCache {
             ServiceConfig config = new ServiceConfig();
             searcher.search(context, parameters, config);
             Element response = searcher.present(context, parameters, config);
-            List<String> relatedServices = ((List<Element>)(response.getChildren())).stream()
+            List<String> relatedServices = ((List<Element>) (response.getChildren())).stream()
                 .map(indexedMd -> indexedMd.getChild("info", Edit.NAMESPACE).getChild("uuid").getText())
                 .collect(Collectors.toList());
             related.addAll(relatedServices);
@@ -138,5 +147,9 @@ public class RdfCache {
         }
 
         return related;
+    }
+
+    private boolean isCacheDisabled() {
+        return !SystemInfo.STAGE_PRODUCTION.equals(this.systemInfo.getStagingProfile());
     }
 }
