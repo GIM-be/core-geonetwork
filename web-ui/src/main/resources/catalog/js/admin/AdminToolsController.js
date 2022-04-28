@@ -548,6 +548,23 @@
             });
       };
 
+      $scope.clearRdfCache = function() {
+        return $http.delete('../api/rdf/cache')
+          .success(function(data) {
+            $rootScope.$broadcast('StatusUpdated', {
+              msg: $translate.instant('rdfCacheCleared'),
+              timeout: 2,
+              type: 'success'});
+          })
+          .error(function(data) {
+            $rootScope.$broadcast('StatusUpdated', {
+              title: $translate.instant('rdfCacheClearFailure'),
+              error: data,
+              timeout: 0,
+              type: 'danger'});
+          });
+      };
+
       gnConfigService.loadPromise.then(function(settings) {
         $scope.isBackupArchiveEnabled =
             settings['metadata.backuparchive.enable'];
