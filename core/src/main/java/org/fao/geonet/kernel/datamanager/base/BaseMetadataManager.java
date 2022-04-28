@@ -403,14 +403,16 @@ public class BaseMetadataManager implements IMetadataManager {
         if (findOne != null) {
             boolean isMetadata = findOne.getDataInfo().getType() == MetadataType.METADATA;
 
+            if (isMetadata) {
+                rdfCache.delete(findOne.getUuid(), true);
+            }
+
             deleteMetadataFromDB(context, metadataId);
 
             // Notifies the metadata change to metatada notifier service
             if (isMetadata) {
                 context.getBean(MetadataNotifierManager.class).deleteMetadata(metadataId, findOne.getUuid(), context);
             }
-
-            rdfCache.delete(findOne.getUuid(), true);
         }
 
         // --- update search criteria

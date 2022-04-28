@@ -74,6 +74,9 @@ public class DraftMetadataManager extends BaseMetadataManager implements IMetada
         if (findOne != null) {
             boolean isMetadata = findOne.getDataInfo().getType() == MetadataType.METADATA;
 
+            if (isMetadata) {
+                rdfCache.delete(findOne.getUuid(), true);
+            }
 
             if (findOne instanceof Metadata) {
                 // Check if exists draft version and don't allow to remove until draft is removed
@@ -91,8 +94,6 @@ public class DraftMetadataManager extends BaseMetadataManager implements IMetada
             if (isMetadata) {
                 context.getBean(MetadataNotifierManager.class).deleteMetadata(metadataId, findOne.getUuid(), context);
             }
-
-            rdfCache.delete(findOne.getUuid(), true);
         }
 
         // --- update search criteria

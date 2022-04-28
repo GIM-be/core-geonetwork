@@ -108,11 +108,13 @@ public class RdfCache {
 
         try {
             // related dataset
-            SchemaPlugin schemaPlugin = SchemaManager.getSchemaPlugin(metadata.getDataInfo().getSchemaId());
-            if (schemaPlugin instanceof AssociatedResourcesSchemaPlugin) {
-                Element mdXml = metadata.getXmlData(false);
-                Set<String> uuids = ((AssociatedResourcesSchemaPlugin) schemaPlugin).getAssociatedDatasetUUIDs(mdXml);
-                related.addAll(uuids);
+            if (!Objects.isNull(metadata)) {
+                SchemaPlugin schemaPlugin = SchemaManager.getSchemaPlugin(metadata.getDataInfo().getSchemaId());
+                if (schemaPlugin instanceof AssociatedResourcesSchemaPlugin) {
+                    Element mdXml = metadata.getXmlData(false);
+                    Set<String> uuids = ((AssociatedResourcesSchemaPlugin) schemaPlugin).getAssociatedDatasetUUIDs(mdXml);
+                    related.addAll(uuids);
+                }
             }
 
             // related services
