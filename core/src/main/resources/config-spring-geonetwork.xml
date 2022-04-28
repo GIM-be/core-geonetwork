@@ -77,6 +77,7 @@
         scope="singleton"/>
   <bean id="schematronValidator" class="org.fao.geonet.kernel.SchematronValidator" lazy-init="false"
         scope="singleton"/>
+  <bean id="RdfCache" class="org.fao.geonet.kernel.metadata.RdfCache" lazy-init="true" scope="singleton" />
 
 
   <!-- List of records to index in a moment ...-->
