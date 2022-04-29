@@ -4,7 +4,7 @@
 
   <div class=""
        data-ng-repeat="(type, items) in relations track by $index"
-       data-ng-if="type && type !== 'thumbnails'">
+       data-ng-if="type && type !== 'thumbnails' && type !== 'paging'">
     <div class="row list-group-item gn-related-item gn-related-{{type}}"
          data-ng-repeat="r in items track by $index"
          data-ng-init="mainType = config.getType(r, type);">

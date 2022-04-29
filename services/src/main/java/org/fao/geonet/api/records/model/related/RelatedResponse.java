@@ -1,13 +1,12 @@
 package org.fao.geonet.api.records.model.related;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 
 /**
@@ -175,6 +174,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "related")
 public class RelatedResponse {
 
+    protected RelatedResponse.RelationPaging paging;
+
     protected RelatedResponse.Children children;
     protected RelatedResponse.Parent parent;
     protected RelatedResponse.Siblings siblings;
@@ -188,6 +189,14 @@ public class RelatedResponse {
     protected RelatedResponse.Related related;
     protected RelatedResponse.Online onlines;
     protected RelatedResponse.Thumbnail thumbnails;
+
+    public RelatedResponse.RelationPaging getPaging() {
+        return this.paging;
+    }
+
+    public void setPaging(RelatedResponse.RelationPaging paging) {
+        this.paging = paging;
+    }
 
     /**
      * Gets the value of the children property.
@@ -1094,5 +1103,102 @@ public class RelatedResponse {
             return this.item;
         }
 
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class RelationPaging {
+        protected RelationPage children;
+        protected RelationPage associated;
+        protected RelationPage services;
+        protected RelationPage datasets;
+        protected RelationPage hasfeaturecats;
+        protected RelationPage sources;
+        protected RelationPage hassources;
+
+        public RelationPage getChildren() {
+            return children;
+        }
+
+        public void setChildren(RelationPage children) {
+            this.children = children;
+        }
+
+        public RelationPage getAssociated() {
+            return associated;
+        }
+
+        public void setAssociated(RelationPage associated) {
+            this.associated = associated;
+        }
+
+        public RelationPage getServices() {
+            return services;
+        }
+
+        public void setServices(RelationPage services) {
+            this.services = services;
+        }
+
+        public RelationPage getDatasets() {
+            return datasets;
+        }
+
+        public void setDatasets(RelationPage datasets) {
+            this.datasets = datasets;
+        }
+
+        public RelationPage getHasfeaturecats() {
+            return hasfeaturecats;
+        }
+
+        public void setHasfeaturecats(RelationPage hasfeaturecats) {
+            this.hasfeaturecats = hasfeaturecats;
+        }
+
+        public RelationPage getSources() {
+            return sources;
+        }
+
+        public void setSources(RelationPage sources) {
+            this.sources = sources;
+        }
+
+        public RelationPage getHassources() {
+            return hassources;
+        }
+
+        public void setHassources(RelationPage hassources) {
+            this.hassources = hassources;
+        }
+    }
+
+    public static class RelationPage {
+        protected String from;
+        protected String to;
+        protected String count;
+
+        public String getFrom() {
+            return from;
+        }
+
+        public void setFrom(String from) {
+            this.from = from;
+        }
+
+        public String getTo() {
+            return to;
+        }
+
+        public void setTo(String to) {
+            this.to = to;
+        }
+
+        public String getCount() {
+            return count;
+        }
+
+        public void setCount(String count) {
+            this.count = count;
+        }
     }
 }
