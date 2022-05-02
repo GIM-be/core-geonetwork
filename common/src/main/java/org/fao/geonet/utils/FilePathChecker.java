@@ -53,7 +53,7 @@ public class FilePathChecker {
         }
 
         Path path = Paths.get(filePath);
-        if (path.isAbsolute() || filePath.startsWith("/") ||
+        if (path.isAbsolute() || filePath.startsWith("/") || filePath.startsWith("\\") ||
                 filePath.startsWith("://", 1))  {
             throw new BadParameterEx("Invalid character found in path.", filePath);
         }

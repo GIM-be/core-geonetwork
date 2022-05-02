@@ -43,6 +43,7 @@
     <related>
       <!-- online and thumbnail are extracted from schema extract-relations.xsl -->
       <!--<xsl:message><xsl:copy-of select="."/></xsl:message> -->
+      <xsl:apply-templates mode="paging" select="/root/relations" />
       <xsl:apply-templates mode="relation" select="/root/relations/*[not(name() = ('externalDatasets', 'externalServices'))]"/>
       <xsl:if test="not(/root/relations/datasets) and /root/relations/externalDatasets">
         <datasets>
@@ -267,6 +268,28 @@
         </url>
       </item>
     </xsl:for-each>
+  </xsl:template>
+
+
+  <xsl:template mode="paging" match="relations">
+    <paging>
+      <xsl:for-each select="*[not(name() = ('externalDatasets', 'externalServices'))]">
+        <xsl:if test="(response/@from or response/@to or response/@count)">
+          <xsl:variable name="type" select="name(.)"/>
+          <xsl:element name="{$type}">
+            <from>
+              <xsl:value-of select="response/@from"/>
+            </from>
+            <to>
+              <xsl:value-of select="response/@to"/>
+            </to>
+            <count>
+              <xsl:value-of select="response/summary/@count"/>
+            </count>
+          </xsl:element>
+        </xsl:if>
+      </xsl:for-each>
+    </paging>
   </xsl:template>
 
   <!-- Add the default title as title. This may happen when title is retrieve
