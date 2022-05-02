@@ -181,6 +181,8 @@ public class MetadataUtils {
                 if (listOfUUIDs != null && listOfUUIDs.size() > 0) {
                     String joinedUUIDs = Joiner.on(" or ").join(listOfUUIDs);
                     relatedRecords.addContent(search(joinedUUIDs, "datasets", context, from, to, fast));
+                } else {
+                    relatedRecords.addContent(getEmptyResponse("datasets"));
                 }
             }
             // if source, return source datasets defined in the current record
@@ -190,6 +192,8 @@ public class MetadataUtils {
                 if (listOfUUIDs != null && listOfUUIDs.size() > 0) {
                     String joinedUUIDs = Joiner.on(" or ").join(listOfUUIDs);
                     relatedRecords.addContent(search(joinedUUIDs, "sources", context, from, to, fast));
+                } else {
+                    relatedRecords.addContent(getEmptyResponse("sources"));
                 }
             }
             // if fcat
@@ -283,7 +287,7 @@ public class MetadataUtils {
             if (!"children".equals(type)) {
                 parameters.addContent(new Element("sortOrder").addContent("reverse"));
             }
-            parameters.addContent(new Element("buildSummary").addContent("false"));
+            parameters.addContent(new Element("buildSummary").addContent("true"));
             parameters.addContent(new Element("from").addContent(from));
             parameters.addContent(new Element("to").addContent(to));
 
@@ -413,5 +417,19 @@ public class MetadataUtils {
             (metadataValidationRepository.count(MetadataValidationSpecs.isInvalidAndRequiredForMetadata(metadata.getId())) > 0);
 
         return isInvalid;
+    }
+
+    private static Element getEmptyResponse(String type) {
+        Element emptyResults = new Element(type);
+        Element response = new Element("response");
+        Element summary = new Element("summary");
+
+        response.setAttribute("from", "1");
+        response.setAttribute("to", "0");
+        summary.setAttribute("count", "0");
+
+        response.addContent(summary);
+        emptyResults.addContent(response);
+        return emptyResults;
     }
 }

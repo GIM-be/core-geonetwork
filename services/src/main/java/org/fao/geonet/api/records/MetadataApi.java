@@ -577,13 +577,12 @@ public class MetadataApi {
                 new Element("language").setText(language),
                 new Element("url").setText(context.getBaseUrl())
             )),
-            MetadataUtils.getRelated(context, md.getId(), md.getUuid(), type, start, start + rows, true)
+            MetadataUtils.getRelated(context, md.getId(), md.getUuid(), type, start, start + rows - 1, true)
         ));
         Path relatedXsl = dataDirectory.getWebappDir().resolve("xslt/services/metadata/relation.xsl");
 
         final Element transform = Xml.transform(raw, relatedXsl);
-        RelatedResponse response = (RelatedResponse) Xml.unmarshall(transform, RelatedResponse.class);
-        return response;
+        return (RelatedResponse) Xml.unmarshall(transform, RelatedResponse.class);
     }
 
     @ApiOperation(
