@@ -473,8 +473,18 @@
       <xsl:choose>
         <!-- Service specific -->
         <xsl:when test="$ResourceType = 'service'">
+          <xsl:variable name="relatedDatasetByOperatesOn" select="xslutil:getRelatedDatasets($RecordUUID)/datasets/*"/>
+
           <!-- Topic category -->
-          <xsl:apply-templates select="gmd:identificationInfo/*/gmd:topicCategory"/>
+          <xsl:variable name="dcatThemes">
+            <xsl:apply-templates select="$relatedDatasetByOperatesOn//gmd:topicCategory"/>
+          </xsl:variable>
+          <xsl:for-each-group select="$dcatThemes/dcat:theme" group-by="skos:Concept/@rdf:about">
+            <xsl:copy-of select="." />
+          </xsl:for-each-group>
+          <xsl:for-each-group select="$dcatThemes/dct:subject" group-by="@rdf:resource">
+            <xsl:copy-of select="." />
+          </xsl:for-each-group>
 
           <!-- Transfer option -->
           <xsl:variable name="distribution" select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[
@@ -500,7 +510,7 @@
           <!-- Coupled resources -->
           <xsl:if test="$relationLookup and count(gmd:identificationInfo/*/srv:operatesOn) > 0">
             <xsl:variable name="operatesOn" select="gmd:identificationInfo/*/srv:operatesOn"/>
-            <xsl:for-each select="xslutil:getRelatedDatasets($RecordUUID)/datasets/*">
+            <xsl:for-each select="$relatedDatasetByOperatesOn">
               <xsl:choose>
                 <xsl:when test="name() = 'gmd:MD_Metadata'">
                   <xsl:variable name="datasetUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
