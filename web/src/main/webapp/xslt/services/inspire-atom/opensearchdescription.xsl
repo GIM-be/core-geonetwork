@@ -14,7 +14,7 @@
                 xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0"
                 exclude-result-prefixes="gmx xsl gmd gco srv java">
   <xsl:param name="nodeUrl" />
-  <xsl:param name="requestedLanguage" select="string('eng')" />
+  <xsl:param name="requestedLanguage" select="string('en')" />
   <xsl:param name="opensearchDescriptionFileName" select="'OpenSearchDescription.xml'"/>
   <xsl:param name="opensearchUrlSuffix" />
   <xsl:param name="atomDescribeServiceUrlSuffix" />
@@ -40,7 +40,7 @@
           <Url type="application/opensearchdescription+xml" rel="self">
             <xsl:attribute name="template">
               <xsl:value-of
-                select="concat($nodeUrl, $opensearchUrlSuffix, '/', $opensearchDescriptionFileName, '?uuid=', fileId)"/>
+                select="concat($nodeUrl, $opensearchUrlSuffix, '/', $opensearchDescriptionFileName, '?uuid=', fileId, '&amp;language=',$requestedLanguage)"/>
             </xsl:attribute>
           </Url>
         </xsl:when>
