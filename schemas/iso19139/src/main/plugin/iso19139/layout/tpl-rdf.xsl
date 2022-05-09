@@ -1354,31 +1354,33 @@
     <xsl:variable name="west" select="gmd:westBoundLongitude/gco:Decimal"/>
     <xsl:variable name="geoId" select="normalize-space((../../gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString)[1])"/>
     <dct:spatial>
-      <xsl:if test="$geoId != ''">
-        <xsl:choose>
-          <xsl:when test="starts-with($geoId, 'http://') or starts-with($geoId, 'https://')">
-            <xsl:attribute name="rdf:about" select="$geoId"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <locn:geographicName xml:lang="nl">
-              <xsl:value-of select="$geoId"/>
-            </locn:geographicName>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:if>
-      <dcat:bbox>
-        <xsl:variable name="bbox">
-          <gml:Envelope srsName="{$SrsUri}">
-            <gml:lowerCorner>
-              <xsl:value-of select="concat($west, ' ', $south)"/>
-            </gml:lowerCorner>
-            <gml:upperCorner>
-              <xsl:value-of select="concat($east, ' ', $north)"/>
-            </gml:upperCorner>
-          </gml:Envelope>
-        </xsl:variable>
-        <xsl:apply-templates select="$bbox" mode="serialize"/>
-      </dcat:bbox>
+      <dct:Location>
+        <xsl:if test="$geoId != ''">
+          <xsl:choose>
+            <xsl:when test="starts-with($geoId, 'http://') or starts-with($geoId, 'https://')">
+              <xsl:attribute name="rdf:about" select="$geoId"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <locn:geographicName xml:lang="nl">
+                <xsl:value-of select="$geoId"/>
+              </locn:geographicName>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:if>
+        <dcat:bbox>
+          <xsl:variable name="bbox">
+            <gml:Envelope srsName="{$SrsUri}">
+              <gml:lowerCorner>
+                <xsl:value-of select="concat($west, ' ', $south)"/>
+              </gml:lowerCorner>
+              <gml:upperCorner>
+                <xsl:value-of select="concat($east, ' ', $north)"/>
+              </gml:upperCorner>
+            </gml:Envelope>
+          </xsl:variable>
+          <xsl:apply-templates select="$bbox" mode="serialize"/>
+        </dcat:bbox>
+      </dct:Location>
     </dct:spatial>
   </xsl:template>
 

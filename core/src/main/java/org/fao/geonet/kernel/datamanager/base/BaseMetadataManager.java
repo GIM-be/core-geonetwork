@@ -463,6 +463,7 @@ public class BaseMetadataManager implements IMetadataManager {
         }
 
         String schema = templateMetadata.getDataInfo().getSchemaId();
+        String root = templateMetadata.getDataInfo().getRoot();
         String data = templateMetadata.getData();
         Element xml = Xml.loadString(data, false);
         MetadataType type = templateMetadata.getDataInfo().getType();
@@ -479,6 +480,7 @@ public class BaseMetadataManager implements IMetadataManager {
 		newMetadata.getDataInfo().setChangeDate(new ISODate()).setCreateDate(new ISODate()).setSchemaId(schema)
 				.setType(MetadataType.lookup(isTemplate));
 		newMetadata.getSourceInfo().setGroupOwner(Integer.valueOf(groupOwner)).setOwner(owner).setSourceId(source);
+        newMetadata.getDataInfo().setRoot(root);
 
         // If there is a default category for the group, use it:
         Group group = groupRepository.findOne(Integer.valueOf(groupOwner));
