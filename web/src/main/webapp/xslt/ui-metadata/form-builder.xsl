@@ -183,12 +183,27 @@
               <xsl:value-of select="$label/mandatoryType"/>
           </xsl:if>
         </xsl:variable>
-        <div
-          class="form-group gn-field gn-{substring-after(name(), ':')}
-                 {if ($isRequired and not($requiredType!='')) then ' gn-required' else ''}
-                 {if ($requiredType!='') then concat(' gn-required required-', $requiredType) else ''}
-                 {if ($isFirst) then '' else ' gn-extra-field'}"
-          id="gn-el-{$editInfo/@ref}">
+
+        <xsl:variable name="localName" select="name()"/>
+
+        <xsl:variable name="fieldClasses">
+          <xsl:value-of select="'form-group '"/>
+          <xsl:value-of select="'gn-field '"/>
+          <xsl:value-of select="concat('gn-',substring-after(name(), ':'), ' ')"/>
+          <xsl:if test="(($parentEditInfo and $parentEditInfo/@min = 1) or (not($parentEditInfo) and $editInfo and $editInfo/@min = 1))
+                          and not($requiredType!='')
+                          and count(preceding-sibling::*[name() = $localName]) = 0">
+            <xsl:value-of select="'gn-required '"/>
+          </xsl:if>
+          <xsl:if test="$requiredType != ''">
+            <xsl:value-of select="concat('gn-required required-', $requiredType, ' ')"/>
+          </xsl:if>
+          <xsl:if test="not($isFirst)">
+            <xsl:value-of select="'gn-extra-field '"/>
+          </xsl:if>
+        </xsl:variable>
+
+        <div class="{$fieldClasses}" id="gn-el-{$editInfo/@ref}">
           <xsl:if test="not($lightMode)">
             <xsl:attribute name="data-gn-field-highlight" select="''"/>
           </xsl:if>
@@ -852,10 +867,25 @@
       <xsl:variable name="isRequired" select="$childEditInfo/@min = 1"/>
 
       <!-- This element is replaced by the content received when clicking add -->
-      <div
-        class="form-group gn-field {if ($isRequired) then 'gn-required' else ''} {if ($isFirst) then '' else 'gn-extra-field'} gn-add-field {if ($isHidden) then 'hidden' else ''} {$class}"
-        id="gn-el-{$id}"
-        data-gn-cardinality="{$childEditInfo/@min}-{$childEditInfo/@max}">
+      <xsl:variable name="localName" select="concat(@prefix, ':', @name)"/>
+
+      <xsl:variable name="fieldClasses">
+        <xsl:value-of select="'form-group '"/>
+        <xsl:value-of select="'gn-field '"/>
+        <xsl:if test="$isRequired and count(preceding-sibling::*[name() = $localName]) = 0">
+          <xsl:value-of select="'gn-required '"/>
+        </xsl:if>
+        <xsl:if test="not($isFirst)">
+          <xsl:value-of select="'gn-extra-field '"/>
+        </xsl:if>
+        <xsl:value-of select="'gn-add-field '"/>
+        <xsl:if test="$isHidden">
+          <xsl:value-of select="'hidden '"/>
+        </xsl:if>
+        <xsl:value-of select="$class"/>
+      </xsl:variable>
+
+      <div class="{$fieldClasses}" id="gn-el-{$id}" data-gn-cardinality="{$childEditInfo/@min}-{$childEditInfo/@max}">
         <xsl:if test="not($lightMode)">
           <xsl:attribute name="data-gn-field-highlight" select="''"/>
         </xsl:if>
