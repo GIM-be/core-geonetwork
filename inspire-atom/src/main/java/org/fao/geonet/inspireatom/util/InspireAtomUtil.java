@@ -369,6 +369,17 @@ public class InspireAtomUtil {
 
         for (String uuid : datasetsUuids) {
             String id = dataManager.getMetadataId(uuid);
+            if (StringUtils.isEmpty(id)) {
+                String fieldValue = null;
+                try {
+                    fieldValue = LuceneSearcher.getMetadataFromIndexByDatasetIdentifier(null, uuid, "fileId");
+                    if (fieldValue!=null) {
+                        id = dataManager.getMetadataId(fieldValue);
+                    }
+                } catch (Exception e) {
+                    Log.error(Geonet.GEONETWORK, "Failed to get index field value caused by " + e.getMessage());
+                }
+            }
             if (StringUtils.isEmpty(id))
                 throw new ResourceNotFoundException(String.format("Dataset '%s' attached to the requested service was not found. Check the link between the 2 records (see operatesOn element).", uuid));
             Element ds = dataManager.getMetadata(id);
@@ -497,7 +508,7 @@ public class InspireAtomUtil {
 
         String serviceMdUuid = null;
         Document luceneParamSearch = createDefaultLuceneSearcherParams();
-        luceneParamSearch.getRootElement().addContent(new Element("operatesOn").setText(datasetMd.getUuid() + " or " + spIdentifier));
+        luceneParamSearch.getRootElement().addContent(new Element("operatesOn").setText(datasetMd.getUuid() + "*" + " or " + spIdentifier + "*"));
         luceneParamSearch.getRootElement().addContent(new Element("serviceType").setText("download"));
 
         try (MetaSearcher searcher = searchMan.newSearcher(SearcherType.LUCENE, Geonet.File.SEARCH_LUCENE)) {
