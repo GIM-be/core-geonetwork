@@ -670,6 +670,12 @@
                     init();
                   }
                 });
+              scope.$watch('thesaurusModalVisible',
+                function() {
+                  if (!initialized) {
+                    init();
+                  }
+                });
               var init = function() {
                 var schema = attrs['schema'] ||
                     gnCurrentEdit.schema || 'iso19139';

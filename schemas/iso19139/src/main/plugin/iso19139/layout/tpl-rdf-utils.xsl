@@ -297,7 +297,7 @@
   <xsl:function name="geonet:escapeURI">
     <xsl:param name="uri"/>
     <xsl:if test="$uri">
-      <xsl:value-of select="replace(normalize-space($uri), ' ', '%20')"/>
+      <xsl:value-of select="replace(replace(replace(replace(normalize-space($uri), ' ', '%20'), '&lt;', '%3C'), '&gt;', '%3E'), '\\', '%5C')"/>
     </xsl:if>
   </xsl:function>
 
