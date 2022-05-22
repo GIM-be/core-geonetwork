@@ -59,8 +59,6 @@ public class SendNotification {
 
     /**
      * Launches the notification manager
-     *
-     * @param catalogRequestId Catalog request identifier to reject
      */
     public static void process(ServiceContext context, Element element,
                                @SuppressWarnings("rawtypes") AbstractHarvester abstractHarvester)
@@ -88,23 +86,20 @@ public class SendNotification {
         boolean bToAddressSet = false;
 
         try {
-            String groupEmail = ah.getOwnerEmail();
-            if (groupEmail != null && !groupEmail.trim().isEmpty()) {
-                toAddress.add(groupEmail);
+            String groupOwnerEmail = ah.getGroupOwnerEmail();
+            if (groupOwnerEmail != null && !groupOwnerEmail.trim().isEmpty()) {
+                toAddress.add(groupOwnerEmail);
                 bToAddressSet = true;
-            } else {
-                List<User> groupUsers = getGroupUsers(Integer.valueOf(ah.getParams().getOwnerIdGroup()));
-                if (groupUsers!=null) {
-                    for (User user : groupUsers) {
-                    	if (user.getEmail()!=null && !user.getEmail().trim().isEmpty() && user.getProfile()==Profile.Reviewer) {
-                        	if (bToAddressSet) {
-                        		bccAddress.add(user.getEmail());
-                        	} else {
-                        		toAddress.add(user.getEmail());
-                                bToAddressSet = true;
-                        	}
-                    	}
+            }
+            String ownerEmail = ah.getOwnerEmail();
+            if (ownerEmail != null && !ownerEmail.trim().isEmpty()) {
+                if (bToAddressSet) {
+                    if (!bccAddress.contains(ownerEmail)) {
+                        bccAddress.add(ownerEmail);
                     }
+                } else {
+                    toAddress.add(ownerEmail);
+                    bToAddressSet = true;
                 }
             }
         } catch (Exception e1) {
@@ -113,10 +108,11 @@ public class SendNotification {
 
         if (receiver != null && !receiver.trim().isEmpty()) {
         	if (bToAddressSet) {
-                bccAddress.add(receiver);
+                if (!bccAddress.contains(receiver)) {
+                    bccAddress.add(receiver);
+                }
         	} else {
                 toAddress.add(receiver);
-                bToAddressSet = true;
         	}
         }
 
@@ -149,14 +145,6 @@ public class SendNotification {
 
                 htmlMessage = htmlMessage.replace("$$errorMsg$$", errorMsg);
 
-                String[] values = new String[]{"total", "added", "updated",
-                    "removed", "unchanged", "unretrievable", "doesNotValidate"};
-
-                for (String value : values) {
-                    htmlMessage = replace(result, htmlMessage, value);
-                    subject = replace(result, subject, value);
-                }
-
             } else {
 
                 Element harvesterErrors = result.getChild("errors");
@@ -175,29 +163,49 @@ public class SendNotification {
 
                     htmlMessage = htmlMessage.replace("$$errorMsg$$", errorMsg);
 
-                    String[] values = new String[]{"total", "added", "updated",
-                        "removed", "unchanged", "unretrievable",
-                        "doesNotValidate"};
+                    subject = "Errors in harvester: " + subject;
 
-                    for (String value : values) {
-                        htmlMessage = replace(result, htmlMessage, value);
-                        subject = replace(result, subject, value);
-                    }
                 } else {
-                    // Success!! Level 1, let's check it:
-                    if (!settings.getValueAsBool(Settings.SYSTEM_HARVESTING_MAIL_LEVEL1)) {
-                        return;
+                    int iUnretrievable = 0;
+                    int iDoesNotValidate = 0;
+                    String sUnretrievable = result.getChildText("unretrievable");
+                    if (sUnretrievable != null) {
+                        iUnretrievable = Integer.valueOf(sUnretrievable);
+                    }
+                    String sDoesNotValidate = result.getChildText("doesNotValidate").toString();
+                    if (sDoesNotValidate != null) {
+                        iDoesNotValidate = Integer.valueOf(sDoesNotValidate);
+                    }
+                    if (iUnretrievable + iDoesNotValidate > 0) {
+                        // Success with warnings, Level 2, let's check it:
+                        if (!settings.getValueAsBool(Settings.SYSTEM_HARVESTING_MAIL_LEVEL2)) {
+                            return;
+                        }
+                        htmlMessage = settings
+                            .getValue(Settings.SYSTEM_HARVESTING_MAIL_TEMPLATE_WARNING);
+                        subject = "Warnings in harvester: " + subject;
+                    } else {
+                        // Success!! Level 1, let's check it:
+                        if (!settings.getValueAsBool(Settings.SYSTEM_HARVESTING_MAIL_LEVEL1)) {
+                            return;
+                        }
+                        subject = "Succesfull harvester: " + subject;
                     }
 
-                    String[] values = new String[]{"total", "added", "updated",
-                        "removed", "unchanged", "unretrievable",
-                        "doesNotValidate"};
-
-                    for (String value : values) {
-                        htmlMessage = replace(result, htmlMessage, value);
-                        subject = replace(result, subject, value);
-                    }
                 }
+            }
+            String[] values = new String[]{"total", "added", "updated",
+                "removed", "unchanged", "unretrievable", "doesNotValidate"};
+
+            for (String value : values) {
+                htmlMessage = replace(result, htmlMessage, value);
+                subject = replace(result, subject, value);
+            }
+
+            String logfile = result.getChildText("logfile");
+            if (logfile!=null) {
+                htmlMessage = htmlMessage.replace("$$logURL$$",
+                    settings.getSiteURL("dut") + "/admin.harvester.log?file=" + logfile.replaceAll("\\\\","/"));
             }
         }
 
@@ -230,27 +238,27 @@ public class SendNotification {
      * @return
      */
     private static String extractWarningsTrace(Element result) {
-        StringBuffer errorMsg = new StringBuffer("");
+        StringBuffer errorMsg = new StringBuffer("<ul>");
 
         for (Object o : result.getChildren("errors")) {
-            Element errores = ((Element) o);
-            for (Object a : errores.getChildren("error")) {
+            Element errors = ((Element) o);
+            for (Object a : errors.getChildren("error")) {
                 Element error = ((Element) a);
                 String desc = error.getChildText("description");
                 String hint = error.getChildText("hint");
-                String trace = getErrorTrace(error);
+                //String trace = getErrorTrace(error);
 
                 // do not convert it to html, dangerous!
                 errorMsg = errorMsg.append("<li><p><strong>'")
                     .append(desc)
-                    .append("'</strong>:")
+                    .append("'</strong>: ")
                     .append(hint)
-                    .append("</p><p>")
-                    .append(trace)
+                    //.append("</p><p>")
+                    //.append(trace)
                     .append("</p></li>");
             }
         }
-        errorMsg.append("<ul>").append(errorMsg).append("</ul>");
+        errorMsg.append("</ul>");
         return errorMsg.toString();
     }
 
