@@ -726,7 +726,7 @@
                           </dct:identifier>
                           <xsl:copy-of select="$Title"/>
                           <xsl:copy-of select="$Description"/>
-                          <dcat:accessURL rdf:resource="{$linkage}"/>
+                          <dcat:accessURL rdf:resource="{geonet:escapeURI($linkage)}"/>
                           <xsl:copy-of select="$LicenseAndRightsConstraints"/>
                           <xsl:if test="$isDownload">
                             <xsl:copy-of select="."/>

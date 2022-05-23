@@ -1012,10 +1012,17 @@ public abstract class AbstractHarvester<T extends HarvestResult> {
     /**
      * Who should we notify by default?
      */
-    public String getOwnerEmail()  {
-        String ownerId = getParams().getOwnerIdGroup();
+    public String getGroupOwnerEmail()  {
+        String groupOwnerId = getParams().getOwnerIdGroup();
 
-        final Group group = context.getBean(GroupRepository.class).findOne(Integer.parseInt(ownerId));
+        final Group group = context.getBean(GroupRepository.class).findOne(Integer.parseInt(groupOwnerId));
         return group.getEmail();
+    }
+
+    public String getOwnerEmail()  {
+        String ownerId = getParams().getOwnerIdUser();
+
+        final User user = context.getBean(UserRepository.class).findOne(Integer.parseInt(ownerId));
+        return user.getEmail();
     }
 }

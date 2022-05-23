@@ -243,6 +243,7 @@
 
 
           $(id).focus();
+          $rootScope.$broadcast('thesaurusModalVisible');
         });
       };
 
