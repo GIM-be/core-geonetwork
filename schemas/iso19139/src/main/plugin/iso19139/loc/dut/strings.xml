@@ -75,6 +75,10 @@
   <objectCatalogueTab>Objectencatalogus</objectCatalogueTab>
   <otherKeywords>Overige trefwoorden</otherKeywords>
   <mdConstraintsSection>Inhoudelijke beperkingen</mdConstraintsSection>
+  <mdAccessConstraints>Toegangsbeperkingen</mdAccessConstraints>
+  <mdUseConstraints>Gebruiksvoorwaarden</mdUseConstraints>
+  <mdOtherConstraints>Regeling</mdOtherConstraints>
+  <mdLegalConstraintsSection>Legale beperkingen</mdLegalConstraintsSection>
   <mdLegalAndSecurityConstraintsSection>Legale en veiligheidsbeperkingen</mdLegalAndSecurityConstraintsSection>
   <description>Beschrijving</description>
   <addOtherConstraints>Beschikbare invulblokken Overige beperkingen</addOtherConstraints>
