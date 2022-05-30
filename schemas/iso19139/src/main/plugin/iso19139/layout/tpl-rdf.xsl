@@ -79,6 +79,7 @@
                 xmlns:adres="https://data.vlaanderen.be/ns/adres#"
                 xmlns:vlgen="https://data.vlaanderen.be/ns/generiek"
                 xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
+                xmlns:dqv="http://www.w3.org/ns/dqv#"
                 exclude-result-prefixes="#all"
                 version="2.0">
 
@@ -774,6 +775,7 @@
                           </xsl:if>
 
                           <xsl:copy-of select="$Distributors"/>
+
                           <xsl:if test="$ResourceCharacterEncoding != ''">
                             <xsl:copy-of select="$ResourceCharacterEncoding"/>
                           </xsl:if>
@@ -948,7 +950,7 @@
       </xsl:choose>
     </xsl:variable>
 
-    <xsl:variable name="OrganisationName" select="normalize-space(gmd:organisationName/*)"/>
+    <xsl:variable name="OrganisationName" select="normalize-space(gmd:organisationName/*[name() = ('gco:CharacterString', 'gmx:Anchor')])"/>
 
     <xsl:variable name="OrganisationName-FOAF">
       <xsl:for-each select="gmd:organisationName">
@@ -1042,11 +1044,11 @@
 
     <xsl:variable name="Address-vCard">
       <xsl:for-each select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address">
-        <xsl:variable name="deliveryPoint" select="normalize-space(gmd:deliveryPoint/*)"/>
-        <xsl:variable name="city" select="normalize-space(gmd:city/*)"/>
-        <xsl:variable name="administrativeArea" select="normalize-space(gmd:administrativeArea/*)"/>
+        <xsl:variable name="deliveryPoint" select="normalize-space(gmd:deliveryPoint/*[name() = ('gco:CharacterString', 'gmx:Anchor')])"/>
+        <xsl:variable name="city" select="normalize-space(gmd:city/*[name() = ('gco:CharacterString', 'gmx:Anchor')])"/>
+        <xsl:variable name="administrativeArea" select="normalize-space(gmd:administrativeArea/*[name() = ('gco:CharacterString', 'gmx:Anchor')])"/>
         <xsl:variable name="postalCode" select="normalize-space(gmd:postalCode/*)"/>
-        <xsl:variable name="country" select="normalize-space(gmd:country/*)"/>
+        <xsl:variable name="country" select="normalize-space(gmd:country/*[name() = ('gco:CharacterString', 'gmx:Anchor')])"/>
         <xsl:if test="$deliveryPoint != '' or $city != '' or $administrativeArea != '' or $postalCode != '' or $country != ''">
           <locn:address>
             <locn:Address>
@@ -1954,11 +1956,45 @@
 
   <!-- Spatial resolution -->
   <xsl:template name="SpatialResolution" match="gmd:identificationInfo/*/gmd:spatialResolution">
-    <xsl:if test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = 'm']">
-      <dcat:spatialResolutionInMeters>
-        <xsl:value-of select="string(gmd:MD_Resolution/gmd:distance/gco:Distance)"/>
-      </dcat:spatialResolutionInMeters>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom != '']">
+        <xsl:variable name="meters">
+          <xsl:choose>
+            <xsl:when test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = ('m', 'meter', 'meters')]">
+              <xsl:value-of select="string(gmd:MD_Resolution/gmd:distance/gco:Distance)"/>
+            </xsl:when>
+            <xsl:when test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = ('km', 'kilometer', 'kilometers')]">
+              <xsl:value-of select="number(gmd:MD_Resolution/gmd:distance/gco:Distance) * 1000"/>
+            </xsl:when>
+            <xsl:when test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = ('cm', 'centimeter', 'centimeters')]">
+              <xsl:value-of select="number(gmd:MD_Resolution/gmd:distance/gco:Distance) div 1000"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:variable>
+
+        <xsl:if test="normalize-space($meters) != ''">
+          <dcat:spatialResolutionInMeters rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">
+            <xsl:value-of select="$meters"/>
+          </dcat:spatialResolutionInMeters>
+        </xsl:if>
+      </xsl:when>
+      <xsl:when test="gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator">
+        <dqv:hasQualityMeasurement>
+          <dqv:QualityMeasurement>
+            <dqv:isMeasurementOf>
+              <dqv:Metric rdf:about="http://data.europa.eu/930/spatialResolutionAsScale">
+                <skos:prefLabel xml:lang="en">Spatial resolution as equivalent scale</skos:prefLabel>
+                <dqv:expectedDataType rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+                <dqv:inDimension rdf:resource="http://www.w3.org/ns/dqv#precision"/>
+              </dqv:Metric>
+            </dqv:isMeasurementOf>
+            <dqv:value rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">
+              <xsl:value-of select="1 div number(gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator/*)"/>
+            </dqv:value>
+          </dqv:QualityMeasurement>
+        </dqv:hasQualityMeasurement>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
   <!-- Version info -->
