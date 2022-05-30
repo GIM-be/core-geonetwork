@@ -257,36 +257,10 @@
     </ul>
   </xsl:template>
 
-
-  <!-- Specific schema rendering -->
-  <xsl:template mode="getMetadataTitle" match="gmd:MD_Metadata">
-    <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:title">
-      <xsl:call-template name="localised">
-        <xsl:with-param name="langId" select="$langId"/>
-      </xsl:call-template>
-    </xsl:for-each>
-  </xsl:template>
-
-
-  <xsl:template mode="getMetadataAbstract" match="gmd:MD_Metadata">
-    <xsl:for-each select="gmd:identificationInfo/*/gmd:abstract">
-      <xsl:call-template name="localised">
-        <xsl:with-param name="langId" select="$langId"/>
-      </xsl:call-template>
-    </xsl:for-each>
-  </xsl:template>
-
-
-  <xsl:template mode="getMetadataHierarchyLevel" match="gmd:MD_Metadata">
-    <xsl:value-of select="gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue"/>
-  </xsl:template>
-
-
   <xsl:template mode="getMetadataThumbnail" match="gmd:MD_Metadata">
     <xsl:value-of
       select="gmd:identificationInfo/*/gmd:graphicOverview[1]/gmd:MD_BrowseGraphic/gmd:fileName/*"/>
   </xsl:template>
-
 
   <xsl:template mode="getOverviews" match="gmd:MD_Metadata">
     <section class="gn-md-side-overview">
@@ -348,8 +322,7 @@
       </div>
 
       <div data-ng-if="user.isEditorOrMore() &amp;&amp; md.mdStatus&lt;50 &amp;&amp; isMdWorkflowEnable">
-        <i
-          class="fa gn-aiv-workflow-status-all gn-aiv-workflow-status-{{{{(md.mdStatus==2 || md.mdStatus==3) ? 'unlocked' : 'locked'}}}} gn-aiv-workflow-status-{{{{(md.mdStatus &amp;&amp; md.mdStatus &lt; 7) ? md.mdStatus : 'x'}}}}">
+        <i class="fa gn-aiv-workflow-status-all gn-aiv-workflow-status-{{{{(md.mdStatus==2 || md.mdStatus==3) ? 'unlocked' : 'locked'}}}} gn-aiv-workflow-status-{{{{(md.mdStatus &amp;&amp; md.mdStatus &lt; 7) ? md.mdStatus : 'x'}}}}">
           <span>{{'mdStatusRecord' | translate}}: {{('mdStatus-' + md.mdStatus) | translate}}</span>
         </i>
       </div>
