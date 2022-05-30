@@ -357,6 +357,7 @@ public class RdfOutputManager {
             "xmlns:adres=\"https://data.vlaanderen.be/ns/adres#\" " +
             "xmlns:cnt=\"http://www.w3.org/2011/content#\" " +
             "xmlns:geodcat=\"http://data.europa.eu/930/\" " +
+            "xmlns:dqv=\"http://www.w3.org/ns/dqv#\" " +
             "xmlns:dct=\"http://purl.org/dc/terms/\">");
         output.write("\n");
     }
@@ -439,6 +440,7 @@ public class RdfOutputManager {
             .replace(" xmlns:mdcat=\"http://data.vlaanderen.be/ns/metadata-dcat#\"", "")
             .replace(" xmlns:adres=\"https://data.vlaanderen.be/ns/adres#\"", "")
             .replace(" xmlns:cnt=\"http://www.w3.org/2011/content#\"", "")
+            .replace(" xmlns:dqv=\"http://www.w3.org/ns/dqv#\"", "")
             .replace(" xmlns:geodcat=\"http://data.europa.eu/930/\"", "");
     }
 }
