@@ -382,9 +382,27 @@
       <xsl:copy-of select="$ResourceAbstract"/>
 
       <!-- Keyword -->
-      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords">
-        <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-      </xsl:apply-templates>
+      <xsl:variable name="keywordsRdfMapping">
+        <xsl:apply-templates select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords">
+          <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+        </xsl:apply-templates>
+      </xsl:variable>
+      <xsl:if test="$ResourceType != 'service'">
+        <xsl:if test="count($keywordsRdfMapping/dcat:theme) = 0">
+          <xsl:variable name="dcatThemesByTopicCategory">
+            <xsl:apply-templates select="gmd:identificationInfo/*/gmd:topicCategory"/>
+          </xsl:variable>
+          <xsl:for-each-group select="$dcatThemesByTopicCategory/dcat:theme" group-by="skos:Concept/@rdf:about">
+            <xsl:copy-of select="." />
+          </xsl:for-each-group>
+          <xsl:if test="count($keywordsRdfMapping/dct:subject) = 0">
+            <xsl:for-each-group select="$dcatThemesByTopicCategory/dct:subject" group-by="@rdf:resource">
+              <xsl:copy-of select="." />
+            </xsl:for-each-group>
+          </xsl:if>
+        </xsl:if>
+      </xsl:if>
+      <xsl:copy-of select="$keywordsRdfMapping/*" />
 
       <!-- Alternate title -->
       <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle|
@@ -477,15 +495,24 @@
           <xsl:variable name="relatedDatasetByOperatesOn" select="xslutil:getRelatedDatasets($RecordUUID)/datasets/*"/>
 
           <!-- Topic category -->
-          <xsl:variable name="dcatThemes">
-            <xsl:apply-templates select="$relatedDatasetByOperatesOn//gmd:topicCategory"/>
-          </xsl:variable>
-          <xsl:for-each-group select="$dcatThemes/dcat:theme" group-by="skos:Concept/@rdf:about">
-            <xsl:copy-of select="." />
-          </xsl:for-each-group>
-          <xsl:for-each-group select="$dcatThemes/dct:subject" group-by="@rdf:resource">
-            <xsl:copy-of select="." />
-          </xsl:for-each-group>
+          <xsl:if test="count($keywordsRdfMapping/dcat:theme) = 0">
+            <xsl:variable name="dcatThemesByTopicCategory">
+              <xsl:apply-templates select="$relatedDatasetByOperatesOn//gmd:topicCategory"/>
+            </xsl:variable>
+            <xsl:for-each-group select="$relatedDatasetByOperatesOn//gmd:topicCategory" group-by="normalize-space(.)">
+              <xsl:call-template name="Map-topicCategory">
+                <xsl:with-param name="topicCategoryValue" select="normalize-space(.)"/>
+              </xsl:call-template>
+            </xsl:for-each-group>
+            <xsl:for-each-group select="$dcatThemesByTopicCategory/dcat:theme" group-by="skos:Concept/@rdf:about">
+              <xsl:copy-of select="." />
+            </xsl:for-each-group>
+            <xsl:if test="count($keywordsRdfMapping/dct:subject) = 0">
+              <xsl:for-each-group select="$dcatThemesByTopicCategory/dct:subject" group-by="@rdf:resource">
+                <xsl:copy-of select="." />
+              </xsl:for-each-group>
+            </xsl:if>
+          </xsl:if>
 
           <!-- Transfer option -->
           <xsl:variable name="distribution" select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[

@@ -17,6 +17,7 @@
   <xsl:variable name="ProtocolCodelist" select="document('../thesauri-AIV/theme/protocol.rdf')"/>
   <xsl:variable name="MediaTypeCodelist" select="document('../thesauri-AIV/theme/media-types.rdf')"/>
   <xsl:variable name="ServiceTypeCodelist" select="document('../thesauri-AIV/theme/inspire-service-type.rdf')"/>
+  <xsl:variable name="TopicCategoryCodelist" select="document('../thesauri-AIV/theme/TopicCategory.rdf')"/>
   <xsl:variable name="ServiceCategoryCodelist" select="document('../thesauri-AIV/theme/inspire-service-taxonomy.rdf')"/>
 
   <xsl:template name="ExtractLang" match="gmd:language">
@@ -245,8 +246,29 @@
               <xsl:value-of select="string()"/>
             </skos:prefLabel>
           </xsl:for-each>
+          <skos:inScheme rdf:resource="{$ServiceTypeCodelist//skos:ConceptScheme/@rdf:about[1]}"/>
         </skos:Concept>
       </mdcat:servicetype>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="Map-topicCategory">
+    <xsl:param name="topicCategoryValue"/>
+    <xsl:variable name="concept" select="$TopicCategoryCodelist//skos:Concept[ends-with(@rdf:about, $topicCategoryValue)][1]"/>
+    <xsl:if test="$concept">
+      <mdcat:ISO-categorie>
+        <skos:Concept rdf:about="{$concept/@rdf:about}">
+          <xsl:for-each select="$concept/skos:prefLabel">
+            <skos:prefLabel>
+              <xsl:if test="@xml:lang">
+                <xsl:attribute name="xml:lang" select="@xml:lang"/>
+              </xsl:if>
+              <xsl:value-of select="string()"/>
+            </skos:prefLabel>
+          </xsl:for-each>
+          <skos:inScheme rdf:resource="{$TopicCategoryCodelist//skos:ConceptScheme/@rdf:about[1]}"/>
+        </skos:Concept>
+      </mdcat:ISO-categorie>
     </xsl:if>
   </xsl:template>
 
@@ -264,6 +286,7 @@
               <xsl:value-of select="string()"/>
             </skos:prefLabel>
           </xsl:for-each>
+          <skos:inScheme rdf:resource="{$ServiceCategoryCodelist//skos:ConceptScheme/@rdf:about[1]}"/>
         </skos:Concept>
       </mdcat:servicecategorie>
     </xsl:if>
