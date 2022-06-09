@@ -199,7 +199,7 @@
 
   <xsl:template name="Map-protocol">
     <xsl:param name="protocol"/>
-    <xsl:variable name="concept" select="$ProtocolCodelist//skos:Concept[skos:notation = $protocol][1]"/>
+    <xsl:variable name="concept" select="$ProtocolCodelist/rdf:RDF/skos:Concept[skos:notation = $protocol][1]"/>
     <xsl:if test="$concept != ''">
       <dct:conformsTo>
         <dct:Standard>
@@ -220,7 +220,7 @@
         <xsl:otherwise><xsl:value-of select="lower-case($mediaType)"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:variable name="concept" select="$MediaTypeCodelist//skos:Concept[ends-with(@rdf:about, concat('/', $searchMediaType))][1]"/>
+    <xsl:variable name="concept" select="$MediaTypeCodelist/rdf:RDF/skos:Concept[ends-with(@rdf:about, concat('/', $searchMediaType))][1]"/>
     <xsl:if test="$concept != ''">
       <dcat:mediaType>
         <skos:Concept rdf:about="{$concept/@rdf:about}">
@@ -234,7 +234,7 @@
 
   <xsl:template name="Map-serviceType">
     <xsl:param name="serviceTypeUri"/>
-    <xsl:variable name="concept" select="$ServiceTypeCodelist//skos:Concept[@rdf:about = $serviceTypeUri][1]"/>
+    <xsl:variable name="concept" select="$ServiceTypeCodelist/rdf:RDF/skos:Concept[@rdf:about = $serviceTypeUri][1]"/>
     <xsl:if test="$concept">
       <mdcat:servicetype>
         <skos:Concept rdf:about="{$concept/@rdf:about}">
@@ -246,7 +246,7 @@
               <xsl:value-of select="string()"/>
             </skos:prefLabel>
           </xsl:for-each>
-          <skos:inScheme rdf:resource="{$ServiceTypeCodelist//skos:ConceptScheme/@rdf:about[1]}"/>
+          <skos:inScheme rdf:resource="{$ServiceTypeCodelist/rdf:RDF/skos:ConceptScheme/@rdf:about[1]}"/>
         </skos:Concept>
       </mdcat:servicetype>
     </xsl:if>
@@ -254,7 +254,7 @@
 
   <xsl:template name="Map-topicCategory">
     <xsl:param name="topicCategoryValue"/>
-    <xsl:variable name="concept" select="$TopicCategoryCodelist//skos:Concept[ends-with(@rdf:about, $topicCategoryValue)][1]"/>
+    <xsl:variable name="concept" select="$TopicCategoryCodelist/rdf:RDF/skos:Concept[ends-with(@rdf:about, $topicCategoryValue)][1]"/>
     <xsl:if test="$concept">
       <mdcat:ISO-categorie>
         <skos:Concept rdf:about="{$concept/@rdf:about}">
@@ -266,7 +266,7 @@
               <xsl:value-of select="string()"/>
             </skos:prefLabel>
           </xsl:for-each>
-          <skos:inScheme rdf:resource="{$TopicCategoryCodelist//skos:ConceptScheme/@rdf:about[1]}"/>
+          <skos:inScheme rdf:resource="{$TopicCategoryCodelist/rdf:RDF/skos:ConceptScheme/@rdf:about[1]}"/>
         </skos:Concept>
       </mdcat:ISO-categorie>
     </xsl:if>
@@ -274,7 +274,7 @@
 
   <xsl:template name="Map-serviceCategory">
     <xsl:param name="serviceCategoryUri"/>
-    <xsl:variable name="concept" select="$ServiceCategoryCodelist//skos:Concept[@rdf:about = $serviceCategoryUri][1]"/>
+    <xsl:variable name="concept" select="$ServiceCategoryCodelist/rdf:RDF/skos:Concept[@rdf:about = $serviceCategoryUri][1]"/>
     <xsl:if test="$concept">
       <mdcat:servicecategorie>
         <skos:Concept rdf:about="{$concept/@rdf:about}">
@@ -286,7 +286,7 @@
               <xsl:value-of select="string()"/>
             </skos:prefLabel>
           </xsl:for-each>
-          <skos:inScheme rdf:resource="{$ServiceCategoryCodelist//skos:ConceptScheme/@rdf:about[1]}"/>
+          <skos:inScheme rdf:resource="{$ServiceCategoryCodelist/rdf:RDF/skos:ConceptScheme/@rdf:about[1]}"/>
         </skos:Concept>
       </mdcat:servicecategorie>
     </xsl:if>
@@ -339,7 +339,7 @@
   <xsl:function name="geonet:getResourceBaseURIOrUUID">
     <xsl:param name="md" as="node()"/>
     <xsl:variable name="resourceIdentifiers">
-      <xsl:for-each select="$md//gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
+      <xsl:for-each select="$md/gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
         <xsl:choose>
           <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
             <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>
@@ -355,7 +355,7 @@
         <xsl:value-of select="$resourceIdentifiers[matches(., $uuidRegex)][1]"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="xslutil:uuidFromString($md//gmd:fileIdentifier/gco:CharacterString)"/>
+        <xsl:value-of select="xslutil:uuidFromString($md/gmd:fileIdentifier/gco:CharacterString)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
@@ -378,7 +378,7 @@
         <!-- Else statement should never occur -->
         <xsl:value-of select="if (matches($normalizedUUID, concat('^', $uuidRegex, '$')))
                               then normalize-space($normalizedUUID)
-                              else xslutil:uuidFromString($md//gmd:fileIdentifier/gco:CharacterString)"/>
+                              else xslutil:uuidFromString($md/gmd:fileIdentifier/gco:CharacterString)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
