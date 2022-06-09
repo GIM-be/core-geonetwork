@@ -815,10 +815,15 @@
 
     <xsl:if test="$nonExistingChildParent/* and $isDisplayed = 'true'">
       <xsl:variable name="childName" select="@or"/>
+      <xsl:variable name="childPrefix" select="@prefix" />
 
+      <xsl:variable name="gnChildPrefix">
+        <xsl:if test="$childPrefix"><xsl:value-of select="$childPrefix"/></xsl:if>
+        <xsl:if test="not($childPrefix)"><xsl:value-of select="$nonExistingChildParent/*/gn:child[@name = $childName]/@prefix"/></xsl:if>
+      </xsl:variable>
       <!-- Get label from action or from gn:child -->
-      <xsl:variable name="elementName"
-                    select="$nonExistingChildParent/*/gn:child[@name = $childName]/concat(@prefix, ':', @name)"/>
+      <xsl:variable name="elementName" select="$nonExistingChildParent/*/gn:child[@name = $childName and @prefix=$gnChildPrefix]/concat(@prefix, ':', @name)"/>
+
       <xsl:variable name="originalNode" select="gn-fn-metadata:getOriginalNode($metadata, $nonExistingChildParent/node())"/>
       <xsl:variable name="btnOverrideName"
                     select="@name"/>
@@ -847,7 +852,7 @@
             <xsl:with-param name="name" select="$name"/>
             <xsl:with-param name="id" select="concat('_X',
      $nonExistingChildParent/*[position() = last()]/gn:element/@ref, '_',
-     $nonExistingChildParent/*[position() = last()]/gn:child[@name = $childName]/@prefix, 'COLON', @or)"/>
+     $nonExistingChildParent/*[position() = last()]/gn:child[@name = $childName]/@prefix[.=$gnChildPrefix], 'COLON', @or)"/>
             <xsl:with-param name="isExisting" select="false()"/>
             <xsl:with-param name="template" select="template"/>
             <xsl:with-param name="hasAddAction" select="true()"/>
@@ -856,7 +861,7 @@
             <xsl:with-param name="parentRef"
                             select="$nonExistingChildParent/*[position() = last()]/gn:element/@ref"/>
             <xsl:with-param name="qname"
-                            select="concat($nonExistingChildParent/*[position() = last()]/gn:child[@name = $childName]/@prefix, ':', @or)"/>
+                            select="concat($nonExistingChildParent/*[position() = last()]/gn:child[@name = $childName]/@prefix[.=$gnChildPrefix], ':', @or)"/>
             <xsl:with-param name="isFirst" select="@forceLabel or count($elementOfSameKind/*) = 0"/>
             <xsl:with-param name="isAddAction" select="true()"/>
             <xsl:with-param name="btnLabel"
