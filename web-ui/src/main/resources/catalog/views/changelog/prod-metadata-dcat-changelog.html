@@ -16,6 +16,96 @@
   <div class="changelog-container">
     <h1>Changelog</h1>
 
+    <section id="20/06/2022 - R4" title="R4 - Verbeteringen en bugfixes Informatiecatalogus">
+      <ul>
+        <li>
+          <strong>Metadata-standaard</strong>
+          <ul>
+            <li>Hoofdzakelijk verbeteringen aan de GeoDCAT-AP Vl mapping van de ISO-metadatarecords naar de RDF-output</li>
+            <li>Bugfixing in sjablonen van de overige applicatieprofielen, waar nodig</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Metadata-inhoud</strong>
+          <ul>
+            <li>Aanpassing van alle vormen van de organisatienaam van 'agentschap Informatie Vlaanderen' naar 'agentschap Digitaal Vlaanderen'</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Metadata-beheersysteem</strong>
+          <ul>
+            <li>Bugfixing en optimaliseren van kleine features op GeoNetwork 3.8, de DCAT-AP plug-in, en de Zoek-facets en indexing-mechanismen</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Overzicht van alle verbeteringen sinds R3 in detail (in chronologische volgorde)</strong>
+          <ul>
+            <li>Fix waar voorbeeldweergaven niet konden worden opgeladen of verwijderd</li>
+            <li>Fix crash bij de RDF-export van ISO-metadatarecords met meerdere objectencatalogi</li>
+            <li>Changelog voorzien per omgeving (DEV, BETA, PROD)</li>
+            <li>Toevoegen mapping van 'gmd:EX_GeographicBoundingBox' naar  'dct:spatial/dcat:bbox'</li>
+            <li>Fix verkeerde 'SpatialRepresentationType URL' voor  'adms:representationTechnique'</li>
+            <li>Enkel 'gmd:MD_LegalConstraints' and 'gmd:MD_SecurityConstraints' mappen naar 'dct:rights'</li><li>Correct gebruik maken van de oorspronkelijke dataset identificator (UUID) en URI als deze aanwezig zijn en de correcte syntax gebruiken</li>
+            <li>Fix 'dct:spatial' GML-encoding</li>
+            <li>Update 'dcat:Catalog contact' en 'publisher' informatie</li>
+            <li>Mapping van het originele metadatarecord (HTML-view weergave) naar 'mdcat:landingpageVoorBronMetadata' in plaats van naar de parent property 'dcat:landingPage'</li>
+            <li>Toevoegen mapping voor 'OGC:OGC-API-Features-landingpage' en 'OGC:OGC-API-Features-items protocols'</li>
+            <li>Toevoegen van protocol mapping voor services in het element 'conformsTo' gebaseerd op het distributie-element 'gmd:protocol'</li>
+            <li>Fix om niet te dupliceren van de mapping waar de overdracht niet via de download protocols gebeurt ('WWW:DOWNLOAD-1.0-ftp—download', 'WWW:DOWNLOAD-1.0-http—download', of 'LINK download-store')</li>
+            <li>Toevoeging mapping van de 'OGC:OGC-API-Features protocols' in de dataset-distributies</li>
+            <li>Fix ontbrekende referentie naar de 'dcat:CatalogRecord', 'dcat:Dataset' en 'dcat:DataService' in de RDF-output bij exporteren via the user interface ("/dut/rdf.metadata.get" API)</li>
+            <li>Verwijderen van de maximum kardinaliteit van de validatieregel voor het element 'statuut' voor 'DCAT-AP Vl'</li>
+            <li>Toevoegen van via de admin settings te configureren organisatie e-mail en URL van de catalogus</li>
+            <li>Fix niet-editeerbaar concept 'dct:rightsHolder/dct:type'</li>
+            <li>Fix Dataset en DataService geïndexeerd onder 'standardName'</li>
+            <li>Fix van het soms lege record onderdeel in de 'Metadata DCAT' view</li>
+            <li>Fix van het soms lege 'Standard name' en 'description' in de 'catalog record' van geharveste metadata</li>
+            <li>Fix gedupliceerde 'amds:identifier' in de RDF-output van bepaalde DCAT-native aangemaakte records</li>
+            <li>Fix zodat het distributie licentie-blok in de DCAT-sjablonen verwijderd kan worden</li>
+            <li>Toevoegen van de GeoNetwork homepage link aan 'dcat:Catalog/foaf:homepage/foaf:Document/@rdf:about attribute'</li>
+            <li>Aanmaken van 'dct:creator' van 'dcat:CatalogRecord/adms:identifier' dynamisch gebaseerd op de gebruikte node</li>
+            <li>Aanpassen van 'dcat:landingPage' naar 'mdcat:landingpageVoorBronMetadata'</li>
+            <li>Fix tikfout in licentietype</li>
+            <li>Fix 'hard line returns' in bepaalde licentie-beschrijvingen</li>
+            <li>Verplaatsen van alle 'element-namespaces' naar het 'root-element'</li>
+            <li>Fix character encoding in de hydra paging URL's query parameter</li>
+            <li>Fix van de niet-editeerbare service 'dct:license/dct:LicenseDocument/dct:type'-thesaurus value</li>
+            <li>Toevoegen van de mapping van 'status progress code' naar 'mdcat:status(sub-property of adms:status)'</li>
+            <li>Toevoegen van de mapping van trefwoorden naar de subproperties van dct:subject:
+              <ul>
+                <li><a href="http://vocab.belgif.be/auth/datatheme" target="_blank">http://vocab.belgif.be/auth/datatheme</a> => dcat:theme</li>
+                <li><a href="https://inspire.ec.europa.eu/metadata-codelist/TopicCategory" target="_blank">https://inspire.ec.europa.eu/metadata-codelist/TopicCategory</a> => mdcat:ISO-categorie</li>
+                <li><a href="https://inspire.ec.europa.eu/theme" target="_blank">https://inspire.ec.europa.eu/theme</a> => mdcat:INSPIRE-thema</li>
+                <li><a href="http://www.eionet.europa.eu/gemet" target="_blank">http://www.eionet.europa.eu/gemet</a> => mdcat:GEMET-concept</li>
+                <li><a href="https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie" target="_blank">https://data.vlaanderen.be/id/conceptscheme/MAGDA-categorie</a> => mdcat:MAGDA-categorie</li>
+                <li>Andere trefwoorden => dct:subject</li>
+              </ul>
+            </li>
+            <li>Toevoegen mapping voor service types en service categorieën</li>
+            <li>Fix tikfout in "dct:creator/@rdf:resoure" attribuutnaame</li>
+            <li>Implementatie van caching mechanisme voor omgezette RDF-metadata voor betere performantie</li>
+            <li>Patch voor Taxonomy indexing memory leak</li>
+            <li>Toevoegen van de totale relation-count in het 'relation-API -antwoord' om efficiënte paginering toe te staan</li>
+            <li>Fix ontbrekend 'dct:Location' wrapper-element</li>
+            <li>Fix ontbrekende "root" property voor native metadata in de database</li>
+            <li>Fix 'dcat:endpointDescription' minimum kardinaliteit</li>
+            <li>Fix ontbrekende "*" tekens op de verplichte velden in de DCAT-sjablonen in het editeren</li>
+            <li>Toevoegen van de + knop voor verwijderde titel en beschrijving in DataService sjabloon in de editor</li>
+            <li>Update van het schematron met de meest recente SHACL specificatie</li>
+            <li>Update van de Header-informatie van "agentschap Information Vlaanderen" naar "Digitaal Vlaanderen"</li>
+            <li>Fix om dcat:distribution te verwijderen die niet het laatst zijn toegevoegd</li>
+            <li>Implementeren van fixes op de ATOM-feed functionaliteit</li>
+            <li>Toevoegen van dct:conformsTo in de distributie-tab in de native DCAT-sjablonen bij het editeren</li>
+            <li>Verbeteren van de harvester notification e-mails</li>
+            <li>Fix encoding-problemen bij het exporteren van het ISO-distributie-element naar het 'accessURL' RDF-element</li>
+            <li>Verbeteren van de DCAT-harvester bij het omgaan met 'blank nodes'</li>
+            <li>Toevoegen van een apart te bereiken 'Gebruiksvoorwaarden'-view in functie van de Downloadtoepassing</li>
+            <li>Toevoegen van de mapping voor 'spatialResolution'</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
     <section id="15/03/2022 - R3"
              title="R3 - Metadata Vlaanderen integreert API’s en voorziet een uitgebreid ecosysteem aan metadata-standaarden">
       <ul>
