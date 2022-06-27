@@ -545,37 +545,37 @@
             <xsl:for-each select="$relatedDatasetByOperatesOn">
               <xsl:choose>
                 <xsl:when test="name() = 'gmd:MD_Metadata'">
-                  <xsl:variable name="datasetUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
-                  <dcat:servesDataset rdf:resource="{geonet:getResourceURI(., 'dataset', $datasetUriPattern)}"/>
+                  <xsl:variable name="datasetUriPattern"
+                                select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
 
-                  <!--<dcat:servesDataset>-->
-                  <!--  <dcat:Dataset rdf:about="{geonet:getResourceURI(., 'dataset', $datasetUriPattern)}">-->
-                  <!--    <xsl:variable name="dsIdentifiers">-->
-                  <!--      <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">-->
-                  <!--        <xsl:choose>-->
-                  <!--          <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">-->
-                  <!--            <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>-->
-                  <!--          </xsl:when>-->
-                  <!--          <xsl:otherwise>-->
-                  <!--            <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>-->
-                  <!--          </xsl:otherwise>-->
-                  <!--        </xsl:choose>-->
-                  <!--      </xsl:for-each>-->
-                  <!--    </xsl:variable>-->
-                  <!--    <xsl:variable name="link" select="normalize-space($operatesOn[@uuidref = $dsIdentifiers][1]/@xlink:href)"/>-->
-
-                  <!--    <dct:identifier>-->
-                  <!--      <xsl:value-of select="gmd:fileIdentifier/gco:CharacterString"/>-->
-                  <!--    </dct:identifier>-->
-                  <!--    <dct:title>-->
-                  <!--      <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"/>-->
-                  <!--    </dct:title>-->
-                  <!--    <xsl:if test="$link != ''">-->
-                  <!--      <dcat:landingPage rdf:resource="{$link}"/>-->
-                  <!--    </xsl:if>-->
-                  <!--  </dcat:Dataset>-->
-                  <!--</dcat:servesDataset>-->
-
+                  <dcat:servesDataset>
+                    <dcat:Dataset rdf:about="{geonet:getResourceURI(., 'dataset', $datasetUriPattern)}">
+                      <xsl:variable name="dsIdentifiers">
+                        <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
+                          <xsl:choose>
+                            <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
+                              <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>
+                            </xsl:otherwise>
+                          </xsl:choose>
+                        </xsl:for-each>
+                      </xsl:variable>
+                      <xsl:variable name="link" select="normalize-space($operatesOn[@uuidref = $dsIdentifiers][1]/@xlink:href)"/>
+                      <dct:identifier>
+                        <xsl:value-of select="gmd:fileIdentifier/gco:CharacterString"/>
+                      </dct:identifier>
+                      <dct:title>
+                        <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"/>
+                      </dct:title>
+                      <xsl:if test="$link != ''">
+                        <dct:conformsTo>
+                          <dct:Standard rdf:resource="{$link}"/>
+                        </dct:conformsTo>
+                      </xsl:if>
+                    </dcat:Dataset>
+                  </dcat:servesDataset>
                 </xsl:when>
                 <xsl:when test="name() = 'rdf:RDF'">
                   <dct:relation rdf:resource="{geonet:escapeURI(.//dcat:Dataset[1]/@rdf:about)}"/>
@@ -759,8 +759,8 @@
                           <xsl:copy-of select="$Title"/>
                           <xsl:copy-of select="$Description"/>
                           <dcat:accessURL rdf:resource="{geonet:escapeURI($linkage)}"/>
-                          <xsl:copy-of select="$LicenseAndRightsConstraints"/>
                           <xsl:if test="$isDownload">
+                            <xsl:copy-of select="$LicenseAndRightsConstraints"/>
                             <xsl:copy-of select="."/>
                           </xsl:if>
                           <xsl:call-template name="Map-protocol">
@@ -797,12 +797,16 @@
                                   <xsl:variable name="serviceUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
                                   <xsl:value-of select="geonet:getResourceURI(., 'service', $serviceUriPattern)"/>
                                 </resourceURI>
+                                <uuid>
+                                  <xsl:value-of select="gmd:fileIdentifier/gco:CharacterString"/>
+                                </uuid>
                               </xsl:if>
                             </xsl:for-each>
                           </xsl:variable>
 
-                          <xsl:if test="$servedService/resourceURI">
+                          <xsl:if test="not($isDownload) and $servedService/resourceURI">
                             <dcat:accessService rdf:resource="{$servedService/resourceURI[1]}"/>
+                            <dct:rights rdf:resource="{concat($catalogUrl, '/catalog.search#/metadata/', $servedService/uuid[1], '/formatters/legalconstraints')}"/>
                           </xsl:if>
 
                           <xsl:copy-of select="$Distributors"/>
@@ -1960,7 +1964,7 @@
     <adms:representationTechnique>
       <skos:Concept rdf:about="{$SpatialRepresentationTypeCodelistUri}/{@codeListValue}">
         <skos:notation>
-          <xsl:value-of select="'het primaire ruimtelijke voorstellingstype waarin de data in de dataset wordt beheercfl'"/>
+          <xsl:value-of select="'het primaire ruimtelijke voorstellingstype waarin de data in de dataset wordt beheerd'"/>
         </skos:notation>
         <skos:inScheme rdf:resource="{$SpatialRepresentationTypeCodelistUri}"/>
       </skos:Concept>
