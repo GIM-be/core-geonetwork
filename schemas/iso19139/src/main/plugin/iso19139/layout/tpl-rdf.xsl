@@ -1960,7 +1960,7 @@
     <adms:representationTechnique>
       <skos:Concept rdf:about="{$SpatialRepresentationTypeCodelistUri}/{@codeListValue}">
         <skos:notation>
-          <xsl:value-of select="'het primaire ruimtelijke voorstellingstype waarin de data in de dataset wordt beheercfl'"/>
+          <xsl:value-of select="'het primaire ruimtelijke voorstellingstype waarin de data in de dataset wordt beheerd'"/>
         </skos:notation>
         <skos:inScheme rdf:resource="{$SpatialRepresentationTypeCodelistUri}"/>
       </skos:Concept>
