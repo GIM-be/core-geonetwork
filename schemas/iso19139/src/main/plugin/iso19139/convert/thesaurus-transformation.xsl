@@ -146,6 +146,26 @@
     </xsl:call-template>
   </xsl:template>
 
+  <xsl:template name="to-md-format-gmd-name">
+    <xsl:variable name="currentThesaurus"
+                  select="if (thesaurus/key) then thesaurus/key else /root/request/thesaurus"/>
+    <xsl:for-each select="//keyword[thesaurus/key = $currentThesaurus]">
+      <gmd:name>
+        <gmx:Anchor>
+          <xsl:attribute name="xlink:href">
+            <xsl:value-of select="uri"/>
+          </xsl:attribute>
+          <xsl:value-of select="value"/>
+        </gmx:Anchor>
+      </gmd:name>
+    </xsl:for-each>
+    <xsl:if test="count(//keyword[thesaurus/key = $currentThesaurus]) = 0">
+      <gmd:name gco:nilReason="missing">
+        <gmx:Anchor xlink:href="" />
+      </gmd:name>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template name="to-md-keywords">
     <xsl:param name="textgroupOnly"/>
     <xsl:param name="listOfLanguage"/>

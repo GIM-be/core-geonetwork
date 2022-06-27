@@ -557,7 +557,7 @@
       <gmd:distributionFormat>
         <gmd:MD_Format>
           <gmd:name gco:nilReason="missing">
-            <gco:CharacterString/>
+            <gmx:Anchor/>
           </gmd:name>
           <gmd:version gco:nilReason="missing">
             <gco:CharacterString/>

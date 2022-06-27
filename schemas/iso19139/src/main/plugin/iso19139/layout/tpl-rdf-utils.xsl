@@ -16,6 +16,7 @@
 
   <xsl:variable name="ProtocolCodelist" select="document('../thesauri-AIV/theme/protocol.rdf')"/>
   <xsl:variable name="MediaTypeCodelist" select="document('../thesauri-AIV/theme/media-types.rdf')"/>
+  <xsl:variable name="FileTypeCodelist" select="document('../thesauri-AIV/theme/file-type.rdf')"/>
   <xsl:variable name="ServiceTypeCodelist" select="document('../thesauri-AIV/theme/inspire-service-type.rdf')"/>
   <xsl:variable name="TopicCategoryCodelist" select="document('../thesauri-AIV/theme/TopicCategory.rdf')"/>
   <xsl:variable name="ServiceCategoryCodelist" select="document('../thesauri-AIV/theme/inspire-service-taxonomy.rdf')"/>
@@ -229,6 +230,71 @@
           <xsl:copy-of select="$concept/skos:inScheme" />
         </skos:Concept>
       </dcat:mediaType>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="Map-format-to-file-type">
+    <xsl:param name="format"/>
+    <xsl:variable name="searchFormat">
+      <xsl:choose>
+        <xsl:when test="lower-case($format)=lower-case('Access')">MDB</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('Access-databank (.mdb)')">MDB</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('AccessDB')">MDB</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('Arc/Info Binary Grid')">Esri binary grid</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('Arc/Info Coverage')">ArcInfo coverage</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('ASCII-georeferentiebestand (.tfw)')">Worldfile</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('BigTIFF')">TIFF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('CSV')">CSV</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('dBASE')">DBF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('dBase (dbf)')">DBF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('Dgn')">DGN</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('Dwg')">DWG</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('Dxf')">DXF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('E00')">E00</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('ESRI Arc/Info ASCII Grid')">Esri ASCII grid</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('ESRI ASCII Raster')">Esri ASCII grid</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('ESRI Shapefile')">Esri Shape</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('File Geodatabase')">Esri File Geodatabase</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('GeoTIFF')">GeoTIFF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('GEOTIFF (.tif)')">TIFF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('GeoTIFFs')">TIFF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('GIF')">GIF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('GML')">GML</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('GML application schema')">GML</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('GRD')"></xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('grid - geotiff')">TIFF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('HDF')">HDF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('IHO S-102')">TIFF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('IHO S57')">TIFF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('IHO S-57')">TIFF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('image/png')">PNG</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('JPEG2000')">JPEG 2000</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('JPG')">JPEG</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('KML')">KML</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('layerpackage')">Layer package</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('MGE')">Intergraph</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('MIF/MID')">MIF/MID</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('Mr.Sid')">MrSID</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('MrSID')">MrSID</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('MS Access')">MDB</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('PDF')">PDF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('PNG')">PNG</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('polygoon shape file per pakket')">Esri Shape</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('PostScript')">PS</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('Shape')">Esri Shape</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('shapefiile')">Esri Shape</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('Shapefile')">Esri Shape</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('shape-file lijnenkaarten per eenheid')">Esri Shape</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('Space delimited ASCII')">Plain text</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('TIFF')">TIFF</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('Ungen')">Ungen</xsl:when>
+        <xsl:when test="lower-case($format)=lower-case('XML')">XML</xsl:when>
+        <xsl:otherwise><xsl:value-of select="$format"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="concept" select="$FileTypeCodelist/rdf:RDF/skos:Concept[skos:prefLabel[@xml:lang=('nl','en','fr','de') and lower-case(.)=lower-case($searchFormat)]][1]"/>
+    <xsl:if test="$concept">
+      <dct:format rdf:resource="{geonet:escapeURI($concept/@rdf:about)}"/>
     </xsl:if>
   </xsl:template>
 

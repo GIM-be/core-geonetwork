@@ -147,7 +147,7 @@
       <!-- Distribution - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
       <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
-        <xsl:for-each select="gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString">
+        <xsl:for-each select="gmd:distributionFormat/gmd:MD_Format/gmd:name/*">
           <dc:format>
             <xsl:value-of select="."/>
           </dc:format>
