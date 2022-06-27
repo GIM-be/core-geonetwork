@@ -759,8 +759,8 @@
                           <xsl:copy-of select="$Title"/>
                           <xsl:copy-of select="$Description"/>
                           <dcat:accessURL rdf:resource="{geonet:escapeURI($linkage)}"/>
-                          <xsl:copy-of select="$LicenseAndRightsConstraints"/>
                           <xsl:if test="$isDownload">
+                            <xsl:copy-of select="$LicenseAndRightsConstraints"/>
                             <xsl:copy-of select="."/>
                           </xsl:if>
                           <xsl:call-template name="Map-protocol">
@@ -797,12 +797,16 @@
                                   <xsl:variable name="serviceUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
                                   <xsl:value-of select="geonet:getResourceURI(., 'service', $serviceUriPattern)"/>
                                 </resourceURI>
+                                <uuid>
+                                  <xsl:value-of select="gmd:fileIdentifier/gco:CharacterString"/>
+                                </uuid>
                               </xsl:if>
                             </xsl:for-each>
                           </xsl:variable>
 
-                          <xsl:if test="$servedService/resourceURI">
+                          <xsl:if test="not($isDownload) and $servedService/resourceURI">
                             <dcat:accessService rdf:resource="{$servedService/resourceURI[1]}"/>
+                            <dct:rights rdf:resource="{concat($catalogUrl, '/catalog.search#/metadata/', $servedService/uuid[1], '/formatters/legalconstraints')}"/>
                           </xsl:if>
 
                           <xsl:copy-of select="$Distributors"/>
