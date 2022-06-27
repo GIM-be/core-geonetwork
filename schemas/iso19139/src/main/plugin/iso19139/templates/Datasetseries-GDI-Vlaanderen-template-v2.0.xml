@@ -703,10 +703,10 @@
     <gmd:MD_Distribution>
       <gmd:distributionFormat>
         <gmd:MD_Format>
-          <gmd:name>
-            <gco:CharacterString/>
+          <gmd:name gco:nilReason="missing">
+            <gmx:Anchor/>
           </gmd:name>
-          <gmd:version>
+          <gmd:version gco:nilReason="missing">
             <gco:CharacterString/>
           </gmd:version>
         </gmd:MD_Format>
