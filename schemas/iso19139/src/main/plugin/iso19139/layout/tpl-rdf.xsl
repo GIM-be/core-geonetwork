@@ -545,37 +545,37 @@
             <xsl:for-each select="$relatedDatasetByOperatesOn">
               <xsl:choose>
                 <xsl:when test="name() = 'gmd:MD_Metadata'">
-                  <xsl:variable name="datasetUriPattern" select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
-                  <dcat:servesDataset rdf:resource="{geonet:getResourceURI(., 'dataset', $datasetUriPattern)}"/>
+                  <xsl:variable name="datasetUriPattern"
+                                select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
 
-                  <!--<dcat:servesDataset>-->
-                  <!--  <dcat:Dataset rdf:about="{geonet:getResourceURI(., 'dataset', $datasetUriPattern)}">-->
-                  <!--    <xsl:variable name="dsIdentifiers">-->
-                  <!--      <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">-->
-                  <!--        <xsl:choose>-->
-                  <!--          <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">-->
-                  <!--            <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>-->
-                  <!--          </xsl:when>-->
-                  <!--          <xsl:otherwise>-->
-                  <!--            <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>-->
-                  <!--          </xsl:otherwise>-->
-                  <!--        </xsl:choose>-->
-                  <!--      </xsl:for-each>-->
-                  <!--    </xsl:variable>-->
-                  <!--    <xsl:variable name="link" select="normalize-space($operatesOn[@uuidref = $dsIdentifiers][1]/@xlink:href)"/>-->
-
-                  <!--    <dct:identifier>-->
-                  <!--      <xsl:value-of select="gmd:fileIdentifier/gco:CharacterString"/>-->
-                  <!--    </dct:identifier>-->
-                  <!--    <dct:title>-->
-                  <!--      <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"/>-->
-                  <!--    </dct:title>-->
-                  <!--    <xsl:if test="$link != ''">-->
-                  <!--      <dcat:landingPage rdf:resource="{$link}"/>-->
-                  <!--    </xsl:if>-->
-                  <!--  </dcat:Dataset>-->
-                  <!--</dcat:servesDataset>-->
-
+                  <dcat:servesDataset>
+                    <dcat:Dataset rdf:about="{geonet:getResourceURI(., 'dataset', $datasetUriPattern)}">
+                      <xsl:variable name="dsIdentifiers">
+                        <xsl:for-each select="gmd:identificationInfo[1]/*/gmd:citation/*/gmd:identifier/*">
+                          <xsl:choose>
+                            <xsl:when test="gmd:codeSpace/gco:CharacterString/text() != ''">
+                              <xsl:value-of select="concat(gmd:codeSpace/gco:CharacterString/text(), gmd:code/gco:CharacterString/text())"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <xsl:value-of select="gmd:code/gco:CharacterString/text()"/>
+                            </xsl:otherwise>
+                          </xsl:choose>
+                        </xsl:for-each>
+                      </xsl:variable>
+                      <xsl:variable name="link" select="normalize-space($operatesOn[@uuidref = $dsIdentifiers][1]/@xlink:href)"/>
+                      <dct:identifier>
+                        <xsl:value-of select="gmd:fileIdentifier/gco:CharacterString"/>
+                      </dct:identifier>
+                      <dct:title>
+                        <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"/>
+                      </dct:title>
+                      <xsl:if test="$link != ''">
+                        <dct:conformsTo>
+                          <dct:Standard rdf:resource="{$link}"/>
+                        </dct:conformsTo>
+                      </xsl:if>
+                    </dcat:Dataset>
+                  </dcat:servesDataset>
                 </xsl:when>
                 <xsl:when test="name() = 'rdf:RDF'">
                   <dct:relation rdf:resource="{geonet:escapeURI(.//dcat:Dataset[1]/@rdf:about)}"/>
