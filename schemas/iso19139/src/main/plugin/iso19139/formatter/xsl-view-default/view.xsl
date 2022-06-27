@@ -467,7 +467,7 @@
     <xsl:call-template name="render-text-as-row">
       <xsl:with-param name="label" select="tr:nodeLabel($schemaLoc, 'gmd:distributionFormat', name())"/>
       <xsl:with-param name="value">
-        <xsl:for-each select="gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString">
+        <xsl:for-each select="gmd:distributionFormat/gmd:MD_Format/gmd:name/*">
           <xsl:variable name="version" select="normalize-space(../../gmd:version/gco:CharacterString)" />
           <xsl:variable name="toolTip" select="concat('{{''clickToFilterOn'' | translate}} ', .)"/>
           <a>

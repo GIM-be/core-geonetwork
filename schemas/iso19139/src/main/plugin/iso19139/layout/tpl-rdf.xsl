@@ -1878,14 +1878,26 @@
         <dct:format rdf:resource="{geonet:escapeURI(@xlink:href)}"/>
       </xsl:when>
       <xsl:otherwise>
-        <dct:format>
-          <skos:Concept>
-            <rdf:type rdf:resource="http://purl.org/dc/terms/MediaTypeOrExtent"/>
-            <skos:prefLabel>
-              <xsl:value-of select="."/>
-            </skos:prefLabel>
-          </skos:Concept>
-        </dct:format>
+        <xsl:variable name="mappedFormat">
+          <xsl:call-template name="Map-format-to-file-type">
+            <xsl:with-param name="format" select="."/>
+          </xsl:call-template>
+        </xsl:variable>
+        <xsl:choose>
+          <xsl:when test="$mappedFormat/count(*)>0">
+            <xsl:copy-of select="$mappedFormat/dct:format"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <dct:format>
+              <skos:Concept>
+                <rdf:type rdf:resource="http://purl.org/dc/terms/MediaTypeOrExtent"/>
+                <skos:prefLabel>
+                  <xsl:value-of select="."/>
+                </skos:prefLabel>
+              </skos:Concept>
+            </dct:format>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

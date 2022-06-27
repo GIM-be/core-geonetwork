@@ -599,7 +599,7 @@
         <col del=".."/>
       </row>
     </table>
-    <table for="gmd:MD_Format">
+    <!--table for="gmd:MD_Format">
       <header>
         <col label="gmd:name"/>
         <col label="gmd:version"/>
@@ -610,7 +610,7 @@
         <col xpath="gmd:version"/>
         <col del=".."/>
       </row>
-    </table>
+    </table-->
     <table for="gmd:PT_Locale">
       <header>
         <col label="gmd:languageCode"/>
@@ -3935,7 +3935,7 @@
                 <gmd:distributionFormat>
                   <gmd:MD_Format>
                     <gmd:name>
-                      <gco:CharacterString/>
+                      <gmx:Anchor xlink:href=""/>
                     </gmd:name>
                     <gmd:version>
                       <gco:CharacterString/>

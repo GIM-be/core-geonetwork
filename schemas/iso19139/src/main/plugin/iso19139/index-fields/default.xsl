@@ -762,7 +762,7 @@
     <!-- === Distribution === -->
 
     <xsl:for-each select="gmd:distributionInfo/gmd:MD_Distribution">
-      <xsl:for-each select="gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString">
+      <xsl:for-each select="gmd:distributionFormat/gmd:MD_Format/gmd:name/*">
         <Field name="format" string="{string(.)}" store="true" index="true"/>
       </xsl:for-each>
 
@@ -925,9 +925,9 @@
     <xsl:variable name="isMapDigital" select="count(gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/
                         gmd:presentationForm[gmd:CI_PresentationFormCode/@codeListValue = 'mapDigital']) > 0"/>
     <xsl:variable name="isStatic" select="count(gmd:distributionInfo/gmd:MD_Distribution/
-                        gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString[contains(., 'PDF') or contains(., 'PNG') or contains(., 'JPEG')]) > 0"/>
+                        gmd:distributionFormat/gmd:MD_Format/gmd:name/*[contains(., 'PDF') or contains(., 'PNG') or contains(., 'JPEG')]) > 0"/>
     <xsl:variable name="isInteractive" select="count(gmd:distributionInfo/gmd:MD_Distribution/
-                        gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString[contains(., 'OGC:WMC') or contains(., 'OGC:OWS-C')]) > 0"/>
+                        gmd:distributionFormat/gmd:MD_Format/gmd:name/*[contains(., 'OGC:WMC') or contains(., 'OGC:OWS-C')]) > 0"/>
     <xsl:variable name="isPublishedWithWMCProtocol" select="count(gmd:distributionInfo/gmd:MD_Distribution/
                         gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:protocol[starts-with(gco:CharacterString, 'OGC:WMC')]) > 0"/>
 
