@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gmd:MD_Metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:gco="http://www.isotc211.org/2005/gco"
-                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                  xmlns:gmx="http://www.isotc211.org/2005/gmx"
                  xmlns:gts="http://www.isotc211.org/2005/gts"
                  xmlns:gsr="http://www.isotc211.org/2005/gsr"
@@ -113,9 +113,7 @@
       <gmd:citation>
         <gmd:CI_Citation>
           <gmd:title>
-            <gco:CharacterString>
-              &lt;span id="template1">&lt;strong&gt;Geografische gegevens:&lt;/strong&gt; Sjabloon voor Metadata van Geografische (open) datasets, conform GDI-Vlaanderen Best Practices v2.0&lt;/span>
-            </gco:CharacterString>
+            <gco:CharacterString>&lt;span id="template1"&gt;&lt;strong&gt;Geografische gegevens:&lt;/strong&gt; Sjabloon voor Metadata van Geografische (open) datasets, conform GDI-Vlaanderen Best Practices v2.0&lt;/span&gt;</gco:CharacterString>
           </gmd:title>
           <gmd:alternateTitle>
             <gco:CharacterString/>
