@@ -498,7 +498,7 @@
           <xsl:variable name="relatedDatasetByOperatesOn" select="xslutil:getRelatedDatasets($RecordUUID)/datasets/*"/>
 
           <!-- Topic category -->
-          <xsl:if test="count($keywordsRdfMapping/dcat:theme) = 0">
+          <!--xsl:if test="count($keywordsRdfMapping/dcat:theme) = 0">
             <xsl:variable name="topicCategories" select="$relatedDatasetByOperatesOn/gmd:identificationInfo/*/gmd:topicCategory" />
             <xsl:variable name="dcatThemesByTopicCategory">
               <xsl:apply-templates select="$topicCategories"/>
@@ -516,7 +516,7 @@
                 <xsl:copy-of select="." />
               </xsl:for-each-group>
             </xsl:if>
-          </xsl:if>
+          </xsl:if-->
 
           <!-- Transfer option -->
           <xsl:variable name="distribution" select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[
@@ -539,15 +539,14 @@
           </xsl:for-each-group>
           <xsl:copy-of select="$LicenseAndRightsConstraints"/>
 
+          <xsl:variable name="datasetUriPattern"
+                        select="xslutil:getUriPattern($RecordUUID)"/>
           <!-- Coupled resources -->
           <xsl:if test="$relationLookup and count(gmd:identificationInfo/*/srv:operatesOn) > 0">
             <xsl:variable name="operatesOn" select="gmd:identificationInfo/*/srv:operatesOn"/>
             <xsl:for-each select="$relatedDatasetByOperatesOn">
               <xsl:choose>
                 <xsl:when test="name() = 'gmd:MD_Metadata'">
-                  <xsl:variable name="datasetUriPattern"
-                                select="xslutil:getUriPattern(gmd:fileIdentifier/gco:CharacterString)"/>
-
                   <dcat:servesDataset>
                     <dcat:Dataset rdf:about="{geonet:getResourceURI(., 'dataset', $datasetUriPattern)}">
                       <xsl:variable name="dsIdentifiers">
