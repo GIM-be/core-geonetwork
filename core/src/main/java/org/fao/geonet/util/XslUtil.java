@@ -47,6 +47,7 @@ import org.fao.geonet.domain.*;
 import org.fao.geonet.kernel.*;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
 import org.fao.geonet.kernel.schema.AssociatedResourcesSchemaPlugin;
+import org.fao.geonet.kernel.schema.ISOPlugin;
 import org.fao.geonet.kernel.schema.SchemaPlugin;
 import org.fao.geonet.kernel.search.*;
 import org.fao.geonet.kernel.setting.SettingInfo;
@@ -68,6 +69,7 @@ import org.geotools.xml.Parser;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+import org.jdom.filter.ElementFilter;
 import org.jdom.output.DOMOutputter;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
@@ -93,6 +95,7 @@ import java.util.stream.Collectors;
 
 import static org.fao.geonet.kernel.search.spatial.SpatialIndexWriter.parseGml;
 import static org.fao.geonet.kernel.setting.Settings.SYSTEM_SITE_ORGANIZATION;
+import static org.fao.geonet.schema.iso19139.ISO19139Namespaces.GMD;
 
 /**
  * These are all extension methods for calling from xsl docs.  Note:  All params are objects because
@@ -1093,16 +1096,38 @@ public final class XslUtil {
             try {
                 Element mdXml = metadata.getXmlData(false);
                 Set<String> uuids = schemaPlugin.getAssociatedDatasetUUIDs(mdXml);
+                List<ElementFilter> elementFilters = new ArrayList<ElementFilter>();
+                elementFilters.add(new ElementFilter("fileIdentifier", ISO19139Namespaces.GMD));
+                elementFilters.add(new ElementFilter("identificationInfo", ISO19139Namespaces.GMD));
                 Element related = new Element("datasets");
                 if (uuids != null && uuids.size() > 0) {
                     List<AbstractMetadata> mds = (List<AbstractMetadata>) metadataUtils.findAll(MetadataSpecs.hasMetadataUuidIn(uuids));
                     for (AbstractMetadata md: mds) {
-                        related.addContent(md.getXmlData(false));
+                        if (md.getDataInfo().getSchemaId().equals("iso19139")) {
+                            related.addContent(getSubsetOfDataset(md.getXmlData(false), elementFilters));
+                        } else {
+                            related.addContent(md.getXmlData(false));
+                        }
                     }
                 }
                 return new DOMOutputter().output(new Document(related));
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+                Log.error(Geonet.GEONETWORK,"XslUtil getRelatedDatasets error: " + e.getMessage(), e);
+            }
         }
         return new DOMOutputter().output(new Document(new Element("datasets")));
+    }
+
+    private static Element getSubsetOfDataset(Element datasetRecord, List<ElementFilter> xpaths) {
+        Element subsetOfDataset = new Element("MD_Metadata", GMD);
+        xpaths.stream().forEach(xpath -> processElements(datasetRecord, subsetOfDataset, xpath));
+        return subsetOfDataset;
+    }
+
+    private static void processElements(Element datasetRecord, Element subsetOfDataset, ElementFilter xpath) {
+        Iterator<Element> elementIterator = datasetRecord.getDescendants(xpath);
+        while (elementIterator.hasNext()) {
+            subsetOfDataset.addContent((Element)elementIterator.next().clone());
+        }
     }
 }

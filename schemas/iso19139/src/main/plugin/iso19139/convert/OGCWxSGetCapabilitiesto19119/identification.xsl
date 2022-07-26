@@ -397,7 +397,7 @@
 					<gco:CharacterString>Toegangs- en (her)gebruiksvoorwaarden</gco:CharacterString>
 				</useLimitation>
 				<useConstraints>
-					<MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions"/>
+					<MD_RestrictionCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions"/>
 				</useConstraints>
 				<otherConstraints>
 					<gmx:Anchor xlink:href="https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht">Gebruiksrecht geografische webdiensten (agentschap Informatie Vlaanderen)</gmx:Anchor>
@@ -410,7 +410,7 @@
 					<gco:CharacterString>Beperking(en) op de publieke toegang</gco:CharacterString>
 				</useLimitation>
 				<accessConstraints>
-					<MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions"/>
+					<MD_RestrictionCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions"/>
 				</accessConstraints>
 				<otherConstraints>
 					<gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">Geen beperkingen op de publieke toegang</gmx:Anchor>
