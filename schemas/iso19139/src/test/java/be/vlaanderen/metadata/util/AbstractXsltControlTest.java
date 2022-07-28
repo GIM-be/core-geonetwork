@@ -1,0 +1,140 @@
+package be.vlaanderen.metadata.util;
+
+import com.google.common.collect.Lists;
+import org.fao.geonet.schemas.XslProcessTest;
+import org.fao.geonet.utils.Xml;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.output.XMLOutputter;
+import org.junit.Before;
+import org.junit.Test;
+import org.xmlunit.builder.DiffBuilder;
+import org.xmlunit.builder.Input;
+import org.xmlunit.diff.DefaultNodeMatcher;
+import org.xmlunit.diff.Diff;
+import org.xmlunit.diff.ElementSelectors;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+
+abstract public class AbstractXsltControlTest extends XslProcessTest {
+
+    private String controlFilename;
+    private Path controlFile;
+    private Element xslElement;
+    private Element inputElement;
+    private Element controlElement;
+    private Element resultElement;
+
+    /**
+     * Pass the filenames (resources) to this constructor.
+     *
+     * @param xslFilename     the xsl file that transforms the input file
+     * @param inputFilename   the input file that is transformed by the xsl file
+     * @param controlFilename the expected outcome of the transformation
+     */
+    public AbstractXsltControlTest(String xslFilename, String inputFilename, String controlFilename) {
+        // make sure the passed tests are present on the classpath
+        Lists.newArrayList(xslFilename, inputFilename, controlFilename).forEach(this::assertValidResource);
+
+        // set the filenames for later use in the tests
+        setXslFilename(xslFilename);
+        setXmlFilename(inputFilename);
+        setControlFilename(controlFilename);
+    }
+
+    private void assertValidResource(String filename) {
+        URL resource = this.getClass().getClassLoader().getResource(filename);
+        if (resource == null) {
+            throw new RuntimeException("Could not find filename " + filename + " in as a resource.");
+        }
+
+        URI uri;
+        try {
+            uri = resource.toURI();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Could not retrieve URI for "+filename+".", e);
+        }
+
+        if (!Files.exists(Paths.get(uri))) {
+            throw new RuntimeException("File " + filename + " does not exist.");
+        }
+    }
+
+    private void setControlFilename(String controlFilename) {
+        this.controlFilename = controlFilename;
+    }
+
+    @Before
+    public void setup() throws URISyntaxException {
+        super.setup();
+
+        // get the control file
+        if (controlFilename != null) {
+            URL resource = testClass.getClassLoader().getResource(controlFilename);
+            URI uri = resource.toURI();
+            controlFile = Paths.get(uri);
+        }
+
+        // load the files
+        try {
+            xslElement = Xml.loadFile(xslFile);
+            inputElement = Xml.loadFile(xmlFile);
+            controlElement = Xml.loadFile(controlFile);
+        } catch (JDOMException | NoSuchFileException e) {
+            throw new RuntimeException(e);
+        }
+
+        // perform transform
+        try {
+            resultElement = Xml.transform(inputElement, xslFile);
+            System.out.println(resultElement.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void print(Element element) {
+        try {
+            new XMLOutputter().output(element, System.out);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void resultMustEqualControl() {
+        assertNotNull(resultElement);
+        assertNotNull(controlElement);
+
+        // set up the comparison
+        Diff diff = DiffBuilder
+                .compare(Input.fromString(Xml.getString(resultElement)))
+                .ignoreWhitespace()
+                .withTest(Input.fromString(Xml.getString(controlElement)))
+                // TODO make sure that 'currentdate' elements are not considered here. `gco:date`?
+                .withNodeFilter(node -> true)
+                .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byName))
+                .checkForSimilar()
+                .build();
+
+        // print differences if present
+        if (diff.hasDifferences()) {
+            System.out.println("Differences detected between control and result.");
+            diff.getDifferences().forEach(d -> System.out.println(" > " + d));
+        }
+
+        // make sure result and control are equivalent
+        assertFalse("After transformation, output should be equivalent to the desired specified output.", diff.hasDifferences());
+    }
+}
