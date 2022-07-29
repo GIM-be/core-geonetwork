@@ -2344,6 +2344,9 @@
       <option value="WWW:LINK-1.0-http-partners">Partner webadres (URL)</option>
       <option value="WWW:LINK-1.0-http-rss">RSS News feed (URL)</option>
       <option value="WWW:LINK-1.0-http-samples">Showcase product (URL)</option>
+      <option value="LINK-download-store">LINK-download-store</option>
+      <option value="REST">Representational State Transfer (REST)</option>
+      <option value="LDES">Linked Data Event Stream (LDES)</option>
       <option value="invoke">Invoke service</option>
       <option value="discovery">Discovery service</option>
       <option value="download">Download service</option>

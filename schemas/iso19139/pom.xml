@@ -43,6 +43,9 @@
       <testResource>
         <directory>src/main/plugin/iso19139</directory>
       </testResource>
+      <testResource>
+        <directory>src/test/resources/be/vlaanderen/metadata</directory>
+      </testResource>
     </testResources>
   </build>
 

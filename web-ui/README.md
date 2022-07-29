@@ -2,8 +2,7 @@
 
 ## Content
 
-This module contains a web user interface for GeoNetwork opensource based on AngularJS, Bootstrap and d3.js librairies.
-
+This module contains a web user interface for GeoNetwork opensource based on AngularJS, Bootstrap and d3.js libraries.
 
 
 ## Compile
@@ -24,7 +23,6 @@ sudo easy_install http://closure-linter.googlecode.com/files/closure_linter-late
 Maven build running with profile "jslint" runs:
  * fixjsstyle for fix JS style
  * gjslint for checking JS files
-
 
 ```
  mvn clean install -Pjslint
