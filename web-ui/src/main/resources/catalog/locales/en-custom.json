@@ -78,6 +78,7 @@
   "rdfCacheCleared":  "RDF Cache cleared",
   "rdfCacheClearFailure": "An error occurred while attempting to clear the RDF cache",
   "searchAlicence": "Select a license ...",
+  "searchAprotocol": "Select a protocol ...",
   "resourceUriPattern": "Resource URI pattern",
   "resourceUriPatternHelp": "Pattern used to generate URI of the resources during the RDF export. Example of value: https://metadata.vlaanderen.be/srv/resources/{resourceType}/{resourceUuid}",
   "isOpenData": "Open data",
