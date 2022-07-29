@@ -71,6 +71,9 @@
     <xsl:call-template name="langId19139"/>
   </xsl:variable>
 
+  <xsl:variable name="isDataset" select="count(gmd:MD_Metadata/gmd:hierarchyLevel[gmd:MD_ScopeCode/@codeListValue='dataset']) > 0
+                                           or count(gmd:MD_Metadata/gmd:hierarchyLevel) = 0"/>
+
   <xsl:template match="/">
 
     <Documents>
@@ -647,6 +650,10 @@
           <!-- ignore empty downloads -->
           <xsl:if test="string($linkage)!='' and not(contains($linkage,$download_check))">
             <Field name="protocol" string="{string($protocol)}" store="true" index="true"/>
+          </xsl:if>
+
+          <xsl:if test="not($isDataset)">
+            <Field name="serviceProtocol" string="{string($protocol)}" store="true" index="true"/>
           </xsl:if>
 
           <xsl:if test="string($title)!='' and string($desc)!='' and not(contains($linkage,$download_check))">
