@@ -143,6 +143,7 @@
     <facet name="lifeCycle" indexKey="lifeCycle" label="lifeCycle"/>
     <facet name="developmentState" indexKey="developmentState" label="developmentState"/>
     <facet name="isOpenData" indexKey="isOpenData" label="isOpenData"/>
+    <facet name="serviceProtocol" indexKey="serviceProtocol" label="serviceProtocol"/>
   </facets>
 
   <summaryTypes>
@@ -250,6 +251,7 @@
       <item facet="lifeCycle" sortBy="value" sortOrder="desc"/>
       <item facet="developmentState" sortBy="value" sortOrder="desc"/>
       <item facet="isOpenData" sortBy="value" sortOrder="asc" max="2"/>
+      <item facet="serviceProtocol" sortBy="value" sortOrder="desc"/>
     </summaryType>
 
     <!-- (deprecated) old-style configuration supporting only
