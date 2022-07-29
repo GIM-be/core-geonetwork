@@ -6,16 +6,27 @@
          xmlns:owl="http://www.w3.org/2002/07/owl#">
 
   <skos:ConceptScheme rdf:about="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol">
-    <dc:title>Conceptscheme protocollen voor dataservices</dc:title>
     <skos:prefLabel xml:lang="nl">conceptscheme protocollen voor dataservices</skos:prefLabel>
     <skos:definition>Codelijst voor de protocollen waarmee een dataservice is gedeployed.</skos:definition>
-    <!-- https://github.com/Informatievlaanderen/OSLOthema-metadataVoorServices/blob/master/codelijsten/protocol.ttl -->
   </skos:ConceptScheme>
+
+  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/dataserviceprotocol/LDES">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/Standard"/>
+    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
+    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
+    <skos:notation>LDES</skos:notation>
+    <skos:prefLabel xml:lang="nl">LDES</skos:prefLabel>
+    <dc:title xml:lang="nl">Linked Data Event Stream (LDES)</dc:title>
+    <skos:definition xml:lang="nl">Linked Data Event Stream of kortweg LDES is een collectie van onveranderlijke elementen, waarbij zowel de collectie als de elementen beschreven zijn door het Resource Description Framework (RDF). De LDES specificatie bouwt voort op de TREE hypermedia specificatie. Een Event Stream is een uitbreiding is van de TREE hypermedia Collection die beschrijft hoe te navigeren over grote collectie data-elementen. Dit laat toe om grote hoeveelheden data efficiënt te publiceren door gebruik te maken van HTTP caching.</skos:definition>
+    <dc:description xml:lang="nl">Linked Data Event Stream of kortweg LDES is een collectie van onveranderlijke elementen, waarbij zowel de collectie als de elementen beschreven zijn door het Resource Description Framework (RDF). De LDES specificatie bouwt voort op de TREE hypermedia specificatie. Een Event Stream is een uitbreiding is van de TREE hypermedia Collection die beschrijft hoe te navigeren over grote collectie data-elementen. Dit laat toe om grote hoeveelheden data efficiënt te publiceren door gebruik te maken van HTTP caching.</dc:description>
+    <rdfs:seeAlso rdf:resource="https://w3id.org/ldes/specification"/>
+  </skos:Concept>
 
   <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/dataserviceprotocol/REST">
     <rdf:type rdf:resource="http://purl.org/dc/terms/Standard"/>
     <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
     <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
+    <skos:notation>REST</skos:notation>
     <skos:prefLabel xml:lang="nl">REST</skos:prefLabel>
     <dc:title xml:lang="nl">Representational State Transfer (REST)</dc:title>
     <skos:definition xml:lang="nl">Representational State Transfer of kortweg REST is een architecturale stijl voor gedistribueerde hypermedia-systemen zoals ingevoerd en gedefinieerd in 2000 door Roy Fielding, waarbij de toegang tot en bewerking van objecten in een bepaald domein worden beschreven als standaard web operaties op web resources. REST stoelt sterk op de concepten en principes van het HTTP-protocol waarvan Roy Fielding mede-auteur is.</skos:definition>
@@ -27,6 +38,7 @@
     <rdf:type rdf:resource="http://purl.org/dc/terms/Standard"/>
     <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
     <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
+    <skos:notation>REST richtlijnen Digitaal Vlaanderen</skos:notation>
     <skos:prefLabel xml:lang="nl">REST richtlijnen Digitaal Vlaanderen</skos:prefLabel>
     <dc:title xml:lang="nl">REST richtlijnen Digitaal Vlaanderen</dc:title>
     <skos:definition xml:lang="nl">De REST richtlijnen van Digitaal Vlaanderen</skos:definition>
@@ -652,34 +664,4 @@
     <rdfs:seeAlso rdf:resource="https://www.ogc.org/standards/ods"/>
   </skos:Concept>
 
-  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/dataserviceprotocol/OGC:OGC-API-Features-landingpage">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/Standard"/>
-    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
-    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
-    <skos:prefLabel xml:lang="nl">OGC API Features landingpage</skos:prefLabel>
-    <skos:definition xml:lang="nl">De OGC API Features landingspagina is die pagina waarop alle informatie die nodig is om de bezoeker tot actie aan te zetten, staat.</skos:definition>
-    <dc:title xml:lang="nl">OGC API Features landingpage</dc:title>
-    <dc:description xml:lang="nl">De OGC API Features landingspagina is die pagina waarop alle informatie die nodig is om de bezoeker tot actie aan te zetten, staat.</dc:description>
-    <owl:versionInfo>1.0.0</owl:versionInfo>
-    <skos:notation>OGC:OGC-API-Features-landingpage</skos:notation>
-    <skos:exactMatch rdf:resource="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download"/>
-    <rdfs:seeAlso rdf:resource="http://www.opengis.net/def/interface/ogcapi-features"/>
-    <rdfs:seeAlso rdf:resource="https://www.ogc.org/standards/ogcapi-features"/>
-  </skos:Concept>
-
-  <skos:Concept rdf:about="https://data.vlaanderen.be/id/concept/dataserviceprotocol/OGC:OGC-API-Features-items">
-    <rdf:type rdf:resource="http://purl.org/dc/terms/Standard"/>
-    <skos:inscheme rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
-    <skos:topConceptOf rdf:resource="https://data.vlaanderen.be/id/conceptscheme/dataserviceprotocol"/>
-    <skos:prefLabel xml:lang="nl">OGC API Features items</skos:prefLabel>
-    <skos:definition xml:lang="nl">OGC API Features items retourneert (een selectie aan) objecten uit de data die voldoen aan de parameters die zijn opgegeven in het verzoek.</skos:definition>
-    <dc:title xml:lang="nl">OGC API Features items</dc:title>
-    <dc:description xml:lang="nl">OGC API Features items retourneert (een selectie aan) objecten uit de data die voldoen aan de parameters die zijn opgegeven in het verzoek.</dc:description>
-    <owl:versionInfo>1.0.0</owl:versionInfo>
-    <skos:notation>OGC:OGC-API-Features-items</skos:notation>
-    <skos:exactMatch rdf:resource="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download"/>
-    <rdfs:seeAlso rdf:resource="http://www.opengis.net/def/interface/ogcapi-features"/>
-    <rdfs:seeAlso rdf:resource="https://www.ogc.org/standards/ogcapi-features"/>
-  </skos:Concept>
-  
 </rdf:RDF>

@@ -73,7 +73,7 @@
                   select="exists($viewConfig/sidePanel) and $isTemplate != 's' and $isTemplate != 't'"/>
     <div id="gn-editor-container-{$metadataId}">
 
-      <div class="col-md-{if ($hasSidePanel) then '8' else '12'}">
+      <div class="col-md-{if ($hasSidePanel) then '8' else '12'} gn-editor-mainbar">
 
         <!--
               The main editor form.
