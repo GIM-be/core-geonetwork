@@ -50,7 +50,7 @@
 	-->
 	<!--aangepast door Gustaaf -->
 	<!--DIT MOET HET ZIJN!!! -->
-	<!--afgeckecked met Geraldine-->
+	<!--gechecked bij Geraldine-->
 	<xsl:variable name="inspire-theme-thesaurus" select="'GEMET - INSPIRE themes, version 1.0'"/>
 	<xsl:variable name="inspire-theme-thesaurus-anchor-href" select="'http://inspire.ec.europa.eu/theme'"/>
 	<xsl:variable name="inspire-theme-thesaurus-anchor-value" select="'GEMET - INSPIRE themes, version 1.0'"/>
@@ -400,7 +400,7 @@
 					<MD_RestrictionCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions"/>
 				</useConstraints>
 				<otherConstraints>
-					<gmx:Anchor xlink:href="https://overheid.vlaanderen.be/Webdiensten-Gebruiksrecht">Gebruiksrecht geografische webdiensten (agentschap Informatie Vlaanderen)</gmx:Anchor>
+					<gmx:Anchor xlink:href="https://www.vlaanderen.be/digitaal-vlaanderen/onze-oplossingen/geografische-webdiensten/gebruiksrecht-en-privacyverklaring-geografische-webdiensten">Gebruiksrecht geografische webdiensten (agentschap Digitaal Vlaanderen)</gmx:Anchor>
 				</otherConstraints>
 			</MD_LegalConstraints>
 		</resourceConstraints>
