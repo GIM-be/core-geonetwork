@@ -7,6 +7,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.output.XMLOutputter;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
@@ -125,6 +126,7 @@ abstract public class AbstractXsltControlTest extends XslProcessTest {
                 // TODO make sure that 'currentdate' elements are not considered here. `gco:date`?
                 .withNodeFilter(node -> true)
                 .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byName))
+                .ignoreComments()
                 .checkForSimilar()
                 .build();
 

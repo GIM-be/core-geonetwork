@@ -384,12 +384,6 @@
                <gmd:keyword>
                   <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/LIJSTMRINSPIRE">Lijst M&amp;R INSPIRE</gmx:Anchor>
                </gmd:keyword>
-               <gmd:keyword>
-                  <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/MDINSPIRECONFORM">Metadata INSPIRE-conform</gmx:Anchor>
-               </gmd:keyword>
-               <gmd:keyword>
-                  <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/MDGDICONFORM">Metadata GDI-Vl-conform</gmx:Anchor>
-               </gmd:keyword>
                <gmd:thesaurusName>
                   <gmd:CI_Citation>
                      <gmd:title>
