@@ -20,6 +20,7 @@
   <xsl:variable name="ServiceTypeCodelist" select="document('../thesauri-AIV/theme/inspire-service-type.rdf')"/>
   <xsl:variable name="TopicCategoryCodelist" select="document('../thesauri-AIV/theme/TopicCategory.rdf')"/>
   <xsl:variable name="ServiceCategoryCodelist" select="document('../thesauri-AIV/theme/inspire-service-taxonomy.rdf')"/>
+  <xsl:variable name="ProgressCodeCodelist" select="document('../thesauri-AIV/theme/ProgressCode.rdf')"/>
 
   <xsl:template name="ExtractLang" match="gmd:language">
     <xsl:param name="lang"/>
