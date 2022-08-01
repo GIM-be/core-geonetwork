@@ -2032,17 +2032,13 @@
 
   <!-- Progress code -->
   <xsl:template name="ProgressCode" match="gmd:status/gmd:MD_ProgressCode[ends-with(@codeList,'#MD_ProgressCode')]">
-    <xsl:variable name="value" select="normalize-space(@codeListValue)"/>
     <xsl:variable name="scheme" select="'https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode'"/>
-    <xsl:if test="$value != ''">
+    <xsl:variable name="uri" select="concat($scheme, '_', normalize-space(@codeListValue))"/>
+    <xsl:variable name="concept" select="$ProgressCodeCodelist//skos:Concept[@rdf:about = $uri]"/>
+
+    <xsl:if test="normalize-space($concept) != ''">
       <mdcat:status>
-        <skos:Concept rdf:about="{$scheme}_{$value}">
-          <skos:prefLabel xml:lang="nl"><xsl:value-of select="$value"/></skos:prefLabel>
-          <skos:prefLabel xml:lang="en"><xsl:value-of select="$value"/></skos:prefLabel>
-          <skos:prefLabel xml:lang="fr"><xsl:value-of select="$value"/></skos:prefLabel>
-          <skos:prefLabel xml:lang="de"><xsl:value-of select="$value"/></skos:prefLabel>
-          <skos:inScheme rdf:resource="{$scheme}" />
-        </skos:Concept>
+        <xsl:copy-of copy-namespaces="no" select="$concept"/>
       </mdcat:status>
     </xsl:if>
   </xsl:template>
