@@ -209,7 +209,7 @@
       </xsl:for-each>
     </xsl:variable>
 
-    <xsl:variable name="LicenseAndRightsConstraints">
+    <xsl:variable name="LicenseConstraints">
       <xsl:variable name="constraints" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*[name() = ('gmd:MD_LegalConstraints', 'gmd:MD_SecurityConstraints')]/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/*|
                                                gmd:identificationInfo[1]/*/gmd:resourceConstraints/*[name() = ('gmd:MD_LegalConstraints', 'gmd:MD_SecurityConstraints')]/gmd:useLimitation[not(../gmd:useConstraints or ../gmd:accessConstraints)]/*"/>
 
@@ -226,8 +226,11 @@
       <xsl:if test="normalize-space($modelLicences) != ''">
         <xsl:copy-of select="$modelLicences/*[1]"/>
       </xsl:if>
+    </xsl:variable>
 
-      <!-- Map all the other constraints to dct:rights -->
+    <xsl:variable name="RightsConstraints">
+      <xsl:variable name="constraints" select="gmd:identificationInfo[1]/*/gmd:resourceConstraints/*[name() = ('gmd:MD_LegalConstraints', 'gmd:MD_SecurityConstraints')]/gmd:otherConstraints[../gmd:useConstraints or ../gmd:accessConstraints]/*|
+                                               gmd:identificationInfo[1]/*/gmd:resourceConstraints/*[name() = ('gmd:MD_LegalConstraints', 'gmd:MD_SecurityConstraints')]/gmd:useLimitation[not(../gmd:useConstraints or ../gmd:accessConstraints)]/*"/>
       <xsl:for-each select="$constraints">
         <xsl:variable name="currentUrl" select="translate(@xlink:href, $uppercase, $lowercase)"/>
         <xsl:variable name="modelLicence" select="$modelLicencieKeywords/license[count(urlKeyword[contains($currentUrl, .)]) > 0 and (not(scope) or count(scope[$ResourceType = .]) > 0)]/content/*"/>
@@ -247,7 +250,6 @@
     </xsl:variable>
 
     <xsl:variable name="AccessRights">
-      msg
       <!-- Mapping revised for compliance with the 2017 edition of the INSPIRE Metadata Technical Guidelines -->
       <xsl:variable name="firstConstraint" select="gmd:identificationInfo[count(*/gmd:resourceConstraints/*/gmd:accessConstraints) > 0]/*/gmd:resourceConstraints/*"/>
       <xsl:choose>
@@ -537,7 +539,8 @@
               </xsl:call-template>
             </xsl:if>
           </xsl:for-each-group>
-          <xsl:copy-of select="$LicenseAndRightsConstraints"/>
+          <xsl:copy-of select="$LicenseConstraints"/>
+          <xsl:copy-of select="$RightsConstraints"/>
 
           <xsl:variable name="datasetUriPattern"
                         select="xslutil:getUriPattern($RecordUUID)"/>
@@ -743,7 +746,8 @@
                             $Title,
                             $Description,
                             string($linkage),
-                            string($LicenseAndRightsConstraints),
+                            string($LicenseConstraints),
+                            string($RightsConstraints),
                             string(.),
                             string($Protocol),
                             string($Distributors)
@@ -758,10 +762,7 @@
                           <xsl:copy-of select="$Title"/>
                           <xsl:copy-of select="$Description"/>
                           <dcat:accessURL rdf:resource="{geonet:escapeURI($linkage)}"/>
-                          <xsl:if test="$isDownload">
-                            <xsl:copy-of select="$LicenseAndRightsConstraints"/>
-                            <xsl:copy-of select="."/>
-                          </xsl:if>
+
                           <xsl:call-template name="Map-protocol">
                             <xsl:with-param name="protocol" select="$Protocol"/>
                           </xsl:call-template>
@@ -787,6 +788,12 @@
                                 </skos:notation>
                               </adms:Identifier>
                             </adms:identifier>
+                          </xsl:if>
+
+                          <xsl:copy-of select="$LicenseConstraints"/>
+                          <xsl:if test="$isDownload">
+                            <xsl:copy-of select="$RightsConstraints"/>
+                            <xsl:copy-of select="."/>
                           </xsl:if>
 
                           <xsl:variable name="servedService">
@@ -2025,17 +2032,13 @@
 
   <!-- Progress code -->
   <xsl:template name="ProgressCode" match="gmd:status/gmd:MD_ProgressCode[ends-with(@codeList,'#MD_ProgressCode')]">
-    <xsl:variable name="value" select="normalize-space(@codeListValue)"/>
     <xsl:variable name="scheme" select="'https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode'"/>
-    <xsl:if test="$value != ''">
+    <xsl:variable name="uri" select="concat($scheme, '_', normalize-space(@codeListValue))"/>
+    <xsl:variable name="concept" select="$ProgressCodeCodelist//skos:Concept[@rdf:about = $uri]"/>
+
+    <xsl:if test="normalize-space($concept) != ''">
       <mdcat:status>
-        <skos:Concept rdf:about="{$scheme}_{$value}">
-          <skos:prefLabel xml:lang="nl"><xsl:value-of select="$value"/></skos:prefLabel>
-          <skos:prefLabel xml:lang="en"><xsl:value-of select="$value"/></skos:prefLabel>
-          <skos:prefLabel xml:lang="fr"><xsl:value-of select="$value"/></skos:prefLabel>
-          <skos:prefLabel xml:lang="de"><xsl:value-of select="$value"/></skos:prefLabel>
-          <skos:inScheme rdf:resource="{$scheme}" />
-        </skos:Concept>
+        <xsl:copy-of copy-namespaces="no" select="$concept"/>
       </mdcat:status>
     </xsl:if>
   </xsl:template>
