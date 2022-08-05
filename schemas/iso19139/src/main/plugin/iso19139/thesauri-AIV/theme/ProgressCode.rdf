@@ -5,7 +5,7 @@
   <skos:ConceptScheme rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
 
   <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_completed">
-    <skos:prefLabel xml:lang="nl">compleet</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Compleet</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Completed</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Finalisé</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Abgeschlossen</skos:prefLabel>
@@ -13,7 +13,7 @@
   </skos:Concept>
 
   <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_historicalArchive">
-    <skos:prefLabel xml:lang="nl">historisch archief</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Historisch archief</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Historical archive</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Archivé</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Historisches Archiv</skos:prefLabel>
@@ -21,7 +21,7 @@
   </skos:Concept>
 
   <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_obsolete">
-    <skos:prefLabel xml:lang="nl">niet relevant</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Niet relevant</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Obsolete</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Obsolète</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Veraltet</skos:prefLabel>
@@ -29,7 +29,7 @@
   </skos:Concept>
 
   <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_onGoing">
-    <skos:prefLabel xml:lang="nl">continu geactualiseerd</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Continu geactualiseerd</skos:prefLabel>
     <skos:prefLabel xml:lang="en">On going</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Mise à jour continue</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Kontinuierliche Aktualisierung</skos:prefLabel>
@@ -37,7 +37,7 @@
   </skos:Concept>
 
   <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_planned">
-    <skos:prefLabel xml:lang="nl">gepland</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Gepland</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Planned</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Planifié</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Geplant</skos:prefLabel>
@@ -45,7 +45,7 @@
   </skos:Concept>
 
   <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_required">
-    <skos:prefLabel xml:lang="nl">actualisatie vereist</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Actualisatie vereist</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Required</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Création ou mise à jour requise</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Erforderlich</skos:prefLabel>
@@ -54,7 +54,7 @@
 
   <skos:Concept
       rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_underDevelopment">
-    <skos:prefLabel xml:lang="nl">in ontwikkeling</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">In ontwikkeling</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Under development</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">En cours de création</skos:prefLabel>
     <skos:prefLabel xml:lang="de">In Erstellung</skos:prefLabel>
