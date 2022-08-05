@@ -344,6 +344,7 @@
       <dct:conformsTo>
         <dct:Standard rdf:about="https://data.vlaanderen.be/doc/applicatieprofiel/GEODCAT-AP-VL/">
           <dct:title>Geodcat-ap-vl</dct:title>
+          <owl:versionInfo>2.0</owl:versionInfo>
         </dct:Standard>
       </dct:conformsTo>
 
@@ -1655,9 +1656,6 @@
               )"/>
             </xsl:otherwise>
           </xsl:choose>
-          <dct:title>
-            <xsl:value-of select="$uuidref"/>
-          </dct:title>
 
           <xsl:variable name="title" select="geonet:getLabel(gmd:CI_Citation/gmd:title)"/>
           <xsl:if test="$title != ''">
@@ -1666,7 +1664,9 @@
             </dct:title>
           </xsl:if>
           <xsl:apply-templates select="gmd:CI_Citation/gmd:edition"/>
+          <xsl:apply-templates select="gmd:CI_Citation/gmd:date/gmd:CI_Date"/>
           <dct:type rdf:resource="https://www.iso.org/standard/39965.html"/>
+          <!-- <dct:type rdf:resource="https://www.iso.org/standard/57303.html"/> -->
         </dct:Standard>
       </dct:conformsTo>
     </xsl:for-each>
