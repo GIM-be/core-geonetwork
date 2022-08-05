@@ -52,11 +52,8 @@
 
 <xsl:stylesheet xmlns:adms="http://www.w3.org/ns/adms#"
                 xmlns:cnt="http://www.w3.org/2011/content#"
-                xmlns:dc="http://purl.org/dc/elements/1.1/"
                 xmlns:dcat="http://www.w3.org/ns/dcat#"
                 xmlns:dct="http://purl.org/dc/terms/"
-                xmlns:dctype="http://purl.org/dc/dcmitype/"
-                xmlns:earl="http://www.w3.org/ns/earl#"
                 xmlns:foaf="http://xmlns.com/foaf/0.1/"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
@@ -66,8 +63,6 @@
                 xmlns:locn="http://www.w3.org/ns/locn#"
                 xmlns:owl="http://www.w3.org/2002/07/owl#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-                xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-                xmlns:schema="http://schema.org/"
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:srv="http://www.isotc211.org/2005/srv"
                 xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
@@ -389,7 +384,12 @@
         <xsl:apply-templates select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords">
           <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
         </xsl:apply-templates>
+        <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle|
+            gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:alternateTitle">
+          <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+        </xsl:apply-templates>
       </xsl:variable>
+
       <xsl:if test="$ResourceType != 'service'">
         <xsl:if test="count($keywordsRdfMapping/dcat:theme) = 0">
           <xsl:variable name="dcatThemesByTopicCategory">
@@ -408,13 +408,10 @@
       <xsl:for-each-group select="$keywordsRdfMapping/dcat:theme" group-by="skos:Concept/@rdf:about">
         <xsl:copy-of select="." />
       </xsl:for-each-group>
-      <xsl:copy-of select="$keywordsRdfMapping/*[name()!='dcat:theme']" />
-
-      <!-- Alternate title -->
-      <xsl:apply-templates select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle|
-          gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:alternateTitle">
-        <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-      </xsl:apply-templates>
+      <xsl:for-each-group select="$keywordsRdfMapping/dcat:keyword" group-by="concat('lang :', @xml:lang, ' val: ', string())">
+        <xsl:copy-of select="." />
+      </xsl:for-each-group>
+      <xsl:copy-of select="$keywordsRdfMapping/*[not(name()=('dcat:theme', 'dcat:keyword'))]"/>
 
       <!-- Content information -->
       <xsl:apply-templates select="gmd:contentInfo/*"/>
