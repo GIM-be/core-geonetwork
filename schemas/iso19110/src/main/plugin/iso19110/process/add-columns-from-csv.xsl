@@ -115,7 +115,7 @@
                     <gco:upper>
                       <xsl:choose>
                         <xsl:when test="$columns[5] != ''">
-                          <gco:Integer><xsl:value-of select="$columns[5]"/></gco:Integer>
+                          <gco:UnlimitedInteger><xsl:value-of select="$columns[5]"/></gco:UnlimitedInteger>
                         </xsl:when>
                         <xsl:otherwise>
                           <gco:UnlimitedInteger xsi:nil="true" isInfinite="true" />

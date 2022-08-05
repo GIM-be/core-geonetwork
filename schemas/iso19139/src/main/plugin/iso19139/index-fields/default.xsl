@@ -493,6 +493,12 @@
       ]"/>
       <Field name="isOpenData" string="{if (count($openKeywords) > 0) then 'y' else 'n'}" store="true" index="true"/>
 
+      <xsl:variable name="geoKeywords" select="$gdiKeywords/*[
+        (name() = 'gmx:Anchor' and @xlink:href = 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/GEODATA') or
+        (name() = 'gco:CharacterString' and string(.) = 'Geografische gegevens')
+      ]"/>
+      <Field name="isGeoData" string="{if (count($geoKeywords) > 0) then 'y' else 'n'}" store="true" index="true"/>
+
       <xsl:variable name="listOfKeywords">{
         <xsl:variable name="keywordWithNoThesaurus"
                       select="//gmd:MD_Keywords[
