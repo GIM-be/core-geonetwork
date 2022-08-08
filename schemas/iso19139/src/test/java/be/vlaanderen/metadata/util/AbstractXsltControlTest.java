@@ -5,6 +5,7 @@ import org.fao.geonet.schemas.XslProcessTest;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Element;
 import org.jdom.JDOMException;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
 import org.xmlunit.diff.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -73,6 +74,21 @@ abstract public class AbstractXsltControlTest extends XslProcessTest {
 
     private void setControlFilename(String controlFilename) {
         this.controlFilename = controlFilename;
+    }
+
+    protected void writeResult(File file) throws IOException {
+        Format format = Format
+                .getPrettyFormat()
+                .setOmitDeclaration(false)
+                .setOmitEncoding(false)
+                .setEncoding("UTF-8");
+        XMLOutputter xmlOutputter = new XMLOutputter(format);
+        xmlOutputter.setFormat(format);
+
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            fileWriter.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            xmlOutputter.output(resultElement, fileWriter);
+        }
     }
 
     @Before
@@ -167,7 +183,7 @@ abstract public class AbstractXsltControlTest extends XslProcessTest {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String today = simpleDateFormat.format(new Date());
         // check text nodes that contain /just/ the current-date
-        if(node != null && node.getNodeType() == Node.TEXT_NODE && node.getTextContent().equals(today)) {
+        if (node != null && node.getNodeType() == Node.TEXT_NODE && node.getTextContent().equals(today)) {
             return true;
         }
         return false;
