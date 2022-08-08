@@ -411,14 +411,16 @@ Mapping between:
                 <xsl:variable name="ows_wmts_rest_capabilities">
                   <!-- [contains(string(), ".xml")] added to include WMTS REST endpoint-->
                   <xsl:value-of select="//ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href|
-	    																														//ows11:Operation[@name='GetCapabilities']/ows11:DCP/ows11:HTTP/ows11:Get/@xlink:href|
-    	                        																	//ows2:Operation[@name='GetCapabilities']/ows2:DCP/ows2:HTTP/ows2:Get/@xlink:href"/>
+	    																	//ows11:Operation[@name='GetCapabilities']/ows11:DCP/ows11:HTTP/ows11:Get/@xlink:href|
+    	                        					//ows2:Operation[@name='GetCapabilities']/ows2:DCP/ows2:HTTP/ows2:Get/@xlink:href"/>
                 </xsl:variable>
-                <xsl:variable name="leftPartURL" select="substring-before($ows_wmts_rest_capabilities,'?')"/>
+                <xsl:variable name="leftPartURL">
+                  <xsl:value-of select="substring-before($ows_wmts_rest_capabilities,'wmts')"/>
+                </xsl:variable>
                 <onLine>
 								<CI_OnlineResource>
 									<linkage>
-									<URL> <xsl:value-of select="concat(normalize-space($leftPartURL), '/1.0.0/WMTSCapabilities.xml')"/></URL>
+									<URL> <xsl:value-of select="concat(normalize-space($leftPartURL), 'wmts/1.0.0/WMTSCapabilities.xml')"/></URL>
 									</linkage>
 									<protocol>
 									<gco:CharacterString>OGC:WMTS</gco:CharacterString>
