@@ -410,22 +410,21 @@ Mapping between:
               <xsl:if test="$ows='true' and local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wmts/1.0'">
                 <xsl:variable name="ows_wmts_rest_capabilities">
                   <!-- [contains(string(), ".xml")] added to include WMTS REST endpoint-->
-                  <xsl:value-of select="//ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href[contains(string(), '.xml')]|
-	    																														//ows11:Operation[@name='GetCapabilities']/ows11:DCP/ows11:HTTP/ows11:Get/@xlink:href[contains(string(), '.xml')]|
-    	                        																	//ows2:Operation[@name='GetCapabilities']/ows2:DCP/ows2:HTTP/ows2:Get/@xlink:href[contains(string(), '.xml')]"/>
+                  <xsl:value-of select="//ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href|
+	    																														//ows11:Operation[@name='GetCapabilities']/ows11:DCP/ows11:HTTP/ows11:Get/@xlink:href|
+    	                        																	//ows2:Operation[@name='GetCapabilities']/ows2:DCP/ows2:HTTP/ows2:Get/@xlink:href"/>
                 </xsl:variable>
-
-
+                <xsl:variable name="leftPartURL" select="substring-before($ows_wmts_rest_capabilities,'?')"/>
                 <onLine>
 								<CI_OnlineResource>
 									<linkage>
-									<URL> <xsl:value-of select="normalize-space($ows_wmts_rest_capabilities)"/></URL>
+									<URL> <xsl:value-of select="concat(normalize-space($leftPartURL), '/1.0.0/WMTSCapabilities.xml')"/></URL>
 									</linkage>
 									<protocol>
 									<gco:CharacterString>OGC:WMTS</gco:CharacterString>
 									</protocol>
 									<name>
-									<gco:CharacterString>Capabilities van de webdienst agentschap Informatie Vlaanderen WMTS service (RESTful implementatie)</gco:CharacterString>
+									<gco:CharacterString>Capabilities van de webdienst <xsl:value-of select="$ServiceTitel"/> (RESTful implementatie)</gco:CharacterString>
 									</name>
 									<description>
 										<gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">access point</gmx:Anchor>
