@@ -286,7 +286,7 @@ Mapping between:
           </distributionFormat>
           <transferOptions>
             <MD_DigitalTransferOptions>
-            xsl:variable name="ServiceTitel">
+            <xsl:variable name="ServiceTitel">
                 <xsl:choose>
                   <!--WFS | WMTS | WCS-->
                   <xsl:when test="$ows='true'">
