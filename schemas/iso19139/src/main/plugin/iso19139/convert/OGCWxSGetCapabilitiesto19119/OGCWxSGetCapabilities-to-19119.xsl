@@ -286,6 +286,22 @@ Mapping between:
           </distributionFormat>
           <transferOptions>
             <MD_DigitalTransferOptions>
+            <xsl:variable name="ServiceTitel">
+                <xsl:choose>
+                  <!--WFS | WMTS | WCS-->
+                  <xsl:when test="$ows='true'">
+                    <xsl:value-of select="ows:ServiceIdentification/ows:Title|
+                      ows11:ServiceIdentification/ows11:Title|
+                      ows2:ServiceIdentification/ows2:Title|
+                      /wps1:Capabilities/ows11:ServiceIdentification/ows11:Title|
+                      /wps2:Capabilities/ows2:ServiceIdentification/ows2:Title"/>
+                  </xsl:when>
+                  <!--WMS-->
+                  <xsl:when test="name(.)='WMS_Capabilities'">
+                    <xsl:value-of select="wms:Service/wms:Title"/>
+                  </xsl:when>
+                </xsl:choose>
+              </xsl:variable>
               <!-- KVP BLOK moet voor alle services uitgevoerd worden-->
               <onLine>
                 <CI_OnlineResource>
@@ -377,22 +393,6 @@ Mapping between:
                     </gco:CharacterString>
                   </protocol>
                   <name>
-                    <xsl:variable name="ServiceTitel">
-                      <xsl:choose>
-                        <!--WFS | WMTS | WCS-->
-                        <xsl:when test="$ows='true'">
-                          <xsl:value-of select="ows:ServiceIdentification/ows:Title|
-													  ows11:ServiceIdentification/ows11:Title|
-													  ows2:ServiceIdentification/ows2:Title|
-													  /wps1:Capabilities/ows11:ServiceIdentification/ows11:Title|
-													  /wps2:Capabilities/ows2:ServiceIdentification/ows2:Title"/>
-                        </xsl:when>
-                        <!--WMS-->
-                        <xsl:when test="name(.)='WMS_Capabilities'">
-                          <xsl:value-of select="wms:Service/wms:Title"/>
-                        </xsl:when>
-                      </xsl:choose>
-                    </xsl:variable>
                     <gco:CharacterString>
                       Capabilities van de webdienst <xsl:value-of select="$ServiceTitel"/>
                     </gco:CharacterString>
@@ -410,22 +410,23 @@ Mapping between:
               <xsl:if test="$ows='true' and local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wmts/1.0'">
                 <xsl:variable name="ows_wmts_rest_capabilities">
                   <!-- [contains(string(), ".xml")] added to include WMTS REST endpoint-->
-                  <xsl:value-of select="//ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href[contains(string(), '.xml')]|
-	    																														//ows11:Operation[@name='GetCapabilities']/ows11:DCP/ows11:HTTP/ows11:Get/@xlink:href[contains(string(), '.xml')]|
-    	                        																	//ows2:Operation[@name='GetCapabilities']/ows2:DCP/ows2:HTTP/ows2:Get/@xlink:href[contains(string(), '.xml')]"/>
+                  <xsl:value-of select="//ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href|
+	    																	//ows11:Operation[@name='GetCapabilities']/ows11:DCP/ows11:HTTP/ows11:Get/@xlink:href|
+    	                        					//ows2:Operation[@name='GetCapabilities']/ows2:DCP/ows2:HTTP/ows2:Get/@xlink:href"/>
                 </xsl:variable>
-
-
+                <xsl:variable name="leftPartURL">
+                  <xsl:value-of select="substring-before($ows_wmts_rest_capabilities,'wmts')"/>
+                </xsl:variable>
                 <onLine>
 								<CI_OnlineResource>
 									<linkage>
-									<URL> <xsl:value-of select="normalize-space($ows_wmts_rest_capabilities)"/></URL>
+									<URL> <xsl:value-of select="concat(normalize-space($leftPartURL), 'wmts/1.0.0/WMTSCapabilities.xml')"/></URL>
 									</linkage>
 									<protocol>
 									<gco:CharacterString>OGC:WMTS</gco:CharacterString>
 									</protocol>
 									<name>
-									<gco:CharacterString>Capabilities van de webdienst agentschap Informatie Vlaanderen WMTS service (RESTful implementatie)</gco:CharacterString>
+									<gco:CharacterString>Capabilities van de webdienst <xsl:value-of select="$ServiceTitel"/> (RESTful implementatie)</gco:CharacterString>
 									</name>
 									<description>
 										<gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">access point</gmx:Anchor>
