@@ -771,7 +771,10 @@ public class BaseMetadataManager implements IMetadataManager {
                 // contains both XSD and schematron errors.
                 // The report is used when building the editor form
                 // to display errors related to elements.
+                editLib.removeEditingInfo(metadataXml);
                 metadataXml = new AGIVValidation(srvContext).addConformKeywordsToElement(metadataXml, schema, Integer.parseInt(id)).two();
+                editLib.expandElements(schema, metadataXml);
+                version = editLib.getVersionForEditing(schema, id, metadataXml);
                 metadataXml.addContent(versionAndReport.one());
             } else {
                 editLib.expandElements(schema, metadataXml);

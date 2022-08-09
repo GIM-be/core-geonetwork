@@ -305,7 +305,7 @@
 								<date>
 									<CI_Date>
 										<date>
-											<gco:Date>2015-03-16</gco:Date>
+											<gco:Date>2016-03-11</gco:Date>
 										</date>
 										<dateType>
 											<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
@@ -660,7 +660,7 @@
 			<xsl:with-param name="thesaurusTitle" select="$gdi-vlaanderen-service-types-thesaurus"/>
 			<xsl:with-param name="thesaurusAnchor" select="$gdi-vlaanderen-service-types-thesaurus-anchor-href"/>
 			<xsl:with-param name="thesaurusAnchorValue" select="$gdi-vlaanderen-service-types-thesaurus-anchor-value"/>
-			<xsl:with-param name="thesaurusDate" select="'2015-03-16'"/>
+			<xsl:with-param name="thesaurusDate" select="'2016-03-11'"/>
 		</xsl:call-template>
 		<xsl:call-template name="get-vocabulary-keywords">
 			<xsl:with-param name="thesaurusTitle" select="$gdi-vlaanderen-trefwoorden-thesaurus"/>
