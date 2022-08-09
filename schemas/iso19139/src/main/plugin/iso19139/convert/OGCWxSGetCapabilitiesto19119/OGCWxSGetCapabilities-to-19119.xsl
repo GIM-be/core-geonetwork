@@ -286,6 +286,22 @@ Mapping between:
           </distributionFormat>
           <transferOptions>
             <MD_DigitalTransferOptions>
+            xsl:variable name="ServiceTitel">
+                <xsl:choose>
+                  <!--WFS | WMTS | WCS-->
+                  <xsl:when test="$ows='true'">
+                    <xsl:value-of select="ows:ServiceIdentification/ows:Title|
+                      ows11:ServiceIdentification/ows11:Title|
+                      ows2:ServiceIdentification/ows2:Title|
+                      /wps1:Capabilities/ows11:ServiceIdentification/ows11:Title|
+                      /wps2:Capabilities/ows2:ServiceIdentification/ows2:Title"/>
+                  </xsl:when>
+                  <!--WMS-->
+                  <xsl:when test="name(.)='WMS_Capabilities'">
+                    <xsl:value-of select="wms:Service/wms:Title"/>
+                  </xsl:when>
+                </xsl:choose>
+              </xsl:variable>
               <!-- KVP BLOK moet voor alle services uitgevoerd worden-->
               <onLine>
                 <CI_OnlineResource>
@@ -377,22 +393,6 @@ Mapping between:
                     </gco:CharacterString>
                   </protocol>
                   <name>
-                    <xsl:variable name="ServiceTitel">
-                      <xsl:choose>
-                        <!--WFS | WMTS | WCS-->
-                        <xsl:when test="$ows='true'">
-                          <xsl:value-of select="ows:ServiceIdentification/ows:Title|
-													  ows11:ServiceIdentification/ows11:Title|
-													  ows2:ServiceIdentification/ows2:Title|
-													  /wps1:Capabilities/ows11:ServiceIdentification/ows11:Title|
-													  /wps2:Capabilities/ows2:ServiceIdentification/ows2:Title"/>
-                        </xsl:when>
-                        <!--WMS-->
-                        <xsl:when test="name(.)='WMS_Capabilities'">
-                          <xsl:value-of select="wms:Service/wms:Title"/>
-                        </xsl:when>
-                      </xsl:choose>
-                    </xsl:variable>
                     <gco:CharacterString>
                       Capabilities van de webdienst <xsl:value-of select="$ServiceTitel"/>
                     </gco:CharacterString>
