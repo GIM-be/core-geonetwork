@@ -772,6 +772,7 @@ public class BaseMetadataManager implements IMetadataManager {
                 // The report is used when building the editor form
                 // to display errors related to elements.
                 editLib.removeEditingInfo(metadataXml);
+                editLib.contractElements(metadataXml);
                 metadataXml = new AGIVValidation(srvContext).addConformKeywordsToElement(metadataXml, schema, Integer.parseInt(id)).two();
                 editLib.expandElements(schema, metadataXml);
                 version = editLib.getVersionForEditing(schema, id, metadataXml);
