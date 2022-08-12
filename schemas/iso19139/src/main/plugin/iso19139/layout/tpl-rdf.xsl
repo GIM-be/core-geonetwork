@@ -808,9 +808,21 @@
                             </xsl:for-each>
                           </xsl:variable>
 
-                          <xsl:if test="not($isDownload) and $servedService/resourceURI">
-                            <dcat:accessService rdf:resource="{$servedService/resourceURI[1]}"/>
-                            <dct:rights rdf:resource="{concat($catalogUrl, '/catalog.search#/metadata/', $servedService/uuid[1], '/formatters/legalconstraints')}"/>
+                          <xsl:if test="not($isDownload)">
+                            <xsl:choose>
+                              <xsl:when test="$servedService/resourceURI">
+                                <dcat:accessService rdf:resource="{$servedService/resourceURI[1]}"/>
+                                <dct:rights rdf:resource="{concat($catalogUrl, '/catalog.search#/metadata/', $servedService/uuid[1], '/formatters/legalconstraints')}"/>
+                              </xsl:when>
+                              <xsl:otherwise>
+                                <dct:rights>
+                                  <dct:RightsStatement>
+                                    <dct:title>Hoewel deze hier niet zijn opgegeven, kunnen er voorwaarden verbonden zijn aan de toegang tot en het gebruik van deze webservice/API waarmee u toegang kunt krijgen tot de gegevens van deze dataset.
+                                      Gelieve de metadata van de betreffende service/API te raadplegen, of contact op te nemen met de aanbieder van de de gegevensbron of de service/API.</dct:title>
+                                  </dct:RightsStatement>
+                                </dct:rights>
+                              </xsl:otherwise>
+                            </xsl:choose>
                           </xsl:if>
 
                           <xsl:copy-of select="$Distributors"/>
