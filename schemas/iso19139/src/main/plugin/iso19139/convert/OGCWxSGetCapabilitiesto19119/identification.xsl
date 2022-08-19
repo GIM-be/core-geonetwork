@@ -417,58 +417,58 @@
             <xsl:for-each select="exslt:node-set($topics)/*[name(.)='topicCategory']">
                 <xsl:choose>
                     <xsl:when test=".='biota'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='boundaries'">
                         <theme label="Milieu">rest</theme>
                     </xsl:when>
                     <xsl:when test=".='climatologyMeteorologyAtmosphere'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='economy'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ECON</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/ECON</theme>
                     </xsl:when>
                     <xsl:when test=".='elevation'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='environment'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='farming'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/AGRI</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/AGRI</theme>
                     </xsl:when>
                     <xsl:when test=".='geoscientificInformation'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/TECH</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/TECH</theme>
                     </xsl:when>
                     <xsl:when test=".='health'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/HEAL</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/HEAL</theme>
                     </xsl:when>
                     <xsl:when test=".='imageryBaseMapsEarthCover'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='inlandWaters'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='intelligenceMilitary'">
                         <theme label="Milieu">nvt</theme>
                     </xsl:when>
                     <xsl:when test=".='location'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='oceans'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='planningCadastre'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='society'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/SOCI</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/SOCI</theme>
                     </xsl:when>
                     <xsl:when test=".='structure'">
                         <theme label="Milieu">rest</theme>
                     </xsl:when>
                     <xsl:when test=".='transportation'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/TRAN</theme>
+                        <theme label="Milieu">https://vocab.belgif.be/auth/datatheme/TRAN</theme>
                     </xsl:when>
                     <xsl:when test=".='utilitiesCommunication'">
                         <theme label="Milieu">rest</theme>
@@ -506,7 +506,7 @@
                         <thesaurusName>
                             <CI_Citation>
                                 <title>
-                                    <gmx:Anchor xlink:href="http://vocab.belgif.be/auth/datatheme">
+                                    <gmx:Anchor xlink:href="https://vocab.belgif.be/auth/datatheme">
                                         Data.gov.be themes
                                     </gmx:Anchor>
                                 </title>

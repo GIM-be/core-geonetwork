@@ -329,24 +329,20 @@
          <gmd:descriptiveKeywords>
             <gmd:MD_Keywords>
                <gmd:keyword>
-                  <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/biota">Biota</gmx:Anchor>
-               </gmd:keyword>
-               <gmd:keyword>
-                  <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/TopicCategory/environment">Milieu</gmx:Anchor>
+                  <gmx:Anchor xlink:href="https://vocab.belgif.be/auth/datatheme/ENVI">Milieu</gmx:Anchor>
                </gmd:keyword>
                <gmd:thesaurusName>
                   <gmd:CI_Citation>
                      <gmd:title>
-                        <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/TopicCategory">Onderwerpcategorieën overeenkomstig EN ISO 19115</gmx:Anchor>
+                        <gmx:Anchor xlink:href="https://vocab.belgif.be/auth/datatheme">Data.gov.be themes</gmx:Anchor>
                      </gmd:title>
                      <gmd:date>
                         <gmd:CI_Date>
                            <gmd:date>
-                              <gco:Date>2006-07-01</gco:Date>
+                              <gco:Date>2019-01-31</gco:Date>
                            </gmd:date>
                            <gmd:dateType>
-                              <gmd:CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                   codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                              <gmd:CI_DateTypeCode codeListValue="publication" codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
                            </gmd:dateType>
                         </gmd:CI_Date>
                      </gmd:date>
