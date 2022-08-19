@@ -1,0 +1,377 @@
+<WMS_Capabilities version="1.3.0" xmlns="http://www.opengis.net/wms" xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0" xmlns:insp_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0 http://inspire.ec.europa.eu/schemas/inspire_vs/1.0/inspire_vs.xsd http://inspire.ec.europa.eu/schemas/common/1.0 http://inspire.ec.europa.eu/schemas/common/1.0/common.xsd http://www.opengis.net/wms http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd">
+ <Service>
+   <Name>WMS</Name>
+   <Title>WMS Instituut voor Natuur- en Bosonderzoek</Title>
+   <Abstract>Web Map Service met data van het Instituut voor Natuur- en Bosonderzoek.</Abstract>
+   <KeywordList>
+     <Keyword>bebossing</Keyword>
+     <Keyword>bosbouw</Keyword>
+     <Keyword>bostype</Keyword>
+     <Keyword>climax vegetatie</Keyword>
+     <Keyword>landschapsstudie</Keyword>
+     <Keyword>natuurbehoud</Keyword>
+     <Keyword>natuurlijke vegetatie</Keyword>
+     <Keyword>natuurontwikkeling</Keyword>
+     <Keyword>verbossing</Keyword>
+     <Keyword>historisch bos</Keyword>
+     <Keyword>boshistoriek</Keyword>
+     <Keyword>boskartering</Keyword>
+     <Keyword>bosleeftijdskaart</Keyword>
+     <Keyword>bosleeftijdsklasse</Keyword>
+     <Keyword>ecosysteemvisie</Keyword>
+     <Keyword>wildbeheer</Keyword>
+     <Keyword>ontbossen</Keyword>
+     <Keyword>ontbossing</Keyword>
+     <Keyword>terreinverkenning</Keyword>
+     <Keyword>landgebruik</Keyword>
+     <Keyword>biologische waardering</Keyword>
+     <Keyword>biotoopinformatie</Keyword>
+     <Keyword>biotoopzeldzaamheid</Keyword>
+     <Keyword>bodembedekking</Keyword>
+     <Keyword>diversiteit</Keyword>
+     <Keyword>ecotoop</Keyword>
+     <Keyword>faunistisch belangrijk gebied</Keyword>
+     <Keyword>kwetsbaarheid</Keyword>
+     <Keyword>landschapselement</Keyword>
+     <Keyword>natuurbeleid</Keyword>
+     <Keyword>vegetatietype</Keyword>
+     <Keyword>waarderingszone</Keyword>
+     <Keyword>waterkwaliteit</Keyword>
+     <Keyword>zeldzame soort</Keyword>
+     <Keyword>NATURA 2000 habitat</Keyword>
+     <Keyword>habitattype</Keyword>
+     <Keyword>natuurwaarde</Keyword>
+     <Keyword>biodiversiteit</Keyword>
+     <Keyword>natuurlijk landschap</Keyword>
+     <Keyword>(rivier)oevervegetatie</Keyword>
+     <Keyword>flora (gezamenlijke vegetatie)</Keyword>
+     <Keyword>fauna</Keyword>
+     <Keyword>natuurlijke fauna</Keyword>
+     <Keyword>plantensoort</Keyword>
+     <Keyword>ecologisch</Keyword>
+     <Keyword>landschapsecologisch</Keyword>
+     <Keyword>signaalkaart</Keyword>
+     <Keyword vocabulary="GDI-Vlaanderen Trefwoorden">Lijst M&amp;R INSPIRE</Keyword>
+     <Keyword vocabulary="GDI-Vlaanderen Service Types">OGC:WMS</Keyword>
+   </KeywordList>
+   <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.api.vlaanderen.be/INBO/wms" />
+   <ContactInformation>
+     <ContactPersonPrimary>
+       <ContactPerson>Helpdesk Digitaal Vlaanderen</ContactPerson>
+       <ContactOrganization>agentschap Digitaal Vlaanderen</ContactOrganization>
+     </ContactPersonPrimary>
+     <ContactAddress>
+       <AddressType>Postal</AddressType>
+       <Address>Havenlaan 88</Address>
+       <City>Brussel</City>
+       <StateOrProvince />
+       <PostCode>1000</PostCode>
+       <Country>België</Country>
+     </ContactAddress>
+     <ContactVoiceTelephone>+32 9 276 15 00</ContactVoiceTelephone>
+     <ContactElectronicMailAddress>digitaal.vlaanderen@vlaanderen.be</ContactElectronicMailAddress>
+   </ContactInformation>
+   <Fees>Het gebruik van de service is kosteloos.</Fees>
+   <AccessConstraints>Het gebruiksrecht is te vinden op https://www.vlaanderen.be/digitaal-vlaanderen/onze-oplossingen/geografische-webdiensten/gebruiksrecht-en-privacyverklaring-geografische-webdiensten.</AccessConstraints>
+   <MaxWidth>2048</MaxWidth>
+   <MaxHeight>2048</MaxHeight>
+ </Service>
+ <Capability>
+   <Request>
+     <GetCapabilities>
+       <Format>application/vnd.ogc.wms_xml</Format>
+       <Format>text/xml</Format>
+       <DCPType>
+         <HTTP>
+           <Get>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.api.vlaanderen.be/INBO/wms" />
+           </Get>
+         </HTTP>
+       </DCPType>
+     </GetCapabilities>
+     <GetMap>
+       <Format>image/bmp</Format>
+       <Format>image/jpeg</Format>
+       <Format>image/tiff</Format>
+       <Format>image/png</Format>
+       <Format>image/png8</Format>
+       <Format>image/png24</Format>
+       <Format>image/png32</Format>
+       <Format>image/gif</Format>
+       <Format>image/svg+xml</Format>
+       <DCPType>
+         <HTTP>
+           <Get>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.api.vlaanderen.be/INBO/wms" />
+           </Get>
+         </HTTP>
+       </DCPType>
+     </GetMap>
+     <GetFeatureInfo>
+       <Format>application/vnd.esri.wms_raw_xml</Format>
+       <Format>application/vnd.esri.wms_featureinfo_xml</Format>
+       <Format>application/vnd.ogc.wms_xml</Format>
+       <Format>text/xml</Format>
+       <Format>text/html</Format>
+       <Format>text/plain</Format>
+       <DCPType>
+         <HTTP>
+           <Get>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.api.vlaanderen.be/INBO/wms" />
+           </Get>
+         </HTTP>
+       </DCPType>
+     </GetFeatureInfo>
+   </Request>
+   <Exception>
+     <Format>application/vnd.ogc.se_xml</Format>
+     <Format>application/vnd.ogc.se_inimage</Format>
+     <Format>application/vnd.ogc.se_blank</Format>
+     <Format>text/xml</Format>
+     <Format>XML</Format>
+   </Exception>
+   <insp_vs:ExtendedCapabilities>
+     <inspire_common:ResourceLocator>
+       <inspire_common:URL>https://geo.api.vlaanderen.be/INBO/wms</inspire_common:URL>
+       <inspire_common:MediaType>application/vnd.ogc.wms_xml</inspire_common:MediaType>
+     </inspire_common:ResourceLocator>
+     <inspire_common:ResourceType>service</inspire_common:ResourceType>
+     <inspire_common:TemporalReference>
+       <inspire_common:DateOfCreation>2013-05-23</inspire_common:DateOfCreation>
+     </inspire_common:TemporalReference>
+     <inspire_common:Conformity>
+       <inspire_common:Specification xsi:type="inspire_common:citationInspireInteroperabilityRegulation_dut">
+         <inspire_common:Title>VERORDENING (EU) Nr. 1089/2010 VAN DE COMMISSIE van 23 november 2010 ter uitvoering van Richtlijn 2007/2/EG van het Europees Parlement en de Raad betreffende de interoperabiliteit van verzamelingen ruimtelijke gegevens en van diensten met betrekking tot ruimtelijke gegevens</inspire_common:Title>
+         <inspire_common:DateOfPublication>2010-12-08</inspire_common:DateOfPublication>
+         <inspire_common:URI>OJ:L:2010:323:0011:0102:NL:PDF</inspire_common:URI>
+         <inspire_common:ResourceLocator>
+           <inspire_common:URL>http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2010:323:0011:0102:NL:PDF</inspire_common:URL>
+           <inspire_common:MediaType>application/pdf</inspire_common:MediaType>
+         </inspire_common:ResourceLocator>
+       </inspire_common:Specification>
+       <inspire_common:Degree>notEvaluated</inspire_common:Degree>
+     </inspire_common:Conformity>
+     <inspire_common:MetadataPointOfContact>
+       <inspire_common:OrganisationName>agentschap Digitaal Vlaanderen</inspire_common:OrganisationName>
+       <inspire_common:EmailAddress>digitaal.vlaanderen@vlaanderen.be</inspire_common:EmailAddress>
+     </inspire_common:MetadataPointOfContact>
+     <inspire_common:MetadataDate>2022-08-11</inspire_common:MetadataDate>
+     <inspire_common:SpatialDataServiceType>view</inspire_common:SpatialDataServiceType>
+     <inspire_common:MandatoryKeyword xsi:type="inspire_common:classificationOfSpatialDataService">
+       <inspire_common:KeywordValue>infoMapAccessService</inspire_common:KeywordValue>
+     </inspire_common:MandatoryKeyword>
+     <inspire_common:Keyword xsi:type="inspire_common:inspireTheme_dut">
+       <inspire_common:OriginatingControlledVocabulary xsi:type="inspire_common:originatingControlledVocabularyGemetInspireThemes">
+         <inspire_common:Title>GEMET - INSPIRE themes</inspire_common:Title>
+         <inspire_common:DateOfPublication>2008-06-01</inspire_common:DateOfPublication>
+       </inspire_common:OriginatingControlledVocabulary>
+       <inspire_common:KeywordValue>Habitats en biotopen</inspire_common:KeywordValue>
+     </inspire_common:Keyword>
+     <inspire_common:SupportedLanguages xsi:type="inspire_common:supportedLanguagesType">
+       <inspire_common:DefaultLanguage>
+         <inspire_common:Language>dut</inspire_common:Language>
+       </inspire_common:DefaultLanguage>
+     </inspire_common:SupportedLanguages>
+     <inspire_common:ResponseLanguage>
+       <inspire_common:Language>dut</inspire_common:Language>
+     </inspire_common:ResponseLanguage>
+     <inspire_common:MetadataUrl xsi:type="inspire_common:resourceLocatorType">
+       <inspire_common:URL>https://dev.metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=07570002-1923-6fa2-fed3-d1ed-5de2-5970-e56c9325&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd</inspire_common:URL>
+       <inspire_common:MediaType>application/vnd.ogc.csw.GetRecordByIdResponse_xml</inspire_common:MediaType>
+     </inspire_common:MetadataUrl>
+   </insp_vs:ExtendedCapabilities>
+   <Layer>
+     <Title>Instituut voor Natuur- en Bosonderzoek</Title>
+     <Abstract>Data van het Instituut voor Natuur- en Bosonderzoek.</Abstract>
+     <KeywordList>
+       <Keyword>Bebossing</Keyword>
+       <Keyword>BWK</Keyword>
+       <Keyword>INBO</Keyword>
+       <Keyword>Instituut voor Natuur- en Bosonderzoek</Keyword>
+     </KeywordList>
+     <CRS>CRS:84</CRS>
+     <CRS>EPSG:4326</CRS>
+     <CRS>EPSG:4258</CRS>
+     <CRS>EPSG:31370</CRS>
+     <CRS>EPSG:3812</CRS>
+     <CRS>EPSG:3043</CRS>
+     <CRS>EPSG:32631</CRS>
+     <CRS>EPSG:25831</CRS>
+     <CRS>EPSG:3857</CRS>
+     <CRS>EPSG:102100</CRS>
+     <CRS>EPSG:3035</CRS>
+     <EX_GeographicBoundingBox>
+       <westBoundLongitude>2.52</westBoundLongitude>
+       <eastBoundLongitude>5.94</eastBoundLongitude>
+       <southBoundLatitude>50.64</southBoundLatitude>
+       <northBoundLatitude>51.51</northBoundLatitude>
+     </EX_GeographicBoundingBox>
+     <BoundingBox maxx="5.94" maxy="51.51" minx="2.52" miny="50.64" CRS="CRS:84" />
+     <BoundingBox maxx="51.51" maxy="5.94" minx="50.64" miny="2.52" CRS="EPSG:4326" />
+     <BoundingBox maxx="51.51" maxy="5.94" minx="50.64" miny="2.52" CRS="EPSG:4258" />
+     <BoundingBox maxy="245000" maxx="259000" miny="150000" minx="22000" CRS="EPSG:31370" />
+     <BoundingBox maxy="745000" maxx="759000" miny="650000" minx="552000" CRS="EPSG:3812" />
+     <BoundingBox maxy="5710000" maxx="705700" miny="5610500" minx="466900" CRS="EPSG:3043" />
+     <BoundingBox maxy="5710000" maxx="705700" miny="5610500" minx="466900" CRS="EPSG:32631" />
+     <BoundingBox maxy="5710000" maxx="705700" miny="5610500" minx="466900" CRS="EPSG:25831" />
+     <BoundingBox maxy="6712007" maxx="661237" miny="6557859" minx="280525" CRS="EPSG:3857" />
+     <BoundingBox maxy="6712007" maxx="661237" miny="6557859" minx="280525" CRS="EPSG:102100" />
+     <BoundingBox maxy="5446513" maxx="6293974" miny="1528101" minx="2426378" CRS="EPSG:3035" />
+     <AuthorityURL name="geo-api-vlaanderen-be">
+       <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://geo.api.vlaanderen.be" />
+     </AuthorityURL>
+     <Layer queryable="1">
+       <Name>BWK1Zone</Name>
+       <Title>BWK 1 - Zones</Title>
+       <Abstract>Gebied met bepaalde biologische waarde en met combinatie van voorkomende vegetatiekundige eenheden, elementen van menselijk gebruik en ecotypes.</Abstract>
+       <KeywordList>
+         <Keyword>biologische waardering</Keyword>
+         <Keyword>biologische waarderingskaart</Keyword>
+         <Keyword>ecologisch</Keyword>
+         <Keyword>kwetsbaarheid</Keyword>
+         <Keyword>landschapsecologisch</Keyword>
+         <Keyword>signaalkaart</Keyword>
+         <Keyword>waarderingszone</Keyword>
+       </KeywordList>
+       <Identifier authority="geo-api-vlaanderen-be">6C12098F-785B-4662-8C2F-8DDC4E04DDF7</Identifier>
+       <MetadataURL type="ISO19115:2005">
+         <Format>text/html</Format>
+         <OnlineResource xlink:href="https://dev.metadata.vlaanderen.be/metadatacenter/srv/dut/catalog.search#/metadata/DA9C6CFF-6DF3-412A-B4C1-247C188BC638" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+       </MetadataURL>
+       <MetadataURL type="ISO19115:2005">
+         <Format>text/xml</Format>
+         <OnlineResource xlink:href="https://dev.metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=DA9C6CFF-6DF3-412A-B4C1-247C188BC638&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+       </MetadataURL>
+       <Style>
+         <Name>default</Name>
+         <Title>BWK1Zone</Title>
+         <LegendURL width="563" height="152">
+           <Format>image/png</Format>
+           <OnlineResource xlink:href="https://geo.api.vlaanderen.be/INBO/wms?request=GetLegendGraphic%26version=1.3.0%26format=image/png%26layer=BWK1Zone" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+         </LegendURL>
+       </Style>
+       <MaxScaleDenominator>75595.238095</MaxScaleDenominator>
+     </Layer>
+     <Layer queryable="1">
+       <Name>BWK2</Name>
+       <Title>Biologische Waarderingskaart</Title>
+       <Abstract>De Biologische Waarderingskaart (BWK) is een uniforme inventarisatie en evaluatie van het gehele Vlaamse grondgebied aan de hand van een set karteringseenheden die staan voor vegetaties, bodembedekking en kleine landschapselementen (lijn- en puntvormige elementen). Ook met de aanwezigheid van belangrijke fauna-elementen is er rekening gehouden. De vernieuwde BWK, versie 2, probeert, in vergelijking met de versie 1, aan meer vereisten en noden te voldoen, zowel inhoudelijk als op het gebied van nauwkeurigheid.</Abstract>
+       <KeywordList>
+         <Keyword>biologische waardering</Keyword>
+         <Keyword>biologische waarderingskaart</Keyword>
+         <Keyword>biotoopinformatie</Keyword>
+         <Keyword>biotoopzeldzaamheid</Keyword>
+         <Keyword>bodembedekking</Keyword>
+         <Keyword>diversiteit</Keyword>
+         <Keyword>ecotoop</Keyword>
+         <Keyword>faunistisch belangrijk gebied</Keyword>
+         <Keyword>kwetsbaarheid</Keyword>
+         <Keyword>landschapselement</Keyword>
+         <Keyword>natuurbehoud</Keyword>
+         <Keyword>natuurbeleid</Keyword>
+         <Keyword>vegetatietype</Keyword>
+         <Keyword>waarderingszone</Keyword>
+         <Keyword>waterkwaliteit</Keyword>
+         <Keyword>zeldzame soort</Keyword>
+       </KeywordList>
+       <MaxScaleDenominator>75595.238095</MaxScaleDenominator>
+       <Layer queryable="1">
+         <Name>BWK2Hab3260</Name>
+         <Title>BWK 2 - Habitattype 3260</Title>
+         <Abstract>Weergave van voorkomen van het habitattype 3260, de submontane- en laaglandrivieren met waterranonkel- en fonteinkruidvegetaties.</Abstract>
+         <KeywordList>
+           <Keyword>biologische waardering</Keyword>
+           <Keyword>biologische waarderingskaart</Keyword>
+           <Keyword>biotoopinformatie</Keyword>
+           <Keyword>biotoopzeldzaamheid</Keyword>
+           <Keyword>bodembedekking</Keyword>
+           <Keyword>diversiteit</Keyword>
+           <Keyword>ecotoop</Keyword>
+           <Keyword>faunistisch belangrijk gebied</Keyword>
+           <Keyword>kwetsbaarheid</Keyword>
+           <Keyword>landschapselement</Keyword>
+           <Keyword>natuurbehoud</Keyword>
+           <Keyword>natuurbeleid</Keyword>
+           <Keyword>vegetatietype</Keyword>
+           <Keyword>waarderingszone</Keyword>
+           <Keyword>waterkwaliteit</Keyword>
+           <Keyword>zeldzame soort</Keyword>
+           <Keyword>NATURA 2000 habitat</Keyword>
+           <Keyword>habitattype</Keyword>
+           <Keyword>habitat 3260</Keyword>
+           <Keyword>natuurwaarde</Keyword>
+           <Keyword>biodiversiteit</Keyword>
+           <Keyword>natuurlijk landschap</Keyword>
+           <Keyword>(rivier)oevervegetatie</Keyword>
+           <Keyword>flora (gezamenlijke vegetatie)</Keyword>
+           <Keyword>fauna</Keyword>
+           <Keyword>natuurlijke fauna</Keyword>
+           <Keyword>plantensoort</Keyword>
+         </KeywordList>
+         <Identifier authority="geo-api-vlaanderen-be">e3d76184-3e32-4dee-bf70-44cab9780733</Identifier>
+         <MetadataURL type="ISO19115:2005">
+           <Format>text/html</Format>
+           <OnlineResource xlink:href="https://dev.metadata.vlaanderen.be/metadatacenter/srv/dut/catalog.search#/metadata/5D89DD1E-5C44-11DC-8314-0800200C9A66" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+         </MetadataURL>
+         <MetadataURL type="ISO19115:2005">
+           <Format>text/xml</Format>
+           <OnlineResource xlink:href="https://dev.metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=5D89DD1E-5C44-11DC-8314-0800200C9A66&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+         </MetadataURL>
+         <Style>
+           <Name>default</Name>
+           <Title>BWK2Hab3260</Title>
+           <LegendURL width="131" height="16">
+             <Format>image/png</Format>
+             <OnlineResource xlink:href="https://geo.api.vlaanderen.be/INBO/wms?request=GetLegendGraphic%26version=1.3.0%26format=image/png%26layer=BWK2Hab3260" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+           </LegendURL>
+         </Style>
+         <MaxScaleDenominator>75595.238095</MaxScaleDenominator>
+       </Layer>
+     </Layer>
+     <Layer queryable="1">
+       <Name>HistoBos</Name>
+       <Title>Historische bossen</Title>
+       <Abstract>Groepering van informatie over historische bossen.</Abstract>
+       <KeywordList>
+         <Keyword>Historisch bos</Keyword>
+       </KeywordList>
+       <Layer queryable="1">
+         <Name>B1775</Name>
+         <Title>Bebossing op de Ferrariskaarten (1771-1778)</Title>
+         <Abstract>Bebossing op de Ferrariskaart (1771-1778)</Abstract>
+         <KeywordList>
+           <Keyword>bosbouw</Keyword>
+           <Keyword>bosleeftijdskaart</Keyword>
+           <Keyword>bos</Keyword>
+           <Keyword>ecosysteemvisie</Keyword>
+           <Keyword>historisch bos</Keyword>
+           <Keyword>landgebruik</Keyword>
+           <Keyword>natuurbehoud</Keyword>
+           <Keyword>natuurontwikkeling</Keyword>
+           <Keyword>ontbossen</Keyword>
+           <Keyword>ontbossing</Keyword>
+           <Keyword>terreinverkenning</Keyword>
+           <Keyword>wildbeheer</Keyword>
+         </KeywordList>
+         <Identifier authority="geo-api-vlaanderen-be">39836ed2-3ae1-4836-87bb-84191576f4cc</Identifier>
+         <MetadataURL type="ISO19115:2005">
+           <Format>text/html</Format>
+           <OnlineResource xlink:href="https://dev.metadata.vlaanderen.be/metadatacenter/srv/dut/catalog.search#/metadata/656A43E0-3254-47C4-976D-A71EE2E616CB" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+         </MetadataURL>
+         <MetadataURL type="ISO19115:2005">
+           <Format>text/xml</Format>
+           <OnlineResource xlink:href="https://dev.metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=656A43E0-3254-47C4-976D-A71EE2E616CB&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+         </MetadataURL>
+         <Style>
+           <Name>default</Name>
+           <Title>B1775</Title>
+           <LegendURL width="175" height="39">
+             <Format>image/png</Format>
+             <OnlineResource xlink:href="https://geo.api.vlaanderen.be/INBO/wms?request=GetLegendGraphic%26version=1.3.0%26format=image/png%26layer=B1775" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+           </LegendURL>
+         </Style>
+       </Layer>
+     </Layer>
+   </Layer>
+ </Capability>
+</WMS_Capabilities>
