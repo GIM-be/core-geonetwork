@@ -494,35 +494,35 @@
                         <!-- output the themes, sorted alphabetically -->
                         <xsl:for-each select="exslt:node-set($distinctThemes)">
                             <xsl:sort select="./@label"/>
-                            <gmd:keyword>
+                            <keyword>
                                 <gmx:Anchor>
                                     <xsl:attribute name="xlink:href" select="."/>
                                     <xsl:value-of select="./@label"/>
                                 </gmx:Anchor>
-                            </gmd:keyword>
+                            </keyword>
                         </xsl:for-each>
 
                         <!-- output the thesaurus -->
-                        <gmd:thesaurusName>
-                            <gmd:CI_Citation>
-                                <gmd:title>
+                        <thesaurusName>
+                            <CI_Citation>
+                                <title>
                                     <gmx:Anchor xlink:href="http://vocab.belgif.be/auth/datatheme">
                                         Data.gov.be themes
                                     </gmx:Anchor>
-                                </gmd:title>
-                                <gmd:date>
-                                    <gmd:CI_Date>
-                                        <gmd:date>
+                                </title>
+                                <date>
+                                    <CI_Date>
+                                        <date>
                                             <gco:Date>2019-01-31</gco:Date>
-                                        </gmd:date>
-                                        <gmd:dateType>
-                                            <gmd:CI_DateTypeCode codeListValue="publication"
+                                        </date>
+                                        <dateType>
+                                            <CI_DateTypeCode codeListValue="publication"
                                                                  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
-                                        </gmd:dateType>
-                                    </gmd:CI_Date>
-                                </gmd:date>
-                            </gmd:CI_Citation>
-                        </gmd:thesaurusName>
+                                        </dateType>
+                                    </CI_Date>
+                                </date>
+                            </CI_Citation>
+                        </thesaurusName>
                     </MD_Keywords>
                 </descriptiveKeywords>
             </xsl:when>
