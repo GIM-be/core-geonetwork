@@ -329,12 +329,12 @@
          <gmd:descriptiveKeywords>
             <gmd:MD_Keywords>
                <gmd:keyword>
-                  <gmx:Anchor xlink:href="https://vocab.belgif.be/auth/datatheme/ENVI">Milieu</gmx:Anchor>
+                  <gmx:Anchor xlink:href="http://vocab.belgif.be/auth/datatheme/ENVI">Milieu</gmx:Anchor>
                </gmd:keyword>
                <gmd:thesaurusName>
                   <gmd:CI_Citation>
                      <gmd:title>
-                        <gmx:Anchor xlink:href="https://vocab.belgif.be/auth/datatheme">Data.gov.be themes</gmx:Anchor>
+                        <gmx:Anchor xlink:href="http://vocab.belgif.be/auth/datatheme">Data.gov.be themes</gmx:Anchor>
                      </gmd:title>
                      <gmd:date>
                         <gmd:CI_Date>
