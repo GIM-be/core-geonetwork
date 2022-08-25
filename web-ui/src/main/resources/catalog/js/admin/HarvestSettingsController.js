@@ -610,8 +610,7 @@
                 'SERVICE=CSW&REQUEST=GetCapabilities&VERSION=2.0.2';
           }
 
-          $http.get($scope.proxyUrl +
-              encodeURIComponent(url))
+          $http.get(url)
               .success(function(data) {
                 $scope.cswCriteria = [];
 
