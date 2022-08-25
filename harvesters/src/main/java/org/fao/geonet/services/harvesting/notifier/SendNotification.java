@@ -27,6 +27,7 @@ import org.fao.geonet.domain.Group;
 import org.fao.geonet.domain.Profile;
 import org.fao.geonet.domain.User;
 import org.fao.geonet.domain.UserGroupId_;
+import org.fao.geonet.kernel.HarvestValidationEnum;
 import org.fao.geonet.kernel.harvest.harvester.AbstractHarvester;
 import org.fao.geonet.kernel.setting.SettingManager;
 import org.fao.geonet.kernel.setting.Settings;
@@ -72,9 +73,7 @@ public class SendNotification {
     /**
      * Send the mail
      */
-    private static void notifyByMail(SettingManager settings, Element element,
-                                     @SuppressWarnings("rawtypes") AbstractHarvester ah)
-        throws EmailException {
+    private static void notifyByMail(SettingManager settings, Element element, @SuppressWarnings("rawtypes") AbstractHarvester ah) {
 
         if (!settings.getValueAsBool(Settings.SYSTEM_HARVESTING_MAIL_ENABLED)) {
             return;
@@ -107,19 +106,18 @@ public class SendNotification {
         }
 
         if (receiver != null && !receiver.trim().isEmpty()) {
-        	if (bToAddressSet) {
+            if (bToAddressSet) {
                 if (!bccAddress.contains(receiver)) {
                     bccAddress.add(receiver);
                 }
-        	} else {
+            } else {
                 toAddress.add(receiver);
-        	}
+            }
         }
 
         String subject = settings.getValue(Settings.SYSTEM_HARVESTING_MAIL_SUBJECT);
 
-        String htmlMessage = settings
-            .getValue(Settings.SYSTEM_HARVESTING_MAIL_TEMPLATE);
+        String htmlMessage = settings.getValue(Settings.SYSTEM_HARVESTING_MAIL_TEMPLATE);
 
         Element info = element.getChild("info");
 
@@ -134,8 +132,7 @@ public class SendNotification {
                 if (!settings.getValueAsBool(Settings.SYSTEM_HARVESTING_MAIL_LEVEL3)) {
                     return;
                 }
-                htmlMessage = settings
-                    .getValue(Settings.SYSTEM_HARVESTING_MAIL_TEMPLATE_ERROR);
+                htmlMessage = settings.getValue(Settings.SYSTEM_HARVESTING_MAIL_TEMPLATE_ERROR);
                 Element error = (Element) info.getChildren("error").get(0);
                 String errorMsg = error.getChildText("message");
                 // do not convert it to html, dangerous!
@@ -149,15 +146,13 @@ public class SendNotification {
 
                 Element harvesterErrors = result.getChild("errors");
 
-                if ((harvesterErrors != null) &&
-                    (harvesterErrors.getChildren().size() > 0)) {
+                if (harvesterErrors != null && harvesterErrors.getChildren().size() > 0) {
                     // Success with warnings, Level 2, let's check it:
                     if (!settings.getValueAsBool(Settings.SYSTEM_HARVESTING_MAIL_LEVEL2)) {
                         return;
                     }
 
-                    htmlMessage = settings
-                        .getValue(Settings.SYSTEM_HARVESTING_MAIL_TEMPLATE_WARNING);
+                    htmlMessage = settings.getValue(Settings.SYSTEM_HARVESTING_MAIL_TEMPLATE_ERROR);
 
                     String errorMsg = extractWarningsTrace(result);
 
@@ -170,19 +165,18 @@ public class SendNotification {
                     int iDoesNotValidate = 0;
                     String sUnretrievable = result.getChildText("unretrievable");
                     if (sUnretrievable != null) {
-                        iUnretrievable = Integer.valueOf(sUnretrievable);
+                        iUnretrievable = Integer.parseInt(sUnretrievable);
                     }
-                    String sDoesNotValidate = result.getChildText("doesNotValidate").toString();
+                    String sDoesNotValidate = result.getChildText("doesNotValidate");
                     if (sDoesNotValidate != null) {
-                        iDoesNotValidate = Integer.valueOf(sDoesNotValidate);
+                        iDoesNotValidate = Integer.parseInt(sDoesNotValidate);
                     }
                     if (iUnretrievable + iDoesNotValidate > 0) {
                         // Success with warnings, Level 2, let's check it:
                         if (!settings.getValueAsBool(Settings.SYSTEM_HARVESTING_MAIL_LEVEL2)) {
                             return;
                         }
-                        htmlMessage = settings
-                            .getValue(Settings.SYSTEM_HARVESTING_MAIL_TEMPLATE_WARNING);
+                        htmlMessage = settings.getValue(Settings.SYSTEM_HARVESTING_MAIL_TEMPLATE_WARNING);
                         subject = "Warnings in harvester: " + subject;
                     } else {
                         // Success!! Level 1, let's check it:
@@ -203,24 +197,26 @@ public class SendNotification {
             }
 
             String logfile = result.getChildText("logfile");
-            if (logfile!=null) {
+            if (logfile != null) {
                 htmlMessage = htmlMessage.replace("$$logURL$$",
-                    settings.getSiteURL("dut") + "/admin.harvester.log?file=" + logfile.replaceAll("\\\\","/"));
+                    settings.getSiteURL("dut") + "/admin.harvester.log?file=" + logfile.replaceAll("\\\\", "/"));
             }
         }
 
-        htmlMessage = htmlMessage.replace("$$harvesterName$$",
-            ah.getParams().getName());
+        htmlMessage = htmlMessage.replace("$$harvesterName$$", ah.getParams().getName());
         subject = subject.replace("$$harvesterName$$", ah.getParams().getName());
 
         htmlMessage = htmlMessage.replace("$$harvesterType$$", ah.getType());
         subject = subject.replace("$$harvesterType$$", ah.getType());
 
+        htmlMessage = htmlMessage.replace("$$harvestValidate$$", getHarvestValidationLabel(ah.getParams().getValidate()));
+        subject = subject.replace("$$harvestValidate$$", getHarvestValidationLabel(ah.getParams().getValidate()));
+
         MailUtil.sendHtmlMail(toAddress, bccAddress, subject, htmlMessage, settings);
     }
 
     @SuppressWarnings("unused")
-	private static List<User> getGroupUsers(Integer groupId) {
+    private static List<User> getGroupUsers(Integer groupId) {
         ApplicationContext applicationContext = ApplicationContextHolder.get();
         GroupRepository groupRepository = applicationContext.getBean(GroupRepository.class);
         final Group group = groupRepository.findOne(groupId);
@@ -246,7 +242,7 @@ public class SendNotification {
                 Element error = ((Element) a);
                 String desc = error.getChildText("description");
                 String hint = error.getChildText("hint");
-                //String trace = getErrorTrace(error);
+                // String trace = getErrorTrace(error);
 
                 // do not convert it to html, dangerous!
                 errorMsg = errorMsg.append("<li><p><strong>'")
@@ -285,6 +281,19 @@ public class SendNotification {
             return htmlMessage.replace("$$" + value + "$$", "0");
         } else {
             return htmlMessage.replace("$$" + value + "$$", tmp);
+        }
+    }
+
+    private static String getHarvestValidationLabel(HarvestValidationEnum validation) {
+        switch (validation) {
+            case NOVALIDATION:
+                return "No validation";
+            case XSDVALIDATION:
+                return "XSD validation only";
+            case SCHEMATRONVALIDATION:
+                return "Schematron and XSD validation";
+            default:
+                return "Unknown";
         }
     }
 }
