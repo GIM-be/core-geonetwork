@@ -473,6 +473,7 @@
                     <xsl:when test=".='utilitiesCommunication'">
                         <theme label="Milieu">rest</theme>
                     </xsl:when>
+                    <!-- TODO dit moet ook weg-->
                     <xsl:otherwise>unknown</xsl:otherwise>
                 </xsl:choose>
             </xsl:for-each>
@@ -517,7 +518,7 @@
                                         </date>
                                         <dateType>
                                             <CI_DateTypeCode codeListValue="publication"
-                                                                 codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
+                                                             codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
                                         </dateType>
                                     </CI_Date>
                                 </date>

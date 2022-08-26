@@ -18,9 +18,8 @@ public class OGCWxSGetCapabilitiesTo19119XslTest2 extends AbstractXsltControlTes
         setNs(ImmutableSet.of(ISO19139Namespaces.GMD, ISO19139Namespaces.GCO));
     }
 
-    // uncomment for easy viewing of the result
-    //    @After
-    //    public void write() throws IOException {
-    //        writeResult(new File("c:/temp/test.xml"));
-    //    }
+//    @After
+//    public void write() throws IOException {
+//        writeResult(new File("c:/temp/test.xml"));
+//    }
 }

@@ -371,12 +371,12 @@
                <gmd:keyword>
                   <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/LIJSTMRINSPIRE">Lijst M&amp;R INSPIRE</gmx:Anchor>
                </gmd:keyword>
-               <gmd:keyword>
-                  <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/MDINSPIRECONFORM">Metadata INSPIRE-conform</gmx:Anchor>
-               </gmd:keyword>
-               <gmd:keyword>
-                  <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/MDGDICONFORM">Metadata GDI-Vl-conform</gmx:Anchor>
-               </gmd:keyword>
+<!--               <gmd:keyword>-->
+<!--                  <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/MDINSPIRECONFORM">Metadata INSPIRE-conform</gmx:Anchor>-->
+<!--               </gmd:keyword>-->
+<!--               <gmd:keyword>-->
+<!--                  <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/MDGDICONFORM">Metadata GDI-Vl-conform</gmx:Anchor>-->
+<!--               </gmd:keyword>-->
                <gmd:thesaurusName>
                   <gmd:CI_Citation>
                      <gmd:title>
@@ -676,20 +676,9 @@
                </srv:connectPoint>
             </srv:SV_OperationMetadata>
          </srv:containsOperations>
-         <srv:operatesOn xlink:href="https://metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=DA9C6CFF-6DF3-412A-B4C1-247C188BC638&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd"
-                         uuidref="6C12098F-785B-4662-8C2F-8DDC4E04DDF7"/>
-         <srv:operatesOn xlink:href="https://metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=e17fe655-987c-4c5f-bbae-b10dcd4fccc3&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd"
-                         uuidref="e3d76184-3e32-4dee-bf70-44cab9780733"/>
-         <srv:operatesOn xlink:href="https://metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=abea5ed7-b0b6-453d-8146-a9384868e5ae&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd"
-                         uuidref="39836ed2-3ae1-4836-87bb-84191576f4cc"/>
-         <srv:operatesOn xlink:href="https://metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=9dc8c617-ad7f-4f99-89e1-fc94cfa050b7&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd"
-                         uuidref="fb6ba0f3-4fdf-439a-8e7a-af523e842c32"/>
-         <srv:operatesOn xlink:href="https://metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=d53a2408-f82e-44fa-b7b3-6daf04bf65b2&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd"
-                         uuidref="1c4dd999-ec9a-4ad0-aba0-33d0f2e0277d"/>
-         <srv:operatesOn xlink:href="https://metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=680321a6-99d2-4ff2-8048-0dd1d5012377&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd"
-                         uuidref="6e5eba97-3540-4609-b639-265fcc3e928f"/>
-         <srv:operatesOn xlink:href="https://metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=7298E391-C45B-40BF-95F9-F1FDA879FD0D&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd"
-                         uuidref="AD4026A4-911D-4D3A-89AE-96B6823D2BCC"/>
+      <srv:operatesOn xlink:href="https://dev.metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=DA9C6CFF-6DF3-412A-B4C1-247C188BC638&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd" uuidref="6C12098F-785B-4662-8C2F-8DDC4E04DDF7" />
+      <srv:operatesOn xlink:href="https://dev.metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=5D89DD1E-5C44-11DC-8314-0800200C9A66&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd" uuidref="e3d76184-3e32-4dee-bf70-44cab9780733" />
+      <srv:operatesOn xlink:href="https://dev.metadata.vlaanderen.be/metadatacenter/srv/dut/csw?request=GetRecordById&amp;service=CSW&amp;constraintLanguage=CQL_TEXT&amp;version=2.0.2&amp;resultType=results&amp;ElementSetName=full&amp;typenames=csw:Record&amp;id=656A43E0-3254-47C4-976D-A71EE2E616CB&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd" uuidref="39836ed2-3ae1-4836-87bb-84191576f4cc" />
       </srv:SV_ServiceIdentification>
    </gmd:identificationInfo>
    <gmd:distributionInfo>
