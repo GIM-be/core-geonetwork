@@ -1482,25 +1482,27 @@
 
   <!-- Generic date template -->
   <xsl:template name="Dates" match="gmd:date/gmd:CI_Date">
-    <xsl:variable name="date" select="geonet:formatRdfDate(gmd:date/*)"/>
+    <xsl:variable name="date" select="normalize-space(geonet:formatRdfDate(gmd:date/*))"/>
     <xsl:variable name="type" select="gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
-    <xsl:choose>
-      <xsl:when test="$type = 'publication'">
-        <dct:issued>
-          <xsl:value-of select="$date"/>
-        </dct:issued>
-      </xsl:when>
-      <xsl:when test="$type = 'revision'">
-        <dct:modified>
-          <xsl:value-of select="$date"/>
-        </dct:modified>
-      </xsl:when>
-      <xsl:when test="$type = 'creation'">
-        <dct:created>
-          <xsl:value-of select="$date"/>
-        </dct:created>
-      </xsl:when>
-    </xsl:choose>
+    <xsl:if test="$date != ''">
+      <xsl:choose>
+        <xsl:when test="$type = 'publication'">
+          <dct:issued>
+            <xsl:value-of select="$date"/>
+          </dct:issued>
+        </xsl:when>
+        <xsl:when test="$type = 'revision'">
+          <dct:modified>
+            <xsl:value-of select="$date"/>
+          </dct:modified>
+        </xsl:when>
+        <xsl:when test="$type = 'creation'">
+          <dct:created>
+            <xsl:value-of select="$date"/>
+          </dct:created>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:if>
   </xsl:template>
 
   <!-- Keyword -->
@@ -1893,7 +1895,9 @@
   <xsl:template name="Encoding" match="gmd:distributionFormat/gmd:MD_Format/gmd:name/*">
     <xsl:choose>
       <xsl:when test="@xlink:href and @xlink:href != ''">
-        <dct:format rdf:resource="{geonet:escapeURI(@xlink:href)}"/>
+        <xsl:call-template name="Fill-format-concept-from-uri">
+          <xsl:with-param name="formatUri" select="geonet:escapeURI(@xlink:href)"/>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="mappedFormat">
@@ -1902,10 +1906,10 @@
           </xsl:call-template>
         </xsl:variable>
         <xsl:choose>
-          <xsl:when test="$mappedFormat/count(*)>0">
+          <xsl:when test="$mappedFormat/count(*) > 0">
             <xsl:copy-of select="$mappedFormat/dct:format"/>
           </xsl:when>
-          <xsl:otherwise>
+          <xsl:when test="normalize-space(.) != ''">
             <dct:format>
               <skos:Concept>
                 <rdf:type rdf:resource="http://purl.org/dc/terms/MediaTypeOrExtent"/>
@@ -1914,7 +1918,7 @@
                 </skos:prefLabel>
               </skos:Concept>
             </dct:format>
-          </xsl:otherwise>
+          </xsl:when>
         </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
@@ -2075,29 +2079,28 @@
   <xsl:function name="geonet:formatRdfDate">
     <xsl:param name="date"/>
 
-    <xsl:variable name="dateType" select="if (matches($date, '^\d{4}-\d{2}-\d{2}Z|(-|\+)\d{2}:\d{2}|T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|(-|\+)\d{2}:\d{2})?$'))
-                                          then 'dateTime'
-                                          else 'date'"/>
     <xsl:choose>
-      <xsl:when test="normalize-space($date) = ''">
-        <xsl:value-of select="''"/>
-      </xsl:when>
-      <xsl:when test="$dateType = 'date'">
+      <!-- xs:date -->
+      <xsl:when test="matches($date, '^-?\d{4}-\d{2}-\d{2}(Z|(-|\+)\d{2}:\d{2})?$')">
+        <!-- <xsl:variable name="timezone" select="normalize-space(format-date($date, '[Z]'))" /> -->
         <xsl:value-of select="format-date($date, '[Y0001]-[M01]-[D01]')"/>
       </xsl:when>
-      <xsl:otherwise>
-        <xsl:variable name="timeZone">
-          <xsl:choose>
-            <xsl:when test="$dateType = 'dateTime' and normalize-space(format-dateTime($date, '[Z]')) != ''">
-              <xsl:value-of select="normalize-space(format-dateTime($date, '[Z]')) != ''"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="'+01:00'"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:value-of select="concat(format-dateTime($date, '[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]'), $timeZone)"/>
-      </xsl:otherwise>
+
+      <!-- xs:dateTime -->
+      <xsl:when test="matches($date, '^-?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|(-|\+)\d{2}:\d{2})?$')">
+        <!-- <xsl:variable name="timezone" select="normalize-space(format-dateTime($date, '[Z]'))" /> -->
+        <xsl:value-of select="format-dateTime($date, '[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]')"/>
+      </xsl:when>
+
+      <!-- xs:gYearMonth -->
+      <!-- <xsl:when test="matches($date, '^\d{4}-\d{2}$')"> -->
+      <!--   <xsl:value-of select="string($date)"/> -->
+      <!-- </xsl:when> -->
+
+      <!-- xs:gYear -->
+      <!-- <xsl:when test="matches($date, '^\d{4}$')"> -->
+      <!--   <xsl:value-of select="string($date)"/> -->
+      <!-- </xsl:when> -->
     </xsl:choose>
   </xsl:function>
 </xsl:stylesheet>

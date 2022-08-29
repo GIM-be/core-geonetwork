@@ -704,24 +704,20 @@ USA.
 			//*[@gco:isoType='gmd:MD_DataIdentification']|
 			//srv:SV_ServiceIdentification|
 			//*[@gco:isoType='srv:SV_ServiceIdentification']">
-            <sch:let name="useLimitation" value="gmd:resourceConstraints/*/gmd:useLimitation/*/text()"/>
-            <sch:let name="useLimitation_count" value="count(gmd:resourceConstraints/*/gmd:useLimitation/*/text())"/>
+            <sch:let name="mdConstraints_count" value="count(gmd:resourceConstraints/gmd:MD_Constraints)"/>
+            <sch:let name="useLimitation" value="gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation/*/text()"/>
+            <sch:let name="useLimitation_count" value="count(gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation/*/text())"/>
 
-           <sch:assert test="count(gmd:resourceConstraints/*) > 0" see="geonet:child[@name='resourceConstraints']/@uuid">
-               <sch:value-of select="$loc/strings/alert.M45/div"/>
-           </sch:assert>
+          <sch:assert test="count(gmd:resourceConstraints/*) > 0" see="geonet:child[@name='resourceConstraints']/@uuid">
+            <sch:value-of select="$loc/strings/alert.M45/div"/>
+          </sch:assert>
 
-            <sch:let name="useLimitationDefined" value="gmd:resourceConstraints/*/gmd:useLimitation/node()"/>
-            <sch:assert test="$useLimitationDefined" see="gmd:resourceConstraints/*/geonet:child[@name='useLimitation']/@uuid">
-                <sch:value-of select="$loc/strings/alert.M45/div"/>
+          <sch:assert test="not($mdConstraints_count and not($useLimitation_count))" see="gmd:resourceConstraints/*/gmd:useLimitation/geonet:element/@ref">
+                <sch:value-of select="$loc/strings/alert.M45.us/div"/>
             </sch:assert>
 
-            <sch:assert test="$useLimitation_count or not($useLimitationDefined)" see="gmd:resourceConstraints/*/gmd:useLimitation/geonet:element/@ref">
-                <sch:value-of select="$loc/strings/alert.M45/div"/>
-            </sch:assert>
-
-            <sch:report test="$useLimitation_count">
-                <sch:value-of select="$loc/strings/report.M45/div"/>
+            <sch:report test="$mdConstraints_count and $useLimitation_count">
+                <sch:value-of select="$loc/strings/report.M45.us/div"/>
                 <sch:value-of select="$useLimitation"/>
             </sch:report>
         </sch:rule>
