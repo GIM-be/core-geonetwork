@@ -1895,7 +1895,9 @@
   <xsl:template name="Encoding" match="gmd:distributionFormat/gmd:MD_Format/gmd:name/*">
     <xsl:choose>
       <xsl:when test="@xlink:href and @xlink:href != ''">
-        <dct:format rdf:resource="{geonet:escapeURI(@xlink:href)}"/>
+        <xsl:call-template name="Fill-format-concept-from-uri">
+          <xsl:with-param name="formatUri" select="geonet:escapeURI(@xlink:href)"/>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="mappedFormat">
@@ -1904,10 +1906,10 @@
           </xsl:call-template>
         </xsl:variable>
         <xsl:choose>
-          <xsl:when test="$mappedFormat/count(*)>0">
+          <xsl:when test="$mappedFormat/count(*) > 0">
             <xsl:copy-of select="$mappedFormat/dct:format"/>
           </xsl:when>
-          <xsl:otherwise>
+          <xsl:when test="normalize-space(.) != ''">
             <dct:format>
               <skos:Concept>
                 <rdf:type rdf:resource="http://purl.org/dc/terms/MediaTypeOrExtent"/>
@@ -1916,7 +1918,7 @@
                 </skos:prefLabel>
               </skos:Concept>
             </dct:format>
-          </xsl:otherwise>
+          </xsl:when>
         </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
