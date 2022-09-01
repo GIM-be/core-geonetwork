@@ -398,10 +398,19 @@
                             <!-- case 2: no data.gov.be themes were found, fetch the topicCategories -->
                             <xsl:otherwise>
                                 <xsl:for-each select="document(.)//gmd:topicCategory">
-                                    <topicCategory>
-                                        <!-- output the categoryCode, to be added to a URI for lookup -->
-                                        <xsl:value-of select="./gmd:MD_TopicCategoryCode"/>
-                                    </topicCategory>
+                                    <xsl:choose>
+                                        <!-- make sure we don't output topicCategories that are not processed into themes (rest / nvt) -->
+                                        <xsl:when
+                                                test="not(./gmd:MD_TopicCategoryCode='boundaries') and
+                                                  not(./gmd:MD_TopicCategoryCode='intelligenceMilitary') and
+                                                  not(./gmd:MD_TopicCategoryCode='structure') and
+                                                  not(./gmd:MD_TopicCategoryCode='utilitiesCommunication')">
+                                            <topicCategory>
+                                                <!-- output the categoryCode, to be added to a URI for lookup -->
+                                                <xsl:value-of select="./gmd:MD_TopicCategoryCode"/>
+                                            </topicCategory>
+                                        </xsl:when>
+                                    </xsl:choose>
                                 </xsl:for-each>
                             </xsl:otherwise>
                         </xsl:choose>
@@ -419,14 +428,11 @@
                     <xsl:when test=".='biota'">
                         <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
-                    <xsl:when test=".='boundaries'">
-                        <theme label="Milieu">rest</theme>
-                    </xsl:when>
                     <xsl:when test=".='climatologyMeteorologyAtmosphere'">
                         <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='economy'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ECON</theme>
+                        <theme label="Economie en financiën">http://vocab.belgif.be/auth/datatheme/ECON</theme>
                     </xsl:when>
                     <xsl:when test=".='elevation'">
                         <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
@@ -435,22 +441,21 @@
                         <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='farming'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/AGRI</theme>
+                        <theme label="Landbouw, visserij, bosbouw en voeding">
+                            http://vocab.belgif.be/auth/datatheme/AGRI
+                        </theme>
                     </xsl:when>
                     <xsl:when test=".='geoscientificInformation'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/TECH</theme>
+                        <theme label="Wetenschap en technologie">http://vocab.belgif.be/auth/datatheme/TECH</theme>
                     </xsl:when>
                     <xsl:when test=".='health'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/HEAL</theme>
+                        <theme label="Gezondheid">http://vocab.belgif.be/auth/datatheme/HEAL</theme>
                     </xsl:when>
                     <xsl:when test=".='imageryBaseMapsEarthCover'">
                         <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='inlandWaters'">
                         <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
-                    </xsl:when>
-                    <xsl:when test=".='intelligenceMilitary'">
-                        <theme label="Milieu">nvt</theme>
                     </xsl:when>
                     <xsl:when test=".='location'">
                         <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
@@ -462,19 +467,11 @@
                         <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='society'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/SOCI</theme>
-                    </xsl:when>
-                    <xsl:when test=".='structure'">
-                        <theme label="Milieu">rest</theme>
+                        <theme label="Bevolking en samenleving">http://vocab.belgif.be/auth/datatheme/SOCI</theme>
                     </xsl:when>
                     <xsl:when test=".='transportation'">
-                        <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/TRAN</theme>
+                        <theme label="Vervoer">http://vocab.belgif.be/auth/datatheme/TRAN</theme>
                     </xsl:when>
-                    <xsl:when test=".='utilitiesCommunication'">
-                        <theme label="Milieu">rest</theme>
-                    </xsl:when>
-                    <!-- TODO dit moet ook weg-->
-                    <xsl:otherwise>unknown</xsl:otherwise>
                 </xsl:choose>
             </xsl:for-each>
             <!-- data.gov.be themes can be left as they are -->
