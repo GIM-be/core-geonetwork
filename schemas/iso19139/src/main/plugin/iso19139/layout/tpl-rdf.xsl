@@ -495,7 +495,11 @@
       <xsl:choose>
         <!-- Service specific -->
         <xsl:when test="$ResourceType = 'service'">
-          <xsl:variable name="relatedDatasetByOperatesOn" select="xslutil:getRelatedDatasets($RecordUUID)/datasets/*"/>
+          <xsl:variable name="relatedDatasetByOperatesOn">
+            <xsl:if test="$relationLookup">
+              <xsl:copy-of select="xslutil:getRelatedDatasets($RecordUUID)/datasets/*"/>
+            </xsl:if>
+          </xsl:variable>
 
           <!-- Topic category -->
           <!--xsl:if test="count($keywordsRdfMapping/dcat:theme) = 0">
@@ -2078,7 +2082,6 @@
 
   <xsl:function name="geonet:formatRdfDate">
     <xsl:param name="date"/>
-
     <xsl:choose>
       <!-- xs:date -->
       <xsl:when test="matches($date, '^-?\d{4}-\d{2}-\d{2}(Z|(-|\+)\d{2}:\d{2})?$')">
@@ -2089,7 +2092,8 @@
       <!-- xs:dateTime -->
       <xsl:when test="matches($date, '^-?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|(-|\+)\d{2}:\d{2})?$')">
         <!-- <xsl:variable name="timezone" select="normalize-space(format-dateTime($date, '[Z]'))" /> -->
-        <xsl:value-of select="format-dateTime($date, '[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]')"/>
+        <!-- <xsl:value-of select="format-dateTime($date, '[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]')"/> -->
+        <xsl:value-of select="format-dateTime($date, '[Y0001]-[M01]-[D01]')"/>
       </xsl:when>
 
       <!-- xs:gYearMonth -->
