@@ -805,10 +805,25 @@
       </xsl:if>
       <xsl:if test="not(normalize-space($child) = '')">
         <gco:DateTime>
-          <xsl:value-of select="$child"/>
+          <xsl:choose>
+            <xsl:when test="matches($child, '^-?\d{4}-\d{2}-\d{2}(Z|(-|\+)\d{2}:\d{2})?$')">
+              <xsl:value-of select="concat($child, 'T00:00:00')"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="$child"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </gco:DateTime>
       </xsl:if>
     </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="gmd:date[gmd:CI_Date]">
+    <xsl:if test="count(gmd:CI_Date/gmd:date) > 0 and count(gmd:CI_Date/gmd:dateType/*) > 0">
+      <xsl:copy copy-namespaces="no">
+        <xsl:apply-templates select="@*|node()"/>
+      </xsl:copy>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="*[gco:DateTime]" priority="100">
@@ -818,7 +833,7 @@
         <xsl:attribute name="gco:nilReason" select="'missing'"/>
       </xsl:if>
       <xsl:if test="not(normalize-space($child) = '')">
-        <xsl:apply-templates select="@*|node()"/>
+        <xsl:apply-templates select="@*[name() != 'gco:nilReason']|node()"/>
       </xsl:if>
     </xsl:copy>
   </xsl:template>
@@ -830,7 +845,7 @@
         <xsl:attribute name="gco:nilReason" select="'missing'"/>
       </xsl:if>
       <xsl:if test="not(normalize-space($child) = '')">
-        <xsl:apply-templates select="@*|node()"/>
+        <xsl:apply-templates select="@*[name() != 'gco:nilReason']|node()"/>
       </xsl:if>
     </xsl:copy>
   </xsl:template>
@@ -842,7 +857,7 @@
           <xsl:attribute name="gco:nilReason" select="'unknown'"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates select="@*[not(name() = 'gco:nilReason')]|*"/>
+          <xsl:apply-templates select="@*[name() != 'gco:nilReason']|*"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:copy>
