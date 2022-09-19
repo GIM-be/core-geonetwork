@@ -1238,6 +1238,11 @@
             </dct:publisher>
           </xsl:when>
         </xsl:choose>
+        <xsl:if test="$role = 'pointOfContact' and name(..) = 'gmd:contact' and count(//gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = ('custodian')]) = 0">
+          <dct:publisher>
+            <xsl:copy-of select="$ROInfo"/>
+          </dct:publisher>
+        </xsl:if>
       </xsl:when>
 
       <xsl:otherwise>
@@ -1273,8 +1278,12 @@
             <xsl:copy-of select="$ROInfo"/>
           </dct:publisher>
         </xsl:if>
+        <xsl:if test="$role = 'pointOfContact' and name(..) = 'gmd:contact' and count(//gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = ('publisher', 'owner')]) = 0">
+          <dct:publisher>
+            <xsl:copy-of select="$ROInfo"/>
+          </dct:publisher>
+        </xsl:if>
       </xsl:otherwise>
-
     </xsl:choose>
   </xsl:template>
 
