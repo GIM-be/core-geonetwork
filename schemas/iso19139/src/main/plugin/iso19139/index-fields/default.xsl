@@ -491,13 +491,17 @@
         (name() = 'gmx:Anchor' and @xlink:href = ('https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA', 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA')) or
         (name() = 'gco:CharacterString' and string(.) = ('Vlaamse Open data', 'Vlaamse Open data Service'))
       ]"/>
-      <Field name="isOpenData" string="{if (count($openKeywords) > 0) then 'y' else 'n'}" store="true" index="true"/>
+      <xsl:variable name="isOpenData" select="if (count($openKeywords) > 0) then 'y' else 'n'"/>
+      <Field name="isOpenData" string="{$isOpenData}" store="true" index="true"/>
 
       <xsl:variable name="geoKeywords" select="$gdiKeywords/*[
         (name() = 'gmx:Anchor' and @xlink:href = 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/GEODATA') or
         (name() = 'gco:CharacterString' and string(.) = 'Geografische gegevens')
       ]"/>
-      <Field name="isGeoData" string="{if (count($geoKeywords) > 0) then 'y' else 'n'}" store="true" index="true"/>
+      <xsl:variable name="isGeoData" select="if (count($geoKeywords) > 0) then 'y' else 'n'"/>
+      <Field name="isGeoData" string="{$isGeoData}" store="true" index="true"/>
+
+      <Field name="domain" string="{concat('geo: ', $isGeoData, ', open: ', $isOpenData)}" store="true" index="true" />
 
       <xsl:variable name="listOfKeywords">{
         <xsl:variable name="keywordWithNoThesaurus"
