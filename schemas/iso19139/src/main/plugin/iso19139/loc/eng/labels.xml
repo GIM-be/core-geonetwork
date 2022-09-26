@@ -2272,7 +2272,7 @@
       <option value="OGC:WMS-1.1.1-http-get-capabilities">OGC-WMS GetCapabilities service (ver 1.1.1)</option>
       <option value="OGC:WMS-1.1.1-http-get-featureinfo">OGC-WMS GetFeatureInfo service (ver 1.1.1)</option>
       <option value="OGC:WMS-1.3.0-http-get-map">OGC-WMS GetMap service (ver 1.3.0)</option>
-      <option value="OGC:WMS-1.3.0-http-get-capabilities">OGC-WMS GetµCapabilities service (ver 1.3.0)</option>
+      <option value="OGC:WMS-1.3.0-http-get-capabilities">OGC-WMS GetCapabilities service (ver 1.3.0)</option>
       <option value="OGC:WMS-1.3.0-http-get-featureinfo">OGC-WMS GetFeatureInfo service (ver 1.3.0)</option>
       <option value="OGC:WFS">OGC-WFS Web Feature Service</option>
       <option value="OGC:WFS-1.0.0-http-get-capabilities">OGC-WFS GetCapabilities service (ver 1.0.0)</option>
@@ -2299,6 +2299,7 @@
       <option value="OGC:WMTS">OGC-WMTS Web Map Tile Service</option>
       <option value="OGC:WMTS-1.0.0-http-get-capabilities">OGC-WMTS GetCapabilities service (ver 1.0.0)</option>
       <option value="OGC:WMTS-1.0.0-http-get-tile">OGC-WMTS GetTile service (ver 1.0.0)</option>
+      <option value="OGC:OGC-API-Features-items">OGC:OGC-API-Features-items</option>
       <option value="OGC:KML">OGC-KML Keyhole Markup Language Service</option>
       <option value="OGC:OGC-API-Features-landingpage">OGC API Features landingpage (ver 1.0.0)</option>
       <option value="OGC:OGC-API-Features-items">OGC API Features items (ver 1.0.0)</option>
@@ -2347,6 +2348,7 @@
       <option value="LINK-download-store">LINK-download-store</option>
       <option value="REST">Representational State Transfer (REST)</option>
       <option value="LDES">Linked Data Event Stream (LDES)</option>
+      <option value="rest-richtlijnen-digitaal-vlaanderen">REST richtlijnen Digitaal Vlaanderen</option>
       <option value="invoke">Invoke service</option>
       <option value="discovery">Discovery service</option>
       <option value="download">Download service</option>

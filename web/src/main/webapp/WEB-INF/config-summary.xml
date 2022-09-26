@@ -144,6 +144,7 @@
     <facet name="developmentState" indexKey="developmentState" label="developmentState"/>
     <facet name="isOpenData" indexKey="isOpenData" label="isOpenData"/>
     <facet name="isGeoData" indexKey="isGeoData" label="isGeoData"/>
+    <facet name="domain" indexKey="domain" label="domain"/>
     <facet name="serviceProtocol" indexKey="serviceProtocol" label="serviceProtocol"/>
   </facets>
 
@@ -254,6 +255,7 @@
       <item facet="isOpenData" sortBy="value" sortOrder="asc" max="2"/>
       <item facet="isGeoData" sortBy="value" sortOrder="asc" max="2"/>
       <item facet="serviceProtocol" sortBy="value" sortOrder="desc"/>
+      <item facet="domain" sortBy="value" sortOrder="desc" max="4"/>
     </summaryType>
 
     <!-- (deprecated) old-style configuration supporting only
