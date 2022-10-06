@@ -255,7 +255,7 @@
       <item facet="isOpenData" sortBy="value" sortOrder="asc" max="2"/>
       <item facet="isGeoData" sortBy="value" sortOrder="asc" max="2"/>
       <item facet="serviceProtocol" sortBy="value" sortOrder="desc"/>
-      <item facet="domain" sortBy="value" sortOrder="desc" max="4"/>
+      <item facet="domain" sortBy="value" sortOrder="asc" max="2"/>
     </summaryType>
 
     <!-- (deprecated) old-style configuration supporting only
