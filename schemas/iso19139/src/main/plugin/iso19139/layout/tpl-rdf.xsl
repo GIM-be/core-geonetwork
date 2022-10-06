@@ -454,20 +454,26 @@
       </xsl:apply-templates>
 
       <!-- Responsible organisation -->
-      <xsl:for-each select="(.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'publisher'])[1]|
-                            (.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'custodian'])[1]">
-        <xsl:apply-templates select=".">
-          <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-          <xsl:with-param name="ResourceType" select="$ResourceType"/>
-        </xsl:apply-templates>
-      </xsl:for-each>
+      <xsl:variable name="contacts">
+        <xsl:for-each select="(.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'publisher'])[1]|
+                              (.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'custodian'])[1]">
+          <xsl:apply-templates select=".">
+            <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+            <xsl:with-param name="ResourceType" select="$ResourceType"/>
+          </xsl:apply-templates>
+        </xsl:for-each>
 
-      <xsl:for-each select=".//gmd:CI_ResponsibleParty[not(gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'distributor', 'custodian'))]">
-        <xsl:apply-templates select=".">
-          <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
-          <xsl:with-param name="ResourceType" select="$ResourceType"/>
-        </xsl:apply-templates>
-      </xsl:for-each>
+        <xsl:for-each select=".//gmd:CI_ResponsibleParty[not(gmd:role/gmd:CI_RoleCode/@codeListValue = ('publisher', 'distributor', 'custodian'))]">
+          <xsl:apply-templates select=".">
+            <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
+            <xsl:with-param name="ResourceType" select="$ResourceType"/>
+          </xsl:apply-templates>
+        </xsl:for-each>
+      </xsl:variable>
+
+      <xsl:for-each-group select="$contacts/*" group-by="concat(name(), '|', string(vcard:Organization/vcard:organization-name[1]|foaf:Agent/foaf:name[1]))">
+        <xsl:copy-of select="current-group()[1]"/>
+      </xsl:for-each-group>
 
       <xsl:variable name="Distributors">
         <xsl:apply-templates select="(.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'distributor'])[1]">

@@ -81,6 +81,7 @@
   <metaMetadataTab>Meta-metadata</metaMetadataTab>
   <objectCatalogueTab>Objectencatalogus</objectCatalogueTab>
   <otherKeywords>Other keywords</otherKeywords>
+  <mdConstraintsSection>Content limitations</mdConstraintsSection>
   <description>Description</description>
   <addOtherConstraints>Add another constraints</addOtherConstraints>
   <sourceDescription>Collection method</sourceDescription>

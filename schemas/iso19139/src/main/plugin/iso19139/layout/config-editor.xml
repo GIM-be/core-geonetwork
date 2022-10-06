@@ -574,15 +574,21 @@
         <col label="srv:operationName"/>
         <col label="srv:DCP"/>
         <col label="srv:connectPoint"/>
+        <col label="gmd:protocol"/>
+        <col label="gmd:name"/>
+        <col label="gmd:description"/>
         <col/>
       </header>
       <row>
         <col xpath="srv:operationName"/>
         <col xpath="srv:DCP"/>
         <col xpath="srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage"/>
+        <col xpath="srv:connectPoint/gmd:CI_OnlineResource/gmd:protocol"/>
+        <col xpath="srv:connectPoint/gmd:CI_OnlineResource/gmd:name"/>
+        <col xpath="srv:connectPoint/gmd:CI_OnlineResource/gmd:description"/>
         <col del=".."/>
-        <section xpath="srv:SV_OperationMetadata/srv:parameters"
-                 or="parameters" in="srv:SV_OperationMetadata"/>
+        <!-- <section xpath="srv:SV_OperationMetadata/srv:parameters" -->
+        <!--          or="parameters" in="srv:SV_OperationMetadata"/> -->
       </row>
     </table>
     <table for="srv:SV_CoupledResource">
@@ -3355,48 +3361,43 @@
 
           <!-- Classification for services, serviceType = other -->
           <section name="classificationSection" per="*[name(.)='srv:SV_ServiceIdentification']">
-
-            <!-- Service type -->
             <field xpath="srv:serviceType" />
-
-            <!--            <field templateModeOnly="true" notDisplayedIfMissing="true" xpath="srv:serviceType">-->
-            <!--              <template>-->
-            <!--                <values>-->
-            <!--                  <key label="localName"-->
-            <!--                       xpath="gco:LocalName"-->
-            <!--                       use="data-gn-codelist-picker">-->
-            <!--                    <codelist name="gmd:MD_ScopeCode"/>-->
-            <!--                  </key>-->
-            <!--                </values>-->
-            <!--                <snippet>-->
-            <!--                  <srv:serviceType><gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType">{{localName}}</gco:LocalName></srv:serviceType>-->
-            <!--                </snippet>-->
-            <!--              </template>-->
-            <!--            </field>-->
-            <!-- Service couplingType -->
             <field xpath="srv:couplingType" />
             <field xpath="srv:accessProperties/gmd:MD_StandardOrderProcess/gmd:fees" del="../.."/>
-
+            <section xpath="srv:containsOperations" />
+            <action type="add" name="srv:containsOperations" or="containsOperations" in="">
+              <template>
+                <snippet>
+                  <srv:containsOperations>
+                    <srv:SV_OperationMetadata>
+                      <srv:operationName>
+                        <gco:CharacterString/>
+                      </srv:operationName>
+                      <srv:DCP>
+                        <srv:DCPList codeListValue="" codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/DCPList.xml"/>
+                      </srv:DCP>
+                      <srv:connectPoint>
+                        <gmd:CI_OnlineResource>
+                          <gmd:linkage>
+                            <gmd:URL/>
+                          </gmd:linkage>
+                          <gmd:protocol>
+                            <gco:CharacterString/>
+                          </gmd:protocol>
+                          <gmd:name>
+                            <gco:CharacterString/>
+                          </gmd:name>
+                          <gmd:description>
+                            <gco:CharacterString/>
+                          </gmd:description>
+                        </gmd:CI_OnlineResource>
+                      </srv:connectPoint>
+                    </srv:SV_OperationMetadata>
+                  </srv:containsOperations>
+                </snippet>
+              </template>
+            </action>
             <section xpath="srv:operatesOn" />
-            <!-- Operates on -->
-            <!--section name="srv:operatesOn" per="srv:operatesOn" required="true()">
-              <field templateModeOnly="true" notDisplayedIfMissing="true"
-                     xpath=".">
-                <template>
-                  <values readonlyIf="true()">
-                    <key label="operatesOnXlinkHref"
-                         xpath="@xlink:href">
-                    </key>
-                    <key label="operatesOnUuidref"
-                         xpath="@uuidref">
-                    </key>
-                  </values>
-                  <snippet>
-                    <srv:operatesOn uuidref="{{operatesOnUuidref}}" xlink:href="{{operatesOnXlinkHref}}" />
-                  </snippet>
-                </template>
-              </field>
-            </section-->
           </section>
 
           <!-- For dataset(series) and services-->
