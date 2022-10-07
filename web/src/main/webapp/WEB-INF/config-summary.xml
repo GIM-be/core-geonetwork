@@ -165,6 +165,7 @@
       <item facet="orgName" max="25"/>
       <item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
       <item facet="format" max="15" sortBy="value" sortOrder="asc"/>
+      <item facet="domain" sortBy="value" sortOrder="asc" max="2"/>
       <item facet="spatialRepresentationType"
             translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
       <item facet="maintenanceAndUpdateFrequency"
@@ -192,6 +193,7 @@
       <item facet="mdActions"/>
       <item facet="serviceType" translator="codelist:gmd:MD_ScopeCode"/>
       <item facet="flanderskeyword" sortBy="value" sortOrder="desc"/>
+      <item facet="domain" sortBy="value" sortOrder="asc" max="2"/>
       <item facet="accessRights" sortBy="value" sortOrder="asc"/>
       <item facet="sourceCatalog"
             translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid" max="99"/>
