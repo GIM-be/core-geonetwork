@@ -1623,7 +1623,9 @@
                 <xsl:value-of select="'dcat:theme'"/>
               </xsl:when>
               <xsl:when test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory')">
-                <xsl:value-of select="'mdcat:ISO-categorie'"/>
+                <!-- <xsl:value-of select="'mdcat:ISO-categorie'"/> -->
+                <!-- Do not map TopicCategory to subject due to it being map to theme already -->
+                <xsl:value-of select="''"/>
               </xsl:when>
               <xsl:when test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/theme')">
                 <xsl:value-of select="'mdcat:INSPIRE-thema'"/>
@@ -1639,10 +1641,11 @@
               </xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
-
-          <xsl:element name="{$property}">
-            <xsl:copy-of select="$concept"/>
-          </xsl:element>
+          <xsl:if test="normalize-space($property) != ''">
+            <xsl:element name="{$property}">
+              <xsl:copy-of select="$concept"/>
+            </xsl:element>
+          </xsl:if>
         </xsl:otherwise>
       </xsl:choose>
 
