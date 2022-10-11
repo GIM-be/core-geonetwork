@@ -1161,6 +1161,11 @@
         <keyword>creative_commons_zero_verklaring</keyword>
         <keyword>cc0</keyword>
       </license>
+      <license>
+        <title>Gebruiksrecht en privacyverklaring geografische webdiensten</title>
+        <keyword>Webdiensten-Gebruiksrecht</keyword>
+        <keyword>webdiensten-gebruiksrecht</keyword>
+      </license>
     </xsl:variable>
     <xsl:variable name="modelLicencie">
       <xsl:for-each select="$licensesConstraintsAnchor">
