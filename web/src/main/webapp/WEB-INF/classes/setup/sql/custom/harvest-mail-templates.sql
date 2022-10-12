@@ -1,8 +1,5 @@
 UPDATE Settings
-SET value = '<p>
-  The $$harvesterType$$ harvester ''<b>$$harvesterName$$</b>'' was successful and has imported $$total$$ records. There
-  were $$doesNotValidate$$ datasets that are not valid against the validation rules.
-</p>
+SET value = '<p><b>SUCCESS</b> - The harvest-job of $$harvesterType$$-harvester ''<b>$$harvesterName$$</b>'' was successful and has imported $$total$$ records. There were $$doesNotValidate$$ records that are not valid against the validation rules.</p>
 <ul style="list-style-type: none; padding-inline-start: 0;">
   <li>Total number of metadata imported: $$total$$.</li>
   <li>Number of metadata added: $$added$$.</li>
@@ -23,10 +20,7 @@ SET value = '<p>
 WHERE name = 'system/harvesting/mail/template';
 
 UPDATE Settings
-SET value = '<p>
-  The $$harvesterType$$ harvester ''<b>$$harvesterName$$</b>'' was NOT successful<br>
-  Error Message: <i>$$errorMsg$$</i>
-</p>
+SET value = '<p><b>ERROR</b> - The harvest-job of $$harvesterType$$-harvester ''<b>$$harvesterName$$</b>'' was NOT successful<br>
 <ul style="list-style-type: none; padding-inline-start: 0;">
   <li>Total number of metadata imported: $$total$$.</li>
   <li>Number of metadata added: $$added$$.</li>
@@ -47,7 +41,7 @@ SET value = '<p>
 WHERE name = 'system/harvesting/mail/templateError';
 
 UPDATE Settings
-SET value = '<p>The $$harvesterType$$ harvester ''<b>$$harvesterName$$</b>'' was successful with warnings</p>
+SET value = '<p><b>WARNING</b> - The harvest-job of $$harvesterType$$-harvester ''<b>$$harvesterName$$</b>'' was NOT successful</p>
 <ul style="list-style-type: none; padding-inline-start: 0;">
   <li>Total number of metadata imported: $$total$$.</li>
   <li>Number of metadata added: $$added$$.</li>
