@@ -708,10 +708,21 @@
 
               <xsl:variable name="LayerName" select="normalize-space(gmd:name[1]/gco:CharacterString)"/>
 
+              <xsl:variable name="Protocol" select="gmd:protocol/*/text()"/>
+
+              <xsl:variable name="isDownload" select="starts-with($Protocol, 'WWW:DOWNLOAD-1.0') or $Protocol = 'LINK download-store'"/>
+
               <xsl:variable name="Description">
                 <xsl:for-each select="gmd:description">
                   <dct:description xml:lang="{$MetadataLanguage}">
-                    <xsl:value-of select="concat(normalize-space(gco:CharacterString), ' (De accessURL verwijst naar een gelimiteerde set van data, volgens de INSPIRE afspraken)')"/>
+                    <xsl:choose>
+                      <xsl:when test="$isDownload">
+                        <xsl:value-of select="normalize-space(gco:CharacterString)"/>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <xsl:value-of select="concat(normalize-space(gco:CharacterString), ' (De accessURL verwijst naar een gelimiteerde set van data, volgens de INSPIRE afspraken)')"/>
+                      </xsl:otherwise>
+                    </xsl:choose>
                   </dct:description>
                   <xsl:call-template name="LocalisedString">
                     <xsl:with-param name="term">dct:description</xsl:with-param>
@@ -719,7 +730,6 @@
                 </xsl:for-each>
               </xsl:variable>
 
-              <xsl:variable name="Protocol" select="gmd:protocol/*/text()"/>
 
               <xsl:variable name="linkage" select="geonet:escapeURI(gmd:linkage[1]/gmd:URL[1])"/>
 
@@ -735,7 +745,6 @@
                                 ends-with($Protocol, 'get-coverage') or
                                 starts-with($Protocol, 'OGC:OGC-API-Features')">
 
-                    <xsl:variable name="isDownload" select="starts-with($Protocol, 'WWW:DOWNLOAD-1.0') or $Protocol = 'LINK download-store'"/>
                     <xsl:variable name="encoding">
                       <xsl:choose>
                         <xsl:when test="$isDownload">
