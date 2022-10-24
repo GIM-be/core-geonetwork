@@ -80,6 +80,7 @@ public class GetRecordsRequest extends CatalogRequest {
 
     public GetRecordsRequest(ServiceContext context) {
         super(context);
+        alSortBy.add("Identifier:A");
     }
 
     //---------------------------------------------------------------------------
