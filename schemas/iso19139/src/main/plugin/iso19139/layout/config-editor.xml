@@ -3364,6 +3364,24 @@
             <field xpath="srv:serviceType" />
             <field xpath="srv:couplingType" />
             <field xpath="srv:accessProperties/gmd:MD_StandardOrderProcess/gmd:fees" del="../.."/>
+            <section xpath="srv:coupledResource"/>
+            <action type="add" name="srv:coupledResource" or="coupledResource" in="">
+              <template>
+                <snippet>
+                  <srv:coupledResource>
+                    <srv:SV_CoupledResource>
+                      <srv:operationName>
+                        <gco:CharacterString/>
+                      </srv:operationName>
+                      <srv:identifier>
+                        <gco:CharacterString/>
+                      </srv:identifier>
+                      <gco:ScopedName/>
+                    </srv:SV_CoupledResource>
+                  </srv:coupledResource>
+                </snippet>
+              </template>
+            </action>
             <section xpath="srv:containsOperations" />
             <action type="add" name="srv:containsOperations" or="containsOperations" in="">
               <template>

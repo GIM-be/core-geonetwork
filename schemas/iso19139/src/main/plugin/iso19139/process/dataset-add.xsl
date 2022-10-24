@@ -138,12 +138,11 @@ attached it to the metadata for data.
                     select="gmd:identificationInfo/*/srv:coupledResource">
                     <!-- Avoid duplicate SV_CoupledResource elements -->
                     <xsl:choose>
-                      <xsl:when
-                        test="srv:SV_CoupledResource/srv:identifier/gco:CharacterString!=$uuidref">
+                      <xsl:when test="srv:SV_CoupledResource/srv:identifier/gco:CharacterString != $uuidref and normalize-space(srv:SV_CoupledResource/srv:identifier/gco:CharacterString) != ''">
                         <xsl:copy-of select="."/>
                       </xsl:when>
                     </xsl:choose>
-                    <xsl:if test="position()=last()">
+                    <xsl:if test="position() = last()">
                       <xsl:copy-of select="$coupledResource"/>
                     </xsl:if>
                   </xsl:for-each>
@@ -160,7 +159,7 @@ attached it to the metadata for data.
               <xsl:copy-of
                 select="gmd:identificationInfo/*/srv:couplingType|
                         gmd:identificationInfo/*/srv:containsOperations|
-                        gmd:identificationInfo/*/srv:operatesOn[@uuidref!=$uuidref]"/>
+                        gmd:identificationInfo/*/srv:operatesOn[@uuidref != $uuidref and @uuidref != '' and @xlink:href != '']"/>
 
               <!-- Handle operatesOn
 
