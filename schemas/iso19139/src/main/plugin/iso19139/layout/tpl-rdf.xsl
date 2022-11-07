@@ -246,9 +246,11 @@
 
     <xsl:variable name="AccessRights">
       <!-- Mapping revised for compliance with the 2017 edition of the INSPIRE Metadata Technical Guidelines -->
-      <xsl:variable name="firstConstraint" select="gmd:identificationInfo[count(*/gmd:resourceConstraints/*/gmd:accessConstraints) > 0]/*/gmd:resourceConstraints/*"/>
+      <xsl:variable name="noLimitationConstraint" select="gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor[
+                                                            @xlink:href = ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations','https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')
+                                                          ]"/>
       <xsl:choose>
-        <xsl:when test="count($firstConstraint/gmd:otherConstraints/gmx:Anchor/@xlink:href[. = ('http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations','https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations')]) > 0">
+        <xsl:when test="count($noLimitationConstraint) > 0">
           <dct:accessRights>
             <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC">
               <rdf:type rdf:resource="http://purl.org/dc/terms/RightsStatement"/>
