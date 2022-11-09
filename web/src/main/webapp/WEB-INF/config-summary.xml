@@ -146,6 +146,7 @@
     <facet name="isGeoData" indexKey="isGeoData" label="isGeoData"/>
     <facet name="domain" indexKey="domain" label="domain"/>
     <facet name="serviceProtocol" indexKey="serviceProtocol" label="serviceProtocol"/>
+    <facet name="protocol" indexKey="protocol" label="protocol"/>
   </facets>
 
   <summaryTypes>
@@ -165,6 +166,7 @@
       <item facet="orgName" max="25"/>
       <item facet="createDateYear" sortBy="value" sortOrder="desc" max="40"/>
       <item facet="format" max="15" sortBy="value" sortOrder="asc"/>
+      <item facet="protocol" max="15" sortBy="value"/>
       <item facet="domain" sortBy="value" sortOrder="asc" max="2"/>
       <item facet="spatialRepresentationType"
             translator="codelist:gmd:MD_SpatialRepresentationTypeCode"/>
@@ -199,6 +201,7 @@
             translator="db:org.fao.geonet.repository.SourceRepository:findOneByUuid" max="99"/>
       <item facet="status" translator="codelist:gmd:MD_ProgressCode"/>
       <item facet="topicCat" translator="codelist:gmd:MD_TopicCategoryCode" max="20"/>
+      <item facet="protocol" max="15" sortBy="value"/>
       <item facet="mdStatus" max="10" sortBy="value"
             translator="db:org.fao.geonet.repository.StatusValueRepository:findOne:int"/>
       <item facet="isValid" max="3" sortBy="value" translator="apploc:validStatus-"/>
