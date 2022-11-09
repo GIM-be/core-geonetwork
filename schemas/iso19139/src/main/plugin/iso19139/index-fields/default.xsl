@@ -65,6 +65,7 @@
                 select="if ($inspire!='false') then document(concat('file:///', replace($thesauriDir, '\\', '/'), '/external/thesauri/theme/inspire-theme.rdf')) else ''"/>
   <xsl:variable name="inspire-theme"
                 select="if ($inspire!='false') then $inspire-thesaurus//skos:Concept else ''"/>
+  <xsl:variable name="protocolConcepts" select="document('../thesauri-AIV/theme/protocol.rdf')/rdf:RDF"/>
 
   <!-- If identification creation, publication and revision date
     should be indexed as a temporal extent information (eg. in INSPIRE
@@ -805,8 +806,43 @@
                         select="contains(lower-case($linkage), 'service=wms') and not(string($protocol))"/>
 
           <!-- ignore empty downloads -->
-          <xsl:if test="string($linkage)!='' and not(contains($linkage,$download_check))">
-            <Field name="protocol" string="{string($protocol)}" store="true" index="true"/>
+          <xsl:if test="string($linkage) != '' and not(contains($linkage, $download_check))">
+            <xsl:variable name="topLevelProtocol">
+              <xsl:choose>
+                <xsl:when test="starts-with($protocol, 'WWW:DOWNLOAD-1.0') or $protocol = 'LINK download-store'">
+                  <xsl:value-of select="'download'"/>
+                </xsl:when>
+                <xsl:when test="starts-with($protocol, 'WWW:LINK-1.0') or $protocol = 'ESRI:AIMS-http-configuration'">
+                  <xsl:value-of select="'link'"/>
+                </xsl:when>
+                <xsl:when test="$protocolConcepts/skos:Concept[skos:notation = $protocol]/skos:hasTopConcept">
+                  <xsl:variable name="topProtocolUri" select="$protocolConcepts/skos:Concept[skos:notation = $protocol]/skos:hasTopConcept/@rdf:resource"/>
+                  <xsl:variable name="topProtocol" select="$protocolConcepts/skos:Concept[@rdf:about = $topProtocolUri]"/>
+                  <xsl:choose>
+                    <xsl:when test="$topProtocol/skos:prefLabel[@xml:lang = $lang2Char]">
+                      <xsl:value-of select="$topProtocol/skos:prefLabel[@xml:lang = $lang2Char]"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:value-of select="$topProtocol/skos:prefLabel[1]"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:when>
+                <xsl:when test="$protocolConcepts/skos:Concept[skos:notation = $protocol]">
+                  <xsl:variable name="topProtocol" select="$protocolConcepts/skos:Concept[skos:notation = $protocol]"/>
+                  <xsl:choose>
+                    <xsl:when test="$topProtocol/skos:prefLabel[@xml:lang = $lang2Char]">
+                      <xsl:value-of select="$topProtocol/skos:prefLabel[@xml:lang = $lang2Char]"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:value-of select="$topProtocol/skos:prefLabel[1]"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:when>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:if test="normalize-space($topLevelProtocol) != ''">
+              <Field name="protocol" string="{normalize-space($topLevelProtocol)}" store="true" index="true"/>
+            </xsl:if>
           </xsl:if>
 
           <xsl:if test="not($isDataset)">
