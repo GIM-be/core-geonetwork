@@ -441,9 +441,7 @@
                         <theme label="Milieu">http://vocab.belgif.be/auth/datatheme/ENVI</theme>
                     </xsl:when>
                     <xsl:when test=".='farming'">
-                        <theme label="Landbouw, visserij, bosbouw en voeding">
-                            http://vocab.belgif.be/auth/datatheme/AGRI
-                        </theme>
+                        <theme label="Landbouw, visserij, bosbouw en voeding">http://vocab.belgif.be/auth/datatheme/AGRI</theme>
                     </xsl:when>
                     <xsl:when test=".='geoscientificInformation'">
                         <theme label="Wetenschap en technologie">http://vocab.belgif.be/auth/datatheme/TECH</theme>
