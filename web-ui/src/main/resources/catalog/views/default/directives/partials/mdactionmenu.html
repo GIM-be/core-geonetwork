@@ -195,10 +195,10 @@
       </li>
 
       <li role="menuitem" class="divider"
-          data-ng-if="user.isEditorOrMore() && md.draft != 'y'">&nbsp;</li>
+          data-ng-if="((user.canEditRecord(md) && md.draft != 'e') || !user.canEditRecord(md))">&nbsp;</li>
       <li role="menuitem">
         <a data-ng-href=""
-           data-ng-if="user.isEditorOrMore() && md.draft != 'y'"
+           data-ng-if="((user.canEditRecord(md) && md.draft != 'e') || !user.canEditRecord(md))"
            data-ng-click="mdService.duplicate(md)">
           <i class="fa fa-fw fa-copy"></i>&nbsp;
           <span data-translate="">duplicate</span>
