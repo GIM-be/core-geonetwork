@@ -1290,7 +1290,10 @@
             </dct:creator>
           </xsl:when>
         </xsl:choose>
-        <xsl:if test="$role = 'owner' and count(../../gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = 'publisher']) = 0 and name(../../..) = 'gmd:identificationInfo'">
+        <xsl:if test="$role = 'owner' and
+                      count(../../gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = 'publisher']) = 0 and
+                      name(../../..) = 'gmd:identificationInfo' and
+                      count(../preceding-sibling::gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = 'owner']]) = 0">
           <dct:publisher>
             <xsl:copy-of select="$ROInfo"/>
           </dct:publisher>
