@@ -987,7 +987,7 @@
     ========================================
   -->
   <!-- Responsible Organisation -->
-  <xsl:template name="ResponsibleOrganisation" match="gmd:CI_ResponsibleParty">
+  <xsl:template name="ResponsibleOrganisation" match="gmd:pointOfContact/gmd:CI_ResponsibleParty|gmd:contact/gmd:CI_ResponsibleParty">
     <xsl:param name="MetadataLanguage"/>
     <xsl:param name="ResourceType"/>
 
@@ -1292,7 +1292,6 @@
         </xsl:choose>
         <xsl:if test="$role = 'owner' and
                       count(../../gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = 'publisher']) = 0 and
-                      name(../../..) = 'gmd:identificationInfo' and
                       count(../preceding-sibling::gmd:pointOfContact[gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue = 'owner']]) = 0">
           <dct:publisher>
             <xsl:copy-of select="$ROInfo"/>
