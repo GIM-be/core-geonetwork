@@ -84,7 +84,7 @@
         </button>
       </div>
     </div>
-    
+
     <div id="gn-harvest-select-help-button" data-gn-need-help="user-guide/harvesting/index.html"></div>
   </div>
 
@@ -240,7 +240,7 @@
                 </ul>
 
                 <a data-ng-show="h.info[0].logfile"
-                   href="admin.harvester.log?file={{h.info[0].logfile}}" target="_blank"
+                   href="admin.harvester.log?file={{h.info[0].logfile.replaceAll('\\','/')}}" target="_blank"
                    data-translate="">logFile</a>
                 </p>
               </div>
