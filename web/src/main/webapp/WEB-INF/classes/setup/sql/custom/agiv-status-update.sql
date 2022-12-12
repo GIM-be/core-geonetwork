@@ -27,33 +27,33 @@ UPDATE statusvalues SET displayorder = 12 WHERE id = 11;  -- removedforagiv
 UPDATE statusvalues SET displayorder = 13 WHERE id = 12;  -- removed
 UPDATE statusvalues SET displayorder = 14 WHERE id = 14;  -- rejectedforremove
 
-UPDATE StatusValuesDes SET label = 'Goedgekeurd door Informatie Vlaanderen en gepubliceerd' WHERE langid = 'dut' and idDes = 2;
+UPDATE StatusValuesDes SET label = 'Goedgekeurd door Digitaal Vlaanderen en gepubliceerd' WHERE langid = 'dut' and idDes = 2;
 
 -- Add translation for the new status
 
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (7, 'dut','Intern goedgekeurd en ingediend bij Informatie Vlaanderen');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (8, 'dut','Klaar voor publicatie door Informatie Vlaanderen');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (9, 'dut','Afgekeurd door validator Informatie Vlaanderen');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (7, 'dut','Intern goedgekeurd en ingediend bij Digitaal Vlaanderen');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (8, 'dut','Klaar voor publicatie door Digitaal Vlaanderen');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (9, 'dut','Afgekeurd door validator Digitaal Vlaanderen');
 INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (10,'dut','Ingediend voor depubliceren');
 INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (11,'dut','Ingediend voor verwijderen');
 INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (12,'dut','Verwijderd');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (13,'dut','Afgekeurd door validator Informatie Vlaanderen en niet gedepubliceerd');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (14,'dut','Afgekeurd door validator Informatie Vlaanderen en niet verwijderd');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (13,'dut','Afgekeurd door validator Digitaal Vlaanderen en niet gedepubliceerd');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (14,'dut','Afgekeurd door validator Digitaal Vlaanderen en niet verwijderd');
 
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (7, 'eng','Internally approved and submitted to Informatie Vlaanderen');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (8, 'eng','Ready for publication by Informatie Vlaanderen');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (9, 'eng','Rejected by Informatie Vlaanderen validator');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (7, 'eng','Internally approved and submitted to Digitaal Vlaanderen');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (8, 'eng','Ready for publication by Digitaal Vlaanderen');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (9, 'eng','Rejected by Digitaal Vlaanderen validator');
 INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (10,'eng','Submitted for un-publishing');
 INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (11,'eng','Submitted for removal');
 INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (12,'eng','Deleted');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (13,'eng','Rejected by Informatie Vlaanderen validator and not unpublished');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (14,'eng','Rejected by Informatie Vlaanderen validator and not deleted');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (13,'eng','Rejected by Digitaal Vlaanderen validator and not unpublished');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (14,'eng','Rejected by Digitaal Vlaanderen validator and not deleted');
 
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (7, 'fre','Approuvé en interne et soumis à Informatie Vlaanderen');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (8, 'fre','Prêt pour publication par Informatie Vlaanderen');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (9, 'fre','Rejeté par le validateur d''Informatie Vlaanderen');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (7, 'fre','Approuvé en interne et soumis à Digitaal Vlaanderen');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (8, 'fre','Prêt pour publication par Digitaal Vlaanderen');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (9, 'fre','Rejeté par le validateur de Digitaal Vlaanderen');
 INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (10,'fre','Soumis pour dépublication');
 INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (11,'fre','Soumis à l''enlèvement');
 INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (12,'fre','Enlevé');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (13,'fre','Rejeté par le validateur d''Informatie Vlaanderen et non publié');
-INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (14,'fre','Rejeté par le validateur d''Informatie Vlaanderen et non supprimé');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (13,'fre','Rejeté par le validateur de Digitaal Vlaanderen et non publié');
+INSERT INTO StatusValuesDes (iddes, langid, label) VALUES (14,'fre','Rejeté par le validateur de Digitaal Vlaanderen et non supprimé');
