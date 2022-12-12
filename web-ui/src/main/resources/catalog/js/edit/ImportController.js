@@ -45,9 +45,10 @@
   module.controller('GnImportController', [
     '$scope',
     '$rootScope',
+    '$translate',
     'gnMetadataManager',
     '$window',
-    function($scope,  $rootScope, gnMetadataManager, $window) {
+    function($scope,  $rootScope, $translate, gnMetadataManager, $window) {
       $scope.importMode = 'uploadFile';
       $scope.file_type = 'single';
       $scope.queue = [];
@@ -77,7 +78,17 @@
       };
       var uploadImportMdError = function(evt, data, o) {
         $scope.importing = false;
-        $scope.reports.push(data.jqXHR.responseJSON);
+        if (data.jqXHR.status >= 500) {
+          $rootScope.$broadcast('StatusUpdated', {
+            error: {
+              message: $translate.instant('importFailed'),
+              description: data.jqXHR.status===502 ? $translate.instant('importTimeout') : data.jqXHR.statusText
+            },
+            timeout: 0,
+            type: 'danger'});
+        } else {
+          $scope.reports.push(data.jqXHR.responseJSON);
+        }
       };
 
       // upload directive options
