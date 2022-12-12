@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:dct="http://purl.org/dc/terms/"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:prov="http://www.w3.org/ns/prov#"
+         xmlns:qudt="http://qudt.org/schema/qudt/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:vaem="http://www.linkedmodel.org/schema/vaem#">
+  <skos:ConceptScheme rdf:about="http://qudt.org/vocab/unit">
+    <skos:prefLabel xml:lang="en">QUDT Units of Measure for All Units Release 2.1.22</skos:prefLabel>
+    <dct:title xml:lang="en">QUDT Units of Measure for All Units Release 2.1.22</dct:title>
+    <dct:identifier>http://qudt.org/vocab/unit</dct:identifier>
+  </skos:ConceptScheme>
+  <skos:Concept rdf:about="http://qudt.org/vocab/unit/M">
+    <skos:prefLabel xml:lang="en">Metre</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Metre</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Metre</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Metre</skos:prefLabel>
+    <qudt:symbol>m</qudt:symbol>
+    <skos:inScheme rdf:resource="http://qudt.org/vocab/unit"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://qudt.org/vocab/unit/DEG">
+    <skos:prefLabel xml:lang="en">Degree</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Degree</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Degree</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Degree</skos:prefLabel>
+    <qudt:symbol>°</qudt:symbol>
+    <skos:inScheme rdf:resource="http://qudt.org/vocab/unit"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://qudt.org/vocab/unit/MilliM">
+    <skos:prefLabel xml:lang="en">Millimetre</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Millimetre</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Millimetre</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Millimetre</skos:prefLabel>
+    <qudt:symbol>mm</qudt:symbol>
+    <skos:inScheme rdf:resource="http://qudt.org/vocab/unit"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://qudt.org/vocab/unit/HectoM">
+    <skos:prefLabel xml:lang="en">Hectometre</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Hectometre</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Hectometre</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Hectometre</skos:prefLabel>
+    <qudt:symbol>hm</qudt:symbol>
+    <skos:inScheme rdf:resource="http://qudt.org/vocab/unit"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://qudt.org/vocab/unit/DeciM">
+    <skos:prefLabel xml:lang="en">Decimetre</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Decimetre</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Decimetre</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Decimetre</skos:prefLabel>
+    <qudt:symbol>dm</qudt:symbol>
+    <skos:inScheme rdf:resource="http://qudt.org/vocab/unit"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://qudt.org/vocab/unit/MicroM">
+    <skos:prefLabel xml:lang="en">Micrometre</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Micrometre</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Micrometre</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Micrometre</skos:prefLabel>
+    <qudt:symbol>µm</qudt:symbol>
+    <skos:inScheme rdf:resource="http://qudt.org/vocab/unit"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://qudt.org/vocab/unit/CentiM">
+    <skos:prefLabel xml:lang="en">Centimetre</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Centimetre</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Centimetre</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Centimetre</skos:prefLabel>
+    <qudt:symbol>cm</qudt:symbol>
+    <skos:inScheme rdf:resource="http://qudt.org/vocab/unit"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://qudt.org/vocab/unit/NanoM">
+    <skos:prefLabel xml:lang="en">Nanometer</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Nanometer</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Nanometer</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Nanometer</skos:prefLabel>
+    <qudt:symbol>nM</qudt:symbol>
+    <skos:inScheme rdf:resource="http://qudt.org/vocab/unit"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://qudt.org/vocab/unit/KiloM">
+    <skos:prefLabel xml:lang="en">Kilometer</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Kilometer</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Kilometer</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Kilometer</skos:prefLabel>
+    <qudt:symbol>km</qudt:symbol>
+    <skos:inScheme rdf:resource="http://qudt.org/vocab/unit"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://qudt.org/vocab/unit/DecaM">
+    <skos:prefLabel xml:lang="en">Decameter</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Decameter</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Decameter</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Decameter</skos:prefLabel>
+    <qudt:symbol>dam</qudt:symbol>
+    <skos:inScheme rdf:resource="http://qudt.org/vocab/unit"/>
+  </skos:Concept>
+  <skos:Concept rdf:about="http://qudt.org/vocab/unit/FemtoM">
+    <skos:prefLabel xml:lang="en">Femtometre</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Femtometre</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Femtometre</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Femtometre</skos:prefLabel>
+    <qudt:symbol>fm</qudt:symbol>
+    <skos:inScheme rdf:resource="http://qudt.org/vocab/unit"/>
+  </skos:Concept>
+</rdf:RDF>
