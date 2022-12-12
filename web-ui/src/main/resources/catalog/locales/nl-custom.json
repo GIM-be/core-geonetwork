@@ -110,5 +110,7 @@
   "rdfClearCache":  "Verwijder RDF Cache",
   "rdfClearCacheHelp": "Records converted to RDF are cached in order to improve to performance. The RDF cache is automatically cleared for a metadata as well as for its related records when the metadata is inserted, updated or deleted.",
   "rdfCacheCleared":  "RDF Cache cleared",
-  "rdfCacheClearFailure": "An error occurred while attempting to clear the RDF cache"
+  "rdfCacheClearFailure": "An error occurred while attempting to clear the RDF cache",
+  "importFailed": "Importeren record mislukt",
+  "importTimeout": "Timeout bereikt tijdens het importeren, controleer of de import alsnog gelukt is"
 }
