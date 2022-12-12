@@ -484,6 +484,7 @@
     <xsl:param name="class" required="no" as="xs:string?" select="''"/>
     <xsl:param name="btnLabel" required="no" as="xs:string?" select="''"/>
     <xsl:param name="btnClass" required="no" as="xs:string?" select="''"/>
+    <xsl:param name="forceDel" required="no" as="xs:boolean" select="false()"/>
 
     <xsl:variable name="tagId" select="generate-id()"/>
 
@@ -803,6 +804,7 @@
         <div class="col-sm-1 gn-control">
           <xsl:call-template name="render-form-field-control-remove">
             <xsl:with-param name="editInfo" select="$refToDelete"/>
+            <xsl:with-param name="forceDel" select="$forceDel"/>
           </xsl:call-template>
         </div>
       </xsl:if>
@@ -1386,8 +1388,9 @@
     <xsl:param name="editInfo"/>
     <xsl:param name="parentEditInfo" required="no"/>
     <xsl:param name="isRequired" required="no"/>
+    <xsl:param name="forceDel" required="no"/>
     <xsl:if
-      test="(($parentEditInfo and (
+      test="$forceDel or ((($parentEditInfo and (
               $parentEditInfo/@del = 'true' or
               $parentEditInfo/@min != 1)
             ) or (
@@ -1395,7 +1398,7 @@
                 $editInfo/@del = 'true' or
                 $editInfo/@min != 1
               )
-            )) and not($isRequired and ($editInfo and $editInfo/@max and $editInfo/@max = 1) and ($parentEditInfo and $parentEditInfo/@max and $parentEditInfo/@max = 1))">
+            )) and not($isRequired and ($editInfo and $editInfo/@max and $editInfo/@max = 1) and ($parentEditInfo and $parentEditInfo/@max and $parentEditInfo/@max = 1)))">
 
       <xsl:variable name="elementToRemove" select="if ($parentEditInfo) then
         $parentEditInfo else $editInfo"/>
