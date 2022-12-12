@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:gml="http://www.opengis.net/gml#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xdt="http://www.w3.org/2005/02/xpath-datatypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <skos:ConceptScheme rdf:about="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType">
+    <dc:title>Spatial data service type</dc:title>
+    <dc:description>GDI-Vlaanderen Trefwoorden</dc:description>
+  </skos:ConceptScheme>
+
+  <skos:Concept rdf:about="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/discovery">
+    <skos:prefLabel xml:lang="en">Discovery Service</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Zoekdienst</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Service de recherche</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Suchdienste</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/view">
+    <skos:prefLabel xml:lang="en">View Service</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Raadpleegdienst</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Service de consultation</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Darstellungsdienste</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download">
+    <skos:prefLabel xml:lang="en">Download Service</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Downloaddienst</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Service de téléchargement</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Download-Dienste</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/transformation">
+    <skos:prefLabel xml:lang="en">Transformation Service</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Verwerkingsdienst</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Service de transformation</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Transformationsdienste</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/invoke">
+    <skos:prefLabel xml:lang="en">Invoke Spatial Data Service</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Oproepdienst</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Service d’appel de services de données géographiques</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Dienste zum Abrufen von Geodatendiensten</skos:prefLabel>
+  </skos:Concept>
+  <skos:Concept rdf:about="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/other">
+    <skos:prefLabel xml:lang="en">Other Service</skos:prefLabel>
+    <skos:prefLabel xml:lang="nl">Andere dienst</skos:prefLabel>
+    <skos:prefLabel xml:lang="fr">Autre service</skos:prefLabel>
+    <skos:prefLabel xml:lang="de">Sonstige Dienste</skos:prefLabel>
+  </skos:Concept>
+</rdf:RDF>
