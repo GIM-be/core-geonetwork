@@ -8,6 +8,8 @@
                 xmlns:dcat="http://www.w3.org/ns/dcat#"
                 xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:qudt="http://qudt.org/schema/qudt/"
+                xmlns:sdmx-attribute="http://purl.org/linked-data/sdmx/2009/attribute#"
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -21,6 +23,7 @@
   <xsl:variable name="TopicCategoryCodelist" select="document('../thesauri-AIV/theme/TopicCategory.rdf')"/>
   <xsl:variable name="ServiceCategoryCodelist" select="document('../thesauri-AIV/theme/inspire-service-taxonomy.rdf')"/>
   <xsl:variable name="ProgressCodeCodelist" select="document('../thesauri-AIV/theme/ProgressCode.rdf')"/>
+  <xsl:variable name="UnitMeasuresCodeCodelist" select="document('../thesauri-AIV/theme/unitmeasures.rdf')"/>
 
   <xsl:template name="ExtractLang" match="gmd:language">
     <xsl:param name="lang"/>
@@ -376,6 +379,42 @@
           <skos:inScheme rdf:resource="{$ServiceCategoryCodelist/rdf:RDF/skos:ConceptScheme/@rdf:about[1]}"/>
         </skos:Concept>
       </mdcat:servicecategorie>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="Map-uom">
+    <xsl:param name="uom"/>
+    <xsl:variable name="concept">
+      <xsl:choose>
+        <xsl:when test="$UnitMeasuresCodeCodelist/rdf:RDF/skos:Concept[translate(qudt:symbol, $uppercase, $lowercase) = translate($uom, $uppercase, $lowercase)]">
+          <xsl:copy-of select="$UnitMeasuresCodeCodelist/rdf:RDF/skos:Concept[translate(qudt:symbol, $uppercase, $lowercase) = translate($uom, $uppercase, $lowercase)]"/>
+        </xsl:when>
+        <xsl:when test="$uom = ('mm', 'millimetre', 'millimetres')">
+          <xsl:copy-of select="$UnitMeasuresCodeCodelist/rdf:RDF/skos:Concept[@rdf:about = 'http://qudt.org/vocab/unit/MilliM']"/>
+        </xsl:when>
+        <xsl:when test="$uom = ('cm', 'centimeter', 'centimeters')">
+          <xsl:copy-of select="$UnitMeasuresCodeCodelist/rdf:RDF/skos:Concept[@rdf:about = 'http://qudt.org/vocab/unit/CentiM']"/>
+        </xsl:when>
+        <xsl:when test="$uom = ('m', 'meter', 'meters')">
+          <xsl:copy-of select="$UnitMeasuresCodeCodelist/rdf:RDF/skos:Concept[@rdf:about = 'http://qudt.org/vocab/unit/M']"/>
+        </xsl:when>
+        <xsl:when test="$uom = ('km', 'kilometer', 'kilometers')">
+          <xsl:copy-of select="$UnitMeasuresCodeCodelist/rdf:RDF/skos:Concept[@rdf:about = 'http://qudt.org/vocab/unit/KiloM']"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:message select="concat('WARNING: Unknown distance unit - ', $uom)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:if test="normalize-space($concept) != ''">
+      <sdmx-attribute:unitMeasure>
+        <skos:Conpept>
+          <xsl:attribute name="rdf:about" select="$concept/skos:Concept/@rdf:about"/>
+          <xsl:copy-of select="$concept/skos:Concept/skos:prefLabel"/>
+          <xsl:copy-of select="$concept/skos:Concept/skos:inScheme"/>
+        </skos:Conpept>
+      </sdmx-attribute:unitMeasure>
     </xsl:if>
   </xsl:template>
 

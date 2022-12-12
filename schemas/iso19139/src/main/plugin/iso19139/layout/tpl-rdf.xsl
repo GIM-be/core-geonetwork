@@ -71,6 +71,7 @@
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:geodcat="http://data.europa.eu/930/"
                 xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
+                xmlns:sdmx-attribute="http://purl.org/linked-data/sdmx/2009/attribute#"
                 xmlns:adres="https://data.vlaanderen.be/ns/adres#"
                 xmlns:vlgen="https://data.vlaanderen.be/ns/generiek"
                 xmlns:xslutil="java:org.fao.geonet.util.XslUtil"
@@ -2030,14 +2031,17 @@
       <xsl:when test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom != '']">
         <xsl:variable name="meters">
           <xsl:choose>
+            <xsl:when test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = ('mm', 'millimetre', 'millimetres')]">
+              <xsl:value-of select="number(gmd:MD_Resolution/gmd:distance/gco:Distance) div 1000"/>
+            </xsl:when>
+            <xsl:when test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = ('cm', 'centimeter', 'centimeters')]">
+              <xsl:value-of select="number(gmd:MD_Resolution/gmd:distance/gco:Distance) div 100"/>
+            </xsl:when>
             <xsl:when test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = ('m', 'meter', 'meters')]">
               <xsl:value-of select="string(gmd:MD_Resolution/gmd:distance/gco:Distance)"/>
             </xsl:when>
             <xsl:when test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = ('km', 'kilometer', 'kilometers')]">
               <xsl:value-of select="number(gmd:MD_Resolution/gmd:distance/gco:Distance) * 1000"/>
-            </xsl:when>
-            <xsl:when test="gmd:MD_Resolution/gmd:distance/gco:Distance[@uom = ('cm', 'centimeter', 'centimeters')]">
-              <xsl:value-of select="number(gmd:MD_Resolution/gmd:distance/gco:Distance) div 1000"/>
             </xsl:when>
           </xsl:choose>
         </xsl:variable>
@@ -2047,6 +2051,24 @@
             <xsl:value-of select="$meters"/>
           </dcat:spatialResolutionInMeters>
         </xsl:if>
+
+        <dqv:hasQualityMeasurement>
+          <dqv:QualityMeasurement>
+            <dqv:isMeasurementOf>
+              <dqv:Metric rdf:about="http://data.europa.eu/930/spatialResolutionAsDistance">
+                <skos:prefLabel xml:lang="en">Spatial resolution as distance</skos:prefLabel>
+                <dqv:expectedDataType rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+                <dqv:inDimension rdf:resource="http://www.w3.org/ns/dqv#precision"/>
+              </dqv:Metric>
+            </dqv:isMeasurementOf>
+            <xsl:call-template name="Map-uom">
+              <xsl:with-param name="uom" select="gmd:MD_Resolution/gmd:distance/gco:Distance/@uom"/>
+            </xsl:call-template>
+            <dqv:value rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">
+              <xsl:value-of select="number(gmd:MD_Resolution/gmd:distance/gco:Distance)"/>
+            </dqv:value>
+          </dqv:QualityMeasurement>
+        </dqv:hasQualityMeasurement>
       </xsl:when>
       <xsl:when test="gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator">
         <dqv:hasQualityMeasurement>
