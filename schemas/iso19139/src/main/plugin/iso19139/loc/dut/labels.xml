@@ -1745,7 +1745,7 @@
     </subtemplate>
   </element>
   <element name="gmd:otherConstraints" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints">
-    <label>Beschrijving</label>
+    <label>Overige beperkingen</label>
     <description>Andere restricties of beperkingen die niet in andere velden kunnen worden ondergebracht, bijvoorbeeld de naam van de copyrighthouder.
     </description>
     <condition>mandatory</condition>
