@@ -1745,7 +1745,7 @@
     </subtemplate>
   </element>
   <element name="gmd:otherConstraints" context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints">
-    <label>Beschrijving</label>
+    <label>Overige beperkingen</label>
     <description>Andere restricties of beperkingen die niet in andere velden kunnen worden ondergebracht, bijvoorbeeld de naam van de copyrighthouder.
     </description>
     <condition>mandatory</condition>
@@ -1909,7 +1909,6 @@
       <option value="OGC:WMTS">OGC-WMTS Web Map Tile Service (endpoint)</option>
       <option value="OGC:WMTS-1.0.0-http-get-capabilities">OGC-WMTS GetCapabilities operatie (ver 1.0.0)</option>
       <option value="OGC:WMTS-1.0.0-http-get-tile">OGC-WMTS GetTile operatie (ver 1.0.0)</option>
-      <option value="OGC:OGC-API-Features-items">OGC:OGC-API-Features-items</option>
       <option value="OGC:KML">OGC-KML Keyhole Markup Language Service</option>
       <option value="OGC:OGC-API-Features-landingpage">OGC API Features landingpage (ver 1.0.0)</option>
       <option value="OGC:OGC-API-Features-items">OGC API Features items (ver 1.0.0)</option>
