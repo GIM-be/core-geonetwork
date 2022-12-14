@@ -393,6 +393,11 @@
         </xsl:apply-templates>
       </xsl:variable>
 
+      <!-- mdcat:ISO-category -->
+      <xsl:call-template name="Map-topicCategory">
+        <xsl:with-param name="topicCategoryValue" select="normalize-space(gmd:identificationInfo/*/gmd:topicCategory/gmd:MD_TopicCategoryCode)"/>
+      </xsl:call-template>
+
       <xsl:if test="$ResourceType != 'service'">
         <xsl:if test="count($keywordsRdfMapping/dcat:theme) = 0">
           <xsl:variable name="dcatThemesByTopicCategory">
@@ -510,27 +515,6 @@
             </xsl:if>
           </xsl:variable>
 
-          <!-- Topic category -->
-          <!--xsl:if test="count($keywordsRdfMapping/dcat:theme) = 0">
-            <xsl:variable name="topicCategories" select="$relatedDatasetByOperatesOn/gmd:identificationInfo/*/gmd:topicCategory" />
-            <xsl:variable name="dcatThemesByTopicCategory">
-              <xsl:apply-templates select="$topicCategories"/>
-            </xsl:variable>
-            <xsl:for-each-group select="$topicCategories" group-by="normalize-space(.)">
-              <xsl:call-template name="Map-topicCategory">
-                <xsl:with-param name="topicCategoryValue" select="normalize-space(.)"/>
-              </xsl:call-template>
-            </xsl:for-each-group>
-            <xsl:for-each-group select="$dcatThemesByTopicCategory/dcat:theme" group-by="skos:Concept/@rdf:about">
-              <xsl:copy-of select="." />
-            </xsl:for-each-group>
-            <xsl:if test="count($keywordsRdfMapping/dct:subject) = 0">
-              <xsl:for-each-group select="$dcatThemesByTopicCategory/dct:subject" group-by="@rdf:resource">
-                <xsl:copy-of select="." />
-              </xsl:for-each-group>
-            </xsl:if>
-          </xsl:if-->
-
           <!-- Transfer option -->
           <xsl:variable name="distribution" select="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine[
                                                       gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString = ('OGC:WMS', 'OGC:WFS', 'OGC:WCS', 'OGC:WMTS') and
@@ -598,9 +582,10 @@
           </xsl:if>
 
           <!-- Service type and category -->
-          <xsl:variable name="serviceTypeUri" select="concat(gmd:identificationInfo/*/srv:serviceType/gco:LocalName/@codeSpace, '/', gmd:identificationInfo/*/srv:serviceType/gco:LocalName)"/>
+
           <xsl:call-template name="Map-serviceType">
-            <xsl:with-param name="serviceTypeUri" select="$serviceTypeUri"/>
+            <xsl:with-param name="codeSpace" select="string(gmd:identificationInfo/*/srv:serviceType/gco:LocalName/@codeSpace)"/>
+            <xsl:with-param name="localName" select="string(gmd:identificationInfo/*/srv:serviceType/gco:LocalName)"/>
           </xsl:call-template>
           <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gmx:Anchor[
                                   starts-with(@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/') or
@@ -1637,9 +1622,7 @@
                 <xsl:value-of select="'dcat:theme'"/>
               </xsl:when>
               <xsl:when test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/metadata-codelist/TopicCategory')">
-                <!-- <xsl:value-of select="'mdcat:ISO-categorie'"/> -->
-                <!-- Do not map TopicCategory to subject due to it being map to theme already -->
-                <xsl:value-of select="''"/>
+                <xsl:value-of select="'mdcat:ISO-categorie'"/>
               </xsl:when>
               <xsl:when test="geonet:urlEquals($scheme, 'inspire.ec.europa.eu/theme')">
                 <xsl:value-of select="'mdcat:INSPIRE-thema'"/>
