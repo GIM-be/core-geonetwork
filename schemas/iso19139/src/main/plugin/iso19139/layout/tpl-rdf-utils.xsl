@@ -323,22 +323,26 @@
   </xsl:template>
 
   <xsl:template name="Map-serviceType">
-    <xsl:param name="serviceTypeUri"/>
-    <xsl:variable name="concept" select="$ServiceTypeCodelist/rdf:RDF/skos:Concept[@rdf:about = $serviceTypeUri][1]"/>
-    <xsl:if test="$concept">
-      <mdcat:servicetype>
-        <skos:Concept rdf:about="{$concept/@rdf:about}">
-          <xsl:for-each select="$concept/skos:prefLabel">
-            <skos:prefLabel>
-              <xsl:if test="@xml:lang">
-                <xsl:attribute name="xml:lang" select="@xml:lang"/>
-              </xsl:if>
-              <xsl:value-of select="string()"/>
-            </skos:prefLabel>
-          </xsl:for-each>
-          <skos:inScheme rdf:resource="{$ServiceTypeCodelist/rdf:RDF/skos:ConceptScheme/@rdf:about[1]}"/>
-        </skos:Concept>
-      </mdcat:servicetype>
+    <xsl:param name="codeSpace"/>
+    <xsl:param name="localName"/>
+    <xsl:if test="contains($codeSpace, 'inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType')">
+      <xsl:variable name="concept" select="$ServiceTypeCodelist/rdf:RDF/skos:Concept[@rdf:about = concat('https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/', $localName)][1]"/>
+      <xsl:message select="$concept"/>
+      <xsl:if test="$concept">
+        <mdcat:servicetype>
+          <skos:Concept rdf:about="{$concept/@rdf:about}">
+            <xsl:for-each select="$concept/skos:prefLabel">
+              <skos:prefLabel>
+                <xsl:if test="@xml:lang">
+                  <xsl:attribute name="xml:lang" select="@xml:lang"/>
+                </xsl:if>
+                <xsl:value-of select="string()"/>
+              </skos:prefLabel>
+            </xsl:for-each>
+            <skos:inScheme rdf:resource="{$ServiceTypeCodelist/rdf:RDF/skos:ConceptScheme/@rdf:about[1]}"/>
+          </skos:Concept>
+        </mdcat:servicetype>
+      </xsl:if>
     </xsl:if>
   </xsl:template>
 

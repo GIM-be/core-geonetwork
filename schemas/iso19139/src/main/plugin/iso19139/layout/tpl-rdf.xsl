@@ -582,9 +582,10 @@
           </xsl:if>
 
           <!-- Service type and category -->
-          <xsl:variable name="serviceTypeUri" select="concat(gmd:identificationInfo/*/srv:serviceType/gco:LocalName/@codeSpace, '/', gmd:identificationInfo/*/srv:serviceType/gco:LocalName)"/>
+
           <xsl:call-template name="Map-serviceType">
-            <xsl:with-param name="serviceTypeUri" select="$serviceTypeUri"/>
+            <xsl:with-param name="codeSpace" select="string(gmd:identificationInfo/*/srv:serviceType/gco:LocalName/@codeSpace)"/>
+            <xsl:with-param name="localName" select="string(gmd:identificationInfo/*/srv:serviceType/gco:LocalName)"/>
           </xsl:call-template>
           <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gmx:Anchor[
                                   starts-with(@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/') or
