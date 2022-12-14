@@ -409,11 +409,11 @@
 
     <xsl:if test="normalize-space($concept) != ''">
       <sdmx-attribute:unitMeasure>
-        <skos:Conpept>
+        <skos:Concept>
           <xsl:attribute name="rdf:about" select="$concept/skos:Concept/@rdf:about"/>
           <xsl:copy-of select="$concept/skos:Concept/skos:prefLabel"/>
           <xsl:copy-of select="$concept/skos:Concept/skos:inScheme"/>
-        </skos:Conpept>
+        </skos:Concept>
       </sdmx-attribute:unitMeasure>
     </xsl:if>
   </xsl:template>
