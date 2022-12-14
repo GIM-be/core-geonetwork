@@ -2299,7 +2299,6 @@
       <option value="OGC:WMTS">OGC-WMTS Web Map Tile Service</option>
       <option value="OGC:WMTS-1.0.0-http-get-capabilities">OGC-WMTS GetCapabilities service (ver 1.0.0)</option>
       <option value="OGC:WMTS-1.0.0-http-get-tile">OGC-WMTS GetTile service (ver 1.0.0)</option>
-      <option value="OGC:OGC-API-Features-items">OGC:OGC-API-Features-items</option>
       <option value="OGC:KML">OGC-KML Keyhole Markup Language Service</option>
       <option value="OGC:OGC-API-Features-landingpage">OGC API Features landingpage (ver 1.0.0)</option>
       <option value="OGC:OGC-API-Features-items">OGC API Features items (ver 1.0.0)</option>
