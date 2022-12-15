@@ -216,7 +216,6 @@ public class Aligner extends BaseAligner<CswParams> {
                         case OVERRIDE:
                             updateMetadata(ri, Integer.toString(metadataUtils.findOneByUuid(ri.uuid).getId()), true);
                             log.debug("Overriding record with uuid " + ri.uuid);
-                            result.updatedMetadata++;
 
                             if (params.isIfRecordExistAppendPrivileges()) {
                                 addPrivileges(id, params.getPrivileges(), localGroups, context);

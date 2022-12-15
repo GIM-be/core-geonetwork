@@ -348,9 +348,7 @@
                         </gmd:keyword>
                       </xsl:when>
                       <xsl:otherwise>
-                        <xsl:copy>
-                          <xsl:apply-templates select="@*|*|text()"/>
-                        </xsl:copy>
+                        <xsl:copy-of copy-namespaces="no" select="."/>
                       </xsl:otherwise>
                     </xsl:choose>
                   </xsl:for-each>
@@ -360,7 +358,13 @@
                       <gmx:Anchor xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/GEODATA">Geografische gegevens</gmx:Anchor>
                     </gmd:keyword>
                   </xsl:if>
-                  <xsl:apply-templates select="@*|text()|*[name() != 'gmd:keyword']"/>
+                  <xsl:for-each select="gmd:type">
+                    <xsl:copy-of copy-namespaces="no" select="."/>
+                  </xsl:for-each>
+                  <!-- Do not forget to put out sibling element thesaurusName -->
+                  <xsl:for-each select="gmd:thesaurusName">
+                    <xsl:copy-of copy-namespaces="no" select="."/>
+                  </xsl:for-each>
                 </xsl:copy>
               </xsl:for-each>
             </xsl:when>
@@ -398,7 +402,7 @@
         </gmd:descriptiveKeywords>
       </xsl:if>
 
-      <xsl:apply-templates select="$elements-after[name() != 'gmd:descriptiveKeywords']" />
+      <xsl:apply-templates select="$elements-after[local-name() != 'descriptiveKeywords']" />
     </xsl:copy>
   </xsl:template>
 </xsl:stylesheet>
