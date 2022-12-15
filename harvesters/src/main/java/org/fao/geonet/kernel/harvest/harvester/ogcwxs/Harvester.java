@@ -462,18 +462,18 @@ class Harvester extends BaseAligner<OgcWxSParams> implements IHarvester<HarvestR
 
             addCategories(metadata, params.getCategories(), localCateg, context, null, false);
 
-            result.addedMetadata++;
             metadata = metadataManager.insertMetadata(context, metadata, md, true, false, false, UpdateDatestamp.NO, false, false);
+            result.addedMetadata++;
         } else {
             if (!existingRecord.getSourceInfo().getSourceId().equals(params.getUuid())) {
                 log.info(String.format("  - Updating an existing record with uuid %s linked to another source is not allowed.", uuid));
                 result.uuidSkipped++;
                 return uuids;
             }
-            result.updatedMetadata++;
             String id = dataMan.getMetadataId(uuid);
             metadata = metadataManager.updateMetadata(context, id, md, false, false, false,
                 context.getLanguage(), dataMan.extractDateModified(schema, md), false);
+            result.updatedMetadata++;
         }
         metadataValidator.doValidate(metadata, context.getLanguage());
         new AGIVValidation(context).addConformKeywords(metadata, true);

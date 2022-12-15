@@ -25,7 +25,6 @@
         <xsl:for-each select="gmd:MD_Keywords/gmd:type">
           <xsl:copy-of copy-namespaces="no" select="."/>
         </xsl:for-each>
-        <xsl:apply-templates select="gmd:type"/>
         <!-- Do not forget to put out sibling element thesaurusName -->
         <xsl:for-each select="gmd:MD_Keywords/gmd:thesaurusName">
           <xsl:copy-of copy-namespaces="no" select="."/>
