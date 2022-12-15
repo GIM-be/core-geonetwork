@@ -1,3 +1,4 @@
+-- Run only on Metadatacenter
 UPDATE dbo.StatusValuesDes SET label = 'Goedgekeurd door Digitaal Vlaanderen en gepubliceerd' WHERE langid = 'dut' and idDes = 2;
 UPDATE dbo.StatusValuesDes SET label = 'Intern goedgekeurd en ingediend bij Digitaal Vlaanderen' WHERE langid = 'dut' and idDes = 7;
 UPDATE dbo.StatusValuesDes SET label = 'Klaar voor publicatie door Digitaal Vlaanderen' WHERE langid = 'dut' and idDes = 8;
