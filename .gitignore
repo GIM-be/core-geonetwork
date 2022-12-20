@@ -12,6 +12,8 @@ web/src/main/webapp/WEB-INF/data/config/schema_plugins/dcat2
 web/src/main/webapp/WEB-INF/data/wro4j-cache*
 web/src/main/webapp/scripts/lib/*
 web/src/main/webapp/images/logos/*
+!web/src/main/webapp/images/logos/favicon.png
+!web/src/main/webapp/images/logos/favicon.icon
 web/src/main/webapp/images/statTmp
 web/src/main/webapp/WEB-INF/data/wro4j*.db
 web/src/main/webResources/WEB-INF/classes/git.properties
