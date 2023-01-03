@@ -327,7 +327,6 @@
     <xsl:param name="localName"/>
     <xsl:if test="contains($codeSpace, 'inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType')">
       <xsl:variable name="concept" select="$ServiceTypeCodelist/rdf:RDF/skos:Concept[@rdf:about = concat('https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/', $localName)][1]"/>
-      <xsl:message select="$concept"/>
       <xsl:if test="$concept">
         <mdcat:servicetype>
           <skos:Concept rdf:about="{$concept/@rdf:about}">

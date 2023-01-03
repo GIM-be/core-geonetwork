@@ -364,14 +364,7 @@
           <rdf:type rdf:resource="{$dcat}Dataset"/>
         </xsl:when>
         <xsl:when test="$ResourceType = 'service'">
-          <xsl:choose>
-            <xsl:when test="$ServiceType = 'discovery'">
-              <rdf:type rdf:resource="{$dcat}Catalog"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <rdf:type rdf:resource="{$dcat}DataService"/>
-            </xsl:otherwise>
-          </xsl:choose>
+          <rdf:type rdf:resource="{$dcat}DataService"/>
         </xsl:when>
       </xsl:choose>
 
