@@ -484,7 +484,7 @@
       </xsl:for-each-group>
 
       <xsl:variable name="Distributors">
-        <xsl:apply-templates select="(.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'distributor'])[1]">
+        <xsl:apply-templates select="(.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'distributor' and name(..) != 'gmd:distributorContact'])[1]">
           <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
           <xsl:with-param name="ResourceType" select="$ResourceType"/>
         </xsl:apply-templates>
