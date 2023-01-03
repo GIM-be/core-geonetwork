@@ -387,9 +387,11 @@
       </xsl:variable>
 
       <!-- mdcat:ISO-category -->
-      <xsl:call-template name="Map-topicCategory">
-        <xsl:with-param name="topicCategoryValue" select="normalize-space(gmd:identificationInfo/*/gmd:topicCategory/gmd:MD_TopicCategoryCode)"/>
-      </xsl:call-template>
+      <xsl:for-each select="gmd:identificationInfo/*/gmd:topicCategory/gmd:MD_TopicCategoryCode">
+        <xsl:call-template name="Map-topicCategory">
+          <xsl:with-param name="topicCategoryValue" select="normalize-space(.)"/>
+        </xsl:call-template>
+      </xsl:for-each>
 
       <xsl:if test="$ResourceType != 'service'">
         <xsl:if test="count($keywordsRdfMapping/dcat:theme) = 0">
