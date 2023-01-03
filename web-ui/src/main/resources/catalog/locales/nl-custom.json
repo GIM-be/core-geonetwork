@@ -112,5 +112,6 @@
   "rdfCacheCleared":  "RDF Cache cleared",
   "rdfCacheClearFailure": "An error occurred while attempting to clear the RDF cache",
   "importFailed": "Importeren record mislukt",
-  "importTimeout": "Timeout bereikt tijdens het importeren, controleer of de import alsnog gelukt is"
+  "importTimeout": "Timeout bereikt tijdens het importeren, controleer of de import alsnog gelukt is",
+  "domain": "domein"
 }
