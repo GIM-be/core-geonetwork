@@ -489,7 +489,7 @@
 
       <xsl:variable name="gdiKeywords" select="gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/*[1] = 'GDI-Vlaanderen Trefwoorden']/gmd:keyword"/>
       <xsl:variable name="openKeywords" select="$gdiKeywords/*[
-        (name() = 'gmx:Anchor' and @xlink:href = ('https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA', 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA')) or
+        (name() = 'gmx:Anchor' and @xlink:href = ('https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA', 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATASERVICE')) or
         (name() = 'gco:CharacterString' and string(.) = ('Vlaamse Open data', 'Vlaamse Open data Service'))
       ]"/>
       <xsl:variable name="isOpenData" select="if (count($openKeywords) > 0) then 'y' else 'n'"/>
