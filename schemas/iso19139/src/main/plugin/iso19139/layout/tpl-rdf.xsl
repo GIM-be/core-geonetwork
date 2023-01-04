@@ -1667,7 +1667,7 @@
 
   <!-- Conforms to - Feature catalog description -->
   <xsl:template name="FeatureCatalogueDescription" match="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
-    <xsl:for-each select="gmd:featureCatalogueCitation">
+    <xsl:for-each select="gmd:featureCatalogueCitation[normalize-space(@uuidref) != '']">
       <dct:conformsTo>
         <dct:Standard>
           <xsl:variable name="uuidref" select="@uuidref"/>
