@@ -19,53 +19,62 @@
     <skos:prefLabel xml:lang="en">Toegevoegd GDI-Vl</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Toegevoegd GDI-Vl</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Toegevoegd GDI-Vl</skos:prefLabel>
+    <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
   </skos:Concept>
   <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA">
     <skos:prefLabel xml:lang="nl">Vlaamse Open data</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Vlaamse Open data</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Vlaamse Open data</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Vlaamse Open data</skos:prefLabel>
+    <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
   </skos:Concept>
   <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATASERVICE">
     <skos:prefLabel xml:lang="nl">Vlaamse Open data Service</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Vlaamse Open data Service</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Vlaamse Open data Service</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Vlaamse Open data Service</skos:prefLabel>
+    <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
   </skos:Concept>
   <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/HERBRUIKBAAR">
     <skos:prefLabel xml:lang="nl">Herbruikbaar</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Herbruikbaar</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Herbruikbaar</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Herbruikbaar</skos:prefLabel>
+    <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
   </skos:Concept>
   <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/KOSTELOOS">
     <skos:prefLabel xml:lang="nl">Kosteloos</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Kosteloos</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Kosteloos</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Kosteloos</skos:prefLabel>
+    <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
   </skos:Concept>
   <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/LIJSTMRINSPIRE">
     <skos:prefLabel xml:lang="nl">Lijst M&amp;R INSPIRE</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Lijst M&amp;R INSPIRE</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Lijst M&amp;R INSPIRE</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Lijst M&amp;R INSPIRE</skos:prefLabel>
+    <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
   </skos:Concept>
   <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/MDINSPIRECONFORM">
     <skos:prefLabel xml:lang="nl">Metadata INSPIRE-conform</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Metadata INSPIRE-conform</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Metadata INSPIRE-conform</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Metadata INSPIRE-conform</skos:prefLabel>
+    <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
   </skos:Concept>
   <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/MDGDICONFORM">
     <skos:prefLabel xml:lang="nl">Metadata GDI-Vl-conform</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Metadata GDI-Vl-conform</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Metadata GDI-Vl-conform</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Metadata GDI-Vl-conform</skos:prefLabel>
+    <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
   </skos:Concept>
   <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/GEODATA">
     <skos:prefLabel xml:lang="nl">Geografische gegevens</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Geografische gegevens</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Geografische gegevens</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Geografische gegevens</skos:prefLabel>
+    <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
   </skos:Concept>
 </rdf:RDF>
