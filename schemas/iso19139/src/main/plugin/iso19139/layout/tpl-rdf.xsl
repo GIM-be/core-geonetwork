@@ -364,14 +364,7 @@
           <rdf:type rdf:resource="{$dcat}Dataset"/>
         </xsl:when>
         <xsl:when test="$ResourceType = 'service'">
-          <xsl:choose>
-            <xsl:when test="$ServiceType = 'discovery'">
-              <rdf:type rdf:resource="{$dcat}Catalog"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <rdf:type rdf:resource="{$dcat}DataService"/>
-            </xsl:otherwise>
-          </xsl:choose>
+          <rdf:type rdf:resource="{$dcat}DataService"/>
         </xsl:when>
       </xsl:choose>
 
@@ -394,9 +387,11 @@
       </xsl:variable>
 
       <!-- mdcat:ISO-category -->
-      <xsl:call-template name="Map-topicCategory">
-        <xsl:with-param name="topicCategoryValue" select="normalize-space(gmd:identificationInfo/*/gmd:topicCategory/gmd:MD_TopicCategoryCode)"/>
-      </xsl:call-template>
+      <xsl:for-each select="gmd:identificationInfo/*/gmd:topicCategory/gmd:MD_TopicCategoryCode">
+        <xsl:call-template name="Map-topicCategory">
+          <xsl:with-param name="topicCategoryValue" select="normalize-space(.)"/>
+        </xsl:call-template>
+      </xsl:for-each>
 
       <xsl:if test="$ResourceType != 'service'">
         <xsl:if test="count($keywordsRdfMapping/dcat:theme) = 0">
@@ -484,7 +479,7 @@
       </xsl:for-each-group>
 
       <xsl:variable name="Distributors">
-        <xsl:apply-templates select="(.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'distributor'])[1]">
+        <xsl:apply-templates select="(.//gmd:CI_ResponsibleParty[gmd:role/gmd:CI_RoleCode/@codeListValue = 'distributor' and name(..) != 'gmd:distributorContact'])[1]">
           <xsl:with-param name="MetadataLanguage" select="$MetadataLanguage"/>
           <xsl:with-param name="ResourceType" select="$ResourceType"/>
         </xsl:apply-templates>
@@ -542,7 +537,7 @@
           <!-- Coupled resources -->
           <xsl:if test="$relationLookup and count(gmd:identificationInfo/*/srv:operatesOn) > 0">
             <xsl:variable name="operatesOn" select="gmd:identificationInfo/*/srv:operatesOn"/>
-            <xsl:for-each select="$relatedDatasetByOperatesOn">
+            <xsl:for-each select="$relatedDatasetByOperatesOn/*">
               <xsl:choose>
                 <xsl:when test="name() = 'gmd:MD_Metadata'">
                   <dcat:servesDataset>
@@ -1672,7 +1667,7 @@
 
   <!-- Conforms to - Feature catalog description -->
   <xsl:template name="FeatureCatalogueDescription" match="gmd:contentInfo/gmd:MD_FeatureCatalogueDescription">
-    <xsl:for-each select="gmd:featureCatalogueCitation">
+    <xsl:for-each select="gmd:featureCatalogueCitation[normalize-space(@uuidref) != '']">
       <dct:conformsTo>
         <dct:Standard>
           <xsl:variable name="uuidref" select="@uuidref"/>

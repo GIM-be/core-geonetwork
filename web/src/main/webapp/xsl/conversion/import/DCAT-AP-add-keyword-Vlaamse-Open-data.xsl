@@ -36,13 +36,15 @@
         <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA">
           <skos:prefLabel xml:lang="nl">Vlaamse Open data</skos:prefLabel>
           <skos:prefLabel xml:lang="en">Vlaamse Open data</skos:prefLabel>
+          <skos:prefLabel xml:lang="fr">Vlaamse Open data</skos:prefLabel>
+          <skos:prefLabel xml:lang="de">Vlaamse Open data</skos:prefLabel>
           <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
         </skos:Concept>
       </dct:subject>
 
       <xsl:apply-templates select="dct:subject[
         skos:Concept/@rdf:about != 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA' and
-        skos:Concept/@rdf:about != 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA'
+        skos:Concept/@rdf:about != 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATASERVICE'
       ]"/>
 
       <xsl:apply-templates select="dcat:theme"/>
@@ -100,15 +102,17 @@
 
       <!-- Add the missing subject -->
       <dct:subject>
-        <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA">
+        <skos:Concept rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATASERVICE">
           <skos:prefLabel xml:lang="nl">Vlaamse Open data Service</skos:prefLabel>
           <skos:prefLabel xml:lang="en">Vlaamse Open data Service</skos:prefLabel>
+          <skos:prefLabel xml:lang="fr">Vlaamse Open data Service</skos:prefLabel>
+          <skos:prefLabel xml:lang="de">Vlaamse Open data Service</skos:prefLabel>
           <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden"/>
         </skos:Concept>
       </dct:subject>
       <xsl:apply-templates select="dct:subject[
         skos:Concept/@rdf:about != 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA' and
-        skos:Concept/@rdf:about != 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/SERVICEVLOPENDATA'
+        skos:Concept/@rdf:about != 'https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATASERVICE'
       ]"/>
 
       <xsl:apply-templates select="dcat:theme"/>
