@@ -537,7 +537,7 @@
           <!-- Coupled resources -->
           <xsl:if test="$relationLookup and count(gmd:identificationInfo/*/srv:operatesOn) > 0">
             <xsl:variable name="operatesOn" select="gmd:identificationInfo/*/srv:operatesOn"/>
-            <xsl:for-each select="$relatedDatasetByOperatesOn">
+            <xsl:for-each select="$relatedDatasetByOperatesOn/*">
               <xsl:choose>
                 <xsl:when test="name() = 'gmd:MD_Metadata'">
                   <dcat:servesDataset>
