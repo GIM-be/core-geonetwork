@@ -16,14 +16,14 @@
   <div class="changelog-container">
     <h1>Changelog</h1>
 
-    <section id="10/01/2023 - R5" title="R5 - Verbeteringen en bugfixes Informatiecatalogus">
+    <section id="11/01/2023 - R5" title="R5 - Verbeteringen en bugfixes Informatiecatalogus">
       <ul>
         <li>
           <strong>Metadata-standaard</strong>
           <ul>
             <li>Hoofdzakelijk verbeteringen aan de GeoDCAT-AP Vl mapping van de ISO-metadatarecords naar de RDF-output
             </li>
-            <li>Bugfixing in sjablonen van de overige applicatieprofielen, waar nodig</li>
+            <li>Bugfixing in sjablonen van de overige applicatieprofielen</li>
           </ul>
         </li>
         <li>
@@ -33,27 +33,25 @@
               vullen tekstveld
               <ul>
                 <li>
-                  Bijhorend is het distributieblok aangepakt om dit op te schonen voor de beheerinstanties
+                  Bijhorend is het distributieblok aangepakt en opgeschoond
                 </li>
               </ul>
             </li>
-            <li>Ook de ‘protocollen’ kunnen nu uit een ruimere thesaurus gekozen worden</li>
           </ul>
         </li>
 
         <li>
           <strong>Metadata-beheersysteem</strong>
           <ul>
-            <li>Bugfixing en optimaliseren van kleine features op GeoNetwork 3.8, de DCAT-AP plug-in, en de Zoek-facets
+            <li>Bugfixing en optimalisatie van kleine features op GeoNetwork 3.8, DCAT-AP plug-in, en de Zoek-facets
               en indexing-mechanismen
             </li>
-            <li>Inschakelen van een WAFv2 firewall</li>
           </ul>
         </li>
         <li>
           <strong>Overzicht van alle verbeteringen sinds R4 in detail:</strong>
           <ul>
-            <li>Inloggen via de tegel ‘Vlaamse Overheid’ kan nu al op basis van een Trusted Relatie met ACM/IDM</li>
+            <li>Inloggen via de tegel ‘Vlaamse Overheid’ kan nu op basis van een Trusted Relatie met ACM/IDM</li>
             <li>Fix waarbij de eerste distributie kan verwijderd worden als er meerdere aanwezig zijn</li>
             <li>Fix op het sjabloon voor Geografische Services</li>
             <li>Fix op het wegschrijven van ISO-elementen richting GeoDCAT:
@@ -61,7 +59,7 @@
                 <li>‘categorisaties’ zoals ISO-categorie, INSPIRE-thema, GEMET-concept, MAGDA-categorie, Statuut,
                   ServiceType en ServiceCategorie
                 </li>
-                <li>‘Spatial Coverage’, ‘Location’,</li>
+                <li>‘Spatial Coverage’, ‘Location’</li>
                 <li>‘Spatial Resolution’ voor ‘Afstand (Distance)’</li>
                 <li>Relatie ‘Dataservice’ > ‘Dataset’ (OperatesOn)</li>
                 <li>‘Licenses & Rights’</li>
@@ -75,7 +73,7 @@
                 <li>Fix op dubbel voorkomen van ‘rightsHolder’</li>
                 <li>Fix op dubbel voorkomen van ‘Keywords’</li>
                 <li>Versie toegevoegd aan de ConformsTo elementen voor de gebruikte applicatieprofielen</li>
-                <li>CSW werd foutief als Dataset ipv als Dataservice gecatalogeerd in GeoDCAT</li>
+                <li>CSW werd foutief als Dataset i.p.v. als Dataservice gecatalogeerd in GeoDCAT</li>
               </ul>
             </li>
 
@@ -83,7 +81,7 @@
               Codelijst Organisatietypes in DCAT-sjablonen)
             </li>
             <li>Fix in de doorvertaling van metadata naar de relation API</li>
-            <li>Bijwerkingen van de SHACL validatie toegepast in de validaties in GeoNetwork, zowel voor de ISO- als de
+            <li>Bijwerkingen van de SHACL-validatie toegepast in de validaties in GeoNetwork, zowel voor de ISO- als de
               DCAT-profielen
             </li>
             <li>Fix in het root element van native aangemaakte records</li>
@@ -95,7 +93,7 @@
             </li>
 
             <li>Fix in de harvest logging</li>
-            <li>Aanmaak van ‘formatters’ zodat de pagina’s van Toegangs-en gebruiksvoorwarden en Bewerkingen apart te
+            <li>Aanmaak van ‘formatters’ zodat de pagina’s van Toegangs-en gebruiksvoorwaarden en Bewerkingen apart te
               bereiken zijn met een URL vanuit andere toepassingen
             </li>
             <li>Oplossing om met ‘blanc nodes’ om te gaan bij harvesten van DCAT-feeds</li>
@@ -128,19 +126,15 @@
             </li>
             <li>Fix vCard-issue in de UI</li>
             <li>Fix op het bewaren van een trefwoord uit de GDI-Vlaanderen thesaurus</li>
-            <li>Correcte implementatie van de conformsTo protocollen</li>
             <li>Onderzoek naar TSL/SSL encryptie</li>
             <li>Fix van een XML-schema fout</li>
             <li>Onderzoek op te strenge INSPIRE-validatie op de gmd:useLimitation</li>
-            <li>Logica onderzoeken uitschrijven waarom bepaalde datasets die bedoeld zijn als ‘Publiek’ toch als
+            <li>Logica onderzoeken en uitschrijven waarom bepaalde datasets die bedoeld zijn als ‘Publiek’ toch als
               ‘Niet-publiek’ worden gepubliceerd >> bepaalde partijen al gecontacteerd om dit te corrigeren in hun
               metadata
             </li>
             <li>Fix op de UI in styling waar lange URL’s ervoor zorgden dat die bovenop het rechter zijpaneel terecht
               kwamen
-            </li>
-            <li>Inschakelen van een WAFv2, of kortweg een firewall die ‘bad-calls’ kan afblokken. Zo kan de proxy die er
-              nu is uitgefaseerd worden tvv de app gateway
             </li>
           </ul>
         </li>
