@@ -55,20 +55,20 @@ Mapping between:
   </xsl:template>
   <!-- ============================================================================= -->
   <xsl:template match="WMT_MS_Capabilities|wfs:WFS_Capabilities
-		
+
 		|wcs:Capabilities|
-         
+
          wps:Capabilities|wps1:Capabilities|wps2:Capabilities|wms:WMS_Capabilities|wmts:Capabilities">
     <!--Variable ows = true voor WCS, WFS en WMTS-->
     <xsl:variable name="ows">
       <xsl:choose>
         <!--  or (local-name(.)='WCS_Capabilities' and namespace-uri(.)='http://www.opengis.net/wcs') -->
-        <xsl:when test="(local-name(.)='WFS_Capabilities' and (namespace-uri(.)='http://www.opengis.net/wfs' 
+        <xsl:when test="(local-name(.)='WFS_Capabilities' and (namespace-uri(.)='http://www.opengis.net/wfs'
 				  or namespace-uri(.)='http://www.opengis.net/wfs/2.0') and (@version='1.1.0' or @version='2.0.0'))
 
-				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wcs/2.0') 
-				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/ows/2.0') 
-				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wmts/1.0') 
+				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wcs/2.0')
+				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/ows/2.0')
+				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wmts/1.0')
 				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengeospatial.net/wps')
 				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wps/1.0.0')
 				  or (local-name(.)='Capabilities' and namespace-uri(.)='http://www.opengis.net/wps/2.0')">true</xsl:when>
@@ -78,7 +78,7 @@ Mapping between:
     <xsl:variable name="wfs">
       <!-- variabele wordt niet gebruikt! -->
       <xsl:choose>
-        <xsl:when test="local-name(.)='WFS_Capabilities' and (namespace-uri(.)='http://www.opengis.net/wfs' 
+        <xsl:when test="local-name(.)='WFS_Capabilities' and (namespace-uri(.)='http://www.opengis.net/wfs'
 					or namespace-uri(.)='http://www.opengis.net/ows') and @version='1.1.0'">
           <xsl:value-of select="true()"/>
         </xsl:when>
@@ -195,7 +195,7 @@ Mapping between:
       <!-- ============================================================================= -->
       <!-- === referenceSystemInfo WCS OK-->
       <!-- ============================================================================= -->
-      <!-- 
+      <!--
 			WMS-raadpleegdiensten (geoservices en inspire): Op hoofd-layer-niveau zijn de verschillende CRS'en gedefinieerd
 			WMTS: 3 TileMatrixSets zijn gedefinieerd met telkens een SupportedCRS
 			WFS-overdrachtdiensten (geoservices): Per FeatureType is een DefaultSRS en meerdere OtherSRS'en gedefinieerd in de vorm van urn:ogc:def:crs:EPSG:31370
@@ -435,7 +435,7 @@ Mapping between:
 										<CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="information"/>
 									</function>
 								</CI_OnlineResource>
-							</onLine> 
+							</onLine>
               </xsl:if>
             </MD_DigitalTransferOptions>
           </transferOptions>
@@ -612,8 +612,6 @@ Mapping between:
     <xsl:namespace name="gmd" select="'http://www.isotc211.org/2005/gmd'"/>
     <xsl:namespace name="gmx" select="'http://www.isotc211.org/2005/gmx'"/>
     <xsl:namespace name="gts" select="'http://www.isotc211.org/2005/gts'"/>
-    <xsl:namespace name="gsr" select="'http://www.isotc211.org/2005/gsr'"/>
-    <xsl:namespace name="gmi" select="'http://www.isotc211.org/2005/gmi'"/>
     <xsl:namespace name="srv" select="'http://www.isotc211.org/2005/srv'"/>
     <xsl:choose>
       <xsl:when test="$isUsing2005Schema and not($isUsing2007Schema)">
