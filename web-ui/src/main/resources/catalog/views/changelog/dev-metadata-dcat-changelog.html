@@ -21,6 +21,15 @@
       <span>See also <a href="dev-main-changelog.html">Main changelog</a></span>
     </div>
 
+    <section id="30/01/2023">
+      <ul>
+        <li title="168066">DCAT native records now uses elements <code>mdcat:statuut</code> and <code>mdcat:MAGDA-categorie</code>
+          instead of the generic <code>dct:subject</code> element
+        </li>
+        <li title="170428">Include <code>mdcat:statuut</code> when defining isGeo and isOpen domains</li>
+      </ul>
+    </section>
+
     <section id="05/01/2023">
       <ul>
         <li title="167453">GeoDCAT: Prevent mapping of <code>gmd:distributorContact</code></li>
@@ -145,6 +154,7 @@
         <li title="161544">GeoDCAT: Fix incomplete GeoDCAT mapping of <code>dct:format</code></li>
         <li title="160480">Update gmd:otherConstraints subtemplates</li>
       </ul>
+      N
     </section>
 
     <section id="22/08/2022">
@@ -772,8 +782,9 @@
       <ol>
         <li>MVP: Imlement ISO19139 to GeoDCAT conversion</li>
         <li>Add new facet resultType containing all possible facets values: "all" <br>
-          Exemple URL: <a href="https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all"
-                          target="_blank">https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all</a>
+          Exemple URL: <a
+            href="https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all"
+            target="_blank">https://dev.metadata.vlaanderen.be/srv/dut/q?_content_type=json&fast=index&from=1&to=20&resultType=all</a>
         </li>
         <li>Add facets for elements:
           <table class="bullet-table">
