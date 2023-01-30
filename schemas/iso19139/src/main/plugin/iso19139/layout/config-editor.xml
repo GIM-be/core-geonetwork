@@ -674,7 +674,7 @@
             <template>
               <snippet>
                 <gmd:status>
-                  <gmd:MD_ProgressCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"
+                  <gmd:MD_ProgressCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"
                                        codeListValue=""/>
                 </gmd:status>
               </snippet>

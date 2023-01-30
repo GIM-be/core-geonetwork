@@ -335,7 +335,7 @@ Insert is made in first transferOptions found.
                 <xsl:if test="$function != ''">
                   <gmd:function>
                     <gmd:CI_OnLineFunctionCode
-                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                      codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
                       codeListValue="{$function}"/>
                   </gmd:function>
                 </xsl:if>
@@ -506,7 +506,7 @@ Insert is made in first transferOptions found.
               <xsl:if test="$function != ''">
                 <gmd:function>
                   <gmd:CI_OnLineFunctionCode
-                    codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                    codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
                     codeListValue="{$function}"/>
                 </gmd:function>
               </xsl:if>

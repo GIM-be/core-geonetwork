@@ -25,7 +25,6 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:gmd="http://www.isotc211.org/2005/gmd"
                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                xmlns:gmi="http://www.isotc211.org/2005/gmi"
                 xmlns:gco="http://www.isotc211.org/2005/gco"
                 xmlns:srv="http://www.isotc211.org/2005/srv"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -64,7 +63,7 @@
     <xsl:apply-templates mode="index"/>
   </xsl:template>
 
-  <xsl:template match="gmi:MI_Metadata|gmd:MD_Metadata"
+  <xsl:template match="gmd:MD_Metadata"
                 mode="extract-uuid">
     <xsl:value-of select="gmd:fileIdentifier/gco:CharacterString"/>
   </xsl:template>
@@ -74,7 +73,7 @@
 
   <xsl:template mode="index-extra-documents" match="*"/>
 
-  <xsl:template match="gmi:MI_Metadata|gmd:MD_Metadata"
+  <xsl:template match="gmd:MD_Metadata"
                 mode="index">
     <!-- Main variables for the document
 
