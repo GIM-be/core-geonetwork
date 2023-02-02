@@ -512,6 +512,12 @@
     <description>Organisatie die verantwoordelijk is voor de metadata.</description>
     <condition>mandatory</condition>
   </element>
+  <element name="gmd:contact" context="gmd:MD_MaintenanceInformation">
+    <label>Onderhouder</label>
+    <description>Identificatie van en communicatiemiddelen met de persoon/personen en organisatie(s) die
+      verantwoordelijk zijn voor het onderhoud van de metadata
+    </description>
+  </element>
   <element name="gmd:contactInfo">
     <label>Contact info</label>
     <description>Adres van de verantwoordelijke partij.</description>
