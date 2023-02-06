@@ -126,6 +126,7 @@ public class DraftMetadataManager extends BaseMetadataManager implements IMetada
         if (info instanceof Metadata) {
             return super.save((Metadata) info);
         } else if (info instanceof MetadataDraft) {
+            rdfCache.delete(info.getUuid(), true);
             return metadataDraftRepository.save((MetadataDraft) info);
         } else {
             throw new ClassCastException("Unknown AbstractMetadata subtype: " + info.getClass().getName());
@@ -152,6 +153,7 @@ public class DraftMetadataManager extends BaseMetadataManager implements IMetada
                 throw new ClassCastException("Unknown AbstractMetadata subtype: " + updater.getClass().getName());
             }
         }
+        rdfCache.delete(md.getUuid(), true);
         return md;
     }
 

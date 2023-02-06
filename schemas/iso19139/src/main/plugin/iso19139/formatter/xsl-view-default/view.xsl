@@ -559,7 +559,7 @@
     <xsl:apply-templates mode="render-content" select="gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode"/>
     <xsl:apply-templates mode="render-content" select="gmd:MD_MaintenanceInformation/gmd:dateOfNextUpdate"/>
     <xsl:call-template name="render-block-as-row-with-header">
-      <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:contact', 'gmd:dateOfNextUpdate')"/>
+      <xsl:with-param name="header" select="tr:nodeLabel($schemaLoc, 'gmd:contact', 'gmd:MD_MaintenanceInformation')"/>
       <xsl:with-param name="block">
         <xsl:apply-templates mode="render-content" select="gmd:MD_MaintenanceInformation/gmd:contact/gmd:CI_ResponsibleParty"/>
       </xsl:with-param>

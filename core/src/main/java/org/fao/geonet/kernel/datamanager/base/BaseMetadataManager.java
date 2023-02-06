@@ -1341,6 +1341,7 @@ public class BaseMetadataManager implements IMetadataManager {
     @Override
     public AbstractMetadata save(AbstractMetadata info) {
         if (info instanceof Metadata) {
+            rdfCache.delete(info.getUuid(), true);
             return metadataRepository.save((Metadata) info);
         } else {
             throw new ClassCastException("Unknown AbstractMetadata subtype: " + info.getClass().getName());
@@ -1350,6 +1351,7 @@ public class BaseMetadataManager implements IMetadataManager {
     @Override
     public AbstractMetadata update(int id, @Nonnull Updater<? extends AbstractMetadata> updater) {
         try {
+            rdfCache.delete(id, true);
             return metadataRepository.update(id, (Updater<Metadata>) updater);
         } catch (ClassCastException t) {
             throw new ClassCastException("Unknown AbstractMetadata subtype: " + updater.getClass().getName());

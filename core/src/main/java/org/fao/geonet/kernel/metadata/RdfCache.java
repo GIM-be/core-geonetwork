@@ -7,6 +7,7 @@ import org.fao.geonet.SystemInfo;
 import org.fao.geonet.constants.Edit;
 import org.fao.geonet.constants.Geonet;
 import org.fao.geonet.domain.AbstractMetadata;
+import org.fao.geonet.domain.Metadata;
 import org.fao.geonet.kernel.GeonetworkDataDirectory;
 import org.fao.geonet.kernel.SchemaManager;
 import org.fao.geonet.kernel.datamanager.IMetadataUtils;
@@ -15,11 +16,13 @@ import org.fao.geonet.kernel.schema.SchemaPlugin;
 import org.fao.geonet.kernel.search.MetaSearcher;
 import org.fao.geonet.kernel.search.SearchManager;
 import org.fao.geonet.kernel.search.SearcherType;
+import org.fao.geonet.repository.MetadataRepository;
 import org.fao.geonet.utils.Xml;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -35,6 +38,9 @@ public class RdfCache {
     private IMetadataUtils metadataUtils;
     private SearchManager searchMan;
     private SystemInfo systemInfo;
+
+    @Autowired
+    private MetadataRepository metadataRepository;
 
 
     public void init(ServiceContext context) throws IOException {
@@ -99,6 +105,13 @@ public class RdfCache {
         }
     }
 
+    public synchronized void delete(Integer id, boolean lookup) {
+        Metadata md = metadataRepository.findOne(id);
+        if (md != null) {
+            delete(md.getUuid(), lookup);
+        }
+    }
+
     public synchronized void emptyCache() {
         File[] files = this.gnDataDir
             .getRdfCacheDir()
@@ -150,6 +163,7 @@ public class RdfCache {
     }
 
     private boolean isCacheDisabled() {
-        return !SystemInfo.STAGE_PRODUCTION.equals(this.systemInfo.getStagingProfile());
+        // return !SystemInfo.STAGE_PRODUCTION.equals(this.systemInfo.getStagingProfile());
+        return false;
     }
 }
