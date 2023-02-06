@@ -726,7 +726,7 @@
                                 ends-with($Protocol, 'get-tile') or
                                 ends-with($Protocol, 'get-feature') or
                                 ends-with($Protocol, 'get-coverage') or
-                                starts-with($Protocol, 'OGC:OGC-API-Features')">
+                                (starts-with($Protocol, 'OGC:OGC-API-Features') and not(ends-with($Protocol, '-landingpage')))">
 
                     <xsl:variable name="encoding">
                       <xsl:choose>
