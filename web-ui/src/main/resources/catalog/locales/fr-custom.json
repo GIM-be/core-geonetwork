@@ -69,5 +69,9 @@
   "geoDescCode": "Identificator geografische begrenzing",
   "groupIsRequired": "Gelieve een groep te selecteren. Het metadatarecord komt in het beheer van de geselecteerde organisatie.",
   "standardName": "Profile",
-  "changelog": "Changelog"
+  "changelog": "Changelog",
+  "domain": "Domaine",
+  "fcats": "Feature Catalogue",
+  "hasfeaturecats": "A feature catalogue",
+  "related": "Lié"
 }

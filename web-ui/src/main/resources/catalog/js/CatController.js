@@ -184,7 +184,7 @@
             defaultUrl: ''
           },
           'grid': {
-            'related': ['parent', 'children', 'services', 'datasets']
+            'related': ['parent', 'children', 'services', 'datasets', 'fcats', 'hasfeaturecats', 'related']
           },
           'linkTypes': {
             'links': ['LINK', 'kml'],
