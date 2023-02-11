@@ -1817,7 +1817,7 @@
     <description>Gegevens van de voor de dataset verantwoordelijke organisatie.</description>
   </element>
   <element name="gmd:pointOfContact">
-    <label>Contactgegevens dataset(serie)</label>
+    <label>Contactgegevens service</label>
     <description>Gegevens van de voor de dataset verantwoordelijke organisatie.</description>
   </element>
   <element name="gmd:polygon">
@@ -2417,7 +2417,7 @@
   </element>
 
   <element name="gco:ScopedName">
-    <label>Naam van de laag in de service</label>
+    <label>Title van de Dataset</label>
     <description/>
     <help/>
     <condition/>
