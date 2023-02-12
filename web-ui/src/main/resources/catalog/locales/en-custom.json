@@ -79,6 +79,10 @@
   "rdfCacheClearFailure": "An error occurred while attempting to clear the RDF cache",
   "importFailed": "Importeren record mislukt",
   "importTimeout": "Timeout bereikt tijdens het importeren, controleer of de import alsnog gelukt is",
+  "domain": "Domain",
+  "fcats": "Feature catalog",
+  "hasfeaturecats": "Has feature catalog",
+  "related": "Related",
   "searchAlicence": "Select a license ...",
   "searchAprotocol": "Select a protocol ...",
   "resourceUriPattern": "Resource URI pattern",
@@ -86,5 +90,5 @@
   "isOpenData": "Open data",
   "accessRights": "Access rights",
   "NON_PUBLIC": "Not public",
-  "PUBLIC": "Public"
+  "PUBLIC": "Public",
 }

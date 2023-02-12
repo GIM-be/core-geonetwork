@@ -22,22 +22,22 @@
         <i class="fa fa-fw fa-save"/>
         <span class="visible-lg">{{(isTemplate() ? 'saveTemplate' : 'saveMetadata') | translate}}</span>
       </button>
-      <button type="button"
-              class="btn btn-success navbar-btn dropdown-toggle"
-              aria-label="{{'showOptions' | translate}}"
-              data-toggle="dropdown"
-              aria-expanded="false">
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-right" role="menu">
-        <li role="menuitem">
-          <a href=""
-             title="{{(isTemplate() ? 'saveAsMetadata' : 'saveAsTemplate') | translate}}"
-             data-gn-click-and-spin="switchTypeAndSave(true)">
-            {{(isTemplate() ? 'saveAsMetadata' : 'saveAsTemplate') | translate}}
-          </a>
-        </li>
-      </ul>
+      <!-- <button type="button" -->
+      <!--         class="btn btn-success navbar-btn dropdown-toggle" -->
+      <!--         aria-label="{{'showOptions' | translate}}" -->
+      <!--         data-toggle="dropdown" -->
+      <!--         aria-expanded="false"> -->
+      <!--   <span class="caret"></span> -->
+      <!-- </button> -->
+      <!-- <ul class="dropdown-menu dropdown-menu-right" role="menu"> -->
+      <!--   <li role="menuitem"> -->
+      <!--     <a href="" -->
+      <!--        title="{{(isTemplate() ? 'saveAsMetadata' : 'saveAsTemplate') | translate}}" -->
+      <!--        data-gn-click-and-spin="switchTypeAndSave(true)"> -->
+      <!--       {{(isTemplate() ? 'saveAsMetadata' : 'saveAsTemplate') | translate}} -->
+      <!--     </a> -->
+      <!--   </li> -->
+      <!-- </ul> -->
     </div>
     <data-gn-md-validation-tools></data-gn-md-validation-tools>
     <!-- TODO: automatic save status -->
