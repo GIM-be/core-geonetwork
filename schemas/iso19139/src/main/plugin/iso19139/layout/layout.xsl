@@ -463,7 +463,11 @@
     </xsl:call-template>
   </xsl:template>
 
-
+  <!-- Hide element from view -->
+  <xsl:template mode="mode-iso19139" priority="2001"
+                match="*[
+                  (name() = 'geonet:child' and name(..) = 'gmd:MD_MaintenanceInformation' and @name = 'contact')
+                ]"/>
 
   <xsl:template mode="mode-iso19139" match="gco:ScopedName|gco:LocalName">
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
