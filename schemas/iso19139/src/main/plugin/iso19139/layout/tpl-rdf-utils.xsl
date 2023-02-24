@@ -204,7 +204,7 @@
 
   <xsl:template name="Map-protocol">
     <xsl:param name="protocol"/>
-    <xsl:variable name="concept" select="$ProtocolCodelist/rdf:RDF/skos:Concept[skos:notation = $protocol][1]"/>
+    <xsl:variable name="concept" select="$ProtocolCodelist/rdf:RDF//skos:Concept[skos:notation = $protocol][1]"/>
     <xsl:if test="$concept != ''">
       <dct:conformsTo>
         <dct:Standard>
