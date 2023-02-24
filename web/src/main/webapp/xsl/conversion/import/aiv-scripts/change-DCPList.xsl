@@ -17,6 +17,6 @@
         <xsl:otherwise><xsl:value-of select="@codeListValue"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <srv:DCPList codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/DCPList.xml" codeListValue="{$codeListValue}"/>
+    <srv:DCPList codeList="http://standards.iso.org/iso/19115/resources/Codelists/gml/DCPList.xml" codeListValue="{$codeListValue}"/>
 	</xsl:template>
 </xsl:stylesheet>

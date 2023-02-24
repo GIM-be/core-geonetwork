@@ -92,7 +92,7 @@
   <xsl:template match="gmd:descriptiveKeywords[gmd:MD_Keywords/gmd:thesaurusName and (gmd:MD_Keywords/gmd:keyword/*/normalize-space(.)='Regionaal' or gmd:MD_Keywords/gmd:keyword/*/normalize-space(.)='infoMapAccessService' or gmd:MD_Keywords/gmd:keyword/*/normalize-space(.)='infoFeatureAccessService' or gmd:MD_Keywords/gmd:keyword/*/normalize-space(.)='infoCatalogueService' or gmd:MD_Keywords/gmd:keyword/*/normalize-space(.)='infoCoverageAccessService')]" priority="2000">
 	<xsl:call-template name="addDefaultKeywords"/>
   </xsl:template>
-  
+
   <xsl:template name="addDefaultKeywords">
     <xsl:variable name="previousDescriptiveKeywordsSiblingsCount"
                   select="count(preceding-sibling::*[name(.) = 'gmd:descriptiveKeywords'])"/>
@@ -105,7 +105,7 @@
 			  </gmd:keyword>
 			  <gmd:type>
 				<gmd:MD_KeywordTypeCode
-				  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+				  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
 				  codeListValue="theme"/>
 			  </gmd:type>
 			  <gmd:thesaurusName>
@@ -120,7 +120,7 @@
 					  </gmd:date>
 					  <gmd:dateType>
 						<gmd:CI_DateTypeCode
-						  codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+						  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
 						  codeListValue="publication"/>
 					  </gmd:dateType>
 					</gmd:CI_Date>
@@ -138,7 +138,7 @@
 							<gmx:Anchor xlink:href="{concat('http://inspire.ec.europa.eu/theme/',$altLabel)}"><xsl:value-of select="$thesauri/thesausus[@title = 'GEMET - INSPIRE themes, version 1.0']/skos:Concept[skos:altLabel=$altLabel]/skos:prefLabel[@xml:lang = 'nl']"/></gmx:Anchor>
 						</gmd:keyword>
 						<gmd:type>
-							<gmd:MD_KeywordTypeCode codeListValue="theme" codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"/>
+							<gmd:MD_KeywordTypeCode codeListValue="theme" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"/>
 						</gmd:type>
 						<gmd:thesaurusName>
 							<gmd:CI_Citation>
@@ -151,7 +151,7 @@
 											<gco:Date>2008-06-01</gco:Date>
 										</gmd:date>
 										<gmd:dateType>
-											<gmd:CI_DateTypeCode codeListValue="publication" codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
+											<gmd:CI_DateTypeCode codeListValue="publication" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
 										</gmd:dateType>
 									</gmd:CI_Date>
 								</gmd:date>
@@ -194,7 +194,7 @@
 										<gco:Date>2008-12-03</gco:Date>
 									</gmd:date>
 									<gmd:dateType>
-										<gmd:CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+										<gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
 									</gmd:dateType>
 								</gmd:CI_Date>
 							</gmd:date>
@@ -324,7 +324,7 @@
       </xsl:variable>
       <gmd:type>
         <gmd:MD_KeywordTypeCode codeListValue="{$codeListValue}"
-                                codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"/>
+                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"/>
       </gmd:type>
       <xsl:apply-templates select="gmd:thesaurusName"/>
     </xsl:copy>
@@ -341,7 +341,7 @@
     </xsl:variable>
     <xsl:copy copy-namespaces="no">
       <gmd:MD_KeywordTypeCode codeListValue="{$codeListValue}"
-                              codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"/>
+                              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"/>
     </xsl:copy>
   </xsl:template>
 

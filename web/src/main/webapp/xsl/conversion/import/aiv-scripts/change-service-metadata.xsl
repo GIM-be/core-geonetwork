@@ -8,7 +8,7 @@
 	<xsl:output method="xml" indent="yes"/>
 
   <xsl:template match="srv:couplingType [$nodeType='Geopunt' or $nodeType='MercatorNet']" priority="1000">
-    <srv:couplingType><srv:SV_CouplingType codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/SV_CouplingType.xml" codeListValue="tight" /></srv:couplingType>
+    <srv:couplingType><srv:SV_CouplingType codeList="http://standards.iso.org/iso/19115/resources/Codelists/gml/SV_CouplingType.xml" codeListValue="tight" /></srv:couplingType>
   </xsl:template>
 
   <xsl:template match="srv:serviceType/gco:LocalName[$nodeType='Geopunt' or $nodeType='MercatorNet']" priority="1000">
@@ -20,7 +20,7 @@
         <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <gco:LocalName codeSpace="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType"><xsl:value-of select="$localName"/></gco:LocalName>
+    <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType"><xsl:value-of select="$localName"/></gco:LocalName>
   </xsl:template>
 
   <xsl:template match="srv:serviceTypeVersion[$nodeType='Geopunt' or $nodeType='MercatorNet']" priority="1000"/>

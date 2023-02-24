@@ -26,7 +26,7 @@
           <xsl:otherwise><xsl:value-of select="gmd:MD_CharacterSetCode"/></xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
-      <gmd:MD_CharacterSetCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="{$newCodeListValue}"><xsl:value-of select="$characterSetCode" /></gmd:MD_CharacterSetCode>
+      <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="{$newCodeListValue}"><xsl:value-of select="$characterSetCode" /></gmd:MD_CharacterSetCode>
 		</xsl:copy>
 	</xsl:template>
 </xsl:stylesheet>

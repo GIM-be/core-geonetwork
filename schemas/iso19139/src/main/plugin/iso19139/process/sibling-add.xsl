@@ -159,7 +159,7 @@ Stylesheet used to add a reference to a related record using aggregation info.
                       <gco:Date><xsl:value-of select="$creationDate" /></gco:Date>
                     </gmd:date>
                     <gmd:dateType>
-                      <gmd:CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
+                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
                     </gmd:dateType>
                   </gmd:CI_Date>
                 </gmd:date>
@@ -171,7 +171,7 @@ Stylesheet used to add a reference to a related record using aggregation info.
                       <gco:Date><xsl:value-of select="$revisionDate" /></gco:Date>
                     </gmd:date>
                     <gmd:dateType>
-                      <gmd:CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
+                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
                     </gmd:dateType>
                   </gmd:CI_Date>
                 </gmd:date>
@@ -183,7 +183,7 @@ Stylesheet used to add a reference to a related record using aggregation info.
                       <gco:Date><xsl:value-of select="$publicationDate" /></gco:Date>
                     </gmd:date>
                     <gmd:dateType>
-                      <gmd:CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
                     </gmd:dateType>
                   </gmd:CI_Date>
                 </gmd:date>
@@ -209,13 +209,13 @@ Stylesheet used to add a reference to a related record using aggregation info.
           </gmd:aggregateDataSetIdentifier>
           <gmd:associationType>
             <gmd:DS_AssociationTypeCode
-              codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_AssociationTypeCode"
+              codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_AssociationTypeCode"
               codeListValue="{$associationType}"/>
           </gmd:associationType>
           <xsl:if test="$initiativeType != ''">
             <gmd:initiativeType>
               <gmd:DS_InitiativeTypeCode
-                codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_InitiativeTypeCode"
+                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#DS_InitiativeTypeCode"
                 codeListValue="{$initiativeType}"/>
             </gmd:initiativeType>
           </xsl:if>
