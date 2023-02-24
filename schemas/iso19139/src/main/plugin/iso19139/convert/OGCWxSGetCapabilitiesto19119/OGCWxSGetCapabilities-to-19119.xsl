@@ -135,13 +135,13 @@ Mapping between:
       <!-- === characterSet WCS OK-->
       <!-- ============================================================================= -->
       <characterSet>
-        <MD_CharacterSetCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8">UTF-8</MD_CharacterSetCode>
+        <MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8">UTF-8</MD_CharacterSetCode>
       </characterSet>
       <!-- ============================================================================= -->
       <!-- === hierarchyLevel and hierarchyLevelName WCS OK-->
       <!-- ============================================================================= -->
       <hierarchyLevel>
-        <MD_ScopeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="service"/>
+        <MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="service"/>
       </hierarchyLevel>
       <hierarchyLevelName>
         <gco:CharacterString>Dienst</gco:CharacterString>
@@ -398,10 +398,10 @@ Mapping between:
                     </gco:CharacterString>
                   </name>
                   <description>
-                    <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">access point</gmx:Anchor>
+                    <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">access point</gmx:Anchor>
                   </description>
                   <function>
-                    <CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="information"/>
+                    <CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="information"/>
                   </function>
                 </CI_OnlineResource>
               </onLine>
@@ -429,10 +429,10 @@ Mapping between:
 									<gco:CharacterString>Capabilities van de webdienst <xsl:value-of select="$ServiceTitel"/> (RESTful implementatie)</gco:CharacterString>
 									</name>
 									<description>
-										<gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">access point</gmx:Anchor>
+										<gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">access point</gmx:Anchor>
 									</description>
 									<function>
-										<CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="information"/>
+										<CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="information"/>
 									</function>
 								</CI_OnlineResource>
 							</onLine>
@@ -449,7 +449,7 @@ Mapping between:
           <scope>
             <DQ_Scope>
               <level>
-                <MD_ScopeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="service"/>
+                <MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="service"/>
               </level>
               <levelDescription>
                 <MD_ScopeDescription>
@@ -484,7 +484,7 @@ Mapping between:
 															<gco:Date>2010-12-08</gco:Date>
 														</date>
 														<dateType>
-															<CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+															<CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
 														</dateType>
 													</CI_Date>
 												</date>
@@ -526,7 +526,7 @@ Mapping between:
                             <gco:Date>2009-10-19</gco:Date>
                           </date>
                           <dateType>
-                            <CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+                            <CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
                           </dateType>
                         </CI_Date>
                       </date>
@@ -586,7 +586,7 @@ Mapping between:
                             </xsl:choose>
                           </date>
                           <dateType>
-                            <CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
+                            <CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</CI_DateTypeCode>
                           </dateType>
                         </CI_Date>
                       </date>

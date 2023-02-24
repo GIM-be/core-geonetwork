@@ -272,7 +272,7 @@
                   </gmd:description>
                   <gmd:function>
                     <gmd:CI_OnLineFunctionCode
-                      codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                      codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
                       codeListValue="information"/>
                   </gmd:function>
                 </gmd:CI_OnlineResource>

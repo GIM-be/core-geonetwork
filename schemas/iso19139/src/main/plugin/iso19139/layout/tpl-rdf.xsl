@@ -2082,7 +2082,7 @@
 
   <!-- Progress code -->
   <xsl:template name="ProgressCode" match="gmd:status/gmd:MD_ProgressCode[ends-with(@codeList,'#MD_ProgressCode')]">
-    <xsl:variable name="scheme" select="'https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode'"/>
+    <xsl:variable name="scheme" select="'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode'"/>
     <xsl:variable name="uri" select="concat($scheme, '_', normalize-space(@codeListValue))"/>
     <xsl:variable name="concept" select="$ProgressCodeCodelist//skos:Concept[@rdf:about = $uri]"/>
 

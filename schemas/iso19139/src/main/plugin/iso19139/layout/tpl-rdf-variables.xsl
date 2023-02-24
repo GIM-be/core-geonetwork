@@ -66,7 +66,7 @@
   </xsl:variable>
 
   <!-- INSPIRE code list URIs -->
-  <xsl:variable name="INSPIRECodelistUri">https://inspire.ec.europa.eu/metadata-codelist/</xsl:variable>
+  <xsl:variable name="INSPIRECodelistUri">http://inspire.ec.europa.eu/metadata-codelist/</xsl:variable>
   <xsl:variable name="SpatialDataServiceCategoryCodelistUri" select="concat($INSPIRECodelistUri,'SpatialDataServiceCategory')"/>
   <xsl:variable name="DegreeOfConformityCodelistUri" select="concat($INSPIRECodelistUri,'DegreeOfConformity')"/>
   <xsl:variable name="ResourceTypeCodelistUri" select="concat($INSPIRECodelistUri,'ResourceType')"/>

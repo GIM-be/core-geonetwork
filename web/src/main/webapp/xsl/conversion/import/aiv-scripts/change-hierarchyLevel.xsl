@@ -17,7 +17,7 @@
 			<xsl:with-param name="element" select="gmd:MD_ScopeCode"/>
 		</xsl:call-template>
 		<xsl:copy copy-namespaces="no">
-			<gmd:MD_ScopeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="{lower-case(gmd:MD_ScopeCode/@codeListValue)}"/>
+			<gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="{lower-case(gmd:MD_ScopeCode/@codeListValue)}"/>
 		</xsl:copy>
 		<xsl:variable name="hierarchyLevelNameValue">
 			<xsl:choose>

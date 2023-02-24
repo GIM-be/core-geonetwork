@@ -195,7 +195,7 @@
                                 codeListValue="{$mainLanguage}"/>
             </gmd:languageCode>
             <gmd:characterEncoding>
-              <gmd:MD_CharacterSetCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
+              <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
                                        codeListValue="{$defaultEncoding}"/>
             </gmd:characterEncoding>
           </gmd:PT_Locale>
@@ -256,7 +256,7 @@
   <!-- Change gmd:hierarchyLevelName -->
   <xsl:template match="gmd:hierarchyLevel[lower-case(gmd:MD_ScopeCode/@codeListValue)=('dataset','series','service')]">
     <xsl:copy copy-namespaces="no">
-      <gmd:MD_ScopeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="{lower-case(gmd:MD_ScopeCode/@codeListValue)}"/>
+      <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="{lower-case(gmd:MD_ScopeCode/@codeListValue)}"/>
     </xsl:copy>
     <xsl:variable name="hierarchyLevelNameValue">
       <xsl:choose>
@@ -568,7 +568,7 @@
   <!--  only accept the pointOfContact role code for a gmd:contact element -->
   <xsl:template match="gmd:role[name(../..)='gmd:contact']" priority="100">
     <gmd:role>
-      <gmd:CI_RoleCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+      <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
     </gmd:role>
   </xsl:template>
 
@@ -577,7 +577,7 @@
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
       <xsl:attribute name="codeList">
         <xsl:value-of
-          select="concat('https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#',local-name(.))"/>
+          select="concat('http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#',local-name(.))"/>
       </xsl:attribute>
       <!-- Keep the translation for the codeListValue attribute in the xml if exists and when required, see TG 2.0 -->
       <xsl:apply-templates select="node()"/>
@@ -589,7 +589,7 @@
       <xsl:apply-templates select="@*[name(.)!='codeList']"/>
       <xsl:attribute name="codeList">
         <xsl:value-of
-          select="concat('https://standards.iso.org/iso/19115/resources/Codelists/gml/',local-name(.),'.xml')"/>
+          select="concat('http://standards.iso.org/iso/19115/resources/Codelists/gml/',local-name(.),'.xml')"/>
       </xsl:attribute>
     </xsl:copy>
   </xsl:template>
