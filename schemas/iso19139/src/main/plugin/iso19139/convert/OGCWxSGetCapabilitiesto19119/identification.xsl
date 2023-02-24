@@ -97,7 +97,7 @@
                             <xsl:when test="$ows='true'">
                                 <xsl:value-of select="
                   ows11:ServiceIdentification/ows11:Title|
-									ows:ServiceIdentification/ows:Title|							
+									ows:ServiceIdentification/ows:Title|
 									ows2:ServiceIdentification/ows2:Title|
 									/wps1:Capabilities/ows11:ServiceIdentification/ows11:Title|
 								    /wps2:Capabilities/ows2:ServiceIdentification/ows2:Title
@@ -135,7 +135,7 @@
                             </date>
                             <dateType>
                                 <CI_DateTypeCode
-                                        codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                         codeListValue="revision"/>
                             </dateType>
                         </CI_Date>
@@ -158,7 +158,7 @@
                             </date>
                             <dateType>
                                 <CI_DateTypeCode
-                                        codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                         codeListValue="creation"/>
                             </dateType>
                         </CI_Date>
@@ -181,7 +181,7 @@
                             </date>
                             <dateType>
                                 <CI_DateTypeCode
-                                        codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                         codeListValue="publication"/>
                             </dateType>
                         </CI_Date>
@@ -200,7 +200,7 @@
                         </date>
                         <dateType>
                             <CI_DateTypeCode
-                                    codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                    codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                     codeListValue="revision"/>
                         </dateType>
                     </CI_Date>
@@ -217,7 +217,7 @@
                                 </gco:Date>
                             </date>
                             <dateType>
-                                <CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                                <CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
                             </dateType>
                         </CI_Date>
                     </date>
@@ -316,7 +316,7 @@
                                 </date>
                                 <dateType>
                                     <CI_DateTypeCode
-                                            codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                            codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                             codeListValue="publication">publication
                                     </CI_DateTypeCode>
                                 </dateType>
@@ -353,7 +353,7 @@
                                         </date>
                                         <dateType>
                                             <CI_DateTypeCode
-                                                    codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                    codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                                     codeListValue="publication">publication
                                             </CI_DateTypeCode>
                                         </dateType>
@@ -513,7 +513,7 @@
                                         </date>
                                         <dateType>
                                             <CI_DateTypeCode codeListValue="publication"
-                                                             codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
+                                                             codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
                                         </dateType>
                                     </CI_Date>
                                 </date>
@@ -541,7 +541,7 @@
                 </useLimitation>
                 <useConstraints>
                     <MD_RestrictionCode
-                            codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                            codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
                             codeListValue="otherRestrictions"/>
                 </useConstraints>
                 <otherConstraints>
@@ -559,12 +559,12 @@
                 </useLimitation>
                 <accessConstraints>
                     <MD_RestrictionCode
-                            codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                            codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
                             codeListValue="otherRestrictions"/>
                 </accessConstraints>
                 <otherConstraints>
                     <gmx:Anchor
-                            xlink:href="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">
+                            xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">
                         Geen beperkingen op de publieke toegang
                     </gmx:Anchor>
                 </otherConstraints>
@@ -583,14 +583,14 @@
             <xsl:value-of select="concat('http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/', $ServiceType)"/>
         </xsl:variable>
 
-        <xsl:variable name="ServiceTypeName" select="document('https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/SpatialDataServiceType.nl.iso19135xml')//grg:RE_Register/grg:containedItem[@xlink:href=$ServiceTypeUrl]/grg:RE_RegisterItem/grg:name/gco:CharacterString"/>
+        <xsl:variable name="ServiceTypeName" select="document('http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/SpatialDataServiceType.nl.iso19135xml')//grg:RE_Register/grg:containedItem[@xlink:href=$ServiceTypeUrl]/grg:RE_RegisterItem/grg:name/gco:CharacterString"/>
         <srv:serviceType>
-            <gco:LocalName codeSpace="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType">
+            <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType">
                 <xsl:value-of select="$ServiceTypeName"/>
             </gco:LocalName>
         </srv:serviceType>-->
         <srv:serviceType>
-            <gco:LocalName codeSpace="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType">
+            <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType">
                 <xsl:value-of select="//*:ExtendedCapabilities/inspire_common:SpatialDataServiceType"/>
             </gco:LocalName>
         </srv:serviceType>
@@ -704,7 +704,7 @@
         <!-- ============================================================================= -->
         <srv:couplingType>
             <srv:SV_CouplingType
-                    codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/SV_CouplingType.xml"
+                    codeList="http://standards.iso.org/iso/19115/resources/Codelists/gml/SV_CouplingType.xml"
                     codeListValue="tight"/>
         </srv:couplingType>
         <!-- ============================================================================= -->
@@ -739,7 +739,7 @@
                         </gco:CharacterString>
                     </srv:operationName>
                     <srv:DCP>
-                        <srv:DCPList codeList="https://standards.iso.org/iso/19115/resources/Codelists/gml/DCPList.xml"
+                        <srv:DCPList codeList="http://standards.iso.org/iso/19115/resources/Codelists/gml/DCPList.xml"
                                      codeListValue="HTTP"/>
                     </srv:DCP>
                     <xsl:choose>
@@ -858,45 +858,45 @@
         </xsl:call-template>
         <xsl:if test="count(Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and
 									lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
-									lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+									lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and
 									lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
-									lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
-									lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
-						count(wms:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+									lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and
+									lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) +
+						count(wms:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and
 										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
-										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and
 										  lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
-										  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
-										  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
-						count(ows:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and
+										  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) +
+						count(ows:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and
 										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
-										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and
 										  lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
-									      lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
-									      lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
-						count(ows11:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+									      lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and
+									      lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) +
+						count(ows11:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and
 											lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
-											lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+											lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and
 											lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
-											lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
-											lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
-            count(ows2:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+											lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and
+											lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) +
+            count(ows2:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and
 											lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
-											lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+											lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and
 											lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
-											lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
-											lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
-						count(wfs:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+											lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and
+											lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) +
+						count(wfs:Keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and
 										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
-										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and
 										  lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
-										  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
-										  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) + 
-						count(wcs:keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and
+										  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) +
+						count(wcs:keyword[lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and
 										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
-										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and
 										  lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
-										  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
+										  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and
 										  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)]) > 0">
             <!--Lijst M&R-->
             <xsl:for-each select="ows:Keyword | ows11:Keyword | ows2:Keyword | wfs:Keyword | wcs:keyword">
@@ -924,7 +924,7 @@
                                             </date>
                                             <dateType>
                                                 <CI_DateTypeCode
-                                                        codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                                         codeListValue="publication">publication
                                                 </CI_DateTypeCode>
                                             </dateType>
@@ -943,9 +943,9 @@
                             select="Keyword | wms:Keyword | ows:Keyword | ows11:Keyword | ows2:Keyword | wfs:Keyword | wcs:keyword">
                         <xsl:if test="lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-regios-thesaurus) and
 											  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-service-types-thesaurus) and
-											  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and 
+											  lower-case(@vocabulary)!=lower-case($gdi-vlaanderen-trefwoorden-thesaurus) and
 											  lower-case(@vocabulary)!=lower-case($gemet-thesaurus) and
-											  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and 
+											  lower-case(@vocabulary)!=lower-case($inspire-service-taxonomy-thesaurus) and
 											  lower-case(@vocabulary)!=lower-case($inspire-theme-thesaurus)">
                             <xsl:variable name="keywordValue" select="normalize-space(.)"/>
                             <xsl:if test="$keywordValue!='infoMapAccessService' and $keywordValue!='infoFeatureAccessService' and $keywordValue!='Lijst M&amp;R INSPIRE' and  $keywordValue!='infoCoverageAccessService'">
@@ -973,7 +973,7 @@
         <xsl:variable name="lowerCaseThesaurusTitle" select="lower-case($thesaurusTitle)"/>
         <!--inspireTheme_dut-->
         <xsl:if test="(count(//inspire_common:Keyword[ends-with(@xsi:type,'inspireTheme_dut')]/inspire_common:KeywordValue) > 0 and
-		$lowerCaseThesaurusTitle=lower-case($inspire-theme-thesaurus)) or 
+		$lowerCaseThesaurusTitle=lower-case($inspire-theme-thesaurus)) or
 		(count(Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wms:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(ows:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(ows11:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(ows2:Keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wfs:Keywords[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) + count(wcs:keyword[lower-case(@vocabulary)=$lowerCaseThesaurusTitle]) > 0)">
             <descriptiveKeywords>
                 <MD_Keywords>
@@ -1051,7 +1051,7 @@
                                     </date>
                                     <dateType>
                                         <CI_DateTypeCode
-                                                codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
                                                 codeListValue="publication">publication
                                         </CI_DateTypeCode>
                                     </dateType>

@@ -2,63 +2,63 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:skos="http://www.w3.org/2004/02/skos/core#">
 
-  <skos:ConceptScheme rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
+  <skos:ConceptScheme rdf:about="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
 
-  <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_completed">
+  <skos:Concept rdf:about="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_completed">
     <skos:prefLabel xml:lang="nl">Compleet</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Completed</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Finalisé</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Abgeschlossen</skos:prefLabel>
-    <skos:inScheme rdf:resource="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
+    <skos:inScheme rdf:resource="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
   </skos:Concept>
 
-  <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_historicalArchive">
+  <skos:Concept rdf:about="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_historicalArchive">
     <skos:prefLabel xml:lang="nl">Historisch archief</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Historical archive</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Archivé</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Historisches Archiv</skos:prefLabel>
-    <skos:inScheme rdf:resource="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
+    <skos:inScheme rdf:resource="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
   </skos:Concept>
 
-  <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_obsolete">
+  <skos:Concept rdf:about="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_obsolete">
     <skos:prefLabel xml:lang="nl">Niet relevant</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Obsolete</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Obsolète</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Veraltet</skos:prefLabel>
-    <skos:inScheme rdf:resource="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
+    <skos:inScheme rdf:resource="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
   </skos:Concept>
 
-  <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_onGoing">
+  <skos:Concept rdf:about="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_onGoing">
     <skos:prefLabel xml:lang="nl">Continu geactualiseerd</skos:prefLabel>
     <skos:prefLabel xml:lang="en">On going</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Mise à jour continue</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Kontinuierliche Aktualisierung</skos:prefLabel>
-    <skos:inScheme rdf:resource="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
+    <skos:inScheme rdf:resource="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
   </skos:Concept>
 
-  <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_planned">
+  <skos:Concept rdf:about="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_planned">
     <skos:prefLabel xml:lang="nl">Gepland</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Planned</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Planifié</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Geplant</skos:prefLabel>
-    <skos:inScheme rdf:resource="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
+    <skos:inScheme rdf:resource="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
   </skos:Concept>
 
-  <skos:Concept rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_required">
+  <skos:Concept rdf:about="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_required">
     <skos:prefLabel xml:lang="nl">Actualisatie vereist</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Required</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">Création ou mise à jour requise</skos:prefLabel>
     <skos:prefLabel xml:lang="de">Erforderlich</skos:prefLabel>
-    <skos:inScheme rdf:resource="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
+    <skos:inScheme rdf:resource="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
   </skos:Concept>
 
   <skos:Concept
-      rdf:about="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_underDevelopment">
+      rdf:about="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode_underDevelopment">
     <skos:prefLabel xml:lang="nl">In ontwikkeling</skos:prefLabel>
     <skos:prefLabel xml:lang="en">Under development</skos:prefLabel>
     <skos:prefLabel xml:lang="fr">En cours de création</skos:prefLabel>
     <skos:prefLabel xml:lang="de">In Erstellung</skos:prefLabel>
-    <skos:inScheme rdf:resource="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
+    <skos:inScheme rdf:resource="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
   </skos:Concept>
 
 </rdf:RDF>

@@ -114,7 +114,7 @@ attached it to the metadata for data.
             <gco:Date><xsl:value-of select="//mdToBeAggregated/gfc:FC_FeatureCatalogue/gmx:versionDate/gco:Date"/></gco:Date>
           </gmd:date>
           <gmd:dateType>
-            <gmd:CI_DateTypeCode codeListValue="revision" codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
+            <gmd:CI_DateTypeCode codeListValue="revision" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
           </gmd:dateType>
         </gmd:CI_Date>
       </gmd:date>
