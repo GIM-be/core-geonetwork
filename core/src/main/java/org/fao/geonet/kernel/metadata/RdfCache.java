@@ -163,7 +163,6 @@ public class RdfCache {
     }
 
     private boolean isCacheDisabled() {
-        // return !SystemInfo.STAGE_PRODUCTION.equals(this.systemInfo.getStagingProfile());
-        return false;
+        return !SystemInfo.STAGE_PRODUCTION.equals(this.systemInfo.getStagingProfile());
     }
 }

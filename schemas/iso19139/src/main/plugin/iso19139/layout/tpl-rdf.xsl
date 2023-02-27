@@ -562,9 +562,7 @@
                         <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"/>
                       </dct:title>
                       <xsl:if test="$link != ''">
-                        <dct:conformsTo>
-                          <dct:Standard rdf:resource="{$link}"/>
-                        </dct:conformsTo>
+                        <dct:conformsTo rdf:resource="{$link}"/>
                       </xsl:if>
                     </dcat:Dataset>
                   </dcat:servesDataset>
@@ -1182,10 +1180,10 @@
       <foaf:Agent>
         <xsl:choose>
           <xsl:when test="$IndividualURI != ''">
-            <xsl:attribute name="rdf:resource" select="$IndividualURI"/>
+            <xsl:attribute name="rdf:about" select="$IndividualURI"/>
           </xsl:when>
           <xsl:when test="$OrganisationURI != ''">
-            <xsl:attribute name="rdf:resource" select="$OrganisationURI"/>
+            <xsl:attribute name="rdf:about" select="$OrganisationURI"/>
           </xsl:when>
         </xsl:choose>
         <xsl:copy-of select="$info"/>
@@ -1212,10 +1210,10 @@
       <vcard:Organization>
         <xsl:choose>
           <xsl:when test="$IndividualURI != ''">
-            <xsl:attribute name="rdf:resource" select="$IndividualURI"/>
+            <xsl:attribute name="rdf:about" select="$IndividualURI"/>
           </xsl:when>
           <xsl:when test="$OrganisationURI != ''">
-            <xsl:attribute name="rdf:resource" select="$OrganisationURI"/>
+            <xsl:attribute name="rdf:about" select="$OrganisationURI"/>
           </xsl:when>
         </xsl:choose>
         <xsl:copy-of select="$info"/>

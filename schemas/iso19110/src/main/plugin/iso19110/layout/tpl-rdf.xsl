@@ -51,7 +51,7 @@
   <!--
     Convert ISO record to DCAT
     -->
-  <xsl:template match="gfc:FC_FeatureCatalogue|gfc:FC_FeatureType" mode="to-dcat">
+  <xsl:template match="gfc:FC_FeatureCatalogue|gfc:FC_FeatureType" mode="to-dcat-disabled">
     <!-- Catalogue records
       "A record in a data catalog, describing a single dataset."
     -->
