@@ -18,7 +18,7 @@
 
   <!-- If the keyword doesn't exist yet, this template copy every dcat element in the right order and add the missing keyword -->
   <xsl:template match="dcat:Dataset">
-    <xsl:copy>
+    <xsl:copy copy-namespaces="no">
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates select="dct:identifier"/>
       <xsl:apply-templates select="dct:title"/>
