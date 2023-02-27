@@ -29,6 +29,21 @@
         <li title="170427">GeoDCAT: Fix topConcept protocol not being mapped</li>
         <li title="172504">Update protocol thesaurus</li>
         <li title="168066">Fix <code>dct:subject</code> still added during the harvesting procedure. Now using <code>mdcat:statuut</code>
+        <li title="172335">GeoDCAT: Fix invalid RDF syntax
+          <ul>
+            <li><code>foaf:Agent</code> was using <code>rdf:resource</code> attribute instead of <code>rdf:about</code>
+            </li>
+            <li><code>vcard:Organization</code> had the same issue</li>
+            <li>In the <code>dcat:servesDataset</code>, the <code>dct:conformsTo</code> of the was declaring a <code>dct:Standard</code>
+              with a <code>rdf:resource</code> attribute. It should either be a <code>rdf:about</code> attribute on the
+              <code>dct:Standard</code> level or a <code>rdf:resource</code> on the <code>dct:conformsTo</code> level.
+              The second option was implemented (both solutions are semantically the same but the second result in a
+              more readable feed)
+            </li>
+            <li>ISO19110 was mapped to an almost empty <code>rdf:Description</code> without any specific rdf:type. The
+              mapping is now completely removed
+            </li>
+          </ul>
         </li>
       </ul>
     </section>
