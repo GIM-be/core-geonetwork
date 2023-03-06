@@ -979,7 +979,7 @@
     <xsl:variable name="IndividualName-vCard">
       <xsl:for-each select="gmd:individualName">
         <vcard:fn xml:lang="{$MetadataLanguage}">
-          <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
+          <xsl:value-of select="normalize-space(*[name() = ('gco:CharacterString', 'gmx:Anchor')])"/>
         </vcard:fn>
         <xsl:call-template name="LocalisedString">
           <xsl:with-param name="term">vcard:fn</xsl:with-param>
@@ -1005,7 +1005,7 @@
     <xsl:variable name="OrganisationName-FOAF">
       <xsl:for-each select="gmd:organisationName">
         <foaf:name xml:lang="{$MetadataLanguage}">
-          <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
+          <xsl:value-of select="normalize-space(*[name() = ('gco:CharacterString', 'gmx:Anchor')])"/>
         </foaf:name>
         <xsl:call-template name="LocalisedString">
           <xsl:with-param name="term">foaf:name</xsl:with-param>
@@ -1016,7 +1016,7 @@
     <xsl:variable name="OrganisationName-vCard">
       <xsl:for-each select="gmd:organisationName">
         <vcard:organization-name xml:lang="{$MetadataLanguage}">
-          <xsl:value-of select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
+          <xsl:value-of select="normalize-space(*[name() = ('gco:CharacterString', 'gmx:Anchor')])"/>
         </vcard:organization-name>
         <xsl:call-template name="LocalisedString">
           <xsl:with-param name="term">vcard:organization-name</xsl:with-param>
@@ -1026,7 +1026,7 @@
 
     <xsl:variable name="OrganisationNameAsIndividualName-vCard">
       <xsl:for-each select="gmd:organisationName">
-        <xsl:variable name="orgName" select="normalize-space(*[self::gco:CharacterString|gmx:Anchor])"/>
+        <xsl:variable name="orgName" select="normalize-space(*[name() = ('gco:CharacterString', 'gmx:Anchor')])"/>
         <xsl:if test="$orgName != ''">
           <vcard:fn xml:lang="{$MetadataLanguage}">
             <xsl:value-of select="$orgName"/>
