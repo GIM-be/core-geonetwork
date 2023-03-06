@@ -24,7 +24,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:gfc="http://www.isotc211.org/2005/gfc"
-                version="1.0">
+                version="2.0">
 
   <!-- ================================================================= -->
 
@@ -34,12 +34,12 @@
 
   <!-- ================================================================= -->
 
-  <xsl:template match="gfc:FC_FeatureCatalogue|gfc:FC_FeatureType">
+  <xsl:template match="gfc:FC_FeatureCatalogue|gfc:FC_FeatureType[not(parent::node())]">
     <xsl:copy>
       <xsl:attribute name="uuid">
         <xsl:value-of select="/root/env/uuid"/>
       </xsl:attribute>
-      <xsl:apply-templates select="@*|node()"/>
+      <xsl:apply-templates select="@*[name() != 'uuid']|node()"/>
     </xsl:copy>
   </xsl:template>
 
