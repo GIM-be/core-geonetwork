@@ -79,7 +79,7 @@
   <xsl:variable name="MaintenanceFrequencyCodelistUri" select="concat($INSPIRECodelistUri,'MaintenanceFrequencyCode')"/>
 
   <!-- INSPIRE glossary URI -->
-  <xsl:variable name="INSPIREGlossaryUri">https://inspire.ec.europa.eu/glossary/</xsl:variable>
+  <xsl:variable name="INSPIREGlossaryUri">http://inspire.ec.europa.eu/glossary/</xsl:variable>
 
   <!-- GIM custom variables -->
   <xsl:variable name="catalogUrl" select="concat(substring-before($resourcePrefix, '/resource'), '/dut')"/>
