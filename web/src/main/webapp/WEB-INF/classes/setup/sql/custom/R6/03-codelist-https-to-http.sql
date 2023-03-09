@@ -8,7 +8,7 @@ where isharvested = 'n'
 
 update dbo.metadata
 set data = cast(replace(cast(data as NVarchar(MAX)),
-                        'https://inspire.ec.europa.eu/metadata-codelist/',
-                        'http://inspire.ec.europa.eu/metadata-codelist/') as text)
+                        'https://inspire.ec.europa.eu/',
+                        'http://inspire.ec.europa.eu/') as text)
 where isharvested = 'n'
-  and data like '%https://inspire.ec.europa.eu/metadata-codelist/%';
+  and data like '%https://inspire.ec.europa.eu/%';

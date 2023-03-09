@@ -566,10 +566,10 @@ Mapping between:
                       <title>
                         <xsl:choose>
                           <xsl:when test="$NetwerkDienst='View'">
-                            <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/documents/technical-guidance-implementation-inspire-view-services-1">Technical Guidance for the implementation of INSPIRE View Services</gmx:Anchor>
+                            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/documents/technical-guidance-implementation-inspire-view-services-1">Technical Guidance for the implementation of INSPIRE View Services</gmx:Anchor>
                           </xsl:when>
                           <xsl:otherwise>
-                            <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/documents/technical-guidance-implementation-inspire-download-services">Technical Guidance for the implementation of INSPIRE Download Services</gmx:Anchor>
+                            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/documents/technical-guidance-implementation-inspire-download-services">Technical Guidance for the implementation of INSPIRE Download Services</gmx:Anchor>
                           </xsl:otherwise>
                         </xsl:choose>
                       </title>
