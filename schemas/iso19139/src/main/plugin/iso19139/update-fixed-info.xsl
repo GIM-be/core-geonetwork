@@ -861,6 +861,12 @@
     </xsl:copy>
   </xsl:template>
 
+
+  <!-- Fix INSPIRE codelist still under HTTPS instead of HTTP -->
+  <xsl:template match="@*[starts-with(string(), 'https://inspire.ec.europa.eu')]">
+    <xsl:attribute name="{name()}" select="replace(., 'https://inspire.ec.europa.eu', 'http://inspire.ec.europa.eu')"/>
+  </xsl:template>
+
   <!-- ================================================================= -->
   <!-- copy everything else as is -->
 
