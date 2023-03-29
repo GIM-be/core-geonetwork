@@ -849,7 +849,7 @@
 
           <!-- gmd:graphical-->
           <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic">
-            <xsl:variable name="fileName" select="normalize-space(gmd:fileName/*/text())"/>
+            <xsl:variable name="fileName" select="geonet:escapeURI(normalize-space(gmd:fileName/*/text()))"/>
             <xsl:variable name="fileType" select="normalize-space(gmd:fileType/*/text())"/>
             <xsl:variable name="fileDescription" select="normalize-space(gmd:fileDescription/*/text())"/>
             <xsl:if test="$fileName">
