@@ -313,7 +313,7 @@
         <xsl:with-param name="insertRef" select="$theElement/gn:element/@ref"/>
       </xsl:apply-templates>
       <xsl:apply-templates mode="render-for-field-for-attribute"
-                           select="*/@*">
+                           select="*/@*[not(name() = 'gco:nilReason' and string() = 'custom')]">
         <xsl:with-param name="ref" select="$theElement/gn:element/@ref"/>
         <xsl:with-param name="insertRef" select="$theElement/gn:element/@ref"/>
       </xsl:apply-templates>

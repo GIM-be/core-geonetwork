@@ -460,13 +460,6 @@
       </xsl:choose>
 
 
-      <!-- For multilingual records, for multilingual fields,
-       create a gco:CharacterString or gmx:Anchor containing
-       the same value as the default language PT_FreeText.
-      -->
-      <xsl:variable name="element" select="name()"/>
-
-
       <xsl:choose>
         <!-- Check record does not contains multilingual elements
           matching the main language. This may happen if the main
@@ -481,8 +474,12 @@
             <xsl:value-of select="$valueInPtFreeTextForMainLanguage"/>
           </xsl:element>
         </xsl:when>
-        <xsl:when test="not($isMultilingual) or
-                        $excluded">
+        <xsl:when test="(not($isMultilingual) or $excluded) and gco:CharacterString[@gco:nilReason = 'custom']">
+          <gmx:Anchor gco:nilReason="custom" xlink:href="">
+            <xsl:value-of select="gco:CharacterString"/>
+          </gmx:Anchor>
+        </xsl:when>
+        <xsl:when test="not($isMultilingual) or $excluded">
           <!-- Copy gco:CharacterString only. PT_FreeText are removed if not multilingual. -->
           <xsl:apply-templates select="gco:CharacterString|gmx:Anchor"/>
         </xsl:when>
