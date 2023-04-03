@@ -2417,7 +2417,7 @@
   </element>
 
   <element name="gco:ScopedName">
-    <label>Title van de Dataset</label>
+    <label>Titel van de Dataset</label>
     <description/>
     <help/>
     <condition/>
