@@ -70,7 +70,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:geodcat="http://data.europa.eu/930/"
-                xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
+                xmlns:mdcat="https://data.vlaanderen.be/ns/metadata-dcat#"
                 xmlns:sdmx-attribute="http://purl.org/linked-data/sdmx/2009/attribute#"
                 xmlns:adres="https://data.vlaanderen.be/ns/adres#"
                 xmlns:vlgen="https://data.vlaanderen.be/ns/generiek"
