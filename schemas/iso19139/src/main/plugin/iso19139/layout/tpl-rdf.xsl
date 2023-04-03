@@ -775,11 +775,14 @@
                                     <xsl:when test="contains($Protocol, 'WMTS')">
                                       <xsl:attribute name="rdf:datatype" select="'http://schemas.opengis.net/wmts#Layer'"/>
                                     </xsl:when>
-                                    <xsl:when test="contains($Protocol, 'WFS') or starts-with($Protocol, 'OGC:OGC-API-Features')">
+                                    <xsl:when test="contains($Protocol, 'WFS')">
                                       <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wfs#FeatureType'"/>
                                     </xsl:when>
                                     <xsl:when test="contains($Protocol, 'WCS')">
                                       <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wcs#CoverageDescription'"/>
+                                    </xsl:when>
+                                    <xsl:when test="starts-with($Protocol, 'OGC:OGC-API-Features')">
+                                      <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/ogcapi-features-1/1.0#Collection'"/>
                                     </xsl:when>
                                   </xsl:choose>
                                   <xsl:value-of select="$LayerName"/>
