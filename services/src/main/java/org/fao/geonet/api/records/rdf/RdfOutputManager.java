@@ -353,7 +353,7 @@ public class RdfOutputManager {
             "xmlns:adms=\"http://www.w3.org/ns/adms#\" " +
             "xmlns:vcard=\"http://www.w3.org/2006/vcard/ns#\" " +
             "xmlns:vlgen=\"https://data.vlaanderen.be/ns/generiek\" " +
-            "xmlns:mdcat=\"http://data.vlaanderen.be/ns/metadata-dcat#\" " +
+            "xmlns:mdcat=\"https://data.vlaanderen.be/ns/metadata-dcat#\" " +
             "xmlns:adres=\"https://data.vlaanderen.be/ns/adres#\" " +
             "xmlns:cnt=\"http://www.w3.org/2011/content#\" " +
             "xmlns:geodcat=\"http://data.europa.eu/930/\" " +
@@ -437,7 +437,7 @@ public class RdfOutputManager {
             .replace(" xmlns:adms=\"http://www.w3.org/ns/adms#\"", "")
             .replace(" xmlns:vcard=\"http://www.w3.org/2006/vcard/ns#\"", "")
             .replace(" xmlns:vlgen=\"https://data.vlaanderen.be/ns/generiek\"", "")
-            .replace(" xmlns:mdcat=\"http://data.vlaanderen.be/ns/metadata-dcat#\"", "")
+            .replace(" xmlns:mdcat=\"https://data.vlaanderen.be/ns/metadata-dcat#\"", "")
             .replace(" xmlns:adres=\"https://data.vlaanderen.be/ns/adres#\"", "")
             .replace(" xmlns:cnt=\"http://www.w3.org/2011/content#\"", "")
             .replace(" xmlns:dqv=\"http://www.w3.org/ns/dqv#\"", "")
