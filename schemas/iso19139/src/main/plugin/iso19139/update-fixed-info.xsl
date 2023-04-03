@@ -474,11 +474,6 @@
             <xsl:value-of select="$valueInPtFreeTextForMainLanguage"/>
           </xsl:element>
         </xsl:when>
-        <xsl:when test="(not($isMultilingual) or $excluded) and gco:CharacterString[@gco:nilReason = 'custom']">
-          <gmx:Anchor gco:nilReason="custom" xlink:href="">
-            <xsl:value-of select="gco:CharacterString"/>
-          </gmx:Anchor>
-        </xsl:when>
         <xsl:when test="not($isMultilingual) or $excluded">
           <!-- Copy gco:CharacterString only. PT_FreeText are removed if not multilingual. -->
           <xsl:apply-templates select="gco:CharacterString|gmx:Anchor"/>
@@ -791,6 +786,19 @@
   -->
   <xsl:template match="gmd:extent[gmd:EX_Extent/not(*)]|srv:extent[gmd:EX_Extent/not(*)]"/>
 
+
+  <xsl:template match="gmd:otherConstraints[*/@gco:nilReason = 'custom' or @gco:nilReason = 'custom']" priority="200">
+    <xsl:copy copy-namespaces="no">
+      <xsl:attribute name="gco:nilReason" select="'custom'"/>
+      <xsl:apply-templates select="@*"/>
+      <gmx:Anchor xlink:href="{gmx:Anchor/@xlink:href}">
+        <xsl:for-each select="gmx:Anchor/@*[name() != 'gco:nilReason' and name() != 'xlink:href']">
+          <xsl:attribute name="{name()}" select="string()"/>
+        </xsl:for-each>
+        <xsl:value-of select="string(*)"/>
+      </gmx:Anchor>
+    </xsl:copy>
+  </xsl:template>
 
   <xsl:template match="gmd:dateTime" priority="200">
     <xsl:variable name="child" select="gco:Date|gco:DateTime"/>
