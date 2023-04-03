@@ -70,7 +70,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:geodcat="http://data.europa.eu/930/"
-                xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
+                xmlns:mdcat="https://data.vlaanderen.be/ns/metadata-dcat#"
                 xmlns:sdmx-attribute="http://purl.org/linked-data/sdmx/2009/attribute#"
                 xmlns:adres="https://data.vlaanderen.be/ns/adres#"
                 xmlns:vlgen="https://data.vlaanderen.be/ns/generiek"
@@ -775,11 +775,14 @@
                                     <xsl:when test="contains($Protocol, 'WMTS')">
                                       <xsl:attribute name="rdf:datatype" select="'http://schemas.opengis.net/wmts#Layer'"/>
                                     </xsl:when>
-                                    <xsl:when test="contains($Protocol, 'WFS') or starts-with($Protocol, 'OGC:OGC-API-Features')">
+                                    <xsl:when test="contains($Protocol, 'WFS')">
                                       <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wfs#FeatureType'"/>
                                     </xsl:when>
                                     <xsl:when test="contains($Protocol, 'WCS')">
                                       <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/wcs#CoverageDescription'"/>
+                                    </xsl:when>
+                                    <xsl:when test="starts-with($Protocol, 'OGC:OGC-API-Features')">
+                                      <xsl:attribute name="rdf:datatype" select="'http://www.opengis.net/ogcapi-features-1/1.0#Collection'"/>
                                     </xsl:when>
                                   </xsl:choose>
                                   <xsl:value-of select="$LayerName"/>
@@ -849,7 +852,7 @@
 
           <!-- gmd:graphical-->
           <xsl:for-each select="gmd:identificationInfo/gmd:MD_DataIdentification/gmd:graphicOverview/gmd:MD_BrowseGraphic">
-            <xsl:variable name="fileName" select="normalize-space(gmd:fileName/*/text())"/>
+            <xsl:variable name="fileName" select="geonet:escapeURI(normalize-space(gmd:fileName/*/text()))"/>
             <xsl:variable name="fileType" select="normalize-space(gmd:fileType/*/text())"/>
             <xsl:variable name="fileDescription" select="normalize-space(gmd:fileDescription/*/text())"/>
             <xsl:if test="$fileName">

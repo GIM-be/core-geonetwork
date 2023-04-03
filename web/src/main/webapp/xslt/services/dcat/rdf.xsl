@@ -80,7 +80,7 @@
     <xsl:namespace name="schema" select="'http://schema.org/'"/>
     <xsl:namespace name="dc" select="'http://purl.org/dc/elements/1.1/'"/>
     <xsl:namespace name="vlgen" select="'https://data.vlaanderen.be/ns/generiek'"/>
-    <xsl:namespace name="mdcat" select="'http://data.vlaanderen.be/ns/metadata-dcat#'"/>
+    <xsl:namespace name="mdcat" select="'https://data.vlaanderen.be/ns/metadata-dcat#'"/>
     <xsl:namespace name="adres" select="'https://data.vlaanderen.be/ns/adres#'"/>
     <xsl:namespace name="geodcat" select="'http://data.europa.eu/930/'"/>
   </xsl:template>

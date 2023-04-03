@@ -4,7 +4,7 @@
                 xmlns:dct="http://purl.org/dc/terms/"
                 xmlns:foaf="http://xmlns.com/foaf/0.1/"
                 xmlns:owl="http://www.w3.org/2002/07/owl#"
-                xmlns:mdcat="http://data.vlaanderen.be/ns/metadata-dcat#"
+                xmlns:mdcat="https://data.vlaanderen.be/ns/metadata-dcat#"
                 xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:adms="http://www.w3.org/ns/adms#">

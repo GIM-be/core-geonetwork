@@ -1,6 +1,7 @@
 <gmd:otherConstraints xmlns:gmd="http://www.isotc211.org/2005/gmd"
                       xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                      xmlns:xlink="http://www.w3.org/1999/xlink">
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      xmlns:gco="http://www.isotc211.org/2005/gco">
   <subtemplate-title>Beschrijving en URL</subtemplate-title>
-  <gmx:Anchor xlink:href=""/>
+  <gmx:Anchor gco:nilReason="custom" xlink:href=""/>
 </gmd:otherConstraints>

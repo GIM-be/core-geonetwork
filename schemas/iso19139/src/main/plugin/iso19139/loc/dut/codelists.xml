@@ -2043,6 +2043,30 @@ het gebruik van een commerci&#235;le druk of
     </entry-->
 
   </codelist>
+
+  <codelist name="gco:nilReason">
+    <entry>
+      <code>missing</code>
+      <label>Ontbreekt</label>
+    </entry>
+    <entry>
+      <code>inapplicable</code>
+      <label>Niet van toepassing</label>
+    </entry>
+    <entry>
+      <code>template</code>
+      <label>Sjabloon</label>
+    </entry>
+    <entry>
+      <code>unknown</code>
+      <label>Onbekend</label>
+    </entry>
+    <entry>
+      <code>withheld</code>
+      <label>Ingehouden</label>
+    </entry>
+  </codelist>
+
   <!--=== CouplingType from ISO19119 ===-->
   <codelist name="srv:SV_CouplingType">
     <entry>
