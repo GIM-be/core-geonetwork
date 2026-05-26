@@ -268,16 +268,16 @@
           <xsl:copy-of select="gn-fn-index:add-multilingual-field('resourceTitle', gmd:title, $allLanguages)"/>
           <xsl:copy-of select="gn-fn-index:add-multilingual-field('resourceAltTitle', gmd:alternateTitle, $allLanguages)"/>
 
-          <xsl:for-each select="gmd:date/gmd:CI_Date[gn-fn-index:is-isoDate(gmd:date/*/text())]">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gn-fn-index:is-isoDate((gmd:date/*[normalize-space(.) != ''])[1])]">
             <xsl:variable name="dateType"
                           select="gmd:dateType[1]/gmd:CI_DateTypeCode/@codeListValue"
                           as="xs:string?"/>
             <xsl:variable name="date"
-                          select="string(gmd:date[1]/gco:Date|gmd:date[1]/gco:DateTime)"/>
+                          select="normalize-space((gmd:date[1]/gco:Date|gmd:date[1]/gco:DateTime)[1])"/>
 
             <xsl:variable name="zuluDateTime" as="xs:string?">
               <xsl:if test="gn-fn-index:is-isoDate($date)">
-                <xsl:value-of select="date-util:convertToISOZuluDateTime(normalize-space($date))"/>
+                <xsl:value-of select="date-util:convertToISOZuluDateTime($date)"/>
               </xsl:if>
             </xsl:variable>
 
@@ -311,12 +311,12 @@
           </xsl:for-each>
 
 
-          <xsl:for-each select="gmd:date/gmd:CI_Date[gn-fn-index:is-isoDate(gmd:date/*/text())]">
+          <xsl:for-each select="gmd:date/gmd:CI_Date[gn-fn-index:is-isoDate((gmd:date/*[normalize-space(.) != ''])[1])]">
             <xsl:variable name="dateType"
                           select="gmd:dateType[1]/gmd:CI_DateTypeCode/@codeListValue"
                           as="xs:string?"/>
             <xsl:variable name="date"
-                          select="string(gmd:date[1]/gco:Date|gmd:date[1]/gco:DateTime)"/>
+                          select="normalize-space((gmd:date[1]/gco:Date|gmd:date[1]/gco:DateTime)[1])"/>
 
             <xsl:variable name="zuluDate"
                           select="date-util:convertToISOZuluDateTime($date)"/>
@@ -328,10 +328,10 @@
           </xsl:for-each>
 
           <xsl:if test="$useDateAsTemporalExtent">
-            <xsl:for-each-group select="gmd:date/gmd:CI_Date[gn-fn-index:is-isoDate(gmd:date/*/text())]/gmd:date/*/text()"
-                                group-by=".">
+            <xsl:for-each-group select="gmd:date/gmd:CI_Date[gn-fn-index:is-isoDate((gmd:date/*[normalize-space(.) != ''])[1])]/gmd:date/*[normalize-space(.) != '']"
+                                group-by="normalize-space(.)">
               <xsl:variable name="zuluDate"
-                            select="date-util:convertToISOZuluDateTime(.)"/>
+                            select="date-util:convertToISOZuluDateTime(normalize-space(.))"/>
               <xsl:if test="$zuluDate != ''">
                 <resourceTemporalDateRange type="object">{
                   "gte": "<xsl:value-of select="$zuluDate"/>",
@@ -341,10 +341,14 @@
             </xsl:for-each-group>
           </xsl:if>
 
-          <xsl:for-each select="gmd:identifier/*[string(gmd:code/*)]">
+          <xsl:for-each select="gmd:identifier/*[normalize-space(((gmd:code/gco:CharacterString|gmd:code/gmx:Anchor|gmd:code/gmd:PT_FreeText/*/gmd:LocalisedCharacterString)/text())[1]) != '']">
+            <xsl:variable name="code"
+                          select="normalize-space(((gmd:code/gco:CharacterString|gmd:code/gmx:Anchor|gmd:code/gmd:PT_FreeText/*/gmd:LocalisedCharacterString)/text())[1])"/>
+            <xsl:variable name="codeSpace"
+                          select="normalize-space(((gmd:codeSpace/gco:CharacterString|gmd:codeSpace/gmx:Anchor)/text())[1])"/>
             <resourceIdentifier type="object">{
-              "code": "<xsl:value-of select="util:escapeForJson(gmd:code/(gco:CharacterString|gmx:Anchor))"/>",
-              "codeSpace": "<xsl:value-of select="gmd:codeSpace/(gco:CharacterString|gmx:Anchor)"/>",
+              "code": "<xsl:value-of select="util:escapeForJson($code)"/>",
+              "codeSpace": "<xsl:value-of select="util:escapeForJson($codeSpace)"/>",
               "link": "<xsl:value-of select="gmd:code/gmx:Anchor/@xlink:href"/>"
               }</resourceIdentifier>
           </xsl:for-each>
@@ -657,11 +661,15 @@
         <xsl:for-each select="gmd:resourceMaintenance/*">
           <maintenance type="object">{
             "frequency": "<xsl:value-of select="*:maintenanceAndUpdateFrequency/*/@codeListValue"/>"
-            <xsl:for-each select="gmd:dateOfNextUpdate[*/text() != '']">
+            <xsl:for-each select="gmd:dateOfNextUpdate">
+              <xsl:variable name="dateOfNextUpdate"
+                            select="normalize-space((*/text())[normalize-space(.) != ''][1])"/>
               <xsl:variable name="dateOfNextUpdateZulu"
-                            select="date-util:convertToISOZuluDateTime(*/text())"/>
+                            select="if (gn-fn-index:is-isoDate($dateOfNextUpdate))
+                                    then date-util:convertToISOZuluDateTime($dateOfNextUpdate)
+                                    else ''"/>
               <xsl:if test="$dateOfNextUpdateZulu != ''">
-              ,"nextUpdateDate": "<xsl:value-of select="*/text()"/>"
+              ,"nextUpdateDate": "<xsl:value-of select="$dateOfNextUpdate"/>"
               </xsl:if>
             </xsl:for-each>
             <xsl:for-each select="gmd:userDefinedMaintenanceFrequency[*/text() != '']">
@@ -805,34 +813,40 @@
           </xsl:for-each>
 
           <xsl:for-each select=".//gmd:temporalElement/*/gmd:extent/(gml:TimePeriod|gml320:TimePeriod)">
-            <xsl:variable name="start"
-                          select="gml:beginPosition
+            <xsl:variable name="start" as="node()?"
+                          select="((gml:beginPosition
                                   |gml:begin/gml:TimeInstant/gml:timePosition
                                   |gml320:beginPosition
-                                  |gml320:begin/gml320:TimeInstant/gml320:timePosition"/>
-            <xsl:variable name="end"
-                          select="gml:endPosition
+                                  |gml320:begin/gml320:TimeInstant/gml320:timePosition)[normalize-space(.) != ''])[1]"/>
+            <xsl:variable name="end" as="node()?"
+                          select="((gml:endPosition
                                   |gml:end/gml:TimeInstant/gml:timePosition
                                   |gml320:endPosition
-                                  |gml320:end/gml320:TimeInstant/gml320:timePosition"/>
+                                  |gml320:end/gml320:TimeInstant/gml320:timePosition)[normalize-space(.) != '' or @indeterminatePosition != ''])[1]"/>
+            <xsl:variable name="endIndeterminatePosition"
+                          select="string($end/@indeterminatePosition)"/>
 
             <xsl:variable name="zuluStartDate"
-                          select="date-util:convertToISOZuluDateTime($start)"/>
+                          select="if (gn-fn-index:is-isoDate(normalize-space($start)))
+                                  then date-util:convertToISOZuluDateTime(normalize-space($start))
+                                  else ''"/>
             <xsl:variable name="zuluEndDate"
-                          select="date-util:convertToISOZuluDateTime($end)"/>
+                          select="if (gn-fn-index:is-isoDate(normalize-space($end)))
+                                  then date-util:convertToISOZuluDateTime(normalize-space($end))
+                                  else ''"/>
 
             <xsl:choose>
               <xsl:when test="$zuluStartDate castable as xs:dateTime
-                              and ($zuluEndDate  castable as xs:dateTime or $end/@indeterminatePosition = 'now')">
+                              and ($zuluEndDate  castable as xs:dateTime or $endIndeterminatePosition = 'now')">
                 <resourceTemporalDateRange type="object">{
                   "gte": "<xsl:value-of select="$zuluStartDate"/>"
-                  <xsl:if test="$start &lt; $end and not($end/@indeterminatePosition = 'now')">
+                  <xsl:if test="normalize-space($end) != '' and normalize-space($start) &lt; normalize-space($end) and not($endIndeterminatePosition = 'now')">
                     ,"lte": "<xsl:value-of select="$zuluEndDate"/>"
                   </xsl:if>
                   }</resourceTemporalDateRange>
                 <resourceTemporalExtentDateRange type="object">{
                   "gte": "<xsl:value-of select="$zuluStartDate"/>"
-                  <xsl:if test="$start &lt; $end and not($end/@indeterminatePosition = 'now')">
+                  <xsl:if test="normalize-space($end) != '' and normalize-space($start) &lt; normalize-space($end) and not($endIndeterminatePosition = 'now')">
                     ,"lte": "<xsl:value-of select="$zuluEndDate"/>"
                   </xsl:if>
                   }</resourceTemporalExtentDateRange>
@@ -850,14 +864,14 @@
 
             <xsl:if test="$zuluStartDate castable as xs:dateTime
                           and $zuluEndDate  castable as xs:dateTime
-                          and $start &gt; $end">
+                          and normalize-space($start) &gt; normalize-space($end)">
               <indexingErrorMsg type="object">
                 {
                   "string": "indexingErrorMsg-temporalRangeLowerGreaterThanUpper",
                   "type": "warning",
                   "values": {
-                    "lowerBound": "<xsl:value-of select="util:escapeForJson($start)"/>",
-                    "upperBound": "<xsl:value-of select="util:escapeForJson($end)"/>"
+                    "lowerBound": "<xsl:value-of select="util:escapeForJson(normalize-space($start))"/>",
+                    "upperBound": "<xsl:value-of select="util:escapeForJson(normalize-space($end))"/>"
                   }
                 }
               </indexingErrorMsg>
@@ -1039,9 +1053,11 @@
           <xsl:variable name="description"
                         select="(../../gmd:measureDescription/gco:CharacterString)[1]"/>
           <xsl:variable name="measureDate"
-                        select="(../../gmd:dateTime/gco:DateTime)[1]"/>
+                        select="normalize-space((../../gmd:dateTime/gco:DateTime/text())[1])"/>
           <xsl:variable name="measureDateZulu"
-                        select="date-util:convertToISOZuluDateTime($measureDate)"/>
+                        select="if (gn-fn-index:is-isoDate($measureDate))
+                                then date-util:convertToISOZuluDateTime($measureDate)
+                                else ''"/>
           <measure type="object">{
             "name": "<xsl:value-of select="util:escapeForJson($name)"/>",
             <xsl:if test="$description != ''">
@@ -1067,27 +1083,33 @@
         </xsl:for-each>
 
         <xsl:variable name="processSteps"
-                      select="gmd:lineage/*/gmd:processStep/*[gmd:description/gco:CharacterString != '']"/>
+                      select="gmd:lineage/*/gmd:processStep/*[normalize-space(gmd:description) != '']"/>
         <xsl:for-each select="$processSteps">
+          <xsl:variable name="stepDateTime"
+                        select="normalize-space((gmd:dateTime/*/text())[normalize-space(.) != ''][1])"/>
           <xsl:variable name="stepDateTimeZulu"
-                        select="date-util:convertToISOZuluDateTime(normalize-space(gmd:dateTime))"/>
+                        select="if (gn-fn-index:is-isoDate($stepDateTime))
+                                then date-util:convertToISOZuluDateTime($stepDateTime)
+                                else ''"/>
 
           <processSteps type="object">{
             "descriptionObject": <xsl:value-of select="gn-fn-index:add-multilingual-field(
                                 'description', gmd:description, $allLanguages, true())"/>
             <xsl:if test="$stepDateTimeZulu != ''">
-              ,"date": "<xsl:value-of select="gmd:dateTime/gco:*/text()"/>"
+              ,"date": "<xsl:value-of select="$stepDateTime"/>"
             </xsl:if>
-            ,"source": [
-            <xsl:for-each select="gmd:source/*[gmd:description/gco:CharacterString != '']">
-              {
-                "descriptionObject": <xsl:value-of
-                                        select="gn-fn-index:add-multilingual-field(
-                                          'description', gmd:description, $allLanguages, true())"/>
-              }
-              <xsl:if test="position() != last()">,</xsl:if>
-            </xsl:for-each>
-            ]
+            <xsl:if test="normalize-space(gmd:source) != ''">
+              ,"source": [
+              <xsl:for-each select="gmd:source/*[gmd:description/gco:CharacterString != '']">
+                {
+                  "descriptionObject": <xsl:value-of
+                                          select="gn-fn-index:add-multilingual-field(
+                                            'description', gmd:description, $allLanguages, true())"/>
+                }
+                <xsl:if test="position() != last()">,</xsl:if>
+              </xsl:for-each>
+              ]
+            </xsl:if>
 
             <xsl:variable name="processors"
                           select="gmd:processor/*[gmd:organisationName/gco:CharacterString != '']"/>

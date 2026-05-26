@@ -62,10 +62,11 @@
   date_optional_time||yyyy-MM-dd||yyyy-MM||yyyy||epoch_millis
   -->
   <xsl:function name="gn-fn-index:is-isoDate" as="xs:boolean">
-    <xsl:param name="value" as="xs:string?"/>
-    <xsl:value-of select="if ($value castable as xs:date
-                          or $value castable as xs:dateTime
-                          or matches($value, '^[0-9]{4}$|^[0-9]{4}-(0[1-9]|1[012])$'))
+    <xsl:param name="value" as="item()*"/>
+    <xsl:variable name="date" select="normalize-space(string(($value)[1]))"/>
+    <xsl:value-of select="if ($date castable as xs:date
+                          or $date castable as xs:dateTime
+                          or matches($date, '^[0-9]{8}$|^[0-9]{4}$|^[0-9]{4}-(0[1-9]|1[012])$'))
                           then true() else false()"/>
   </xsl:function>
 

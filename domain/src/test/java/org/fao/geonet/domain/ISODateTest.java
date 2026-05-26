@@ -70,6 +70,22 @@ public class ISODateTest {
         assertEquals(0, date.getSeconds());
 
         date = new ISODate();
+        date.setDateAndTime("20251117");
+        assertEquals(true, date.isDateOnly());
+        assertEquals(2025, date.getYears());
+        assertEquals(11, date.getMonths());
+        assertEquals(17, date.getDays());
+        assertEquals("2025-11-17", date.getDateAndTime());
+
+        date = new ISODate();
+        date.setDateAndTime("20251117Z");
+        assertEquals(true, date.isDateOnly());
+        assertEquals(2025, date.getYears());
+        assertEquals(11, date.getMonths());
+        assertEquals(17, date.getDays());
+        assertEquals("2025-11-17", date.getDateAndTime());
+
+        date = new ISODate();
         date.setDateAndTime("1976-6-3T");
         assertEquals(true, date.isDateOnly());
         assertEquals(1976, date.getYears());

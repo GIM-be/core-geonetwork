@@ -380,6 +380,20 @@ public class ISODate implements Cloneable, Comparable<ISODate>, Serializable, Xm
             ZoneId offset = ZoneId.systemDefault();
             // canonicalize the string
             isoDate = isoDate.replace('/', '-');
+            if (StringUtils.endsWithIgnoreCase(isoDate, "z")) {
+                offset = ZoneOffset.UTC;
+                isoDate = isoDate.substring(0, isoDate.length() - 1);
+            }
+            if (isoDate.matches("\\d{8}")) {
+                year = Integer.parseInt(isoDate.substring(0, 4));
+                month = Integer.parseInt(isoDate.substring(4, 6));
+                day = Integer.parseInt(isoDate.substring(6, 8));
+                _shortDate = true;
+                _shortDateYearMonth = false;
+                _shortDateYear = false;
+                internalDateTime = ZonedDateTime.of(year, month, day, 0, 0, 0, 0, offset);
+                return;
+            }
             // until we've processed the whole string
             while (startPos < isoDate.length()) {
                 if (partNumber >= 3) {
