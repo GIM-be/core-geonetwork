@@ -52,25 +52,26 @@ import java.nio.file.attribute.FileTime;
 import java.util.HashSet;
 
 public class S3Resources extends Resources {
+    private static final Path RESOURCES_DIR = Paths.get("/resources");
+
     @Autowired
     S3Credentials s3;
 
     @Override
     protected Path getBasePath(final ServiceContext context) {
-        // TODO: I'm not sure it can be always the same...
-        return Paths.get("/");
+        return locateResourcesDir(context);
     }
 
     @Override
     public Path locateResourcesDir(final ServletContext context, final ApplicationContext applicationContext) {
         // TODO: I'm not sure it can be always the same...
-        return Paths.get("/resources");
+        return RESOURCES_DIR;
     }
 
     @Override
     protected Path locateResourcesDir(final ServiceContext context) {
         // TODO: I'm not sure it can be always the same...
-        return Paths.get("/resources");
+        return RESOURCES_DIR;
     }
 
     private String getKey(final Path dir, final String name) {
@@ -78,27 +79,49 @@ public class S3Resources extends Resources {
     }
 
     private String getKey(final Path path) {
-        String pathString;
+        String pathString = path.isAbsolute()
+            ? path.getRoot().relativize(path).toString()
+            : path.toString();
         // For windows it may be "\" in which case we need to change it to folderDelimiter which is normally "/"
-        if (path.getFileSystem().getSeparator().equals("/")) {
-            pathString = path.toString();
-        } else {
-            pathString=path.toString().replace(path.getFileSystem().getSeparator(), "/");
+        if (!path.getFileSystem().getSeparator().equals("/")) {
+            pathString = pathString.replace(path.getFileSystem().getSeparator(), "/");
         }
-        // remove leading / from path since the basefolder already ends with "/". Absolute paths will have 2 "/"
-        return s3.getKeyPrefix() + (path.isAbsolute() ? pathString.substring(2) : pathString.substring(1));
+        // The prefix already ends with "/", so object keys must be relative.
+        return s3.getKeyPrefix() + pathString;
     }
 
     private Path getKeyPath(String key) {
         return Paths.get("/" + key.substring(s3.getKeyPrefix().length()));
     }
 
+    private Path getLegacyPath(final Path path) {
+        if (path != null && path.startsWith(RESOURCES_DIR)) {
+            return RESOURCES_DIR.getRoot().resolve(RESOURCES_DIR.relativize(path));
+        }
+        return null;
+    }
+
+    private boolean objectExists(final String key) {
+        return s3.getClient().doesObjectExist(s3.getBucket(), key);
+    }
+
     @Nullable
     @Override
     protected Path findImagePath(final String imageName, final Path logosDir) {
+        Path path = findImagePathInDirectory(imageName, logosDir);
+        if (path == null) {
+            Path legacyDir = getLegacyPath(logosDir);
+            if (legacyDir != null) {
+                path = findImagePathInDirectory(imageName, legacyDir);
+            }
+        }
+        return path;
+    }
+
+    private Path findImagePathInDirectory(final String imageName, final Path logosDir) {
         final String key = getKey(logosDir, imageName);
         if (imageName.indexOf('.') > -1) {
-            if (s3.getClient().doesObjectExist(s3.getBucket(), key)) {
+            if (objectExists(key)) {
                 return getKeyPath(key);
             }
         } else {
@@ -175,6 +198,13 @@ public class S3Resources extends Resources {
 
 
         if (!s3.getClient().doesObjectExist(s3.getBucket(), key)) {
+            if (resourcesDir != null && RESOURCES_DIR.equals(resourcesDir)) {
+                final String legacyKey = s3.getKeyPrefix() + filename;
+                if (objectExists(legacyKey)) {
+                    return getKeyPath(legacyKey);
+                }
+            }
+
             Path webappCopy = null;
             if (context != null) {
                 final String realPath = context.getRealPath(filename);
@@ -187,7 +217,7 @@ public class S3Resources extends Resources {
                 webappCopy = appPath.resolve(filename);  // TODO: this won't work...
             }
             if (!java.nio.file.Files.isReadable(webappCopy)) {
-                if (resourcesDir.equals(Paths.get("/resources"))) {
+                if (RESOURCES_DIR.equals(resourcesDir) && context != null) {
                     final ConfigurableApplicationContext applicationContext =
                         JeevesDelegatingFilterProxy.getApplicationContextFromServletContext(context);
                     webappCopy = super.locateResourcesDir(context, applicationContext).resolve(filename);
@@ -240,6 +270,15 @@ public class S3Resources extends Resources {
     @Override
     protected void addFiles(final DirectoryStream.Filter<Path> iconFilter, final Path webappDir,
                             final HashSet<Path> result) {
+        addFilesFromPrefix(iconFilter, webappDir, result);
+        Path legacyDir = getLegacyPath(webappDir);
+        if (legacyDir != null) {
+            addFilesFromPrefix(iconFilter, legacyDir, result);
+        }
+    }
+
+    private void addFilesFromPrefix(final DirectoryStream.Filter<Path> iconFilter, final Path webappDir,
+                                    final HashSet<Path> result) {
         final ListObjectsV2Result objects =
             s3.getClient().listObjectsV2(s3.getBucket(), getKey(webappDir) + "/");
         for (S3ObjectSummary cur: objects.getObjectSummaries()) {
@@ -321,7 +360,7 @@ public class S3Resources extends Resources {
 
         @Override
         public String getRelativePath() {
-            return key;
+            return key.substring(s3.getKeyPrefix().length());
         }
 
         @Override

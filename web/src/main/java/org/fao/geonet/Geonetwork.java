@@ -84,8 +84,10 @@ import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -524,12 +526,72 @@ public class Geonetwork implements ApplicationHandler {
         try {
             final Resources resources = context.getBean(Resources.class);
             Path logosDir = resources.locateLogosDir(context);
-            Path logo = logosDir.resolve(nodeUuid + ".png");
-            if (!Files.exists(logo)) {
+            String logoFileName = nodeUuid + Resources.DEFAULT_LOGO_EXTENSION;
+            try (Resources.ResourceHolder logo =
+                     resources.getImage(context, logoFileName, logosDir)) {
+                if (logo != null) {
+                    replaceBundledDefaultLogo(resources, context, logo, logoFileName, logosDir);
+                    return;
+                }
+            }
+
+            if (!copyConfiguredSiteLogo(resources, context, logoFileName, logosDir)) {
                 resources.copyLogo(context, "images" + File.separator + "harvesting" + File.separator + "GN3.png", nodeUuid);
             }
         } catch (Throwable e) {
             logger.error("      Error when setting the logo: " + e.getMessage());
+        }
+    }
+
+    private void replaceBundledDefaultLogo(Resources resources, ServiceContext context,
+                                           Resources.ResourceHolder logo, String logoFileName,
+                                           Path logosDir) throws IOException {
+        Path resourcesDir = logosDir.getParent().getParent();
+        try (Resources.ResourceHolder configuredLogo =
+                 resources.getImage(context, "images/logo.png", resourcesDir);
+             Resources.ResourceHolder bundledLogo =
+                 resources.getImage(context, "GN3.png", resources.locateHarvesterLogosDir(context))) {
+            if (configuredLogo != null && bundledLogo != null
+                && hasSameContent(logo.getPath(), bundledLogo.getPath())
+                && !hasSameContent(configuredLogo.getPath(), bundledLogo.getPath())) {
+                copyLogo(configuredLogo, resources, context, logoFileName, logosDir);
+            }
+        }
+    }
+
+    private boolean copyConfiguredSiteLogo(Resources resources, ServiceContext context,
+                                           String logoFileName, Path logosDir) throws IOException {
+        Path resourcesDir = logosDir.getParent().getParent();
+        try (Resources.ResourceHolder configuredLogo =
+                 resources.getImage(context, "images/logo.png", resourcesDir)) {
+            if (configuredLogo == null) {
+                return false;
+            }
+            copyLogo(configuredLogo, resources, context, logoFileName, logosDir);
+            return true;
+        }
+    }
+
+    private void copyLogo(Resources.ResourceHolder source, Resources resources, ServiceContext context,
+                          String logoFileName, Path logosDir) throws IOException {
+        try (Resources.ResourceHolder destination = resources.getWritableImage(context, logoFileName, logosDir)) {
+            Files.copy(source.getPath(), destination.getPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+    }
+
+    private boolean hasSameContent(Path first, Path second) throws IOException {
+        if (Files.size(first) != Files.size(second)) {
+            return false;
+        }
+        try (InputStream firstStream = Files.newInputStream(first);
+             InputStream secondStream = Files.newInputStream(second)) {
+            int firstByte;
+            while ((firstByte = firstStream.read()) != -1) {
+                if (firstByte != secondStream.read()) {
+                    return false;
+                }
+            }
+            return secondStream.read() == -1;
         }
     }
 

@@ -29,16 +29,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     ">
 
-    <bean id="s3credentials" class="org.fao.geonet.resources.S3Credentials">
-      <property name="region" value="eu-west-1"/>
-      <property name="bucket" value="geonetwork-test"/>
-      <property name="keyPrefix" value="geonetwork"/>
-      <!-- Only needed if you don't have a ~/.aws/credentials -->
-      <property name="accessKey" value="MyAccessKey"/>
-      <property name="secretKey" value="MySecretKey"/>
-      <!-- Only needed when not using Amazon S3-->
-      <property name="endpoint" value="sos-ch-dk-2.exo.io"/>
-    </bean>
+    <bean id="s3credentials" class="org.fao.geonet.resources.S3Credentials"/>
     <bean id="filesystemStore" class="org.fao.geonet.api.records.attachments.S3Store" />
     <bean id="resourceStore"
           class="org.fao.geonet.api.records.attachments.ResourceLoggerStore">

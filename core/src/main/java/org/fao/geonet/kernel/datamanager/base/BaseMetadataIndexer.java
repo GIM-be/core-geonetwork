@@ -480,7 +480,7 @@ public class BaseMetadataIndexer implements IMetadataIndexer, ApplicationEventPu
                         if (logo != null) {
                             added = true;
                             fields.put(Geonet.IndexFieldNames.LOGO,
-                                "/images/harvesting/" + logo.getPath().getFileName());
+                                "/images/harvesting/" + Path.of(logo.getRelativePath()).getFileName());
                         }
                     }
                 }
