@@ -155,7 +155,7 @@
           type: "subportal",
           uuid: "",
           name: "",
-          logo: "",
+          logo: null,
           uiConfig: "",
           filter: "",
           serviceRecord: null,

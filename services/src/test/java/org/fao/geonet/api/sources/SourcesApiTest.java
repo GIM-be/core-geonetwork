@@ -121,11 +121,7 @@ public class SourcesApiTest extends AbstractServiceIntegrationTest {
 
         source.setName("source-test-updated");
 
-        Gson gson = new GsonBuilder()
-            .setFieldNamingStrategy(new JsonFieldNamingStrategy())
-            .setExclusionStrategies(new FieldNameExclusionStrategy("_labelTranslations", "creationDate"))
-            .create();
-        String json = gson.toJson(source);
+        String json = toJson(source);
 
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 
@@ -140,6 +136,57 @@ public class SourcesApiTest extends AbstractServiceIntegrationTest {
     }
 
     @Test
+    public void addSourceWithBlankLogo() throws Exception {
+        Source source = new Source();
+        source.setName("source-test-blank-logo");
+        source.setUuid(UUID.randomUUID().toString());
+        source.setType(SourceType.subportal);
+        source.setLogo("");
+
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+
+        this.mockHttpSession = loginAsAdmin();
+
+        this.mockMvc.perform(put("/srv/api/sources")
+            .content(toJson(source))
+            .contentType(API_JSON_EXPECTED_ENCODING)
+            .session(this.mockHttpSession)
+            .accept(MediaType.parseMediaType("text/plain")))
+            .andExpect(status().is(201));
+
+        _entityManager.flush();
+        _entityManager.clear();
+        Assert.assertNull(sourceRepo.findById(source.getUuid()).get().getLogo());
+    }
+
+    @Test
+    public void updateSourceWithBlankLogo() throws Exception {
+        Source existingSource = sourceRepo.findOneByName("source-test");
+        Assert.assertNotNull(existingSource);
+
+        Source source = new Source();
+        source.setUuid(existingSource.getUuid());
+        source.setName(existingSource.getName());
+        source.setType(existingSource.getType());
+        source.setLogo(" ");
+
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+
+        this.mockHttpSession = loginAsAdmin();
+
+        this.mockMvc.perform(put("/srv/api/sources/" + source.getUuid())
+            .content(toJson(source))
+            .contentType(API_JSON_EXPECTED_ENCODING)
+            .session(this.mockHttpSession)
+            .accept(MediaType.parseMediaType("text/plain")))
+            .andExpect(status().is(204));
+
+        _entityManager.flush();
+        _entityManager.clear();
+        Assert.assertNull(sourceRepo.findById(source.getUuid()).get().getLogo());
+    }
+
+    @Test
     public void updateNonExistingSource() throws Exception {
         Source sourceToUpdate = sourceRepo.findOneByName("source-test-2");
         Assert.assertNull(sourceToUpdate);
@@ -149,11 +196,7 @@ public class SourcesApiTest extends AbstractServiceIntegrationTest {
         sourceToUpdate.setUuid(UUID.randomUUID().toString());
         sourceToUpdate.setType(SourceType.harvester);
 
-        Gson gson = new GsonBuilder()
-            .setFieldNamingStrategy(new JsonFieldNamingStrategy())
-            .setExclusionStrategies(new FieldNameExclusionStrategy("_labelTranslations", "creationDate"))
-            .create();
-        String json = gson.toJson(sourceToUpdate);
+        String json = toJson(sourceToUpdate);
 
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 
@@ -165,6 +208,14 @@ public class SourcesApiTest extends AbstractServiceIntegrationTest {
             .session(this.mockHttpSession)
             .accept(MediaType.parseMediaType("text/plain")))
             .andExpect(status().is(404));
+    }
+
+    private String toJson(Source source) {
+        Gson gson = new GsonBuilder()
+            .setFieldNamingStrategy(new JsonFieldNamingStrategy())
+            .setExclusionStrategies(new FieldNameExclusionStrategy("_labelTranslations", "creationDate"))
+            .create();
+        return gson.toJson(source);
     }
 
     private void createTestData() {

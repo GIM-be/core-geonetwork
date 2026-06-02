@@ -208,6 +208,7 @@ public class SourcesApi {
         Source source,
         @Parameter(hidden = true)
         HttpServletRequest request) {
+        normalizeSource(source);
         Optional<Source> existing = sourceRepository.findById(source.getUuid());
         if (existing.isPresent()) {
             throw new IllegalArgumentException(String.format(
@@ -240,11 +241,15 @@ public class SourcesApi {
     }
 
     private void copySourceLogo(Source source, HttpServletRequest request) {
-        if (source.getLogo() != null) {
+        if (StringUtils.isNotBlank(source.getLogo())) {
             ServiceContext context = ApiUtils.createServiceContext(request);
             context.getBean(Resources.class).copyLogo(context, "images" + File.separator + "harvesting" + File.separator + source.getLogo(),
                 source.getUuid());
         }
+    }
+
+    private void normalizeSource(Source source) {
+        source.setLogo(StringUtils.trimToNull(source.getLogo()));
     }
 
     @io.swagger.v3.oas.annotations.Operation(
@@ -275,6 +280,7 @@ public class SourcesApi {
         Source source,
         @Parameter(hidden = true)
         HttpServletRequest request) throws Exception {
+        normalizeSource(source);
         Optional<Source> existingSource = sourceRepository.findById(sourceIdentifier);
         if (existingSource.isPresent()) {
             // Rebuild translation pack cache if there are changes in the translations
@@ -323,7 +329,7 @@ public class SourcesApi {
     ) throws ResourceNotFoundException {
         Optional<Source> existingSource = sourceRepository.findById(sourceIdentifier);
         if (existingSource.isPresent()) {
-            if (existingSource.get().getLogo() != null) {
+            if (StringUtils.isNotBlank(existingSource.get().getLogo())) {
                 ServiceContext context = ApiUtils.createServiceContext(request);
                 final Resources resources = context.getBean(Resources.class);
                 final Path logoDir = resources.locateLogosDir(context);
