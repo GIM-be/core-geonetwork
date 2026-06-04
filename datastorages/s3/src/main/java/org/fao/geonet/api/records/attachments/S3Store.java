@@ -59,7 +59,7 @@ public class S3Store extends AbstractStore {
     @Override
     public List<MetadataResource> getResources(final ServiceContext context, final String metadataUuid,
             final MetadataResourceVisibility visibility, String filter, Boolean approved) throws Exception {
-        final int metadataId = canEdit(context, metadataUuid, approved);
+        final int metadataId = canDownload(context, metadataUuid, visibility, approved);
 
         final String resourceTypeDir = getMetadataDir(metadataId) + "/" + visibility.toString();
 
