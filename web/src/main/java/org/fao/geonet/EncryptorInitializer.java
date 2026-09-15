@@ -238,10 +238,11 @@ public class EncryptorInitializer {
                 pstmt.executeUpdate();
             }
 
-            final String encryptedHarvesterSettings = "SELECT name, value FROM HarvesterSettings WHERE name = 'password'";
-            updates = new HashMap<>();
+            // Harvester settings share the name 'password', so rows must be keyed by id
+            final String encryptedHarvesterSettings = "SELECT id, value FROM HarvesterSettings WHERE name = 'password'";
+            Map<Integer, String> updatesHarvesterSettings = new HashMap<>();
             try (ResultSet harvesterSettingsResultSet = statement.executeQuery(encryptedHarvesterSettings)) {
-                int numberOfHarvesterSettings = encryptDatabaseValuesStringId(previousEncryptor, updates, harvesterSettingsResultSet);
+                int numberOfHarvesterSettings = encryptDatabaseValuesIntegerId(previousEncryptor, updatesHarvesterSettings, harvesterSettingsResultSet);
 
                 Log.debug(LOG_MODULE, "  Number of harvester settings of type password to update: " + numberOfHarvesterSettings);
             } catch (Exception ex) {
@@ -250,10 +251,10 @@ public class EncryptorInitializer {
                 ex.printStackTrace();
             }
 
-            for (String key : updates.keySet()) {
-                PreparedStatement pstmt = connection.prepareStatement("UPDATE HarvesterSettings SET value=? WHERE name=?");
-                pstmt.setString(1, updates.get(key));
-                pstmt.setString(2, key);
+            for (Integer key : updatesHarvesterSettings.keySet()) {
+                PreparedStatement pstmt = connection.prepareStatement("UPDATE HarvesterSettings SET value=? WHERE id=?");
+                pstmt.setString(1, updatesHarvesterSettings.get(key));
+                pstmt.setInt(2, key);
                 pstmt.executeUpdate();
             }
 
@@ -274,6 +275,25 @@ public class EncryptorInitializer {
             for (Integer key : updatesMapServers.keySet()) {
                 PreparedStatement pstmt = connection.prepareStatement("UPDATE Mapservers SET password=? WHERE id=?");
                 pstmt.setString(1, updatesMapServers.get(key));
+                pstmt.setInt(2, key);
+                pstmt.executeUpdate();
+            }
+
+            final String encryptedDoiServerPasswords = "SELECT id, password FROM Doiservers";
+            Map<Integer, String> updatesDoiServers = new HashMap<>();
+            try (ResultSet doiServerResultSet = statement.executeQuery(encryptedDoiServerPasswords)) {
+                int numberOfDoiServers = encryptDatabaseValuesIntegerId(previousEncryptor, updatesDoiServers, doiServerResultSet);
+
+                Log.debug(LOG_MODULE, "  Number of DOI server passwords to update: " + numberOfDoiServers);
+            } catch (Exception ex) {
+                Log.error(LOG_MODULE, "Error getting the DOI servers' passwords for encrypting them");
+                Log.error(LOG_MODULE, ex);
+                ex.printStackTrace();
+            }
+
+            for (Integer key : updatesDoiServers.keySet()) {
+                PreparedStatement pstmt = connection.prepareStatement("UPDATE Doiservers SET password=? WHERE id=?");
+                pstmt.setString(1, updatesDoiServers.get(key));
                 pstmt.setInt(2, key);
                 pstmt.executeUpdate();
             }
