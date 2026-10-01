@@ -497,7 +497,7 @@ class Harvester extends BaseAligner<WebDavParams> implements IHarvester<HarvestR
                 updateSchema = !newSchema.equals(schema);
                 schema = newSchema;
             } else {
-                if (!recordInfo.schema.equals(schema)) {
+                if (!schema.equals(recordInfo.schema)) {
                     log.warning("  - Detected schema '" + schema + "' is different from the one of the metadata in the catalog '" + recordInfo.schema + "'. Using the detected one.");
                     updateSchema = true;
                 }

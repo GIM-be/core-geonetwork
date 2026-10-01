@@ -93,6 +93,7 @@ public class RecordInfo {
         uuid = record.getUuid();
         isTemplate = record.getDataInfo().getType().codeString;
         changeDate = record.getDataInfo().getChangeDate().getDateAndTime();
+        schema = record.getDataInfo().getSchemaId();
     }
 
     public int hashCode() {
