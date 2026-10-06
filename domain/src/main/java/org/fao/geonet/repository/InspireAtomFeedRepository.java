@@ -37,12 +37,23 @@ import java.util.List;
 public interface InspireAtomFeedRepository extends GeonetRepository<InspireAtomFeed, Integer>,
     InspireAtomFeedRepositoryCustom, JpaSpecificationExecutor<InspireAtomFeed> {
     /**
-     * Find an inspire atom feed related to a metadata.
+     * Find an inspire atom feed related to a metadata. If several feeds are stored for the metadata
+     * (eg. after concurrent harvests), the most recently stored one is returned.
      *
      * @param metadataId metadata identifier
      * @return the metadata related to the inspire atom feed
      */
-    InspireAtomFeed findByMetadataId(final int metadataId);
+    default InspireAtomFeed findByMetadataId(final int metadataId) {
+        return findFirstByMetadataIdOrderByIdDesc(metadataId);
+    }
+
+    /**
+     * Find the most recently stored inspire atom feed related to a metadata.
+     *
+     * @param metadataId metadata identifier
+     * @return the most recent inspire atom feed related to the metadata
+     */
+    InspireAtomFeed findFirstByMetadataIdOrderByIdDesc(final int metadataId);
 
     /**
      * Find the list of all {@link InspireAtomFeed} with the provided {@code atomDatasetid}.

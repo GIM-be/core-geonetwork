@@ -36,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @Transactional
@@ -106,6 +107,39 @@ public class InspireAtomFeedRepositoryTest extends AbstractSpringDataTest {
         assertEquals(1, _repo.findAll().size());
     }
 
+
+    @Test
+    public void testFindByMetadataIdWithDuplicates() {
+        InspireAtomFeed feed1 = newInspireAtomFeed();
+        feed1.setMetadataId(10);
+        _repo.save(feed1);
+
+        InspireAtomFeed feed2 = newInspireAtomFeed();
+        feed2.setMetadataId(10);
+        feed2 = _repo.save(feed2);
+
+        assertEquals(feed2.getId(), _repo.findByMetadataId(10).getId());
+        assertNull(_repo.findByMetadataId(11));
+    }
+
+    @Test
+    public void testDeleteFeedsWithEntriesByMetadataId() {
+        _repo.deleteAll();
+
+        InspireAtomFeed feed1 = newInspireAtomFeed();
+        feed1.setMetadataId(1);
+        _repo.save(feed1);
+
+        InspireAtomFeed feed2 = newInspireAtomFeed();
+        feed2.setMetadataId(2);
+        _repo.save(feed2);
+
+        _repo.deleteAll(_repo.findAll(InspireAtomFeedSpecs.hasMetadataId(1)));
+        _repo.flush();
+
+        assertEquals(1, _repo.findAll().size());
+        assertNull(_repo.findByMetadataId(1));
+    }
 
     @Test
     public void testRetrieveDatasetUuidFromIdentifierNs() {

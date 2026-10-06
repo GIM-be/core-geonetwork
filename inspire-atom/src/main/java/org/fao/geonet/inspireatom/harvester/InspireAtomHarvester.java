@@ -54,6 +54,7 @@ import java.util.*;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toCollection;
+import static java.util.stream.Collectors.toList;
 
 
 /**
@@ -105,9 +106,10 @@ public class InspireAtomHarvester {
         try {
             logger.info("ATOM feed harvest started");
 
-            // Removes all atom information from existing metadata. Harvester will reload with updated information
-            logger.info("ATOM feed harvest: remove existing metadata feeds");
-            repository.deleteAll();
+            // The feed of each metadata is replaced when harvested and the feeds of metadata no longer processed
+            // are removed at the end. This keeps the existing feeds available while harvesting and when a remote
+            // feed can't be retrieved.
+            Set<Integer> processedMetadataIds = new HashSet<>();
 
             logger.info("ATOM feed harvest: retrieving service metadata feeds");
 
@@ -121,11 +123,16 @@ public class InspireAtomHarvester {
             //    datasetsInformation stores the dataset information for identifier, namespace and feed url
             //    described in the services feed. This information is not available in the datasets feeds.
             List<DatasetFeedInfo> datasetsInformation =
-                processServiceMetadataFeeds(dataMan, serviceMetadataWithAtomFeeds, result);
+                processServiceMetadataFeeds(dataMan, serviceMetadataWithAtomFeeds, result, processedMetadataIds);
 
             // Process DATASET metadata feeds related to the service metadata
             logger.info("ATOM feed harvest: processing dataset metadata feeds (" + datasetsInformation.size() + ")");
-            processDatasetsMetadataFeeds(dataMan, datasetsInformation, result);
+            processDatasetsMetadataFeeds(dataMan, datasetsInformation, result, processedMetadataIds);
+
+            logger.info("ATOM feed harvest: remove feeds of metadata no longer referenced");
+            repository.deleteAll(repository.findAll().stream()
+                .filter(feed -> !processedMetadataIds.contains(feed.getMetadataId()))
+                .collect(toList()));
 
             logger.info("ATOM feed harvest finished");
 
@@ -149,7 +156,6 @@ public class InspireAtomHarvester {
     public final void harvestServiceMetadata(final ServiceContext context, final String metadataId) {
         Logger localLogger = Log.createLogger(Geonet.ATOM);
 
-        final InspireAtomFeedRepository repository = context.getBean(InspireAtomFeedRepository.class);
         DataManager dataMan = context.getBean(DataManager.class);
         SettingManager sm = context.getBean(SettingManager.class);
 
@@ -167,12 +173,7 @@ public class InspireAtomHarvester {
             // Value used in metadata editor for online resources to identify an INSPIRE atom resource
             String atomProtocol = sm.getValue(Settings.SYSTEM_INSPIRE_ATOM_PROTOCOL);
 
-            // Removes all atom information from existing metadata. Harvester will reload with updated information
-            localLogger.info("ATOM feed harvest: remove existing metadata feed");
-            repository.deleteAll(InspireAtomFeedSpecs.hasMetadataId(Integer.parseInt(metadataId)));
-            dataMan.indexMetadata(metadataId, DirectIndexSubmitter.INSTANCE);
-
-            // Process service metadata feeds
+            // Process service metadata feeds (existing feeds are replaced when the new ones are stored)
             //    datasetsInformation stores the dataset information for identifier and namespace for the services feed.
             //    This information is not available in the datasets feeds
             localLogger.info("ATOM feed harvest: processing service metadata feeds");
@@ -182,11 +183,11 @@ public class InspireAtomHarvester {
                 InspireAtomUtil.retrieveServiceMetadataWithAtomFeed(dataMan, iso19139Metadata, atomProtocol);
 
             List<DatasetFeedInfo> datasetsInformation =
-                processServiceMetadataFeeds(dataMan, serviceMetadataWithAtomFeed, result);
+                processServiceMetadataFeeds(dataMan, serviceMetadataWithAtomFeed, result, new HashSet<>());
 
             // Process dataset metadata feeds related to the service metadata
             localLogger.info("ATOM feed harvest for metadata: " + metadataId + ",  processing dataset metadata feeds");
-            processDatasetsMetadataFeeds(dataMan, datasetsInformation, result);
+            processDatasetsMetadataFeeds(dataMan, datasetsInformation, result, new HashSet<>());
 
             localLogger.info("ATOM feed harvest finished for metadata: " + metadataId);
         } catch (Exception x) {
@@ -199,13 +200,16 @@ public class InspireAtomHarvester {
     /**
      * Process service metadata feeds.
      *
+     * @param processedMetadataIds collects the ids of the metadata processed, including those whose feed
+     *                             could not be retrieved and keep their existing feed.
      * @return a List with the datasets referenced in the service feeds (dataset-id,
      * dataset-namespace). The namespace is only available in the service feeds. Dataset feeds seem
      * not containing this information.
      */
     private List<DatasetFeedInfo> processServiceMetadataFeeds(final DataManager dataMan,
                                                               final Map<String, String> serviceMetadataWithAtomFeeds,
-                                                              Element result)
+                                                              Element result,
+                                                              final Set<Integer> processedMetadataIds)
         throws Exception {
 
         List<DatasetFeedInfo> datasetsInformation = new ArrayList<>();
@@ -219,6 +223,7 @@ public class InspireAtomHarvester {
         for (Map.Entry<String, String> entry : serviceMetadataWithAtomFeeds.entrySet()) {
             String metadataId = entry.getKey();
             String metadataUuid = dataMan.getMetadataUuid(metadataId);
+            processedMetadataIds.add(Integer.parseInt(metadataId));
 
             try {
                 String atomUrl = entry.getValue();
@@ -232,6 +237,7 @@ public class InspireAtomHarvester {
 
                 if (!atomDoc.getNamespace().equals(Geonet.Namespaces.ATOM)) {
                     logger.warning("Atom feed Document (" + atomUrl + ") for service metadata (" + metadataUuid + ") is not a valid feed");
+                    datasetsInformation.addAll(extractDatasetsInfoFromExistingFeed(dataMan, repository, metadataId));
                     continue;
                 }
 
@@ -242,7 +248,7 @@ public class InspireAtomHarvester {
                 inspireAtomFeed.setAtomDatasetid("");
                 inspireAtomFeed.setAtomDatasetns("");
 
-                repository.save(inspireAtomFeed);
+                replaceFeed(repository, inspireAtomFeed);
 
                 // Index the metadata to store the atom feed information in the index
                 dataMan.indexMetadata(metadataId, DirectIndexSubmitter.INSTANCE);
@@ -263,6 +269,7 @@ public class InspireAtomHarvester {
                 logger.error(ex);
                 result.addContent(new Element("feed").setAttribute("uuid", metadataUuid)
                     .setAttribute("error", ex.getMessage()).setAttribute("status", "error"));
+                datasetsInformation.addAll(extractDatasetsInfoFromExistingFeed(dataMan, repository, metadataId));
             }
         }
 
@@ -277,10 +284,13 @@ public class InspireAtomHarvester {
      * Process the feeds for a set datasets related to a service metadata.
      *
      * @param datasetsFeedInformation Datasets map (datasetid, namespace)
+     * @param processedMetadataIds    collects the ids of the metadata processed, including those whose feed
+     *                                could not be retrieved and keep their existing feed.
      */
     private void processDatasetsMetadataFeeds(final DataManager dataMan,
                                               final List<DatasetFeedInfo> datasetsFeedInformation,
-                                              final Element result) {
+                                              final Element result,
+                                              final Set<Integer> processedMetadataIds) {
 
         final InspireAtomFeedRepository repository = gc.getBean(InspireAtomFeedRepository.class);
 
@@ -314,6 +324,7 @@ public class InspireAtomHarvester {
                 }
 
                 String metadataId = dataMan.getMetadataId(metadataUuid);
+                processedMetadataIds.add(Integer.parseInt(metadataId));
 
                 logger.debug("Dataset, id=" + datasetFeedInfo.identifier + ", namespace=" + datasetFeedInfo.namespace);
 
@@ -335,7 +346,7 @@ public class InspireAtomHarvester {
                 inspireAtomFeed.setAtomUrl(atomUrl);
                 inspireAtomFeed.setAtom(atomFeedDocument);
 
-                repository.save(inspireAtomFeed);
+                replaceFeed(repository, inspireAtomFeed);
 
                 // Index the metadata to store the atom feed information in the index
                 dataMan.indexMetadata(metadataId, DirectIndexSubmitter.INSTANCE);
@@ -347,6 +358,36 @@ public class InspireAtomHarvester {
                 logger.error(ex);
                 result.addContent(new Element("feed").setAttribute("uuid", metadataUuid).setAttribute("error", ex.getMessage()).setAttribute("status", "error"));
             }
+        }
+    }
+
+    /**
+     * Stores the feed of a metadata, replacing the feeds previously stored for the metadata.
+     */
+    private void replaceFeed(final InspireAtomFeedRepository repository, final InspireAtomFeed inspireAtomFeed) {
+        // Delete the entities instead of a bulk delete by specification, so their entry list is removed too
+        repository.deleteAll(repository.findAll(InspireAtomFeedSpecs.hasMetadataId(inspireAtomFeed.getMetadataId())));
+        repository.save(inspireAtomFeed);
+    }
+
+    /**
+     * Retrieves the datasets referenced in the existing feed of a service metadata. Used when the remote service
+     * feed can't be processed, to keep processing the related dataset feeds.
+     */
+    private List<DatasetFeedInfo> extractDatasetsInfoFromExistingFeed(final DataManager dataMan,
+                                                                      final InspireAtomFeedRepository repository,
+                                                                      final String metadataId) {
+        InspireAtomFeed existingFeed = repository.findByMetadataId(Integer.parseInt(metadataId));
+        if (existingFeed == null || StringUtils.isEmpty(existingFeed.getAtom())) {
+            return Collections.emptyList();
+        }
+
+        try {
+            return InspireAtomUtil.extractRelatedDatasetsInfoFromServiceFeed(existingFeed.getAtom(), dataMan);
+        } catch (Exception ex) {
+            logger.error("Failed to extract datasets information from the existing atom feed for service metadata: "
+                + metadataId + " " + ex.getMessage());
+            return Collections.emptyList();
         }
     }
 }

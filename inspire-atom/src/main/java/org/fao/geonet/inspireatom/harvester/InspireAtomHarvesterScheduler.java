@@ -24,6 +24,7 @@ package org.fao.geonet.inspireatom.harvester;
 
 import jeeves.server.context.ServiceContext;
 //import jeeves.server.resources.ResourceManager;
+import org.fao.geonet.utils.Env;
 import org.fao.geonet.utils.Log;
 import org.fao.geonet.utils.QuartzSchedulerUtils;
 import org.fao.geonet.GeonetContext;
@@ -75,6 +76,13 @@ public class InspireAtomHarvesterScheduler {
 
         // Unschedule previous job
         unSchedule();
+
+        // In a multi-node setup only the node responsible for scheduled harvesting runs the atom harvester,
+        // otherwise all nodes rebuild the shared atom feeds table at the same time.
+        if (!Env.getPropertyFromEnv("harvester.scheduler.enabled", "true").equalsIgnoreCase("true")) {
+            Log.info(Geonet.ATOM, "ATOM feed harvester not scheduled, harvester.scheduler.enabled is false");
+            return;
+        }
 
         Scheduler scheduler = getScheduler();
 
